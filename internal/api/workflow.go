@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"camoufoxmulti/internal/workflow"
+	"browseforge/internal/workflow"
 )
 
 func WorkflowHandler(engine *workflow.Engine) http.HandlerFunc {

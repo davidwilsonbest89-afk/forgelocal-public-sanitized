@@ -1,4 +1,4 @@
-// CamoufoxMulti Fingerprint Injector (content script)
+// BrowseForge Fingerprint Injector (content script)
 // Runs at document_start in ISOLATED world
 // Calls Camoufox C++ setters via wrappedJSObject before any page JS executes
 

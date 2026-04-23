@@ -1,4 +1,4 @@
-// CamoufoxMulti Sidebar App
+// BrowseForge Sidebar App
 const API = 'http://127.0.0.1:19280/api';
 let profiles = [];
 let token = '';

@@ -1,4 +1,4 @@
-# CamoufoxMulti API 文件
+# BrowseForge API 文件
 
 ## 連線資訊
 

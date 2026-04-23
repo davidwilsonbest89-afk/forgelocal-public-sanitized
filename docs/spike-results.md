@@ -1,4 +1,4 @@
-# CamoufoxMulti Spike Results
+# BrowseForge Spike Results
 
 ## 0.1.4 Playwright 連接驗證
 - **日期**: 2026-04-23

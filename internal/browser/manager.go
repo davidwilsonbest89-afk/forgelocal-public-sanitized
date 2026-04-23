@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"sync"
 
-	"camoufoxmulti/internal/config"
-	"camoufoxmulti/internal/profile"
+	"browseforge/internal/config"
+	"browseforge/internal/profile"
 
 	"github.com/playwright-community/playwright-go"
 )

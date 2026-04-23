@@ -35,17 +35,17 @@ PLATFORM ?= macos-arm64
 VERSION ?= 0.1.0
 
 package: build
-	@mkdir -p dist/CamoufoxMulti
-	@cp dist/control-server dist/CamoufoxMulti/
-	@cp -r extension/ dist/CamoufoxMulti/extension/
-	@cp -r dist/data/ dist/CamoufoxMulti/data/
-	@mkdir -p dist/CamoufoxMulti/profiles
-	@mkdir -p dist/CamoufoxMulti/logs
-	@cp config.default.json dist/CamoufoxMulti/config.json
-	@cp scripts/start.sh dist/CamoufoxMulti/ && chmod +x dist/CamoufoxMulti/start.sh
-	@cp README.md dist/CamoufoxMulti/
-	cd dist && zip -r CamoufoxMulti-v$(VERSION)-$(PLATFORM).zip CamoufoxMulti/
-	@echo "Package: dist/CamoufoxMulti-v$(VERSION)-$(PLATFORM).zip"
+	@mkdir -p dist/BrowseForge
+	@cp dist/control-server dist/BrowseForge/
+	@cp -r extension/ dist/BrowseForge/extension/
+	@cp -r dist/data/ dist/BrowseForge/data/
+	@mkdir -p dist/BrowseForge/profiles
+	@mkdir -p dist/BrowseForge/logs
+	@cp config.default.json dist/BrowseForge/config.json
+	@cp scripts/start.sh dist/BrowseForge/ && chmod +x dist/BrowseForge/start.sh
+	@cp README.md dist/BrowseForge/
+	cd dist && zip -r BrowseForge-v$(VERSION)-$(PLATFORM).zip BrowseForge/
+	@echo "Package: dist/BrowseForge-v$(VERSION)-$(PLATFORM).zip"
 
 # --- Spike tests ---
 
@@ -64,7 +64,7 @@ clean:
 CAMOUFOX_VERSION ?= v135.0.1-beta.24
 
 download-camoufox:
-	@mkdir -p dist/CamoufoxMulti
+	@mkdir -p dist/BrowseForge
 	@echo "Download Camoufox $(CAMOUFOX_VERSION) for macOS ARM64..."
 	@echo "Visit: https://github.com/daijro/camoufox/releases/tag/$(CAMOUFOX_VERSION)"
-	@echo "Extract to: dist/CamoufoxMulti/camoufox/"
+	@echo "Extract to: dist/BrowseForge/camoufox/"

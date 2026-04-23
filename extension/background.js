@@ -1,4 +1,4 @@
-// CamoufoxMulti Background Script
+// BrowseForge Background Script
 // Responsibilities: proxy routing, container management, server communication
 
 const API_BASE = 'http://127.0.0.1:19280/api';
@@ -10,7 +10,7 @@ let ws = null;
 // --- Initialization ---
 
 async function init() {
-  console.log('[CamoufoxMulti] Background script starting...');
+  console.log('[BrowseForge] Background script starting...');
 
   // Load token from storage
   const stored = await browser.storage.local.get('apiToken');
@@ -39,7 +39,7 @@ async function init() {
   // Connect to Control Server
   connectWebSocket();
 
-  console.log('[CamoufoxMulti] Background script ready');
+  console.log('[BrowseForge] Background script ready');
 }
 
 // --- Proxy Routing (synchronous, per-container) ---
@@ -138,7 +138,7 @@ function connectWebSocket() {
   ws = new WebSocket(`ws://127.0.0.1:${port}/ws`);
 
   ws.onopen = () => {
-    console.log('[CamoufoxMulti] WebSocket connected');
+    console.log('[BrowseForge] WebSocket connected');
     ws.send(JSON.stringify({ type: 'extension_ready', payload: { version: '0.1.0' } }));
   };
 
@@ -148,7 +148,7 @@ function connectWebSocket() {
   };
 
   ws.onclose = () => {
-    console.log('[CamoufoxMulti] WebSocket disconnected, reconnecting...');
+    console.log('[BrowseForge] WebSocket disconnected, reconnecting...');
     setTimeout(connectWebSocket, 2000);
   };
 }

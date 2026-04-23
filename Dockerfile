@@ -1,4 +1,4 @@
-# CamoufoxMulti Development Environment
+# BrowseForge Development Environment
 # All build tools in Docker, host stays clean
 
 FROM golang:1.26-bookworm AS base

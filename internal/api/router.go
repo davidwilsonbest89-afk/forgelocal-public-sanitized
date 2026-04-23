@@ -12,10 +12,10 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
-	"camoufoxmulti/internal/browser"
-	"camoufoxmulti/internal/config"
-	"camoufoxmulti/internal/fingerprint"
-	"camoufoxmulti/internal/profile"
+	"browseforge/internal/browser"
+	"browseforge/internal/config"
+	"browseforge/internal/fingerprint"
+	"browseforge/internal/profile"
 )
 
 func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool) *chi.Mux {

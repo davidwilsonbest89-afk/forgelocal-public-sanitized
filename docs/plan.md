@@ -1,8 +1,8 @@
-# CamoufoxMulti — 跨平台多指紋反偵測瀏覽器
+# BrowseForge — 跨平台多指紋反偵測瀏覽器
 
 ## 專案概述
 
-CamoufoxMulti 是基於 Camoufox（Firefox 核心）的跨平台 portable 瀏覽器工具，核心目標：
+BrowseForge 是基於 Camoufox（Firefox 核心）的跨平台 portable 瀏覽器工具，核心目標：
 
 - **每個分頁一個獨立指紋 profile**，實現多帳號社群營運管理
 - **跨平台**（Windows / macOS / Linux）
@@ -107,7 +107,7 @@ CamoufoxMulti 是基於 Camoufox（Firefox 核心）的跨平台 portable 瀏覽
 ### Portable 打包結構
 
 ```
-CamoufoxMulti-v1.0-win64.zip  (~120MB 預估)
+BrowseForge-v1.0-win64.zip  (~120MB 預估)
 │
 ├── camoufox.exe              ← Camoufox 主程式 + Firefox DLLs
 ├── control-server.exe        ← Go API server (~15MB)
@@ -515,7 +515,7 @@ browser.proxy.onRequest.addListener((requestInfo) => {
 | W4 | 測試 + 修 bug + 文件 |
 
 **交付物：**
-- `CamoufoxMulti-v0.1-{platform}.zip`
+- `BrowseForge-v0.1-{platform}.zip`
 - 支援 5-10 個同時開啟的 profile
 - REST API 可用
 - 基本 sidebar 管理 UI
@@ -566,7 +566,7 @@ browser.proxy.onRequest.addListener((requestInfo) => {
 
 ## 競品分析
 
-| 功能 | Multilogin | GoLogin | AdsPower | **CamoufoxMulti** |
+| 功能 | Multilogin | GoLogin | AdsPower | **BrowseForge** |
 |------|-----------|---------|----------|-------------------|
 | 核心引擎 | Chromium (Mimic) + Firefox (Stealthfox) | Chromium (Orbita) | Chromium | **Camoufox (Firefox)** |
 | 指紋偽造層級 | JS 注入 + 部分 C++ | JS 注入 | JS 注入 | **C++ 層級** |

@@ -1,4 +1,4 @@
-module camoufoxmulti
+module browseforge
 
 go 1.22
 

@@ -93,7 +93,7 @@ func TestCamoufoxFingerprint(t *testing.T) {
 		const ctx = c.getContext('2d');
 		ctx.textBaseline = 'top';
 		ctx.font = '14px Arial';
-		ctx.fillText('CamoufoxMulti test', 2, 2);
+		ctx.fillText('BrowseForge test', 2, 2);
 		return c.toDataURL().substring(0, 80);
 	})()`)
 	if err != nil {

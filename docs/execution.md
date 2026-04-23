@@ -1,4 +1,4 @@
-# CamoufoxMulti — 執行計劃
+# BrowseForge — 執行計劃
 
 > 目標：編譯出一個執行檔，打開就能用。
 > 分工：AI 執行開發 + 排錯 + 驗證，使用者做最終產品驗證。
@@ -224,7 +224,7 @@
 
 #### 5-1. 打包腳本
 - [ ] Makefile：download-camoufox、build-server、build-extension、package
-- [ ] 三平台打包：CamoufoxMulti-v0.1-{win64|macos-arm64|linux-x64}.zip
+- [ ] 三平台打包：BrowseForge-v0.1-{win64|macos-arm64|linux-x64}.zip
 - [ ] Go binary strip（-ldflags "-s -w"）
 
 #### 5-2. 測試

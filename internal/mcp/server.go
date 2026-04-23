@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"sync/atomic"
 
-	"camoufoxmulti/internal/browser"
-	"camoufoxmulti/internal/profile"
+	"browseforge/internal/browser"
+	"browseforge/internal/profile"
 )
 
 // MCP Server — Model Context Protocol (2025-11-25 spec, Streamable HTTP transport)
@@ -56,7 +56,7 @@ func (s *Server) handleInitialize(params json.RawMessage) any {
 	return map[string]any{
 		"protocolVersion": "2025-11-25",
 		"capabilities":    map[string]any{"tools": map[string]any{}},
-		"serverInfo":      map[string]any{"name": "CamoufoxMulti", "version": "0.1.0"},
+		"serverInfo":      map[string]any{"name": "BrowseForge", "version": "0.1.0"},
 	}
 }
 

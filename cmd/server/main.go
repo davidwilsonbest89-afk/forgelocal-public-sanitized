@@ -13,17 +13,17 @@ import (
 	"syscall"
 	"time"
 
-	"camoufoxmulti/internal/api"
-	"camoufoxmulti/internal/browser"
-	"camoufoxmulti/internal/config"
-	"camoufoxmulti/internal/fingerprint"
-	"camoufoxmulti/internal/mcp"
-	"camoufoxmulti/internal/profile"
-	"camoufoxmulti/internal/workflow"
+	"browseforge/internal/api"
+	"browseforge/internal/browser"
+	"browseforge/internal/config"
+	"browseforge/internal/fingerprint"
+	"browseforge/internal/mcp"
+	"browseforge/internal/profile"
+	"browseforge/internal/workflow"
 )
 
 func main() {
-	// MCP stdio mode: CamoufoxMulti --mcp
+	// MCP stdio mode: BrowseForge --mcp
 	if len(os.Args) > 1 && os.Args[1] == "--mcp" {
 		runMCPStdio()
 		return
@@ -165,7 +165,7 @@ func runServer() {
 				token := cfg.APIToken
 				url := fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token)
 				fmt.Println("╔══════════════════════════════════════════╗")
-				fmt.Println("║        🦊 CamoufoxMulti v0.2.0          ║")
+				fmt.Println("║        🦊 BrowseForge v0.2.0          ║")
 				fmt.Println("╠══════════════════════════════════════════╣")
 				fmt.Printf("║  Dashboard: http://127.0.0.1:%-12s║\n", cfg.Port)
 				fmt.Printf("║  MCP:       http://127.0.0.1:19281       ║\n")

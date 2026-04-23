@@ -1,4 +1,4 @@
-# CamoufoxMulti — 五層 WBS 開發計劃
+# BrowseForge — 五層 WBS 開發計劃
 
 > 版本：v0.3 | 更新：2026-04-23
 > 層級：L1 開發項目 → L2 子系統 → L3 功能模組 → L4 實作任務 → L5 技術步驟
@@ -1086,7 +1086,7 @@
   - 9.2.1.1.3 複製 extension/ 目錄
   - 9.2.1.1.4 建立空的 profiles/、data/ 目錄
   - 9.2.1.1.5 生成預設 config.json
-  - 9.2.1.1.6 打包為 CamoufoxMulti-v{version}-{platform}.zip
+  - 9.2.1.1.6 打包為 BrowseForge-v{version}-{platform}.zip
 
 #### 9.2.2 檔案大小優化
 - 9.2.2.1 Go binary strip symbols（-ldflags "-s -w"）
@@ -1321,7 +1321,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
 **Manifest V2 狀態：Mozilla 明確承諾不棄用 MV2，無 sunset 時間表。**
 - 2025-02 Mozilla 再次重申不會移除 MV2 支援
 - Chrome 已於 2025-06 完全移除 MV2，Firefox 明確差異化
-- CamoufoxMulti 使用 MV2 是安全的長期選擇
+- BrowseForge 使用 MV2 是安全的長期選擇
 
 ### 13.3 Camoufox 版本管理
 #### 13.3.1 版本鎖定
@@ -1373,7 +1373,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
 ### 14.2 批次備份/還原
 #### 14.2.1 全量備份
 - 14.2.1.1 打包整個 profiles/ 目錄
-  - 14.2.1.1.1 API: POST /api/backup → 生成 CamoufoxMulti-backup-{date}.zip
+  - 14.2.1.1.1 API: POST /api/backup → 生成 BrowseForge-backup-{date}.zip
   - 14.2.1.1.2 包含所有 profile.json + cookies-backup.json + config.json
   - 14.2.1.1.3 不含 firefox-data/（使用者可選擇包含，但檔案會很大）
 
@@ -1534,7 +1534,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
 
 ---
 
-## 附錄 B：開源專案深度解析 — 對 CamoufoxMulti 的技術影響
+## 附錄 B：開源專案深度解析 — 對 BrowseForge 的技術影響
 
 > 以下是 WBS 中提及的所有開源專案的深度分析，提取對開發直接有用的技術細節。
 
@@ -1565,7 +1565,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
   window.setFontList(csv) / window.setSpeechVoices(csv)
   ```
 
-**⚠️ 對 CamoufoxMulti 的影響：**
+**⚠️ 對 BrowseForge 的影響：**
 - Phase 1 可以直接用 Layer 2 的 setter 做 per-container 指紋覆寫，不需要改 C++
 - 但這些 setter 是 JS 層的，creepjs 的 prototype 偵測可能會抓到
 - Phase 2 改 C++ 層時，可以參考 `cross-process-storage.patch` 的 IPC 機制（`RoverfoxStoragePut/Get`）做 per-container 指紋同步
@@ -1699,7 +1699,7 @@ node generate-pool.js --browser firefox --os macos --count 500 > fingerprints-ma
 
 #### 架構決策對比
 
-| 決策 | Donut Browser | CamoufoxMulti |
+| 決策 | Donut Browser | BrowseForge |
 |------|--------------|---------------|
 | 隔離方式 | 多實例（每 profile 一個 OS process） | Container（單實例多 tab） |
 | UI 框架 | Tauri v2（Rust + Next.js） | WebExtension（零依賴） |
@@ -1763,7 +1763,7 @@ creepjs 用 trap value 注入 + readback 比對、`copyFromChannel` vs `getChann
 
 #### 🟡 需要注意的事
 
-| 檢查項 | 要求 | CamoufoxMulti 對策 |
+| 檢查項 | 要求 | BrowseForge 對策 |
 |--------|------|-------------------|
 | GPU 字串有效性 | 必須包含已知 GPU 廠商名稱，無多餘空格 | 從真實 GPU 資料庫取值 |
 | Platform API 一致性 | Windows 要有 SharedWorker/EyeDropper，Mac 要有 BarcodeDetector | Camoufox 基於真實 Firefox，天然正確 |
@@ -2125,7 +2125,7 @@ Facebook 的風控系統（Sigma）不只看指紋，還看：
 即使指紋不同，同一個 IP 上出現 5+ 個帳號登入，平台會標記該 IP。Residential proxy 比 datacenter proxy 安全，但也不是無限的。建議每個 IP 最多 2-3 個帳號。
 
 **4. 這些不是技術問題，是產品文件問題。**
-CamoufoxMulti 的 README 或使用指南中應該包含「最佳實踐」章節，告訴使用者怎麼用才不會被封。這不是 WBS 的開發任務，但是產品成功的關鍵。
+BrowseForge 的 README 或使用指南中應該包含「最佳實踐」章節，告訴使用者怎麼用才不會被封。這不是 WBS 的開發任務，但是產品成功的關鍵。
 
 ---
 

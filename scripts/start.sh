@@ -1,5 +1,5 @@
 #!/bin/bash
-# CamoufoxMulti Launcher
+# BrowseForge Launcher
 set -e
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -30,5 +30,5 @@ echo "API Token: $TOKEN"
 
 # Camoufox will be launched by Control Server via Playwright
 # Just wait for server to exit
-echo "CamoufoxMulti is running. Press Ctrl+C to stop."
+echo "BrowseForge is running. Press Ctrl+C to stop."
 wait $SERVER_PID

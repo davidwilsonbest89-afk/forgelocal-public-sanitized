@@ -1,4 +1,4 @@
-# CamoufoxMulti
+# BrowseForge
 
 🦊🌐 跨平台多指紋反偵測瀏覽器 — 雙引擎（Firefox + Chromium），每個 Profile 獨立指紋、Cookie、Proxy。
 
@@ -19,11 +19,11 @@
 
 ```bash
 # 下載 release
-unzip CamoufoxMulti-v1.0.0-lite-macos-x64.zip
-cd CamoufoxMulti-lite
+unzip BrowseForge-v1.0.0-lite-macos-x64.zip
+cd BrowseForge-lite
 
 # 啟動（首次會自動下載瀏覽器 ~440MB）
-./CamoufoxMulti
+./BrowseForge
 # → Dashboard 自動開啟 http://127.0.0.1:19280
 ```
 
@@ -31,15 +31,15 @@ cd CamoufoxMulti-lite
 
 ```bash
 sudo apt install -y xvfb
-xvfb-run ./CamoufoxMulti
+xvfb-run ./BrowseForge
 ```
 
 ## 從原始碼 Build
 
 ```bash
 # 需要 Go 1.22+ 和 Node.js 22+
-git clone https://github.com/nczz/CamoufoxMulti.git
-cd CamoufoxMulti
+git clone https://github.com/nczz/BrowseForge.git
+cd BrowseForge
 
 # 生成指紋池
 npm install
@@ -49,10 +49,10 @@ node scripts/generate-fingerprints.js --browser chrome --os windows --count 500
 node scripts/generate-fingerprints.js --browser chrome --os macos --count 500
 
 # Build
-go build -ldflags="-s -w" -o CamoufoxMulti ./cmd/server
+go build -ldflags="-s -w" -o BrowseForge ./cmd/server
 
 # 啟動
-./CamoufoxMulti
+./BrowseForge
 ```
 
 ### Docker Build（不裝 Go）
@@ -69,7 +69,7 @@ make package  # 打包 ZIP
 ## 架構
 
 ```
-CamoufoxMulti (Go binary)
+BrowseForge (Go binary)
   ├── REST API (:19280)     ← Profile CRUD + 瀏覽器操作
   ├── MCP Server (:19281)   ← AI Agent 整合
   ├── Web Dashboard         ← 管理介面

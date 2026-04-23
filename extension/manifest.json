@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "CamoufoxMulti",
+  "name": "BrowseForge",
   "version": "0.1.0",
   "description": "Multi-profile anti-detect browser manager",
 
@@ -22,7 +22,7 @@
   },
 
   "sidebar_action": {
-    "default_title": "CamoufoxMulti",
+    "default_title": "BrowseForge",
     "default_panel": "sidebar/index.html",
     "default_icon": "icons/icon-48.png"
   },
