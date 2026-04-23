@@ -127,6 +127,10 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 
 	// Use the version that has macOS builds
 	version := "chromium-v145.0.7632.109.2"
+	// Linux arm64 only available in v146
+	if osName == "linux" && arch == "arm64" {
+		version = "chromium-v146.0.7680.177.3"
+	}
 	url := fmt.Sprintf("https://github.com/CloakHQ/CloakBrowser/releases/download/%s/%s", version, filename)
 	destDir := filepath.Join(baseDir, "browsers", "cloakbrowser")
 	os.MkdirAll(destDir, 0755)
