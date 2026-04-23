@@ -1,0 +1,99 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            goos: linux
+            goarch: amd64
+            suffix: linux-x64
+          - os: ubuntu-latest
+            goos: linux
+            goarch: arm64
+            suffix: linux-arm64
+          - os: ubuntu-latest
+            goos: darwin
+            goarch: amd64
+            suffix: macos-x64
+          - os: ubuntu-latest
+            goos: darwin
+            goarch: arm64
+            suffix: macos-arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate fingerprint pool
+        run: |
+          npm install --silent
+          node scripts/generate-fingerprints.js --browser firefox --os windows --count 500
+          node scripts/generate-fingerprints.js --browser firefox --os macos --count 500
+          node scripts/generate-fingerprints.js --browser chrome --os windows --count 500
+          node scripts/generate-fingerprints.js --browser chrome --os macos --count 500
+
+      - name: Build
+        env:
+          CGO_ENABLED: "0"
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        run: |
+          BINARY=BrowseForge
+          if [ "${{ matrix.goos }}" = "windows" ]; then BINARY=BrowseForge.exe; fi
+          go build -ldflags="-s -w" -o $BINARY ./cmd/server
+
+      - name: Package
+        run: |
+          DIR=BrowseForge-lite
+          mkdir -p $DIR/data $DIR/profiles $DIR/logs $DIR/examples
+          
+          BINARY=BrowseForge
+          if [ "${{ matrix.goos }}" = "windows" ]; then BINARY=BrowseForge.exe; fi
+          
+          cp $BINARY $DIR/
+          cp -r extension/ $DIR/extension/
+          cp -r data/fingerprints-*.json $DIR/data/
+          cp -r examples/* $DIR/examples/ 2>/dev/null || true
+          cp config.default.json $DIR/config.json
+          cp README.md API.md $DIR/
+          
+          ZIPNAME=BrowseForge-${GITHUB_REF_NAME}-lite-${{ matrix.suffix }}.zip
+          zip -r $ZIPNAME $DIR/
+          echo "ZIPNAME=$ZIPNAME" >> $GITHUB_ENV
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BrowseForge-${{ matrix.suffix }}
+          path: ${{ env.ZIPNAME }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*.zip
+          generate_release_notes: true
