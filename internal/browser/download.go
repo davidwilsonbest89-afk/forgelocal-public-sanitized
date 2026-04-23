@@ -59,6 +59,9 @@ func DownloadCamoufox(baseDir string) (string, error) {
 		}
 		filename = fmt.Sprintf("camoufox-135.0.1-beta.24-lin.%s.zip", suffix)
 		extractedBin = "camoufox/camoufox"
+	case "windows":
+		filename = "camoufox-135.0.1-beta.24-win.x86_64.zip"
+		extractedBin = "camoufox/camoufox.exe"
 	default:
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}
@@ -115,6 +118,9 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 		}
 		filename = fmt.Sprintf("cloakbrowser-linux-%s.tar.gz", suffix)
 		extractedBin = "chrome"
+	case "windows":
+		filename = "cloakbrowser-windows-x64.zip"
+		extractedBin = "chrome.exe"
 	default:
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}

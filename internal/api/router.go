@@ -3,6 +3,7 @@ package api
 import (
 	"crypto/rand"
 	"encoding/hex"
+	crand "crypto/rand"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -109,17 +110,30 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		if engine == "" {
 			engine = "firefox"
 		}
-		fp, err := h.fpPool.Pick(engine, "windows")
+		// Map engine to fingerprint-suite browser name
+		fpBrowser := engine
+		if engine == "chromium" {
+			fpBrowser = "chrome"
+		}
+		fp, err := h.fpPool.Pick(fpBrowser, "windows")
+		if err != nil {
+			// Try macos pool as fallback
+			fp, err = h.fpPool.Pick(fpBrowser, "macos")
+		}
 		if err == nil {
 			if p.Proxy != nil && p.Proxy.Host != "" {
-				// Has proxy: adjust geo fields based on proxy IP country
 				fingerprint.AdjustForCountry(fp, "US") // TODO: real GeoIP lookup
 			} else {
-				// No proxy: adjust to match local machine's actual location
 				fingerprint.AdjustToLocal(fp)
 			}
 			p.Fingerprint = fp
 		}
+	}
+	// Auto-generate fingerprint seed for Chromium (CloakBrowser)
+	if p.Engine == "chromium" && p.FingerprintSeed == 0 {
+		b := make([]byte, 4)
+		crand.Read(b)
+		p.FingerprintSeed = uint32(b[0])<<24 | uint32(b[1])<<16 | uint32(b[2])<<8 | uint32(b[3])
 	}
 	if err := h.store.Create(&p); err != nil {
 		writeError(w, http.StatusInternalServerError, "CREATE_FAILED", err.Error())

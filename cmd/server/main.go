@@ -195,10 +195,13 @@ func findBrowser(baseDir, name string) string {
 		// Camoufox (Firefox)
 		filepath.Join("browsers", name, "Camoufox.app", "Contents", "MacOS", "camoufox"),
 		filepath.Join("camoufox", "Camoufox.app", "Contents", "MacOS", "camoufox"),
+		filepath.Join("browsers", name, "camoufox", "camoufox"),
 		filepath.Join("browsers", name, "camoufox"),
+		filepath.Join("browsers", name, "camoufox", "camoufox.exe"),
 		// CloakBrowser (Chromium)
 		filepath.Join("browsers", name, "Chromium.app", "Contents", "MacOS", "Chromium"),
 		filepath.Join("browsers", name, "chrome"),
+		filepath.Join("browsers", name, "chrome.exe"),
 		filepath.Join("browsers", name, "chromium"),
 	}
 	for _, c := range candidates {
