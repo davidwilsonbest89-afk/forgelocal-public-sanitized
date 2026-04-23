@@ -1,0 +1,128 @@
+:root {
+  --bg: #1e1e2e;
+  --surface: #2a2a3c;
+  --text: #cdd6f4;
+  --text-dim: #6c7086;
+  --accent: #89b4fa;
+  --green: #a6e3a1;
+  --red: #f38ba8;
+  --yellow: #f9e2af;
+  --border: #45475a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--text);
+  width: 280px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+#search {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+}
+
+#search:focus { border-color: var(--accent); }
+
+#profile-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.group-header {
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--text-dim);
+  cursor: pointer;
+  user-select: none;
+}
+
+.group-header:hover { color: var(--text); }
+
+.profile-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px 6px 24px;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.profile-item:hover { background: var(--surface); }
+
+.profile-item .status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.profile-item .status.active { background: var(--green); }
+.profile-item .status.attention { background: var(--red); animation: pulse 1s infinite; }
+.profile-item .status.suspended { background: var(--yellow); }
+
+.profile-item .name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-item .engine {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.profile-item .proxy-flag {
+  font-size: 11px;
+}
+
+.footer {
+  padding: 8px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 4px;
+}
+
+.footer button {
+  flex: 1;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.footer button:hover { background: var(--accent); color: var(--bg); }
+
+#btn-settings { flex: 0 0 36px; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

@@ -1,0 +1,43 @@
+{
+  "manifest_version": 2,
+  "name": "CamoufoxMulti",
+  "version": "0.1.0",
+  "description": "Multi-profile anti-detect browser manager",
+
+  "permissions": [
+    "contextualIdentities",
+    "cookies",
+    "proxy",
+    "tabs",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "browsingData",
+    "notifications",
+    "<all_urls>"
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "sidebar_action": {
+    "default_title": "CamoufoxMulti",
+    "default_panel": "sidebar/index.html",
+    "default_icon": "icons/icon-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["lib/fingerprint-injector.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  }
+}

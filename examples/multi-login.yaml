@@ -1,0 +1,48 @@
+name: 多帳號登入驗證
+steps:
+  - name: 建立 Profile A
+    action: create_profile
+    params:
+      name: "FB Account A"
+      engine: firefox
+      var: profile_a
+
+  - name: 建立 Profile B
+    action: create_profile
+    params:
+      name: "FB Account B"
+      engine: firefox
+      var: profile_b
+
+  - name: 開啟 A
+    action: open_browser
+    profile_id: $profile_a
+
+  - name: 開啟 B
+    action: open_browser
+    profile_id: $profile_b
+
+  - name: A 導航到 Facebook
+    action: navigate
+    profile_id: $profile_a
+    params:
+      url: https://www.facebook.com
+
+  - name: B 導航到 Facebook
+    action: navigate
+    profile_id: $profile_b
+    params:
+      url: https://www.facebook.com
+
+  - name: 等待 30 秒讓使用者手動登入
+    action: sleep
+    params:
+      seconds: 30
+
+  - name: 關閉 A
+    action: close_browser
+    profile_id: $profile_a
+
+  - name: 關閉 B
+    action: close_browser
+    profile_id: $profile_b

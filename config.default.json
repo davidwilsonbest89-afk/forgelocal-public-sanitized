@@ -1,0 +1,9 @@
+{
+  "port": "19280",
+  "profiles_dir": "profiles",
+  "data_dir": "data",
+  "log_file": "logs/server.log",
+  "camoufox_path": "camoufox/camoufox",
+  "cloakbrowser_path": "",
+  "fingerprint_dir": "data"
+}

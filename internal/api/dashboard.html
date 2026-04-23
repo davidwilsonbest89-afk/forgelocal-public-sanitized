@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<title>CamoufoxMulti</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,sans-serif;background:#1e1e2e;color:#cdd6f4;min-height:100vh}
+.header{padding:16px 24px;border-bottom:1px solid #45475a;display:flex;align-items:center;gap:16px}
+.header h1{font-size:18px;font-weight:600}
+.header .status{font-size:12px;color:#a6e3a1}
+.toolbar{padding:12px 24px;display:flex;gap:8px;border-bottom:1px solid #313244}
+button{padding:8px 16px;background:#45475a;border:none;border-radius:6px;color:#cdd6f4;cursor:pointer;font-size:13px}
+button:hover{background:#585b70}
+button.primary{background:#89b4fa;color:#1e1e2e}
+button.danger{background:#f38ba8;color:#1e1e2e}
+.grid{padding:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:#2a2a3c;border:1px solid #45475a;border-radius:10px;padding:16px;position:relative}
+.card .name{font-size:15px;font-weight:600;margin-bottom:4px}
+.card .meta{font-size:12px;color:#6c7086;margin-bottom:12px}
+.card .engine{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:#313244}
+.card .engine.firefox{color:#f9e2af}
+.card .engine.chromium{color:#89b4fa}
+.card .fp{font-size:11px;color:#6c7086;margin:8px 0;line-height:1.6}
+.card .fp span{color:#a6adc8}
+.card .actions{display:flex;gap:6px;margin-top:12px}
+.card .actions button{padding:6px 12px;font-size:12px}
+.badge{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.badge.active{background:#a6e3a1}
+.badge.inactive{background:#6c7086}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:#2a2a3c;border-radius:12px;padding:24px;width:420px;max-height:80vh;overflow-y:auto}
+.modal h2{margin-bottom:16px;font-size:16px}
+.modal label{display:block;font-size:12px;color:#a6adc8;margin:8px 0 4px}
+.modal input,.modal select{width:100%;padding:8px;background:#1e1e2e;border:1px solid #45475a;border-radius:6px;color:#cdd6f4;font-size:13px}
+.modal .btn-row{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+#toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;background:#313244;border-radius:8px;font-size:13px;display:none;z-index:200}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🦊 CamoufoxMulti</h1>
+  <span class="status" id="status">連線中...</span>
+</div>
+<div class="toolbar">
+  <button class="primary" onclick="showCreate()">+ 新增 Profile</button>
+  <button onclick="loadProfiles()">🔄 重新整理</button>
+</div>
+<div class="grid" id="grid"></div>
+
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <h2>編輯 Profile</h2>
+    <input type="hidden" id="e-id">
+    <label>名稱</label><input id="e-name">
+    <label>分組</label><input id="e-group">
+    <label>Proxy 類型</label>
+    <select id="e-proxy-type"><option value="">無 Proxy</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
+    <label>Proxy Host</label><input id="e-proxy-host">
+    <label>Proxy Port</label><input id="e-proxy-port" type="number">
+    <label>Proxy 帳號</label><input id="e-proxy-user">
+    <label>Proxy 密碼</label><input id="e-proxy-pass" type="password">
+    <div class="btn-row">
+      <button onclick="hideEdit()">取消</button>
+      <button class="primary" onclick="saveProfile()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="createModal">
+  <div class="modal">
+    <h2>新增 Profile</h2>
+    <label>名稱</label><input id="f-name" placeholder="FB Brand #1">
+    <label>引擎</label><select id="f-engine"><option value="firefox">🦊 Firefox (Camoufox)</option><option value="chromium">🌐 Chromium (CloakBrowser)</option></select>
+    <label>分組</label><input id="f-group" placeholder="客戶A">
+    <label>Proxy (選填)</label>
+    <select id="f-proxy-type"><option value="">無 Proxy</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
+    <input id="f-proxy-host" placeholder="proxy.example.com" style="margin-top:4px">
+    <input id="f-proxy-port" placeholder="1080" type="number" style="margin-top:4px">
+    <input id="f-proxy-user" placeholder="帳號 (選填)" style="margin-top:4px">
+    <input id="f-proxy-pass" placeholder="密碼 (選填)" type="password" style="margin-top:4px">
+    <div class="btn-row">
+      <button onclick="hideCreate()">取消</button>
+      <button class="primary" onclick="createProfile()">建立</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const API = '/api';
+let TOKEN = '';
+let profiles = [];
+let sessions = new Set();
+
+async function init() {
+  // Get token from URL hash or prompt
+  TOKEN = location.hash.slice(1) || localStorage.getItem('cmfx-token') || '';
+  if (!TOKEN) {
+    TOKEN = prompt('請輸入 API Token（在 data/.api-token 檔案中）：') || '';
+    if (TOKEN) localStorage.setItem('cmfx-token', TOKEN);
+  }
+  await checkStatus();
+  await loadProfiles();
+  await loadSessions();
+  setInterval(loadSessions, 5000);
+}
+
+async function api(method, path, body) {
+  const opts = { method, headers: { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(API + path, opts);
+  return r.json();
+}
+
+async function checkStatus() {
+  try {
+    const r = await fetch(API + '/status');
+    const d = await r.json();
+    document.getElementById('status').textContent = '✅ v' + d.version;
+  } catch { document.getElementById('status').textContent = '❌ 離線'; }
+}
+
+async function loadProfiles() {
+  const d = await api('GET', '/profiles');
+  profiles = d.data || [];
+  render();
+}
+
+async function loadSessions() {
+  const d = await api('GET', '/sessions');
+  sessions = new Set((d.data || []).map(s => s.profile_id));
+  render();
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const groups = {};
+  profiles.forEach(p => { const g = p.group || '未分組'; (groups[g] = groups[g] || []).push(p); });
+
+  grid.innerHTML = Object.entries(groups).map(([group, items]) =>
+    items.map(p => {
+      const active = sessions.has(p.id);
+      const fp = p.fingerprint || {};
+      return `<div class="card">
+        <div class="name"><span class="badge ${active ? 'active' : 'inactive'}"></span>${esc(p.name)}</div>
+        <div class="meta">
+          <span class="engine ${p.engine}">${p.engine === 'chromium' ? '🌐 Chromium' : '🦊 Firefox'}</span>
+          · ${esc(group)}
+          ${p.proxy ? ' · 🔒 ' + esc(p.proxy.host) : ''}
+        </div>
+        <div class="fp">
+          <span>UA:</span> ${esc((fp['navigator.userAgent']||'').substring(0,60))}...<br>
+          <span>Platform:</span> ${esc(fp['navigator.platform']||'N/A')}
+          · <span>Screen:</span> ${fp['screen.width']||'?'}×${fp['screen.height']||'?'}
+        </div>
+        <div class="actions">
+          ${active
+            ? `<button class="danger" onclick="closeSession('${p.id}')">關閉</button>`
+            : `<button class="primary" onclick="openSession('${p.id}')">開啟</button>`}
+          <button onclick="editProfile('${p.id}')">編輯</button>
+          <button onclick="duplicateProfile('${p.id}')">複製</button>
+          <button onclick="deleteProfile('${p.id}','${esc(p.name)}')">刪除</button>
+        </div>
+      </div>`;
+    }).join('')
+  ).join('');
+}
+
+async function openSession(profileId) {
+  toast('啟動中...');
+  const d = await api('POST', '/sessions', { profile_id: profileId });
+  if (d.error) { toast('❌ ' + d.error.message); return; }
+  toast('✅ 瀏覽器已開啟');
+  sessions.add(profileId);
+  render();
+}
+
+async function closeSession(profileId) {
+  await api('DELETE', '/sessions/sess_' + profileId);
+  sessions.delete(profileId);
+  render();
+  toast('已關閉');
+}
+
+function showCreate() { document.getElementById('createModal').classList.add('show'); }
+function hideCreate() { document.getElementById('createModal').classList.remove('show'); }
+
+function hideEdit() { document.getElementById('editModal').classList.remove('show'); }
+
+async function editProfile(id) {
+  const p = profiles.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('e-id').value = p.id;
+  document.getElementById('e-name').value = p.name || '';
+  document.getElementById('e-group').value = p.group || '';
+  document.getElementById('e-proxy-type').value = p.proxy?.type || '';
+  document.getElementById('e-proxy-host').value = p.proxy?.host || '';
+  document.getElementById('e-proxy-port').value = p.proxy?.port || '';
+  document.getElementById('e-proxy-user').value = p.proxy?.username || '';
+  document.getElementById('e-proxy-pass').value = p.proxy?.password || '';
+  document.getElementById('editModal').classList.add('show');
+}
+
+async function saveProfile() {
+  const id = document.getElementById('e-id').value;
+  const body = {
+    name: document.getElementById('e-name').value,
+    group: document.getElementById('e-group').value || undefined,
+  };
+  const proxyType = document.getElementById('e-proxy-type').value;
+  if (proxyType) {
+    body.proxy = {
+      type: proxyType,
+      host: document.getElementById('e-proxy-host').value,
+      port: parseInt(document.getElementById('e-proxy-port').value) || 1080,
+      username: document.getElementById('e-proxy-user').value || undefined,
+      password: document.getElementById('e-proxy-pass').value || undefined,
+    };
+  } else {
+    body.proxy = null;
+  }
+  const d = await api('PUT', '/profiles/' + id, body);
+  if (d.error) { toast('❌ ' + d.error.message); return; }
+  hideEdit();
+  toast('✅ 已儲存');
+  await loadProfiles();
+}
+
+async function createProfile() {
+  const name = document.getElementById('f-name').value;
+  if (!name) { toast('請輸入名稱'); return; }
+  const body = {
+    name,
+    engine: document.getElementById('f-engine').value,
+    group: document.getElementById('f-group').value || undefined,
+  };
+  const proxyType = document.getElementById('f-proxy-type').value;
+  if (proxyType) {
+    body.proxy = {
+      type: proxyType,
+      host: document.getElementById('f-proxy-host').value,
+      port: parseInt(document.getElementById('f-proxy-port').value) || 1080,
+      username: document.getElementById('f-proxy-user').value || undefined,
+      password: document.getElementById('f-proxy-pass').value || undefined,
+    };
+  }
+  const d = await api('POST', '/profiles', body);
+  if (d.error) { toast('❌ ' + d.error.message); return; }
+  hideCreate();
+  toast('✅ 已建立 ' + name);
+  await loadProfiles();
+}
+
+async function duplicateProfile(id) {
+  await api('POST', '/profiles/' + id + '/duplicate');
+  toast('✅ 已複製');
+  await loadProfiles();
+}
+
+async function deleteProfile(id, name) {
+  if (!confirm('確定刪除 ' + name + '？')) return;
+  await api('DELETE', '/profiles/' + id);
+  toast('已刪除');
+  await loadProfiles();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+init();
+</script>
+</body>
+</html>

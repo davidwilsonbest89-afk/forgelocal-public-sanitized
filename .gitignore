@@ -1,0 +1,29 @@
+# Build outputs
+dist/
+
+# Browser binaries (downloaded at runtime)
+browsers/
+
+# Node dependencies (npm install)
+node_modules/
+
+# Generated at runtime
+config.json
+data/.api-token
+logs/
+profiles/prof_*
+
+# Fingerprint pool (generated via npm script)
+data/fingerprints-*.json
+
+# Phase 2 fork workspace
+camoufox-src/
+camoufox-fork/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+/tmp/

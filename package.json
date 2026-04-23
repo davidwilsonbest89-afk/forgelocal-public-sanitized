@@ -1,0 +1,11 @@
+{
+  "name": "camoufoxmulti-tools",
+  "private": true,
+  "scripts": {
+    "generate-fingerprints": "node scripts/generate-fingerprints.js"
+  },
+  "dependencies": {
+    "fingerprint-generator": "^2.1.0",
+    "header-generator": "^2.1.0"
+  }
+}

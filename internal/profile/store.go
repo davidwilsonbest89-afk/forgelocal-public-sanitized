@@ -1,0 +1,197 @@
+package profile
+
+import (
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sync"
+	"time"
+)
+
+type Profile struct {
+	ID              string            `json:"id"`
+	Name            string            `json:"name"`
+	Engine          string            `json:"engine"` // "firefox" | "chromium"
+	Group           string            `json:"group,omitempty"`
+	Tags            []string          `json:"tags,omitempty"`
+	CreatedAt       time.Time         `json:"created_at"`
+	LastUsed        time.Time         `json:"last_used"`
+	Fingerprint     map[string]any    `json:"fingerprint"`
+	FingerprintSeed uint32            `json:"fingerprint_seed,omitempty"` // CloakBrowser
+	Proxy           *ProxyConfig      `json:"proxy,omitempty"`
+	ContainerID     string            `json:"container_id,omitempty"`
+	ProfileDir      string            `json:"profile_dir"`
+}
+
+type ProxyConfig struct {
+	Type     string `json:"type"` // "socks5" | "http"
+	Host     string `json:"host"`
+	Port     int    `json:"port"`
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
+type Store struct {
+	dir      string
+	mu       sync.RWMutex
+	profiles map[string]*Profile
+}
+
+func NewStore(dir string) (*Store, error) {
+	os.MkdirAll(dir, 0755)
+	s := &Store{dir: dir, profiles: make(map[string]*Profile)}
+	return s, s.loadAll()
+}
+
+func (s *Store) loadAll() error {
+	entries, err := os.ReadDir(s.dir)
+	if err != nil {
+		return err
+	}
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		path := filepath.Join(s.dir, e.Name(), "profile.json")
+		data, err := os.ReadFile(path)
+		if err != nil {
+			continue
+		}
+		var p Profile
+		if err := json.Unmarshal(data, &p); err != nil {
+			continue
+		}
+		s.profiles[p.ID] = &p
+	}
+	return nil
+}
+
+func (s *Store) Create(p *Profile) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if p.ID == "" {
+		p.ID = generateID()
+	}
+	if p.Engine == "" {
+		p.Engine = "firefox"
+	}
+	p.CreatedAt = time.Now()
+	p.LastUsed = p.CreatedAt
+	p.ProfileDir = filepath.Join(s.dir, p.ID)
+
+	os.MkdirAll(p.ProfileDir, 0755)
+	os.MkdirAll(filepath.Join(p.ProfileDir, "browser-data"), 0755)
+
+	if err := s.save(p); err != nil {
+		return err
+	}
+	s.profiles[p.ID] = p
+	return nil
+}
+
+func (s *Store) Get(id string) (*Profile, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	p, ok := s.profiles[id]
+	if !ok {
+		return nil, fmt.Errorf("profile not found: %s", id)
+	}
+	return p, nil
+}
+
+func (s *Store) List(group, tag string) []*Profile {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	var result []*Profile
+	for _, p := range s.profiles {
+		if group != "" && p.Group != group {
+			continue
+		}
+		if tag != "" && !contains(p.Tags, tag) {
+			continue
+		}
+		result = append(result, p)
+	}
+	return result
+}
+
+func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok := s.profiles[id]
+	if !ok {
+		return nil, fmt.Errorf("profile not found: %s", id)
+	}
+
+	data, _ := json.Marshal(p)
+	var m map[string]any
+	json.Unmarshal(data, &m)
+	for k, v := range updates {
+		m[k] = v
+	}
+	merged, _ := json.Marshal(m)
+	json.Unmarshal(merged, p)
+
+	return p, s.save(p)
+}
+
+func (s *Store) Delete(id string) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok := s.profiles[id]
+	if !ok {
+		return fmt.Errorf("profile not found: %s", id)
+	}
+	os.RemoveAll(p.ProfileDir)
+	delete(s.profiles, id)
+	return nil
+}
+
+func (s *Store) Duplicate(id string) (*Profile, error) {
+	s.mu.RLock()
+	src, ok := s.profiles[id]
+	s.mu.RUnlock()
+	if !ok {
+		return nil, fmt.Errorf("profile not found: %s", id)
+	}
+
+	data, _ := json.Marshal(src)
+	var dup Profile
+	json.Unmarshal(data, &dup)
+	dup.ID = ""
+	dup.Name = src.Name + " (copy)"
+	dup.ContainerID = ""
+	return &dup, s.Create(&dup)
+}
+
+func (s *Store) save(p *Profile) error {
+	path := filepath.Join(p.ProfileDir, "profile.json")
+	tmp := path + ".tmp"
+	data, err := json.MarshalIndent(p, "", "  ")
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile(tmp, data, 0644); err != nil {
+		return err
+	}
+	return os.Rename(tmp, path)
+}
+
+func generateID() string {
+	b := make([]byte, 6)
+	rand.Read(b)
+	return "prof_" + hex.EncodeToString(b)
+}
+
+func contains(ss []string, s string) bool {
+	for _, v := range ss {
+		if v == s {
+			return true
+		}
+	}
+	return false
+}
