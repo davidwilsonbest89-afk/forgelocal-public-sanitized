@@ -26,6 +26,10 @@ jobs:
             goos: darwin
             goarch: arm64
             suffix: macos-arm64
+          - os: ubuntu-latest
+            goos: windows
+            goarch: amd64
+            suffix: windows-x64
 
     runs-on: ${{ matrix.os }}
 
