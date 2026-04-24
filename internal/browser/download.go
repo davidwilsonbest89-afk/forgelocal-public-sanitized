@@ -83,8 +83,8 @@ func FindBinary(baseDir, browserName string) string {
 	case "camoufox":
 		candidates = []string{
 			filepath.Join("Camoufox.app", "Contents", "MacOS", "camoufox"),
-			filepath.Join("camoufox", "camoufox.exe"),
-			filepath.Join("camoufox", "camoufox"),
+			"camoufox.exe",
+			"camoufox",
 		}
 		exeNames = []string{"camoufox.exe", "camoufox"}
 	case "cloakbrowser":
@@ -143,10 +143,10 @@ func DownloadCamoufox(baseDir string) (string, error) {
 			suffix = "arm64"
 		}
 		filename = fmt.Sprintf("camoufox-135.0.1-beta.24-lin.%s.zip", suffix)
-		extractedBin = "camoufox/camoufox"
+		extractedBin = "camoufox"
 	case "windows":
 		filename = "camoufox-135.0.1-beta.24-win.x86_64.zip"
-		extractedBin = "camoufox/camoufox.exe"
+		extractedBin = "camoufox.exe"
 	default:
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}
