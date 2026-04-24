@@ -73,10 +73,12 @@ func writeVersionMarker(dir, version string) {
 }
 
 // FindBinary searches a browser directory for a known executable.
+// Checks exact candidate paths first, then scans one level of subdirectories.
 func FindBinary(baseDir, browserName string) string {
 	dir := filepath.Join(baseDir, "browsers", browserName)
 
 	var candidates []string
+	var exeNames []string
 	switch browserName {
 	case "camoufox":
 		candidates = []string{
@@ -84,6 +86,7 @@ func FindBinary(baseDir, browserName string) string {
 			filepath.Join("camoufox", "camoufox.exe"),
 			filepath.Join("camoufox", "camoufox"),
 		}
+		exeNames = []string{"camoufox.exe", "camoufox"}
 	case "cloakbrowser":
 		candidates = []string{
 			filepath.Join("Chromium.app", "Contents", "MacOS", "Chromium"),
@@ -91,19 +94,37 @@ func FindBinary(baseDir, browserName string) string {
 			"chrome",
 			"chromium",
 		}
+		exeNames = []string{"chrome.exe", "chrome", "chromium"}
 	}
 
+	// Check known candidate paths
 	for _, c := range candidates {
 		p := filepath.Join(dir, c)
 		if info, err := os.Stat(p); err == nil && !info.IsDir() {
 			return p
 		}
 	}
+
+	// Fallback: scan one level of subdirectories for known exe names
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return ""
+	}
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			continue
+		}
+		for _, name := range exeNames {
+			p := filepath.Join(dir, entry.Name(), name)
+			if info, err := os.Stat(p); err == nil && !info.IsDir() {
+				return p
+			}
+		}
+	}
 	return ""
 }
 
 func DownloadCamoufox(baseDir string) (string, error) {
-	version := "v135.0.1-beta.24"
 	arch := runtime.GOARCH
 	osName := runtime.GOOS
 
@@ -130,7 +151,7 @@ func DownloadCamoufox(baseDir string) (string, error) {
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}
 
-	url := fmt.Sprintf("https://github.com/daijro/camoufox/releases/download/%s/%s", version, filename)
+	url := fmt.Sprintf("https://github.com/daijro/camoufox/releases/download/%s/%s", CamoufoxVersion, filename)
 	destDir := filepath.Join(baseDir, "browsers", "camoufox")
 	os.MkdirAll(destDir, 0755)
 
@@ -190,8 +211,8 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}
 
-	// Use the version that has macOS builds
-	version := "chromium-v145.0.7632.109.2"
+	// Use the version constant
+	version := CloakBrowserVersion
 	// Linux arm64 only available in v146
 	if osName == "linux" && arch == "arm64" {
 		version = "chromium-v146.0.7680.177.3"
