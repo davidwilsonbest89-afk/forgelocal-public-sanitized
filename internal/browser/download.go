@@ -128,7 +128,7 @@ func DownloadCamoufox(baseDir string) (string, error) {
 	arch := runtime.GOARCH
 	osName := runtime.GOOS
 
-	var filename, extractedBin string
+	var filename string
 	switch osName {
 	case "darwin":
 		suffix := "x86_64"
@@ -136,17 +136,14 @@ func DownloadCamoufox(baseDir string) (string, error) {
 			suffix = "arm64"
 		}
 		filename = fmt.Sprintf("camoufox-135.0.1-beta.24-mac.%s.zip", suffix)
-		extractedBin = "Camoufox.app/Contents/MacOS/camoufox"
 	case "linux":
 		suffix := "x86_64"
 		if arch == "arm64" {
 			suffix = "arm64"
 		}
 		filename = fmt.Sprintf("camoufox-135.0.1-beta.24-lin.%s.zip", suffix)
-		extractedBin = "camoufox"
 	case "windows":
 		filename = "camoufox-135.0.1-beta.24-win.x86_64.zip"
-		extractedBin = "camoufox.exe"
 	default:
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}
@@ -169,15 +166,15 @@ func DownloadCamoufox(baseDir string) (string, error) {
 	}
 	os.Remove(tmpFile)
 
-	binPath := filepath.Join(destDir, extractedBin)
 	if osName == "darwin" {
 		exec.Command("xattr", "-cr", destDir).Run()
 	}
-	os.Chmod(binPath, 0755)
 
-	if _, err := os.Stat(binPath); err != nil {
-		return "", fmt.Errorf("binary not found after extract: %s", binPath)
+	binPath := FindBinary(baseDir, "camoufox")
+	if binPath == "" {
+		return "", fmt.Errorf("binary not found after extract in %s", destDir)
 	}
+	os.Chmod(binPath, 0755)
 
 	fmt.Println("✅ Camoufox installed")
 	writeVersionMarker(destDir, CamoufoxVersion)
@@ -188,7 +185,7 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	arch := runtime.GOARCH
 	osName := runtime.GOOS
 
-	var filename, extractedBin string
+	var filename string
 	switch osName {
 	case "darwin":
 		suffix := "x64"
@@ -196,24 +193,19 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 			suffix = "arm64"
 		}
 		filename = fmt.Sprintf("cloakbrowser-darwin-%s.tar.gz", suffix)
-		extractedBin = "Chromium.app/Contents/MacOS/Chromium"
 	case "linux":
 		suffix := "x64"
 		if arch == "arm64" {
 			suffix = "arm64"
 		}
 		filename = fmt.Sprintf("cloakbrowser-linux-%s.tar.gz", suffix)
-		extractedBin = "chrome"
 	case "windows":
 		filename = "cloakbrowser-windows-x64.zip"
-		extractedBin = "chrome.exe"
 	default:
 		return "", fmt.Errorf("unsupported OS: %s", osName)
 	}
 
-	// Use the version constant
 	version := CloakBrowserVersion
-	// Linux arm64 only available in v146
 	if osName == "linux" && arch == "arm64" {
 		version = "chromium-v146.0.7680.177.3"
 	}
@@ -235,15 +227,15 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	}
 	os.Remove(tmpFile)
 
-	binPath := filepath.Join(destDir, extractedBin)
 	if osName == "darwin" {
 		exec.Command("xattr", "-cr", destDir).Run()
 	}
-	os.Chmod(binPath, 0755)
 
-	if _, err := os.Stat(binPath); err != nil {
-		return "", fmt.Errorf("binary not found after extract: %s", binPath)
+	binPath := FindBinary(baseDir, "cloakbrowser")
+	if binPath == "" {
+		return "", fmt.Errorf("binary not found after extract in %s", destDir)
 	}
+	os.Chmod(binPath, 0755)
 
 	fmt.Println("✅ CloakBrowser installed")
 	writeVersionMarker(destDir, version)
