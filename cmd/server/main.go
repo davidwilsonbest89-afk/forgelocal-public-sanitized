@@ -75,10 +75,33 @@ func runServer() {
 	os.MkdirAll("data", 0755)
 	os.MkdirAll("logs", 0755)
 
-	// Find or download browsers
-	camoufoxPath := findBrowser(baseDir, "camoufox")
-	chromiumPath := findBrowser(baseDir, "cloakbrowser")
+	// Find or download browsers (skip if already configured and exists)
+	cfg, _ := config.Load("config.json")
 
+	camoufoxPath := cfg.CamoufoxPath
+	chromiumPath := cfg.CloakBrowserPath
+
+	// Check if configured paths still valid
+	if camoufoxPath != "" {
+		if _, err := os.Stat(camoufoxPath); err != nil {
+			camoufoxPath = "" // configured but missing
+		}
+	}
+	if chromiumPath != "" {
+		if _, err := os.Stat(chromiumPath); err != nil {
+			chromiumPath = "" // configured but missing
+		}
+	}
+
+	// Try findBrowser if not configured
+	if camoufoxPath == "" {
+		camoufoxPath = findBrowser(baseDir, "camoufox")
+	}
+	if chromiumPath == "" {
+		chromiumPath = findBrowser(baseDir, "cloakbrowser")
+	}
+
+	// Download only if still not found
 	if camoufoxPath == "" {
 		fmt.Println("🦊 Camoufox not found. Downloading...")
 		var err error
@@ -97,7 +120,7 @@ func runServer() {
 		}
 	}
 
-	// Generate config
+	// Save config
 	cfgJSON := fmt.Sprintf(`{
   "port": "19280",
   "profiles_dir": "profiles",
