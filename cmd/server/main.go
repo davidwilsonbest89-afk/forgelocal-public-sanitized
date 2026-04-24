@@ -23,7 +23,7 @@ import (
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.0.6"
+const Version = "1.0.7"
 
 func main() {
 	// MCP stdio mode: BrowseForge --mcp
@@ -45,18 +45,15 @@ func runMCPStdio() {
 
 	// Reuse existing config (don't download browsers in MCP mode)
 	if _, err := os.Stat("config.json"); os.IsNotExist(err) {
-		camoufoxPath := findBrowser(baseDir, "camoufox")
-		chromiumPath := findBrowser(baseDir, "cloakbrowser")
-		cfgJSON := fmt.Sprintf(`{
-  "port": "19280",
-  "profiles_dir": "profiles",
-  "data_dir": "data",
-  "log_file": "logs/server.log",
-  "camoufox_path": %q,
-  "cloakbrowser_path": %q,
-  "fingerprint_dir": "data"
-}`, camoufoxPath, chromiumPath)
-		os.WriteFile("config.json", []byte(cfgJSON), 0644)
+		camoufoxPath := browser.FindBinary(baseDir, "camoufox")
+		chromiumPath := browser.FindBinary(baseDir, "cloakbrowser")
+		cfg := &config.Config{
+			Port: "19280", ProfilesDir: "profiles", DataDir: "data",
+			LogFile: "logs/server.log", FingerprintDir: "data",
+			CamoufoxPath: camoufoxPath, CloakBrowserPath: chromiumPath,
+		}
+		cfgJSON, _ := json.MarshalIndent(cfg, "", "  ")
+		os.WriteFile("config.json", cfgJSON, 0644)
 	}
 
 	cfg, _ := config.Load("config.json")
@@ -78,35 +75,21 @@ func runServer() {
 	os.MkdirAll("data", 0755)
 	os.MkdirAll("logs", 0755)
 
-	// Find or download browsers (skip if already configured and exists)
+	// Find or download browsers — version-based detection
 	cfg, _ := config.Load("config.json")
 
-	camoufoxPath := cfg.CamoufoxPath
-	chromiumPath := cfg.CloakBrowserPath
-
-	// Check if configured paths still valid
-	if camoufoxPath != "" {
-		if _, err := os.Stat(camoufoxPath); err != nil {
-			camoufoxPath = "" // configured but missing
-		}
+	// Camoufox: check installed version vs expected
+	camoufoxPath := ""
+	if browser.InstalledVersion(baseDir, "camoufox") == browser.CamoufoxVersion {
+		camoufoxPath = browser.FindBinary(baseDir, "camoufox")
 	}
-	if chromiumPath != "" {
-		if _, err := os.Stat(chromiumPath); err != nil {
-			chromiumPath = "" // configured but missing
-		}
-	}
-
-	// Try findBrowser if not configured
 	if camoufoxPath == "" {
-		camoufoxPath = findBrowser(baseDir, "camoufox")
-	}
-	if chromiumPath == "" {
-		chromiumPath = findBrowser(baseDir, "cloakbrowser")
-	}
-
-	// Download only if still not found
-	if camoufoxPath == "" {
-		fmt.Println("🦊 Camoufox not found. Downloading...")
+		if browser.InstalledVersion(baseDir, "camoufox") == "" {
+			fmt.Println("🦊 Camoufox not found. Downloading...")
+		} else {
+			fmt.Printf("🦊 Camoufox update available (%s → %s). Downloading...\n",
+				browser.InstalledVersion(baseDir, "camoufox"), browser.CamoufoxVersion)
+		}
 		var err error
 		camoufoxPath, err = browser.DownloadCamoufox(baseDir)
 		if err != nil {
@@ -114,8 +97,19 @@ func runServer() {
 		}
 	}
 
+	// CloakBrowser: check installed version vs expected
+	chromiumPath := ""
+	expectedCloak := browser.ExpectedCloakBrowserVersion()
+	if browser.InstalledVersion(baseDir, "cloakbrowser") == expectedCloak {
+		chromiumPath = browser.FindBinary(baseDir, "cloakbrowser")
+	}
 	if chromiumPath == "" {
-		fmt.Println("🌐 CloakBrowser not found. Downloading...")
+		if browser.InstalledVersion(baseDir, "cloakbrowser") == "" {
+			fmt.Println("🌐 CloakBrowser not found. Downloading...")
+		} else {
+			fmt.Printf("🌐 CloakBrowser update available (%s → %s). Downloading...\n",
+				browser.InstalledVersion(baseDir, "cloakbrowser"), expectedCloak)
+		}
 		var err error
 		chromiumPath, err = browser.DownloadCloakBrowser(baseDir)
 		if err != nil {
@@ -123,7 +117,7 @@ func runServer() {
 		}
 	}
 
-	// Save config only if browser paths changed
+	// Save config if browser paths changed
 	if camoufoxPath != cfg.CamoufoxPath || chromiumPath != cfg.CloakBrowserPath {
 		cfg.CamoufoxPath = camoufoxPath
 		cfg.CloakBrowserPath = chromiumPath
@@ -210,30 +204,6 @@ func runServer() {
 	defer cancel()
 	srv.Shutdown(ctx)
 	browserMgr.Close()
-}
-
-// findBrowser locates browser binary relative to base directory
-func findBrowser(baseDir, name string) string {
-	candidates := []string{
-		// Camoufox (Firefox)
-		filepath.Join("browsers", name, "Camoufox.app", "Contents", "MacOS", "camoufox"),
-		filepath.Join("camoufox", "Camoufox.app", "Contents", "MacOS", "camoufox"),
-		filepath.Join("browsers", name, "camoufox", "camoufox.exe"),
-		filepath.Join("browsers", name, "camoufox", "camoufox"),
-		// CloakBrowser (Chromium)
-		filepath.Join("browsers", name, "Chromium.app", "Contents", "MacOS", "Chromium"),
-		filepath.Join("browsers", name, "chrome.exe"),
-		filepath.Join("browsers", name, "chrome"),
-		filepath.Join("browsers", name, "chromium"),
-	}
-	for _, c := range candidates {
-		abs := filepath.Join(baseDir, c)
-		info, err := os.Stat(abs)
-		if err == nil && !info.IsDir() {
-			return abs
-		}
-	}
-	return ""
 }
 
 // openBrowser opens URL in the default system browser

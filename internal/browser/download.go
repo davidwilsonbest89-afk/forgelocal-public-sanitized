@@ -17,6 +17,21 @@ import (
 
 // Downloader handles first-run browser binary downloads
 
+// Version constants — bump these to trigger auto-update
+const (
+	CamoufoxVersion = "v135.0.1-beta.24"
+)
+
+// ExpectedCloakBrowserVersion returns the expected version for the current platform.
+func ExpectedCloakBrowserVersion() string {
+	if runtime.GOOS == "linux" && runtime.GOARCH == "arm64" {
+		return "chromium-v146.0.7680.177.3"
+	}
+	return CloakBrowserVersion
+}
+
+const CloakBrowserVersion = "chromium-v145.0.7632.109.2"
+
 type BrowserInfo struct {
 	Name    string
 	Exists  bool
@@ -27,7 +42,7 @@ type BrowserInfo struct {
 func CheckBrowsers(camoufoxPath, cloakPath string) (camoufox, cloak BrowserInfo) {
 	camoufox = BrowserInfo{Name: "Camoufox (Firefox)"}
 	if camoufoxPath != "" {
-		if _, err := os.Stat(camoufoxPath); err == nil {
+		if info, err := os.Stat(camoufoxPath); err == nil && !info.IsDir() {
 			camoufox.Exists = true
 			camoufox.Path = camoufoxPath
 		}
@@ -35,12 +50,56 @@ func CheckBrowsers(camoufoxPath, cloakPath string) (camoufox, cloak BrowserInfo)
 
 	cloak = BrowserInfo{Name: "CloakBrowser (Chromium)"}
 	if cloakPath != "" {
-		if _, err := os.Stat(cloakPath); err == nil {
+		if info, err := os.Stat(cloakPath); err == nil && !info.IsDir() {
 			cloak.Exists = true
 			cloak.Path = cloakPath
 		}
 	}
 	return
+}
+
+// InstalledVersion reads the .version marker file in a browser directory.
+// Returns empty string if not installed.
+func InstalledVersion(baseDir, browserName string) string {
+	data, err := os.ReadFile(filepath.Join(baseDir, "browsers", browserName, ".version"))
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(data))
+}
+
+func writeVersionMarker(dir, version string) {
+	os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0644)
+}
+
+// FindBinary searches a browser directory for a known executable.
+func FindBinary(baseDir, browserName string) string {
+	dir := filepath.Join(baseDir, "browsers", browserName)
+
+	var candidates []string
+	switch browserName {
+	case "camoufox":
+		candidates = []string{
+			filepath.Join("Camoufox.app", "Contents", "MacOS", "camoufox"),
+			filepath.Join("camoufox", "camoufox.exe"),
+			filepath.Join("camoufox", "camoufox"),
+		}
+	case "cloakbrowser":
+		candidates = []string{
+			filepath.Join("Chromium.app", "Contents", "MacOS", "Chromium"),
+			"chrome.exe",
+			"chrome",
+			"chromium",
+		}
+	}
+
+	for _, c := range candidates {
+		p := filepath.Join(dir, c)
+		if info, err := os.Stat(p); err == nil && !info.IsDir() {
+			return p
+		}
+	}
+	return ""
 }
 
 func DownloadCamoufox(baseDir string) (string, error) {
@@ -100,6 +159,7 @@ func DownloadCamoufox(baseDir string) (string, error) {
 	}
 
 	fmt.Println("✅ Camoufox installed")
+	writeVersionMarker(destDir, CamoufoxVersion)
 	return binPath, nil
 }
 
@@ -165,6 +225,7 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	}
 
 	fmt.Println("✅ CloakBrowser installed")
+	writeVersionMarker(destDir, version)
 	return binPath, nil
 }
 
