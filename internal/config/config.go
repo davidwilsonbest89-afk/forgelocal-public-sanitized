@@ -15,6 +15,7 @@ type Config struct {
 	CloakBrowserPath string `json:"cloakbrowser_path"`
 	FingerprintDir  string `json:"fingerprint_dir"`
 	APIToken        string `json:"-"` // generated at runtime
+	Version         string `json:"-"` // set from main
 }
 
 func Load(path string) (*Config, error) {

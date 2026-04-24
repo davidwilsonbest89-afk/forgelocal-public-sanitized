@@ -22,6 +22,8 @@ import (
 	"browseforge/internal/workflow"
 )
 
+const Version = "1.0.5"
+
 func main() {
 	// MCP stdio mode: BrowseForge --mcp
 	if len(os.Args) > 1 && os.Args[1] == "--mcp" {
@@ -137,6 +139,7 @@ func runServer() {
 		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
 		os.Exit(1)
 	}
+	cfg.Version = Version
 
 	logger := config.SetupLogger(cfg.LogFile)
 	slog.SetDefault(logger)
@@ -188,7 +191,7 @@ func runServer() {
 				token := cfg.APIToken
 				url := fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token)
 				fmt.Println("╔══════════════════════════════════════════╗")
-				fmt.Println("║        🦊 BrowseForge v1.0.5          ║")
+				fmt.Printf("║        🦊 BrowseForge v%-16s║\n", Version)
 				fmt.Println("╠══════════════════════════════════════════╣")
 				fmt.Printf("║  Dashboard: http://127.0.0.1:%-12s║\n", cfg.Port)
 				fmt.Printf("║  MCP:       http://127.0.0.1:19281       ║\n")

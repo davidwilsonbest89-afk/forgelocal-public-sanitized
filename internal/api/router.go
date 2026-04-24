@@ -89,7 +89,7 @@ func (h *handler) authMiddleware(next http.Handler) http.Handler {
 
 func (h *handler) status(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{
-		"version": "0.1.0",
+		"version": h.cfg.Version,
 		"status":  "ok",
 	})
 }
