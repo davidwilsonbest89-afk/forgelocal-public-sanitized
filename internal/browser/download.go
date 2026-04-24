@@ -293,11 +293,12 @@ func extractZip(zipFile, destDir string) error {
 			continue // skip zip slip
 		}
 		if f.FileInfo().IsDir() {
-			os.MkdirAll(target, f.Mode())
+			os.MkdirAll(target, 0755)
 			continue
 		}
 		os.MkdirAll(filepath.Dir(target), 0755)
-		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, f.Mode())
+		mode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)
+		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
 		if err != nil {
 			return err
 		}
@@ -344,10 +345,11 @@ func extractTarGz(tarFile, destDir string) error {
 		}
 		switch hdr.Typeflag {
 		case tar.TypeDir:
-			os.MkdirAll(target, os.FileMode(hdr.Mode))
+			os.MkdirAll(target, 0755)
 		case tar.TypeReg:
 			os.MkdirAll(filepath.Dir(target), 0755)
-			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(hdr.Mode))
+			mode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows
+			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
 			if err != nil {
 				return err
 			}
@@ -359,7 +361,13 @@ func extractTarGz(tarFile, destDir string) error {
 		case tar.TypeSymlink:
 			os.MkdirAll(filepath.Dir(target), 0755)
 			os.Remove(target)
-			os.Symlink(hdr.Linkname, target)
+			if err := os.Symlink(hdr.Linkname, target); err != nil {
+				// Windows: symlink needs admin/dev-mode — copy the target instead
+				src := filepath.Join(filepath.Dir(target), hdr.Linkname)
+				if data, readErr := os.ReadFile(src); readErr == nil {
+					os.WriteFile(target, data, 0755)
+				}
+			}
 		}
 	}
 	return nil
