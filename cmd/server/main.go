@@ -18,12 +18,13 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
+	"browseforge/internal/humanize"
 	"browseforge/internal/mcp"
 	"browseforge/internal/profile"
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.0.9"
+const Version = "1.1.0"
 
 func main() {
 	// MCP stdio mode: BrowseForge --mcp
@@ -60,7 +61,7 @@ func runMCPStdio() {
 	profileStore, _ := profile.NewStore(cfg.ProfilesDir)
 	browserMgr, _ := browser.NewManager(cfg)
 
-	mcpServer := mcp.NewServer(profileStore, browserMgr)
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg))
 	mcpServer.RunStdio()
 }
 
@@ -157,7 +158,7 @@ func runServer() {
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
 	// MCP Server
-	mcpServer := mcp.NewServer(profileStore, browserMgr)
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg))
 	go func() {
 		slog.Info("MCP server starting", "port", "19281")
 		http.ListenAndServe("127.0.0.1:19281", mcpServer)
@@ -220,4 +221,11 @@ func openBrowser(url string) {
 	if cmd != nil {
 		cmd.Start()
 	}
+}
+
+func buildHumanizeCfg(cfg *config.Config) humanize.Config {
+	if cfg.Humanize == nil {
+		return humanize.DefaultConfig()
+	}
+	return humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 }

@@ -16,6 +16,7 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
+	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
 )
 
@@ -28,7 +29,12 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	token := loadOrCreateToken(cfg.DataDir)
 	cfg.APIToken = token
 
-	h := &handler{cfg: cfg, store: store, mgr: mgr, token: token, fpPool: fpPool}
+	hcfg := humanize.DefaultConfig()
+	if cfg.Humanize != nil {
+		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
+	}
+
+	h := &handler{cfg: cfg, store: store, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg}
 
 	r.Get("/api/status", h.status)
 	r.Get("/", h.dashboard)
@@ -73,6 +79,7 @@ type handler struct {
 	store  *profile.Store
 	mgr    *browser.Manager
 	fpPool *fingerprint.Pool
+	hcfg   humanize.Config
 	token  string
 }
 

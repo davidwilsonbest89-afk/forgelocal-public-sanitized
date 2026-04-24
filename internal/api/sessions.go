@@ -6,6 +6,8 @@ import (
 	"io"
 	"net/http"
 
+	"browseforge/internal/humanize"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/playwright-community/playwright-go"
 )
@@ -111,7 +113,7 @@ func (h *handler) click(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewDecoder(r.Body).Decode(&req)
 
-	if err := page.Click(req.Selector); err != nil {
+	if err := humanize.Click(page, req.Selector, h.hcfg); err != nil {
 		writeError(w, 500, "CLICK_FAILED", err.Error())
 		return
 	}
@@ -125,18 +127,12 @@ func (h *handler) typeText(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var req struct {
-		Selector string  `json:"selector"`
-		Text     string  `json:"text"`
-		Delay    float64 `json:"delay,omitempty"`
+		Selector string `json:"selector"`
+		Text     string `json:"text"`
 	}
 	json.NewDecoder(r.Body).Decode(&req)
 
-	opts := playwright.PageTypeOptions{}
-	if req.Delay > 0 {
-		opts.Delay = playwright.Float(req.Delay)
-	}
-
-	if err := page.Type(req.Selector, req.Text, opts); err != nil {
+	if err := humanize.Type(page, req.Selector, req.Text, h.hcfg); err != nil {
 		writeError(w, 500, "TYPE_FAILED", err.Error())
 		return
 	}

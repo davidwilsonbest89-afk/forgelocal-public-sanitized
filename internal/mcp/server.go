@@ -8,6 +8,7 @@ import (
 	"sync/atomic"
 
 	"browseforge/internal/browser"
+	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
 )
 
@@ -16,11 +17,12 @@ import (
 type Server struct {
 	store *profile.Store
 	mgr   *browser.Manager
+	hcfg  humanize.Config
 	reqID atomic.Int64
 }
 
-func NewServer(store *profile.Store, mgr *browser.Manager) *Server {
-	return &Server{store: store, mgr: mgr}
+func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config) *Server {
+	return &Server{store: store, mgr: mgr, hcfg: hcfg}
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -199,7 +201,7 @@ func (s *Server) toolClick(args map[string]any) (any, *mcpError) {
 	if !ok {
 		return nil, newError(-32000, "no active session")
 	}
-	if err := sess.Page.Click(selector); err != nil {
+	if err := humanize.Click(sess.Page, selector, s.hcfg); err != nil {
 		return nil, newError(-32000, err.Error())
 	}
 	return textResult("Clicked " + selector), nil
@@ -213,7 +215,7 @@ func (s *Server) toolTypeText(args map[string]any) (any, *mcpError) {
 	if !ok {
 		return nil, newError(-32000, "no active session")
 	}
-	if err := sess.Page.Fill(selector, text); err != nil {
+	if err := humanize.Type(sess.Page, selector, text, s.hcfg); err != nil {
 		return nil, newError(-32000, err.Error())
 	}
 	return textResult("Typed text into " + selector), nil

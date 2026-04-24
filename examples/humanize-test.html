@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>BrowseForge Humanize Test</title>
+<style>
+  body { font-family: monospace; margin: 20px; background: #1a1a2e; color: #eee; }
+  #canvas { border: 1px solid #444; background: #16213e; cursor: crosshair; }
+  .panel { display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap; }
+  .card { background: #0f3460; padding: 15px; border-radius: 8px; min-width: 280px; }
+  .card h3 { margin: 0 0 10px; color: #e94560; }
+  input, button { padding: 10px; font-size: 16px; margin: 5px; border-radius: 4px; border: 1px solid #444; }
+  input { background: #16213e; color: #eee; width: 300px; }
+  button { background: #e94560; color: #fff; cursor: pointer; border: none; }
+  #log { height: 200px; overflow-y: auto; font-size: 12px; background: #0a0a1a; padding: 8px; border-radius: 4px; }
+  .metric { font-size: 24px; color: #53d8fb; }
+  .label { font-size: 12px; color: #888; }
+  .verdict { font-size: 18px; padding: 8px; border-radius: 4px; margin-top: 10px; }
+  .human { background: #1b4332; color: #95d5b2; }
+  .bot { background: #5c1010; color: #f4a0a0; }
+</style></head>
+<body>
+<h2>🧪 BrowseForge Humanize Verification</h2>
+<p>用 MCP 工具操作此頁面，觀察行為是否像人類。</p>
+
+<canvas id="canvas" width="800" height="400"></canvas>
+
+<div class="panel">
+  <div class="card">
+    <h3>🖱️ Mouse</h3>
+    <div class="label">Total Points</div><div class="metric" id="mPoints">0</div>
+    <div class="label">Avg Speed (px/ms)</div><div class="metric" id="mSpeed">-</div>
+    <div class="label">Path Curvature</div><div class="metric" id="mCurve">-</div>
+    <div class="label">Micro-pauses</div><div class="metric" id="mPauses">0</div>
+    <div id="mVerdict" class="verdict">等待滑鼠移動...</div>
+  </div>
+  <div class="card">
+    <h3>⌨️ Keyboard</h3>
+    <input id="testInput" type="text" placeholder="用 type_text 在這裡打字">
+    <div class="label">Keystrokes</div><div class="metric" id="kCount">0</div>
+    <div class="label">Avg Interval (ms)</div><div class="metric" id="kAvg">-</div>
+    <div class="label">Interval StdDev (ms)</div><div class="metric" id="kStd">-</div>
+    <div class="label">Typos Detected</div><div class="metric" id="kTypos">0</div>
+    <div id="kVerdict" class="verdict">等待鍵盤輸入...</div>
+  </div>
+  <div class="card">
+    <h3>🖱️ Click</h3>
+    <button id="testBtn">Click Me</button>
+    <div class="label">Click Down→Up (ms)</div><div class="metric" id="cDelay">-</div>
+    <div class="label">Clicks</div><div class="metric" id="cCount">0</div>
+    <div id="cVerdict" class="verdict">等待點擊...</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:15px">
+  <h3>📋 Event Log</h3>
+  <div id="log"></div>
+</div>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const log = document.getElementById('log');
+
+// --- Mouse tracking ---
+let mousePoints = [];
+let lastMoveTime = 0;
+let pauseCount = 0;
+
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  const now = performance.now();
+  const dt = lastMoveTime ? now - lastMoveTime : 0;
+  lastMoveTime = now;
+
+  mousePoints.push({ x, y, t: now, dt });
+
+  // Draw trail
+  if (mousePoints.length > 1) {
+    const prev = mousePoints[mousePoints.length - 2];
+    ctx.beginPath();
+    ctx.moveTo(prev.x, prev.y);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = dt > 50 ? '#e94560' : '#53d8fb'; // red = pause
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
+
+  // Detect micro-pauses (>40ms gap)
+  if (dt > 40) pauseCount++;
+
+  // Update metrics every 10 points
+  if (mousePoints.length % 10 === 0) updateMouseMetrics();
+});
+
+function updateMouseMetrics() {
+  const pts = mousePoints;
+  document.getElementById('mPoints').textContent = pts.length;
+  document.getElementById('mPauses').textContent = pauseCount;
+
+  if (pts.length < 3) return;
+
+  // Average speed
+  let totalDist = 0, totalTime = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const dx = pts[i].x - pts[i-1].x, dy = pts[i].y - pts[i-1].y;
+    totalDist += Math.sqrt(dx*dx + dy*dy);
+    totalTime += pts[i].dt;
+  }
+  const avgSpeed = totalTime > 0 ? (totalDist / totalTime).toFixed(2) : '-';
+  document.getElementById('mSpeed').textContent = avgSpeed;
+
+  // Curvature: total path length / straight-line distance
+  const straight = Math.sqrt(
+    (pts[pts.length-1].x - pts[0].x)**2 + (pts[pts.length-1].y - pts[0].y)**2
+  );
+  const curvature = straight > 10 ? (totalDist / straight).toFixed(2) : '-';
+  document.getElementById('mCurve').textContent = curvature;
+
+  // Verdict
+  const v = document.getElementById('mVerdict');
+  const isHuman = parseFloat(curvature) > 1.05 && pauseCount > 0 && parseFloat(avgSpeed) < 3;
+  v.textContent = isHuman ? '✅ 像人類' : '⚠️ 像機器人';
+  v.className = 'verdict ' + (isHuman ? 'human' : 'bot');
+}
+
+// --- Keyboard tracking ---
+let keyTimes = [];
+let typoCount = 0;
+let lastChar = '';
+
+document.getElementById('testInput').addEventListener('keydown', e => {
+  const now = performance.now();
+  if (e.key === 'Backspace') {
+    typoCount++;
+    addLog(`⌫ Backspace (typo correction)`);
+  } else if (e.key.length === 1) {
+    keyTimes.push(now);
+    addLog(`⌨️ '${e.key}' interval=${keyTimes.length > 1 ? (now - keyTimes[keyTimes.length-2]).toFixed(0) : '-'}ms`);
+  }
+  lastChar = e.key;
+  updateKeyMetrics();
+});
+
+function updateKeyMetrics() {
+  document.getElementById('kCount').textContent = keyTimes.length;
+  document.getElementById('kTypos').textContent = typoCount;
+
+  if (keyTimes.length < 2) return;
+
+  const intervals = [];
+  for (let i = 1; i < keyTimes.length; i++) intervals.push(keyTimes[i] - keyTimes[i-1]);
+
+  const avg = intervals.reduce((a,b) => a+b, 0) / intervals.length;
+  const std = Math.sqrt(intervals.reduce((a,b) => a + (b-avg)**2, 0) / intervals.length);
+
+  document.getElementById('kAvg').textContent = avg.toFixed(0);
+  document.getElementById('kStd').textContent = std.toFixed(0);
+
+  const v = document.getElementById('kVerdict');
+  const isHuman = std > 15 && avg > 50 && avg < 500;
+  v.textContent = isHuman ? '✅ 像人類' : '⚠️ 像機器人';
+  v.className = 'verdict ' + (isHuman ? 'human' : 'bot');
+}
+
+// --- Click tracking ---
+let clickDownTime = 0;
+let clickCount = 0;
+
+document.getElementById('testBtn').addEventListener('mousedown', () => {
+  clickDownTime = performance.now();
+});
+document.getElementById('testBtn').addEventListener('mouseup', () => {
+  const delay = performance.now() - clickDownTime;
+  clickCount++;
+  document.getElementById('cDelay').textContent = delay.toFixed(0);
+  document.getElementById('cCount').textContent = clickCount;
+  addLog(`🖱️ Click down→up: ${delay.toFixed(0)}ms`);
+
+  const v = document.getElementById('cVerdict');
+  const isHuman = delay > 30 && delay < 300;
+  v.textContent = isHuman ? '✅ 像人類' : '⚠️ 像機器人';
+  v.className = 'verdict ' + (isHuman ? 'human' : 'bot');
+});
+
+function addLog(msg) {
+  log.innerHTML += msg + '<br>';
+  log.scrollTop = log.scrollHeight;
+}
+
+// Clear canvas button
+canvas.addEventListener('dblclick', () => {
+  ctx.clearRect(0, 0, 800, 400);
+  mousePoints = []; pauseCount = 0; lastMoveTime = 0;
+  updateMouseMetrics();
+});
+</script>
+</body></html>

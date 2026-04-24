@@ -14,8 +14,18 @@ type Config struct {
 	CamoufoxPath    string `json:"camoufox_path"`
 	CloakBrowserPath string `json:"cloakbrowser_path"`
 	FingerprintDir  string `json:"fingerprint_dir"`
+	Humanize        *HumanizeConfig `json:"humanize,omitempty"`
 	APIToken        string `json:"-"` // generated at runtime
 	Version         string `json:"-"` // set from main
+}
+
+// HumanizeConfig controls human-like behavior simulation.
+type HumanizeConfig struct {
+	Enabled     *bool    `json:"enabled,omitempty"`
+	MouseSpeed  string   `json:"mouse_speed,omitempty"`
+	TypingCPM   int      `json:"typing_cpm,omitempty"`
+	TypoRate    *float64 `json:"typo_rate,omitempty"`
+	ScrollStyle string   `json:"scroll_style,omitempty"`
 }
 
 func Load(path string) (*Config, error) {
@@ -51,3 +61,4 @@ func SetupLogger(logFile string) *slog.Logger {
 	}
 	return slog.New(slog.NewJSONHandler(f, nil))
 }
+
