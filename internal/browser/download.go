@@ -1,8 +1,13 @@
 package browser
 
 import (
+	"archive/tar"
+	"archive/zip"
+	"compress/gzip"
 	"fmt"
+	"io"
 	"log/slog"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -163,19 +168,138 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	return binPath, nil
 }
 
-func download(url, dest string) error {
-	cmd := exec.Command("curl", "-L", "-o", dest, "--progress-bar", url)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
+func download(dlURL, dest string) error {
+	resp, err := http.Get(dlURL)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("download failed: HTTP %d", resp.StatusCode)
+	}
+
+	out, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	total := resp.ContentLength
+	var written int64
+	buf := make([]byte, 32*1024)
+	for {
+		n, readErr := resp.Body.Read(buf)
+		if n > 0 {
+			if _, err := out.Write(buf[:n]); err != nil {
+				return err
+			}
+			written += int64(n)
+			if total > 0 {
+				fmt.Fprintf(os.Stderr, "\r  %d / %d MB (%.0f%%)", written>>20, total>>20, float64(written)/float64(total)*100)
+			}
+		}
+		if readErr == io.EOF {
+			break
+		}
+		if readErr != nil {
+			return readErr
+		}
+	}
+	fmt.Fprintln(os.Stderr)
+	return nil
 }
 
 func extract(file, destDir string) error {
 	if strings.HasSuffix(file, ".zip") {
-		return exec.Command("unzip", "-q", "-o", file, "-d", destDir).Run()
+		return extractZip(file, destDir)
 	}
 	if strings.HasSuffix(file, ".tar.gz") {
-		return exec.Command("tar", "xzf", file, "-C", destDir).Run()
+		return extractTarGz(file, destDir)
 	}
 	return fmt.Errorf("unknown archive format: %s", file)
+}
+
+func extractZip(zipFile, destDir string) error {
+	r, err := zip.OpenReader(zipFile)
+	if err != nil {
+		return err
+	}
+	defer r.Close()
+
+	for _, f := range r.File {
+		target := filepath.Join(destDir, f.Name)
+		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {
+			continue // skip zip slip
+		}
+		if f.FileInfo().IsDir() {
+			os.MkdirAll(target, f.Mode())
+			continue
+		}
+		os.MkdirAll(filepath.Dir(target), 0755)
+		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return err
+		}
+		rc, err := f.Open()
+		if err != nil {
+			out.Close()
+			return err
+		}
+		_, err = io.Copy(out, rc)
+		rc.Close()
+		out.Close()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func extractTarGz(tarFile, destDir string) error {
+	f, err := os.Open(tarFile)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	gz, err := gzip.NewReader(f)
+	if err != nil {
+		return err
+	}
+	defer gz.Close()
+
+	tr := tar.NewReader(gz)
+	for {
+		hdr, err := tr.Next()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+		target := filepath.Join(destDir, hdr.Name)
+		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {
+			continue // skip path traversal
+		}
+		switch hdr.Typeflag {
+		case tar.TypeDir:
+			os.MkdirAll(target, os.FileMode(hdr.Mode))
+		case tar.TypeReg:
+			os.MkdirAll(filepath.Dir(target), 0755)
+			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(hdr.Mode))
+			if err != nil {
+				return err
+			}
+			_, err = io.Copy(out, tr)
+			out.Close()
+			if err != nil {
+				return err
+			}
+		case tar.TypeSymlink:
+			os.MkdirAll(filepath.Dir(target), 0755)
+			os.Remove(target)
+			os.Symlink(hdr.Linkname, target)
+		}
+	}
+	return nil
 }
