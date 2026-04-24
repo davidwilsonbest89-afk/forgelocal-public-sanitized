@@ -188,7 +188,7 @@ func runServer() {
 				token := cfg.APIToken
 				url := fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token)
 				fmt.Println("╔══════════════════════════════════════════╗")
-				fmt.Println("║        🦊 BrowseForge v1.0.3          ║")
+				fmt.Println("║        🦊 BrowseForge v1.0.4          ║")
 				fmt.Println("╠══════════════════════════════════════════╣")
 				fmt.Printf("║  Dashboard: http://127.0.0.1:%-12s║\n", cfg.Port)
 				fmt.Printf("║  MCP:       http://127.0.0.1:19281       ║\n")

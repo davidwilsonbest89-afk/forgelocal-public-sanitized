@@ -110,23 +110,23 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		if engine == "" {
 			engine = "firefox"
 		}
-		// Map engine to fingerprint-suite browser name
-		fpBrowser := engine
-		if engine == "chromium" {
-			fpBrowser = "chrome"
-		}
-		fp, err := h.fpPool.Pick(fpBrowser, "windows")
-		if err != nil {
-			// Try macos pool as fallback
-			fp, err = h.fpPool.Pick(fpBrowser, "macos")
-		}
-		if err == nil {
-			if p.Proxy != nil && p.Proxy.Host != "" {
-				fingerprint.DetectProxyGeo(fp, p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
-			} else {
-				fingerprint.AdjustToLocal(fp)
+		// Chromium (CloakBrowser) uses seed-based fingerprint at C++ level — skip pool
+		if engine != "chromium" {
+			fpBrowser := engine
+			fp, err := h.fpPool.Pick(fpBrowser, "windows")
+			if err != nil {
+				fp, err = h.fpPool.Pick(fpBrowser, "macos")
 			}
-			p.Fingerprint = fp
+			if err == nil {
+				if p.Proxy != nil && p.Proxy.Host != "" {
+					tz, locale := fingerprint.DetectProxyGeoResult(p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
+					fp["timezone"] = tz
+					fp["navigator.language"] = locale
+				} else {
+					fingerprint.AdjustToLocal(fp)
+				}
+				p.Fingerprint = fp
+			}
 		}
 	}
 	// Auto-generate fingerprint seed for Chromium (CloakBrowser)

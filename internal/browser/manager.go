@@ -6,9 +6,11 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"runtime"
 	"sync"
 
 	"browseforge/internal/config"
+	"browseforge/internal/fingerprint"
 	"browseforge/internal/profile"
 
 	"github.com/playwright-community/playwright-go"
@@ -163,6 +165,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 
 	absChromiumPath, _ := filepath.Abs(chromiumPath)
 
+	// CloakBrowser native flags — fingerprint at C++ level
 	args := []string{
 		"--no-first-run",
 		"--test-type",
@@ -171,20 +174,43 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, fmt.Sprintf("--fingerprint=%d", p.FingerprintSeed))
 	}
 
+	// GeoIP: detect timezone/locale from proxy or local IP, pass as native flags
+	var tz, locale string
+	if p.Proxy != nil && p.Proxy.Host != "" {
+		tz, locale = fingerprint.DetectProxyGeoResult(p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
+		args = append(args, "--fingerprint-webrtc-ip=auto")
+	} else {
+		tz, locale = fingerprint.DetectLocalGeoResult()
+	}
+	args = append(args,
+		"--fingerprint-timezone="+tz,
+		"--fingerprint-locale="+locale,
+	)
+
+	// Platform spoofing: Linux → appear as Windows (more common fingerprint)
+	if runtime.GOOS == "linux" {
+		args = append(args, "--fingerprint-platform=windows")
+	}
+
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
 		ExecutablePath: playwright.String(absChromiumPath),
 		Headless:       playwright.Bool(false),
 		Args:           args,
 		Viewport:       &playwright.Size{Width: 1280, Height: 800},
-		IgnoreDefaultArgs: []string{"--enable-automation", "--no-sandbox", "--disable-blink-features=AutomationControlled"},
+		IgnoreDefaultArgs: []string{
+			"--enable-automation",
+			"--no-sandbox",
+			"--disable-blink-features=AutomationControlled",
+			"--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1", // CloakBrowser handles DNS internally
+		},
 	}
 
+	// Proxy setup — SOCKS5 with auth needs local relay (Playwright protocol rejects it)
 	var relay *SOCKS5Relay
 
 	if p.Proxy != nil {
 		needsRelay := p.Proxy.Type == "socks5" && p.Proxy.Username != ""
 		if needsRelay {
-			// Chromium doesn't support SOCKS5 auth — use local relay
 			upstream := fmt.Sprintf("%s:%d", p.Proxy.Host, p.Proxy.Port)
 			var localAddr string
 			var err error

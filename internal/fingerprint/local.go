@@ -50,25 +50,33 @@ func detectPublicIPGeo() (country, timezone string) {
 	return queryIPGeo(client)
 }
 
-// DetectProxyGeo detects the exit IP's country/timezone through the given proxy,
-// then adjusts the fingerprint accordingly.
-func DetectProxyGeo(fp map[string]any, proxyType, host string, port int, username, password string) {
+// DetectProxyGeoResult returns timezone and locale detected through the proxy.
+func DetectProxyGeoResult(proxyType, host string, port int, username, password string) (timezone, locale string) {
 	client := buildProxyClient(proxyType, host, port, username, password)
 	country, tz := queryIPGeo(client)
 	if country == "" {
-		// Proxy unreachable at fingerprint time — fallback to US
-		country, tz = "US", "America/New_York"
+		return "America/New_York", "en-US"
 	}
 	geo, ok := countryToGeo[country]
 	if !ok {
-		geo = countryToGeo["US"]
+		return tz, "en-US"
 	}
-	fp["timezone"] = tz
-	fp["locale:language"] = geo.Language[:2]
-	fp["locale:region"] = country
-	fp["navigator.language"] = geo.Language
-	fp["navigator.languages"] = geo.Languages
-	fp["headers.Accept-Language"] = buildAcceptLanguage(geo.Languages)
+	return tz, geo.Language
+}
+
+// DetectLocalGeoResult returns timezone and locale from the machine's public IP.
+func DetectLocalGeoResult() (timezone, locale string) {
+	client := &http.Client{Timeout: 5 * time.Second}
+	country, tz := queryIPGeo(client)
+	if country == "" {
+		tz = detectLocalTimezone()
+		country = timezoneToCountry(tz)
+	}
+	geo, ok := countryToGeo[country]
+	if !ok {
+		return tz, "en-US"
+	}
+	return tz, geo.Language
 }
 
 func queryIPGeo(client *http.Client) (country, timezone string) {
