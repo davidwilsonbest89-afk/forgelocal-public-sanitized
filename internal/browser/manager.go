@@ -165,6 +165,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 
 	args := []string{
 		"--no-first-run",
+		"--test-type",
 	}
 	if p.FingerprintSeed > 0 {
 		args = append(args, fmt.Sprintf("--fingerprint=%d", p.FingerprintSeed))
