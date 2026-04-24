@@ -2,10 +2,15 @@ package fingerprint
 
 import (
 	"encoding/json"
+	"fmt"
+	"net"
 	"net/http"
+	"net/url"
 	"os/exec"
 	"strings"
 	"time"
+
+	"golang.org/x/net/proxy"
 )
 
 // AdjustToLocal adjusts fingerprint geo fields to match the actual public IP
@@ -42,6 +47,31 @@ func AdjustToLocal(fp map[string]any) {
 // detectPublicIPGeo queries a free API to get the actual public IP's country and timezone
 func detectPublicIPGeo() (country, timezone string) {
 	client := &http.Client{Timeout: 5 * time.Second}
+	return queryIPGeo(client)
+}
+
+// DetectProxyGeo detects the exit IP's country/timezone through the given proxy,
+// then adjusts the fingerprint accordingly.
+func DetectProxyGeo(fp map[string]any, proxyType, host string, port int, username, password string) {
+	client := buildProxyClient(proxyType, host, port, username, password)
+	country, tz := queryIPGeo(client)
+	if country == "" {
+		// Proxy unreachable at fingerprint time — fallback to US
+		country, tz = "US", "America/New_York"
+	}
+	geo, ok := countryToGeo[country]
+	if !ok {
+		geo = countryToGeo["US"]
+	}
+	fp["timezone"] = tz
+	fp["locale:language"] = geo.Language[:2]
+	fp["locale:region"] = country
+	fp["navigator.language"] = geo.Language
+	fp["navigator.languages"] = geo.Languages
+	fp["headers.Accept-Language"] = buildAcceptLanguage(geo.Languages)
+}
+
+func queryIPGeo(client *http.Client) (country, timezone string) {
 	resp, err := client.Get("http://ip-api.com/json/?fields=countryCode,timezone")
 	if err != nil {
 		return "", ""
@@ -56,6 +86,36 @@ func detectPublicIPGeo() (country, timezone string) {
 		return result.CountryCode, result.Timezone
 	}
 	return "", ""
+}
+
+func buildProxyClient(proxyType, host string, port int, username, password string) *http.Client {
+	addr := net.JoinHostPort(host, fmt.Sprintf("%d", port))
+
+	if proxyType == "socks5" {
+		var auth *proxy.Auth
+		if username != "" {
+			auth = &proxy.Auth{User: username, Password: password}
+		}
+		dialer, err := proxy.SOCKS5("tcp", addr, auth, proxy.Direct)
+		if err == nil {
+			return &http.Client{
+				Timeout: 10 * time.Second,
+				Transport: &http.Transport{
+					Dial: dialer.Dial,
+				},
+			}
+		}
+	}
+
+	// HTTP/HTTPS proxy
+	proxyURL := &url.URL{Scheme: proxyType, Host: addr}
+	if username != "" {
+		proxyURL.User = url.UserPassword(username, password)
+	}
+	return &http.Client{
+		Timeout:   10 * time.Second,
+		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURL)},
+	}
 }
 
 func detectLocalTimezone() string {

@@ -22,6 +22,7 @@ type Session struct {
 	Browser   playwright.Browser
 	Context   playwright.BrowserContext
 	Page      playwright.Page
+	relay     *SOCKS5Relay
 }
 
 // Manager handles browser instances (multi-instance: one process per profile)
@@ -177,17 +178,35 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		IgnoreDefaultArgs: []string{"--enable-automation", "--no-sandbox", "--disable-blink-features=AutomationControlled"},
 	}
 
+	var relay *SOCKS5Relay
+
 	if p.Proxy != nil {
-		server := fmt.Sprintf("%s://%s:%d", p.Proxy.Type, p.Proxy.Host, p.Proxy.Port)
-		opts.Proxy = &playwright.Proxy{
-			Server:   server,
-			Username: playwright.String(p.Proxy.Username),
-			Password: playwright.String(p.Proxy.Password),
+		needsRelay := p.Proxy.Type == "socks5" && p.Proxy.Username != ""
+		if needsRelay {
+			// Chromium doesn't support SOCKS5 auth — use local relay
+			upstream := fmt.Sprintf("%s:%d", p.Proxy.Host, p.Proxy.Port)
+			var localAddr string
+			var err error
+			relay, localAddr, err = StartSOCKS5Relay(upstream, p.Proxy.Username, p.Proxy.Password)
+			if err != nil {
+				return nil, fmt.Errorf("socks5 relay: %w", err)
+			}
+			opts.Proxy = &playwright.Proxy{Server: "socks5://" + localAddr}
+		} else {
+			server := fmt.Sprintf("%s://%s:%d", p.Proxy.Type, p.Proxy.Host, p.Proxy.Port)
+			opts.Proxy = &playwright.Proxy{
+				Server:   server,
+				Username: playwright.String(p.Proxy.Username),
+				Password: playwright.String(p.Proxy.Password),
+			}
 		}
 	}
 
 	ctx, err := m.pw.Chromium.LaunchPersistentContext(userDataDir, opts)
 	if err != nil {
+		if relay != nil {
+			relay.Close()
+		}
 		return nil, fmt.Errorf("launch chromium: %w", err)
 	}
 
@@ -205,6 +224,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		Engine:    "chromium",
 		Context:   ctx,
 		Page:      page,
+		relay:     relay,
 	}, nil
 }
 
@@ -238,6 +258,9 @@ func (m *Manager) CloseSession(id string) error {
 	if s.Browser != nil {
 		s.Browser.Close()
 	}
+	if s.relay != nil {
+		s.relay.Close()
+	}
 	delete(m.sessions, id)
 	slog.Info("session closed", "session", id)
 	return nil
@@ -249,6 +272,9 @@ func (m *Manager) Close() {
 	for id, s := range m.sessions {
 		if s.Context != nil {
 			s.Context.Close()
+		}
+		if s.relay != nil {
+			s.relay.Close()
 		}
 		delete(m.sessions, id)
 	}

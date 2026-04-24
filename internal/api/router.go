@@ -122,7 +122,7 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		}
 		if err == nil {
 			if p.Proxy != nil && p.Proxy.Host != "" {
-				fingerprint.AdjustForCountry(fp, "US") // TODO: real GeoIP lookup
+				fingerprint.DetectProxyGeo(fp, p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
 			} else {
 				fingerprint.AdjustToLocal(fp)
 			}
