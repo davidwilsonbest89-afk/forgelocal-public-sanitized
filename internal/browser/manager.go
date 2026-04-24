@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"sync"
 
 	"browseforge/internal/config"
@@ -95,13 +96,32 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		return nil, fmt.Errorf("camoufox not found: %s", camoufoxPath)
 	}
 
-	// Build CAMOU_CONFIG from profile fingerprint
-	configJSON, _ := json.Marshal(p.Fingerprint)
+	// Build CAMOU_CONFIG: start from profile fingerprint, then overlay GeoIP
+	config := make(map[string]any)
+	for k, v := range p.Fingerprint {
+		config[k] = v
+	}
+
+	// GeoIP: detect timezone/locale from proxy or local IP, inject into CAMOU_CONFIG
+	if p.Proxy != nil && p.Proxy.Host != "" {
+		tz, locale := fingerprint.DetectProxyGeoResult(p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
+		config["timezone"] = tz
+		parts := splitLocale(locale)
+		config["locale:language"] = parts[0]
+		config["locale:region"] = parts[1]
+	} else {
+		tz, locale := fingerprint.DetectLocalGeoResult()
+		config["timezone"] = tz
+		parts := splitLocale(locale)
+		config["locale:language"] = parts[0]
+		config["locale:region"] = parts[1]
+	}
+
+	configJSON, _ := json.Marshal(config)
 
 	userDataDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
 	os.MkdirAll(userDataDir, 0755)
 
-	// Camoufox path must also be absolute
 	absPath, _ := filepath.Abs(camoufoxPath)
 
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
@@ -111,28 +131,43 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 			"CAMOU_CONFIG": string(configJSON),
 		},
 		FirefoxUserPrefs: map[string]any{
-			"media.peerconnection.enabled":  false,
 			"xpinstall.signatures.required": false,
 		},
 		Viewport: &playwright.Size{Width: 1280, Height: 800},
 	}
 
-	// Per-profile proxy
+	// Proxy: SOCKS5 with auth needs relay (Playwright protocol rejects it)
+	var relay *SOCKS5Relay
+
 	if p.Proxy != nil {
-		server := fmt.Sprintf("%s://%s:%d", p.Proxy.Type, p.Proxy.Host, p.Proxy.Port)
-		opts.Proxy = &playwright.Proxy{
-			Server:   server,
-			Username: playwright.String(p.Proxy.Username),
-			Password: playwright.String(p.Proxy.Password),
+		needsRelay := p.Proxy.Type == "socks5" && p.Proxy.Username != ""
+		if needsRelay {
+			upstream := fmt.Sprintf("%s:%d", p.Proxy.Host, p.Proxy.Port)
+			var localAddr string
+			var err error
+			relay, localAddr, err = StartSOCKS5Relay(upstream, p.Proxy.Username, p.Proxy.Password)
+			if err != nil {
+				return nil, fmt.Errorf("socks5 relay: %w", err)
+			}
+			opts.Proxy = &playwright.Proxy{Server: "socks5://" + localAddr}
+		} else {
+			server := fmt.Sprintf("%s://%s:%d", p.Proxy.Type, p.Proxy.Host, p.Proxy.Port)
+			opts.Proxy = &playwright.Proxy{
+				Server:   server,
+				Username: playwright.String(p.Proxy.Username),
+				Password: playwright.String(p.Proxy.Password),
+			}
 		}
 	}
 
 	ctx, err := m.pw.Firefox.LaunchPersistentContext(userDataDir, opts)
 	if err != nil {
+		if relay != nil {
+			relay.Close()
+		}
 		return nil, fmt.Errorf("launch firefox: %w", err)
 	}
 
-	// Get or create first page
 	pages := ctx.Pages()
 	var page playwright.Page
 	if len(pages) > 0 {
@@ -140,6 +175,9 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 	} else {
 		page, err = ctx.NewPage()
 		if err != nil {
+			if relay != nil {
+				relay.Close()
+			}
 			ctx.Close()
 			return nil, fmt.Errorf("new page: %w", err)
 		}
@@ -151,7 +189,16 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		Engine:    "firefox",
 		Context:   ctx,
 		Page:      page,
+		relay:     relay,
 	}, nil
+}
+
+// splitLocale splits "en-US" into ["en", "US"], fallback to ["en", "US"]
+func splitLocale(locale string) [2]string {
+	if i := strings.IndexByte(locale, '-'); i > 0 {
+		return [2]string{locale[:i], locale[i+1:]}
+	}
+	return [2]string{"en", "US"}
 }
 
 func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
