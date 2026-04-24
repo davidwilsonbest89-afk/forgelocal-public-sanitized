@@ -45,6 +45,8 @@ sudo apt install -y xvfb
 xvfb-run ./BrowseForge
 ```
 
+需要遠端看到瀏覽器畫面（處理驗證碼等）？詳見 [Linux Server 部署指南](docs/linux-server.md)，支援 noVNC 遠端桌面和 Docker Compose 一鍵部署。
+
 ### Windows
 
 解壓後雙擊 `BrowseForge.exe`，首次啟動會自動下載瀏覽器引擎。
