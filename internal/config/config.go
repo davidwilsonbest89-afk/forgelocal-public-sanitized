@@ -24,7 +24,6 @@ func Load(path string) (*Config, error) {
 		ProfilesDir:    "profiles",
 		DataDir:        "data",
 		LogFile:        "logs/server.log",
-		CamoufoxPath:   "camoufox/camoufox",
 		FingerprintDir: "data",
 	}
 

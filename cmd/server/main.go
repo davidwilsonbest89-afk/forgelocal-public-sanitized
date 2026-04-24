@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -122,17 +123,13 @@ func runServer() {
 		}
 	}
 
-	// Save config
-	cfgJSON := fmt.Sprintf(`{
-  "port": "19280",
-  "profiles_dir": "profiles",
-  "data_dir": "data",
-  "log_file": "logs/server.log",
-  "camoufox_path": %q,
-  "cloakbrowser_path": %q,
-  "fingerprint_dir": "data"
-}`, camoufoxPath, chromiumPath)
-	os.WriteFile("config.json", []byte(cfgJSON), 0644)
+	// Save config only if browser paths changed
+	if camoufoxPath != cfg.CamoufoxPath || chromiumPath != cfg.CloakBrowserPath {
+		cfg.CamoufoxPath = camoufoxPath
+		cfg.CloakBrowserPath = chromiumPath
+		cfgJSON, _ := json.MarshalIndent(cfg, "", "  ")
+		os.WriteFile("config.json", cfgJSON, 0644)
+	}
 
 	cfg, err := config.Load("config.json")
 	if err != nil {
@@ -221,18 +218,18 @@ func findBrowser(baseDir, name string) string {
 		// Camoufox (Firefox)
 		filepath.Join("browsers", name, "Camoufox.app", "Contents", "MacOS", "camoufox"),
 		filepath.Join("camoufox", "Camoufox.app", "Contents", "MacOS", "camoufox"),
-		filepath.Join("browsers", name, "camoufox", "camoufox"),
-		filepath.Join("browsers", name, "camoufox"),
 		filepath.Join("browsers", name, "camoufox", "camoufox.exe"),
+		filepath.Join("browsers", name, "camoufox", "camoufox"),
 		// CloakBrowser (Chromium)
 		filepath.Join("browsers", name, "Chromium.app", "Contents", "MacOS", "Chromium"),
-		filepath.Join("browsers", name, "chrome"),
 		filepath.Join("browsers", name, "chrome.exe"),
+		filepath.Join("browsers", name, "chrome"),
 		filepath.Join("browsers", name, "chromium"),
 	}
 	for _, c := range candidates {
 		abs := filepath.Join(baseDir, c)
-		if _, err := os.Stat(abs); err == nil {
+		info, err := os.Stat(abs)
+		if err == nil && !info.IsDir() {
 			return abs
 		}
 	}
