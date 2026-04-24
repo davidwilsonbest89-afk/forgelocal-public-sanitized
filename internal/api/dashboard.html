@@ -46,6 +46,12 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 <div class="toolbar">
   <button class="primary" onclick="showCreate()">+ 新增 Profile</button>
   <button onclick="loadProfiles()">🔄 重新整理</button>
+  <span style="flex:1"></span>
+  <button onclick="importProfile()">📥 匯入 Profile</button>
+  <button onclick="backupAll()">📦 全部備份</button>
+  <button onclick="restoreBackup()">📤 還原備份</button>
+  <input type="file" id="importFile" accept=".zip" style="display:none" onchange="handleImport(this)">
+  <input type="file" id="restoreFile" accept=".zip" style="display:none" onchange="handleRestore(this)">
 </div>
 <div class="grid" id="grid"></div>
 
@@ -161,6 +167,7 @@ function render() {
             ? `<button class="danger" onclick="closeSession('${p.id}')">關閉</button>`
             : `<button class="primary" onclick="openSession('${p.id}')">開啟</button>`}
           <button onclick="editProfile('${p.id}')">編輯</button>
+          <button onclick="exportProfile('${p.id}','${esc(p.name)}')">匯出</button>
           <button onclick="duplicateProfile('${p.id}')">複製</button>
           <button onclick="deleteProfile('${p.id}','${esc(p.name)}')">刪除</button>
         </div>
@@ -264,6 +271,65 @@ async function deleteProfile(id, name) {
   if (!confirm('確定刪除 ' + name + '？')) return;
   await api('DELETE', '/profiles/' + id);
   toast('已刪除');
+  await loadProfiles();
+}
+
+async function exportProfile(id, name) {
+  toast('匯出中...');
+  const r = await fetch(API + '/profiles/' + id + '/export', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
+  if (!r.ok) { toast('❌ 匯出失敗'); return; }
+  const blob = await r.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (name || id) + '.zip';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('✅ 已匯出 ' + name);
+}
+
+function importProfile() { document.getElementById('importFile').click(); }
+
+async function handleImport(input) {
+  const file = input.files[0];
+  if (!file) return;
+  toast('匯入中...');
+  const fd = new FormData();
+  fd.append('file', file);
+  const r = await fetch(API + '/profiles/import', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN }, body: fd });
+  const d = await r.json();
+  input.value = '';
+  if (d.error) { toast('❌ ' + d.error.message); return; }
+  toast('✅ 已匯入');
+  await loadProfiles();
+}
+
+async function backupAll() {
+  toast('備份中...');
+  const r = await fetch(API + '/backup', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
+  if (!r.ok) { toast('❌ 備份失敗'); return; }
+  const blob = await r.blob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'browseforge-backup-' + new Date().toISOString().slice(0,10) + '.zip';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('✅ 已備份全部 Profile');
+}
+
+function restoreBackup() { document.getElementById('restoreFile').click(); }
+
+async function handleRestore(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!confirm('還原備份會匯入所有 Profile（不會覆蓋現有的），確定？')) { input.value = ''; return; }
+  toast('還原中...');
+  const fd = new FormData();
+  fd.append('file', file);
+  const r = await fetch(API + '/restore', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN }, body: fd });
+  const d = await r.json();
+  input.value = '';
+  if (d.error) { toast('❌ ' + d.error.message); return; }
+  toast('✅ 已還原 ' + d.data.imported + ' 個 Profile');
   await loadProfiles();
 }
 
