@@ -37,7 +37,7 @@ type Manager struct {
 }
 
 func NewManager(cfg *config.Config) (*Manager, error) {
-	playwright.Install(&playwright.RunOptions{Browsers: []string{}})
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
 
 	pw, err := playwright.Run()
 	if err != nil {

@@ -24,7 +24,7 @@ import (
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.1.0"
+const Version = "1.1.1"
 
 func main() {
 	// MCP stdio mode: BrowseForge --mcp
