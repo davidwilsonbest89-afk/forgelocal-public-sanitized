@@ -100,6 +100,14 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 		return s.toolGetContent(call.Arguments)
 	case "evaluate":
 		return s.toolEvaluate(call.Arguments)
+	case "new_tab":
+		return s.toolNewTab(call.Arguments)
+	case "list_tabs":
+		return s.toolListTabs(call.Arguments)
+	case "switch_tab":
+		return s.toolSwitchTab(call.Arguments)
+	case "close_tab":
+		return s.toolCloseTab(call.Arguments)
 	default:
 		return nil, newError(-32602, "Unknown tool: "+call.Name)
 	}
@@ -300,6 +308,75 @@ func (s *Server) toolEvaluate(args map[string]any) (any, *mcpError) {
 	return textResult(fmt.Sprintf("%v", result)), nil
 }
 
+func (s *Server) toolNewTab(args map[string]any) (any, *mcpError) {
+	id, _ := args["profile_id"].(string)
+	sess, ok := s.mgr.GetSession("sess_" + id)
+	if !ok {
+		return nil, newError(-32000, "no active session")
+	}
+	page, err := sess.Context.NewPage()
+	if err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+	sess.Page = page
+	url, _ := args["url"].(string)
+	if url != "" {
+		page.Goto(url)
+	}
+	return textResult(fmt.Sprintf("New tab opened (total: %d)", len(sess.Context.Pages()))), nil
+}
+
+func (s *Server) toolListTabs(args map[string]any) (any, *mcpError) {
+	id, _ := args["profile_id"].(string)
+	sess, ok := s.mgr.GetSession("sess_" + id)
+	if !ok {
+		return nil, newError(-32000, "no active session")
+	}
+	pages := sess.Context.Pages()
+	var tabs []map[string]any
+	for i, p := range pages {
+		active := p == sess.Page
+		tabs = append(tabs, map[string]any{"index": i, "url": p.URL(), "active": active})
+	}
+	return textResult(mustJSON(tabs)), nil
+}
+
+func (s *Server) toolSwitchTab(args map[string]any) (any, *mcpError) {
+	id, _ := args["profile_id"].(string)
+	index := int(args["index"].(float64))
+	sess, ok := s.mgr.GetSession("sess_" + id)
+	if !ok {
+		return nil, newError(-32000, "no active session")
+	}
+	pages := sess.Context.Pages()
+	if index < 0 || index >= len(pages) {
+		return nil, newError(-32000, fmt.Sprintf("tab index %d out of range (0-%d)", index, len(pages)-1))
+	}
+	sess.Page = pages[index]
+	return textResult(fmt.Sprintf("Switched to tab %d: %s", index, sess.Page.URL())), nil
+}
+
+func (s *Server) toolCloseTab(args map[string]any) (any, *mcpError) {
+	id, _ := args["profile_id"].(string)
+	index := int(args["index"].(float64))
+	sess, ok := s.mgr.GetSession("sess_" + id)
+	if !ok {
+		return nil, newError(-32000, "no active session")
+	}
+	pages := sess.Context.Pages()
+	if index < 0 || index >= len(pages) {
+		return nil, newError(-32000, fmt.Sprintf("tab index %d out of range (0-%d)", index, len(pages)-1))
+	}
+	pages[index].Close()
+	if pages[index] == sess.Page {
+		remaining := sess.Context.Pages()
+		if len(remaining) > 0 {
+			sess.Page = remaining[len(remaining)-1]
+		}
+	}
+	return textResult(fmt.Sprintf("Closed tab %d (remaining: %d)", index, len(sess.Context.Pages()))), nil
+}
+
 // --- MCP Protocol types ---
 
 var tools = []map[string]any{
@@ -317,6 +394,10 @@ var tools = []map[string]any{
 	tool("screenshot", "截圖", map[string]any{"profile_id": prop("string", "Profile ID"), "quality": prop("number", "JPEG 品質 1-100（預設 40）"), "full_page": prop("boolean", "是否截全頁（預設 false，僅可視範圍）")}),
 	tool("get_content", "取得頁面內容", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector（選填）")}),
 	tool("evaluate", "執行 JavaScript", map[string]any{"profile_id": prop("string", "Profile ID"), "script": prop("string", "JS 程式碼")}),
+	tool("new_tab", "開啟新分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "url": prop("string", "新分頁要導航的 URL（選填）")}),
+	tool("list_tabs", "列出所有分頁", map[string]any{"profile_id": prop("string", "Profile ID")}),
+	tool("switch_tab", "切換到指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "分頁索引（從 0 開始）")}),
+	tool("close_tab", "關閉指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "要關閉的分頁索引")}),
 }
 
 type mcpRequest struct {

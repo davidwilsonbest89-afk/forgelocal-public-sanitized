@@ -124,14 +124,22 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 
 	absPath, _ := filepath.Abs(camoufoxPath)
 
+	downloadsDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
+	os.MkdirAll(downloadsDir, 0755)
+
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
-		ExecutablePath: playwright.String(absPath),
-		Headless:       playwright.Bool(false),
+		ExecutablePath:  playwright.String(absPath),
+		Headless:        playwright.Bool(false),
+		AcceptDownloads: playwright.Bool(true),
 		Env: map[string]string{
 			"CAMOU_CONFIG": string(configJSON),
 		},
 		FirefoxUserPrefs: map[string]any{
-			"xpinstall.signatures.required": false,
+			"xpinstall.signatures.required":        false,
+			"browser.download.folderList":           2,
+			"browser.download.dir":                  downloadsDir,
+			"browser.download.useDownloadDir":       true,
+			"browser.helperApps.neverAsk.saveToDisk": "application/octet-stream,image/jpeg,image/png,application/pdf,application/zip",
 		},
 		Viewport: &playwright.Size{Width: 1280, Height: 800},
 	}
@@ -167,6 +175,13 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		}
 		return nil, fmt.Errorf("launch firefox: %w", err)
 	}
+
+	dlDir := downloadsDir
+	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
+	for _, pg := range ctx.Pages() {
+		pg.OnDownload(onDl)
+	}
+	ctx.OnPage(func(pg playwright.Page) { pg.OnDownload(onDl) })
 
 	pages := ctx.Pages()
 	var page playwright.Page
@@ -239,11 +254,28 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, "--fingerprint-platform=windows")
 	}
 
+	downloadsDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
+	os.MkdirAll(downloadsDir, 0755)
+
+	// Set Chromium download directory via Preferences (before launch)
+	prefsDir := filepath.Join(userDataDir, "Default")
+	os.MkdirAll(prefsDir, 0755)
+	prefsPath := filepath.Join(prefsDir, "Preferences")
+	prefs := map[string]any{}
+	if data, err := os.ReadFile(prefsPath); err == nil {
+		json.Unmarshal(data, &prefs)
+	}
+	prefs["savefile"] = map[string]any{"default_directory": downloadsDir}
+	prefs["download"] = map[string]any{"default_directory": downloadsDir, "prompt_for_download": false}
+	out, _ := json.Marshal(prefs)
+	os.WriteFile(prefsPath, out, 0644)
+
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
-		ExecutablePath: playwright.String(absChromiumPath),
-		Headless:       playwright.Bool(false),
-		Args:           args,
-		Viewport:       &playwright.Size{Width: 1280, Height: 800},
+		ExecutablePath:  playwright.String(absChromiumPath),
+		Headless:        playwright.Bool(false),
+		AcceptDownloads: playwright.Bool(true),
+		Args:            args,
+		Viewport:        &playwright.Size{Width: 1280, Height: 800},
 		IgnoreDefaultArgs: []string{
 			"--enable-automation",
 			"--no-sandbox",
@@ -283,6 +315,13 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		}
 		return nil, fmt.Errorf("launch chromium: %w", err)
 	}
+
+	dlDir := downloadsDir
+	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
+	for _, pg := range ctx.Pages() {
+		pg.OnDownload(onDl)
+	}
+	ctx.OnPage(func(pg playwright.Page) { pg.OnDownload(onDl) })
 
 	pages := ctx.Pages()
 	var page playwright.Page
