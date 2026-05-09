@@ -24,13 +24,13 @@ const (
 
 // ExpectedCloakBrowserVersion returns the expected version for the current platform.
 func ExpectedCloakBrowserVersion() string {
-	if runtime.GOOS == "linux" && runtime.GOARCH == "arm64" {
-		return "chromium-v146.0.7680.177.3"
+	if runtime.GOOS == "darwin" {
+		return "chromium-v145.0.7632.109.2"
 	}
 	return CloakBrowserVersion
 }
 
-const CloakBrowserVersion = "chromium-v145.0.7632.109.2"
+const CloakBrowserVersion = "chromium-v146.0.7680.177.4"
 
 type BrowserInfo struct {
 	Name    string
@@ -206,8 +206,8 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	}
 
 	version := CloakBrowserVersion
-	if osName == "linux" && arch == "arm64" {
-		version = "chromium-v146.0.7680.177.3"
+	if runtime.GOOS == "darwin" {
+		version = "chromium-v145.0.7632.109.2"
 	}
 	url := fmt.Sprintf("https://github.com/CloakHQ/CloakBrowser/releases/download/%s/%s", version, filename)
 	destDir := filepath.Join(baseDir, "browsers", "cloakbrowser")

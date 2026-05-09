@@ -10,6 +10,8 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
+
+	"github.com/playwright-community/playwright-go"
 )
 
 // MCP Server — Model Context Protocol (2025-11-25 spec, Streamable HTTP transport)
@@ -106,7 +108,9 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 // --- Tool implementations ---
 
 func (s *Server) toolListProfiles(args map[string]any) (any, *mcpError) {
-	profiles := s.store.List("", "")
+	group, _ := args["group"].(string)
+	tag, _ := args["tag"].(string)
+	profiles := s.store.List(group, tag)
 	var items []map[string]string
 	for _, p := range profiles {
 		items = append(items, map[string]string{"id": p.ID, "name": p.Name, "engine": p.Engine, "group": p.Group})
@@ -188,7 +192,12 @@ func (s *Server) toolNavigate(args map[string]any) (any, *mcpError) {
 	if !ok {
 		return nil, newError(-32000, "no active session for "+id)
 	}
-	if _, err := sess.Page.Goto(url); err != nil {
+	opts := playwright.PageGotoOptions{}
+	if wu, ok := args["wait_until"].(string); ok && wu != "" {
+		wus := playwright.WaitUntilState(wu)
+		opts.WaitUntil = &wus
+	}
+	if _, err := sess.Page.Goto(url, opts); err != nil {
 		return nil, newError(-32000, err.Error())
 	}
 	return textResult(fmt.Sprintf("Navigated to %s", url)), nil
@@ -200,6 +209,11 @@ func (s *Server) toolClick(args map[string]any) (any, *mcpError) {
 	sess, ok := s.mgr.GetSession("sess_" + id)
 	if !ok {
 		return nil, newError(-32000, "no active session")
+	}
+	if t, ok := args["timeout"].(float64); ok && t > 0 {
+		if err := sess.Page.Locator(selector).WaitFor(playwright.LocatorWaitForOptions{Timeout: playwright.Float(t)}); err != nil {
+			return nil, newError(-32000, err.Error())
+		}
 	}
 	if err := humanize.Click(sess.Page, selector, s.hcfg); err != nil {
 		return nil, newError(-32000, err.Error())
@@ -215,6 +229,9 @@ func (s *Server) toolTypeText(args map[string]any) (any, *mcpError) {
 	if !ok {
 		return nil, newError(-32000, "no active session")
 	}
+	if clear, _ := args["clear"].(bool); clear {
+		sess.Page.Locator(selector).Clear()
+	}
 	if err := humanize.Type(sess.Page, selector, text, s.hcfg); err != nil {
 		return nil, newError(-32000, err.Error())
 	}
@@ -227,7 +244,22 @@ func (s *Server) toolScreenshot(args map[string]any) (any, *mcpError) {
 	if !ok {
 		return nil, newError(-32000, "no active session")
 	}
-	data, err := sess.Page.Screenshot()
+
+	quality := 40
+	if q, ok := args["quality"].(float64); ok && q > 0 {
+		quality = int(q)
+	}
+	fullPage := false
+	if fp, ok := args["full_page"].(bool); ok {
+		fullPage = fp
+	}
+
+	opts := playwright.PageScreenshotOptions{
+		Type:     playwright.ScreenshotTypeJpeg,
+		Quality:  playwright.Int(quality),
+		FullPage: playwright.Bool(fullPage),
+	}
+	data, err := sess.Page.Screenshot(opts)
 	if err != nil {
 		return nil, newError(-32000, err.Error())
 	}
@@ -271,7 +303,7 @@ func (s *Server) toolEvaluate(args map[string]any) (any, *mcpError) {
 // --- MCP Protocol types ---
 
 var tools = []map[string]any{
-	tool("list_profiles", "列出所有瀏覽器 Profile", map[string]any{}),
+	tool("list_profiles", "列出所有瀏覽器 Profile", map[string]any{"group": prop("string", "依分組過濾（選填）"), "tag": prop("string", "依標籤過濾（選填）")}),
 	tool("create_profile", "建立新 Profile", map[string]any{
 		"name": prop("string", "Profile 名稱"), "engine": prop("string", "firefox 或 chromium"), "group": prop("string", "分組名稱"),
 	}),
@@ -279,10 +311,10 @@ var tools = []map[string]any{
 	tool("update_profile", "更新 Profile 設定（名稱、分組、Proxy）", map[string]any{"profile_id": prop("string", "Profile ID"), "name": prop("string", "新名稱"), "group": prop("string", "新分組")}),
 	tool("open_browser", "開啟瀏覽器", map[string]any{"profile_id": prop("string", "Profile ID")}),
 	tool("close_browser", "關閉瀏覽器", map[string]any{"profile_id": prop("string", "Profile ID")}),
-	tool("navigate", "導航到 URL", map[string]any{"profile_id": prop("string", "Profile ID"), "url": prop("string", "目標 URL")}),
-	tool("click", "點擊元素", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector")}),
-	tool("type_text", "輸入文字", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector"), "text": prop("string", "要輸入的文字")}),
-	tool("screenshot", "截圖", map[string]any{"profile_id": prop("string", "Profile ID")}),
+	tool("navigate", "導航到 URL", map[string]any{"profile_id": prop("string", "Profile ID"), "url": prop("string", "目標 URL"), "wait_until": prop("string", "等待策略：load/domcontentloaded/networkidle/commit（預設 load）")}),
+	tool("click", "點擊元素", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector"), "timeout": prop("number", "等待元素出現的毫秒數（選填）")}),
+	tool("type_text", "輸入文字", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector"), "text": prop("string", "要輸入的文字"), "clear": prop("boolean", "輸入前先清空欄位（預設 false）")}),
+	tool("screenshot", "截圖", map[string]any{"profile_id": prop("string", "Profile ID"), "quality": prop("number", "JPEG 品質 1-100（預設 40）"), "full_page": prop("boolean", "是否截全頁（預設 false，僅可視範圍）")}),
 	tool("get_content", "取得頁面內容", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector（選填）")}),
 	tool("evaluate", "執行 JavaScript", map[string]any{"profile_id": prop("string", "Profile ID"), "script": prop("string", "JS 程式碼")}),
 }
@@ -319,7 +351,7 @@ func textResult(text string) map[string]any {
 }
 
 func imageResult(data []byte) map[string]any {
-	return map[string]any{"content": []map[string]any{{"type": "image", "data": base64.StdEncoding.EncodeToString(data), "mimeType": "image/png"}}}
+	return map[string]any{"content": []map[string]any{{"type": "image", "data": base64.StdEncoding.EncodeToString(data), "mimeType": "image/jpeg"}}}
 }
 
 func writeJSONRPC(w http.ResponseWriter, id any, err *mcpError, result ...any) {
