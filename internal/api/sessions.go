@@ -261,9 +261,19 @@ func (h *handler) setCookies(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) playwrightEndpoint(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, 200, map[string]any{"data": map[string]string{
-		"note": "Use REST API for browser operations. Direct Playwright connection available in Phase 3.",
-	}})
+	sessions := h.mgr.ListSessions()
+	var endpoints []map[string]string
+	for _, s := range sessions {
+		if s.ConnectURL != "" {
+			endpoints = append(endpoints, map[string]string{
+				"session_id": s.ID,
+				"profile_id": s.ProfileID,
+				"engine":     s.Engine,
+				"endpoint":   s.ConnectURL,
+			})
+		}
+	}
+	writeJSON(w, 200, map[string]any{"data": endpoints})
 }
 
 // Backup/restore/shutdown are in backup.go

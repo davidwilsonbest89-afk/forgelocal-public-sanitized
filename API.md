@@ -361,3 +361,27 @@ AI Agent 不需要知道底層是 Firefox 還是 Chromium，MCP tools 是引擎�
 | `MISSING_NAME` | 400 | 建立 Profile 時缺少 name |
 | `LAUNCH_FAILED` | 500 | 瀏覽器啟動失敗 |
 | `NAVIGATE_FAILED` | 500 | 導航失敗 |
+
+## Playwright Connect
+
+### GET /api/playwright/endpoint
+
+取得所有 session 的 Playwright Connect endpoint。
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "session_id": "sess_prof_abc123",
+      "profile_id": "prof_abc123",
+      "engine": "chromium",
+      "endpoint": "/var/folders/.../browser@xxx.sock"
+    }
+  ]
+}
+```
+
+外部 Playwright client 使用 `browserType.connect(endpoint)` 連入操作。
+
+**限制：** Client 必須使用 Playwright 1.59.x。

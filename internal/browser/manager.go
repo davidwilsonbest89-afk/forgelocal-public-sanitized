@@ -19,13 +19,14 @@ import (
 
 // Session represents a running browser profile
 type Session struct {
-	ID        string
-	ProfileID string
-	Engine    string
-	Browser   playwright.Browser
-	Context   playwright.BrowserContext
-	Page      playwright.Page
-	relay     *SOCKS5Relay
+	ID         string
+	ProfileID  string
+	Engine     string
+	Browser    playwright.Browser
+	Context    playwright.BrowserContext
+	Page       playwright.Page
+	relay      *SOCKS5Relay
+	ConnectURL string // Bind endpoint for external Playwright clients
 }
 
 // Manager handles browser instances (multi-instance: one process per profile)
@@ -85,8 +86,17 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 		return nil, err
 	}
 
+	// Bind browser for external Playwright clients
+	if session.Context != nil {
+		if browser := session.Context.Browser(); browser != nil {
+			if result, err := browser.Bind("browseforge-" + session.ID); err == nil {
+				session.ConnectURL = result.Endpoint
+			}
+		}
+	}
+
 	m.sessions[session.ID] = session
-	slog.Info("session launched", "session", session.ID, "profile", p.ID, "engine", p.Engine)
+	slog.Info("session launched", "session", session.ID, "profile", p.ID, "engine", p.Engine, "connectURL", session.ConnectURL)
 	return session, nil
 }
 
