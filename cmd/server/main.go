@@ -177,10 +177,15 @@ func runServer(flags *serveFlags) {
 	os.MkdirAll("data", 0755)
 	os.MkdirAll("logs", 0755)
 
-	// Find or download browsers — version-based detection
-	cfg, _ := config.Load("config.json")
+	// Load config once
+	cfg, err := config.Load("config.json")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
+		os.Exit(1)
+	}
+	cfg.Version = Version
 
-	// Docker auto-detection: override defaults if not explicitly configured
+	// Docker auto-detection
 	if isDocker() {
 		if cfg.Host == "127.0.0.1" {
 			cfg.Host = "0.0.0.0"
@@ -203,7 +208,15 @@ func runServer(flags *serveFlags) {
 		}
 	}
 
-	// Camoufox: check installed version vs expected
+	// Setup logger (stdout in Docker, file otherwise)
+	if isDocker() {
+		slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
+	} else {
+		logger := config.SetupLogger(cfg.LogFile)
+		slog.SetDefault(logger)
+	}
+
+	// Find or download browsers
 	camoufoxPath := ""
 	if browser.InstalledVersion(baseDir, "camoufox") == browser.CamoufoxVersion {
 		camoufoxPath = browser.FindBinary(baseDir, "camoufox")
@@ -215,14 +228,9 @@ func runServer(flags *serveFlags) {
 			fmt.Printf("🦊 Camoufox update available (%s → %s). Downloading...\n",
 				browser.InstalledVersion(baseDir, "camoufox"), browser.CamoufoxVersion)
 		}
-		var err error
-		camoufoxPath, err = browser.DownloadCamoufox(baseDir)
-		if err != nil {
-			fmt.Printf("⚠️  Camoufox download failed: %v\n", err)
-		}
+		camoufoxPath, _ = browser.DownloadCamoufox(baseDir)
 	}
 
-	// CloakBrowser: check installed version vs expected
 	chromiumPath := ""
 	expectedCloak := browser.ExpectedCloakBrowserVersion()
 	if browser.InstalledVersion(baseDir, "cloakbrowser") == expectedCloak {
@@ -235,51 +243,16 @@ func runServer(flags *serveFlags) {
 			fmt.Printf("🌐 CloakBrowser update available (%s → %s). Downloading...\n",
 				browser.InstalledVersion(baseDir, "cloakbrowser"), expectedCloak)
 		}
-		var err error
-		chromiumPath, err = browser.DownloadCloakBrowser(baseDir)
-		if err != nil {
-			fmt.Printf("⚠️  CloakBrowser download failed: %v (Chromium engine disabled)\n", err)
-		}
+		chromiumPath, _ = browser.DownloadCloakBrowser(baseDir)
 	}
 
-	// Save config if browser paths changed
+	// Update config with browser paths if changed
 	if camoufoxPath != cfg.CamoufoxPath || chromiumPath != cfg.CloakBrowserPath {
 		cfg.CamoufoxPath = camoufoxPath
 		cfg.CloakBrowserPath = chromiumPath
 		cfgJSON, _ := json.MarshalIndent(cfg, "", "  ")
 		os.WriteFile("config.json", cfgJSON, 0644)
 	}
-
-	cfg, err := config.Load("config.json")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
-		os.Exit(1)
-	}
-	cfg.Version = Version
-
-	// Re-apply overrides after config reload
-	if isDocker() {
-		if cfg.Host == "127.0.0.1" {
-			cfg.Host = "0.0.0.0"
-		}
-		if !cfg.NoSandbox {
-			cfg.NoSandbox = true
-		}
-	}
-	if flags != nil {
-		if flags.host != "" {
-			cfg.Host = flags.host
-		}
-		if flags.port != "" {
-			cfg.Port = flags.port
-		}
-		if flags.noSandbox {
-			cfg.NoSandbox = true
-		}
-	}
-
-	logger := config.SetupLogger(cfg.LogFile)
-	slog.SetDefault(logger)
 
 	profileStore, err := profile.NewStore(cfg.ProfilesDir)
 	if err != nil {
@@ -299,7 +272,7 @@ func runServer(flags *serveFlags) {
 	router := api.NewRouter(cfg, profileStore, browserMgr, fpPool)
 
 	// Workflow engine
-	wfEngine := workflow.NewEngine("http://"+cfg.Host+":"+cfg.Port, cfg.APIToken)
+	wfEngine := workflow.NewEngine("http://127.0.0.1:"+cfg.Port, cfg.APIToken)
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
 	// MCP Server
@@ -309,14 +282,14 @@ func runServer(flags *serveFlags) {
 		http.ListenAndServe(cfg.Host+":19281", mcpServer)
 	}()
 
+	// HTTP Server with error channel (no os.Exit in goroutine)
 	srv := &http.Server{Addr: cfg.Host + ":" + cfg.Port, Handler: router}
+	serverErr := make(chan error, 1)
 
 	go func() {
 		slog.Info("server starting", "host", cfg.Host, "port", cfg.Port)
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {
-			slog.Error("server", "error", err)
-			fmt.Fprintf(os.Stderr, "❌ Server failed: %v\n", err)
-			os.Exit(1)
+			serverErr <- err
 		}
 	}()
 
@@ -343,15 +316,21 @@ func runServer(flags *serveFlags) {
 		}
 	}()
 
+	// Wait for shutdown signal or server error
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
 
-	fmt.Println("\nShutting down...")
+	select {
+	case <-quit:
+		fmt.Println("\nShutting down...")
+	case err := <-serverErr:
+		fmt.Fprintf(os.Stderr, "❌ Server failed: %v\n", err)
+		os.Exit(1)
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	srv.Shutdown(ctx)
-	browserMgr.Close()
 }
 
 // openBrowser opens URL in the default system browser

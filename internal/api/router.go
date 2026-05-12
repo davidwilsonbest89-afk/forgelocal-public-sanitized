@@ -37,6 +37,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	h := &handler{cfg: cfg, store: store, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg}
 
 	r.Get("/api/status", h.status)
+	r.Get("/api/health", h.health)
 	r.Get("/", h.dashboard)
 
 	r.Group(func(r chi.Router) {
@@ -99,6 +100,10 @@ func (h *handler) status(w http.ResponseWriter, r *http.Request) {
 		"version": h.cfg.Version,
 		"status":  "ok",
 	})
+}
+
+func (h *handler) health(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]any{"status": "ok"})
 }
 
 func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
@@ -224,6 +229,10 @@ func corsLocal(next http.Handler) http.Handler {
 }
 
 func loadOrCreateToken(dataDir string) string {
+	// Environment variable takes priority
+	if envToken := os.Getenv("BROWSEFORGE_TOKEN"); envToken != "" {
+		return envToken
+	}
 	os.MkdirAll(dataDir, 0755)
 	path := dataDir + "/.api-token"
 	if data, err := os.ReadFile(path); err == nil {
