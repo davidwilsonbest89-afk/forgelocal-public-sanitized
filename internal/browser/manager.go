@@ -279,9 +279,27 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, "--fingerprint-platform=windows")
 	}
 
+	// Pass fingerprint pool values as native flags (override seed defaults)
+	if p.Fingerprint != nil {
+		if v, ok := p.Fingerprint["navigator.hardwareConcurrency"]; ok {
+			args = append(args, fmt.Sprintf("--fingerprint-hardware-concurrency=%v", v))
+		}
+		if v, ok := p.Fingerprint["screen.width"]; ok {
+			args = append(args, fmt.Sprintf("--fingerprint-screen-width=%v", v))
+		}
+		if v, ok := p.Fingerprint["screen.height"]; ok {
+			args = append(args, fmt.Sprintf("--fingerprint-screen-height=%v", v))
+		}
+	}
+
 	// Docker/container mode: disable sandbox
 	if m.cfg.NoSandbox {
 		args = append(args, "--no-sandbox")
+	}
+
+	// Docker: use system fonts directory for font fingerprinting
+	if _, err := os.Stat("/usr/share/fonts"); err == nil {
+		args = append(args, "--fingerprint-fonts-dir=/usr/share/fonts")
 	}
 
 	downloadsDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
