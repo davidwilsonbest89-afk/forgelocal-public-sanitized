@@ -86,6 +86,23 @@ ssh -L 19280:localhost:19280 -L 6901:localhost:6901 user@server
 # 然後本機開 http://localhost:19280 和 http://localhost:6901
 ```
 
+## 升級
+
+```bash
+docker pull ghcr.io/nczz/browseforge:latest
+docker stop browseforge && docker rm browseforge
+docker run -d --name browseforge \
+  -p 19280:19280 -p 6901:6901 \
+  -v browseforge-profiles:/app/profiles \
+  -v browseforge-data:/app/data \
+  -v browseforge-browsers:/app/browsers \
+  -e VNC_PASSWORD=browseforge \
+  --restart unless-stopped \
+  ghcr.io/nczz/browseforge:latest
+```
+
+Profiles、Token、瀏覽器引擎都在 volumes 中保留，只更新 BrowseForge。
+
 ## 特性
 
 - **KasmVNC** — Chrome 上 seamless 剪貼簿、IME 中文輸入
