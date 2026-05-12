@@ -67,6 +67,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/sessions/{id}/cookies", h.setCookies)
 
 		r.Get("/api/playwright/endpoint", h.playwrightEndpoint)
+		r.Get("/api/playwright/ws/{id}", h.playwrightWSProxy)
 		r.Post("/api/backup", h.backup)
 		r.Post("/api/restore", h.restore)
 		r.Post("/api/shutdown", h.shutdown)

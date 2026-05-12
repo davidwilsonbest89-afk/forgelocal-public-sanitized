@@ -1,10 +1,13 @@
 package api
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"browseforge/internal/humanize"
@@ -283,6 +286,76 @@ func (h *handler) playwrightEndpoint(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	writeJSON(w, 200, map[string]any{"data": endpoints})
+}
+
+// playwrightWSProxy proxies WebSocket connections to internal Playwright Bind endpoints.
+// Client connects to ws://host:19280/api/playwright/ws/{session_id} with Bearer token.
+// BrowseForge verifies auth then pipes to the internal dynamic-port WebSocket.
+func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
+	sessionID := chi.URLParam(r, "id")
+	session, ok := h.mgr.GetSession(sessionID)
+	if !ok {
+		http.Error(w, "session not found", 404)
+		return
+	}
+	if session.ConnectURL == "" {
+		http.Error(w, "no WebSocket endpoint for this session", 400)
+		return
+	}
+
+	// Parse internal endpoint to get host:port and path
+	internalURL := strings.Replace(session.ConnectURL, "ws://", "http://", 1)
+	parsed, err := url.Parse(internalURL)
+	if err != nil {
+		http.Error(w, "invalid internal endpoint", 500)
+		return
+	}
+	internalAddr := "127.0.0.1:" + parsed.Port()
+	internalPath := parsed.Path
+
+	// Hijack client connection
+	hj, ok := w.(http.Hijacker)
+	if !ok {
+		http.Error(w, "hijack not supported", 500)
+		return
+	}
+	clientConn, clientBuf, err := hj.Hijack()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	defer clientConn.Close()
+
+	// Dial internal Playwright WebSocket
+	backendConn, err := net.Dial("tcp", internalAddr)
+	if err != nil {
+		clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+		return
+	}
+	defer backendConn.Close()
+
+	// Send WebSocket upgrade to backend
+	upgradeReq := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: %s\r\n\r\n",
+		internalPath, internalAddr, "cHJveHlLZXk=")
+	backendConn.Write([]byte(upgradeReq))
+
+	// Read backend upgrade response
+	backendBuf := bufio.NewReader(backendConn)
+	resp, err := http.ReadResponse(backendBuf, nil)
+	if err != nil || resp.StatusCode != 101 {
+		clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+		return
+	}
+
+	// Forward upgrade response to client
+	resp.Write(clientBuf)
+	clientBuf.Flush()
+
+	// Bidirectional pipe
+	done := make(chan struct{}, 2)
+	go func() { io.Copy(backendConn, clientConn); done <- struct{}{} }()
+	go func() { io.Copy(clientConn, backendConn); done <- struct{}{} }()
+	<-done
 }
 
 // Backup/restore/shutdown are in backup.go
