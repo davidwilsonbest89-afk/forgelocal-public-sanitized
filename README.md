@@ -49,6 +49,15 @@ xvfb-run ./BrowseForge
 
 ### Docker（最簡單）
 
+**直接使用預建 image（無需 clone）：**
+```bash
+docker run -d --name browseforge \
+  -p 19280:19280 -p 6901:6901 \
+  -e VNC_PASSWORD=browseforge \
+  ghcr.io/nczz/browseforge:latest
+```
+
+**或從原始碼 build：**
 ```bash
 git clone https://github.com/nczz/BrowseForge.git
 cd BrowseForge/docker
