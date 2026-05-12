@@ -17,7 +17,17 @@ const os = getArg('os', 'windows');
 const count = parseInt(getArg('count', '500'));
 const outputDir = getArg('output', 'data');
 
-console.log(`Generating ${count} ${browser}/${os} fingerprints...`);
+// Load WebGL profiles for complete fingerprinting
+const webglProfilesPath = path.join(__dirname, '..', 'data', 'webgl-profiles', 'webgl-profiles.json');
+let webglProfiles = [];
+try { webglProfiles = JSON.parse(fs.readFileSync(webglProfilesPath, 'utf8')); } catch {}
+
+function findWebGLProfile(renderer) {
+  if (!renderer) return null;
+  return webglProfiles.find(p => renderer.includes(p.match)) || null;
+}
+
+console.log(`Generating ${count} ${browser}/${os} fingerprints (${webglProfiles.length} WebGL profiles loaded)...`);
 
 const generator = new FingerprintGenerator({ browsers: [browser], operatingSystems: [os] });
 const fingerprints = [];
@@ -52,6 +62,13 @@ for (let i = 0; i < count; i++) {
     'headers.Accept-Language': headers['accept-language'] || `${fingerprint.navigator.language},en;q=0.9`,
     '_meta': { browser, os, generated: new Date().toISOString() },
   };
+
+  // Attach complete WebGL profile if available for this GPU
+  const webglProfile = findWebGLProfile(camoufoxConfig['webGl:renderer']);
+  if (webglProfile) {
+    const { match, ...webglData } = webglProfile;
+    Object.assign(camoufoxConfig, webglData);
+  }
 
   fingerprints.push(camoufoxConfig);
 }

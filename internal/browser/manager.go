@@ -107,9 +107,22 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 	}
 
 	// Build CAMOU_CONFIG: start from profile fingerprint, then overlay GeoIP
+	// WebGL strategy: only pass WebGL fields if we have a COMPLETE profile
+	// (with supportedExtensions + parameters). Incomplete WebGL data (only
+	// renderer/vendor) causes inconsistency detection. When omitted, Camoufox
+	// auto-generates a fully consistent WebGL fingerprint via BrowserForge.
 	config := make(map[string]any)
+	hasFullWebGL := false
 	for k, v := range p.Fingerprint {
 		config[k] = v
+		if k == "webGl:supportedExtensions" {
+			hasFullWebGL = true
+		}
+	}
+	if !hasFullWebGL {
+		// Remove partial WebGL data — let Camoufox handle it
+		delete(config, "webGl:renderer")
+		delete(config, "webGl:vendor")
 	}
 
 	// GeoIP: detect timezone/locale from proxy or local IP, inject into CAMOU_CONFIG

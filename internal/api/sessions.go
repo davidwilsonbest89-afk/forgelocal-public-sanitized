@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 
 	"browseforge/internal/humanize"
 
@@ -83,6 +84,14 @@ func (h *handler) navigate(w http.ResponseWriter, r *http.Request) {
 		WaitUntil string `json:"wait_until,omitempty"`
 	}
 	json.NewDecoder(r.Body).Decode(&req)
+
+	if req.URL == "" {
+		writeError(w, 400, "INVALID_URL", "url is required")
+		return
+	}
+	if !strings.HasPrefix(req.URL, "http://") && !strings.HasPrefix(req.URL, "https://") {
+		req.URL = "https://" + req.URL
+	}
 
 	opts := playwright.PageGotoOptions{}
 	if req.WaitUntil != "" {

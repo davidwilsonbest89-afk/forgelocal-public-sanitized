@@ -123,6 +123,7 @@ const API = '/api';
 let TOKEN = '';
 let profiles = [];
 let sessions = new Set();
+let screenshots = {}; // profileId → blob URL
 
 // --- Login ---
 async function init() {
@@ -223,7 +224,8 @@ function render() {
       <div class="actions">
         ${active
           ? `<button class="danger" onclick="closeSession('${p.id}')">關閉</button>
-             <button onclick="navigateTo('${p.id}')">🔗 導航</button>`
+             <button onclick="navigateTo('${p.id}')">🔗 導航</button>
+             <button onclick="loadScreenshot('${p.id}')">📷 截圖</button>`
           : `<button class="primary" onclick="openSession('${p.id}')">開啟</button>`}
         <button onclick="editProfile('${p.id}')">編輯</button>
         <button onclick="exportProfile('${p.id}','${esc(p.name)}')">匯出</button>
@@ -233,8 +235,11 @@ function render() {
     </div>`;
   }).join('');
 
-  // Load screenshots for active sessions
-  sessions.forEach(pid => loadScreenshot(pid));
+  // Restore cached screenshots
+  for (const pid in screenshots) {
+    const img = document.getElementById('thumb-' + pid);
+    if (img) { img.src = screenshots[pid]; img.style.display = 'block'; }
+  }
 }
 
 // --- Navigate ---
@@ -253,8 +258,10 @@ async function loadScreenshot(profileId) {
     });
     if (!r.ok) return;
     const blob = await r.blob();
+    if (screenshots[profileId]) URL.revokeObjectURL(screenshots[profileId]);
+    screenshots[profileId] = URL.createObjectURL(blob);
     const img = document.getElementById('thumb-' + profileId);
-    if (img) { img.src = URL.createObjectURL(blob); img.style.display = 'block'; }
+    if (img) { img.src = screenshots[profileId]; img.style.display = 'block'; }
   } catch {}
 }
 

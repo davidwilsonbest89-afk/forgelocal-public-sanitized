@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head><title>WebGL Fingerprint Collector for BrowseForge</title>
+<style>body{font-family:monospace;background:#1e1e2e;color:#cdd6f4;padding:24px}
+textarea{width:100%;height:400px;background:#2a2a3c;color:#a6e3a1;border:1px solid #45475a;border-radius:8px;padding:12px;font-size:12px}
+button{padding:10px 20px;background:#89b4fa;color:#1e1e2e;border:none;border-radius:6px;cursor:pointer;margin:8px 0}
+h1{margin-bottom:8px}p{color:#6c7086;margin-bottom:16px}</style>
+</head>
+<body>
+<h1>🦊 WebGL Fingerprint Collector</h1>
+<p>此頁面擷取你的 GPU 的完整 WebGL 指紋，用於 BrowseForge + Camoufox 反偵測。<br>
+請在有真實 GPU 的機器上開啟此頁面（不要在 Docker/Xvfb 中執行）。</p>
+<button onclick="collect()">擷取 WebGL 指紋</button>
+<button onclick="copyResult()">複製 JSON</button>
+<textarea id="output" readonly placeholder="點擊上方按鈕擷取..."></textarea>
+
+<script>
+function collect() {
+  const canvas = document.createElement('canvas');
+  const gl = canvas.getContext('webgl');
+  const gl2 = canvas.getContext('webgl2');
+  if (!gl) { document.getElementById('output').value = 'ERROR: WebGL not supported'; return; }
+
+  const result = {};
+
+  // Renderer & Vendor
+  const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+  if (dbg) {
+    result['webGl:renderer'] = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
+    result['webGl:vendor'] = gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL);
+  }
+
+  // Supported Extensions
+  result['webGl:supportedExtensions'] = gl.getSupportedExtensions();
+  if (gl2) result['webGl2:supportedExtensions'] = gl2.getSupportedExtensions();
+
+  // Context Attributes
+  result['webGl:contextAttributes'] = gl.getContextAttributes();
+  if (gl2) result['webGl2:contextAttributes'] = gl2.getContextAttributes();
+
+  // Parameters (all important GL enums)
+  const params = [
+    2849, 2884, 2928, 2929, 2930, 2931, 2932, 2960, 2961, 2962, 2963, 2964, 2965, 2966, 2967, 2968,
+    3024, 3042, 3088, 3089, 3106, 3107, 3317, 3333, 3379, 3386, 3408, 3410, 3411, 3412, 3413, 3414,
+    3415, 7936, 7937, 7938, 10752, 32773, 32777, 32823, 32824, 32873, 32883, 32936, 32937, 32938,
+    32939, 32968, 32969, 32970, 32971, 33000, 33001, 33170, 33901, 33902, 34016, 34024, 34045,
+    34047, 34068, 34076, 34921, 34930, 35071, 35076, 35077, 35371, 35373, 35374, 35375, 35376,
+    35377, 35378, 35379, 35380, 35657, 35658, 35659, 35660, 35661, 36003, 36004, 36005, 36347,
+    36348, 36349, 37440, 37441, 37443
+  ];
+  const glParams = {};
+  params.forEach(p => {
+    try { const v = gl.getParameter(p); if (v !== null) glParams[p] = v; } catch(e) {}
+  });
+  result['webGl:parameters'] = glParams;
+
+  if (gl2) {
+    const gl2Params = {};
+    const params2 = [34852, 34853, 34854, 34855, 35071, 35371, 35373, 35374, 35375, 35376, 35377,
+      35378, 35379, 35380, 35657, 35658, 35659, 35660, 35661, 36003, 36004, 36005, 36183, 36347,
+      36348, 36349, 37440, 37441, 37443];
+    params2.forEach(p => {
+      try { const v = gl2.getParameter(p); if (v !== null) gl2Params[p] = v; } catch(e) {}
+    });
+    result['webGl2:parameters'] = gl2Params;
+  }
+
+  // Shader Precision Formats
+  const shaderTypes = [35633, 35632]; // VERTEX_SHADER, FRAGMENT_SHADER
+  const precisionTypes = [36336, 36337, 36338]; // LOW, MEDIUM, HIGH
+  const spf = {};
+  shaderTypes.forEach(st => {
+    precisionTypes.forEach(pt => {
+      try {
+        const fmt = gl.getShaderPrecisionFormat(st, pt);
+        if (fmt) spf[`${st},${pt}`] = { rangeMin: fmt.rangeMin, rangeMax: fmt.rangeMax, precision: fmt.precision };
+      } catch(e) {}
+    });
+  });
+  result['webGl:shaderPrecisionFormats'] = spf;
+
+  if (gl2) {
+    const spf2 = {};
+    shaderTypes.forEach(st => {
+      precisionTypes.forEach(pt => {
+        try {
+          const fmt = gl2.getShaderPrecisionFormat(st, pt);
+          if (fmt) spf2[`${st},${pt}`] = { rangeMin: fmt.rangeMin, rangeMax: fmt.rangeMax, precision: fmt.precision };
+        } catch(e) {}
+      });
+    });
+    result['webGl2:shaderPrecisionFormats'] = spf2;
+  }
+
+  // Clean up typed arrays for JSON serialization
+  const cleaned = JSON.parse(JSON.stringify(result, (key, value) => {
+    if (value instanceof Float32Array || value instanceof Int32Array || value instanceof Uint32Array) {
+      return Array.from(value);
+    }
+    return value;
+  }));
+
+  document.getElementById('output').value = JSON.stringify(cleaned, null, 2);
+}
+
+function copyResult() {
+  const ta = document.getElementById('output');
+  ta.select();
+  document.execCommand('copy');
+  alert('已複製到剪貼簿');
+}
+</script>
+</body>
+</html>
