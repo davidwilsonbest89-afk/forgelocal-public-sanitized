@@ -159,9 +159,10 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		Headless:        playwright.Bool(false),
 		AcceptDownloads: playwright.Bool(true),
 		Env: map[string]string{
-			"CAMOU_CONFIG": string(configJSON),
-			"DISPLAY":      os.Getenv("DISPLAY"),
-			"HOME":         os.Getenv("HOME"),
+			"CAMOU_CONFIG":           string(configJSON),
+			"DISPLAY":               os.Getenv("DISPLAY"),
+			"HOME":                  os.Getenv("HOME"),
+			"LIBGL_ALWAYS_SOFTWARE": os.Getenv("LIBGL_ALWAYS_SOFTWARE"),
 		},
 		FirefoxUserPrefs: map[string]any{
 			"xpinstall.signatures.required":        false,
@@ -169,6 +170,9 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 			"browser.download.dir":                  downloadsDir,
 			"browser.download.useDownloadDir":       true,
 			"browser.helperApps.neverAsk.saveToDisk": "application/octet-stream,image/jpeg,image/png,application/pdf,application/zip",
+			"webgl.disabled":                        false,
+			"webgl.force-enabled":                   true,
+			"webgl.forbid-software":                 false,
 		},
 		Viewport: &playwright.Size{Width: 1280, Height: 800},
 	}
