@@ -101,3 +101,29 @@ jobs:
         with:
           files: artifacts/**/*.zip
           generate_release_notes: true
+
+  docker:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: docker
+          file: docker/Dockerfile.run
+          push: true
+          platforms: linux/amd64
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/browseforge:latest
+            ghcr.io/${{ github.repository_owner }}/browseforge:${{ github.ref_name }}
