@@ -40,12 +40,9 @@ cd BrowseForge-lite
 
 ### Linux Server（無桌面環境）
 
-```bash
-sudo apt install -y xvfb
-xvfb-run ./BrowseForge
-```
+推薦使用 Docker 部署（見上方），自動處理所有依賴和遠端桌面。
 
-需要遠端看到瀏覽器畫面（處理驗證碼等）？詳見 [Linux Server 部署指南](docs/linux-server.md)，支援 noVNC 遠端桌面和 Docker Compose 一鍵部署。
+詳細部署選項見 [Linux Server 部署指南](docs/linux-server.md)。
 
 ### Docker（最簡單）
 
