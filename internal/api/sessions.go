@@ -277,12 +277,16 @@ func (h *handler) playwrightEndpoint(w http.ResponseWriter, r *http.Request) {
 	var endpoints []map[string]string
 	for _, s := range sessions {
 		if s.ConnectURL != "" {
-			endpoints = append(endpoints, map[string]string{
+			entry := map[string]string{
 				"session_id": s.ID,
 				"profile_id": s.ProfileID,
 				"engine":     s.Engine,
 				"endpoint":   s.ConnectURL,
-			})
+			}
+			if h.cfg.Host != "127.0.0.1" {
+				entry["proxy"] = fmt.Sprintf("ws://%s:%s/api/playwright/ws/%s", h.cfg.Host, h.cfg.Port, s.ID)
+			}
+			endpoints = append(endpoints, entry)
 		}
 	}
 	writeJSON(w, 200, map[string]any{"data": endpoints})
