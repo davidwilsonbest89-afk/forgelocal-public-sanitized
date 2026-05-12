@@ -39,6 +39,7 @@ type Manager struct {
 
 func NewManager(cfg *config.Config) (*Manager, error) {
 	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+	patchDriverWSBind()
 
 	pw, err := playwright.Run()
 	if err != nil {
@@ -86,11 +87,14 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 		return nil, err
 	}
 
-	// Bind browser for external Playwright clients
+	// Bind browser for external Playwright clients (WebSocket mode)
 	if session.Context != nil {
 		if browser := session.Context.Browser(); browser != nil {
-			if result, err := browser.Bind("browseforge-" + session.ID); err == nil {
-				session.ConnectURL = result.Endpoint
+			if result, err := browser.Bind("browseforge-"+session.ID, playwright.BrowserBindOptions{
+				Host: playwright.String("0.0.0.0"),
+				Port: playwright.Int(0),
+			}); err == nil {
+				session.ConnectURL = fixWSEndpoint(result.Endpoint)
 			}
 		}
 	}
@@ -446,6 +450,52 @@ func (m *Manager) Close() {
 	if m.pw != nil {
 		m.pw.Stop()
 	}
+}
+
+// patchDriverWSBind fixes Playwright 1.59.1 driver bug where browser.bind()
+// WebSocket path is missing "/" prefix, causing 400 on connect.
+// Fixed in main branch but not yet released. Remove when upgrading to 1.60+.
+func patchDriverWSBind() {
+	cacheDir, err := os.UserCacheDir()
+	if err != nil {
+		return
+	}
+	target := filepath.Join(cacheDir, "ms-playwright-go", "1.59.1", "package", "lib", "server", "browser.js")
+	data, err := os.ReadFile(target)
+	if err != nil {
+		return
+	}
+	old := `this._wsServer.listen(options.port ?? 0, options.host, (0, import_utils.createGuid)())`
+	fix := `this._wsServer.listen(options.port ?? 0, options.host, "/" + (0, import_utils.createGuid)())`
+	if strings.Contains(string(data), old) {
+		patched := strings.Replace(string(data), old, fix, 1)
+		os.WriteFile(target, []byte(patched), 0644)
+		slog.Info("patched playwright driver ws bind bug")
+	}
+}
+
+// fixWSEndpoint fixes Playwright driver 1.59.1 bug where ws endpoint
+// is missing the / between port and path: ws://host:PORTguid → ws://host:PORT/guid
+// The GUID is always 32 hex characters.
+func fixWSEndpoint(endpoint string) string {
+	if !strings.HasPrefix(endpoint, "ws://") {
+		return endpoint
+	}
+	colonIdx := strings.LastIndex(endpoint, ":")
+	if colonIdx < 0 {
+		return endpoint
+	}
+	portAndGuid := endpoint[colonIdx+1:]
+	// GUID is 32 hex chars at the end
+	if len(portAndGuid) <= 32 {
+		return endpoint
+	}
+	if strings.Contains(portAndGuid, "/") {
+		return endpoint // already has separator
+	}
+	port := portAndGuid[:len(portAndGuid)-32]
+	guid := portAndGuid[len(portAndGuid)-32:]
+	return endpoint[:colonIdx+1] + port + "/" + guid
 }
 
 // humanizeError wraps Playwright errors into user-friendly messages
