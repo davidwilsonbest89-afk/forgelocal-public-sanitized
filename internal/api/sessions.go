@@ -338,15 +338,18 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 	}
 	defer backendConn.Close()
 
-	// Forward client's upgrade request to backend (preserving original Sec-WebSocket-Key)
-	upgradeReq := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: %s\r\nSec-WebSocket-Key: %s\r\n\r\n",
+	// Forward client's upgrade request to backend (preserving all WebSocket headers)
+	upgradeReq := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: %s\r\nSec-WebSocket-Key: %s\r\n",
 		internalPath, internalAddr,
 		r.Header.Get("Sec-WebSocket-Version"),
 		r.Header.Get("Sec-WebSocket-Key"))
-	backendConn.Write([]byte(upgradeReq))
+	if ext := r.Header.Get("Sec-WebSocket-Extensions"); ext != "" {
+		upgradeReq += "Sec-WebSocket-Extensions: " + ext + "\r\n"
+	}
+	upgradeReq += "\r\n"
 	backendConn.Write([]byte(upgradeReq))
 
-	// Read backend upgrade response and forward to client
+	// Read backend upgrade response
 	backendBuf := bufio.NewReader(backendConn)
 	resp, err := http.ReadResponse(backendBuf, nil)
 	if err != nil || resp.StatusCode != 101 {
@@ -354,11 +357,13 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Write raw 101 response to client (don't use resp.Write — it mangles headers)
+	// Forward ALL response headers to client (critical: includes Sec-WebSocket-Extensions)
 	clientConn.Write([]byte("HTTP/1.1 101 Switching Protocols\r\n"))
-	clientConn.Write([]byte("Upgrade: websocket\r\n"))
-	clientConn.Write([]byte("Connection: Upgrade\r\n"))
-	clientConn.Write([]byte("Sec-WebSocket-Accept: " + resp.Header.Get("Sec-WebSocket-Accept") + "\r\n"))
+	for key, vals := range resp.Header {
+		for _, val := range vals {
+			clientConn.Write([]byte(key + ": " + val + "\r\n"))
+		}
+	}
 	clientConn.Write([]byte("\r\n"))
 
 	// Bidirectional pipe (use backendBuf to not lose buffered data)
