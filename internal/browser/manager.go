@@ -185,7 +185,7 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		if relay != nil {
 			relay.Close()
 		}
-		return nil, fmt.Errorf("launch firefox: %w", err)
+		return nil, fmt.Errorf("launch firefox: %w", humanizeError(err))
 	}
 
 	dlDir := downloadsDir
@@ -334,7 +334,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		if relay != nil {
 			relay.Close()
 		}
-		return nil, fmt.Errorf("launch chromium: %w", err)
+		return nil, fmt.Errorf("launch chromium: %w", humanizeError(err))
 	}
 
 	dlDir := downloadsDir
@@ -414,5 +414,22 @@ func (m *Manager) Close() {
 	}
 	if m.pw != nil {
 		m.pw.Stop()
+	}
+}
+
+// humanizeError wraps Playwright errors into user-friendly messages
+func humanizeError(err error) error {
+	msg := err.Error()
+	switch {
+	case strings.Contains(msg, "sandboxing failed") || strings.Contains(msg, "sandbox"):
+		return fmt.Errorf("Chromium sandbox 失敗。Docker 中請使用 --no-sandbox 或 'serve --no-sandbox'。原始錯誤: %w", err)
+	case strings.Contains(msg, "XServer") || strings.Contains(msg, "DISPLAY"):
+		return fmt.Errorf("找不到 X 顯示器。請設定 DISPLAY 環境變數或使用 xvfb-run。原始錯誤: %w", err)
+	case strings.Contains(msg, "profile appears to be in use"):
+		return fmt.Errorf("Profile 被鎖定（上次未正常關閉）。請重啟服務或刪除 profiles/*/browser-data/SingletonLock。原始錯誤: %w", err)
+	case strings.Contains(msg, "executable doesn't exist") || strings.Contains(msg, "not found"):
+		return fmt.Errorf("瀏覽器執行檔不存在。請重新啟動讓 BrowseForge 自動下載。原始錯誤: %w", err)
+	default:
+		return err
 	}
 }
