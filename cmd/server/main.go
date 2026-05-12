@@ -26,7 +26,7 @@ import (
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.5.0"
+const Version = "1.6.0"
 
 func main() {
 	if len(os.Args) < 2 {

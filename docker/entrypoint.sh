@@ -1,32 +1,39 @@
 #!/bin/bash
 
-# Clean up stale files from previous runs
-rm -f /tmp/.X99-lock /tmp/.X11-unix/X99
+# Clean up stale files
+rm -f /tmp/.X1-lock /tmp/.X11-unix/X1
 find /app/profiles -name "SingletonLock" -delete 2>/dev/null
 find /app/profiles -name "SingletonCookie" -delete 2>/dev/null
 find /app/profiles -name "SingletonSocket" -delete 2>/dev/null
 
-# Start virtual framebuffer
-Xvfb :99 -screen 0 2560x1440x24 &
-for i in $(seq 1 30); do
-  [ -e /tmp/.X11-unix/X99 ] && break
-  sleep 0.5
-done
+# Setup KasmVNC user with password
+mkdir -p ~/.vnc
+echo -e "${VNC_PASSWORD}\n${VNC_PASSWORD}\n" | vncpasswd -u user -wr
 
-# Start window manager + clipboard sync
-fluxbox &
-autocutsel -fork &
-autocutsel -selection PRIMARY -fork &
+# Start KasmVNC X server (Basic Auth protects HTTP, VNC protocol uses None)
+# +extension GLX +render enables WebGL support for Camoufox
+/usr/bin/Xvnc :1 \
+  -geometry 2560x1440 \
+  -depth 24 \
+  -sslOnly 0 \
+  -SecurityTypes None \
+  -AlwaysShared \
+  -websocketPort 6901 \
+  -interface 0.0.0.0 \
+  +extension GLX \
+  +render \
+  -http-header Cross-Origin-Embedder-Policy=require-corp \
+  -http-header Cross-Origin-Opener-Policy=same-origin \
+  -httpd /usr/share/kasmvnc/www &
 
-# Start VNC server
-x11vnc -display :99 -passwd "$VNC_PASSWORD" -forever -shared -bg 2>/dev/null
-sleep 1
+sleep 2
 
-# Start noVNC web interface
-websockify --web /usr/share/novnc 6080 localhost:5900 &
-sleep 1
+# Start window manager
+export DISPLAY=:1
+openbox &
 
-# Start BrowseForge
+# Start BrowseForge (force software GL so WebGL works in Camoufox)
+export LIBGL_ALWAYS_SOFTWARE=1
 /app/BrowseForge &
 BF_PID=$!
 
@@ -35,9 +42,10 @@ for i in $(seq 1 60); do
   if [ -f /app/data/.api-token ]; then
     TOKEN=$(cat /app/data/.api-token)
     echo "========================================="
-    echo "  BrowseForge Docker"
+    echo "  BrowseForge Docker (KasmVNC)"
     echo "  Dashboard:  http://0.0.0.0:19280"
-    echo "  Remote VNC: http://0.0.0.0:6080/vnc.html"
+    echo "  Remote VNC: http://0.0.0.0:6901"
+    echo "  VNC User:   user"
     echo "  VNC Password: $VNC_PASSWORD"
     echo "  API Token: $TOKEN"
     echo "========================================="
