@@ -68,7 +68,7 @@ docker compose up -d --build
 | Dashboard | http://localhost:19280 |
 | 遠端桌面 (KasmVNC) | http://localhost:6901 |
 | VNC 帳號 | `user` / `browseforge` |
-| API Token | `docker compose logs \| grep "API Token"` |
+| API Token | `docker exec browseforge /app/BrowseForge token` |
 
 KasmVNC 支援 Chrome 上的 seamless 剪貼簿和 IME 中文輸入。
 BrowseForge 在 Docker 中會自動偵測並啟用 `--no-sandbox` 和 `0.0.0.0` 綁定。
