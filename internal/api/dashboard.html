@@ -23,8 +23,9 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 .card .engine.chromium{color:#89b4fa}
 .card .fp{font-size:11px;color:#6c7086;margin:8px 0;line-height:1.6}
 .card .fp span{color:#a6adc8}
-.card .actions{display:flex;gap:6px;margin-top:12px}
+.card .actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
 .card .actions button{padding:6px 12px;font-size:12px}
+.card .thumb{margin-top:8px;border-radius:6px;max-width:100%;border:1px solid #45475a}
 .badge{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
 .badge.active{background:#a6e3a1}
 .badge.inactive{background:#6c7086}
@@ -36,14 +37,36 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 .modal input,.modal select{width:100%;padding:8px;background:#1e1e2e;border:1px solid #45475a;border-radius:6px;color:#cdd6f4;font-size:13px}
 .modal .btn-row{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
 #toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;background:#313244;border-radius:8px;font-size:13px;display:none;z-index:200}
+.login-overlay{position:fixed;inset:0;background:#1e1e2e;z-index:300;display:flex;align-items:center;justify-content:center}
+.login-box{text-align:center;width:360px}
+.login-box h1{margin-bottom:8px}
+.login-box p{font-size:13px;color:#6c7086;margin-bottom:16px}
+.login-box input{width:100%;padding:10px;background:#2a2a3c;border:1px solid #45475a;border-radius:6px;color:#cdd6f4;font-size:14px;margin-bottom:8px}
+.login-box .error{color:#f38ba8;font-size:12px;margin-bottom:8px;display:none}
+.login-box button{width:100%;padding:10px}
+.empty-state{text-align:center;padding:80px 24px;color:#6c7086}
+.empty-state h2{color:#cdd6f4;margin-bottom:8px}
+.empty-state p{margin-bottom:16px;font-size:14px}
 </style>
 </head>
 <body>
+
+<!-- Login overlay -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h1>🦊 BrowseForge</h1>
+    <p>請輸入 API Token<br><code>./BrowseForge token</code> 或查看 <code>data/.api-token</code></p>
+    <input type="password" id="loginToken" placeholder="API Token" autofocus>
+    <div class="error" id="loginError">Token 無效，請重新輸入</div>
+    <button class="primary" onclick="submitLogin()">登入</button>
+  </div>
+</div>
+
 <div class="header">
   <h1>🦊 BrowseForge</h1>
   <span class="status" id="status">連線中...</span>
 </div>
-<div class="toolbar">
+<div class="toolbar" id="toolbar" style="display:none">
   <button class="primary" onclick="showCreate()">+ 新增 Profile</button>
   <button onclick="loadProfiles()">🔄 重新整理</button>
   <span style="flex:1"></span>
@@ -101,31 +124,46 @@ let TOKEN = '';
 let profiles = [];
 let sessions = new Set();
 
+// --- Login ---
 async function init() {
-  // Get token from URL hash or prompt
   TOKEN = location.hash.slice(1) || localStorage.getItem('cmfx-token') || '';
-  while (true) {
-    if (!TOKEN) {
-      TOKEN = prompt('請輸入 API Token\n（執行 ./BrowseForge token 取得）') || '';
-    }
-    if (!TOKEN) continue;
-    // Verify token
-    const r = await fetch(API + '/profiles', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
-    if (r.status === 401) {
-      TOKEN = '';
-      localStorage.removeItem('cmfx-token');
-      alert('Token 無效，請重新輸入');
-      continue;
-    }
-    localStorage.setItem('cmfx-token', TOKEN);
-    break;
+  if (TOKEN) {
+    const valid = await verifyToken(TOKEN);
+    if (valid) { showApp(); return; }
   }
-  await checkStatus();
-  await loadProfiles();
-  await loadSessions();
+  document.getElementById('loginOverlay').style.display = 'flex';
+}
+
+async function verifyToken(token) {
+  try {
+    const r = await fetch(API + '/profiles', { headers: { 'Authorization': 'Bearer ' + token } });
+    return r.status !== 401;
+  } catch { return false; }
+}
+
+async function submitLogin() {
+  const input = document.getElementById('loginToken');
+  const err = document.getElementById('loginError');
+  TOKEN = input.value.trim();
+  if (!TOKEN) { err.style.display = 'block'; err.textContent = '請輸入 Token'; return; }
+  const valid = await verifyToken(TOKEN);
+  if (!valid) { err.style.display = 'block'; err.textContent = 'Token 無效，請重新輸入'; return; }
+  localStorage.setItem('cmfx-token', TOKEN);
+  showApp();
+}
+
+document.getElementById('loginToken').addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
+
+function showApp() {
+  document.getElementById('loginOverlay').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'flex';
+  checkStatus();
+  loadProfiles();
+  loadSessions();
   setInterval(loadSessions, 5000);
 }
 
+// --- API ---
 async function api(method, path, body) {
   const opts = { method, headers: { 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' } };
   if (body) opts.body = JSON.stringify(body);
@@ -155,39 +193,72 @@ async function loadSessions() {
 
 function render() {
   const grid = document.getElementById('grid');
-  const groups = {};
-  profiles.forEach(p => { const g = p.group || '未分組'; (groups[g] = groups[g] || []).push(p); });
 
-  grid.innerHTML = Object.entries(groups).map(([group, items]) =>
-    items.map(p => {
-      const active = sessions.has(p.id);
-      const fp = p.fingerprint || {};
-      return `<div class="card">
-        <div class="name"><span class="badge ${active ? 'active' : 'inactive'}"></span>${esc(p.name)}</div>
-        <div class="meta">
-          <span class="engine ${p.engine}">${p.engine === 'chromium' ? '🌐 Chromium' : '🦊 Firefox'}</span>
-          · ${esc(group)}
-          ${p.proxy ? ' · 🔒 ' + esc(p.proxy.host) : ''}
-        </div>
-        <div class="fp">
-          <span>UA:</span> ${esc((fp['navigator.userAgent']||'').substring(0,60))}...<br>
-          <span>Platform:</span> ${esc(fp['navigator.platform']||'N/A')}
-          · <span>Screen:</span> ${fp['screen.width']||'?'}×${fp['screen.height']||'?'}
-        </div>
-        <div class="actions">
-          ${active
-            ? `<button class="danger" onclick="closeSession('${p.id}')">關閉</button>`
-            : `<button class="primary" onclick="openSession('${p.id}')">開啟</button>`}
-          <button onclick="editProfile('${p.id}')">編輯</button>
-          <button onclick="exportProfile('${p.id}','${esc(p.name)}')">匯出</button>
-          <button onclick="duplicateProfile('${p.id}')">複製</button>
-          <button onclick="deleteProfile('${p.id}','${esc(p.name)}')">刪除</button>
-        </div>
-      </div>`;
-    }).join('')
-  ).join('');
+  // Empty state
+  if (profiles.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <h2>尚無 Profile</h2>
+      <p>建立你的第一個瀏覽器 Profile 開始使用</p>
+      <button class="primary" onclick="showCreate()">+ 新增 Profile</button>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = profiles.map(p => {
+    const active = sessions.has(p.id);
+    const fp = p.fingerprint || {};
+    return `<div class="card">
+      <div class="name"><span class="badge ${active ? 'active' : 'inactive'}"></span>${esc(p.name)}</div>
+      <div class="meta">
+        <span class="engine ${p.engine}">${p.engine === 'chromium' ? '🌐 Chromium' : '🦊 Firefox'}</span>
+        · ${esc(p.group || '未分組')}
+        ${p.proxy ? ' · 🔒 ' + esc(p.proxy.host) : ''}
+      </div>
+      <div class="fp">
+        <span>UA:</span> ${esc((fp['navigator.userAgent']||'').substring(0,60))}...<br>
+        <span>Platform:</span> ${esc(fp['navigator.platform']||'N/A')}
+        · <span>Screen:</span> ${fp['screen.width']||'?'}×${fp['screen.height']||'?'}
+      </div>
+      ${active ? `<img class="thumb" id="thumb-${p.id}" src="" style="display:none">` : ''}
+      <div class="actions">
+        ${active
+          ? `<button class="danger" onclick="closeSession('${p.id}')">關閉</button>
+             <button onclick="navigateTo('${p.id}')">🔗 導航</button>`
+          : `<button class="primary" onclick="openSession('${p.id}')">開啟</button>`}
+        <button onclick="editProfile('${p.id}')">編輯</button>
+        <button onclick="exportProfile('${p.id}','${esc(p.name)}')">匯出</button>
+        <button onclick="duplicateProfile('${p.id}')">複製</button>
+        <button onclick="deleteProfile('${p.id}','${esc(p.name)}')">刪除</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Load screenshots for active sessions
+  sessions.forEach(pid => loadScreenshot(pid));
 }
 
+// --- Navigate ---
+function navigateTo(profileId) {
+  const url = prompt('輸入要導航的 URL：', 'https://');
+  if (!url) return;
+  api('POST', '/sessions/sess_' + profileId + '/navigate', { url });
+  toast('🔗 導航中...');
+}
+
+// --- Screenshot preview ---
+async function loadScreenshot(profileId) {
+  try {
+    const r = await fetch(API + '/sessions/sess_' + profileId + '/screenshot?quality=30', {
+      headers: { 'Authorization': 'Bearer ' + TOKEN }
+    });
+    if (!r.ok) return;
+    const blob = await r.blob();
+    const img = document.getElementById('thumb-' + profileId);
+    if (img) { img.src = URL.createObjectURL(blob); img.style.display = 'block'; }
+  } catch {}
+}
+
+// --- Sessions ---
 async function openSession(profileId) {
   toast('啟動中...');
   const d = await api('POST', '/sessions', { profile_id: profileId });
@@ -204,9 +275,9 @@ async function closeSession(profileId) {
   toast('已關閉');
 }
 
+// --- Profile CRUD ---
 function showCreate() { document.getElementById('createModal').classList.add('show'); }
 function hideCreate() { document.getElementById('createModal').classList.remove('show'); }
-
 function hideEdit() { document.getElementById('editModal').classList.remove('show'); }
 
 async function editProfile(id) {
@@ -225,65 +296,34 @@ async function editProfile(id) {
 
 async function saveProfile() {
   const id = document.getElementById('e-id').value;
-  const body = {
-    name: document.getElementById('e-name').value,
-    group: document.getElementById('e-group').value || undefined,
-  };
+  const body = { name: document.getElementById('e-name').value, group: document.getElementById('e-group').value || undefined };
   const proxyType = document.getElementById('e-proxy-type').value;
   if (proxyType) {
-    body.proxy = {
-      type: proxyType,
-      host: document.getElementById('e-proxy-host').value,
-      port: parseInt(document.getElementById('e-proxy-port').value) || 1080,
-      username: document.getElementById('e-proxy-user').value || undefined,
-      password: document.getElementById('e-proxy-pass').value || undefined,
-    };
-  } else {
-    body.proxy = null;
-  }
+    body.proxy = { type: proxyType, host: document.getElementById('e-proxy-host').value, port: parseInt(document.getElementById('e-proxy-port').value) || 1080, username: document.getElementById('e-proxy-user').value || undefined, password: document.getElementById('e-proxy-pass').value || undefined };
+  } else { body.proxy = null; }
   const d = await api('PUT', '/profiles/' + id, body);
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  hideEdit();
-  toast('✅ 已儲存');
-  await loadProfiles();
+  hideEdit(); toast('✅ 已儲存'); await loadProfiles();
 }
 
 async function createProfile() {
   const name = document.getElementById('f-name').value;
   if (!name) { toast('請輸入名稱'); return; }
-  const body = {
-    name,
-    engine: document.getElementById('f-engine').value,
-    group: document.getElementById('f-group').value || undefined,
-  };
+  const body = { name, engine: document.getElementById('f-engine').value, group: document.getElementById('f-group').value || undefined };
   const proxyType = document.getElementById('f-proxy-type').value;
   if (proxyType) {
-    body.proxy = {
-      type: proxyType,
-      host: document.getElementById('f-proxy-host').value,
-      port: parseInt(document.getElementById('f-proxy-port').value) || 1080,
-      username: document.getElementById('f-proxy-user').value || undefined,
-      password: document.getElementById('f-proxy-pass').value || undefined,
-    };
+    body.proxy = { type: proxyType, host: document.getElementById('f-proxy-host').value, port: parseInt(document.getElementById('f-proxy-port').value) || 1080, username: document.getElementById('f-proxy-user').value || undefined, password: document.getElementById('f-proxy-pass').value || undefined };
   }
   const d = await api('POST', '/profiles', body);
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  hideCreate();
-  toast('✅ 已建立 ' + name);
-  await loadProfiles();
+  hideCreate(); toast('✅ 已建立 ' + name); await loadProfiles();
 }
 
-async function duplicateProfile(id) {
-  await api('POST', '/profiles/' + id + '/duplicate');
-  toast('✅ 已複製');
-  await loadProfiles();
-}
+async function duplicateProfile(id) { await api('POST', '/profiles/' + id + '/duplicate'); toast('✅ 已複製'); await loadProfiles(); }
 
 async function deleteProfile(id, name) {
   if (!confirm('確定刪除 ' + name + '？')) return;
-  await api('DELETE', '/profiles/' + id);
-  toast('已刪除');
-  await loadProfiles();
+  await api('DELETE', '/profiles/' + id); toast('已刪除'); await loadProfiles();
 }
 
 async function exportProfile(id, name) {
@@ -291,28 +331,18 @@ async function exportProfile(id, name) {
   const r = await fetch(API + '/profiles/' + id + '/export', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
   if (!r.ok) { toast('❌ 匯出失敗'); return; }
   const blob = await r.blob();
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = (name || id) + '.zip';
-  a.click();
-  URL.revokeObjectURL(a.href);
-  toast('✅ 已匯出 ' + name);
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = (name || id) + '.zip'; a.click();
+  toast('✅ 已匯出');
 }
 
 function importProfile() { document.getElementById('importFile').click(); }
-
 async function handleImport(input) {
-  const file = input.files[0];
-  if (!file) return;
-  toast('匯入中...');
-  const fd = new FormData();
-  fd.append('file', file);
+  const file = input.files[0]; if (!file) return;
+  toast('匯入中...'); const fd = new FormData(); fd.append('file', file);
   const r = await fetch(API + '/profiles/import', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN }, body: fd });
-  const d = await r.json();
-  input.value = '';
+  const d = await r.json(); input.value = '';
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  toast('✅ 已匯入');
-  await loadProfiles();
+  toast('✅ 已匯入'); await loadProfiles();
 }
 
 async function backupAll() {
@@ -320,37 +350,22 @@ async function backupAll() {
   const r = await fetch(API + '/backup', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
   if (!r.ok) { toast('❌ 備份失敗'); return; }
   const blob = await r.blob();
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'browseforge-backup-' + new Date().toISOString().slice(0,10) + '.zip';
-  a.click();
-  URL.revokeObjectURL(a.href);
-  toast('✅ 已備份全部 Profile');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'browseforge-backup-' + new Date().toISOString().slice(0,10) + '.zip'; a.click();
+  toast('✅ 已備份');
 }
 
 function restoreBackup() { document.getElementById('restoreFile').click(); }
-
 async function handleRestore(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   if (!confirm('還原備份會匯入所有 Profile（不會覆蓋現有的），確定？')) { input.value = ''; return; }
-  toast('還原中...');
-  const fd = new FormData();
-  fd.append('file', file);
+  toast('還原中...'); const fd = new FormData(); fd.append('file', file);
   const r = await fetch(API + '/restore', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN }, body: fd });
-  const d = await r.json();
-  input.value = '';
+  const d = await r.json(); input.value = '';
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  toast('✅ 已還原 ' + d.data.imported + ' 個 Profile');
-  await loadProfiles();
+  toast('✅ 已還原 ' + d.data.imported + ' 個 Profile'); await loadProfiles();
 }
 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.display = 'block';
-  setTimeout(() => t.style.display = 'none', 3000);
-}
-
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
 function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
 init();
