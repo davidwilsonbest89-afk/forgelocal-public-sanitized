@@ -338,12 +338,15 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 	}
 	defer backendConn.Close()
 
-	// Send WebSocket upgrade to backend
-	upgradeReq := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: %s\r\n\r\n",
-		internalPath, internalAddr, "cHJveHlLZXk=")
+	// Forward client's upgrade request to backend (preserving original Sec-WebSocket-Key)
+	upgradeReq := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: %s\r\nSec-WebSocket-Key: %s\r\n\r\n",
+		internalPath, internalAddr,
+		r.Header.Get("Sec-WebSocket-Version"),
+		r.Header.Get("Sec-WebSocket-Key"))
+	backendConn.Write([]byte(upgradeReq))
 	backendConn.Write([]byte(upgradeReq))
 
-	// Read backend upgrade response
+	// Read backend upgrade response and forward to client
 	backendBuf := bufio.NewReader(backendConn)
 	resp, err := http.ReadResponse(backendBuf, nil)
 	if err != nil || resp.StatusCode != 101 {
@@ -351,14 +354,17 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Forward upgrade response to client
-	resp.Write(clientBuf)
-	clientBuf.Flush()
+	// Write raw 101 response to client (don't use resp.Write — it mangles headers)
+	clientConn.Write([]byte("HTTP/1.1 101 Switching Protocols\r\n"))
+	clientConn.Write([]byte("Upgrade: websocket\r\n"))
+	clientConn.Write([]byte("Connection: Upgrade\r\n"))
+	clientConn.Write([]byte("Sec-WebSocket-Accept: " + resp.Header.Get("Sec-WebSocket-Accept") + "\r\n"))
+	clientConn.Write([]byte("\r\n"))
 
-	// Bidirectional pipe
+	// Bidirectional pipe (use backendBuf to not lose buffered data)
 	done := make(chan struct{}, 2)
-	go func() { io.Copy(backendConn, clientConn); done <- struct{}{} }()
-	go func() { io.Copy(clientConn, backendConn); done <- struct{}{} }()
+	go func() { io.Copy(backendConn, clientBuf); done <- struct{}{} }()
+	go func() { io.Copy(clientConn, backendBuf); done <- struct{}{} }()
 	<-done
 }
 
