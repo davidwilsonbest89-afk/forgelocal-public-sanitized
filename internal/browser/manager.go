@@ -143,6 +143,8 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		AcceptDownloads: playwright.Bool(true),
 		Env: map[string]string{
 			"CAMOU_CONFIG": string(configJSON),
+			"DISPLAY":      os.Getenv("DISPLAY"),
+			"HOME":         os.Getenv("HOME"),
 		},
 		FirefoxUserPrefs: map[string]any{
 			"xpinstall.signatures.required":        false,
@@ -264,6 +266,11 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, "--fingerprint-platform=windows")
 	}
 
+	// Docker/container mode: disable sandbox
+	if m.cfg.NoSandbox {
+		args = append(args, "--no-sandbox")
+	}
+
 	downloadsDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
 	os.MkdirAll(downloadsDir, 0755)
 
@@ -280,18 +287,22 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	out, _ := json.Marshal(prefs)
 	os.WriteFile(prefsPath, out, 0644)
 
+	ignoreArgs := []string{
+		"--enable-automation",
+		"--disable-blink-features=AutomationControlled",
+		"--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1", // CloakBrowser handles DNS internally
+	}
+	if !m.cfg.NoSandbox {
+		ignoreArgs = append(ignoreArgs, "--no-sandbox")
+	}
+
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
 		ExecutablePath:  playwright.String(absChromiumPath),
 		Headless:        playwright.Bool(false),
 		AcceptDownloads: playwright.Bool(true),
 		Args:            args,
 		Viewport:        &playwright.Size{Width: 1280, Height: 800},
-		IgnoreDefaultArgs: []string{
-			"--enable-automation",
-			"--no-sandbox",
-			"--disable-blink-features=AutomationControlled",
-			"--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1", // CloakBrowser handles DNS internally
-		},
+		IgnoreDefaultArgs: ignoreArgs,
 	}
 
 	// Proxy setup — SOCKS5 with auth needs local relay (Playwright protocol rejects it)

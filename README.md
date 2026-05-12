@@ -47,6 +47,19 @@ xvfb-run ./BrowseForge
 
 需要遠端看到瀏覽器畫面（處理驗證碼等）？詳見 [Linux Server 部署指南](docs/linux-server.md)，支援 noVNC 遠端桌面和 Docker Compose 一鍵部署。
 
+### Docker（最簡單）
+
+```bash
+docker run -d -p 19280:19280 -p 6080:6080 ghcr.io/nczz/browseforge:latest
+```
+
+或自行 build：
+```bash
+cd docker && docker compose up -d --build
+```
+
+BrowseForge 在 Docker 中會自動偵測並啟用 `--no-sandbox` 和 `0.0.0.0` 綁定。
+
 ### Windows
 
 解壓後雙擊 `BrowseForge.exe`，首次啟動會自動下載瀏覽器引擎。
@@ -57,6 +70,7 @@ xvfb-run ./BrowseForge
 
 ```json
 {
+  "host": "127.0.0.1",
   "port": "19280",
   "profiles_dir": "profiles",
   "data_dir": "data",
@@ -69,7 +83,9 @@ xvfb-run ./BrowseForge
 
 | 欄位 | 說明 | 預設 |
 |------|------|------|
+| `host` | 監聽地址 | `127.0.0.1`（Docker 自動改為 `0.0.0.0`） |
 | `port` | REST API + Dashboard 端口 | `19280` |
+| `no_sandbox` | 停用 Chromium sandbox | `false`（Docker 自動啟用） |
 | `profiles_dir` | Profile 資料目錄 | `profiles` |
 | `data_dir` | 資料目錄（token、指紋池） | `data` |
 | `log_file` | 日誌檔案路徑 | `logs/server.log` |
@@ -78,6 +94,33 @@ xvfb-run ./BrowseForge
 | `fingerprint_dir` | 指紋池 JSON 目錄 | `data` |
 
 瀏覽器路徑會在首次啟動時自動偵測或下載後填入。手動安裝瀏覽器時可直接修改路徑。
+
+## CLI 命令
+
+```bash
+# 預設啟動（等同 serve）
+./BrowseForge
+
+# 指定監聽地址和停用 sandbox（Docker 部署）
+./BrowseForge serve --host 0.0.0.0 --no-sandbox
+
+# 顯示 API Token
+./BrowseForge token
+
+# 環境檢查
+./BrowseForge doctor
+
+# MCP stdio 模式（Kiro / Claude 整合）
+./BrowseForge --mcp
+```
+
+### Docker 自動偵測
+
+在 Docker 容器內執行時，BrowseForge 會自動：
+- 將監聽地址改為 `0.0.0.0`
+- 啟用 `--no-sandbox`（Chromium 在容器內無法使用 kernel sandbox）
+
+無需額外設定，直接 `./BrowseForge` 即可。
 
 ## MCP Server（AI Agent 整合）
 

@@ -104,9 +104,21 @@ let sessions = new Set();
 async function init() {
   // Get token from URL hash or prompt
   TOKEN = location.hash.slice(1) || localStorage.getItem('cmfx-token') || '';
-  if (!TOKEN) {
-    TOKEN = prompt('請輸入 API Token（在 data/.api-token 檔案中）：') || '';
-    if (TOKEN) localStorage.setItem('cmfx-token', TOKEN);
+  while (true) {
+    if (!TOKEN) {
+      TOKEN = prompt('請輸入 API Token\n（執行 ./BrowseForge token 取得）') || '';
+    }
+    if (!TOKEN) continue;
+    // Verify token
+    const r = await fetch(API + '/profiles', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
+    if (r.status === 401) {
+      TOKEN = '';
+      localStorage.removeItem('cmfx-token');
+      alert('Token 無效，請重新輸入');
+      continue;
+    }
+    localStorage.setItem('cmfx-token', TOKEN);
+    break;
   }
   await checkStatus();
   await loadProfiles();

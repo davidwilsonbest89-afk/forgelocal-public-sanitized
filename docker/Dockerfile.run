@@ -1,0 +1,41 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    DISPLAY=:99 \
+    VNC_PASSWORD=browseforge
+
+# System deps + browser runtime libs
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    xvfb x11vnc websockify fluxbox \
+    curl unzip ca-certificates \
+    libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 \
+    libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1 \
+    libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1 \
+    libgtk-3-0 libdbus-glib-1-2 libxt6 \
+    fonts-noto-cjk xclip autocutsel \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install noVNC 1.5 (Clipboard API support)
+RUN curl -fsSL https://github.com/novnc/noVNC/archive/refs/tags/v1.5.0.tar.gz | \
+    tar -xz -C /usr/share && \
+    mv /usr/share/noVNC-1.5.0 /usr/share/novnc
+
+WORKDIR /app
+
+# Download latest BrowseForge release from GitHub
+RUN LATEST=$(curl -sL https://api.github.com/repos/nczz/BrowseForge/releases/latest | \
+      grep -oP '"tag_name":\s*"\K[^"]+') && \
+    URL="https://github.com/nczz/BrowseForge/releases/download/${LATEST}/BrowseForge-${LATEST}-lite-linux-x64.zip" && \
+    echo "Downloading: $URL" && \
+    curl -fSL -o /tmp/bf.zip "$URL" && \
+    unzip /tmp/bf.zip -d /tmp && \
+    mv /tmp/BrowseForge-lite/* /app/ && \
+    rm -rf /tmp/bf.zip /tmp/BrowseForge-lite && \
+    chmod +x /app/BrowseForge
+
+EXPOSE 19280 19281 6080
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"syscall"
 	"time"
 
@@ -24,17 +26,116 @@ import (
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.4.0"
+const Version = "1.5.0"
 
 func main() {
-	// MCP stdio mode: BrowseForge --mcp
-	if len(os.Args) > 1 && os.Args[1] == "--mcp" {
-		runMCPStdio()
+	if len(os.Args) < 2 {
+		runServer(nil)
 		return
 	}
 
-	// Normal server mode
-	runServer()
+	switch os.Args[1] {
+	case "--mcp":
+		runMCPStdio()
+	case "serve":
+		flags := parseServeFlags(os.Args[2:])
+		runServer(flags)
+	case "token":
+		runToken()
+	case "doctor":
+		runDoctor()
+	default:
+		runServer(nil)
+	}
+}
+
+// serveFlags holds CLI overrides for serve mode
+type serveFlags struct {
+	host      string
+	port      string
+	noSandbox bool
+}
+
+func parseServeFlags(args []string) *serveFlags {
+	fs := flag.NewFlagSet("serve", flag.ExitOnError)
+	f := &serveFlags{}
+	fs.StringVar(&f.host, "host", "", "Listen address (default: 127.0.0.1, Docker auto-detects 0.0.0.0)")
+	fs.StringVar(&f.port, "port", "", "API port (default: 19280)")
+	fs.BoolVar(&f.noSandbox, "no-sandbox", false, "Disable Chromium sandbox (required in Docker)")
+	fs.Parse(args)
+	return f
+}
+
+func runToken() {
+	exe, _ := os.Executable()
+	baseDir := filepath.Dir(exe)
+	tokenPath := filepath.Join(baseDir, "data", ".api-token")
+	data, err := os.ReadFile(tokenPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Token not found. Start the server first.\n")
+		os.Exit(1)
+	}
+	fmt.Println(strings.TrimSpace(string(data)))
+}
+
+func runDoctor() {
+	exe, _ := os.Executable()
+	baseDir := filepath.Dir(exe)
+
+	fmt.Printf("BrowseForge v%s — Environment Check\n\n", Version)
+
+	// Docker detection
+	if isDocker() {
+		fmt.Println("🐳 Docker: detected")
+	} else {
+		fmt.Println("💻 Docker: no (native)")
+	}
+
+	// Display
+	display := os.Getenv("DISPLAY")
+	if display != "" {
+		fmt.Printf("🖥️  Display: %s\n", display)
+	} else {
+		fmt.Println("⚠️  Display: not set (browsers need DISPLAY or --headless)")
+	}
+
+	// Camoufox
+	ver := browser.InstalledVersion(baseDir, "camoufox")
+	if ver != "" {
+		path := browser.FindBinary(baseDir, "camoufox")
+		fmt.Printf("✅ Camoufox: %s (%s)\n", ver, path)
+	} else {
+		fmt.Println("❌ Camoufox: not installed (will download on first run)")
+	}
+
+	// CloakBrowser
+	ver = browser.InstalledVersion(baseDir, "cloakbrowser")
+	if ver != "" {
+		path := browser.FindBinary(baseDir, "cloakbrowser")
+		fmt.Printf("✅ CloakBrowser: %s (%s)\n", ver, path)
+	} else {
+		fmt.Println("❌ CloakBrowser: not installed (will download on first run)")
+	}
+
+	// Sandbox
+	if isDocker() {
+		fmt.Println("⚠️  Sandbox: Docker detected — use 'serve --no-sandbox'")
+	} else {
+		fmt.Println("✅ Sandbox: native environment (should work)")
+	}
+
+	// Token
+	tokenPath := filepath.Join(baseDir, "data", ".api-token")
+	if _, err := os.Stat(tokenPath); err == nil {
+		fmt.Println("✅ API Token: configured")
+	} else {
+		fmt.Println("ℹ️  API Token: will be generated on first start")
+	}
+}
+
+func isDocker() bool {
+	_, err := os.Stat("/.dockerenv")
+	return err == nil
 }
 
 func runMCPStdio() {
@@ -49,7 +150,7 @@ func runMCPStdio() {
 		camoufoxPath := browser.FindBinary(baseDir, "camoufox")
 		chromiumPath := browser.FindBinary(baseDir, "cloakbrowser")
 		cfg := &config.Config{
-			Port: "19280", ProfilesDir: "profiles", DataDir: "data",
+			Host: "127.0.0.1", Port: "19280", ProfilesDir: "profiles", DataDir: "data",
 			LogFile: "logs/server.log", FingerprintDir: "data",
 			CamoufoxPath: camoufoxPath, CloakBrowserPath: chromiumPath,
 		}
@@ -65,7 +166,7 @@ func runMCPStdio() {
 	mcpServer.RunStdio()
 }
 
-func runServer() {
+func runServer(flags *serveFlags) {
 	// Auto-detect base directory (where the binary lives)
 	exe, _ := os.Executable()
 	baseDir := filepath.Dir(exe)
@@ -78,6 +179,29 @@ func runServer() {
 
 	// Find or download browsers — version-based detection
 	cfg, _ := config.Load("config.json")
+
+	// Docker auto-detection: override defaults if not explicitly configured
+	if isDocker() {
+		if cfg.Host == "127.0.0.1" {
+			cfg.Host = "0.0.0.0"
+		}
+		if !cfg.NoSandbox {
+			cfg.NoSandbox = true
+		}
+	}
+
+	// CLI flags override config
+	if flags != nil {
+		if flags.host != "" {
+			cfg.Host = flags.host
+		}
+		if flags.port != "" {
+			cfg.Port = flags.port
+		}
+		if flags.noSandbox {
+			cfg.NoSandbox = true
+		}
+	}
 
 	// Camoufox: check installed version vs expected
 	camoufoxPath := ""
@@ -133,6 +257,27 @@ func runServer() {
 	}
 	cfg.Version = Version
 
+	// Re-apply overrides after config reload
+	if isDocker() {
+		if cfg.Host == "127.0.0.1" {
+			cfg.Host = "0.0.0.0"
+		}
+		if !cfg.NoSandbox {
+			cfg.NoSandbox = true
+		}
+	}
+	if flags != nil {
+		if flags.host != "" {
+			cfg.Host = flags.host
+		}
+		if flags.port != "" {
+			cfg.Port = flags.port
+		}
+		if flags.noSandbox {
+			cfg.NoSandbox = true
+		}
+	}
+
 	logger := config.SetupLogger(cfg.LogFile)
 	slog.SetDefault(logger)
 
@@ -154,42 +299,44 @@ func runServer() {
 	router := api.NewRouter(cfg, profileStore, browserMgr, fpPool)
 
 	// Workflow engine
-	wfEngine := workflow.NewEngine("http://127.0.0.1:"+cfg.Port, cfg.APIToken)
+	wfEngine := workflow.NewEngine("http://"+cfg.Host+":"+cfg.Port, cfg.APIToken)
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
 	// MCP Server
 	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg))
 	go func() {
 		slog.Info("MCP server starting", "port", "19281")
-		http.ListenAndServe("127.0.0.1:19281", mcpServer)
+		http.ListenAndServe(cfg.Host+":19281", mcpServer)
 	}()
 
-	srv := &http.Server{Addr: "127.0.0.1:" + cfg.Port, Handler: router}
+	srv := &http.Server{Addr: cfg.Host + ":" + cfg.Port, Handler: router}
 
 	go func() {
-		slog.Info("server starting", "port", cfg.Port)
+		slog.Info("server starting", "host", cfg.Host, "port", cfg.Port)
 		if err := srv.ListenAndServe(); err != http.ErrServerClosed {
 			slog.Error("server", "error", err)
+			fmt.Fprintf(os.Stderr, "❌ Server failed: %v\n", err)
 			os.Exit(1)
 		}
 	}()
 
-	// Wait for server ready, then open dashboard
+	// Wait for server ready, then show info
 	go func() {
 		for i := 0; i < 30; i++ {
 			resp, err := http.Get("http://127.0.0.1:" + cfg.Port + "/api/status")
 			if err == nil && resp.StatusCode == 200 {
 				resp.Body.Close()
 				token := cfg.APIToken
-				url := fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token)
 				fmt.Println("╔══════════════════════════════════════════╗")
 				fmt.Printf("║        🦊 BrowseForge v%-16s║\n", Version)
 				fmt.Println("╠══════════════════════════════════════════╣")
-				fmt.Printf("║  Dashboard: http://127.0.0.1:%-12s║\n", cfg.Port)
-				fmt.Printf("║  MCP:       http://127.0.0.1:19281       ║\n")
+				fmt.Printf("║  Dashboard: http://%s:%-12s║\n", cfg.Host, cfg.Port)
+				fmt.Printf("║  MCP:       http://%s:19281       ║\n", cfg.Host)
 				fmt.Printf("║  Token:     %s...  ║\n", token[:16])
 				fmt.Println("╚══════════════════════════════════════════╝")
-				openBrowser(url)
+				if cfg.Host == "127.0.0.1" {
+					openBrowser(fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token))
+				}
 				return
 			}
 			time.Sleep(500 * time.Millisecond)

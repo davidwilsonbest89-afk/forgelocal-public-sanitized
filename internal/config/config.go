@@ -7,7 +7,9 @@ import (
 )
 
 type Config struct {
+	Host            string `json:"host,omitempty"`
 	Port            string `json:"port"`
+	NoSandbox       bool   `json:"no_sandbox,omitempty"`
 	ProfilesDir     string `json:"profiles_dir"`
 	DataDir         string `json:"data_dir"`
 	LogFile         string `json:"log_file"`
@@ -30,6 +32,7 @@ type HumanizeConfig struct {
 
 func Load(path string) (*Config, error) {
 	cfg := &Config{
+		Host:           "127.0.0.1",
 		Port:           "19280",
 		ProfilesDir:    "profiles",
 		DataDir:        "data",

@@ -96,12 +96,14 @@ VNC_PASSWORD=mypassword ./start-server.sh
 
 ## 模式三：Docker Compose（最簡單）
 
+BrowseForge v1.5+ 內建 Docker 自動偵測，會自動啟用 `0.0.0.0` 綁定和 `--no-sandbox`。
+
 ```yaml
 # docker-compose.yml
-version: "3"
 services:
   browseforge:
     image: ubuntu:24.04
+    platform: linux/amd64
     ports:
       - "19280:19280"   # Dashboard + API
       - "19281:19281"   # MCP Server
@@ -109,14 +111,15 @@ services:
     volumes:
       - ./profiles:/app/profiles
       - ./data:/app/data
+      - ./browsers:/app/browsers
     environment:
       - DISPLAY=:99
       - VNC_PASSWORD=browseforge
     command: >
       bash -c "
-        apt-get update && apt-get install -y xvfb x11vnc novnc websockify curl unzip &&
-        Xvfb :99 -screen 0 1920x1080x24 &
-        sleep 1 &&
+        apt-get update && apt-get install -y xvfb x11vnc novnc websockify fluxbox curl unzip &&
+        Xvfb :99 -screen 0 1920x1080x24 & sleep 2 &&
+        fluxbox & 
         x11vnc -display :99 -passwd $$VNC_PASSWORD -forever -shared -bg &&
         websockify --web /usr/share/novnc 6080 localhost:5900 &
         cd /app && ./BrowseForge
@@ -127,6 +130,7 @@ services:
 docker compose up -d
 # Dashboard: http://localhost:19280
 # 遠端桌面: http://localhost:6080/vnc.html
+# 取得 Token: docker compose exec browseforge /app/BrowseForge token
 ```
 
 ## 防火牆設定

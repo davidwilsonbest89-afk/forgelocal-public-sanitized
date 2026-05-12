@@ -1,0 +1,21 @@
+services:
+  browseforge:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile.run
+    ports:
+      - "19280:19280"  # Dashboard + REST API
+      - "6080:6080"    # noVNC remote desktop
+    volumes:
+      - browseforge-profiles:/app/profiles
+      - browseforge-data:/app/data
+      - browseforge-browsers:/app/browsers
+    environment:
+      - VNC_PASSWORD=browseforge
+    restart: unless-stopped
+
+volumes:
+  browseforge-profiles:
+  browseforge-data:
+  browseforge-browsers:
