@@ -195,7 +195,7 @@ Token 在首次啟動時自動生成，存放在 `data/.api-token`。
 
 ## Playwright Connect（外部腳本直接操作）
 
-BrowseForge 支援讓外部 Playwright 腳本直接連入操作瀏覽器，無需透過 REST API。每個 session 啟動時自動暴露 Playwright Connect endpoint。
+BrowseForge 支援讓外部 Playwright 腳本直接連入操作瀏覽器。每個 session 啟動時自動暴露 WebSocket endpoint。
 
 ### 使用方式
 
@@ -203,48 +203,63 @@ BrowseForge 支援讓外部 Playwright 腳本直接連入操作瀏覽器，無�
 # 1. 取得 connect endpoint
 curl http://127.0.0.1:19280/api/playwright/endpoint \
   -H "Authorization: Bearer $TOKEN"
-# → {"data":{"sess_prof_xxx":"/var/folders/.../browser@abc.sock"}}
+# → {"data":[{"session_id":"sess_prof_xxx","endpoint":"ws://...","proxy":"ws://..."}]}
 ```
 
-**Node.js：**
+**Node.js（透過 Proxy，推薦）：**
 ```javascript
-import { chromium } from 'playwright'; // 需要 playwright@1.59
+import { firefox } from 'playwright';
 
-const browser = await chromium.connect('/var/folders/.../browser@abc.sock');
-const page = await browser.newPage();
+const browser = await firefox.connect(
+  'ws://YOUR_SERVER:19280/api/playwright/ws/sess_prof_xxx',
+  { headers: { 'Authorization': 'Bearer YOUR_TOKEN' } }
+);
+const page = browser.contexts()[0].pages()[0];
 await page.goto('https://example.com');
 console.log(await page.title());
 await browser.close();
 ```
 
-**Python：**
+**Python（透過 Proxy）：**
 ```python
-from playwright.sync_api import sync_playwright  # 需要 playwright==1.59.*
+from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
-    browser = p.chromium.connect(endpoint)
-    page = browser.new_page()
+    browser = p.firefox.connect(
+        "ws://YOUR_SERVER:19280/api/playwright/ws/sess_prof_xxx",
+        headers={"Authorization": "Bearer YOUR_TOKEN"}
+    )
+    page = browser.contexts[0].pages[0]
     page.goto("https://example.com")
     print(page.title())
 ```
+
+### 連線方式
+
+| 方式 | URL | 適用場景 |
+|------|-----|---------|
+| **Proxy（推薦）** | `ws://host:19280/api/playwright/ws/{session_id}` | Docker、遠端、需要 token 驗證 |
+| 直連 | `ws://host:{dynamic_port}/{guid}` | 本機、低延遲 |
+
+Proxy 模式只需暴露 19280 port，自動帶 token 驗證。
 
 ### 限制
 
 | 項目 | 說明 |
 |------|------|
 | Client 版本 | 必須使用 Playwright **1.59.x**（major.minor 需匹配） |
-| 連線方式 | Named pipe（本機），非 WebSocket |
-| 跨機器 | 需要額外的 WebSocket proxy（pipe 僅限本機） |
-| 反偵測 | 不影響。Bind 使用 Playwright 內部協議，不暴露 CDP |
+| 反偵測 | 不影響。使用 Playwright 內部協議，不暴露 CDP |
 
 ### 與 REST API 的差異
 
 | | REST API | Playwright Connect |
 |---|---------|-------------------|
-| 功能範圍 | BrowseForge 定義的 12 個操作 | 完整 Playwright API |
+| 功能範圍 | BrowseForge 定義的操作 | 完整 Playwright API |
 | 適用場景 | 簡單自動化、AI Agent | 複雜腳本、測試框架 |
-| 跨語言 | 任何 HTTP client | Playwright client (Go/Node/Python/Java) |
+| 跨語言 | 任何 HTTP client | Playwright client (Node/Python/Java) |
 | 版本依賴 | 無 | 需要 PW 1.59.x |
+| Docker | 只需 19280 port | 只需 19280 port（透過 Proxy） |
+| 驗證 | Bearer Token | Bearer Token（Proxy 模式） |
 
 ## YAML Workflow
 
