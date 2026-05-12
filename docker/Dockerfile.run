@@ -37,7 +37,7 @@ RUN LATEST=$(curl -sL https://api.github.com/repos/nczz/BrowseForge/releases/lat
 
 EXPOSE 19280 19281 6901
 
-COPY entrypoint-kasm.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
