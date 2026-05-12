@@ -50,14 +50,21 @@ xvfb-run ./BrowseForge
 ### Docker（最簡單）
 
 ```bash
-docker run -d -p 19280:19280 -p 6080:6080 ghcr.io/nczz/browseforge:latest
+git clone https://github.com/nczz/BrowseForge.git
+cd BrowseForge/docker
+docker compose up -d --build
 ```
 
-或自行 build：
-```bash
-cd docker && docker compose up -d --build
-```
+首次啟動需要 3-5 分鐘下載瀏覽器引擎。
 
+| 服務 | URL |
+|------|-----|
+| Dashboard | http://localhost:19280 |
+| 遠端桌面 (KasmVNC) | http://localhost:6901 |
+| VNC 帳號 | `user` / `browseforge` |
+| API Token | `docker compose logs \| grep "API Token"` |
+
+KasmVNC 支援 Chrome 上的 seamless 剪貼簿和 IME 中文輸入。
 BrowseForge 在 Docker 中會自動偵測並啟用 `--no-sandbox` 和 `0.0.0.0` 綁定。
 
 ### Windows

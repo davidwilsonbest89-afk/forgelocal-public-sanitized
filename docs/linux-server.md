@@ -96,42 +96,34 @@ VNC_PASSWORD=mypassword ./start-server.sh
 
 ## 模式三：Docker Compose（最簡單）
 
-BrowseForge v1.5+ 內建 Docker 自動偵測，會自動啟用 `0.0.0.0` 綁定和 `--no-sandbox`。
+BrowseForge v1.6+ 使用 KasmVNC，支援 seamless 剪貼簿和 IME 中文輸入。
 
-```yaml
-# docker-compose.yml
-services:
-  browseforge:
-    image: ubuntu:24.04
-    platform: linux/amd64
-    ports:
-      - "19280:19280"   # Dashboard + API
-      - "19281:19281"   # MCP Server
-      - "6080:6080"     # noVNC 遠端桌面
-    volumes:
-      - ./profiles:/app/profiles
-      - ./data:/app/data
-      - ./browsers:/app/browsers
-    environment:
-      - DISPLAY=:99
-      - VNC_PASSWORD=browseforge
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y xvfb x11vnc novnc websockify fluxbox curl unzip &&
-        Xvfb :99 -screen 0 1920x1080x24 & sleep 2 &&
-        fluxbox & 
-        x11vnc -display :99 -passwd $$VNC_PASSWORD -forever -shared -bg &&
-        websockify --web /usr/share/novnc 6080 localhost:5900 &
-        cd /app && ./BrowseForge
-      "
+```bash
+git clone https://github.com/nczz/BrowseForge.git
+cd BrowseForge/docker
+docker compose up -d --build
 ```
 
 ```bash
-docker compose up -d
 # Dashboard: http://localhost:19280
-# 遠端桌面: http://localhost:6080/vnc.html
+# 遠端桌面: http://localhost:6901 (user / browseforge)
 # 取得 Token: docker compose exec browseforge /app/BrowseForge token
 ```
+
+### 自訂密碼
+
+```yaml
+# docker-compose.yml
+environment:
+  - VNC_PASSWORD=your_password
+```
+
+### 特性
+
+- **KasmVNC** — Chrome 上 seamless 剪貼簿、IME 中文輸入
+- **WebGL 完整偽裝** — 軟體渲染 + 完整 WebGL 指紋
+- **Docker 自動偵測** — 自動 `0.0.0.0` + `--no-sandbox`
+- **單 port** — Dashboard + API + Playwright WebSocket proxy 都走 19280
 
 ## 防火牆設定
 
