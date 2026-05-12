@@ -91,7 +91,7 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 	if session.Context != nil {
 		if browser := session.Context.Browser(); browser != nil {
 			if result, err := browser.Bind("browseforge-"+session.ID, playwright.BrowserBindOptions{
-				Host: playwright.String("0.0.0.0"),
+				Host: playwright.String(m.cfg.Host),
 				Port: playwright.Int(0),
 			}); err == nil {
 				session.ConnectURL = fixWSEndpoint(result.Endpoint)
