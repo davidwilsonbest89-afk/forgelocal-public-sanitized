@@ -6,6 +6,13 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.7.7 - 2026-05-15
+
+### Fixed
+
+- Playwright driver compatibility patching is now format tolerant, so Firefox/Camoufox page errors without source locations no longer crash the driver in Docker builds.
+- BrowseForge startup now fails fast if Playwright driver installation or patching fails instead of silently running an unpatched driver.
+
 ## v1.7.6 - 2026-05-15
 
 ### Fixed

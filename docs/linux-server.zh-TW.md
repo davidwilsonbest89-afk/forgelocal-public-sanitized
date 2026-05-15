@@ -9,10 +9,10 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 19281:19281 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.6
+  ghcr.io/nczz/browseforge:v1.7.7
 ```
 
-正式部署建議 pin 版本 tag，例如 `v1.7.6`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
+正式部署建議 pin 版本 tag，例如 `v1.7.7`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
 
 > 目前 GHCR Docker image 發佈 `linux/amd64`。Apple Silicon 或 ARM server 會透過 emulation 執行；原生 `linux/arm64` image 會在 KasmVNC、Camoufox、CloakBrowser runtime 都驗證完成後再開啟。
 
@@ -41,7 +41,7 @@ docker run -d --name browseforge \
   -v browseforge-data:/app/data \
   -v browseforge-browsers:/app/browsers \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.6
+  ghcr.io/nczz/browseforge:v1.7.7
 ```
 
 ### Docker Compose
@@ -49,7 +49,7 @@ docker run -d --name browseforge \
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v1.7.6
+    image: ghcr.io/nczz/browseforge:v1.7.7
     platform: linux/amd64
     ports:
       - "19280:19280"
@@ -99,7 +99,7 @@ ssh -L 19280:localhost:19280 -L 19281:localhost:19281 -L 6901:localhost:6901 use
 ## 升級
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v1.7.6
+docker pull ghcr.io/nczz/browseforge:v1.7.7
 docker stop browseforge && docker rm browseforge
 docker run -d --name browseforge \
   -p 19280:19280 -p 19281:19281 -p 6901:6901 \
@@ -108,7 +108,7 @@ docker run -d --name browseforge \
   -v browseforge-browsers:/app/browsers \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.6
+  ghcr.io/nczz/browseforge:v1.7.7
 ```
 
 Profiles、Token、瀏覽器引擎都在 volumes 中保留，只更新 BrowseForge。
