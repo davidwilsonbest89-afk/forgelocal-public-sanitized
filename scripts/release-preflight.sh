@@ -49,6 +49,7 @@ if [[ -n "$origin_main_sha" && "$head_sha" != "$origin_main_sha" ]]; then
 fi
 
 command -v go >/dev/null || die "go is required"
+command -v node >/dev/null || die "node is required"
 command -v docker >/dev/null || die "docker is required"
 command -v rg >/dev/null || die "ripgrep (rg) is required"
 
@@ -62,6 +63,9 @@ fi
 
 run go test -count=1 ./...
 run go vet ./...
+run node --check extension/sidebar/app.js
+run node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json','utf8')); JSON.parse(require('fs').readFileSync('extension/_locales/en/messages.json','utf8')); JSON.parse(require('fs').readFileSync('extension/_locales/zh_TW/messages.json','utf8')); console.log('extension json ok')"
+run node -e "const fs=require('fs'); const html=fs.readFileSync('internal/api/dashboard.html','utf8'); const m=html.match(/<script>([\\s\\S]*)<\\/script>/); if(!m) throw new Error('script not found'); new Function(m[1]); console.log('dashboard js ok')"
 
 if command -v ruby >/dev/null; then
   run ruby -e "require 'yaml'; YAML.load_file('.github/workflows/release.yml'); puts 'workflow yaml ok'"

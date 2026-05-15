@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>BrowseForge</title>
@@ -9,6 +9,8 @@ body{font-family:-apple-system,sans-serif;background:#1e1e2e;color:#cdd6f4;min-h
 .header{padding:16px 24px;border-bottom:1px solid #45475a;display:flex;align-items:center;gap:16px}
 .header h1{font-size:18px;font-weight:600}
 .header .status{font-size:12px;color:#a6e3a1}
+.header .spacer{flex:1}
+.lang-select{padding:6px 8px;background:#2a2a3c;border:1px solid #45475a;border-radius:6px;color:#cdd6f4;font-size:12px}
 .toolbar{padding:12px 24px;display:flex;gap:8px;border-bottom:1px solid #313244}
 button{padding:8px 16px;background:#45475a;border:none;border-radius:6px;color:#cdd6f4;cursor:pointer;font-size:13px}
 button:hover{background:#585b70}
@@ -55,24 +57,29 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box">
     <h1>🦊 BrowseForge</h1>
-    <p>請輸入 API Token<br><code>./BrowseForge token</code> 或查看 <code>data/.api-token</code></p>
+    <p><span data-i18n="loginPrompt">Enter API Token</span><br><code>./BrowseForge token</code> <span data-i18n="loginOr">or check</span> <code>data/.api-token</code></p>
     <input type="password" id="loginToken" placeholder="API Token" autofocus>
-    <div class="error" id="loginError">Token 無效，請重新輸入</div>
-    <button class="primary" onclick="submitLogin()">登入</button>
+    <div class="error" id="loginError" data-i18n="invalidToken">Invalid token. Please try again.</div>
+    <button class="primary" onclick="submitLogin()" data-i18n="login">Log in</button>
   </div>
 </div>
 
 <div class="header">
   <h1>🦊 BrowseForge</h1>
-  <span class="status" id="status">連線中...</span>
+  <span class="status" id="status" data-i18n="connecting">Connecting...</span>
+  <span class="spacer"></span>
+  <select class="lang-select" id="langSelect" aria-label="Language">
+    <option value="en">English</option>
+    <option value="zh-TW">繁體中文</option>
+  </select>
 </div>
 <div class="toolbar" id="toolbar" style="display:none">
-  <button class="primary" onclick="showCreate()">+ 新增 Profile</button>
-  <button onclick="loadProfiles()">🔄 重新整理</button>
+  <button class="primary" onclick="showCreate()" data-i18n="newProfile">+ New Profile</button>
+  <button onclick="loadProfiles()" data-i18n="refresh">🔄 Refresh</button>
   <span style="flex:1"></span>
-  <button onclick="importProfile()">📥 匯入 Profile</button>
-  <button onclick="backupAll()">📦 全部備份</button>
-  <button onclick="restoreBackup()">📤 還原備份</button>
+  <button onclick="importProfile()" data-i18n="importProfile">📥 Import Profile</button>
+  <button onclick="backupAll()" data-i18n="backupAll">📦 Backup All</button>
+  <button onclick="restoreBackup()" data-i18n="restoreBackup">📤 Restore Backup</button>
   <input type="file" id="importFile" accept=".zip" style="display:none" onchange="handleImport(this)">
   <input type="file" id="restoreFile" accept=".zip" style="display:none" onchange="handleRestore(this)">
 </div>
@@ -80,38 +87,38 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 
 <div class="modal-bg" id="editModal">
   <div class="modal">
-    <h2>編輯 Profile</h2>
+    <h2 data-i18n="editProfile">Edit Profile</h2>
     <input type="hidden" id="e-id">
-    <label>名稱</label><input id="e-name">
-    <label>分組</label><input id="e-group">
-    <label>Proxy 類型</label>
-    <select id="e-proxy-type"><option value="">無 Proxy</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
+    <label data-i18n="name">Name</label><input id="e-name">
+    <label data-i18n="group">Group</label><input id="e-group">
+    <label data-i18n="proxyType">Proxy Type</label>
+    <select id="e-proxy-type"><option value="" data-i18n="noProxy">No Proxy</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
     <label>Proxy Host</label><input id="e-proxy-host">
     <label>Proxy Port</label><input id="e-proxy-port" type="number">
-    <label>Proxy 帳號</label><input id="e-proxy-user">
-    <label>Proxy 密碼</label><input id="e-proxy-pass" type="password">
+    <label data-i18n="proxyUsername">Proxy Username</label><input id="e-proxy-user">
+    <label data-i18n="proxyPassword">Proxy Password</label><input id="e-proxy-pass" type="password">
     <div class="btn-row">
-      <button onclick="hideEdit()">取消</button>
-      <button class="primary" onclick="saveProfile()">儲存</button>
+      <button onclick="hideEdit()" data-i18n="cancel">Cancel</button>
+      <button class="primary" onclick="saveProfile()" data-i18n="save">Save</button>
     </div>
   </div>
 </div>
 
 <div class="modal-bg" id="createModal">
   <div class="modal">
-    <h2>新增 Profile</h2>
-    <label>名稱</label><input id="f-name" placeholder="FB Brand #1">
-    <label>引擎</label><select id="f-engine"><option value="firefox">🦊 Firefox (Camoufox)</option><option value="chromium">🌐 Chromium (CloakBrowser)</option></select>
-    <label>分組</label><input id="f-group" placeholder="客戶A">
-    <label>Proxy (選填)</label>
-    <select id="f-proxy-type"><option value="">無 Proxy</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
+    <h2 data-i18n="newProfileTitle">New Profile</h2>
+    <label data-i18n="name">Name</label><input id="f-name" placeholder="FB Brand #1">
+    <label data-i18n="engine">Engine</label><select id="f-engine"><option value="firefox">🦊 Firefox (Camoufox)</option><option value="chromium">🌐 Chromium (CloakBrowser)</option></select>
+    <label data-i18n="group">Group</label><input id="f-group" data-i18n-placeholder="groupPlaceholder" placeholder="Client A">
+    <label data-i18n="proxyOptional">Proxy (optional)</label>
+    <select id="f-proxy-type"><option value="" data-i18n="noProxy">No Proxy</option><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
     <input id="f-proxy-host" placeholder="proxy.example.com" style="margin-top:4px">
     <input id="f-proxy-port" placeholder="1080" type="number" style="margin-top:4px">
-    <input id="f-proxy-user" placeholder="帳號 (選填)" style="margin-top:4px">
-    <input id="f-proxy-pass" placeholder="密碼 (選填)" type="password" style="margin-top:4px">
+    <input id="f-proxy-user" data-i18n-placeholder="usernameOptional" placeholder="Username (optional)" style="margin-top:4px">
+    <input id="f-proxy-pass" data-i18n-placeholder="passwordOptional" placeholder="Password (optional)" type="password" style="margin-top:4px">
     <div class="btn-row">
-      <button onclick="hideCreate()">取消</button>
-      <button class="primary" onclick="createProfile()">建立</button>
+      <button onclick="hideCreate()" data-i18n="cancel">Cancel</button>
+      <button class="primary" onclick="createProfile()" data-i18n="create">Create</button>
     </div>
   </div>
 </div>
@@ -120,13 +127,160 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 
 <script>
 const API = '/api';
+const LOCALES = {
+  en: {
+    loginPrompt: 'Enter API Token',
+    loginOr: 'or check',
+    invalidToken: 'Invalid token. Please try again.',
+    enterToken: 'Enter a token',
+    login: 'Log in',
+    connecting: 'Connecting...',
+    offline: 'Offline',
+    newProfile: '+ New Profile',
+    refresh: '🔄 Refresh',
+    importProfile: '📥 Import Profile',
+    backupAll: '📦 Backup All',
+    restoreBackup: '📤 Restore Backup',
+    editProfile: 'Edit Profile',
+    newProfileTitle: 'New Profile',
+    name: 'Name',
+    group: 'Group',
+    groupPlaceholder: 'Client A',
+    proxyType: 'Proxy Type',
+    noProxy: 'No Proxy',
+    proxyUsername: 'Proxy Username',
+    proxyPassword: 'Proxy Password',
+    proxyOptional: 'Proxy (optional)',
+    usernameOptional: 'Username (optional)',
+    passwordOptional: 'Password (optional)',
+    cancel: 'Cancel',
+    save: 'Save',
+    create: 'Create',
+    noProfiles: 'No profiles yet',
+    noProfilesBody: 'Create your first browser profile to get started.',
+    ungrouped: 'Ungrouped',
+    close: 'Close',
+    navigate: '🔗 Navigate',
+    screenshot: '📷 Screenshot',
+    open: 'Open',
+    edit: 'Edit',
+    export: 'Export',
+    duplicate: 'Duplicate',
+    delete: 'Delete',
+    navigatePrompt: 'Enter URL to navigate:',
+    navigating: '🔗 Navigating...',
+    starting: 'Starting...',
+    browserOpened: '✅ Browser opened',
+    closed: 'Closed',
+    saved: '✅ Saved',
+    nameRequired: 'Enter a name',
+    created: '✅ Created ',
+    duplicated: '✅ Duplicated',
+    deleteConfirm: 'Delete {name}?',
+    deleted: 'Deleted',
+    exporting: 'Exporting...',
+    exportFailed: '❌ Export failed',
+    exported: '✅ Exported',
+    importing: 'Importing...',
+    imported: '✅ Imported',
+    backingUp: 'Backing up...',
+    backupFailed: '❌ Backup failed',
+    backedUp: '✅ Backed up',
+    restoreConfirm: 'Restore will import all profiles without overwriting existing ones. Continue?',
+    restoring: 'Restoring...',
+    restored: '✅ Restored {count} profiles',
+  },
+  'zh-TW': {
+    loginPrompt: '請輸入 API Token',
+    loginOr: '或查看',
+    invalidToken: 'Token 無效，請重新輸入',
+    enterToken: '請輸入 Token',
+    login: '登入',
+    connecting: '連線中...',
+    offline: '離線',
+    newProfile: '+ 新增 Profile',
+    refresh: '🔄 重新整理',
+    importProfile: '📥 匯入 Profile',
+    backupAll: '📦 全部備份',
+    restoreBackup: '📤 還原備份',
+    editProfile: '編輯 Profile',
+    newProfileTitle: '新增 Profile',
+    name: '名稱',
+    group: '分組',
+    groupPlaceholder: '客戶A',
+    proxyType: 'Proxy 類型',
+    noProxy: '無 Proxy',
+    proxyUsername: 'Proxy 帳號',
+    proxyPassword: 'Proxy 密碼',
+    proxyOptional: 'Proxy (選填)',
+    usernameOptional: '帳號 (選填)',
+    passwordOptional: '密碼 (選填)',
+    cancel: '取消',
+    save: '儲存',
+    create: '建立',
+    noProfiles: '尚無 Profile',
+    noProfilesBody: '建立你的第一個瀏覽器 Profile 開始使用',
+    ungrouped: '未分組',
+    close: '關閉',
+    navigate: '🔗 導航',
+    screenshot: '📷 截圖',
+    open: '開啟',
+    edit: '編輯',
+    export: '匯出',
+    duplicate: '複製',
+    delete: '刪除',
+    navigatePrompt: '輸入要導航的 URL：',
+    navigating: '🔗 導航中...',
+    starting: '啟動中...',
+    browserOpened: '✅ 瀏覽器已開啟',
+    closed: '已關閉',
+    saved: '✅ 已儲存',
+    nameRequired: '請輸入名稱',
+    created: '✅ 已建立 ',
+    duplicated: '✅ 已複製',
+    deleteConfirm: '確定刪除 {name}？',
+    deleted: '已刪除',
+    exporting: '匯出中...',
+    exportFailed: '❌ 匯出失敗',
+    exported: '✅ 已匯出',
+    importing: '匯入中...',
+    imported: '✅ 已匯入',
+    backingUp: '備份中...',
+    backupFailed: '❌ 備份失敗',
+    backedUp: '✅ 已備份',
+    restoreConfirm: '還原備份會匯入所有 Profile（不會覆蓋現有的），確定？',
+    restoring: '還原中...',
+    restored: '✅ 已還原 {count} 個 Profile',
+  },
+};
+let locale = localStorage.getItem('bf-locale') || (navigator.language === 'zh-TW' ? 'zh-TW' : 'en');
 let TOKEN = '';
 let profiles = [];
 let sessions = new Set();
 let screenshots = {}; // profileId → blob URL
 
+function t(key, vars = {}) {
+  let value = (LOCALES[locale] && LOCALES[locale][key]) || LOCALES.en[key] || key;
+  for (const [name, replacement] of Object.entries(vars)) value = value.replace(`{${name}}`, replacement);
+  return value;
+}
+
+function applyI18n() {
+  document.documentElement.lang = locale;
+  document.getElementById('langSelect').value = locale;
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+}
+
 // --- Login ---
 async function init() {
+  applyI18n();
+  document.getElementById('langSelect').addEventListener('change', e => {
+    locale = e.target.value;
+    localStorage.setItem('bf-locale', locale);
+    applyI18n();
+    render();
+  });
   TOKEN = location.hash.slice(1) || localStorage.getItem('cmfx-token') || '';
   if (TOKEN) {
     const valid = await verifyToken(TOKEN);
@@ -146,9 +300,9 @@ async function submitLogin() {
   const input = document.getElementById('loginToken');
   const err = document.getElementById('loginError');
   TOKEN = input.value.trim();
-  if (!TOKEN) { err.style.display = 'block'; err.textContent = '請輸入 Token'; return; }
+  if (!TOKEN) { err.style.display = 'block'; err.textContent = t('enterToken'); return; }
   const valid = await verifyToken(TOKEN);
-  if (!valid) { err.style.display = 'block'; err.textContent = 'Token 無效，請重新輸入'; return; }
+  if (!valid) { err.style.display = 'block'; err.textContent = t('invalidToken'); return; }
   localStorage.setItem('cmfx-token', TOKEN);
   showApp();
 }
@@ -177,7 +331,7 @@ async function checkStatus() {
     const r = await fetch(API + '/status');
     const d = await r.json();
     document.getElementById('status').textContent = '✅ v' + d.version;
-  } catch { document.getElementById('status').textContent = '❌ 離線'; }
+  } catch { document.getElementById('status').textContent = '❌ ' + t('offline'); }
 }
 
 async function loadProfiles() {
@@ -198,9 +352,9 @@ function render() {
   // Empty state
   if (profiles.length === 0) {
     grid.innerHTML = `<div class="empty-state">
-      <h2>尚無 Profile</h2>
-      <p>建立你的第一個瀏覽器 Profile 開始使用</p>
-      <button class="primary" onclick="showCreate()">+ 新增 Profile</button>
+      <h2>${t('noProfiles')}</h2>
+      <p>${t('noProfilesBody')}</p>
+      <button class="primary" onclick="showCreate()">${t('newProfile')}</button>
     </div>`;
     return;
   }
@@ -212,7 +366,7 @@ function render() {
       <div class="name"><span class="badge ${active ? 'active' : 'inactive'}"></span>${esc(p.name)}</div>
       <div class="meta">
         <span class="engine ${p.engine}">${p.engine === 'chromium' ? '🌐 Chromium' : '🦊 Firefox'}</span>
-        · ${esc(p.group || '未分組')}
+        · ${esc(p.group || t('ungrouped'))}
         ${p.proxy ? ' · 🔒 ' + esc(p.proxy.host) : ''}
       </div>
       <div class="fp">
@@ -223,14 +377,14 @@ function render() {
       ${active ? `<img class="thumb" id="thumb-${p.id}" src="" style="display:none">` : ''}
       <div class="actions">
         ${active
-          ? `<button class="danger" onclick="closeSession('${p.id}')">關閉</button>
-             <button onclick="navigateTo('${p.id}')">🔗 導航</button>
-             <button onclick="loadScreenshot('${p.id}')">📷 截圖</button>`
-          : `<button class="primary" onclick="openSession('${p.id}')">開啟</button>`}
-        <button onclick="editProfile('${p.id}')">編輯</button>
-        <button onclick="exportProfile('${p.id}','${esc(p.name)}')">匯出</button>
-        <button onclick="duplicateProfile('${p.id}')">複製</button>
-        <button onclick="deleteProfile('${p.id}','${esc(p.name)}')">刪除</button>
+          ? `<button class="danger" onclick="closeSession('${p.id}')">${t('close')}</button>
+             <button onclick="navigateTo('${p.id}')">${t('navigate')}</button>
+             <button onclick="loadScreenshot('${p.id}')">${t('screenshot')}</button>`
+          : `<button class="primary" onclick="openSession('${p.id}')">${t('open')}</button>`}
+        <button onclick="editProfile('${p.id}')">${t('edit')}</button>
+        <button onclick="exportProfile('${p.id}','${esc(p.name)}')">${t('export')}</button>
+        <button onclick="duplicateProfile('${p.id}')">${t('duplicate')}</button>
+        <button onclick="deleteProfile('${p.id}','${esc(p.name)}')">${t('delete')}</button>
       </div>
     </div>`;
   }).join('');
@@ -244,10 +398,10 @@ function render() {
 
 // --- Navigate ---
 function navigateTo(profileId) {
-  const url = prompt('輸入要導航的 URL：', 'https://');
+  const url = prompt(t('navigatePrompt'), 'https://');
   if (!url) return;
   api('POST', '/sessions/sess_' + profileId + '/navigate', { url });
-  toast('🔗 導航中...');
+  toast(t('navigating'));
 }
 
 // --- Screenshot preview ---
@@ -267,10 +421,10 @@ async function loadScreenshot(profileId) {
 
 // --- Sessions ---
 async function openSession(profileId) {
-  toast('啟動中...');
+  toast(t('starting'));
   const d = await api('POST', '/sessions', { profile_id: profileId });
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  toast('✅ 瀏覽器已開啟');
+  toast(t('browserOpened'));
   sessions.add(profileId);
   render();
 }
@@ -279,7 +433,7 @@ async function closeSession(profileId) {
   await api('DELETE', '/sessions/sess_' + profileId);
   sessions.delete(profileId);
   render();
-  toast('已關閉');
+  toast(t('closed'));
 }
 
 // --- Profile CRUD ---
@@ -310,12 +464,12 @@ async function saveProfile() {
   } else { body.proxy = null; }
   const d = await api('PUT', '/profiles/' + id, body);
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  hideEdit(); toast('✅ 已儲存'); await loadProfiles();
+  hideEdit(); toast(t('saved')); await loadProfiles();
 }
 
 async function createProfile() {
   const name = document.getElementById('f-name').value;
-  if (!name) { toast('請輸入名稱'); return; }
+  if (!name) { toast(t('nameRequired')); return; }
   const body = { name, engine: document.getElementById('f-engine').value, group: document.getElementById('f-group').value || undefined };
   const proxyType = document.getElementById('f-proxy-type').value;
   if (proxyType) {
@@ -323,53 +477,53 @@ async function createProfile() {
   }
   const d = await api('POST', '/profiles', body);
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  hideCreate(); toast('✅ 已建立 ' + name); await loadProfiles();
+  hideCreate(); toast(t('created') + name); await loadProfiles();
 }
 
-async function duplicateProfile(id) { await api('POST', '/profiles/' + id + '/duplicate'); toast('✅ 已複製'); await loadProfiles(); }
+async function duplicateProfile(id) { await api('POST', '/profiles/' + id + '/duplicate'); toast(t('duplicated')); await loadProfiles(); }
 
 async function deleteProfile(id, name) {
-  if (!confirm('確定刪除 ' + name + '？')) return;
-  await api('DELETE', '/profiles/' + id); toast('已刪除'); await loadProfiles();
+  if (!confirm(t('deleteConfirm', { name }))) return;
+  await api('DELETE', '/profiles/' + id); toast(t('deleted')); await loadProfiles();
 }
 
 async function exportProfile(id, name) {
-  toast('匯出中...');
+  toast(t('exporting'));
   const r = await fetch(API + '/profiles/' + id + '/export', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
-  if (!r.ok) { toast('❌ 匯出失敗'); return; }
+  if (!r.ok) { toast(t('exportFailed')); return; }
   const blob = await r.blob();
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = (name || id) + '.zip'; a.click();
-  toast('✅ 已匯出');
+  toast(t('exported'));
 }
 
 function importProfile() { document.getElementById('importFile').click(); }
 async function handleImport(input) {
   const file = input.files[0]; if (!file) return;
-  toast('匯入中...'); const fd = new FormData(); fd.append('file', file);
+  toast(t('importing')); const fd = new FormData(); fd.append('file', file);
   const r = await fetch(API + '/profiles/import', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN }, body: fd });
   const d = await r.json(); input.value = '';
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  toast('✅ 已匯入'); await loadProfiles();
+  toast(t('imported')); await loadProfiles();
 }
 
 async function backupAll() {
-  toast('備份中...');
+  toast(t('backingUp'));
   const r = await fetch(API + '/backup', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN } });
-  if (!r.ok) { toast('❌ 備份失敗'); return; }
+  if (!r.ok) { toast(t('backupFailed')); return; }
   const blob = await r.blob();
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'browseforge-backup-' + new Date().toISOString().slice(0,10) + '.zip'; a.click();
-  toast('✅ 已備份');
+  toast(t('backedUp'));
 }
 
 function restoreBackup() { document.getElementById('restoreFile').click(); }
 async function handleRestore(input) {
   const file = input.files[0]; if (!file) return;
-  if (!confirm('還原備份會匯入所有 Profile（不會覆蓋現有的），確定？')) { input.value = ''; return; }
-  toast('還原中...'); const fd = new FormData(); fd.append('file', file);
+  if (!confirm(t('restoreConfirm'))) { input.value = ''; return; }
+  toast(t('restoring')); const fd = new FormData(); fd.append('file', file);
   const r = await fetch(API + '/restore', { method: 'POST', headers: { 'Authorization': 'Bearer ' + TOKEN }, body: fd });
   const d = await r.json(); input.value = '';
   if (d.error) { toast('❌ ' + d.error.message); return; }
-  toast('✅ 已還原 ' + d.data.imported + ' 個 Profile'); await loadProfiles();
+  toast(t('restored', { count: d.data.imported })); await loadProfiles();
 }
 
 function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }

@@ -1,0 +1,49 @@
+name: Bug report
+description: Report a reproducible BrowseForge bug.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: v1.7.0 or commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment
+      options:
+        - Native binary
+        - Docker
+        - Source build
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: OS / Architecture
+      placeholder: macOS arm64, Linux amd64, Windows amd64
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction Steps
+      description: Include exact commands or UI steps.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Remove tokens, cookies, profile data, and secrets.
+      render: text

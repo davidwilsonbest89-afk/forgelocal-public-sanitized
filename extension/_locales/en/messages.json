@@ -1,0 +1,39 @@
+{
+  "extensionName": {
+    "message": "BrowseForge"
+  },
+  "extensionDescription": {
+    "message": "Multi-profile anti-detect browser manager"
+  },
+  "searchPlaceholder": {
+    "message": "Search profiles..."
+  },
+  "addProfile": {
+    "message": "+ New Profile"
+  },
+  "ungrouped": {
+    "message": "Ungrouped"
+  },
+  "profileNamePrompt": {
+    "message": "Profile name:"
+  },
+  "enginePrompt": {
+    "message": "Engine (firefox / chromium):"
+  },
+  "contextMenu": {
+    "message": "$NAME$\n\n1. Edit\n2. Duplicate\n3. Delete\n\nChoose (1-3):",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteConfirm": {
+    "message": "Delete $NAME$?",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
+}

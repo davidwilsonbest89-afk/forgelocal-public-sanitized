@@ -1,5 +1,49 @@
 # BrowseForge
 
+BrowseForge is a cross-platform, multi-profile anti-detect browser manager with Firefox/Camoufox and Chromium/CloakBrowser runtime support. It provides isolated profiles, fingerprint management, REST APIs, MCP integration, workflow automation, Docker deployment, and Playwright-compatible browser control.
+
+## International Project
+
+This project is moving toward international community use. English is the default language for governance, release, security, and contribution documentation.
+
+Project resources:
+
+- [Contributing](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
+- [Support](SUPPORT.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Release Process](docs/release.md)
+- [Platform Support](docs/platform-support.md)
+- [Internationalization](docs/i18n.md)
+- [Changelog](CHANGELOG.md)
+- [API Reference](API.md)
+
+## Quick Start
+
+Download the matching ZIP from [Releases](https://github.com/nczz/BrowseForge/releases):
+
+| Platform | Asset |
+|------|------|
+| macOS Intel | `BrowseForge-vX.X.X-lite-macos-x64.zip` |
+| macOS Apple Silicon | `BrowseForge-vX.X.X-lite-macos-arm64.zip` |
+| Linux x64 | `BrowseForge-vX.X.X-lite-linux-x64.zip` |
+| Linux arm64 | `BrowseForge-vX.X.X-lite-linux-arm64.zip` |
+| Windows x64 | `BrowseForge-vX.X.X-lite-windows-x64.zip` |
+
+For Docker deployments, pin a release tag in production:
+
+```bash
+docker run -d --name browseforge \
+  -p 19280:19280 -p 19281:19281 -p 6901:6901 \
+  -e VNC_PASSWORD=browseforge \
+  --restart unless-stopped \
+  ghcr.io/nczz/browseforge:v1.7.0
+```
+
+The current Docker image is `linux/amd64`. Apple Silicon can run it through Docker emulation; native `linux/arm64` Docker images are deferred until KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
+
+---
+
 🦊🌐 跨平台多指紋反偵測瀏覽器 — 雙引擎（Firefox + Chromium），每個 Profile 獨立指紋、Cookie、Proxy。
 
 ## 功能
@@ -49,9 +93,10 @@ cd BrowseForge-lite
 **直接使用預建 image（無需 clone）：**
 ```bash
 docker run -d --name browseforge \
-  -p 19280:19280 -p 6901:6901 \
+  -p 19280:19280 -p 19281:19281 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
-  ghcr.io/nczz/browseforge:latest
+  --restart unless-stopped \
+  ghcr.io/nczz/browseforge:v1.7.0
 ```
 
 **或從原始碼 build：**
@@ -65,7 +110,8 @@ docker compose up -d --build
 
 | 服務 | URL |
 |------|-----|
-| Dashboard | http://localhost:19280 |
+| Dashboard + REST API + Playwright proxy | http://localhost:19280 |
+| MCP Streamable HTTP | http://localhost:19281 |
 | 遠端桌面 (KasmVNC) | http://localhost:6901 |
 | VNC 帳號 | `user` / `browseforge` |
 | API Token | `docker exec browseforge /app/BrowseForge token` |

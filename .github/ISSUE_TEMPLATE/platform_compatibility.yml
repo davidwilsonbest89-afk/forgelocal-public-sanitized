@@ -1,0 +1,37 @@
+name: Platform compatibility
+description: Report browser, OS, Docker, or architecture compatibility issues.
+title: "[Platform]: "
+labels: ["platform"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: BrowseForge Version
+      placeholder: v1.7.0
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: macOS arm64, Linux amd64 Docker, Linux arm64 native
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser Engine
+      options:
+        - Camoufox
+        - CloakBrowser
+        - Both
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Behavior
+      description: What works and what fails?
+    validations:
+      required: true

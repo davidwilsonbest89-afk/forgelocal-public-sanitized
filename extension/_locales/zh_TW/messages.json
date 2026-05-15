@@ -1,0 +1,39 @@
+{
+  "extensionName": {
+    "message": "BrowseForge"
+  },
+  "extensionDescription": {
+    "message": "多 Profile 反偵測瀏覽器管理工具"
+  },
+  "searchPlaceholder": {
+    "message": "搜尋 profile..."
+  },
+  "addProfile": {
+    "message": "+ 新增 Profile"
+  },
+  "ungrouped": {
+    "message": "未分組"
+  },
+  "profileNamePrompt": {
+    "message": "Profile 名稱："
+  },
+  "enginePrompt": {
+    "message": "引擎 (firefox / chromium)："
+  },
+  "contextMenu": {
+    "message": "$NAME$\n\n1. 編輯\n2. 複製\n3. 刪除\n\n選擇 (1-3)：",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteConfirm": {
+    "message": "確定刪除 $NAME$？",
+    "placeholders": {
+      "name": {
+        "content": "$1"
+      }
+    }
+  }
+}

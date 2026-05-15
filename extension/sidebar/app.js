@@ -4,6 +4,7 @@ let profiles = [];
 let token = '';
 
 async function init() {
+  applyI18n();
   const stored = await browser.storage.local.get('apiToken');
   token = stored.apiToken || '';
   await loadProfiles();
@@ -31,7 +32,7 @@ function render(filter = '') {
 
   const groups = {};
   for (const p of filtered) {
-    const g = p.group || '未分組';
+    const g = p.group || msg('ungrouped');
     (groups[g] = groups[g] || []).push(p);
   }
 
@@ -62,9 +63,9 @@ async function openProfile(p) {
 }
 
 async function addProfile() {
-  const name = prompt('Profile 名稱：');
+  const name = prompt(msg('profileNamePrompt'));
   if (!name) return;
-  const engine = prompt('引擎 (firefox / chromium)：', 'firefox');
+  const engine = prompt(msg('enginePrompt'), 'firefox');
   try {
     await fetch(`${API}/profiles`, {
       method: 'POST',
@@ -79,13 +80,13 @@ async function addProfile() {
 
 function showContextMenu(event, profile) {
   // Simple context menu — can be enhanced later
-  const action = prompt(`${profile.name}\n\n1. 編輯\n2. 複製\n3. 刪除\n\n選擇 (1-3)：`);
+  const action = prompt(msg('contextMenu', profile.name));
   if (action === '3') deleteProfile(profile);
   if (action === '2') duplicateProfile(profile);
 }
 
 async function deleteProfile(p) {
-  if (!confirm(`確定刪除 ${p.name}？`)) return;
+  if (!confirm(msg('deleteConfirm', p.name))) return;
   await fetch(`${API}/profiles/${p.id}`, {
     method: 'DELETE',
     headers: { 'Authorization': `Bearer ${token}` },
@@ -105,6 +106,17 @@ function esc(s) {
   const d = document.createElement('div');
   d.textContent = s;
   return d.innerHTML;
+}
+
+function msg(key, substitutions) {
+  const value = browser.i18n.getMessage(key, substitutions);
+  return value || key;
+}
+
+function applyI18n() {
+  document.documentElement.lang = browser.i18n.getUILanguage();
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = msg(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = msg(el.dataset.i18nPlaceholder); });
 }
 
 init();

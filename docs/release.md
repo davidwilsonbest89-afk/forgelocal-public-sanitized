@@ -18,7 +18,7 @@ BrowseForge releases are tag driven. Do not create or push release tags by hand.
    scripts/release-preflight.sh v1.7.1
    ```
 
-The preflight checks the working tree, version references, Go tests, vet, workflow YAML, Docker Compose config, the Camoufox Bind spike, and a real `linux/amd64` Docker build.
+The preflight checks the working tree, version references, Go tests, vet, UI i18n syntax, workflow YAML, Docker Compose config, the Camoufox Bind spike, and a real `linux/amd64` Docker build.
 
 ## Publish
 
