@@ -64,8 +64,8 @@ if ! rg -q "ghcr.io/nczz/browseforge:${version}" docker/README.md docs/linux-ser
   die "Docker docs must reference ghcr.io/nczz/browseforge:${version}"
 fi
 
-mapfile -t go_packages < <(go list ./... | rg -v '/internal/spike$')
-run go test -count=1 "${go_packages[@]}"
+go_packages="$(go list ./... | rg -v '/internal/spike$')"
+run go test -count=1 $go_packages
 run go vet ./...
 run node --check extension/sidebar/app.js
 run node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json','utf8')); JSON.parse(require('fs').readFileSync('extension/_locales/en/messages.json','utf8')); JSON.parse(require('fs').readFileSync('extension/_locales/zh_TW/messages.json','utf8')); console.log('extension json ok')"
