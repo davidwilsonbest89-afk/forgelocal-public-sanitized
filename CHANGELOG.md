@@ -6,6 +6,13 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.7.6 - 2026-05-15
+
+### Fixed
+
+- Playwright 1.60 driver crashes caused by Firefox/Camoufox page errors without source locations no longer poison later browser launches.
+- Chromium/CloakBrowser launches now recover from stale Playwright driver protocol failures even when dead sessions remain in memory.
+
 ## v1.7.5 - 2026-05-15
 
 ### Fixed

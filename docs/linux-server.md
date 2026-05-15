@@ -9,10 +9,10 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 19281:19281 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.5
+  ghcr.io/nczz/browseforge:v1.7.6
 ```
 
-Pin a version tag such as `v1.7.5` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
+Pin a version tag such as `v1.7.6` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
 
 > The current GHCR Docker image is `linux/amd64`. Apple Silicon and ARM servers run it through emulation. Native `linux/arm64` Docker images should only be enabled after KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
 
@@ -40,7 +40,7 @@ docker run -d --name browseforge \
   -v browseforge-data:/app/data \
   -v browseforge-browsers:/app/browsers \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.5
+  ghcr.io/nczz/browseforge:v1.7.6
 ```
 
 ## Docker Compose
@@ -48,7 +48,7 @@ docker run -d --name browseforge \
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v1.7.5
+    image: ghcr.io/nczz/browseforge:v1.7.6
     platform: linux/amd64
     ports:
       - "19280:19280"
@@ -105,7 +105,7 @@ Then open:
 ## Upgrade
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v1.7.5
+docker pull ghcr.io/nczz/browseforge:v1.7.6
 docker stop browseforge && docker rm browseforge
 docker run -d --name browseforge \
   -p 19280:19280 -p 19281:19281 -p 6901:6901 \
@@ -114,7 +114,7 @@ docker run -d --name browseforge \
   -v browseforge-browsers:/app/browsers \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.5
+  ghcr.io/nczz/browseforge:v1.7.6
 ```
 
 Profiles, tokens, and browser engines remain in Docker volumes.

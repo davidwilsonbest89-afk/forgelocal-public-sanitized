@@ -75,8 +75,11 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 	session, err := m.launchProfile(p)
 
 	if err != nil {
-		if shouldRetryLaunch(err) && len(m.sessions) == 0 {
+		if shouldRetryLaunch(err) {
 			slog.Warn("browser launch failed with recoverable protocol error; restarting Playwright and retrying", "profile", p.ID, "engine", p.Engine, "error", err)
+			if len(m.sessions) > 0 {
+				m.dropSessionsLocked("playwright driver restart after protocol error")
+			}
 			if restartErr := m.restartPlaywright(); restartErr != nil {
 				return nil, fmt.Errorf("%w; playwright restart failed: %v", err, restartErr)
 			}
@@ -132,6 +135,16 @@ func (m *Manager) restartPlaywright() error {
 	}
 	m.pw = pw
 	return nil
+}
+
+func (m *Manager) dropSessionsLocked(reason string) {
+	for id, s := range m.sessions {
+		if s.relay != nil {
+			s.relay.Close()
+		}
+		delete(m.sessions, id)
+		slog.Warn("session dropped", "session", id, "reason", reason)
+	}
 }
 
 func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
