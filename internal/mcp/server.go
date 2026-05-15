@@ -18,15 +18,19 @@ import (
 // MCP Server — Model Context Protocol (2025-11-25 spec, Streamable HTTP transport)
 
 type Server struct {
-	store *profile.Store
-	mgr   *browser.Manager
-	hcfg  humanize.Config
-	token string
-	reqID atomic.Int64
+	store   *profile.Store
+	mgr     *browser.Manager
+	hcfg    humanize.Config
+	token   string
+	version string
+	reqID   atomic.Int64
 }
 
-func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, token string) *Server {
-	return &Server{store: store, mgr: mgr, hcfg: hcfg, token: token}
+func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, token, version string) *Server {
+	if version == "" {
+		version = "dev"
+	}
+	return &Server{store: store, mgr: mgr, hcfg: hcfg, token: token, version: version}
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -77,7 +81,7 @@ func (s *Server) handleInitialize(params json.RawMessage) any {
 	return map[string]any{
 		"protocolVersion": "2025-11-25",
 		"capabilities":    map[string]any{"tools": map[string]any{}},
-		"serverInfo":      map[string]any{"name": "BrowseForge", "version": "1.7.0"},
+		"serverInfo":      map[string]any{"name": "BrowseForge", "version": s.version},
 	}
 }
 

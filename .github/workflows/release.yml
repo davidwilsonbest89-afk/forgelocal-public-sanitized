@@ -86,7 +86,8 @@ jobs:
         run: |
           BINARY=BrowseForge
           if [ "${{ matrix.goos }}" = "windows" ]; then BINARY=BrowseForge.exe; fi
-          go build -ldflags="-s -w" -o $BINARY ./cmd/server
+          VERSION="${GITHUB_REF_NAME#v}"
+          go build -ldflags="-s -w -X main.Version=${VERSION}" -o $BINARY ./cmd/server
 
       - name: Package
         run: |
@@ -149,6 +150,11 @@ jobs:
             find artifacts -type f -name '*.zip' >&2
             exit 1
           fi
+
+          tmp="$(mktemp -d)"
+          unzip -q "artifacts/BrowseForge-linux-x64/BrowseForge-${GITHUB_REF_NAME}-lite-linux-x64.zip" -d "$tmp"
+          chmod +x "$tmp/BrowseForge-lite/BrowseForge"
+          "$tmp/BrowseForge-lite/BrowseForge" doctor | grep "BrowseForge v${GITHUB_REF_NAME#v}"
 
       - uses: softprops/action-gh-release@v2
         with:

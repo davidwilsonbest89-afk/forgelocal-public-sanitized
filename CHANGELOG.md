@@ -6,6 +6,13 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.7.3 - 2026-05-15
+
+### Fixed
+
+- Release binaries now report the tag version through the REST API, doctor output, and MCP initialize response.
+- Release workflow verifies the packaged Linux binary version before publishing assets.
+
 ## v1.7.2 - 2026-05-15
 
 ### Added

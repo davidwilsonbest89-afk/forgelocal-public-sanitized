@@ -35,6 +35,8 @@ fi
 
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
+tmpdir="$(mktemp -d)"
+trap 'rm -rf "$tmpdir"' EXIT
 
 [[ "$(git status --short)" == "" ]] || die "working tree must be clean before release"
 
@@ -63,6 +65,9 @@ fi
 if ! rg -q "ghcr.io/nczz/browseforge:${version}" docker/README.md docs/linux-server.md; then
   die "Docker docs must reference ghcr.io/nczz/browseforge:${version}"
 fi
+
+run go build -ldflags "-s -w -X main.Version=${version#v}" -o "$tmpdir/BrowseForge" ./cmd/server
+"$tmpdir/BrowseForge" doctor | rg -q "BrowseForge v${version#v}" || die "release binary version does not match ${version}"
 
 go_packages="$(go list ./... | rg -v '/internal/spike$')"
 run go test -count=1 $go_packages

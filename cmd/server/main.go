@@ -26,7 +26,7 @@ import (
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.7.0"
+var Version = "dev"
 
 func main() {
 	if len(os.Args) < 2 {
@@ -183,6 +183,7 @@ func runMCPStdio() {
 		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
 		os.Exit(1)
 	}
+	cfg.Version = Version
 	profileStore, err := profile.NewStore(cfg.ProfilesDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Profile store error: %v\n", err)
@@ -195,7 +196,7 @@ func runMCPStdio() {
 	}
 	defer browserMgr.Close()
 
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), "")
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), "", cfg.Version)
 	mcpServer.RunStdio()
 }
 
@@ -346,7 +347,7 @@ func runServer(flags *serveFlags) {
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
 	// MCP Server
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), cfg.APIToken)
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), cfg.APIToken, cfg.Version)
 	go func() {
 		slog.Info("MCP server starting", "port", "19281")
 		if err := http.ListenAndServe(cfg.Host+":19281", mcpServer); err != nil && err != http.ErrServerClosed {
