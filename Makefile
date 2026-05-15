@@ -43,7 +43,7 @@ package: build
 	@mkdir -p dist/BrowseForge/logs
 	@cp config.default.json dist/BrowseForge/config.json
 	@cp scripts/start.sh dist/BrowseForge/ && chmod +x dist/BrowseForge/start.sh
-	@cp README.md README.zh-TW.md dist/BrowseForge/
+	@cp README.md README.zh-TW.md API.md API.zh-TW.md dist/BrowseForge/
 	cd dist && zip -r BrowseForge-v$(VERSION)-$(PLATFORM).zip BrowseForge/
 	@echo "Package: dist/BrowseForge-v$(VERSION)-$(PLATFORM).zip"
 

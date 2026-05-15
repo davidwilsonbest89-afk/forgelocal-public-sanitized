@@ -1,6 +1,8 @@
-# Linux Server 部署指南
+# Linux Server Deployment
 
-## 推薦：Docker 部署
+[繁體中文](linux-server.zh-TW.md)
+
+## Recommended: Docker
 
 ```bash
 docker run -d --name browseforge \
@@ -10,26 +12,25 @@ docker run -d --name browseforge \
   ghcr.io/nczz/browseforge:v1.7.0
 ```
 
-正式部署建議 pin 版本 tag，例如 `v1.7.0`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
+Pin a version tag such as `v1.7.0` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
 
-> 目前 GHCR Docker image 發佈 `linux/amd64`。Apple Silicon 或 ARM server 會透過 emulation 執行；原生 `linux/arm64` image 會在 KasmVNC、Camoufox、CloakBrowser runtime 都驗證完成後再開啟。
+> The current GHCR Docker image is `linux/amd64`. Apple Silicon and ARM servers run it through emulation. Native `linux/arm64` Docker images should only be enabled after KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
 
-| 服務 | URL |
+| Service | URL |
 |------|-----|
-| Dashboard + API | http://YOUR_SERVER:19280 |
-| MCP Streamable HTTP | http://YOUR_SERVER:19281 |
-| 遠端桌面 (KasmVNC) | http://YOUR_SERVER:6901 |
-| VNC 帳號 | `user` / 環境變數 `VNC_PASSWORD` |
+| Dashboard + REST API + Playwright proxy | `http://YOUR_SERVER:19280` |
+| MCP Streamable HTTP | `http://YOUR_SERVER:19281` |
+| KasmVNC remote desktop | `http://YOUR_SERVER:6901` |
+| VNC credentials | `user` / `VNC_PASSWORD` |
 
-### 取得 API Token
+## Get the API Token
 
 ```bash
 docker logs browseforge | grep "API Token"
-# 或
 docker exec browseforge /app/BrowseForge token
 ```
 
-### 持久化資料
+## Persistent Data
 
 ```bash
 docker run -d --name browseforge \
@@ -42,7 +43,7 @@ docker run -d --name browseforge \
   ghcr.io/nczz/browseforge:v1.7.0
 ```
 
-### Docker Compose
+## Docker Compose
 
 ```yaml
 services:
@@ -67,13 +68,13 @@ volumes:
   browseforge-browsers:
 ```
 
-## 防火牆設定
+## Firewall
 
-| 端口 | 用途 | 是否必要 |
-|------|------|---------|
-| 19280 | Dashboard + REST API + Playwright WebSocket proxy | ✅ 必要 |
-| 19281 | MCP Streamable HTTP | 選用（需要遠端 MCP 時） |
-| 6901 | KasmVNC 遠端桌面 | 選用（需要看畫面時） |
+| Port | Purpose | Required |
+|------|---------|----------|
+| 19280 | Dashboard + REST API + Playwright WebSocket proxy | Required |
+| 19281 | MCP Streamable HTTP | Optional, only for remote MCP |
+| 6901 | KasmVNC remote desktop | Optional, only when visual access is needed |
 
 ```bash
 sudo ufw allow 19280/tcp
@@ -81,20 +82,27 @@ sudo ufw allow 19281/tcp
 sudo ufw allow 6901/tcp
 ```
 
-## 安全建議
+## Security
 
-- **不要**把 19280、19281 和 6901 直接暴露到公網，用 SSH tunnel 或 VPN 存取
-- KasmVNC 有 Basic Auth 保護（user/password）
-- API/MCP Token 存在 `data/.api-token`，不要外洩
-- 建議用 nginx reverse proxy + HTTPS 包裝
+- Do not expose `19280`, `19281`, or `6901` directly to the public internet.
+- Use SSH tunnels, VPN, or a hardened HTTPS reverse proxy.
+- KasmVNC uses Basic Auth through `user` and `VNC_PASSWORD`.
+- API and MCP share the Bearer token stored in `data/.api-token`.
+- Treat profiles, backup ZIPs, exported profiles, cookies, and tokens as sensitive.
+
+Recommended SSH tunnel:
 
 ```bash
-# SSH tunnel 方式（最安全）
 ssh -L 19280:localhost:19280 -L 19281:localhost:19281 -L 6901:localhost:6901 user@server
-# 然後本機開 http://localhost:19280、http://localhost:19281 和 http://localhost:6901
 ```
 
-## 升級
+Then open:
+
+- `http://localhost:19280`
+- `http://localhost:19281`
+- `http://localhost:6901`
+
+## Upgrade
 
 ```bash
 docker pull ghcr.io/nczz/browseforge:v1.7.0
@@ -109,12 +117,12 @@ docker run -d --name browseforge \
   ghcr.io/nczz/browseforge:v1.7.0
 ```
 
-Profiles、Token、瀏覽器引擎都在 volumes 中保留，只更新 BrowseForge。
+Profiles, tokens, and browser engines remain in Docker volumes.
 
-## 特性
+## Runtime Features
 
-- **KasmVNC** — Chrome 上 seamless 剪貼簿、IME 中文輸入
-- **WebGL 完整偽裝** — GLX + 軟體渲染 + 完整 WebGL 指紋
-- **Docker 自動偵測** — 自動 `0.0.0.0` + `--no-sandbox`
-- **Playwright WebSocket proxy** — 外部腳本透過 19280 port 連入操作瀏覽器
-- **MCP Streamable HTTP** — 遠端 MCP client 透過 19281 port 連入，使用 Bearer Token
+- KasmVNC remote desktop with browser viewing/control.
+- GLX and software rendering for WebGL behavior in containerized environments.
+- Docker auto-detection for `0.0.0.0` binding and `--no-sandbox`.
+- Playwright WebSocket proxy through port `19280`.
+- MCP Streamable HTTP through port `19281` with Bearer token authentication.

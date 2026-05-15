@@ -18,6 +18,7 @@ Common checks:
 go test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')
 go vet ./...
 bash -n scripts/release-preflight.sh scripts/release-push.sh
+node scripts/check-i18n.js
 docker compose -f docker/docker-compose.yml config
 ```
 

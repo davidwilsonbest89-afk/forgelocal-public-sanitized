@@ -2,7 +2,32 @@
 
 [English](README.md)
 
-🦊🌐 跨平台多指紋反偵測瀏覽器，支援 Firefox/Camoufox 與 Chromium/CloakBrowser。每個 Profile 都有獨立指紋、Cookie、Proxy、瀏覽器資料，並提供 Web Dashboard、REST API、MCP、YAML Workflow、Docker 部署與 Playwright Connect。
+🦊🌐 BrowseForge 是 automation-ready 的反偵測瀏覽器工作區，適合需要在桌面、伺服器、Docker、REST API、MCP、Playwright workflow 中管理可重複、可隔離瀏覽器身份的團隊。
+
+它整合 Firefox/Camoufox 與 Chromium/CloakBrowser runtime，提供 Profile 隔離、指紋管理、遠端控制、備份/還原，以及 AI agent 友善的自動化介面。
+
+## 為什麼選 BrowseForge
+
+- 用一致的方式管理隔離瀏覽器身份，不需要為每個 browser engine 重寫自動化流程。
+- 可透過 Web UI、REST API、MCP tools、YAML workflow 或 Playwright client 控制 profiles。
+- 可在本機開發，也可用 Docker + KasmVNC 部署到 Linux server。
+- 透過支援矩陣、防呆 release scripts、CI checks，讓發布與平台行為可追溯。
+- 以國際化為基礎：英文主文件、繁中文件、Dashboard/extension i18n。
+
+## 適合誰
+
+- 需要驗證多帳號、多地區瀏覽器流程的 QA / automation 團隊。
+- 研究 fingerprint 與反偵測行為的 browser-runtime 研究者。
+- 需要 MCP 控制瀏覽器 session 的 AI agent builder。
+- 需要穩定 profile 儲存、備份、還原、遠端瀏覽器操作的使用者。
+
+## 信任與安全
+
+- MIT license。
+- 公開 security policy 與 support process。
+- REST API、MCP HTTP、Playwright proxy 都使用 token 驗證。
+- Docker 正式部署建議 pin 版本 tag。
+- Release preflight 會檢查 tests、i18n、Docker build、Camoufox Bind runtime、release artifact 一致性。
 
 ## 專案資源
 

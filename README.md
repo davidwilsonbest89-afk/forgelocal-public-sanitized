@@ -2,7 +2,32 @@
 
 [繁體中文](README.zh-TW.md)
 
-BrowseForge is a cross-platform, multi-profile anti-detect browser manager with Firefox/Camoufox and Chromium/CloakBrowser runtime support. It provides isolated browser profiles, fingerprint management, REST APIs, MCP integration, workflow automation, Docker deployment, and Playwright-compatible browser control.
+BrowseForge is an automation-ready anti-detect browser workspace for teams that need repeatable, isolated browser identities across desktop, server, Docker, REST API, MCP, and Playwright workflows.
+
+It combines Firefox/Camoufox and Chromium/CloakBrowser runtime support with profile isolation, fingerprint management, remote control, backup/restore, and agent-friendly automation surfaces.
+
+## Why BrowseForge
+
+- Run isolated browser identities without rebuilding automation around each browser engine.
+- Control profiles through a web UI, REST API, MCP tools, YAML workflows, or Playwright clients.
+- Deploy locally for development or on Linux servers with Docker and KasmVNC.
+- Keep release and platform behavior auditable through documented support matrices, guarded release scripts, and CI checks.
+- Build on an international-ready foundation with English-first docs, Traditional Chinese docs, and UI i18n.
+
+## Who It Is For
+
+- QA and automation teams validating multi-account or multi-region browser flows.
+- Browser-runtime researchers comparing fingerprint and anti-detection behavior.
+- AI agent builders that need MCP-controlled browser sessions.
+- Operators who need repeatable profile storage, backup, restore, and remote browser access.
+
+## Trust and Safety
+
+- MIT licensed.
+- Public security policy and support process.
+- Token-authenticated REST API, MCP HTTP, and Playwright proxy access.
+- Version-pinned Docker guidance for production deployments.
+- Release preflight checks for tests, i18n, Docker build, Camoufox Bind runtime, and release artifact consistency.
 
 ## Features
 

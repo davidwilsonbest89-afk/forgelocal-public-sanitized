@@ -1,54 +1,65 @@
-# Playwright Driver Patch 狀態
+# Playwright Driver Patch Status
 
-## 當前狀態
+[繁體中文](playwright-patches.zh-TW.md)
 
-目前 BrowseForge 使用 Playwright 1.60 整合版，已移除先前為 Playwright 1.59.1 driver 準備的本地 hotfix。
+## Current Status
 
-| Patch | 舊位置 | 狀態 | 移除原因 |
-|-------|--------|------|----------|
-| WebSocket Bind path 缺少 `/` | `internal/browser/manager.go` → `patchDriverWSBind()` / `fixWSEndpoint()` | 已移除 | Playwright driver 1.60 已在 `browser.bind()` 產生正確 `/guid` WebSocket path |
+BrowseForge now uses the Playwright 1.60 integration and no longer keeps the local hotfix that was previously required for the Playwright 1.59.1 driver.
 
-## 詳細說明
+| Patch | Old Location | Status | Reason Removed |
+|-------|--------------|--------|----------------|
+| Missing `/` in the WebSocket Bind path | `internal/browser/manager.go` via `patchDriverWSBind()` / `fixWSEndpoint()` | Removed | Playwright driver 1.60 produces the correct `/guid` WebSocket path from `browser.bind()` |
 
-### Bug 描述
+## Background
 
-`packages/playwright-core/src/server/browser.ts` 中：
+The Playwright 1.59.1 driver generated a WebSocket path without the leading slash:
 
 ```typescript
-// 1.59.1 (有 bug):
+// 1.59.1 buggy behavior:
 endpoint = await this._wsServer.listen(options.port ?? 0, options.host, (0, import_utils.createGuid)());
 
-// main 分支 (已修正):
+// Fixed behavior:
 endpoint = await this._wsServer.listen(options.port ?? 0, options.host, '/' + createGuid());
 ```
 
-缺少 `/` 導致：
-1. endpoint 回傳 `ws://host:PORTguid`（port 和 guid 黏在一起）
-2. WebSocket upgrade handler 比對 `pathname !== path` 永遠失敗（因為 HTTP pathname 有 `/` 但 server 的 path 沒有）
+The missing slash caused two failures:
 
-### BrowseForge 曾經的修正
+1. The endpoint could look like `ws://host:PORTguid`, with the port and GUID joined together.
+2. WebSocket upgrade handling failed because the HTTP pathname included `/` while the server path did not.
 
-1. **`patchDriverWSBind()`** — 啟動時自動修正 driver JS 檔案（`{cacheDir}/ms-playwright-go/1.59.1/package/lib/server/browser.js`）
-2. **`fixWSEndpoint()`** — 作為 fallback，修正回傳的 endpoint 格式（從尾部取 32 字元 GUID 插入 `/`）
+## Previous BrowseForge Hotfix
 
-這兩個修正只適用於 Playwright 1.59.1。升級到 1.60 後繼續保留反而會讓 BrowseForge 依賴過期 driver cache 路徑，並模糊真正的 runtime 行為。
+BrowseForge previously carried two local safeguards:
 
-### 驗證步驟
+1. `patchDriverWSBind()` patched the cached driver JavaScript file at startup.
+2. `fixWSEndpoint()` repaired malformed endpoints as a fallback.
 
-1. 檢查 `go.mod` 中 playwright-go 的版本和對應的 driver 版本
-2. 查看 driver 檔案：
+Both were specific to Playwright 1.59.1. Keeping them after the 1.60 migration would hide the actual runtime behavior and keep BrowseForge coupled to an obsolete driver cache path.
+
+## Verification
+
+1. Check `go.mod` for the current `playwright-go` fork/version.
+2. Inspect the cached driver file when needed:
+
    ```bash
    grep "wsServer.listen" $(find ~/.cache ~/Library/Caches -path "*/ms-playwright-go/*/package/lib/server/browser.js" 2>/dev/null)
    ```
-3. Playwright 1.60 driver 應包含 `"/" +` 或等價的 `/` path 產生邏輯。
-4. BrowseForge 不應再出現 `patchDriverWSBind()` 或 `fixWSEndpoint()`。
 
-### 相關檔案
+3. Playwright 1.60 should include `"/" +` or equivalent slash-prefixed path generation.
+4. BrowseForge should not contain `patchDriverWSBind()` or `fixWSEndpoint()`.
+5. Run the Camoufox Bind spike before release:
 
-- `internal/browser/manager.go` — 直接使用 `browser.Bind()` 回傳的 endpoint
-- `go.mod` — playwright-go 版本（目前 fork: `nczz/playwright-go` 1.60 整合版，driver: 1.60.0）
+   ```bash
+   CAMOUFOX_PATH=/path/to/camoufox go test -count=1 -run '^TestPlaywrightBindEndpointWithCamoufox$' -v ./internal/spike
+   ```
 
-### 上游追蹤
+## Related Files
 
-- Playwright 主倉庫：https://github.com/microsoft/playwright
-- Playwright 1.60 已包含 WebSocket Bind path 修正
+- `internal/browser/manager.go` uses the endpoint returned by `browser.Bind()`.
+- `go.mod` points to the `nczz/playwright-go` 1.60 integration fork.
+- `internal/spike/bind_test.go` covers the Bind endpoint runtime path.
+
+## Upstream Tracking
+
+- Playwright upstream: https://github.com/microsoft/playwright
+- Playwright 1.60 includes the WebSocket Bind path fix.

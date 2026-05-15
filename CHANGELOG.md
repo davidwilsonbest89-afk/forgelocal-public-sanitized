@@ -10,6 +10,10 @@ All notable changes should be documented here. This project follows semantic ver
 - Docker release build hardening with pinned release artifact selection and KasmVNC checksum verification.
 - Community governance, support, security, and contribution documentation.
 - Initial application i18n policy and locale structure.
+- English-first README and API reference with Traditional Chinese counterparts.
+- English public docs for platform support, Linux server deployment, and Playwright patch status.
+- i18n coverage checker for Dashboard and WebExtension locale key parity.
+- Marketing-oriented product positioning, audience, trust, and deployment messaging in README.
 
 ### Changed
 
