@@ -6,7 +6,7 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
-## v1.7.1 - 2026-05-15
+## v1.7.2 - 2026-05-15
 
 ### Added
 
