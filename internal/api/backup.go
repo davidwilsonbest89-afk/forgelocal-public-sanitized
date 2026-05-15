@@ -2,12 +2,12 @@ package api
 
 import (
 	"archive/zip"
+	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"browseforge/internal/profile"
@@ -29,20 +29,36 @@ func (h *handler) exportProfile(w http.ResponseWriter, r *http.Request) {
 	defer zw.Close()
 
 	// Add profile.json
-	data, _ := json.MarshalIndent(p, "", "  ")
-	f, _ := zw.Create("profile.json")
-	f.Write(data)
+	data, err := json.MarshalIndent(p, "", "  ")
+	if err != nil {
+		return
+	}
+	f, err := zw.Create("profile.json")
+	if err != nil {
+		return
+	}
+	if _, err := f.Write(data); err != nil {
+		return
+	}
 
 	// Add cookies backup if exists
 	cookiePath := filepath.Join(p.ProfileDir, "cookies-backup.json")
 	if raw, err := os.ReadFile(cookiePath); err == nil {
-		f, _ := zw.Create("cookies-backup.json")
-		f.Write(raw)
+		f, err := zw.Create("cookies-backup.json")
+		if err != nil {
+			return
+		}
+		if _, err := f.Write(raw); err != nil {
+			return
+		}
 	}
 }
 
 func (h *handler) importProfile(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(10 << 20) // 10MB max
+	if err := r.ParseMultipartForm(10 << 20); err != nil {
+		writeError(w, 400, "INVALID_FORM", err.Error())
+		return
+	}
 	file, _, err := r.FormFile("file")
 	if err != nil {
 		writeError(w, 400, "NO_FILE", "file field required")
@@ -51,8 +67,12 @@ func (h *handler) importProfile(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 
 	// Read zip into memory
-	body, _ := io.ReadAll(file)
-	zr, err := zip.NewReader(strings.NewReader(string(body)), int64(len(body)))
+	body, err := io.ReadAll(file)
+	if err != nil {
+		writeError(w, 400, "READ_FAILED", err.Error())
+		return
+	}
+	zr, err := zip.NewReader(bytes.NewReader(body), int64(len(body)))
 	if err != nil {
 		writeError(w, 400, "INVALID_ZIP", err.Error())
 		return
@@ -62,9 +82,17 @@ func (h *handler) importProfile(w http.ResponseWriter, r *http.Request) {
 	var profileData []byte
 	for _, f := range zr.File {
 		if f.Name == "profile.json" {
-			rc, _ := f.Open()
-			profileData, _ = io.ReadAll(rc)
+			rc, err := f.Open()
+			if err != nil {
+				writeError(w, 400, "READ_FAILED", err.Error())
+				return
+			}
+			profileData, err = io.ReadAll(rc)
 			rc.Close()
+			if err != nil {
+				writeError(w, 400, "READ_FAILED", err.Error())
+				return
+			}
 		}
 	}
 	if profileData == nil {
@@ -73,7 +101,10 @@ func (h *handler) importProfile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var p profile.Profile
-	json.Unmarshal(profileData, &p)
+	if err := json.Unmarshal(profileData, &p); err != nil {
+		writeError(w, 400, "INVALID_PROFILE", err.Error())
+		return
+	}
 	p.ID = "" // generate new ID
 	p.ContainerID = ""
 
@@ -94,14 +125,25 @@ func (h *handler) backup(w http.ResponseWriter, r *http.Request) {
 	defer zw.Close()
 
 	for _, p := range profiles {
-		data, _ := json.MarshalIndent(p, "", "  ")
-		f, _ := zw.Create(p.ID + "/profile.json")
-		f.Write(data)
+		data, err := json.MarshalIndent(p, "", "  ")
+		if err != nil {
+			return
+		}
+		f, err := zw.Create(p.ID + "/profile.json")
+		if err != nil {
+			return
+		}
+		if _, err := f.Write(data); err != nil {
+			return
+		}
 	}
 }
 
 func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(50 << 20) // 50MB max
+	if err := r.ParseMultipartForm(50 << 20); err != nil {
+		writeError(w, 400, "INVALID_FORM", err.Error())
+		return
+	}
 	file, _, err := r.FormFile("file")
 	if err != nil {
 		writeError(w, 400, "NO_FILE", err.Error())
@@ -109,8 +151,12 @@ func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	body, _ := io.ReadAll(file)
-	zr, err := zip.NewReader(strings.NewReader(string(body)), int64(len(body)))
+	body, err := io.ReadAll(file)
+	if err != nil {
+		writeError(w, 400, "READ_FAILED", err.Error())
+		return
+	}
+	zr, err := zip.NewReader(bytes.NewReader(body), int64(len(body)))
 	if err != nil {
 		writeError(w, 400, "INVALID_ZIP", err.Error())
 		return
@@ -121,12 +167,18 @@ func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
 		if filepath.Base(f.Name) != "profile.json" {
 			continue
 		}
-		rc, _ := f.Open()
-		data, _ := io.ReadAll(rc)
+		rc, err := f.Open()
+		if err != nil {
+			continue
+		}
+		data, err := io.ReadAll(rc)
 		rc.Close()
+		if err != nil {
+			continue
+		}
 
 		var p profile.Profile
-		if json.Unmarshal(data, &p) != nil {
+		if err := json.Unmarshal(data, &p); err != nil {
 			continue
 		}
 		p.ID = ""

@@ -16,4 +16,4 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 )
 
-replace github.com/playwright-community/playwright-go => github.com/nczz/playwright-go v0.5700.2-0.20260511054702-2220b7a105a9
+replace github.com/playwright-community/playwright-go => github.com/nczz/playwright-go v0.5700.2-0.20260515065009-ba32c7a9e17a

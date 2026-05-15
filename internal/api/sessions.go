@@ -86,7 +86,10 @@ func (h *handler) navigate(w http.ResponseWriter, r *http.Request) {
 		URL       string `json:"url"`
 		WaitUntil string `json:"wait_until,omitempty"`
 	}
-	json.NewDecoder(r.Body).Decode(&req)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, 400, "INVALID_BODY", err.Error())
+		return
+	}
 
 	if req.URL == "" {
 		writeError(w, 400, "INVALID_URL", "url is required")
@@ -123,7 +126,14 @@ func (h *handler) click(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		Selector string `json:"selector"`
 	}
-	json.NewDecoder(r.Body).Decode(&req)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, 400, "INVALID_BODY", err.Error())
+		return
+	}
+	if req.Selector == "" {
+		writeError(w, 400, "INVALID_SELECTOR", "selector is required")
+		return
+	}
 
 	if err := humanize.Click(page, req.Selector, h.hcfg); err != nil {
 		writeError(w, 500, "CLICK_FAILED", err.Error())
@@ -142,7 +152,14 @@ func (h *handler) typeText(w http.ResponseWriter, r *http.Request) {
 		Selector string `json:"selector"`
 		Text     string `json:"text"`
 	}
-	json.NewDecoder(r.Body).Decode(&req)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, 400, "INVALID_BODY", err.Error())
+		return
+	}
+	if req.Selector == "" {
+		writeError(w, 400, "INVALID_SELECTOR", "selector is required")
+		return
+	}
 
 	if err := humanize.Type(page, req.Selector, req.Text, h.hcfg); err != nil {
 		writeError(w, 500, "TYPE_FAILED", err.Error())
@@ -160,7 +177,14 @@ func (h *handler) evaluate(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		Script string `json:"script"`
 	}
-	json.NewDecoder(r.Body).Decode(&req)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, 400, "INVALID_BODY", err.Error())
+		return
+	}
+	if req.Script == "" {
+		writeError(w, 400, "INVALID_SCRIPT", "script is required")
+		return
+	}
 
 	result, err := page.Evaluate(req.Script)
 	if err != nil {
@@ -222,7 +246,14 @@ func (h *handler) waitFor(w http.ResponseWriter, r *http.Request) {
 		Selector string  `json:"selector"`
 		Timeout  float64 `json:"timeout,omitempty"`
 	}
-	json.NewDecoder(r.Body).Decode(&req)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, 400, "INVALID_BODY", err.Error())
+		return
+	}
+	if req.Selector == "" {
+		writeError(w, 400, "INVALID_SELECTOR", "selector is required")
+		return
+	}
 
 	opts := playwright.PageWaitForSelectorOptions{}
 	if req.Timeout > 0 {
@@ -259,7 +290,11 @@ func (h *handler) setCookies(w http.ResponseWriter, r *http.Request) {
 		writeError(w, 404, "NOT_FOUND", "session not found")
 		return
 	}
-	body, _ := io.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		writeError(w, 400, "INVALID_BODY", err.Error())
+		return
+	}
 	var cookies []playwright.OptionalCookie
 	if err := json.Unmarshal(body, &cookies); err != nil {
 		writeError(w, 400, "INVALID_BODY", err.Error())

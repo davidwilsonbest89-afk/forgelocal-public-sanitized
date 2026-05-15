@@ -26,7 +26,7 @@ import (
 	"browseforge/internal/workflow"
 )
 
-const Version = "1.6.0"
+const Version = "1.7.0"
 
 func main() {
 	if len(os.Args) < 2 {
@@ -139,11 +139,24 @@ func isDocker() bool {
 }
 
 func runMCPStdio() {
-	exe, _ := os.Executable()
+	exe, err := os.Executable()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Executable path error: %v\n", err)
+		os.Exit(1)
+	}
 	baseDir := filepath.Dir(exe)
-	os.Chdir(baseDir)
-	os.MkdirAll("profiles", 0755)
-	os.MkdirAll("data", 0755)
+	if err := os.Chdir(baseDir); err != nil {
+		fmt.Fprintf(os.Stderr, "Chdir error: %v\n", err)
+		os.Exit(1)
+	}
+	if err := os.MkdirAll("profiles", 0755); err != nil {
+		fmt.Fprintf(os.Stderr, "Create profiles dir error: %v\n", err)
+		os.Exit(1)
+	}
+	if err := os.MkdirAll("data", 0755); err != nil {
+		fmt.Fprintf(os.Stderr, "Create data dir error: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Reuse existing config (don't download browsers in MCP mode)
 	if _, err := os.Stat("config.json"); os.IsNotExist(err) {
@@ -154,28 +167,64 @@ func runMCPStdio() {
 			LogFile: "logs/server.log", FingerprintDir: "data",
 			CamoufoxPath: camoufoxPath, CloakBrowserPath: chromiumPath,
 		}
-		cfgJSON, _ := json.MarshalIndent(cfg, "", "  ")
-		os.WriteFile("config.json", cfgJSON, 0644)
+		cfgJSON, err := json.MarshalIndent(cfg, "", "  ")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Config encode error: %v\n", err)
+			os.Exit(1)
+		}
+		if err := os.WriteFile("config.json", cfgJSON, 0644); err != nil {
+			fmt.Fprintf(os.Stderr, "Config write error: %v\n", err)
+			os.Exit(1)
+		}
 	}
 
-	cfg, _ := config.Load("config.json")
-	profileStore, _ := profile.NewStore(cfg.ProfilesDir)
-	browserMgr, _ := browser.NewManager(cfg)
+	cfg, err := config.Load("config.json")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
+		os.Exit(1)
+	}
+	profileStore, err := profile.NewStore(cfg.ProfilesDir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Profile store error: %v\n", err)
+		os.Exit(1)
+	}
+	browserMgr, err := browser.NewManager(cfg)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Browser manager error: %v\n", err)
+		os.Exit(1)
+	}
+	defer browserMgr.Close()
 
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg))
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), "")
 	mcpServer.RunStdio()
 }
 
 func runServer(flags *serveFlags) {
 	// Auto-detect base directory (where the binary lives)
-	exe, _ := os.Executable()
+	exe, err := os.Executable()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Executable path error: %v\n", err)
+		os.Exit(1)
+	}
 	baseDir := filepath.Dir(exe)
-	os.Chdir(baseDir)
+	if err := os.Chdir(baseDir); err != nil {
+		fmt.Fprintf(os.Stderr, "Chdir error: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Auto-create directories
-	os.MkdirAll("profiles", 0755)
-	os.MkdirAll("data", 0755)
-	os.MkdirAll("logs", 0755)
+	if err := os.MkdirAll("profiles", 0755); err != nil {
+		fmt.Fprintf(os.Stderr, "Create profiles dir error: %v\n", err)
+		os.Exit(1)
+	}
+	if err := os.MkdirAll("data", 0755); err != nil {
+		fmt.Fprintf(os.Stderr, "Create data dir error: %v\n", err)
+		os.Exit(1)
+	}
+	if err := os.MkdirAll("logs", 0755); err != nil {
+		fmt.Fprintf(os.Stderr, "Create logs dir error: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Load config once
 	cfg, err := config.Load("config.json")
@@ -228,7 +277,12 @@ func runServer(flags *serveFlags) {
 			fmt.Printf("🦊 Camoufox update available (%s → %s). Downloading...\n",
 				browser.InstalledVersion(baseDir, "camoufox"), browser.CamoufoxVersion)
 		}
-		camoufoxPath, _ = browser.DownloadCamoufox(baseDir)
+		var err error
+		camoufoxPath, err = browser.DownloadCamoufox(baseDir)
+		if err != nil {
+			slog.Error("download Camoufox", "error", err)
+			os.Exit(1)
+		}
 	}
 
 	chromiumPath := ""
@@ -243,15 +297,27 @@ func runServer(flags *serveFlags) {
 			fmt.Printf("🌐 CloakBrowser update available (%s → %s). Downloading...\n",
 				browser.InstalledVersion(baseDir, "cloakbrowser"), expectedCloak)
 		}
-		chromiumPath, _ = browser.DownloadCloakBrowser(baseDir)
+		var err error
+		chromiumPath, err = browser.DownloadCloakBrowser(baseDir)
+		if err != nil {
+			slog.Error("download CloakBrowser", "error", err)
+			os.Exit(1)
+		}
 	}
 
 	// Update config with browser paths if changed
 	if camoufoxPath != cfg.CamoufoxPath || chromiumPath != cfg.CloakBrowserPath {
 		cfg.CamoufoxPath = camoufoxPath
 		cfg.CloakBrowserPath = chromiumPath
-		cfgJSON, _ := json.MarshalIndent(cfg, "", "  ")
-		os.WriteFile("config.json", cfgJSON, 0644)
+		cfgJSON, err := json.MarshalIndent(cfg, "", "  ")
+		if err != nil {
+			slog.Error("config encode", "error", err)
+			os.Exit(1)
+		}
+		if err := os.WriteFile("config.json", cfgJSON, 0644); err != nil {
+			slog.Error("config write", "error", err)
+			os.Exit(1)
+		}
 	}
 
 	profileStore, err := profile.NewStore(cfg.ProfilesDir)
@@ -269,17 +335,23 @@ func runServer(flags *serveFlags) {
 	}
 	defer browserMgr.Close()
 
-	router := api.NewRouter(cfg, profileStore, browserMgr, fpPool)
+	router, err := api.NewRouter(cfg, profileStore, browserMgr, fpPool)
+	if err != nil {
+		slog.Error("api router", "error", err)
+		os.Exit(1)
+	}
 
 	// Workflow engine
 	wfEngine := workflow.NewEngine("http://127.0.0.1:"+cfg.Port, cfg.APIToken)
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
 	// MCP Server
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg))
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), cfg.APIToken)
 	go func() {
 		slog.Info("MCP server starting", "port", "19281")
-		http.ListenAndServe(cfg.Host+":19281", mcpServer)
+		if err := http.ListenAndServe(cfg.Host+":19281", mcpServer); err != nil && err != http.ErrServerClosed {
+			slog.Error("MCP server failed", "error", err)
+		}
 	}()
 
 	// HTTP Server with error channel (no os.Exit in goroutine)

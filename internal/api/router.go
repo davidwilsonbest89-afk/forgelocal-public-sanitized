@@ -2,9 +2,10 @@ package api
 
 import (
 	"crypto/rand"
+	"crypto/subtle"
 	"encoding/hex"
-	crand "crypto/rand"
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -20,13 +21,16 @@ import (
 	"browseforge/internal/profile"
 )
 
-func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool) *chi.Mux {
+func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(corsLocal)
 
-	token := loadOrCreateToken(cfg.DataDir)
+	token, err := loadOrCreateToken(cfg.DataDir)
+	if err != nil {
+		return nil, err
+	}
 	cfg.APIToken = token
 
 	hcfg := humanize.DefaultConfig()
@@ -73,7 +77,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/shutdown", h.shutdown)
 	})
 
-	return r
+	return r, nil
 }
 
 type handler struct {
@@ -87,8 +91,7 @@ type handler struct {
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		auth := r.Header.Get("Authorization")
-		if !strings.HasPrefix(auth, "Bearer ") || auth[7:] != h.token {
+		if !validBearerToken(r.Header.Get("Authorization"), h.token) {
 			writeError(w, http.StatusUnauthorized, "UNAUTHORIZED", "invalid or missing token")
 			return
 		}
@@ -145,7 +148,10 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 	// Auto-generate fingerprint seed for Chromium (CloakBrowser)
 	if p.Engine == "chromium" && p.FingerprintSeed == 0 {
 		b := make([]byte, 4)
-		crand.Read(b)
+		if _, err := rand.Read(b); err != nil {
+			writeError(w, http.StatusInternalServerError, "RANDOM_FAILED", err.Error())
+			return
+		}
 		p.FingerprintSeed = uint32(b[0])<<24 | uint32(b[1])<<16 | uint32(b[2])<<8 | uint32(b[3])
 	}
 	if err := h.store.Create(&p); err != nil {
@@ -216,6 +222,14 @@ func writeError(w http.ResponseWriter, status int, code, msg string) {
 	writeJSON(w, status, map[string]any{"error": map[string]string{"code": code, "message": msg}})
 }
 
+func validBearerToken(auth, token string) bool {
+	if token == "" || !strings.HasPrefix(auth, "Bearer ") {
+		return false
+	}
+	got := auth[len("Bearer "):]
+	return subtle.ConstantTimeCompare([]byte(got), []byte(token)) == 1
+}
+
 func corsLocal(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "moz-extension://*")
@@ -229,20 +243,32 @@ func corsLocal(next http.Handler) http.Handler {
 	})
 }
 
-func loadOrCreateToken(dataDir string) string {
+func loadOrCreateToken(dataDir string) (string, error) {
 	// Environment variable takes priority
 	if envToken := os.Getenv("BROWSEFORGE_TOKEN"); envToken != "" {
-		return envToken
+		return envToken, nil
 	}
-	os.MkdirAll(dataDir, 0755)
+	if err := os.MkdirAll(dataDir, 0755); err != nil {
+		return "", fmt.Errorf("create token directory: %w", err)
+	}
 	path := dataDir + "/.api-token"
 	if data, err := os.ReadFile(path); err == nil {
-		return strings.TrimSpace(string(data))
+		token := strings.TrimSpace(string(data))
+		if token == "" {
+			return "", fmt.Errorf("API token file is empty: %s", path)
+		}
+		return token, nil
+	} else if !os.IsNotExist(err) {
+		return "", fmt.Errorf("read API token: %w", err)
 	}
 	b := make([]byte, 32)
-	rand.Read(b)
+	if _, err := rand.Read(b); err != nil {
+		return "", fmt.Errorf("generate API token: %w", err)
+	}
 	token := hex.EncodeToString(b)
-	os.WriteFile(path, []byte(token), 0600)
+	if err := os.WriteFile(path, []byte(token), 0600); err != nil {
+		return "", fmt.Errorf("write API token: %w", err)
+	}
 	slog.Info("generated API token", "path", path)
-	return token
+	return token, nil
 }

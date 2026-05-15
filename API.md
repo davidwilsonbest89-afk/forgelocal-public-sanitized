@@ -29,7 +29,7 @@ Token 位於 `data/.api-token`。Dashboard 首次開啟時會要求輸入。
 curl http://127.0.0.1:19280/api/status
 ```
 ```json
-{"version": "0.2.0", "status": "ok"}
+{"version": "1.7.0", "status": "ok"}
 ```
 
 #### POST /api/shutdown
@@ -366,7 +366,7 @@ AI Agent 不需要知道底層是 Firefox 還是 Chromium，MCP tools 是引擎�
 
 ### GET /api/playwright/endpoint
 
-取得所有 session 的 Playwright Connect endpoint。
+取得所有 session 的 Playwright Connect endpoint。BrowseForge 目前使用 Playwright 1.60 整合版，回傳的 endpoint 來自 Playwright driver 的 `browser.Bind()`。
 
 **Response:**
 ```json
@@ -376,12 +376,13 @@ AI Agent 不需要知道底層是 Firefox 還是 Chromium，MCP tools 是引擎�
       "session_id": "sess_prof_abc123",
       "profile_id": "prof_abc123",
       "engine": "chromium",
-      "endpoint": "/var/folders/.../browser@xxx.sock"
+      "endpoint": "ws://127.0.0.1:54321/abcdef...",
+      "proxy": "ws://your-host:19280/api/playwright/ws/sess_prof_abc123"
     }
   ]
 }
 ```
 
-外部 Playwright client 使用 `browserType.connect(endpoint)` 連入操作。
+外部 Playwright client 可以使用 `browserType.connect(endpoint)` 直連；遠端或 Docker 場景建議使用 `proxy` URL，並在連線時帶 Bearer Token。
 
-**限制：** Client 必須使用 Playwright 1.59.x。
+**限制：** Client 必須使用與 BrowseForge driver 相容的 Playwright 版本；目前應使用 Playwright **1.60.x**。

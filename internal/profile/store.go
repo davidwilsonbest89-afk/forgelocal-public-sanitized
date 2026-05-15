@@ -12,18 +12,18 @@ import (
 )
 
 type Profile struct {
-	ID              string            `json:"id"`
-	Name            string            `json:"name"`
-	Engine          string            `json:"engine"` // "firefox" | "chromium"
-	Group           string            `json:"group,omitempty"`
-	Tags            []string          `json:"tags,omitempty"`
-	CreatedAt       time.Time         `json:"created_at"`
-	LastUsed        time.Time         `json:"last_used"`
-	Fingerprint     map[string]any    `json:"fingerprint"`
-	FingerprintSeed uint32            `json:"fingerprint_seed,omitempty"` // CloakBrowser
-	Proxy           *ProxyConfig      `json:"proxy,omitempty"`
-	ContainerID     string            `json:"container_id,omitempty"`
-	ProfileDir      string            `json:"profile_dir"`
+	ID              string         `json:"id"`
+	Name            string         `json:"name"`
+	Engine          string         `json:"engine"` // "firefox" | "chromium"
+	Group           string         `json:"group,omitempty"`
+	Tags            []string       `json:"tags,omitempty"`
+	CreatedAt       time.Time      `json:"created_at"`
+	LastUsed        time.Time      `json:"last_used"`
+	Fingerprint     map[string]any `json:"fingerprint"`
+	FingerprintSeed uint32         `json:"fingerprint_seed,omitempty"` // CloakBrowser
+	Proxy           *ProxyConfig   `json:"proxy,omitempty"`
+	ContainerID     string         `json:"container_id,omitempty"`
+	ProfileDir      string         `json:"profile_dir"`
 }
 
 type ProxyConfig struct {
@@ -41,7 +41,9 @@ type Store struct {
 }
 
 func NewStore(dir string) (*Store, error) {
-	os.MkdirAll(dir, 0755)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return nil, err
+	}
 	s := &Store{dir: dir, profiles: make(map[string]*Profile)}
 	return s, s.loadAll()
 }
@@ -74,7 +76,11 @@ func (s *Store) Create(p *Profile) error {
 	defer s.mu.Unlock()
 
 	if p.ID == "" {
-		p.ID = generateID()
+		id, err := generateID()
+		if err != nil {
+			return err
+		}
+		p.ID = id
 	}
 	if p.Engine == "" {
 		p.Engine = "firefox"
@@ -83,8 +89,12 @@ func (s *Store) Create(p *Profile) error {
 	p.LastUsed = p.CreatedAt
 	p.ProfileDir = filepath.Join(s.dir, p.ID)
 
-	os.MkdirAll(p.ProfileDir, 0755)
-	os.MkdirAll(filepath.Join(p.ProfileDir, "browser-data"), 0755)
+	if err := os.MkdirAll(p.ProfileDir, 0755); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Join(p.ProfileDir, "browser-data"), 0755); err != nil {
+		return err
+	}
 
 	if err := s.save(p); err != nil {
 		return err
@@ -127,14 +137,24 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 		return nil, fmt.Errorf("profile not found: %s", id)
 	}
 
-	data, _ := json.Marshal(p)
+	data, err := json.Marshal(p)
+	if err != nil {
+		return nil, err
+	}
 	var m map[string]any
-	json.Unmarshal(data, &m)
+	if err := json.Unmarshal(data, &m); err != nil {
+		return nil, err
+	}
 	for k, v := range updates {
 		m[k] = v
 	}
-	merged, _ := json.Marshal(m)
-	json.Unmarshal(merged, p)
+	merged, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(merged, p); err != nil {
+		return nil, err
+	}
 
 	return p, s.save(p)
 }
@@ -159,9 +179,14 @@ func (s *Store) Duplicate(id string) (*Profile, error) {
 		return nil, fmt.Errorf("profile not found: %s", id)
 	}
 
-	data, _ := json.Marshal(src)
+	data, err := json.Marshal(src)
+	if err != nil {
+		return nil, err
+	}
 	var dup Profile
-	json.Unmarshal(data, &dup)
+	if err := json.Unmarshal(data, &dup); err != nil {
+		return nil, err
+	}
 	dup.ID = ""
 	dup.Name = src.Name + " (copy)"
 	dup.ContainerID = ""
@@ -181,10 +206,12 @@ func (s *Store) save(p *Profile) error {
 	return os.Rename(tmp, path)
 }
 
-func generateID() string {
+func generateID() (string, error) {
 	b := make([]byte, 6)
-	rand.Read(b)
-	return "prof_" + hex.EncodeToString(b)
+	if _, err := rand.Read(b); err != nil {
+		return "", err
+	}
+	return "prof_" + hex.EncodeToString(b), nil
 }
 
 func contains(ss []string, s string) bool {

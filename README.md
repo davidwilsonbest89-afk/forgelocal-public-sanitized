@@ -143,6 +143,26 @@ BrowseForge 內建 MCP Server，支援兩種模式：
 
 啟動 BrowseForge 後，MCP Server 自動在 `http://127.0.0.1:19281` 提供服務。
 
+**認證**：HTTP 模式使用與 REST API 相同的 Bearer Token（符合 MCP 2025-11-25 spec）：
+```
+Authorization: Bearer {token}
+```
+無效或缺少 Token 時回傳 `401 Unauthorized` + `WWW-Authenticate: Bearer`。
+
+**遠端連線設定**（Kiro / Claude 透過 HTTP 連線遠端 MCP Server）：
+```json
+{
+  "mcpServers": {
+    "browseforge": {
+      "url": "http://YOUR_SERVER:19281/",
+      "headers": {
+        "Authorization": "Bearer YOUR_TOKEN"
+      }
+    }
+  }
+}
+```
+
 ### stdio 模式（Kiro / Claude Desktop 整合）
 
 ```bash
@@ -260,7 +280,7 @@ Proxy 模式只需暴露 19280 port，自動帶 token 驗證。
 
 | 項目 | 說明 |
 |------|------|
-| Client 版本 | 必須使用 Playwright **1.59.x**（major.minor 需匹配） |
+| Client 版本 | 必須使用與 BrowseForge driver 相容的 Playwright 版本；目前為 **1.60.x** |
 | 反偵測 | 不影響。使用 Playwright 內部協議，不暴露 CDP |
 
 ### 與 REST API 的差異
@@ -270,7 +290,7 @@ Proxy 模式只需暴露 19280 port，自動帶 token 驗證。
 | 功能範圍 | BrowseForge 定義的操作 | 完整 Playwright API |
 | 適用場景 | 簡單自動化、AI Agent | 複雜腳本、測試框架 |
 | 跨語言 | 任何 HTTP client | Playwright client (Node/Python/Java) |
-| 版本依賴 | 無 | 需要 PW 1.59.x |
+| 版本依賴 | 無 | 需要相容 Playwright client，目前為 1.60.x |
 | Docker | 只需 19280 port | 只需 19280 port（透過 Proxy） |
 | 驗證 | Bearer Token | Bearer Token（Proxy 模式） |
 

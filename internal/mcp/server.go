@@ -1,6 +1,7 @@
 package mcp
 
 import (
+	"crypto/subtle"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -20,16 +21,24 @@ type Server struct {
 	store *profile.Store
 	mgr   *browser.Manager
 	hcfg  humanize.Config
+	token string
 	reqID atomic.Int64
 }
 
-func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config) *Server {
-	return &Server{store: store, mgr: mgr, hcfg: hcfg}
+func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, token string) *Server {
+	return &Server{store: store, mgr: mgr, hcfg: hcfg, token: token}
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "POST only", 405)
+		return
+	}
+
+	// Bearer token auth (MCP spec: MUST return 401 + WWW-Authenticate for HTTP transport)
+	if s.token != "" && !validBearerToken(r.Header.Get("Authorization"), s.token) {
+		w.Header().Set("WWW-Authenticate", "Bearer")
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
 
@@ -56,11 +65,19 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	writeJSONRPC(w, req.ID, mcpErr, result)
 }
 
+func validBearerToken(auth, token string) bool {
+	const prefix = "Bearer "
+	if token == "" || len(auth) < len(prefix) || auth[:len(prefix)] != prefix {
+		return false
+	}
+	return subtle.ConstantTimeCompare([]byte(auth[len(prefix):]), []byte(token)) == 1
+}
+
 func (s *Server) handleInitialize(params json.RawMessage) any {
 	return map[string]any{
 		"protocolVersion": "2025-11-25",
 		"capabilities":    map[string]any{"tools": map[string]any{}},
-		"serverInfo":      map[string]any{"name": "BrowseForge", "version": "0.1.0"},
+		"serverInfo":      map[string]any{"name": "BrowseForge", "version": "1.7.0"},
 	}
 }
 

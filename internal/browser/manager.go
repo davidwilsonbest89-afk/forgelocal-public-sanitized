@@ -39,7 +39,6 @@ type Manager struct {
 
 func NewManager(cfg *config.Config) (*Manager, error) {
 	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
-	patchDriverWSBind()
 
 	pw, err := playwright.Run()
 	if err != nil {
@@ -94,7 +93,9 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 				Host: playwright.String(m.cfg.Host),
 				Port: playwright.Int(0),
 			}); err == nil {
-				session.ConnectURL = fixWSEndpoint(result.Endpoint)
+				session.ConnectURL = result.Endpoint
+			} else {
+				slog.Warn("browser bind failed", "session", session.ID, "error", err)
 			}
 		}
 	}
@@ -144,35 +145,51 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		config["locale:region"] = parts[1]
 	}
 
-	configJSON, _ := json.Marshal(config)
+	configJSON, err := json.Marshal(config)
+	if err != nil {
+		return nil, fmt.Errorf("encode camoufox config: %w", err)
+	}
 
-	userDataDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
-	os.MkdirAll(userDataDir, 0755)
+	userDataDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
+	if err != nil {
+		return nil, fmt.Errorf("browser data path: %w", err)
+	}
+	if err := os.MkdirAll(userDataDir, 0755); err != nil {
+		return nil, fmt.Errorf("create browser data dir: %w", err)
+	}
 
-	absPath, _ := filepath.Abs(camoufoxPath)
+	absPath, err := filepath.Abs(camoufoxPath)
+	if err != nil {
+		return nil, fmt.Errorf("camoufox path: %w", err)
+	}
 
-	downloadsDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
-	os.MkdirAll(downloadsDir, 0755)
+	downloadsDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
+	if err != nil {
+		return nil, fmt.Errorf("downloads path: %w", err)
+	}
+	if err := os.MkdirAll(downloadsDir, 0755); err != nil {
+		return nil, fmt.Errorf("create downloads dir: %w", err)
+	}
 
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
 		ExecutablePath:  playwright.String(absPath),
 		Headless:        playwright.Bool(false),
 		AcceptDownloads: playwright.Bool(true),
 		Env: map[string]string{
-			"CAMOU_CONFIG":           string(configJSON),
+			"CAMOU_CONFIG":          string(configJSON),
 			"DISPLAY":               os.Getenv("DISPLAY"),
 			"HOME":                  os.Getenv("HOME"),
 			"LIBGL_ALWAYS_SOFTWARE": os.Getenv("LIBGL_ALWAYS_SOFTWARE"),
 		},
 		FirefoxUserPrefs: map[string]any{
-			"xpinstall.signatures.required":        false,
-			"browser.download.folderList":           2,
-			"browser.download.dir":                  downloadsDir,
-			"browser.download.useDownloadDir":       true,
+			"xpinstall.signatures.required":          false,
+			"browser.download.folderList":            2,
+			"browser.download.dir":                   downloadsDir,
+			"browser.download.useDownloadDir":        true,
 			"browser.helperApps.neverAsk.saveToDisk": "application/octet-stream,image/jpeg,image/png,application/pdf,application/zip",
-			"webgl.disabled":                        false,
-			"webgl.force-enabled":                   true,
-			"webgl.forbid-software":                 false,
+			"webgl.disabled":                         false,
+			"webgl.force-enabled":                    true,
+			"webgl.forbid-software":                  false,
 		},
 		Viewport: &playwright.Size{Width: 1280, Height: 800},
 	}
@@ -255,10 +272,18 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		return nil, fmt.Errorf("cloakbrowser_path not configured")
 	}
 
-	userDataDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
-	os.MkdirAll(userDataDir, 0755)
+	userDataDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
+	if err != nil {
+		return nil, fmt.Errorf("browser data path: %w", err)
+	}
+	if err := os.MkdirAll(userDataDir, 0755); err != nil {
+		return nil, fmt.Errorf("create browser data dir: %w", err)
+	}
 
-	absChromiumPath, _ := filepath.Abs(chromiumPath)
+	absChromiumPath, err := filepath.Abs(chromiumPath)
+	if err != nil {
+		return nil, fmt.Errorf("cloakbrowser path: %w", err)
+	}
 
 	// CloakBrowser native flags — fingerprint at C++ level
 	args := []string{
@@ -310,21 +335,35 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, "--fingerprint-fonts-dir=/usr/share/fonts")
 	}
 
-	downloadsDir, _ := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
-	os.MkdirAll(downloadsDir, 0755)
+	downloadsDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
+	if err != nil {
+		return nil, fmt.Errorf("downloads path: %w", err)
+	}
+	if err := os.MkdirAll(downloadsDir, 0755); err != nil {
+		return nil, fmt.Errorf("create downloads dir: %w", err)
+	}
 
 	// Set Chromium download directory via Preferences (before launch)
 	prefsDir := filepath.Join(userDataDir, "Default")
-	os.MkdirAll(prefsDir, 0755)
+	if err := os.MkdirAll(prefsDir, 0755); err != nil {
+		return nil, fmt.Errorf("create chromium prefs dir: %w", err)
+	}
 	prefsPath := filepath.Join(prefsDir, "Preferences")
 	prefs := map[string]any{}
 	if data, err := os.ReadFile(prefsPath); err == nil {
-		json.Unmarshal(data, &prefs)
+		if err := json.Unmarshal(data, &prefs); err != nil {
+			return nil, fmt.Errorf("decode chromium preferences: %w", err)
+		}
 	}
 	prefs["savefile"] = map[string]any{"default_directory": downloadsDir}
 	prefs["download"] = map[string]any{"default_directory": downloadsDir, "prompt_for_download": false}
-	out, _ := json.Marshal(prefs)
-	os.WriteFile(prefsPath, out, 0644)
+	out, err := json.Marshal(prefs)
+	if err != nil {
+		return nil, fmt.Errorf("encode chromium preferences: %w", err)
+	}
+	if err := os.WriteFile(prefsPath, out, 0644); err != nil {
+		return nil, fmt.Errorf("write chromium preferences: %w", err)
+	}
 
 	ignoreArgs := []string{
 		"--enable-automation",
@@ -336,11 +375,11 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 
 	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
-		ExecutablePath:  playwright.String(absChromiumPath),
-		Headless:        playwright.Bool(false),
-		AcceptDownloads: playwright.Bool(true),
-		Args:            args,
-		Viewport:        &playwright.Size{Width: 1280, Height: 800},
+		ExecutablePath:    playwright.String(absChromiumPath),
+		Headless:          playwright.Bool(false),
+		AcceptDownloads:   playwright.Bool(true),
+		Args:              args,
+		Viewport:          &playwright.Size{Width: 1280, Height: 800},
 		IgnoreDefaultArgs: ignoreArgs,
 	}
 
@@ -388,7 +427,14 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if len(pages) > 0 {
 		page = pages[0]
 	} else {
-		page, _ = ctx.NewPage()
+		page, err = ctx.NewPage()
+		if err != nil {
+			if relay != nil {
+				relay.Close()
+			}
+			ctx.Close()
+			return nil, fmt.Errorf("new page: %w", err)
+		}
 	}
 
 	return &Session{
@@ -454,52 +500,6 @@ func (m *Manager) Close() {
 	if m.pw != nil {
 		m.pw.Stop()
 	}
-}
-
-// patchDriverWSBind fixes Playwright 1.59.1 driver bug where browser.bind()
-// WebSocket path is missing "/" prefix, causing 400 on connect.
-// Fixed in main branch but not yet released. Remove when upgrading to 1.60+.
-func patchDriverWSBind() {
-	cacheDir, err := os.UserCacheDir()
-	if err != nil {
-		return
-	}
-	target := filepath.Join(cacheDir, "ms-playwright-go", "1.59.1", "package", "lib", "server", "browser.js")
-	data, err := os.ReadFile(target)
-	if err != nil {
-		return
-	}
-	old := `this._wsServer.listen(options.port ?? 0, options.host, (0, import_utils.createGuid)())`
-	fix := `this._wsServer.listen(options.port ?? 0, options.host, "/" + (0, import_utils.createGuid)())`
-	if strings.Contains(string(data), old) {
-		patched := strings.Replace(string(data), old, fix, 1)
-		os.WriteFile(target, []byte(patched), 0644)
-		slog.Info("patched playwright driver ws bind bug")
-	}
-}
-
-// fixWSEndpoint fixes Playwright driver 1.59.1 bug where ws endpoint
-// is missing the / between port and path: ws://host:PORTguid → ws://host:PORT/guid
-// The GUID is always 32 hex characters.
-func fixWSEndpoint(endpoint string) string {
-	if !strings.HasPrefix(endpoint, "ws://") {
-		return endpoint
-	}
-	colonIdx := strings.LastIndex(endpoint, ":")
-	if colonIdx < 0 {
-		return endpoint
-	}
-	portAndGuid := endpoint[colonIdx+1:]
-	// GUID is 32 hex chars at the end
-	if len(portAndGuid) <= 32 {
-		return endpoint
-	}
-	if strings.Contains(portAndGuid, "/") {
-		return endpoint // already has separator
-	}
-	port := portAndGuid[:len(portAndGuid)-32]
-	guid := portAndGuid[len(portAndGuid)-32:]
-	return endpoint[:colonIdx+1] + port + "/" + guid
 }
 
 // humanizeError wraps Playwright errors into user-friendly messages
