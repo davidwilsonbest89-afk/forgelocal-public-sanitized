@@ -6,6 +6,13 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.7.5 - 2026-05-15
+
+### Fixed
+
+- Firefox/Camoufox profile launches now clean stale profile locks before startup and automatically restart the Playwright driver once after recoverable protocol EOF errors.
+- Spike tests no longer attempt to download Playwright-managed browsers during `go test ./...`.
+
 ## v1.7.4 - 2026-05-15
 
 ### Fixed

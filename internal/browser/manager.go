@@ -72,14 +72,19 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 		}
 	}
 
-	var session *Session
-	var err error
+	session, err := m.launchProfile(p)
 
-	switch p.Engine {
-	case "chromium":
-		session, err = m.launchChromium(p)
-	default:
-		session, err = m.launchFirefox(p)
+	if err != nil {
+		if shouldRetryLaunch(err) && len(m.sessions) == 0 {
+			slog.Warn("browser launch failed with recoverable protocol error; restarting Playwright and retrying", "profile", p.ID, "engine", p.Engine, "error", err)
+			if restartErr := m.restartPlaywright(); restartErr != nil {
+				return nil, fmt.Errorf("%w; playwright restart failed: %v", err, restartErr)
+			}
+			session, err = m.launchProfile(p)
+			if err == nil {
+				slog.Info("browser launch recovered after Playwright restart", "profile", p.ID, "engine", p.Engine)
+			}
+		}
 	}
 
 	if err != nil {
@@ -103,6 +108,30 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 	m.sessions[session.ID] = session
 	slog.Info("session launched", "session", session.ID, "profile", p.ID, "engine", p.Engine, "connectURL", session.ConnectURL)
 	return session, nil
+}
+
+func (m *Manager) launchProfile(p *profile.Profile) (*Session, error) {
+	switch p.Engine {
+	case "chromium":
+		return m.launchChromium(p)
+	default:
+		return m.launchFirefox(p)
+	}
+}
+
+func (m *Manager) restartPlaywright() error {
+	if m.pw != nil {
+		if err := m.pw.Stop(); err != nil {
+			slog.Warn("playwright stop during restart failed", "error", err)
+		}
+		m.pw = nil
+	}
+	pw, err := playwright.Run()
+	if err != nil {
+		return fmt.Errorf("playwright.Run: %w", err)
+	}
+	m.pw = pw
+	return nil
 }
 
 func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
@@ -157,6 +186,7 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 	if err := os.MkdirAll(userDataDir, 0755); err != nil {
 		return nil, fmt.Errorf("create browser data dir: %w", err)
 	}
+	cleanProfileLocks(userDataDir)
 
 	absPath, err := filepath.Abs(camoufoxPath)
 	if err != nil {
@@ -279,6 +309,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err := os.MkdirAll(userDataDir, 0755); err != nil {
 		return nil, fmt.Errorf("create browser data dir: %w", err)
 	}
+	cleanProfileLocks(userDataDir)
 
 	absChromiumPath, err := filepath.Abs(chromiumPath)
 	if err != nil {
@@ -506,6 +537,8 @@ func (m *Manager) Close() {
 func humanizeError(err error) error {
 	msg := err.Error()
 	switch {
+	case shouldRetryLaunch(err):
+		return fmt.Errorf("瀏覽器啟動時 Playwright protocol 連線中斷。BrowseForge 會自動重試一次；若仍失敗，請重啟服務或容器。原始錯誤: %w", err)
 	case strings.Contains(msg, "sandboxing failed") || strings.Contains(msg, "sandbox"):
 		return fmt.Errorf("Chromium sandbox 失敗。Docker 中請使用 --no-sandbox 或 'serve --no-sandbox'。原始錯誤: %w", err)
 	case strings.Contains(msg, "XServer") || strings.Contains(msg, "DISPLAY"):
@@ -516,5 +549,24 @@ func humanizeError(err error) error {
 		return fmt.Errorf("瀏覽器執行檔不存在。請重新啟動讓 BrowseForge 自動下載。原始錯誤: %w", err)
 	default:
 		return err
+	}
+}
+
+func shouldRetryLaunch(err error) bool {
+	if err == nil {
+		return false
+	}
+	msg := err.Error()
+	return strings.Contains(msg, "could not read protocol padding") ||
+		strings.Contains(msg, "target closed") ||
+		strings.Contains(msg, "EOF")
+}
+
+func cleanProfileLocks(userDataDir string) {
+	for _, name := range []string{"SingletonLock", "SingletonCookie", "SingletonSocket"} {
+		path := filepath.Join(userDataDir, name)
+		if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
+			slog.Warn("remove stale profile lock failed", "path", path, "error", err)
+		}
 	}
 }

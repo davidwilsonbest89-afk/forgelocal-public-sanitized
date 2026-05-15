@@ -50,7 +50,7 @@ func launchCamoufox(t *testing.T, pw *playwright.Playwright) playwright.Browser 
 }
 
 func TestCamoufoxFingerprint(t *testing.T) {
-	playwright.Install(&playwright.RunOptions{Browsers: []string{}})
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
 	pw, err := playwright.Run()
 	if err != nil {
 		t.Fatalf("playwright.Run: %v", err)
@@ -119,7 +119,7 @@ func TestCamoufoxFingerprint(t *testing.T) {
 }
 
 func TestCamoufoxSetterExists(t *testing.T) {
-	playwright.Install(&playwright.RunOptions{Browsers: []string{}})
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
 	pw, err := playwright.Run()
 	if err != nil {
 		t.Fatalf("playwright.Run: %v", err)

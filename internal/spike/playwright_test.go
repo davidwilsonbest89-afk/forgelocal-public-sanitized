@@ -16,7 +16,7 @@ func TestPlaywrightLaunchCamoufox(t *testing.T) {
 		t.Skipf("Camoufox not found at %s", camoufoxPath)
 	}
 
-	playwright.Install(&playwright.RunOptions{Browsers: []string{}})
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
 
 	pw, err := playwright.Run()
 	if err != nil {
