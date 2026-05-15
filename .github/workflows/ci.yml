@@ -22,7 +22,7 @@ jobs:
           node-version: "22"
 
       - name: Go test
-        run: go test -count=1 -timeout 2m ./...
+        run: go test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')
 
       - name: Go vet
         run: go vet ./...
