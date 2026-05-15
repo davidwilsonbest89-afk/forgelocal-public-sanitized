@@ -1,5 +1,5 @@
 {
-  "name": "camoufoxmulti-tools",
+  "name": "browseforge-tools",
   "private": true,
   "scripts": {
     "generate-fingerprints": "node scripts/generate-fingerprints.js"

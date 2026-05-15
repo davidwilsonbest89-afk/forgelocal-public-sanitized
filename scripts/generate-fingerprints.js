@@ -49,8 +49,10 @@ for (let i = 0; i < count; i++) {
   // Select font subset based on target OS
   const osFonts = os === 'macos' ? macFonts : os === 'windows' ? winFonts : linuxFonts;
 
-  // Build Camoufox-compatible config (only valid keys)
-  const camoufoxConfig = {
+  // Build the BrowseForge fingerprint-pool format.
+  // Firefox/Camoufox consumes these flat keys through CAMOU_CONFIG. Chromium/CloakBrowser
+  // primarily uses fingerprint_seed, with selected fields available as explicit overrides.
+  const fingerprintConfig = {
     // Navigator
     'navigator.userAgent': fingerprint.navigator.userAgent,
     'navigator.platform': fingerprint.navigator.platform,
@@ -81,13 +83,13 @@ for (let i = 0; i < count; i++) {
   };
 
   // Attach complete WebGL profile if available for this GPU
-  const webglProfile = findWebGLProfile(camoufoxConfig['webGl:renderer']);
+  const webglProfile = findWebGLProfile(fingerprintConfig['webGl:renderer']);
   if (webglProfile) {
     const { match, ...webglData } = webglProfile;
-    Object.assign(camoufoxConfig, webglData);
+    Object.assign(fingerprintConfig, webglData);
   }
 
-  fingerprints.push(camoufoxConfig);
+  fingerprints.push(fingerprintConfig);
 }
 
 fs.mkdirSync(outputDir, { recursive: true });

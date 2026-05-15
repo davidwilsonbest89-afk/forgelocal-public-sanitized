@@ -9,6 +9,7 @@ These documents should remain understandable for international users:
 - [Release Process](release.md)
 - [Platform Support](platform-support.md)
 - [Linux Server Deployment](linux-server.md)
+- [Dual-Browser Anti-Detection Architecture](dual-browser-architecture.md)
 - [Playwright Patch Status](playwright-patches.md)
 - [Internationalization](i18n.md)
 
@@ -16,6 +17,7 @@ Traditional Chinese translations are available for:
 
 - [Platform Support zh-TW](platform-support.zh-TW.md)
 - [Linux Server Deployment zh-TW](linux-server.zh-TW.md)
+- [Dual-Browser Anti-Detection Architecture zh-TW](dual-browser-architecture.zh-TW.md)
 - [Playwright Patch Status zh-TW](playwright-patches.zh-TW.md)
 
 ## Technical Reference

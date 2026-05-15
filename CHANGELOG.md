@@ -14,10 +14,14 @@ All notable changes should be documented here. This project follows semantic ver
 - English public docs for platform support, Linux server deployment, and Playwright patch status.
 - i18n coverage checker for Dashboard and WebExtension locale key parity.
 - Marketing-oriented product positioning, audience, trust, and deployment messaging in README.
+- Dual-browser anti-detection architecture documentation in English and Traditional Chinese.
+- Opt-in CloakBrowser runtime spike harness for the Playwright Bind endpoint path.
 
 ### Changed
 
 - Docker documentation recommends pinning version tags for production deployments.
+- Replaced remaining early Camoufox-only tool naming in local scripts and clarified current dual-browser fingerprint behavior.
+- Release preflight runs the CloakBrowser Bind spike when a local binary is available and can enforce it with `REQUIRE_CLOAKBROWSER=1`.
 
 ## v1.7.0 - 2026-05-15
 

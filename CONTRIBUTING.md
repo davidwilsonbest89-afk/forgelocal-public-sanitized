@@ -11,6 +11,7 @@ Requirements:
 - Docker with linux/amd64 build support
 - `rg` for release preflight checks
 - Camoufox installed under `browsers/camoufox/` for runtime spike tests, or set `CAMOUFOX_PATH`
+- CloakBrowser installed under `browsers/cloakbrowser/` for Chromium-family runtime spike tests, or set `CLOAKBROWSER_PATH`
 
 Common checks:
 
@@ -26,6 +27,12 @@ Camoufox Bind spike:
 
 ```bash
 CAMOUFOX_PATH=/path/to/camoufox go test -count=1 -run '^TestPlaywrightBindEndpointWithCamoufox$' -v ./internal/spike
+```
+
+CloakBrowser Bind spike:
+
+```bash
+CLOAKBROWSER_SPIKE=1 CLOAKBROWSER_PATH=/path/to/Chromium go test -count=1 -timeout 45s -run '^TestPlaywrightBindEndpointWithCloakBrowser$' -v ./internal/spike
 ```
 
 ## Pull Request Expectations

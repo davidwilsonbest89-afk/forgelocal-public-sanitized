@@ -1,5 +1,7 @@
 # BrowseForge — 五層 WBS 開發計劃
 
+> Archive note: this WBS includes early Camoufox-first and per-container research. The current product contract is the dual-browser architecture in [dual-browser-architecture.md](dual-browser-architecture.md).
+
 > 版本：v0.3 | 更新：2026-04-23
 > 層級：L1 開發項目 → L2 子系統 → L3 功能模組 → L4 實作任務 → L5 技術步驟
 

@@ -1,5 +1,7 @@
 # BrowseForge Spike Results
 
+> Archive note: these spike notes are retained as historical evidence. The current product contract is the dual-browser architecture in [dual-browser-architecture.md](dual-browser-architecture.md).
+
 ## 0.1.4 Playwright 連接驗證
 - **日期**: 2026-04-23
 - **假設**: playwright-go 能啟動 Camoufox 並透過 CAMOU_CONFIG 注入指紋

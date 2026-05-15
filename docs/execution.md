@@ -1,5 +1,7 @@
 # BrowseForge — 執行計劃
 
+> Archive note: this execution plan reflects early Camoufox-first milestones. The current product contract is the dual-browser architecture in [dual-browser-architecture.md](dual-browser-architecture.md).
+
 > 目標：編譯出一個執行檔，打開就能用。
 > 分工：AI 執行開發 + 排錯 + 驗證，使用者做最終產品驗證。
 > 每個 Phase 結束時有明確的「使用者驗證項目」。

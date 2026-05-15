@@ -2,6 +2,8 @@
 
 BrowseForge 整合兩套反偵測瀏覽器引擎，各有不同的指紋偽裝架構。
 
+> Current architecture source: [Dual-Browser Anti-Detection Architecture](dual-browser-architecture.md).
+
 ---
 
 ## CloakBrowser (Chromium) — Seed 驅動

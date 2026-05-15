@@ -6,7 +6,7 @@ import (
 )
 
 func TestProfileCRUD(t *testing.T) {
-	dir, _ := os.MkdirTemp("", "cmfx-test-*")
+	dir, _ := os.MkdirTemp("", "browseforge-test-*")
 	defer os.RemoveAll(dir)
 
 	store, err := NewStore(dir)

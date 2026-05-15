@@ -1,5 +1,7 @@
 # WebGL 指紋策略
 
+> Current architecture source: [Dual-Browser Anti-Detection Architecture](dual-browser-architecture.md). This document is a technical deep dive for WebGL behavior.
+
 ## 問題
 
 Camoufox 支援完整的 C++ 層級 WebGL 偽裝，但需要提供**完整**的 WebGL 資料才能正確運作：

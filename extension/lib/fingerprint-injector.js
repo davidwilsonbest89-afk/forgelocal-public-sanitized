@@ -1,6 +1,8 @@
 // BrowseForge Fingerprint Injector (content script)
 // Runs at document_start in ISOLATED world
-// Calls Camoufox C++ setters via wrappedJSObject before any page JS executes
+// Legacy Firefox-container experiment. The current primary runtime launches one
+// isolated browser process per profile and applies native fingerprinting through
+// CAMOU_CONFIG for Camoufox or fingerprint_seed/native flags for CloakBrowser.
 
 (async () => {
   try {
@@ -14,7 +16,7 @@
     const fp = stored[key];
     if (!fp) return;
 
-    // Call Camoufox C++ setters via wrappedJSObject (Firefox-specific)
+    // Call optional Firefox/Camoufox setters when a fork exposes them.
     const w = window.wrappedJSObject;
 
     if (fp['canvas:seed'] && w.setCanvasSeed)

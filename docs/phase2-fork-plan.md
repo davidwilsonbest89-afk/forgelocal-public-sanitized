@@ -1,5 +1,7 @@
 # Phase 2: Fork Camoufox — Per-Container Fingerprint
 
+> Archive note: this fork plan is retained as research background. The current product contract uses one isolated browser runtime per profile and is documented in [dual-browser-architecture.md](dual-browser-architecture.md).
+
 ## 目標
 改動 Camoufox 的 C++ 層，讓 MaskConfig 查詢從 process-global 變成 per-userContextId。
 

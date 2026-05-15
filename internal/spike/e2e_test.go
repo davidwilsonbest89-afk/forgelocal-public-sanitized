@@ -22,20 +22,20 @@ func TestE2EFullFlow(t *testing.T) {
 	// Write temp config
 	config := fmt.Sprintf(`{
 		"port": "19299",
-		"profiles_dir": "/tmp/cmfx-test-profiles",
-		"data_dir": "/tmp/cmfx-test-data",
-		"log_file": "/tmp/cmfx-test.log",
+		"profiles_dir": "/tmp/browseforge-test-profiles",
+		"data_dir": "/tmp/browseforge-test-data",
+		"log_file": "/tmp/browseforge-test.log",
 		"camoufox_path": %q,
 		"fingerprint_dir": "data"
 	}`, camoufoxPath)
-	os.WriteFile("/tmp/cmfx-test-config.json", []byte(config), 0644)
-	os.MkdirAll("/tmp/cmfx-test-profiles", 0755)
-	os.MkdirAll("/tmp/cmfx-test-data", 0755)
-	defer os.RemoveAll("/tmp/cmfx-test-profiles")
-	defer os.RemoveAll("/tmp/cmfx-test-data")
+	os.WriteFile("/tmp/browseforge-test-config.json", []byte(config), 0644)
+	os.MkdirAll("/tmp/browseforge-test-profiles", 0755)
+	os.MkdirAll("/tmp/browseforge-test-data", 0755)
+	defer os.RemoveAll("/tmp/browseforge-test-profiles")
+	defer os.RemoveAll("/tmp/browseforge-test-data")
 
 	// Start server
-	cmd := exec.Command("go", "run", "./cmd/server", "--config", "/tmp/cmfx-test-config.json")
+	cmd := exec.Command("go", "run", "./cmd/server", "--config", "/tmp/browseforge-test-config.json")
 	cmd.Dir = os.Getenv("PROJECT_DIR")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -59,7 +59,7 @@ func TestE2EFullFlow(t *testing.T) {
 	}
 
 	// Read token
-	tokenBytes, _ := os.ReadFile("/tmp/cmfx-test-data/.api-token")
+	tokenBytes, _ := os.ReadFile("/tmp/browseforge-test-data/.api-token")
 	token := strings.TrimSpace(string(tokenBytes))
 	t.Logf("Token: %s", token[:8]+"...")
 

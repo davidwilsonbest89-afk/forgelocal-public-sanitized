@@ -6,9 +6,12 @@ usage() {
 Usage: scripts/release-preflight.sh vX.Y.Z
 
 Environment:
-  CAMOUFOX_PATH=/path/to/camoufox   Override Camoufox binary path.
-  SKIP_CAMOUFOX=1                   Skip the Camoufox runtime spike.
-  SKIP_DOCKER=1                     Skip the linux/amd64 Docker build.
+  CAMOUFOX_PATH=/path/to/camoufox         Override Camoufox binary path.
+  CLOAKBROWSER_PATH=/path/to/chromium     Override CloakBrowser binary path.
+  REQUIRE_CLOAKBROWSER=1                  Fail if the CloakBrowser runtime spike cannot run.
+  SKIP_CAMOUFOX=1                         Skip the Camoufox runtime spike.
+  SKIP_CLOAKBROWSER=1                     Skip the CloakBrowser runtime spike.
+  SKIP_DOCKER=1                           Skip the linux/amd64 Docker build.
 USAGE
 }
 
@@ -82,6 +85,19 @@ if [[ "${SKIP_CAMOUFOX:-}" != "1" ]]; then
   run env CAMOUFOX_PATH="$camoufox_path" go test -count=1 -run '^TestPlaywrightBindEndpointWithCamoufox$' -v ./internal/spike
 else
   echo "warning: skipping Camoufox runtime spike because SKIP_CAMOUFOX=1"
+fi
+
+if [[ "${SKIP_CLOAKBROWSER:-}" != "1" ]]; then
+  cloakbrowser_path="${CLOAKBROWSER_PATH:-$repo_root/browsers/cloakbrowser/Chromium.app/Contents/MacOS/Chromium}"
+  if [[ -x "$cloakbrowser_path" ]]; then
+    run env CLOAKBROWSER_SPIKE=1 CLOAKBROWSER_PATH="$cloakbrowser_path" go test -count=1 -timeout 45s -run '^TestPlaywrightBindEndpointWithCloakBrowser$' -v ./internal/spike
+  elif [[ "${REQUIRE_CLOAKBROWSER:-}" == "1" ]]; then
+    die "CloakBrowser binary not found or not executable: $cloakbrowser_path"
+  else
+    echo "warning: skipping CloakBrowser runtime spike; set CLOAKBROWSER_PATH or REQUIRE_CLOAKBROWSER=1 to enforce it"
+  fi
+else
+  echo "warning: skipping CloakBrowser runtime spike because SKIP_CLOAKBROWSER=1"
 fi
 
 if [[ "${SKIP_DOCKER:-}" != "1" ]]; then

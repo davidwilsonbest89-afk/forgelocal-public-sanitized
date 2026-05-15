@@ -314,6 +314,8 @@ profiles/
 
 詳細說明見 [docs/platform-support.md](docs/platform-support.md)。
 
+現行雙瀏覽器反偵測架構請見 [docs/dual-browser-architecture.zh-TW.md](docs/dual-browser-architecture.zh-TW.md)。
+
 ## 從原始碼 Build
 
 ```bash

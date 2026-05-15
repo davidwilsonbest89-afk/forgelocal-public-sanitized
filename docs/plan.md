@@ -1,5 +1,7 @@
 # BrowseForge — 跨平台多指紋反偵測瀏覽器
 
+> Archive note: this is early Camoufox-first planning material. The current product contract is the dual-browser architecture in [dual-browser-architecture.md](dual-browser-architecture.md).
+
 ## 專案概述
 
 BrowseForge 是基於 Camoufox（Firefox 核心）的跨平台 portable 瀏覽器工具，核心目標：

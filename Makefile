@@ -1,25 +1,25 @@
-.PHONY: dev build test package clean spike
+.PHONY: dev build test package clean spike download-browsers download-camoufox download-cloakbrowser
 
 # --- Development (in Docker) ---
 
 dev:
-	docker build --target base -t camoufoxmulti-dev .
-	docker run -it --rm -v $(PWD):/app -p 19280:19280 camoufoxmulti-dev bash
+	docker build --target base -t browseforge-dev .
+	docker run -it --rm -v $(PWD):/app -p 19280:19280 browseforge-dev bash
 
 # --- Build ---
 
 build-server:
-	docker build --target build-server -t camoufoxmulti-build .
-	docker create --name cmfx-build camoufoxmulti-build
-	docker cp cmfx-build:/out/control-server ./dist/control-server
-	docker rm cmfx-build
+	docker build --target build-server -t browseforge-build .
+	docker create --name bf-build browseforge-build
+	docker cp bf-build:/out/control-server ./dist/control-server
+	docker rm bf-build
 	chmod +x ./dist/control-server
 
 build-fingerprints:
-	docker build --target build-fingerprints -t camoufoxmulti-fp .
-	docker create --name cmfx-fp camoufoxmulti-fp
-	docker cp cmfx-fp:/out/ ./dist/data/
-	docker rm cmfx-fp
+	docker build --target build-fingerprints -t browseforge-fp .
+	docker create --name bf-fp browseforge-fp
+	docker cp bf-fp:/out/ ./dist/data/
+	docker rm bf-fp
 
 build: build-server build-fingerprints
 	@echo "Build complete: ./dist/"
@@ -27,7 +27,7 @@ build: build-server build-fingerprints
 # --- Test (in Docker) ---
 
 test:
-	docker build --target test -t camoufoxmulti-test .
+	docker build --target test -t browseforge-test .
 
 # --- Package (final ZIP) ---
 
@@ -50,21 +50,30 @@ package: build
 # --- Spike tests ---
 
 spike:
-	docker build --target base -t camoufoxmulti-dev .
-	docker run --rm -v $(PWD):/app camoufoxmulti-dev go test ./internal/spike/...
+	docker build --target base -t browseforge-dev .
+	docker run --rm -v $(PWD):/app browseforge-dev go test ./internal/spike/...
 
 # --- Clean ---
 
 clean:
 	rm -rf dist/
-	docker rmi camoufoxmulti-dev camoufoxmulti-build camoufoxmulti-fp camoufoxmulti-test 2>/dev/null || true
+	docker rmi browseforge-dev browseforge-build browseforge-fp browseforge-test 2>/dev/null || true
 
-# --- Download Camoufox binary (macOS ARM64) ---
+# --- Download browser binaries (manual links for packaged builds) ---
 
 CAMOUFOX_VERSION ?= v135.0.1-beta.24
+CLOAKBROWSER_VERSION ?= chromium-v146.0.7680.177.4
+
+download-browsers: download-camoufox download-cloakbrowser
 
 download-camoufox:
 	@mkdir -p dist/BrowseForge
 	@echo "Download Camoufox $(CAMOUFOX_VERSION) for macOS ARM64..."
 	@echo "Visit: https://github.com/daijro/camoufox/releases/tag/$(CAMOUFOX_VERSION)"
 	@echo "Extract to: dist/BrowseForge/camoufox/"
+
+download-cloakbrowser:
+	@mkdir -p dist/BrowseForge
+	@echo "Download CloakBrowser $(CLOAKBROWSER_VERSION) for macOS ARM64..."
+	@echo "Visit: https://github.com/CloakHQ/CloakBrowser/releases/tag/$(CLOAKBROWSER_VERSION)"
+	@echo "Extract to: dist/BrowseForge/cloakbrowser/"

@@ -281,10 +281,15 @@ async function init() {
     applyI18n();
     render();
   });
-  TOKEN = location.hash.slice(1) || localStorage.getItem('cmfx-token') || '';
+  TOKEN = location.hash.slice(1) || localStorage.getItem('bf-token') || localStorage.getItem('cmfx-token') || '';
   if (TOKEN) {
     const valid = await verifyToken(TOKEN);
-    if (valid) { showApp(); return; }
+    if (valid) {
+      localStorage.setItem('bf-token', TOKEN);
+      localStorage.removeItem('cmfx-token');
+      showApp();
+      return;
+    }
   }
   document.getElementById('loginOverlay').style.display = 'flex';
 }
@@ -303,7 +308,8 @@ async function submitLogin() {
   if (!TOKEN) { err.style.display = 'block'; err.textContent = t('enterToken'); return; }
   const valid = await verifyToken(TOKEN);
   if (!valid) { err.style.display = 'block'; err.textContent = t('invalidToken'); return; }
-  localStorage.setItem('cmfx-token', TOKEN);
+  localStorage.setItem('bf-token', TOKEN);
+  localStorage.removeItem('cmfx-token');
   showApp();
 }
 

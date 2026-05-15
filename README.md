@@ -314,6 +314,8 @@ Treat profiles, backup ZIPs, exported profiles, cookies, and `data/.api-token` a
 
 See [docs/platform-support.md](docs/platform-support.md) for detailed support notes.
 
+For the current dual-browser anti-detection design, see [docs/dual-browser-architecture.md](docs/dual-browser-architecture.md).
+
 ## Build From Source
 
 ```bash
