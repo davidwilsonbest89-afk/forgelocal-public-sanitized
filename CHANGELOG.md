@@ -6,6 +6,12 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.7.4 - 2026-05-15
+
+### Fixed
+
+- Dashboard version status now remains visible after language initialization or locale changes instead of being overwritten by the translated connecting label.
+
 ## v1.7.3 - 2026-05-15
 
 ### Fixed

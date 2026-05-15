@@ -258,6 +258,8 @@ let TOKEN = '';
 let profiles = [];
 let sessions = new Set();
 let screenshots = {}; // profileId → blob URL
+let statusState = 'connecting';
+let statusVersion = '';
 
 function t(key, vars = {}) {
   let value = (LOCALES[locale] && LOCALES[locale][key]) || LOCALES.en[key] || key;
@@ -270,6 +272,19 @@ function applyI18n() {
   document.getElementById('langSelect').value = locale;
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+  updateStatusText();
+}
+
+function updateStatusText() {
+  const el = document.getElementById('status');
+  if (!el) return;
+  if (statusState === 'online') {
+    el.textContent = '✅ v' + statusVersion;
+  } else if (statusState === 'offline') {
+    el.textContent = '❌ ' + t('offline');
+  } else {
+    el.textContent = t('connecting');
+  }
 }
 
 // --- Login ---
@@ -336,8 +351,13 @@ async function checkStatus() {
   try {
     const r = await fetch(API + '/status');
     const d = await r.json();
-    document.getElementById('status').textContent = '✅ v' + d.version;
-  } catch { document.getElementById('status').textContent = '❌ ' + t('offline'); }
+    statusState = 'online';
+    statusVersion = d.version || '';
+  } catch {
+    statusState = 'offline';
+    statusVersion = '';
+  }
+  updateStatusText();
 }
 
 async function loadProfiles() {
