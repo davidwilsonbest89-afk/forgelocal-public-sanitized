@@ -8,7 +8,7 @@ This matrix defines the currently supported platforms and browser-runtime availa
 
 | Component | Version | Updated |
 |------|------|---------|
-| BrowseForge | v1.7.0 | 2026-05-15 |
+| BrowseForge | v1.7.1 | 2026-05-15 |
 | Camoufox | v135.0.1-beta.24 | 2025-03-15 |
 | CloakBrowser | chromium-v145.0.7632.109.2 | 2026-03-04 |
 

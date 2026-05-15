@@ -82,7 +82,7 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 19281:19281 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.0
+  ghcr.io/nczz/browseforge:v1.7.1
 ```
 
 | 服務 | URL |

@@ -4,6 +4,10 @@ All notable changes should be documented here. This project follows semantic ver
 
 ## Unreleased
 
+Nothing yet.
+
+## v1.7.1 - 2026-05-15
+
 ### Added
 
 - Guarded release scripts and release workflow asset checks.

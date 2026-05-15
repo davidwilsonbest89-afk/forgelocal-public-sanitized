@@ -7,7 +7,7 @@ body:
     id: version
     attributes:
       label: BrowseForge Version
-      placeholder: v1.7.0
+      placeholder: v1.7.1
     validations:
       required: true
   - type: input
