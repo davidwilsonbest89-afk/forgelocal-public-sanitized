@@ -26,6 +26,7 @@ Nothing yet.
 - Docker documentation recommends pinning version tags for production deployments.
 - Replaced remaining early Camoufox-only tool naming in local scripts and clarified current dual-browser fingerprint behavior.
 - Release preflight runs the CloakBrowser Bind spike when a local binary is available and can enforce it with `REQUIRE_CLOAKBROWSER=1`.
+- Release preflight keeps base Go tests separate from explicit browser runtime spike gates.
 
 ## v1.7.0 - 2026-05-15
 
