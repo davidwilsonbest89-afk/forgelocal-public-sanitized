@@ -1,8 +1,11 @@
 FROM ubuntu:24.04
 
+ARG BROWSEFORGE_VERSION
+ARG BROWSEFORGE_ARCH=linux-x64
+ARG KASMVNC_SHA256=12bac6014149c5fdee75f0d403785aaa3e5dd4ea222de73253a5d4181bc9567e
+
 ENV DEBIAN_FRONTEND=noninteractive \
-    DISPLAY=:1 \
-    VNC_PASSWORD=browseforge
+    DISPLAY=:1
 
 # System deps + browser runtime libs
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -19,15 +22,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install KasmVNC (replaces Xvfb + x11vnc + noVNC + websockify)
 RUN curl -fSL -o /tmp/kasmvnc.deb \
     https://github.com/kasmtech/KasmVNC/releases/download/v1.4.0/kasmvncserver_noble_1.4.0_amd64.deb && \
+    echo "${KASMVNC_SHA256}  /tmp/kasmvnc.deb" | sha256sum -c - && \
     apt-get update && apt-get install -y /tmp/kasmvnc.deb && \
     rm -f /tmp/kasmvnc.deb && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Download latest BrowseForge release from GitHub
-RUN LATEST=$(curl -sL https://api.github.com/repos/nczz/BrowseForge/releases/latest | \
-      grep -o '"tag_name":[^,]*' | cut -d'"' -f4) && \
-    URL="https://github.com/nczz/BrowseForge/releases/download/${LATEST}/BrowseForge-${LATEST}-lite-linux-x64.zip" && \
+# Download the exact BrowseForge release selected by the workflow/build args.
+RUN test -n "$BROWSEFORGE_VERSION" && \
+    URL="https://github.com/nczz/BrowseForge/releases/download/${BROWSEFORGE_VERSION}/BrowseForge-${BROWSEFORGE_VERSION}-lite-${BROWSEFORGE_ARCH}.zip" && \
     echo "Downloading: $URL" && \
     curl -fSL -o /tmp/bf.zip "$URL" && \
     unzip /tmp/bf.zip -d /tmp && \

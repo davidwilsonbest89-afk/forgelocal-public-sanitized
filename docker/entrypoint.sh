@@ -1,5 +1,7 @@
 #!/bin/bash
 
+: "${VNC_PASSWORD:=browseforge}"
+
 # Clean up stale files
 rm -f /tmp/.X1-lock /tmp/.X11-unix/X1
 find /app/profiles -name "SingletonLock" -delete 2>/dev/null
@@ -46,7 +48,7 @@ for i in $(seq 1 60); do
     echo "  Dashboard:  http://0.0.0.0:19280"
     echo "  Remote VNC: http://0.0.0.0:6901"
     echo "  VNC User:   user"
-    echo "  VNC Password: $VNC_PASSWORD"
+    echo "  VNC Password: set via VNC_PASSWORD (default: browseforge)"
     echo "  API Token: $TOKEN"
     echo "========================================="
     break

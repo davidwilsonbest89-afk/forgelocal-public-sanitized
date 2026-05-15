@@ -3,7 +3,10 @@ services:
     platform: linux/amd64
     build:
       context: .
-      dockerfile: Dockerfile.kasmvnc
+      dockerfile: Dockerfile.run
+      args:
+        BROWSEFORGE_VERSION: ${BROWSEFORGE_VERSION:-v1.7.0}
+        BROWSEFORGE_ARCH: linux-x64
     ports:
       - "19280:19280"  # Dashboard + REST API
       - "19281:19281"  # MCP Streamable HTTP

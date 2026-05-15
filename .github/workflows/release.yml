@@ -6,7 +6,24 @@ on:
       - "v*"
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Test
+        run: go test -count=1 ./...
+
+      - name: Vet
+        run: go vet ./...
+
   build:
+    needs: verify
     strategy:
       matrix:
         include:
@@ -125,7 +142,14 @@ jobs:
           context: docker
           file: docker/Dockerfile.run
           push: true
+          build-args: |
+            BROWSEFORGE_VERSION=${{ github.ref_name }}
+            BROWSEFORGE_ARCH=linux-x64
           platforms: linux/amd64
           tags: |
             ghcr.io/${{ github.repository_owner }}/browseforge:latest
             ghcr.io/${{ github.repository_owner }}/browseforge:${{ github.ref_name }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.version=${{ github.ref_name }}
+            org.opencontainers.image.revision=${{ github.sha }}
