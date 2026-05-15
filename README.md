@@ -77,6 +77,10 @@ BrowseForge 在 Docker 中會自動偵測並啟用 `--no-sandbox` 和 `0.0.0.0` 
 
 解壓後雙擊 `BrowseForge.exe`，首次啟動會自動下載瀏覽器引擎。
 
+## 維護與發布
+
+發布流程採用防呆 script，不要手動建立或推送 release tag。接手維護時請先閱讀 [Release Process](docs/release.md)。
+
 ## 設定檔
 
 首次啟動時自動生成 `config.json`：

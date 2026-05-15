@@ -59,4 +59,5 @@ Linux arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium
 - [ ] 更新此表
 - [ ] 測試自動下載功能
 - [ ] 測試反偵測能力（browserleaks、Sannysoft）
-- [ ] 打 tag 觸發 CI release
+- [ ] 依照 [Release Process](release.md) 執行 `scripts/release-preflight.sh vX.Y.Z`
+- [ ] 依照 [Release Process](release.md) 執行 `scripts/release-push.sh vX.Y.Z`
