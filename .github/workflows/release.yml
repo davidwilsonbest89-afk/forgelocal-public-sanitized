@@ -12,6 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Validate tag
+        run: |
+          if [[ ! "${GITHUB_REF_NAME}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release tag must match vX.Y.Z, got: ${GITHUB_REF_NAME}" >&2
+            exit 1
+          fi
+
       - uses: actions/setup-go@v5
         with:
           go-version: "1.22"
@@ -115,6 +122,33 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
+
+      - name: Verify release assets
+        run: |
+          set -euo pipefail
+          expected=(
+            "linux-x64"
+            "linux-arm64"
+            "macos-x64"
+            "macos-arm64"
+            "windows-x64"
+          )
+
+          for suffix in "${expected[@]}"; do
+            file="artifacts/BrowseForge-${suffix}/BrowseForge-${GITHUB_REF_NAME}-lite-${suffix}.zip"
+            if [[ ! -s "$file" ]]; then
+              echo "Missing release asset: $file" >&2
+              find artifacts -maxdepth 3 -type f >&2
+              exit 1
+            fi
+          done
+
+          count="$(find artifacts -type f -name '*.zip' | wc -l | tr -d ' ')"
+          if [[ "$count" != "${#expected[@]}" ]]; then
+            echo "Expected ${#expected[@]} zip assets, found $count" >&2
+            find artifacts -type f -name '*.zip' >&2
+            exit 1
+          fi
 
       - uses: softprops/action-gh-release@v2
         with:
