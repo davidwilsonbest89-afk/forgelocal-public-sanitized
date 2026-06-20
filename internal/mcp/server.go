@@ -448,21 +448,52 @@ func (s *Server) toolCloseTab(args map[string]any) (any, *mcpError) {
 // --- MCP Protocol types ---
 
 var tools = []map[string]any{
-	tool("list_profiles", "列出所有瀏覽器 Profile", map[string]any{"group": prop("string", "依分組過濾（選填）"), "tag": prop("string", "依標籤過濾（選填）")}),
+	toolWithRequired("list_profiles", "列出瀏覽器 profiles，可依 group 或 tag 過濾", map[string]any{
+		"group": prop("string", "Optional. 依分組過濾"),
+		"tag":   prop("string", "Optional. 依標籤過濾"),
+	}, []string{}),
 	tool("create_profile", "建立新 Profile", map[string]any{
 		"name": prop("string", "Profile 名稱"), "engine": prop("string", "firefox 或 chromium"), "group": prop("string", "分組名稱"),
 	}),
 	tool("delete_profile", "刪除 Profile", map[string]any{"profile_id": prop("string", "Profile ID")}),
-	tool("update_profile", "更新 Profile 設定（名稱、分組、Proxy）", map[string]any{"profile_id": prop("string", "Profile ID"), "name": prop("string", "新名稱"), "group": prop("string", "新分組")}),
+	toolWithRequired("update_profile", "更新 Profile 設定", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"name":       prop("string", "Optional. 新名稱"),
+		"group":      prop("string", "Optional. 新分組"),
+		"proxy":      prop("object", "Optional. Proxy 設定"),
+	}, []string{"profile_id"}),
 	tool("open_browser", "開啟瀏覽器", map[string]any{"profile_id": prop("string", "Profile ID")}),
 	tool("close_browser", "關閉瀏覽器", map[string]any{"profile_id": prop("string", "Profile ID")}),
-	tool("navigate", "導航到 URL", map[string]any{"profile_id": prop("string", "Profile ID"), "url": prop("string", "目標 URL"), "wait_until": prop("string", "等待策略：load/domcontentloaded/networkidle/commit（預設 load）")}),
-	tool("click", "點擊元素", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector"), "timeout": prop("number", "等待元素出現的毫秒數（選填）")}),
-	tool("type_text", "輸入文字", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector"), "text": prop("string", "要輸入的文字"), "clear": prop("boolean", "輸入前先清空欄位（預設 false）")}),
-	tool("screenshot", "截圖", map[string]any{"profile_id": prop("string", "Profile ID"), "quality": prop("number", "JPEG 品質 1-100（預設 40）"), "full_page": prop("boolean", "是否截全頁（預設 false，僅可視範圍）")}),
-	tool("get_content", "取得頁面內容", map[string]any{"profile_id": prop("string", "Profile ID"), "selector": prop("string", "CSS selector（選填）")}),
+	toolWithRequired("navigate", "導航目前分頁到指定 URL", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"url":        prop("string", "目標 URL"),
+		"wait_until": prop("string", "Optional. 等待策略：load/domcontentloaded/networkidle/commit；預設 Playwright 行為"),
+	}, []string{"profile_id", "url"}),
+	toolWithRequired("click", "點擊頁面元素", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"selector":   prop("string", "CSS selector"),
+		"timeout":    prop("number", "Optional. 點擊前等待元素出現的毫秒數"),
+	}, []string{"profile_id", "selector"}),
+	toolWithRequired("type_text", "在頁面元素中輸入文字", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"selector":   prop("string", "CSS selector"),
+		"text":       prop("string", "要輸入的文字"),
+		"clear":      prop("boolean", "Optional. 輸入前先清空欄位；預設 false"),
+	}, []string{"profile_id", "selector", "text"}),
+	toolWithRequired("screenshot", "擷取頁面截圖", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"quality":    prop("number", "Optional. JPEG 品質 1-100；預設 40"),
+		"full_page":  prop("boolean", "Optional. 是否截全頁；預設 false"),
+	}, []string{"profile_id"}),
+	toolWithRequired("get_content", "取得頁面 HTML 或指定元素文字", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"selector":   prop("string", "Optional. CSS selector；未提供時回傳頁面 HTML"),
+	}, []string{"profile_id"}),
 	tool("evaluate", "執行 JavaScript", map[string]any{"profile_id": prop("string", "Profile ID"), "script": prop("string", "JS 程式碼")}),
-	tool("new_tab", "開啟新分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "url": prop("string", "新分頁要導航的 URL（選填）")}),
+	toolWithRequired("new_tab", "開啟新分頁", map[string]any{
+		"profile_id": prop("string", "Profile ID"),
+		"url":        prop("string", "Optional. 新分頁要導航的 URL"),
+	}, []string{"profile_id"}),
 	tool("list_tabs", "列出所有分頁", map[string]any{"profile_id": prop("string", "Profile ID")}),
 	tool("switch_tab", "切換到指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "分頁索引（從 0 開始）")}),
 	tool("close_tab", "關閉指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "要關閉的分頁索引")}),

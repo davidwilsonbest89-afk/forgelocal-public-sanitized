@@ -3,6 +3,7 @@ package mcp
 import (
 	"net/http"
 	"net/http/httptest"
+	"slices"
 	"strings"
 	"testing"
 
@@ -161,6 +162,63 @@ func TestSearchProviderURLs(t *testing.T) {
 		}
 		if !strings.Contains(got, "BrowseForge") || strings.Contains(got, " ") {
 			t.Fatalf("%s SearchURL query not encoded as expected: %q", name, got)
+		}
+	}
+}
+
+func TestToolSchemasRequiredFields(t *testing.T) {
+	expected := map[string][]string{
+		"list_profiles":   {},
+		"create_profile":  {"name", "engine", "group"},
+		"delete_profile":  {"profile_id"},
+		"update_profile":  {"profile_id"},
+		"open_browser":    {"profile_id"},
+		"close_browser":   {"profile_id"},
+		"navigate":        {"profile_id", "url"},
+		"click":           {"profile_id", "selector"},
+		"type_text":       {"profile_id", "selector", "text"},
+		"screenshot":      {"profile_id"},
+		"get_content":     {"profile_id"},
+		"evaluate":        {"profile_id", "script"},
+		"new_tab":         {"profile_id"},
+		"list_tabs":       {"profile_id"},
+		"switch_tab":      {"profile_id", "index"},
+		"close_tab":       {"profile_id", "index"},
+		"web_search":      {"query"},
+		"web_explore":     {"url"},
+		"create_session":  {"profile_id"},
+		"destroy_session": {"session_id"},
+		"list_sessions":   {},
+		"gc_sessions":     {},
+	}
+
+	seen := map[string]bool{}
+	for _, toolDef := range tools {
+		name, _ := toolDef["name"].(string)
+		seen[name] = true
+		want, ok := expected[name]
+		if !ok {
+			t.Fatalf("unexpected tool in registry: %s", name)
+		}
+		schema, ok := toolDef["inputSchema"].(map[string]any)
+		if !ok {
+			t.Fatalf("%s inputSchema type = %T", name, toolDef["inputSchema"])
+		}
+		rawRequired, ok := schema["required"].([]string)
+		if !ok {
+			t.Fatalf("%s required type = %T", name, schema["required"])
+		}
+		got := append([]string(nil), rawRequired...)
+		slices.Sort(got)
+		want = append([]string(nil), want...)
+		slices.Sort(want)
+		if !slices.Equal(got, want) {
+			t.Fatalf("%s required = %v, want %v", name, got, want)
+		}
+	}
+	for name := range expected {
+		if !seen[name] {
+			t.Fatalf("expected tool missing from registry: %s", name)
 		}
 	}
 }
