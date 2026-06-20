@@ -36,7 +36,16 @@ fi
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 tmpdir="$(mktemp -d)"
-trap 'rm -rf "$tmpdir"' EXIT
+asset_server_pid=""
+
+cleanup() {
+  if [[ -n "$asset_server_pid" ]]; then
+    kill "$asset_server_pid" >/dev/null 2>&1 || true
+    wait "$asset_server_pid" >/dev/null 2>&1 || true
+  fi
+  rm -rf "$tmpdir"
+}
+trap cleanup EXIT
 
 [[ "$(git status --short)" == "" ]] || die "working tree must be clean before release"
 
@@ -107,11 +116,61 @@ else
 fi
 
 if [[ "${SKIP_DOCKER:-}" != "1" ]]; then
+  command -v zip >/dev/null || die "zip is required"
+  command -v python3 >/dev/null || die "python3 is required"
+
+  asset_root="$tmpdir/release-assets"
+  asset_version_dir="$asset_root/$version"
+  package_dir="$tmpdir/package/BrowseForge-lite"
+  mkdir -p "$asset_version_dir" "$package_dir/data" "$package_dir/profiles" "$package_dir/logs" "$package_dir/examples"
+
+  run env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+    -ldflags "-s -w -X main.Version=${version#v}" \
+    -o "$package_dir/BrowseForge" \
+    ./cmd/server
+  run cp -R extension "$package_dir/extension"
+  run cp data/fingerprints-chrome-macos.json data/fingerprints-chrome-windows.json data/fingerprints-firefox-macos.json data/fingerprints-firefox-windows.json "$package_dir/data/"
+  if [[ -d examples ]]; then
+    cp -R examples/. "$package_dir/examples/"
+  fi
+  run cp config.default.json "$package_dir/config.json"
+  run cp README.md README.zh-TW.md API.md API.zh-TW.md "$package_dir/"
+  (
+    cd "$tmpdir/package"
+    run zip -qr "$asset_version_dir/BrowseForge-${version}-lite-linux-x64.zip" BrowseForge-lite
+  )
+
+  port_file="$tmpdir/asset-server.port"
+  python3 - "$asset_root" "$port_file" <<'PY' &
+import functools
+import http.server
+import sys
+
+root = sys.argv[1]
+port_file = sys.argv[2]
+
+handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=root)
+server = http.server.ThreadingHTTPServer(("0.0.0.0", 0), handler)
+with open(port_file, "w", encoding="utf-8") as fh:
+    fh.write(str(server.server_port))
+server.serve_forever()
+PY
+  asset_server_pid="$!"
+  for _ in {1..100}; do
+    [[ -s "$port_file" ]] && break
+    sleep 0.1
+  done
+  [[ -s "$port_file" ]] || die "local release asset server did not start"
+  asset_server_port="$(cat "$port_file")"
+  asset_base_url="http://host.docker.internal:${asset_server_port}"
+
   run docker build \
+    --add-host=host.docker.internal:host-gateway \
     --platform linux/amd64 \
     -f docker/Dockerfile.run \
     --build-arg "BROWSEFORGE_VERSION=${version}" \
     --build-arg BROWSEFORGE_ARCH=linux-x64 \
+    --build-arg "BROWSEFORGE_RELEASE_BASE_URL=${asset_base_url}" \
     -t "browseforge:verify-${version}" \
     docker
   run docker run --rm --platform linux/amd64 --entrypoint /bin/bash "browseforge:verify-${version}" -n /entrypoint.sh
