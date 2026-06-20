@@ -79,7 +79,7 @@ For production deployments, pin a release tag instead of using `latest`:
 
 ```bash
 docker run -d --name browseforge \
-  -p 19280:19280 -p 19281:19281 -p 6901:6901 \
+  -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.7.7
@@ -88,7 +88,7 @@ docker run -d --name browseforge \
 | Service | URL |
 |------|-----|
 | Dashboard + REST API + Playwright proxy | `http://localhost:19280` |
-| MCP Streamable HTTP | `http://localhost:19281` |
+| MCP Streamable HTTP | `http://localhost:19280/mcp` |
 | KasmVNC remote desktop | `http://localhost:6901` |
 | VNC credentials | `user` / `VNC_PASSWORD` |
 | API token | `docker exec browseforge /app/BrowseForge token` |
@@ -158,7 +158,9 @@ BrowseForge provides MCP in two modes.
 
 ### Streamable HTTP
 
-When the server is running, MCP HTTP is available at `http://127.0.0.1:19281`.
+When the server is running, MCP HTTP is available at `http://127.0.0.1:19280/mcp` on the main BrowseForge service port.
+
+Migration note: older clients that used the separate `:19281` MCP listener should update their URL to the main service port plus `/mcp`.
 
 HTTP MCP uses the same Bearer token as the REST API:
 
@@ -172,7 +174,7 @@ Example remote MCP configuration:
 {
   "mcpServers": {
     "browseforge": {
-      "url": "http://YOUR_SERVER:19281/",
+      "url": "http://YOUR_SERVER:19280/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_TOKEN"
       }
@@ -347,10 +349,12 @@ For release publishing, use the guarded flow in [docs/release.md](docs/release.m
 
 ```text
 BrowseForge
-  REST API (:19280)
-  MCP Server (:19281)
-  Web Dashboard
-  Playwright-compatible browser control
+  Main HTTP service (:19280)
+    REST API (/api)
+    MCP Streamable HTTP (/mcp)
+    Web Dashboard (/)
+    Playwright-compatible browser control
+
   Browser runtime
     Camoufox profiles
     CloakBrowser profiles

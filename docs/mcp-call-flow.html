@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BrowseForge MCP Web Session Call Flow</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 2rem; background: #0f172a; color: #e2e8f0; }
+    h1, h2 { color: #f8fafc; }
+    .card { background: #111827; border: 1px solid #334155; border-radius: 12px; padding: 1.25rem; margin: 1rem 0; }
+    code { color: #93c5fd; }
+    li { margin: .35rem 0; }
+  </style>
+</head>
+<body>
+  <h1>BrowseForge MCP Web Session Call Flow</h1>
+
+  <div class="card">
+    <h2>Final architecture</h2>
+    <ul>
+      <li>Chrome/CloakBrowser profiles are the supported browser path for <code>web_search</code> and <code>web_explore</code>.</li>
+      <li>One profile browser is owned by <code>browser.Manager</code>.</li>
+      <li>Each MCP agent session connects through the profile browser's Playwright Bind endpoint.</li>
+      <li>Each agent session owns one independent <code>Page</code>, created with <code>connectedBrowser.NewPage()</code>.</li>
+      <li>GC and <code>destroy_session</code> close only the agent <code>Page</code> and remove metadata.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <pre class="mermaid">
+flowchart TD
+  A[Agent tools/call] --> B{Tool name}
+  B -->|web_search| C[Validate query and profile_id/session_id]
+  B -->|web_explore| D[Validate url and profile_id/session_id]
+  B -->|create_session| E[Validate profile_id]
+
+  C --> F[SessionPool.GetOrCreateSession]
+  D --> F
+  E --> G[SessionPool.CreateSession]
+  G --> H[profile.Store.Get]
+  F --> I{session_id provided?}
+
+  I -->|yes| J[Find WebSession]
+  J --> K[Lock session mutex]
+  K --> L[Reuse existing agent Page]
+
+  I -->|no| H
+  H --> M{Profile engine chromium?}
+  M -->|no| X[Return JSON-RPC -32000]
+  M -->|yes| N[browser.Manager.LaunchSession(profile_id)]
+  N --> O[Use browser.Session.ConnectURL]
+  O --> P[pw.Chromium.Connect ConnectURL]
+  P --> Q[connectedBrowser.NewPage]
+  Q --> R[Store WebSession metadata]
+  R --> L
+
+  L --> S{Operation}
+  S -->|Search| T[Page.Goto Google search URL]
+  S -->|Explore| U[Page.Goto target URL]
+  T --> V[Extract structured results]
+  U --> W[Extract title/text/links]
+  V --> Y[Return content plus session_id profile_id session_created]
+  W --> Y
+
+  Z[destroy_session / GC / CloseAll] --> ZA[Close WebSession.Page]
+  ZA --> ZB[Delete SessionPool metadata]
+  ZB -. never closes .-> ZC[browser.Manager-owned profile browser]
+    </pre>
+  </div>
+
+  <div class="card">
+    <h2>Lifecycle guarantee</h2>
+    <p><code>SessionPool</code> never owns the profile browser. It owns only the MCP agent session metadata and the independent page opened for that session.</p>
+  </div>
+
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+</body>
+</html>

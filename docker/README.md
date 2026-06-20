@@ -8,7 +8,7 @@
 
 ```bash
 docker run -d --name browseforge \
-  -p 19280:19280 -p 19281:19281 -p 6901:6901 \
+  -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.7.7
@@ -34,7 +34,7 @@ BROWSEFORGE_VERSION=v1.7.7 docker compose up -d --build
 | 服務 | URL |
 |------|-----|
 | Dashboard + REST API + Playwright proxy | http://localhost:19280 |
-| MCP Streamable HTTP | http://localhost:19281 |
+| MCP Streamable HTTP | http://localhost:19280/mcp |
 | 遠端桌面 (KasmVNC) | http://localhost:6901 |
 | VNC 帳號 | `user` / 環境變數 `VNC_PASSWORD`（預設 `browseforge`） |
 
@@ -52,7 +52,7 @@ docker compose exec browseforge /app/BrowseForge token
 - **WebGL 完整偽裝** — GLX + 軟體渲染 + 完整 WebGL 指紋
 - **Docker 自動偵測** — 自動啟用 `0.0.0.0` 綁定和 `--no-sandbox`
 - **Playwright proxy** — Dashboard + API + Playwright WebSocket proxy 都走 19280
-- **MCP HTTP** — Streamable HTTP MCP 走 19281，使用與 REST API 相同的 Bearer Token
+- **MCP HTTP** — Streamable HTTP MCP 走 `19280/mcp`，使用與 REST API 相同的 Bearer Token
 
 ## 注意事項
 

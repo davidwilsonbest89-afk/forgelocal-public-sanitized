@@ -7,18 +7,18 @@ import (
 )
 
 type Config struct {
-	Host            string `json:"host,omitempty"`
-	Port            string `json:"port"`
-	NoSandbox       bool   `json:"no_sandbox,omitempty"`
-	ProfilesDir     string `json:"profiles_dir"`
-	DataDir         string `json:"data_dir"`
-	LogFile         string `json:"log_file"`
-	CamoufoxPath    string `json:"camoufox_path"`
-	CloakBrowserPath string `json:"cloakbrowser_path"`
-	FingerprintDir  string `json:"fingerprint_dir"`
-	Humanize        *HumanizeConfig `json:"humanize,omitempty"`
-	APIToken        string `json:"-"` // generated at runtime
-	Version         string `json:"-"` // set from main
+	Host             string          `json:"host,omitempty"`
+	Port             string          `json:"port"`
+	NoSandbox        bool            `json:"no_sandbox,omitempty"`
+	ProfilesDir      string          `json:"profiles_dir"`
+	DataDir          string          `json:"data_dir"`
+	LogFile          string          `json:"log_file"`
+	CamoufoxPath     string          `json:"camoufox_path"`
+	CloakBrowserPath string          `json:"cloakbrowser_path"`
+	FingerprintDir   string          `json:"fingerprint_dir"`
+	Humanize         *HumanizeConfig `json:"humanize,omitempty"`
+	APIToken         string          `json:"-"` // generated at runtime
+	Version          string          `json:"-"` // set from main
 }
 
 // HumanizeConfig controls human-like behavior simulation.
@@ -64,4 +64,3 @@ func SetupLogger(logFile string) *slog.Logger {
 	}
 	return slog.New(slog.NewJSONHandler(f, nil))
 }
-

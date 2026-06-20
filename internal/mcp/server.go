@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 	"sync/atomic"
 
 	"browseforge/internal/browser"
@@ -18,24 +19,25 @@ import (
 // MCP Server — Model Context Protocol (2025-11-25 spec, Streamable HTTP transport)
 
 type Server struct {
-	store   *profile.Store
-	mgr     *browser.Manager
-	hcfg    humanize.Config
-	token   string
-	version string
-	reqID   atomic.Int64
+	store       *profile.Store
+	mgr         *browser.Manager
+	hcfg        humanize.Config
+	sessionPool *SessionPool
+	token       string
+	version     string
+	reqID       atomic.Int64
 }
 
-func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, token, version string) *Server {
+func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, sessionPool *SessionPool, token, version string) *Server {
 	if version == "" {
 		version = "dev"
 	}
-	return &Server{store: store, mgr: mgr, hcfg: hcfg, token: token, version: version}
+	return &Server{store: store, mgr: mgr, hcfg: hcfg, sessionPool: sessionPool, token: token, version: version}
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
-		http.Error(w, "POST only", 405)
+		http.Error(w, "POST only", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -48,7 +50,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var req mcpRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		writeJSONRPC(w, nil, newError(-32700, "Parse error"))
+		writeJSONRPCStatus(w, http.StatusBadRequest, nil, newError(-32700, "Parse error"))
 		return
 	}
 
@@ -94,7 +96,13 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 		Name      string         `json:"name"`
 		Arguments map[string]any `json:"arguments"`
 	}
-	json.Unmarshal(params, &call)
+	if err := json.Unmarshal(params, &call); err != nil {
+		return nil, newError(-32700, "Invalid arguments: "+err.Error())
+	}
+
+	if call.Name == "" {
+		return nil, newError(-32602, "Tool name is required")
+	}
 
 	switch call.Name {
 	case "list_profiles":
@@ -129,6 +137,18 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 		return s.toolSwitchTab(call.Arguments)
 	case "close_tab":
 		return s.toolCloseTab(call.Arguments)
+	case "web_search":
+		return s.toolWebSearch(call.Arguments)
+	case "web_explore":
+		return s.toolWebExplore(call.Arguments)
+	case "create_session":
+		return s.toolCreateSession(call.Arguments)
+	case "destroy_session":
+		return s.toolDestroySession(call.Arguments)
+	case "list_sessions":
+		return s.toolListSessions(call.Arguments)
+	case "gc_sessions":
+		return s.toolGCSessions(call.Arguments)
 	default:
 		return nil, newError(-32602, "Unknown tool: "+call.Name)
 	}
@@ -167,6 +187,12 @@ func (s *Server) toolCreateProfile(args map[string]any) (any, *mcpError) {
 
 func (s *Server) toolDeleteProfile(args map[string]any) (any, *mcpError) {
 	id, _ := args["profile_id"].(string)
+	if s.sessionPool != nil {
+		s.sessionPool.DestroyProfileSessions(id)
+	}
+	if err := s.closeProfileBrowser(id, true); err != nil {
+		return nil, err
+	}
 	if err := s.store.Delete(id); err != nil {
 		return nil, newError(-32000, err.Error())
 	}
@@ -205,11 +231,27 @@ func (s *Server) toolOpenBrowser(args map[string]any) (any, *mcpError) {
 	return textResult(fmt.Sprintf("Opened browser for %s (session: %s, engine: %s)", p.Name, sess.ID, sess.Engine)), nil
 }
 
+func (s *Server) closeProfileBrowser(profileID string, ignoreNotFound bool) *mcpError {
+	if s.mgr == nil {
+		return nil
+	}
+	sessID := "sess_" + profileID
+	if err := s.mgr.CloseSession(sessID); err != nil {
+		if ignoreNotFound && strings.HasPrefix(err.Error(), "session not found: ") {
+			return nil
+		}
+		return newError(-32000, err.Error())
+	}
+	return nil
+}
+
 func (s *Server) toolCloseBrowser(args map[string]any) (any, *mcpError) {
 	id, _ := args["profile_id"].(string)
-	sessID := "sess_" + id
-	if err := s.mgr.CloseSession(sessID); err != nil {
-		return nil, newError(-32000, err.Error())
+	if s.sessionPool != nil {
+		s.sessionPool.DestroyProfileSessions(id)
+	}
+	if err := s.closeProfileBrowser(id, false); err != nil {
+		return nil, err
 	}
 	return textResult("Closed browser for " + id), nil
 }
@@ -342,7 +384,12 @@ func (s *Server) toolNewTab(args map[string]any) (any, *mcpError) {
 	sess.Page = page
 	url, _ := args["url"].(string)
 	if url != "" {
-		page.Goto(url)
+		if _, err := page.Goto(url, playwright.PageGotoOptions{
+			WaitUntil: playwright.WaitUntilStateLoad,
+			Timeout:   playwright.Float(30000),
+		}); err != nil {
+			return nil, newError(-32000, "navigate to new tab: "+err.Error())
+		}
 	}
 	return textResult(fmt.Sprintf("New tab opened (total: %d)", len(sess.Context.Pages()))), nil
 }
@@ -419,6 +466,29 @@ var tools = []map[string]any{
 	tool("list_tabs", "列出所有分頁", map[string]any{"profile_id": prop("string", "Profile ID")}),
 	tool("switch_tab", "切換到指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "分頁索引（從 0 開始）")}),
 	tool("close_tab", "關閉指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "要關閉的分頁索引")}),
+	toolWithRequired("web_search", "Google 網頁搜尋，使用指定 profile 的 CloakBrowser 並為 agent session 開獨立分頁", map[string]any{
+		"query":       prop("string", "搜尋查詢文字"),
+		"profile_id":  prop("string", "Chromium profile ID；session_id 未提供時必填"),
+		"session_id":  prop("string", "agent session ID；提供時重用既有分頁，未提供則自動建立"),
+		"max_results": prop("number", "最大結果數量（預設 10，最大 30）"),
+	}, []string{"query"}),
+	toolWithRequired("web_explore", "探索指定網頁，使用指定 profile 的 CloakBrowser 並為 agent session 開獨立分頁", map[string]any{
+		"url":             prop("string", "要探索的 URL（可省略 http/https 前綴）"),
+		"profile_id":      prop("string", "Chromium profile ID；session_id 未提供時必填"),
+		"session_id":      prop("string", "agent session ID；提供時重用既有分頁，未提供則自動建立"),
+		"max_text_length": prop("number", "最大文字長度（預設 3000）"),
+		"max_links":       prop("number", "最大連結數量（預設 50）"),
+	}, []string{"url"}),
+	toolWithRequired("create_session", "為指定 Chromium profile 建立 agent web session（獨立分頁）", map[string]any{
+		"profile_id": prop("string", "Chromium profile ID"),
+	}, []string{"profile_id"}),
+	toolWithRequired("destroy_session", "銷毀指定 agent web session（關閉分頁）", map[string]any{
+		"session_id": prop("string", "agent session ID"),
+	}, []string{"session_id"}),
+	toolWithRequired("list_sessions", "列出活躍 agent web sessions", map[string]any{
+		"profile_id": prop("string", "依 profile ID 過濾（選填）"),
+	}, []string{}),
+	toolWithRequired("gc_sessions", "立即執行 agent web session GC", map[string]any{}, []string{}),
 }
 
 type mcpRequest struct {
@@ -440,6 +510,10 @@ func tool(name, desc string, props map[string]any) map[string]any {
 	for k := range props {
 		required = append(required, k)
 	}
+	return toolWithRequired(name, desc, props, required)
+}
+
+func toolWithRequired(name, desc string, props map[string]any, required []string) map[string]any {
 	return map[string]any{
 		"name": name, "description": desc,
 		"inputSchema": map[string]any{"type": "object", "properties": props, "required": required},
@@ -457,7 +531,12 @@ func imageResult(data []byte) map[string]any {
 }
 
 func writeJSONRPC(w http.ResponseWriter, id any, err *mcpError, result ...any) {
+	writeJSONRPCStatus(w, http.StatusOK, id, err, result...)
+}
+
+func writeJSONRPCStatus(w http.ResponseWriter, status int, id any, err *mcpError, result ...any) {
 	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(status)
 	resp := map[string]any{"jsonrpc": "2.0", "id": id}
 	if err != nil {
 		resp["error"] = err
@@ -470,4 +549,170 @@ func writeJSONRPC(w http.ResponseWriter, id any, err *mcpError, result ...any) {
 func mustJSON(v any) string {
 	b, _ := json.MarshalIndent(v, "", "  ")
 	return string(b)
+}
+
+// --- Web Search & Explore tools ---
+
+func (s *Server) toolWebSearch(args map[string]any) (any, *mcpError) {
+	query, _ := args["query"].(string)
+	if query == "" {
+		return nil, newError(-32602, "query is required")
+	}
+	profileID, _ := args["profile_id"].(string)
+	sessionID, _ := args["session_id"].(string)
+	if profileID == "" && sessionID == "" {
+		return nil, newError(-32602, "profile_id is required when session_id is not provided")
+	}
+
+	maxResults := 10
+	if mr, ok := args["max_results"].(float64); ok && mr > 0 {
+		maxResults = int(mr)
+	}
+
+	if s.sessionPool == nil {
+		return nil, newError(-32000, "web search is not available (session pool not initialized)")
+	}
+
+	sess, created, err := s.sessionPool.GetOrCreateSession(profileID, sessionID)
+	if err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+
+	searchResp, err := sess.WebSearch(query, maxResults)
+	if err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+
+	return buildWebSearchMCPResult(query, searchResp, sess.ID, sess.ProfileID, created), nil
+}
+
+func buildWebSearchMCPResult(query string, searchResp *SearchResponse, sessionID, profileID string, created bool) map[string]any {
+	if searchResp == nil {
+		searchResp = &SearchResponse{ExtractionMode: "structured"}
+	}
+	items := make([]map[string]string, len(searchResp.Results))
+	for i, r := range searchResp.Results {
+		items[i] = map[string]string{"title": r.Title, "url": r.URL, "snippet": r.Snippet}
+	}
+
+	payload := map[string]any{
+		"query":           query,
+		"extraction_mode": searchResp.ExtractionMode,
+		"results":         items,
+	}
+	if searchResp.RawFallback != nil {
+		payload["raw_fallback"] = searchResp.RawFallback
+	}
+
+	res := textResult(fmt.Sprintf("Found %d results for \"%s\" (mode: %s):\n%s", len(searchResp.Results), query, searchResp.ExtractionMode, mustJSON(payload)))
+	res["session_id"] = sessionID
+	res["profile_id"] = profileID
+	res["session_created"] = created
+	res["extraction_mode"] = searchResp.ExtractionMode
+	res["results"] = items
+	if searchResp.RawFallback != nil {
+		res["raw_fallback"] = searchResp.RawFallback
+	}
+	return res
+}
+
+func (s *Server) toolWebExplore(args map[string]any) (any, *mcpError) {
+	url, _ := args["url"].(string)
+	if url == "" {
+		return nil, newError(-32602, "url is required")
+	}
+	profileID, _ := args["profile_id"].(string)
+	sessionID, _ := args["session_id"].(string)
+	if profileID == "" && sessionID == "" {
+		return nil, newError(-32602, "profile_id is required when session_id is not provided")
+	}
+
+	maxTextLength := 3000
+	if mtl, ok := args["max_text_length"].(float64); ok && mtl > 0 {
+		maxTextLength = int(mtl)
+	}
+	maxLinks := 50
+	if ml, ok := args["max_links"].(float64); ok && ml > 0 {
+		maxLinks = int(ml)
+	}
+
+	if s.sessionPool == nil {
+		return nil, newError(-32000, "web explore is not available (session pool not initialized)")
+	}
+
+	sess, created, err := s.sessionPool.GetOrCreateSession(profileID, sessionID)
+	if err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+
+	result, err := sess.WebExplore(url, maxTextLength, maxLinks)
+	if err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+
+	output := map[string]any{
+		"url":   result.URL,
+		"title": result.Title,
+		"text":  result.Text,
+		"links": result.Links,
+	}
+	if result.Description != "" {
+		output["description"] = result.Description
+	}
+
+	res := textResult(mustJSON(output))
+	res["session_id"] = sess.ID
+	res["profile_id"] = sess.ProfileID
+	res["session_created"] = created
+	return res, nil
+}
+
+func (s *Server) toolCreateSession(args map[string]any) (any, *mcpError) {
+	profileID, _ := args["profile_id"].(string)
+	if profileID == "" {
+		return nil, newError(-32602, "profile_id is required")
+	}
+	if s.sessionPool == nil {
+		return nil, newError(-32000, "web sessions are not available (session pool not initialized)")
+	}
+	sess, err := s.sessionPool.CreateSession(profileID)
+	if err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+	res := textResult(fmt.Sprintf("Session created: %s (profile: %s, browser: %s)", sess.ID, sess.ProfileID, sess.BrowserID))
+	res["session_id"] = sess.ID
+	res["profile_id"] = sess.ProfileID
+	return res, nil
+}
+
+func (s *Server) toolDestroySession(args map[string]any) (any, *mcpError) {
+	sessionID, _ := args["session_id"].(string)
+	if sessionID == "" {
+		return nil, newError(-32602, "session_id is required")
+	}
+	if s.sessionPool == nil {
+		return nil, newError(-32000, "web sessions are not available (session pool not initialized)")
+	}
+	if err := s.sessionPool.DestroySession(sessionID); err != nil {
+		return nil, newError(-32000, err.Error())
+	}
+	res := textResult("Session destroyed: " + sessionID)
+	res["session_id"] = sessionID
+	return res, nil
+}
+
+func (s *Server) toolListSessions(args map[string]any) (any, *mcpError) {
+	profileID, _ := args["profile_id"].(string)
+	if s.sessionPool == nil {
+		return nil, newError(-32000, "web sessions are not available (session pool not initialized)")
+	}
+	return textResult(mustJSON(s.sessionPool.ListSessions(profileID))), nil
+}
+
+func (s *Server) toolGCSessions(args map[string]any) (any, *mcpError) {
+	if s.sessionPool == nil {
+		return nil, newError(-32000, "web sessions are not available (session pool not initialized)")
+	}
+	closed := s.sessionPool.GC()
+	return textResult(fmt.Sprintf("GC completed: closed %d sessions", closed)), nil
 }

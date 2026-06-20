@@ -8,7 +8,7 @@
 |------|-----|------|
 | REST API | `http://127.0.0.1:19280/api` | Profile 管理 + 瀏覽器操作 |
 | Dashboard | `http://127.0.0.1:19280` | Web 管理介面 |
-| MCP Server | `http://127.0.0.1:19281` | AI Agent 整合（JSON-RPC） |
+| MCP Server | `http://127.0.0.1:19280/mcp` | AI Agent 整合（JSON-RPC） |
 
 ## 認證
 
@@ -299,16 +299,18 @@ curl -X POST http://127.0.0.1:19280/api/workflow/run \
 
 ## MCP Server（AI Agent 整合）
 
-端口：`http://127.0.0.1:19281`
+端點：`http://127.0.0.1:19280/mcp`
 協議：JSON-RPC 2.0 over HTTP POST
 規格：MCP 2025-11-25
+
+遷移提醒：舊版 client 若使用獨立的 `:19281` MCP listener，請改成主服務 port 加上 `/mcp`。
 
 ### 連線
 
 ```python
 # Python (mcp 套件)
 from mcp import ClientSession
-async with ClientSession("http://127.0.0.1:19281") as session:
+async with ClientSession("http://127.0.0.1:19280/mcp") as session:
     await session.initialize()
     tools = await session.list_tools()
 ```

@@ -56,6 +56,12 @@ func NewManager(cfg *config.Config) (*Manager, error) {
 	return m, nil
 }
 
+// Playwright returns the underlying Playwright driver instance.
+// Used by integration components that need to reuse the same Playwright process.
+func (m *Manager) Playwright() *playwright.Playwright {
+	return m.pw
+}
+
 // recoverOrphanSessions cleans up stale session state on startup
 func (m *Manager) recoverOrphanSessions() {
 	// On startup, all previous sessions are dead (processes gone)

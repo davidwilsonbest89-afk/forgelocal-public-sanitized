@@ -38,7 +38,7 @@ RUN test -n "$BROWSEFORGE_VERSION" && \
     rm -rf /tmp/bf.zip /tmp/BrowseForge-lite && \
     chmod +x /app/BrowseForge
 
-EXPOSE 19280 19281 6901
+EXPOSE 19280 6901
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

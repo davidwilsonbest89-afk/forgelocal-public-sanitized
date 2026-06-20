@@ -8,7 +8,7 @@
 |------|-----|---------|
 | REST API | `http://127.0.0.1:19280/api` | Profile and browser automation |
 | Dashboard | `http://127.0.0.1:19280` | Web management UI |
-| MCP Streamable HTTP | `http://127.0.0.1:19281` | AI agent integration |
+| MCP Streamable HTTP | `http://127.0.0.1:19280/mcp` | AI agent integration on the main service port |
 
 ## Authentication
 
@@ -385,8 +385,238 @@ Common actions:
 - `screenshot`
 - `sleep`
 
+## MCP Tools
+
+BrowseForge exposes MCP tools at `http://127.0.0.1:19280/mcp` (Streamable HTTP transport, JSON-RPC 2.0). MCP is mounted on the main BrowseForge HTTP service port rather than a separate listener.
+
+Migration note: older clients configured for a separate `:19281` MCP listener should update to the main service port plus `/mcp`.
+
+### Authentication
+
+All MCP requests require Bearer token authentication:
+
+```http
+Authorization: Bearer <token>
+```
+
+### Tool List
+
+| Tool | Description |
+|------|-------------|
+| `list_profiles` | List all browser profiles |
+| `create_profile` | Create a new browser profile |
+| `delete_profile` | Delete a profile |
+| `update_profile` | Update profile settings |
+| `open_browser` | Open a browser session for a profile |
+| `close_browser` | Close a browser session |
+| `navigate` | Navigate to a URL |
+| `click` | Click an element |
+| `type_text` | Type text into an element |
+| `screenshot` | Take a screenshot |
+| `get_content` | Get page content |
+| `evaluate` | Execute JavaScript |
+| `new_tab` | Open a new tab |
+| `list_tabs` | List all tabs |
+| `switch_tab` | Switch to a tab |
+| `close_tab` | Close a tab |
+| `web_search` | Search Google using a profile-bound agent session |
+| `web_explore` | Explore a webpage using a profile-bound agent session |
+| `create_session` | Create an agent web session for a Chromium profile |
+| `destroy_session` | Destroy an agent web session and close its page |
+| `list_sessions` | List active agent web sessions |
+| `gc_sessions` | Trigger web session garbage collection |
+
+### Agent Web Sessions
+
+`web_search` and `web_explore` run through profile-bound agent sessions:
+
+- Only Chromium/CloakBrowser profiles are accepted for these tools.
+- One profile has one persistent browser instance owned by `browser.Manager`.
+- `SessionPool` connects to that browser through the profile's Playwright Bind endpoint.
+- Each agent session opens one independent `Page` via `connectedBrowser.NewPage()`; it does not create a separate browser or `BrowserContext`.
+- `session_id` pins later calls to the same page.
+- GC/destroy/shutdown close idle agent pages and metadata only; they do **not** close the profile browser.
+
+Defaults:
+
+| Setting | Default |
+|---------|---------|
+| Idle TTL | 5 minutes |
+| GC sweep interval | 1 minute |
+| Max sessions per profile | 10 |
+
+MCP response-shape compatibility note:
+
+- BrowseForge keeps the standard MCP `content` text block as the primary human/client-compatible payload.
+- For session-aware web tools, machine-readable session metadata is also exposed as top-level result fields: `session_id`, `profile_id`, and, when applicable, `session_created`.
+- `web_search` also exposes top-level `extraction_mode`, `results`, and, when structured extraction has no results, `raw_fallback` for LLM-friendly SERP interpretation.
+- This avoids breaking clients that only read `content` while still allowing agents to reuse pages reliably without parsing the text payload.
+
+MCP error codes used by these tools:
+
+| Code | Meaning |
+|------|---------|
+| `-32602` | Missing required argument, e.g. `query`, `url`, `profile_id`, or `session_id` |
+| `-32000` | Runtime/session failure, e.g. session pool unavailable, profile not found, non-Chromium profile, browser launch/connect failure, navigation/search failure |
+
+### `web_search`
+
+Search Google and return structured results with title, URL, and snippet. If Google's DOM shape changes and structured extraction returns no results, BrowseForge returns an LLM-friendly raw SERP fallback containing page text and candidate links while preserving explicit captcha/consent/unusual-traffic errors.
+
+**Parameters:**
+
+| Parameter | Type | Required | Description |
+|------|------|------|-------------|
+| `query` | string | Yes | Search query |
+| `profile_id` | string | Required if `session_id` is omitted | Chromium/CloakBrowser profile to use |
+| `session_id` | string | No | Existing agent session to reuse; when omitted, a new session/page is created |
+| `max_results` | number | No | Maximum results. Default `10`; values above `30` are clamped by `WebSearch` |
+
+**Result shape:** `content[0].text` is a text prefix followed by pretty-printed JSON. Top-level result fields include `session_id`, `profile_id`, `session_created`, `extraction_mode`, `results`, and optional `raw_fallback`.
+
+```json
+{
+  "content": [{
+    "type": "text",
+    "text": "Found 5 results for \"Go programming language tutorial\" (mode: structured):\n{...}"
+  }],
+  "session_id": "sess_search_0123abcd",
+  "profile_id": "prof_abc123",
+  "session_created": true,
+  "extraction_mode": "structured",
+  "results": [
+    {"title": "Result title", "url": "https://example.com", "snippet": "Result snippet"}
+  ]
+}
+```
+
+When structured extraction is empty, `extraction_mode` is `raw_fallback` and `raw_fallback` contains:
+
+```json
+{
+  "page_title": "Google Search",
+  "text": "visible SERP text for LLM interpretation...",
+  "candidate_links": [{"text": "Candidate", "url": "https://example.com"}]
+}
+```
+
+### `web_explore`
+
+Navigate to a URL and extract structured content: URL, title, optional meta description, visible text, and links.
+
+**Parameters:**
+
+| Parameter | Type | Required | Description |
+|------|------|------|-------------|
+| `url` | string | Yes | URL to explore; `https://` is prepended when no `http://` or `https://` prefix is provided |
+| `profile_id` | string | Required if `session_id` is omitted | Chromium/CloakBrowser profile to use |
+| `session_id` | string | No | Existing agent session to reuse; when omitted, a new session/page is created |
+| `max_text_length` | number | No | Maximum text length. Default `3000`; extraction clamps to `10000` |
+| `max_links` | number | No | Maximum links to extract. Default `50`; extraction clamps to `200` |
+
+**Result shape:** `content[0].text` is pretty-printed JSON with `url`, `title`, `text`, `links`, and optional `description`. Top-level result fields also include `session_id`, `profile_id`, and `session_created`.
+
+```json
+{
+  "content": [{
+    "type": "text",
+    "text": "{\n  \"url\": \"https://example.com\",\n  \"title\": \"Example Domain\",\n  \"text\": \"Example Domain...\",\n  \"links\": []\n}"
+  }],
+  "session_id": "sess_search_0123abcd",
+  "profile_id": "prof_abc123",
+  "session_created": true
+}
+```
+
+### `create_session`
+
+Create an agent web session for a Chromium/CloakBrowser profile without performing a search or page exploration.
+
+**Parameters:** `profile_id` string, required.
+
+**Returns:** text confirmation plus top-level `session_id` and `profile_id`.
+
+```json
+{
+  "content": [{
+    "type": "text",
+    "text": "Session created: sess_search_0123abcd (profile: prof_abc123, browser: sess_prof_abc123)"
+  }],
+  "session_id": "sess_search_0123abcd",
+  "profile_id": "prof_abc123"
+}
+```
+
+### `destroy_session`
+
+Destroy a session and close its agent page.
+
+**Parameters:** `session_id` string, required.
+
+**Returns:** text confirmation plus top-level `session_id`.
+
+```json
+{
+  "content": [{
+    "type": "text",
+    "text": "Session destroyed: sess_search_0123abcd"
+  }],
+  "session_id": "sess_search_0123abcd"
+}
+```
+
+### `list_sessions`
+
+List active agent web sessions. Optional `profile_id` filters the result.
+
+**Parameters:** `profile_id` string, optional.
+
+**Returns:** `content[0].text` as pretty-printed JSON array of session info objects: `id`, `profile_id`, `browser_id`, `created_at`, `last_accessed`, and `idle_seconds`.
+
+### `gc_sessions`
+
+Run session GC immediately.
+
+**Parameters:** none.
+
+**Returns:** text confirmation such as `GC completed: closed 2 sessions`.
+
+### Common Patterns
+
+**Search and explore first result with the same agent session:**
+
+```json
+// Step 1: Search. Save returned session_id.
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "web_search",
+    "arguments": {
+      "query": "latest Go release notes",
+      "profile_id": "prof_abc123"
+    }
+  }
+}
+
+// Step 2: Explore the first result URL using the same page/session.
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/call",
+  "params": {
+    "name": "web_explore",
+    "arguments": {
+      "url": "<url_from_step_1>",
+      "session_id": "<session_id_from_step_1>"
+    }
+  }
+}
+```
+
 ## Security Notes
 
-- Do not expose `19280`, `19281`, or `6901` directly to the public internet.
+- Do not expose `19280` or `6901` directly to the public internet.
 - Treat tokens, profiles, cookies, backups, and exported profile ZIPs as sensitive.
 - Use SSH tunnels, VPN, or a hardened HTTPS reverse proxy for remote access.

@@ -196,7 +196,17 @@ func runMCPStdio() {
 	}
 	defer browserMgr.Close()
 
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), "", cfg.Version)
+	sessionPool, err := mcp.NewSessionPool(browserMgr, profileStore)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Web session pool warning: %v\n", err)
+	}
+	if sessionPool != nil {
+		stopGC := sessionPool.StartGC(sessionPool.SweepInterval())
+		defer stopGC()
+		defer sessionPool.CloseAll()
+	}
+
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, "", cfg.Version)
 	mcpServer.RunStdio()
 }
 
@@ -342,18 +352,23 @@ func runServer(flags *serveFlags) {
 		os.Exit(1)
 	}
 
+	// Web Search & Explore agent sessions (profile browser + Playwright Bind + independent pages)
+	sessionPool, err := mcp.NewSessionPool(browserMgr, profileStore)
+	if err != nil {
+		slog.Warn("web session pool not available", "error", err)
+	} else {
+		stopGC := sessionPool.StartGC(sessionPool.SweepInterval())
+		defer stopGC()
+		defer sessionPool.CloseAll()
+	}
+
 	// Workflow engine
 	wfEngine := workflow.NewEngine("http://127.0.0.1:"+cfg.Port, cfg.APIToken)
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
-	// MCP Server
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), cfg.APIToken, cfg.Version)
-	go func() {
-		slog.Info("MCP server starting", "port", "19281")
-		if err := http.ListenAndServe(cfg.Host+":19281", mcpServer); err != nil && err != http.ErrServerClosed {
-			slog.Error("MCP server failed", "error", err)
-		}
-	}()
+	// MCP Server (same HTTP service port, integrated with the main router)
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, cfg.APIToken, cfg.Version)
+	router.Post("/mcp", mcpServer.ServeHTTP)
 
 	// HTTP Server with error channel (no os.Exit in goroutine)
 	srv := &http.Server{Addr: cfg.Host + ":" + cfg.Port, Handler: router}
@@ -377,7 +392,7 @@ func runServer(flags *serveFlags) {
 				fmt.Printf("║        🦊 BrowseForge v%-16s║\n", Version)
 				fmt.Println("╠══════════════════════════════════════════╣")
 				fmt.Printf("║  Dashboard: http://%s:%-12s║\n", cfg.Host, cfg.Port)
-				fmt.Printf("║  MCP:       http://%s:19281       ║\n", cfg.Host)
+				fmt.Printf("║  MCP:       http://%s:%-12s║\n", cfg.Host, cfg.Port+"/mcp")
 				fmt.Printf("║  Token:     %s...  ║\n", token[:16])
 				fmt.Println("╚══════════════════════════════════════════╝")
 				if cfg.Host == "127.0.0.1" {

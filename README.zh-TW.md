@@ -79,7 +79,7 @@ Dashboard 會開在 `http://127.0.0.1:19280`。首次啟動會在需要時下載
 
 ```bash
 docker run -d --name browseforge \
-  -p 19280:19280 -p 19281:19281 -p 6901:6901 \
+  -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.7.7
@@ -88,7 +88,7 @@ docker run -d --name browseforge \
 | 服務 | URL |
 |------|-----|
 | Dashboard + REST API + Playwright proxy | `http://localhost:19280` |
-| MCP Streamable HTTP | `http://localhost:19281` |
+| MCP Streamable HTTP | `http://localhost:19280/mcp` |
 | KasmVNC 遠端桌面 | `http://localhost:6901` |
 | VNC 帳號 | `user` / `VNC_PASSWORD` |
 | API Token | `docker exec browseforge /app/BrowseForge token` |
@@ -158,7 +158,9 @@ BrowseForge 支援兩種 MCP 模式。
 
 ### Streamable HTTP
 
-BrowseForge server 啟動後，MCP HTTP 會在 `http://127.0.0.1:19281` 提供服務。
+BrowseForge server 啟動後，MCP HTTP 會在主服務 port 的 `http://127.0.0.1:19280/mcp` 提供服務。
+
+遷移提醒：舊版 client 若使用獨立的 `:19281` MCP listener，請改成主服務 port 加上 `/mcp`。
 
 HTTP MCP 使用與 REST API 相同的 Bearer Token：
 
@@ -172,7 +174,7 @@ Authorization: Bearer <token>
 {
   "mcpServers": {
     "browseforge": {
-      "url": "http://YOUR_SERVER:19281/",
+      "url": "http://YOUR_SERVER:19280/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_TOKEN"
       }
@@ -347,10 +349,11 @@ docker compose -f docker/docker-compose.yml config
 
 ```text
 BrowseForge
-  REST API (:19280)
-  MCP Server (:19281)
-  Web Dashboard
-  Playwright-compatible browser control
+  Main HTTP service (:19280)
+    REST API (/api)
+    MCP Streamable HTTP (/mcp)
+    Web Dashboard (/)
+    Playwright-compatible browser control
   Browser runtime
     Camoufox profiles
     CloakBrowser profiles
