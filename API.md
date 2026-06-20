@@ -419,7 +419,7 @@ Authorization: Bearer <token>
 | `list_tabs` | List all tabs |
 | `switch_tab` | Switch to a tab |
 | `close_tab` | Close a tab |
-| `web_search` | Search Google using a profile-bound agent session |
+| `web_search` | Search the web using a profile-bound agent session |
 | `web_explore` | Explore a webpage using a profile-bound agent session |
 | `create_session` | Create an agent web session for a Chromium profile |
 | `destroy_session` | Destroy an agent web session and close its page |
@@ -461,18 +461,19 @@ MCP error codes used by these tools:
 
 ### `web_search`
 
-Search Google and return structured results with title, URL, and snippet. If Google's DOM shape changes and structured extraction returns no results, BrowseForge returns an LLM-friendly raw SERP fallback containing page text and candidate links while preserving explicit captcha/consent/unusual-traffic errors.
+Search the web with a provider-backed search engine and return structured results with title, URL, and snippet. Supported engines are `google`, `bing`, and `duckduckgo` (`ddg` is accepted as an alias for `duckduckgo`). If an engine's DOM shape changes and structured extraction returns no results, BrowseForge returns an LLM-friendly raw SERP fallback containing page text and candidate links while preserving explicit captcha/consent/unusual-traffic errors.
 
 **Parameters:**
 
 | Parameter | Type | Required | Description |
 |------|------|------|-------------|
 | `query` | string | Yes | Search query |
+| `engine` | string | No | Search engine: `google`, `bing`, or `duckduckgo`. Default `google` |
 | `profile_id` | string | Required if `session_id` is omitted | Chromium/CloakBrowser profile to use |
 | `session_id` | string | No | Existing agent session to reuse; when omitted, a new session/page is created |
 | `max_results` | number | No | Maximum results. Default `10`; values above `30` are clamped by `WebSearch` |
 
-**Result shape:** `content[0].text` is a text prefix followed by pretty-printed JSON. Top-level result fields include `session_id`, `profile_id`, `session_created`, `extraction_mode`, `results`, and optional `raw_fallback`.
+**Result shape:** `content[0].text` is a text prefix followed by pretty-printed JSON. Top-level result fields include `session_id`, `profile_id`, `session_created`, `engine`, `extraction_mode`, `results`, and optional `raw_fallback`.
 
 ```json
 {
@@ -483,6 +484,7 @@ Search Google and return structured results with title, URL, and snippet. If Goo
   "session_id": "sess_search_0123abcd",
   "profile_id": "prof_abc123",
   "session_created": true,
+  "engine": "google",
   "extraction_mode": "structured",
   "results": [
     {"title": "Result title", "url": "https://example.com", "snippet": "Result snippet"}
@@ -494,7 +496,7 @@ When structured extraction is empty, `extraction_mode` is `raw_fallback` and `ra
 
 ```json
 {
-  "page_title": "Google Search",
+  "page_title": "Search Results",
   "text": "visible SERP text for LLM interpretation...",
   "candidate_links": [{"text": "Candidate", "url": "https://example.com"}]
 }
@@ -595,6 +597,7 @@ Run session GC immediately.
     "name": "web_search",
     "arguments": {
       "query": "latest Go release notes",
+      "engine": "google",
       "profile_id": "prof_abc123"
     }
   }

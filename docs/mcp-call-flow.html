@@ -56,11 +56,12 @@ flowchart TD
   R --> L
 
   L --> S{Operation}
-  S -->|Search| T[Page.Goto Google search URL]
+  S -->|Search| T[Resolve search provider]
+  T --> V[Page.Goto provider search URL]
   S -->|Explore| U[Page.Goto target URL]
-  T --> V[Extract structured results]
+  V --> VA[Extract structured results]
   U --> W[Extract title/text/links]
-  V --> Y[Return content plus session_id profile_id session_created]
+  VA --> Y[Return content plus session_id profile_id session_created engine]
   W --> Y
 
   Z[destroy_session / GC / CloseAll] --> ZA[Close WebSession.Page]

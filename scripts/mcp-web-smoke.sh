@@ -15,6 +15,7 @@ fi
 MCP_URL="${MCP_URL:-http://127.0.0.1:19280/mcp}"
 MCP_PROFILE_ID="${MCP_PROFILE_ID:?MCP_PROFILE_ID is required}"
 MCP_SEARCH_QUERY="${MCP_SEARCH_QUERY:-BrowseForge MCP}"
+MCP_SEARCH_ENGINE="${MCP_SEARCH_ENGINE:-google}"
 MCP_EXPLORE_URL="${MCP_EXPLORE_URL:-https://example.com}"
 MCP_AUTH_TOKEN="${MCP_AUTH_TOKEN:-}"
 
@@ -88,13 +89,13 @@ fi
 
 echo "Created MCP web session: $SESSION_ID"
 
-search_args="$(python3 - "$MCP_PROFILE_ID" "$SESSION_ID" "$MCP_SEARCH_QUERY" <<'PY'
+search_args="$(python3 - "$MCP_PROFILE_ID" "$SESSION_ID" "$MCP_SEARCH_QUERY" "$MCP_SEARCH_ENGINE" <<'PY'
 import json, sys
-print(json.dumps({"profile_id": sys.argv[1], "session_id": sys.argv[2], "query": sys.argv[3], "max_results": 3}))
+print(json.dumps({"profile_id": sys.argv[1], "session_id": sys.argv[2], "query": sys.argv[3], "engine": sys.argv[4], "max_results": 3}))
 PY
 )"
 require_no_error "$(rpc_call web_search "$search_args")" >/dev/null
-echo "web_search succeeded"
+echo "web_search succeeded ($MCP_SEARCH_ENGINE)"
 
 explore_args="$(python3 - "$MCP_PROFILE_ID" "$SESSION_ID" "$MCP_EXPLORE_URL" <<'PY'
 import json, sys

@@ -315,7 +315,7 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
     tools = await session.list_tools()
 ```
 
-### 可用 Tools（11 個）
+### 可用 Tools
 
 | Tool | 說明 | 參數 |
 |------|------|------|
@@ -330,6 +330,16 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
 | `screenshot` | 截圖 | `profile_id` |
 | `get_content` | 取得頁面內容 | `profile_id`, `selector`（選填） |
 | `evaluate` | 執行 JavaScript | `profile_id`, `script` |
+| `new_tab` | 開啟新分頁 | `profile_id`, `url`（選填） |
+| `list_tabs` | 列出分頁 | `profile_id` |
+| `switch_tab` | 切換分頁 | `profile_id`, `index` |
+| `close_tab` | 關閉分頁 | `profile_id`, `index` |
+| `web_search` | 使用 Chromium profile 執行 provider-backed web search | `query`, `engine`（選填，`google`/`bing`/`duckduckgo`）, `profile_id` 或 `session_id`, `max_results`（選填） |
+| `web_explore` | 使用 Chromium profile 探索網頁內容 | `url`, `profile_id` 或 `session_id`, `max_text_length`（選填）, `max_links`（選填） |
+| `create_session` | 建立 agent web session | `profile_id` |
+| `destroy_session` | 銷毀 agent web session | `session_id` |
+| `list_sessions` | 列出 agent web sessions | `profile_id`（選填） |
+| `gc_sessions` | 立即執行 agent web session GC | — |
 
 ### 範例：用 Claude 操作
 
@@ -341,7 +351,7 @@ Claude: [呼叫 create_profile] → 建立了 prof_xxx
         [呼叫 navigate] → 已導航到 facebook.com
 ```
 
-AI Agent 不需要知道底層是 Firefox 還是 Chromium，MCP tools 是引擎無關的。
+一般瀏覽器控制 tools 可操作 Firefox 或 Chromium profile；`web_search`、`web_explore` 與 agent web session tools 需要 Chromium/CloakBrowser profile。
 
 ---
 

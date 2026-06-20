@@ -168,6 +168,8 @@ HTTP MCP uses the same Bearer token as the REST API:
 Authorization: Bearer <token>
 ```
 
+The `web_search` MCP tool supports provider-backed search with `google` as the default engine and optional `bing` or `duckduckgo` engines.
+
 Example remote MCP configuration:
 
 ```json

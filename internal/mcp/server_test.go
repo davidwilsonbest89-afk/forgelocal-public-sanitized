@@ -11,6 +11,7 @@ import (
 
 func TestBuildWebSearchMCPResultRawFallback(t *testing.T) {
 	resp := &SearchResponse{
+		Engine:         "duckduckgo",
 		ExtractionMode: "raw_fallback",
 		Results:        nil,
 		RawFallback: &SearchRawFallback{
@@ -37,6 +38,9 @@ func TestBuildWebSearchMCPResultRawFallback(t *testing.T) {
 	if got["extraction_mode"] != "raw_fallback" {
 		t.Fatalf("extraction_mode = %v", got["extraction_mode"])
 	}
+	if got["engine"] != "duckduckgo" {
+		t.Fatalf("engine = %v", got["engine"])
+	}
 	results, ok := got["results"].([]map[string]string)
 	if !ok {
 		t.Fatalf("results type = %T", got["results"])
@@ -57,7 +61,7 @@ func TestBuildWebSearchMCPResultRawFallback(t *testing.T) {
 		t.Fatalf("content = %#v", got["content"])
 	}
 	text, _ := content[0]["text"].(string)
-	for _, want := range []string{"mode: raw_fallback", "raw_fallback", "candidate_links", "visible SERP text"} {
+	for _, want := range []string{"duckduckgo", "mode: raw_fallback", "raw_fallback", "candidate_links", "visible SERP text"} {
 		if !strings.Contains(text, want) {
 			t.Fatalf("content text missing %q: %s", want, text)
 		}
@@ -79,10 +83,25 @@ func TestServeHTTPMalformedJSONReturnsBadRequest(t *testing.T) {
 	}
 }
 
+func TestBuildWebSearchMCPResultDefaultsEngine(t *testing.T) {
+	got := buildWebSearchMCPResult("synthetic query", &SearchResponse{}, "sess_test", "prof_test", false)
+
+	if got["engine"] != "google" {
+		t.Fatalf("engine = %v", got["engine"])
+	}
+	if got["extraction_mode"] != "structured" {
+		t.Fatalf("extraction_mode = %v", got["extraction_mode"])
+	}
+	content := got["content"].([]map[string]any)
+	if !strings.Contains(content[0]["text"].(string), "Found 0 google results") {
+		t.Fatalf("content text = %s", content[0]["text"])
+	}
+}
+
 func TestWebSessionClosedReturnsExplicitError(t *testing.T) {
 	sess := &WebSession{ID: "sess_test", Closed: true}
 
-	_, err := sess.WebSearch("query", 1)
+	_, err := sess.WebSearch("query", "", 1)
 	if err == nil || !strings.Contains(err.Error(), "session is closed: sess_test") {
 		t.Fatalf("WebSearch err = %v", err)
 	}
@@ -95,4 +114,53 @@ func TestWebSessionClosedReturnsExplicitError(t *testing.T) {
 
 func humanizeNoopConfig() humanize.Config {
 	return humanize.Config{}
+}
+
+func TestSearchProviderRegistry(t *testing.T) {
+	tests := []struct {
+		name string
+		want string
+	}{
+		{"", "google"},
+		{"google", "google"},
+		{"BING", "bing"},
+		{"duckduckgo", "duckduckgo"},
+		{"ddg", "duckduckgo"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			provider, err := getSearchProvider(tt.name)
+			if err != nil {
+				t.Fatalf("getSearchProvider(%q): %v", tt.name, err)
+			}
+			if provider.Name() != tt.want {
+				t.Fatalf("provider.Name() = %q, want %q", provider.Name(), tt.want)
+			}
+		})
+	}
+
+	_, err := getSearchProvider("unknown")
+	if err == nil || !strings.Contains(err.Error(), "unsupported search engine") {
+		t.Fatalf("unknown provider err = %v", err)
+	}
+}
+
+func TestSearchProviderURLs(t *testing.T) {
+	for name, wantHost := range map[string]string{
+		"google":     "https://www.google.com/search?",
+		"bing":       "https://www.bing.com/search?",
+		"duckduckgo": "https://duckduckgo.com/html/?",
+	} {
+		provider, err := getSearchProvider(name)
+		if err != nil {
+			t.Fatalf("getSearchProvider(%q): %v", name, err)
+		}
+		got := provider.SearchURL("BrowseForge MCP")
+		if !strings.HasPrefix(got, wantHost) {
+			t.Fatalf("%s SearchURL = %q, want prefix %q", name, got, wantHost)
+		}
+		if !strings.Contains(got, "BrowseForge") || strings.Contains(got, " ") {
+			t.Fatalf("%s SearchURL query not encoded as expected: %q", name, got)
+		}
+	}
 }

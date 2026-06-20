@@ -67,9 +67,10 @@ Required:
 
 Optional:
 
+- `engine` (`google`, `bing`, or `duckduckgo`; default `google`)
 - `max_results` (default `10`, clamped by search implementation)
 
-Returns text content plus top-level `session_id`, `profile_id`, and `session_created`.
+Returns text content plus top-level `session_id`, `profile_id`, `session_created`, `engine`, `extraction_mode`, and `results`.
 
 ### `web_explore`
 

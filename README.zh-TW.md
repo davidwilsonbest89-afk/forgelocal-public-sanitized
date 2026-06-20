@@ -168,6 +168,8 @@ HTTP MCP 使用與 REST API 相同的 Bearer Token：
 Authorization: Bearer <token>
 ```
 
+`web_search` MCP tool 支援 provider-backed search；預設 engine 是 `google`，也可指定 `bing` 或 `duckduckgo`。
+
 遠端 MCP 設定範例：
 
 ```json

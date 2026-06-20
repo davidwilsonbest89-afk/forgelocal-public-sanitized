@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"fmt"
 	"log/slog"
-	"net/url"
 	"sort"
 	"strings"
 	"sync"
@@ -450,8 +449,8 @@ func (sp *SessionPool) ensureProfilePool(profileID string) (*profile.Profile, *P
 	return p, pool, nil
 }
 
-// WebSearch performs a Google search in this session's dedicated page.
-func (s *WebSession) WebSearch(query string, maxResults int) (*SearchResponse, error) {
+// WebSearch performs a provider-backed web search in this session's dedicated page.
+func (s *WebSession) WebSearch(query string, engine string, maxResults int) (*SearchResponse, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -461,13 +460,17 @@ func (s *WebSession) WebSearch(query string, maxResults int) (*SearchResponse, e
 	if maxResults <= 0 || maxResults > 30 {
 		maxResults = 10
 	}
+	provider, err := getSearchProvider(engine)
+	if err != nil {
+		return nil, err
+	}
 	if err := s.ensurePageOpenLocked(); err != nil {
 		return nil, err
 	}
 
 	s.LastAccessed = time.Now()
-	searchURL := fmt.Sprintf("https://www.google.com/search?hl=en&q=%s", encodeQuery(query))
-	_, err := s.Page.Goto(searchURL, playwright.PageGotoOptions{
+	searchURL := provider.SearchURL(query)
+	_, err = s.Page.Goto(searchURL, playwright.PageGotoOptions{
 		WaitUntil: playwright.WaitUntilStateDomcontentloaded,
 		Timeout:   playwright.Float(30000),
 	})
@@ -475,34 +478,39 @@ func (s *WebSession) WebSearch(query string, maxResults int) (*SearchResponse, e
 		return nil, fmt.Errorf("navigate to search: %w", err)
 	}
 
-	_, err = s.Page.WaitForSelector("#search", playwright.PageWaitForSelectorOptions{
-		Timeout: playwright.Float(15000),
-	})
-	if err != nil {
-		slog.Warn("search results selector not found, trying extraction anyway", "session", s.ID, "error", err)
+	if err = provider.WaitForResults(s.Page); err != nil {
+		slog.Warn("search results selector not found, trying extraction anyway", "session", s.ID, "engine", provider.Name(), "error", err)
 	}
 
-	results, err := s.extractGoogleResults(maxResults)
+	resp, err := provider.Extract(s.Page, maxResults)
 	if err != nil {
+		logSearchInterstitial(s.ID, s.ProfileID, provider, err)
 		return nil, fmt.Errorf("extract search results: %w", err)
 	}
-
-	resp := &SearchResponse{Results: results, ExtractionMode: "structured"}
-	if len(results) == 0 {
-		fallback, err := s.extractSearchRawFallback(maxResults)
+	if resp == nil {
+		resp = &SearchResponse{Engine: provider.Name(), ExtractionMode: "structured"}
+	}
+	if resp.Engine == "" {
+		resp.Engine = provider.Name()
+	}
+	if resp.ExtractionMode == "" {
+		resp.ExtractionMode = "structured"
+	}
+	if len(resp.Results) == 0 {
+		fallback, err := s.extractSearchRawFallback(provider, maxResults)
 		if err != nil {
 			return nil, fmt.Errorf("extract raw search fallback: %w", err)
 		}
 		resp.ExtractionMode = "raw_fallback"
 		resp.RawFallback = fallback
-		slog.Info("web search raw fallback extracted", "session", s.ID, "profile", s.ProfileID, "query", query, "text_chars", len(fallback.Text), "candidate_links", len(fallback.CandidateLinks))
+		slog.Info("web search raw fallback extracted", "session", s.ID, "profile", s.ProfileID, "engine", provider.Name(), "query", query, "text_chars", len(fallback.Text), "candidate_links", len(fallback.CandidateLinks))
 	}
 
 	rawLinks := 0
 	if resp.RawFallback != nil {
 		rawLinks = len(resp.RawFallback.CandidateLinks)
 	}
-	slog.Info("web search completed", "session", s.ID, "profile", s.ProfileID, "query", query, "results", len(results), "mode", resp.ExtractionMode, "raw_links", rawLinks)
+	slog.Info("web search completed", "session", s.ID, "profile", s.ProfileID, "engine", provider.Name(), "query", query, "results", len(resp.Results), "mode", resp.ExtractionMode, "raw_links", rawLinks)
 	return resp, nil
 }
 
@@ -569,6 +577,7 @@ func (s *WebSession) ensurePageOpenLocked() error {
 
 // SearchResponse represents a web_search extraction result.
 type SearchResponse struct {
+	Engine         string             `json:"engine"`
 	Results        []SearchResult     `json:"results"`
 	ExtractionMode string             `json:"extraction_mode"`
 	RawFallback    *SearchRawFallback `json:"raw_fallback,omitempty"`
@@ -604,100 +613,24 @@ type LinkRef struct {
 	URL  string `json:"url"`
 }
 
-func (s *WebSession) extractGoogleResults(maxResults int) ([]SearchResult, error) {
-	results, err := s.Page.Evaluate(`() => {
-		const href = window.location.href.toLowerCase();
-		const bodyText = (document.body && document.body.innerText ? document.body.innerText : '').toLowerCase();
-		if (href.includes('/sorry/') || bodyText.includes('unusual traffic') || bodyText.includes('our systems have detected unusual traffic')) {
-			return { error: 'google_unusual_traffic_interstitial' };
-		}
-		if (document.querySelector('form[action*="/sorry/"]') || document.querySelector('iframe[src*="recaptcha"]') || bodyText.includes('not a robot')) {
-			return { error: 'google_captcha_interstitial' };
-		}
-		if ((href.includes('consent.google.') || href.includes('/consent')) && (bodyText.includes('before you continue') || bodyText.includes('accept all'))) {
-			return { error: 'google_consent_interstitial' };
-		}
-
-		const results = [];
-		const seen = new Set();
-		const normalizeGoogleURL = (rawHref) => {
-			if (!rawHref) return '';
-			const u = new URL(rawHref, window.location.href);
-			if (u.pathname === '/url' && u.searchParams.has('q')) {
-				return u.searchParams.get('q') || '';
-			}
-			return u.href;
-		};
-		const addResult = (titleEl, linkEl, snippetEl) => {
-			if (!titleEl || !linkEl) return;
-			const title = (titleEl.innerText || titleEl.textContent || '').trim();
-			const href = normalizeGoogleURL(linkEl.getAttribute('href') || linkEl.href);
-			if (!title || !href || seen.has(href)) return;
-			const parsed = new URL(href, window.location.href);
-			if (parsed.hostname.endsWith('google.com') && ['/search', '/preferences', '/advanced_search', '/maps'].includes(parsed.pathname)) return;
-			const snippet = snippetEl ? (snippetEl.innerText || snippetEl.textContent || '').trim() : '';
-			seen.add(href);
-			results.push({title, url: href, snippet});
-		};
-
-		const items = document.querySelectorAll('div.g, div.MjjYud, div.TzMi6d');
-		for (const item of items) {
-			addResult(item.querySelector('h3'), item.querySelector('a'), item.querySelector('[data-sncf], .VwiC3b, .yXK5lf, [style*="-webkit-line-clamp"]'));
-			if (results.length >= 30) break;
-		}
-
-		if (results.length === 0) {
-			for (const linkEl of document.querySelectorAll('a:has(h3), a[jsname][href], a[data-ved][href]')) {
-				const titleEl = linkEl.querySelector('h3') || linkEl;
-				const container = linkEl.closest('div[data-ved], div[jscontroller], div');
-				const snippetEl = container ? container.querySelector('[data-sncf], .VwiC3b, .yXK5lf, [style*="-webkit-line-clamp"]') : null;
-				addResult(titleEl, linkEl, snippetEl);
-				if (results.length >= 30) break;
-			}
-		}
-		return results;
-	}`)
-	if err != nil {
-		return nil, err
-	}
-
-	if marker, ok := results.(map[string]any); ok {
-		if markerErr := asString(marker["error"]); markerErr != "" {
-			slog.Warn("web search Google interstitial detected", "session", s.ID, "profile", s.ProfileID, "interstitial", markerErr)
-			return nil, fmt.Errorf("%s", markerErr)
-		}
-	}
-
-	raw, ok := results.([]any)
-	if !ok {
-		return nil, fmt.Errorf("unexpected result type from page.evaluate")
-	}
-
-	var searchResults []SearchResult
-	for i, item := range raw {
-		if i >= maxResults {
-			break
-		}
-		m, ok := item.(map[string]any)
-		if !ok {
-			continue
-		}
-		searchResults = append(searchResults, SearchResult{
-			Title:   asString(m["title"]),
-			URL:     asString(m["url"]),
-			Snippet: asString(m["snippet"]),
-		})
-	}
-	return searchResults, nil
-}
-
-func (s *WebSession) extractSearchRawFallback(maxLinks int) (*SearchRawFallback, error) {
+func (s *WebSession) extractSearchRawFallback(provider SearchProvider, maxLinks int) (*SearchRawFallback, error) {
 	data, err := s.Page.Evaluate(`() => {
-		const normalizeGoogleURL = (rawHref) => {
+		const normalizeSearchURL = (rawHref) => {
 			if (!rawHref) return '';
 			const u = new URL(rawHref, window.location.href);
 			if (u.pathname === '/url' && u.searchParams.has('q')) {
 				return u.searchParams.get('q') || '';
+			}
+			if (u.hostname.endsWith('bing.com') && u.searchParams.has('u')) {
+				const encoded = u.searchParams.get('u') || '';
+				try {
+					const payload = encoded.startsWith('a1') ? encoded.slice(2) : encoded;
+					const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+					if (decoded.startsWith('http://') || decoded.startsWith('https://')) return decoded;
+				} catch (_) {}
+			}
+			if (u.pathname.includes('/l/') && u.searchParams.has('uddg')) {
+				return decodeURIComponent(u.searchParams.get('uddg') || '');
 			}
 			return u.href;
 		};
@@ -712,7 +645,7 @@ func (s *WebSession) extractSearchRawFallback(maxLinks int) (*SearchRawFallback,
 		const links = [];
 		const seen = new Set();
 		for (const a of document.querySelectorAll('a[href]')) {
-			const href = normalizeGoogleURL(a.getAttribute('href') || a.href);
+			const href = normalizeSearchURL(a.getAttribute('href') || a.href);
 			if (!isUsefulHref(href) || seen.has(href)) continue;
 			const linkText = (a.innerText || a.textContent || '').replace(/[\s]+/g, ' ').trim();
 			if (!linkText && !href) continue;
@@ -730,8 +663,9 @@ func (s *WebSession) extractSearchRawFallback(maxLinks int) (*SearchRawFallback,
 		return nil, fmt.Errorf("unexpected raw fallback type")
 	}
 	fallback := &SearchRawFallback{
-		PageTitle: asString(raw["page_title"]),
-		Text:      truncateString(asString(raw["text"]), 4000),
+		PageTitle:      asString(raw["page_title"]),
+		Text:           truncateString(asString(raw["text"]), 4000),
+		CandidateLinks: []LinkRef{},
 	}
 	if rawLinks, ok := raw["candidate_links"].([]any); ok {
 		for i, item := range rawLinks {
@@ -742,7 +676,11 @@ func (s *WebSession) extractSearchRawFallback(maxLinks int) (*SearchRawFallback,
 			if !ok {
 				continue
 			}
-			fallback.CandidateLinks = append(fallback.CandidateLinks, LinkRef{Text: asString(m["text"]), URL: asString(m["url"])})
+			linkURL := asString(m["url"])
+			if !provider.UsefulFallbackLink(linkURL) {
+				continue
+			}
+			fallback.CandidateLinks = append(fallback.CandidateLinks, LinkRef{Text: asString(m["text"]), URL: linkURL})
 		}
 	}
 	return fallback, nil
@@ -808,10 +746,6 @@ func newWebSessionID() string {
 		return fmt.Sprintf("sess_search_%d", time.Now().UnixNano())
 	}
 	return "sess_search_" + hex.EncodeToString(b)
-}
-
-func encodeQuery(q string) string {
-	return url.QueryEscape(q)
 }
 
 func truncateString(s string, maxRunes int) string {

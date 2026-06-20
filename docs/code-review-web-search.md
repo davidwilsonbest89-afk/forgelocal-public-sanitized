@@ -43,7 +43,7 @@ The older `Searcher`/Camoufox mismatch is no longer applicable. The current impl
 
 **Status:** Completed for current-code stdio MCP path. A `dev-smoke` Linux binary was built from the current worktree, copied into the existing `browseforge` container, and run with `/app/BrowseForge.current --mcp` against the container's real `DISPLAY=:1`, CloakBrowser install, Playwright runtime, config, and Chromium profile `prof_dc1530a98b16`.
 
-**Observed result:** `initialize`/`tools/list`, `create_session`, `web_search`, `web_explore`, and `destroy_session` all passed. `web_search` launched the Chromium profile browser via Bind and returned three structured Google results; `web_explore` extracted the `Example Domain` page; `destroy_session` closed the returned agent page session.
+**Observed result:** `initialize`/`tools/list`, `create_session`, `web_search`, `web_explore`, and `destroy_session` all passed. `web_search` launched the Chromium profile browser via Bind and returned structured search results; `web_explore` extracted the `Example Domain` page; `destroy_session` closed the returned agent page session.
 
 **HTTP MCP limitation:** In-place replacement of the long-running container service could not be used for current-code HTTP MCP smoke because the existing container restores `/app/BrowseForge` v1.7.7. MCP is now intended to be mounted at `/mcp` on the main BrowseForge service port, so the gated HTTP smoke script should be run against an upgraded service once deployed:
 
@@ -53,11 +53,11 @@ RUN_MCP_SMOKE=1 MCP_PROFILE_ID=<profile-id> ./scripts/mcp-web-smoke.sh
 
 Confirm the profile browser remains alive until explicitly closed by browser/session APIs.
 
-#### M2 — Search extraction remains Google-DOM dependent
+#### M2 — Search extraction remains provider-DOM dependent
 
-**Status:** Completed for current scope. `extractGoogleResults` now detects Google consent/captcha/unusual-traffic interstitials and returns explicit errors. It also includes a fallback organic anchor/heading extraction path when primary card selectors return no results.
+**Status:** Completed for current scope. Search extraction now uses provider-specific extractors for Google, Bing, and DuckDuckGo, with explicit interstitial/verification errors where known. It also includes a fallback organic anchor extraction path when provider selectors return no results.
 
-**Residual risk:** Google markup and anti-bot behavior can still change; the new explicit errors and fallback reduce silent empty results but do not remove external SERP fragility.
+**Residual risk:** Search-provider markup and anti-bot behavior can still change; the new explicit errors and fallback reduce silent empty results but do not remove external SERP fragility.
 
 #### M3 — `LastAccessed` is updated after successful operations only
 
@@ -117,7 +117,7 @@ Updated docs now align with implementation:
 - Current-code container MCP stdio smoke using `/app/BrowseForge.current --mcp` inside the existing `browseforge` container:
   - `initialize` / `tools/list` returned version `dev-smoke` and the web session tools.
   - `create_session` succeeded for Chromium profile `prof_dc1530a98b16`.
-  - `web_search` returned three structured Google results.
+  - `web_search` returned structured search results.
   - `web_explore` extracted `https://example.com`.
   - `destroy_session` succeeded for the returned session.
 

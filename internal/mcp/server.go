@@ -466,8 +466,9 @@ var tools = []map[string]any{
 	tool("list_tabs", "列出所有分頁", map[string]any{"profile_id": prop("string", "Profile ID")}),
 	tool("switch_tab", "切換到指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "分頁索引（從 0 開始）")}),
 	tool("close_tab", "關閉指定分頁", map[string]any{"profile_id": prop("string", "Profile ID"), "index": prop("number", "要關閉的分頁索引")}),
-	toolWithRequired("web_search", "Google 網頁搜尋，使用指定 profile 的 CloakBrowser 並為 agent session 開獨立分頁", map[string]any{
+	toolWithRequired("web_search", "網頁搜尋，使用指定 profile 的 CloakBrowser 並為 agent session 開獨立分頁", map[string]any{
 		"query":       prop("string", "搜尋查詢文字"),
+		"engine":      prop("string", "搜尋引擎：google、bing、duckduckgo（預設 google）"),
 		"profile_id":  prop("string", "Chromium profile ID；session_id 未提供時必填"),
 		"session_id":  prop("string", "agent session ID；提供時重用既有分頁，未提供則自動建立"),
 		"max_results": prop("number", "最大結果數量（預設 10，最大 30）"),
@@ -560,6 +561,7 @@ func (s *Server) toolWebSearch(args map[string]any) (any, *mcpError) {
 	}
 	profileID, _ := args["profile_id"].(string)
 	sessionID, _ := args["session_id"].(string)
+	engine, _ := args["engine"].(string)
 	if profileID == "" && sessionID == "" {
 		return nil, newError(-32602, "profile_id is required when session_id is not provided")
 	}
@@ -578,7 +580,7 @@ func (s *Server) toolWebSearch(args map[string]any) (any, *mcpError) {
 		return nil, newError(-32000, err.Error())
 	}
 
-	searchResp, err := sess.WebSearch(query, maxResults)
+	searchResp, err := sess.WebSearch(query, engine, maxResults)
 	if err != nil {
 		return nil, newError(-32000, err.Error())
 	}
@@ -590,12 +592,19 @@ func buildWebSearchMCPResult(query string, searchResp *SearchResponse, sessionID
 	if searchResp == nil {
 		searchResp = &SearchResponse{ExtractionMode: "structured"}
 	}
+	if searchResp.Engine == "" {
+		searchResp.Engine = defaultSearchProviderName
+	}
+	if searchResp.ExtractionMode == "" {
+		searchResp.ExtractionMode = "structured"
+	}
 	items := make([]map[string]string, len(searchResp.Results))
 	for i, r := range searchResp.Results {
 		items[i] = map[string]string{"title": r.Title, "url": r.URL, "snippet": r.Snippet}
 	}
 
 	payload := map[string]any{
+		"engine":          searchResp.Engine,
 		"query":           query,
 		"extraction_mode": searchResp.ExtractionMode,
 		"results":         items,
@@ -604,10 +613,11 @@ func buildWebSearchMCPResult(query string, searchResp *SearchResponse, sessionID
 		payload["raw_fallback"] = searchResp.RawFallback
 	}
 
-	res := textResult(fmt.Sprintf("Found %d results for \"%s\" (mode: %s):\n%s", len(searchResp.Results), query, searchResp.ExtractionMode, mustJSON(payload)))
+	res := textResult(fmt.Sprintf("Found %d %s results for \"%s\" (mode: %s):\n%s", len(searchResp.Results), searchResp.Engine, query, searchResp.ExtractionMode, mustJSON(payload)))
 	res["session_id"] = sessionID
 	res["profile_id"] = profileID
 	res["session_created"] = created
+	res["engine"] = searchResp.Engine
 	res["extraction_mode"] = searchResp.ExtractionMode
 	res["results"] = items
 	if searchResp.RawFallback != nil {
