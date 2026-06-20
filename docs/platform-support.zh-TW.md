@@ -9,9 +9,10 @@
 
 | 元件 | 版本 | 更新日期 |
 |------|------|---------|
-| BrowseForge | v1.7.7 | 2026-05-15 |
+| BrowseForge | v1.8.0 | 2026-06-20 |
 | Camoufox | v135.0.1-beta.24 | 2025-03-15 |
-| CloakBrowser | chromium-v145.0.7632.109.2 | 2026-03-04 |
+| CloakBrowser macOS | chromium-v145.0.7632.109.2 | 2026-03-04 |
+| CloakBrowser Linux/Windows | chromium-v146.0.7680.177.4 | 2026-04-28 |
 
 ## 平台支援矩陣
 
@@ -19,11 +20,18 @@
 |------|:---:|:---:|:---:|------|
 | macOS x64 (Intel) | ✅ | ✅ v135 | ✅ v145 | |
 | macOS arm64 (Apple Silicon) | ✅ | ✅ v135 | ✅ v145 | |
-| Linux x64 | ✅ | ✅ v135 | ✅ v145 | 需要 xvfb |
-| Linux arm64 | ✅ | ✅ v135 | ⚠️ v146 only | CloakBrowser 需用 v146 版本 |
-| Windows x64 | ✅ | ✅ v135 | ✅ v145 | |
+| Linux x64 | ✅ | ✅ v135 | ✅ v146 | 需要 xvfb 或 Docker runtime |
+| Linux arm64 | ✅ | ✅ v135 | ✅ v146 | CloakBrowser 需用 v146 版本 |
+| Windows x64 | ✅ | ✅ v135 | ✅ v146 | |
 | Windows i686 (32-bit) | ❌ | ✅ v135 | ❌ | BrowseForge 不提供 32-bit build |
 | Linux i686 (32-bit) | ❌ | ✅ v135 | ❌ | 同上 |
+
+## 瀏覽器 Runtime 選版原則
+
+預設瀏覽器 runtime 版本以「能通過 BrowseForge 支援平台的最新可用組合」為準，而不是只看上游最新 tag。
+
+- Camoufox `v150.0.2-beta.25` 比 `v135.0.1-beta.24` 新，但上游 release 目前沒有 BrowseForge 需要的完整平台資產；在有 macOS x64/arm64、Linux x64/arm64、Windows x64 且通過 runtime 驗證的新版本前，維持 `v135.0.1-beta.24`。
+- CloakBrowser `chromium-v146.0.7680.177.5` 比 `.4` 新，但上游只提供 Linux x64 與 Windows x64；Linux arm64 與 macOS 仍停在不同版本。因此 BrowseForge 維持 Linux/Windows 使用 `chromium-v146.0.7680.177.4`、macOS 使用 `chromium-v145.0.7632.109.2`，直到上游恢復更乾淨的跨平台組合。
 
 ## 下載 URL 對照表
 
@@ -37,19 +45,19 @@ Linux arm64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta
 Windows x64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-win.x86_64.zip
 ```
 
-### CloakBrowser (chromium-v145.0.7632.109.2)
+### CloakBrowser macOS (chromium-v145.0.7632.109.2)
 
 ```
 macOS x64:    https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v145.0.7632.109.2/cloakbrowser-darwin-x64.tar.gz
 macOS arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v145.0.7632.109.2/cloakbrowser-darwin-arm64.tar.gz
-Linux x64:    https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v145.0.7632.109.2/cloakbrowser-linux-x64.tar.gz
-Windows x64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v145.0.7632.109.2/cloakbrowser-windows-x64.zip
 ```
 
-### CloakBrowser Linux arm64 (chromium-v146.0.7680.177.3)
+### CloakBrowser Linux/Windows (chromium-v146.0.7680.177.4)
 
 ```
-Linux arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.3/cloakbrowser-linux-arm64.tar.gz
+Linux x64:    https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.4/cloakbrowser-linux-x64.tar.gz
+Linux arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.4/cloakbrowser-linux-arm64.tar.gz
+Windows x64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.4/cloakbrowser-windows-x64.zip
 ```
 
 ## 升級檢查清單

@@ -82,7 +82,7 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.7
+  ghcr.io/nczz/browseforge:v1.8.0
 ```
 
 | 服務 | URL |
@@ -313,7 +313,7 @@ profiles/
 | macOS x64 | 支援 | 支援 | 支援 |
 | macOS arm64 | 支援 | 支援 | 支援 |
 | Linux x64 | 支援 | 支援 | 支援 |
-| Linux arm64 | Binary 支援 | 支援 | 依 runtime 版本 |
+| Linux arm64 | Binary 支援 | 支援 | 支援 |
 | Windows x64 | 支援 | 支援 | 支援 |
 
 詳細說明見 [docs/platform-support.md](docs/platform-support.md)。

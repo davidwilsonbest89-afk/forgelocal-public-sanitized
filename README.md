@@ -82,7 +82,7 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.7
+  ghcr.io/nczz/browseforge:v1.8.0
 ```
 
 | Service | URL |
@@ -313,7 +313,7 @@ Treat profiles, backup ZIPs, exported profiles, cookies, and `data/.api-token` a
 | macOS x64 | Supported | Supported | Supported |
 | macOS arm64 | Supported | Supported | Supported |
 | Linux x64 | Supported | Supported | Supported |
-| Linux arm64 | Binary supported | Supported | Runtime-specific |
+| Linux arm64 | Binary supported | Supported | Supported |
 | Windows x64 | Supported | Supported | Supported |
 
 See [docs/platform-support.md](docs/platform-support.md) for detailed support notes.

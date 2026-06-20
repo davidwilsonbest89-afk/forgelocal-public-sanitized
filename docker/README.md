@@ -11,7 +11,7 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.7.7
+  ghcr.io/nczz/browseforge:v1.8.0
 ```
 
 本地從原始碼 build：
@@ -21,10 +21,10 @@ cd docker
 docker compose up -d --build
 ```
 
-compose 預設會建置 `v1.7.7` release image。要測其他版本：
+compose 預設會建置 `v1.8.0` release image。要測其他版本：
 
 ```bash
-BROWSEFORGE_VERSION=v1.7.7 docker compose up -d --build
+BROWSEFORGE_VERSION=v1.8.0 docker compose up -d --build
 ```
 
 首次啟動需要 3-5 分鐘下載瀏覽器引擎（~440MB）。
