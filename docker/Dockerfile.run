@@ -2,7 +2,6 @@ FROM ubuntu:24.04
 
 ARG BROWSEFORGE_VERSION
 ARG BROWSEFORGE_ARCH=linux-x64
-ARG BROWSEFORGE_RELEASE_BASE_URL=https://github.com/nczz/BrowseForge/releases/download
 ARG KASMVNC_SHA256=12bac6014149c5fdee75f0d403785aaa3e5dd4ea222de73253a5d4181bc9567e
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -30,6 +29,7 @@ RUN curl -fSL -o /tmp/kasmvnc.deb \
 WORKDIR /app
 
 # Download the exact BrowseForge release selected by the workflow/build args.
+ARG BROWSEFORGE_RELEASE_BASE_URL=https://github.com/nczz/BrowseForge/releases/download
 RUN test -n "$BROWSEFORGE_VERSION" && \
     URL="${BROWSEFORGE_RELEASE_BASE_URL}/${BROWSEFORGE_VERSION}/BrowseForge-${BROWSEFORGE_VERSION}-lite-${BROWSEFORGE_ARCH}.zip" && \
     echo "Downloading: $URL" && \
