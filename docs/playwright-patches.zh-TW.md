@@ -4,7 +4,7 @@
 
 ## 當前狀態
 
-目前 BrowseForge 使用 Playwright 1.60 整合版，已移除先前為 Playwright 1.59.1 driver 準備的本地 hotfix。
+目前 BrowseForge 使用 upstream `github.com/playwright-community/playwright-go` `v0.6000.0` 的 Playwright 1.60 整合版，已移除先前為 Playwright 1.59.1 driver 準備的本地 hotfix。
 
 | Patch | 舊位置 | 狀態 | 移除原因 |
 |-------|--------|------|----------|
@@ -48,9 +48,10 @@ endpoint = await this._wsServer.listen(options.port ?? 0, options.host, '/' + cr
 ### 相關檔案
 
 - `internal/browser/manager.go` — 直接使用 `browser.Bind()` 回傳的 endpoint
-- `go.mod` — playwright-go 版本（目前 fork: `nczz/playwright-go` 1.60 整合版，driver: 1.60.0）
+- `go.mod` — playwright-go 版本（目前使用 upstream `github.com/playwright-community/playwright-go` `v0.6000.0`，driver: 1.60.0）
 
 ### 上游追蹤
 
 - Playwright 主倉庫：https://github.com/microsoft/playwright
+- Playwright Go upstream：https://github.com/mxschmitt/playwright-go
 - Playwright 1.60 已包含 WebSocket Bind path 修正

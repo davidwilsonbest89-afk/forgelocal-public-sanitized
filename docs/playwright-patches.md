@@ -4,7 +4,7 @@
 
 ## Current Status
 
-BrowseForge now uses the Playwright 1.60 integration and no longer keeps the local hotfix that was previously required for the Playwright 1.59.1 driver.
+BrowseForge now uses the upstream `github.com/playwright-community/playwright-go` `v0.6000.0` Playwright 1.60 integration and no longer keeps the local hotfix that was previously required for the Playwright 1.59.1 driver.
 
 | Patch | Old Location | Status | Reason Removed |
 |-------|--------------|--------|----------------|
@@ -38,7 +38,7 @@ Both were specific to Playwright 1.59.1. Keeping them after the 1.60 migration w
 
 ## Verification
 
-1. Check `go.mod` for the current `playwright-go` fork/version.
+1. Check `go.mod` for the current `playwright-go` version.
 2. Inspect the cached driver file when needed:
 
    ```bash
@@ -56,10 +56,11 @@ Both were specific to Playwright 1.59.1. Keeping them after the 1.60 migration w
 ## Related Files
 
 - `internal/browser/manager.go` uses the endpoint returned by `browser.Bind()`.
-- `go.mod` points to the `nczz/playwright-go` 1.60 integration fork.
+- `go.mod` points to the upstream `github.com/playwright-community/playwright-go` `v0.6000.0` release.
 - `internal/spike/bind_test.go` covers the Bind endpoint runtime path.
 
 ## Upstream Tracking
 
 - Playwright upstream: https://github.com/microsoft/playwright
+- Playwright Go upstream: https://github.com/mxschmitt/playwright-go
 - Playwright 1.60 includes the WebSocket Bind path fix.

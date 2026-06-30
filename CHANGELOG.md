@@ -6,6 +6,12 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.8.1 - 2026-06-30
+
+### Changed
+
+- Playwright Go now uses the upstream community `v0.6000.0` release instead of the temporary `nczz/playwright-go` integration fork.
+
 ## v1.7.7 - 2026-05-15
 
 ### Fixed
