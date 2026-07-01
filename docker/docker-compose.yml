@@ -5,8 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile.run
       args:
-        BROWSEFORGE_VERSION: ${BROWSEFORGE_VERSION:-v1.8.1}
+        BROWSEFORGE_VERSION: ${BROWSEFORGE_VERSION:-v1.9.0}
         BROWSEFORGE_ARCH: linux-x64
+        BROWSEFORGE_PREINSTALL_BROWSERS: ${BROWSEFORGE_PREINSTALL_BROWSERS:-1}
     ports:
       - "19280:19280"  # Dashboard + REST API
       - "6901:6901"    # KasmVNC web client
@@ -15,6 +16,8 @@ services:
       - ./browseforge/data:/app/data
       - ./browseforge/browsers:/app/browsers
       - ./browseforge/logs:/app/logs
+      - ./browseforge/backups:/app/backups
     environment:
       - VNC_PASSWORD=browseforge
+      - BROWSEFORGE_SEED_BROWSERS=1
     restart: unless-stopped

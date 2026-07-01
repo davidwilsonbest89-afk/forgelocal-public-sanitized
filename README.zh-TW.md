@@ -82,7 +82,7 @@ docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
 | 服務 | URL |
@@ -125,11 +125,19 @@ Linux server 部署細節見 [docs/linux-server.md](docs/linux-server.md)。
 # 環境檢查
 ./BrowseForge doctor
 ./BrowseForge doctor --strict --json
+./BrowseForge status --json
+./BrowseForge browsers status --json
+./BrowseForge open
 
 # 顯示整合能力並驗證 server transport
 ./BrowseForge capabilities --json
-./BrowseForge smoke rest --base-url http://127.0.0.1:19280 --json
-./BrowseForge smoke mcp --base-url http://127.0.0.1:19280 --token "$TOKEN" --json
+./BrowseForge smoke rest --base-url http://127.0.0.1:19280 --wait --json
+./BrowseForge smoke mcp --base-url http://127.0.0.1:19280 --token "$TOKEN" --wait --json
+./BrowseForge mcp-config stdio --json
+
+# 備份與 browser 準備
+./BrowseForge browsers install
+./BrowseForge backup create --full --output ./backups --json
 
 # 執行 server-backed workflow 並檢視 API resources
 ./BrowseForge workflow run examples/multi-login.yaml --token "$TOKEN" --json

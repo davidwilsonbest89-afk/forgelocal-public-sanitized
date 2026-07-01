@@ -142,7 +142,7 @@ JSON shape:
 
 ```json
 {
-  "version": "v1.8.1",
+  "version": "v1.9.0",
   "base_dir": "/srv/browseforge",
   "checks": [
     {"name": "config", "status": "ok", "message": "/srv/browseforge/config.json"}
@@ -221,6 +221,64 @@ BrowseForge sessions list --token "$TOKEN" --json
 5. Validate REST with `BrowseForge smoke rest --json`.
 6. Validate MCP HTTP with `BrowseForge smoke mcp --token "$TOKEN" --json`.
 7. Use `doctor --strict --json` in CI or deployment health checks.
+
+## Operator Commands
+
+### `status`
+
+Summarizes local runtime paths, token presence, browser engine readiness, profile count, and server reachability.
+
+```bash
+BrowseForge status
+BrowseForge status --json
+```
+
+Use this as the first command when a human or agent needs to understand a BrowseForge runtime.
+
+### `open`
+
+Opens the dashboard with the local token in the URL fragment.
+
+```bash
+BrowseForge open
+BrowseForge open --base-url http://127.0.0.1:19280
+```
+
+The server must already be running and `data/.api-token` must exist.
+
+### `mcp-config`
+
+Prints MCP client configuration for local stdio or remote HTTP use.
+
+```bash
+BrowseForge mcp-config stdio --json
+BrowseForge mcp-config http --url http://YOUR_SERVER:19280/mcp --json
+```
+
+HTTP mode reads the token from `data/.api-token` unless `--token` is provided.
+
+### `browsers`
+
+Checks or installs the browser engines used by BrowseForge.
+
+```bash
+BrowseForge browsers status --json
+BrowseForge browsers install
+```
+
+`browsers install` is useful for preparing Docker images or local runtimes before the first `serve` command.
+
+### `backup`
+
+Creates or restores backups.
+
+```bash
+BrowseForge backup create --full --output ./backups --json
+BrowseForge backup restore --full ./backups/browseforge-runtime-YYYYMMDD-HHMMSS.tgz --json
+BrowseForge backup create --metadata --base-url http://127.0.0.1:19280 --json
+```
+
+Full backups archive `profiles/`, `data/`, `browsers/`, and `logs/`. Metadata backups use the REST `/api/backup` endpoint and do not include complete browser user data.
 
 ## Data Persistence
 

@@ -14,13 +14,29 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
   -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
-正式部署建議 pin 版本 tag，例如 `v1.8.1`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
+正式部署建議 pin 版本 tag，例如 `v1.9.0`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
 
 > 目前 GHCR Docker image 發佈 `linux/amd64`。Apple Silicon 或 ARM server 會透過 emulation 執行；原生 `linux/arm64` image 會在 KasmVNC、Camoufox、CloakBrowser runtime 都驗證完成後再開啟。
+
+## 首次啟動與 Browser Engines
+
+BrowseForge 需要 Camoufox 與 CloakBrowser engines 準備完成後，Dashboard 才會真正 ready。目前 Docker image 會在 image build 階段預先安裝 engines，並在啟動時如果 host-mounted `/app/browsers` 缺少該 engine，或 `.version` 與 image 內建版本不同，就用 image 版本更新 `/app/browsers`。這讓 browser engines 跟著 BrowseForge image 版本對齊。若 image 是用舊版 binary 建置、關閉 browser preinstall，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，啟動時仍可能花數分鐘下載 engines，這段期間 `19280` 還不會回應。
+
+請用 logs 與 wait-aware smoke checks 判斷，不要直接認定 container 壞掉：
+
+```bash
+docker logs -f browseforge
+docker exec browseforge /app/BrowseForge browsers status --json
+docker exec browseforge /app/BrowseForge smoke rest --wait --timeout 5m --json
+```
+
+自製 image 時，建議保留預設的 `BROWSEFORGE_PREINSTALL_BROWSERS=1`。特殊 debug 情境可設定 `BROWSEFORGE_SEED_BROWSERS=0`，避免容器用 image 內建版本更新 `/app/browsers`。
 
 | 服務 | URL |
 |------|-----|
@@ -51,8 +67,10 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
   -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
 持久化路徑：
@@ -63,7 +81,7 @@ docker run -d --name browseforge \
 | `./browseforge/data` | `/app/data` | `.api-token` API token 與 fingerprint data。 |
 | `./browseforge/browsers` | `/app/browsers` | 已下載的 Camoufox/CloakBrowser engines。 |
 | `./browseforge/logs` | `/app/logs` | Server logs。 |
-| `./browseforge/backups` | Host only | Filesystem 與 API backup 輸出。 |
+| `./browseforge/backups` | `/app/backups` | Filesystem 與 API backup 輸出。 |
 
 Docker named volumes 也能持久化，但 host bind mounts 比較容易檢查、複製、snapshot 與備份。
 
@@ -72,7 +90,7 @@ Docker named volumes 也能持久化，但 host bind mounts 比較容易檢查�
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v1.8.1
+    image: ghcr.io/nczz/browseforge:v1.9.0
     platform: linux/amd64
     ports:
       - "19280:19280"
@@ -82,8 +100,10 @@ services:
       - ./browseforge/data:/app/data
       - ./browseforge/browsers:/app/browsers
       - ./browseforge/logs:/app/logs
+      - ./browseforge/backups:/app/backups
     environment:
       - VNC_PASSWORD=browseforge
+      - BROWSEFORGE_SEED_BROWSERS=1
     restart: unless-stopped
 ```
 
@@ -115,7 +135,7 @@ ssh -L 19280:localhost:19280 -L 6901:localhost:6901 user@server
 ## 升級
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v1.8.1
+docker pull ghcr.io/nczz/browseforge:v1.9.0
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -125,21 +145,31 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
   -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
 Profiles、Token、下載的 browser engines、logs 都保留在 host 的 `./browseforge/` 目錄。Pull 新 image 並重建容器時，必須沿用同一組 bind mounts。
 
 ## 備份
 
-完整備份包含 browser user data；建議停止容器後直接封存 host runtime 目錄：
+最穩妥的完整備份包含 browser user data；建議停止容器後直接封存 host runtime 目錄：
 
 ```bash
 docker stop browseforge
 tar -czf ./browseforge/backups/browseforge-runtime-$(date +%Y%m%d-%H%M%S).tgz ./browseforge/profiles ./browseforge/data ./browseforge/browsers ./browseforge/logs
 docker start browseforge
 ```
+
+如果需要在容器執行中用較方便的 operator command：
+
+```bash
+docker exec browseforge /app/BrowseForge backup create --full --output /app/backups --json
+```
+
+重大升級或搬遷前，優先使用 stopped-container archive。
 
 若只需要透過 REST API 做較輕量的 profile metadata backup：
 

@@ -51,8 +51,13 @@ Usage:
   BrowseForge [global flags] config show|validate [--json]
   BrowseForge [global flags] token [--json]
   BrowseForge [global flags] doctor [--strict] [--json]
+  BrowseForge [global flags] status [--base-url URL] [--token TOKEN] [--json]
   BrowseForge [global flags] capabilities [--json]
-  BrowseForge [global flags] smoke rest|mcp [--base-url URL] [--token TOKEN] [--json]
+  BrowseForge [global flags] open [--base-url URL]
+  BrowseForge [global flags] mcp-config stdio|http [--url URL] [--token TOKEN] [--json]
+  BrowseForge [global flags] browsers status|install [--json]
+  BrowseForge [global flags] backup create|restore [--full|--metadata] [--output PATH] [--base-url URL] [--token TOKEN] [--json]
+  BrowseForge [global flags] smoke rest|mcp [--base-url URL] [--token TOKEN] [--wait] [--timeout DURATION] [--json]
   BrowseForge [global flags] workflow run FILE [--base-url URL] [--token TOKEN] [--json]
   BrowseForge [global flags] profiles list [--base-url URL] [--token TOKEN] [--json]
   BrowseForge [global flags] sessions list [--base-url URL] [--token TOKEN] [--json]
@@ -111,8 +116,18 @@ func runCLI(args []string, stdout, stderr io.Writer) int {
 		return runTokenCommand(rest[1:], global, stdout, stderr)
 	case "doctor":
 		return runDoctorCommand(rest[1:], global, stdout, stderr)
+	case "status":
+		return runStatusCommand(rest[1:], global, stdout, stderr)
 	case "capabilities":
 		return runCapabilitiesCommand(rest[1:], stdout, stderr)
+	case "open":
+		return runOpenCommand(rest[1:], global, stdout, stderr)
+	case "mcp-config":
+		return runMCPConfigCommand(rest[1:], global, stdout, stderr)
+	case "browsers":
+		return runBrowsersCommand(rest[1:], global, stdout, stderr)
+	case "backup":
+		return runBackupCommand(rest[1:], global, stdout, stderr)
 	case "smoke":
 		return runSmokeCommand(rest[1:], global, stdout, stderr)
 	case "workflow":
@@ -379,10 +394,11 @@ func runCapabilitiesCommand(args []string, stdout, stderr io.Writer) int {
 		},
 		"commands": []string{
 			"serve", "mcp-stdio", "init", "config", "token", "doctor",
-			"capabilities", "smoke", "workflow", "profiles", "sessions",
+			"status", "capabilities", "open", "mcp-config", "browsers",
+			"backup", "smoke", "workflow", "profiles", "sessions",
 		},
 		"browser_engines":  []string{"firefox", "chromium"},
-		"machine_readable": []string{"token --json", "doctor --json", "config validate --json", "capabilities --json", "smoke --json"},
+		"machine_readable": []string{"token --json", "doctor --json", "status --json", "config validate --json", "capabilities --json", "smoke --json"},
 	}
 	if *jsonOut {
 		_ = writeJSON(stdout, caps)
@@ -390,7 +406,7 @@ func runCapabilitiesCommand(args []string, stdout, stderr io.Writer) int {
 		fmt.Fprintf(stdout, "BrowseForge %s\n", Version)
 		fmt.Fprintln(stdout, "Transports: REST, MCP HTTP, MCP stdio, Playwright proxy")
 		fmt.Fprintln(stdout, "Browser engines: firefox, chromium")
-		fmt.Fprintln(stdout, "Agent-ready commands: init, config, token, doctor, capabilities, smoke, workflow, profiles, sessions")
+		fmt.Fprintln(stdout, "Agent-ready commands: init, config, token, doctor, status, capabilities, open, mcp-config, browsers, backup, smoke, workflow, profiles, sessions")
 	}
 	return 0
 }
@@ -404,6 +420,9 @@ func runSmokeCommand(args []string, global cliGlobal, stdout, stderr io.Writer) 
 	fs := newFlagSet("smoke "+target, stderr)
 	baseURL := fs.String("base-url", "", "BrowseForge base URL")
 	token := fs.String("token", "", "Bearer token")
+	wait := fs.Bool("wait", false, "Wait until smoke check succeeds")
+	timeout := fs.Duration("timeout", 60*time.Second, "Maximum wait duration")
+	interval := fs.Duration("interval", 2*time.Second, "Wait retry interval")
 	jsonOut := fs.Bool("json", false, "Write JSON output")
 	if err := fs.Parse(args[1:]); err != nil {
 		return 2
@@ -438,14 +457,31 @@ func runSmokeCommand(args []string, global cliGlobal, stdout, stderr io.Writer) 
 		}
 	}
 	var result map[string]any
-	switch target {
-	case "rest":
-		result, err = smokeREST(resolvedBase)
-	case "mcp":
-		result, err = smokeMCP(resolvedBase, resolvedToken)
-	default:
+	runCheck := func() (map[string]any, error) {
+		switch target {
+		case "rest":
+			return smokeREST(resolvedBase)
+		case "mcp":
+			return smokeMCP(resolvedBase, resolvedToken)
+		default:
+			return nil, fmt.Errorf("unknown smoke target: %s", target)
+		}
+	}
+	if target != "rest" && target != "mcp" {
 		fmt.Fprintf(stderr, "unknown smoke target: %s\n", target)
 		return 2
+	}
+	if *wait {
+		deadline := time.Now().Add(*timeout)
+		for {
+			result, err = runCheck()
+			if err == nil || time.Now().After(deadline) {
+				break
+			}
+			time.Sleep(*interval)
+		}
+	} else {
+		result, err = runCheck()
 	}
 	if err != nil {
 		result = map[string]any{"ok": false, "target": target, "base_url": resolvedBase, "error": err.Error()}
@@ -575,7 +611,7 @@ func runAPIListCommand(resource string, args []string, global cliGlobal, stdout,
 }
 
 func ensureRuntimeDirs(baseDir string) error {
-	for _, name := range []string{"profiles", "data", "logs"} {
+	for _, name := range []string{"profiles", "data", "logs", "browsers"} {
 		if err := os.MkdirAll(filepath.Join(baseDir, name), 0755); err != nil {
 			return err
 		}

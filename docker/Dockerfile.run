@@ -30,6 +30,7 @@ WORKDIR /app
 
 # Download the exact BrowseForge release selected by the workflow/build args.
 ARG BROWSEFORGE_RELEASE_BASE_URL=https://github.com/nczz/BrowseForge/releases/download
+ARG BROWSEFORGE_PREINSTALL_BROWSERS=1
 RUN test -n "$BROWSEFORGE_VERSION" && \
     URL="${BROWSEFORGE_RELEASE_BASE_URL}/${BROWSEFORGE_VERSION}/BrowseForge-${BROWSEFORGE_VERSION}-lite-${BROWSEFORGE_ARCH}.zip" && \
     echo "Downloading: $URL" && \
@@ -38,6 +39,14 @@ RUN test -n "$BROWSEFORGE_VERSION" && \
     mv /tmp/BrowseForge-lite/* /app/ && \
     rm -rf /tmp/bf.zip /tmp/BrowseForge-lite && \
     chmod +x /app/BrowseForge
+
+# Newer BrowseForge releases can preinstall browser engines during image build.
+# Older release binaries skip this step so historical builds remain reproducible.
+RUN if [ "$BROWSEFORGE_PREINSTALL_BROWSERS" = "1" ] && /app/BrowseForge --help 2>/dev/null | grep -q "browsers status"; then \
+      /app/BrowseForge --base-dir /opt/browseforge browsers install; \
+    else \
+      echo "Skipping browser preinstall for this BrowseForge binary"; \
+    fi
 
 EXPOSE 19280 6901
 

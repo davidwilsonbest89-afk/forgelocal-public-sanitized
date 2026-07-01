@@ -6,6 +6,20 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.9.0 - 2026-07-01
+
+### Added
+
+- Added agent-ready CLI commands for runtime status, dashboard opening, MCP client config generation, browser engine status/install, full filesystem backups, metadata backups, and restore workflows.
+- Added wait-aware CLI smoke checks so local and container deployments can block until REST or MCP endpoints are ready.
+- Added local quickstart, cloud deployment, agent integration, and developer integration guides.
+
+### Changed
+
+- Docker release images now preinstall BrowseForge-managed browser engines during image build by default.
+- Container startup now seeds or updates `/app/browsers` from the image when the mounted browser cache is missing or its engine version differs, while keeping tokens, profiles, data, logs, and backups on host-mounted paths.
+- Docker and Linux server documentation now include persistent `/app/backups` mounts and explicit browser-cache upgrade behavior.
+
 ## v1.8.1 - 2026-06-30
 
 ### Changed

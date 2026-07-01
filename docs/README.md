@@ -8,6 +8,10 @@ These documents should remain understandable for international users:
 
 - [Release Process](release.md)
 - [CLI Reference](cli.md)
+- [Local Quickstart](local-quickstart.md)
+- [Cloud Deployment](cloud-deployment.md)
+- [Agent Integration](agent-integration.md)
+- [Developer Integration](developer-integration.md)
 - [Platform Support](platform-support.md)
 - [Linux Server Deployment](linux-server.md)
 - [Dual-Browser Anti-Detection Architecture](dual-browser-architecture.md)

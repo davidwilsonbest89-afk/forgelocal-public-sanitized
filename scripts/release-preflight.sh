@@ -76,7 +76,7 @@ if ! rg -q "ghcr.io/nczz/browseforge:${version}" docker/README.md docs/linux-ser
 fi
 
 run go build -ldflags "-s -w -X main.Version=${version#v}" -o "$tmpdir/BrowseForge" ./cmd/server
-"$tmpdir/BrowseForge" doctor | rg -q "BrowseForge v${version#v}" || die "release binary version does not match ${version}"
+"$tmpdir/BrowseForge" doctor | rg -q "BrowseForge ${version#v}" || die "release binary version does not match ${version}"
 
 go_packages="$(go list ./... | rg -v '/internal/spike$')"
 run go test -count=1 $go_packages

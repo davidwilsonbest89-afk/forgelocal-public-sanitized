@@ -124,6 +124,108 @@ func TestCLICapabilitiesJSON(t *testing.T) {
 	}
 }
 
+func TestCLIStatusAndMCPConfigJSON(t *testing.T) {
+	baseDir := t.TempDir()
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"--base-dir", baseDir, "init"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("init exit = %d, stderr = %s", code, stderr.String())
+	}
+	if err := os.WriteFile(filepath.Join(baseDir, "data", ".api-token"), []byte("test-token\n"), 0600); err != nil {
+		t.Fatalf("write token: %v", err)
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	if code := runCLI([]string{"--base-dir", baseDir, "status", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("status exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var status map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &status); err != nil {
+		t.Fatalf("decode status: %v\n%s", err, stdout.String())
+	}
+	if status["mcp_url"] == "" || status["dashboard"] == "" {
+		t.Fatalf("status missing URLs: %#v", status)
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	if code := runCLI([]string{"--base-dir", baseDir, "mcp-config", "http", "--url", "http://example.test/mcp", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("mcp-config exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var cfg map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &cfg); err != nil {
+		t.Fatalf("decode mcp config: %v\n%s", err, stdout.String())
+	}
+	if _, ok := cfg["browseforge"].(map[string]any); !ok {
+		t.Fatalf("mcp config = %#v", cfg)
+	}
+}
+
+func TestCLIFullBackupCreateAndRestore(t *testing.T) {
+	baseDir := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(baseDir, "profiles", "prof_test"), 0755); err != nil {
+		t.Fatalf("mkdir profile: %v", err)
+	}
+	if err := os.MkdirAll(filepath.Join(baseDir, "data"), 0755); err != nil {
+		t.Fatalf("mkdir data: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(baseDir, "profiles", "prof_test", "profile.json"), []byte(`{"id":"prof_test"}`), 0644); err != nil {
+		t.Fatalf("write profile: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(baseDir, "data", ".api-token"), []byte("test-token"), 0600); err != nil {
+		t.Fatalf("write token: %v", err)
+	}
+	if err := os.MkdirAll(filepath.Join(baseDir, "browsers", "camoufox"), 0755); err != nil {
+		t.Fatalf("mkdir browser: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(baseDir, "browsers", "camoufox", "target.txt"), []byte("browser-data"), 0644); err != nil {
+		t.Fatalf("write browser target: %v", err)
+	}
+	if err := os.Symlink("target.txt", filepath.Join(baseDir, "browsers", "camoufox", "link.txt")); err != nil {
+		t.Fatalf("create browser symlink: %v", err)
+	}
+
+	backupDir := filepath.Join(t.TempDir(), "backups")
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"--base-dir", baseDir, "backup", "create", "--full", "--output", backupDir, "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("backup create exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var created map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &created); err != nil {
+		t.Fatalf("decode backup create: %v\n%s", err, stdout.String())
+	}
+	backupPath, _ := created["path"].(string)
+	if backupPath == "" {
+		t.Fatalf("backup path missing: %#v", created)
+	}
+	if filepath.Dir(backupPath) != backupDir {
+		t.Fatalf("backup path = %s, want dir %s", backupPath, backupDir)
+	}
+	if _, err := os.Stat(backupPath); err != nil {
+		t.Fatalf("backup not written: %v", err)
+	}
+
+	restoreDir := t.TempDir()
+	stdout.Reset()
+	stderr.Reset()
+	if code := runCLI([]string{"--base-dir", restoreDir, "backup", "restore", "--full", "--json", backupPath}, &stdout, &stderr); code != 0 {
+		t.Fatalf("backup restore exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	if _, err := os.Stat(filepath.Join(restoreDir, "profiles", "prof_test", "profile.json")); err != nil {
+		t.Fatalf("profile not restored: %v", err)
+	}
+	if _, err := os.Stat(filepath.Join(restoreDir, "data", ".api-token")); err != nil {
+		t.Fatalf("token not restored: %v", err)
+	}
+	linkTarget, err := os.Readlink(filepath.Join(restoreDir, "browsers", "camoufox", "link.txt"))
+	if err != nil {
+		t.Fatalf("browser symlink not restored: %v", err)
+	}
+	if linkTarget != "target.txt" {
+		t.Fatalf("browser symlink target = %q", linkTarget)
+	}
+}
+
 func TestCLIInvalidConfigDoesNotPanic(t *testing.T) {
 	baseDir := t.TempDir()
 	configPath := filepath.Join(baseDir, "config.json")

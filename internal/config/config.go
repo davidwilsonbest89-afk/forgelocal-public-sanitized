@@ -43,7 +43,6 @@ func Load(path string) (*Config, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			slog.Warn("config not found, using defaults", "path", path)
 			return cfg, nil
 		}
 		return nil, err

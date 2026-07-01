@@ -14,13 +14,29 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
   -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
-Pin a version tag such as `v1.8.1` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
+Pin a version tag such as `v1.9.0` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
 
 > The current GHCR Docker image is `linux/amd64`. Apple Silicon and ARM servers run it through emulation. Native `linux/arm64` Docker images should only be enabled after KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
+
+## First Startup and Browser Engines
+
+BrowseForge needs Camoufox and CloakBrowser engines before the dashboard can become ready. Current Docker images preinstall these engines during image build and seed `/app/browsers` on startup when the host-mounted engine is missing or its `.version` differs from the image. This keeps browser engines aligned with the BrowseForge image version. If the image was built from an older binary, browser preinstall was disabled, or `BROWSEFORGE_SEED_BROWSERS=0` is set, startup may spend several minutes downloading engines before `19280` responds.
+
+Use logs and wait-aware smoke checks instead of assuming the container is broken:
+
+```bash
+docker logs -f browseforge
+docker exec browseforge /app/BrowseForge browsers status --json
+docker exec browseforge /app/BrowseForge smoke rest --wait --timeout 5m --json
+```
+
+For custom images, keep browser preinstall enabled with the default `BROWSEFORGE_PREINSTALL_BROWSERS=1`. For special debugging cases, set `BROWSEFORGE_SEED_BROWSERS=0` to stop the container from updating `/app/browsers` from the image.
 
 | Service | URL |
 |------|-----|
@@ -50,8 +66,10 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
   -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
 Persisted paths:
@@ -62,7 +80,7 @@ Persisted paths:
 | `./browseforge/data` | `/app/data` | API token at `.api-token` and fingerprint data. |
 | `./browseforge/browsers` | `/app/browsers` | Downloaded Camoufox/CloakBrowser engines. |
 | `./browseforge/logs` | `/app/logs` | Server logs. |
-| `./browseforge/backups` | Host only | Filesystem and API backup output. |
+| `./browseforge/backups` | `/app/backups` | Filesystem and API backup output. |
 
 Named Docker volumes also work, but host bind mounts are easier to inspect, copy, snapshot, and back up.
 
@@ -71,7 +89,7 @@ Named Docker volumes also work, but host bind mounts are easier to inspect, copy
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v1.8.1
+    image: ghcr.io/nczz/browseforge:v1.9.0
     platform: linux/amd64
     ports:
       - "19280:19280"
@@ -81,8 +99,10 @@ services:
       - ./browseforge/data:/app/data
       - ./browseforge/browsers:/app/browsers
       - ./browseforge/logs:/app/logs
+      - ./browseforge/backups:/app/backups
     environment:
       - VNC_PASSWORD=browseforge
+      - BROWSEFORGE_SEED_BROWSERS=1
     restart: unless-stopped
 ```
 
@@ -121,7 +141,7 @@ Then open:
 ## Upgrade
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v1.8.1
+docker pull ghcr.io/nczz/browseforge:v1.9.0
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -131,21 +151,31 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
   -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.8.1
+  ghcr.io/nczz/browseforge:v1.9.0
 ```
 
 Profiles, tokens, downloaded browser engines, and logs remain in the host `./browseforge/` directory. Pulling a new image and recreating the container must reuse the same bind mounts.
 
 ## Backup
 
-For a full backup that includes browser user data, stop the container and archive the host runtime directory:
+For the safest full backup that includes browser user data, stop the container and archive the host runtime directory:
 
 ```bash
 docker stop browseforge
 tar -czf ./browseforge/backups/browseforge-runtime-$(date +%Y%m%d-%H%M%S).tgz ./browseforge/profiles ./browseforge/data ./browseforge/browsers ./browseforge/logs
 docker start browseforge
 ```
+
+For an operator-friendly full backup command while the container is running:
+
+```bash
+docker exec browseforge /app/BrowseForge backup create --full --output /app/backups --json
+```
+
+Prefer the stopped-container archive before major upgrades or migrations.
 
 For a lighter metadata-level backup through the REST API:
 

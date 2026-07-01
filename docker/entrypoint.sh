@@ -1,6 +1,32 @@
 #!/bin/bash
 
 : "${VNC_PASSWORD:=browseforge}"
+: "${BROWSEFORGE_SEED_BROWSERS:=1}"
+
+mkdir -p /app/profiles /app/data /app/browsers /app/logs /app/backups
+
+# Seed or update host-mounted browser cache from the image so browser engines
+# follow the BrowseForge image version contract instead of drifting silently.
+if [ "$BROWSEFORGE_SEED_BROWSERS" = "1" ] && [ -d /opt/browseforge/browsers ]; then
+  for engine in camoufox cloakbrowser; do
+    image_version=""
+    current_version=""
+    [ -f "/opt/browseforge/browsers/${engine}/.version" ] && image_version="$(cat "/opt/browseforge/browsers/${engine}/.version")"
+    [ -f "/app/browsers/${engine}/.version" ] && current_version="$(cat "/app/browsers/${engine}/.version")"
+    if [ -n "$image_version" ] && [ "$current_version" != "$image_version" ]; then
+      echo "Seeding ${engine} into /app/browsers..."
+      rm -rf "/app/browsers/${engine}"
+      mkdir -p "/app/browsers/${engine}"
+      cp -a "/opt/browseforge/browsers/${engine}/." "/app/browsers/${engine}/"
+    fi
+  done
+elif [ "$BROWSEFORGE_SEED_BROWSERS" != "1" ]; then
+  echo "Browser engine seeding disabled by BROWSEFORGE_SEED_BROWSERS=${BROWSEFORGE_SEED_BROWSERS}"
+fi
+
+if ! find /app/browsers -name ".version" -print -quit 2>/dev/null | grep -q .; then
+  echo "Browser engines are not installed yet. First startup may spend several minutes downloading them before the dashboard becomes available."
+fi
 
 # Clean up stale files
 rm -f /tmp/.X1-lock /tmp/.X11-unix/X1

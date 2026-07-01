@@ -154,7 +154,7 @@ jobs:
           tmp="$(mktemp -d)"
           unzip -q "artifacts/BrowseForge-linux-x64/BrowseForge-${GITHUB_REF_NAME}-lite-linux-x64.zip" -d "$tmp"
           chmod +x "$tmp/BrowseForge-lite/BrowseForge"
-          "$tmp/BrowseForge-lite/BrowseForge" doctor | grep "BrowseForge v${GITHUB_REF_NAME#v}"
+          "$tmp/BrowseForge-lite/BrowseForge" doctor | grep "BrowseForge ${GITHUB_REF_NAME#v}"
 
       - uses: softprops/action-gh-release@v2
         with:
