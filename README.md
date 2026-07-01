@@ -168,7 +168,7 @@ HTTP MCP uses the same Bearer token as the REST API:
 Authorization: Bearer <token>
 ```
 
-The `web_search` MCP tool supports provider-backed search with `google` as the default engine and optional `bing` or `duckduckgo` engines.
+The `web_search` MCP tool supports provider-backed search with `google` as the default engine and optional `bing` or `duckduckgo` engines. MCP also includes agent-ready page utilities for waiting on selectors, reading page state, filling forms, selecting/checking controls, pressing keys, managing cookies/downloads, saving screenshots as profile artifacts, running workflows, and diagnosing profile readiness. For agent prompting guidance, see [docs/agent-prompt-guide.md](docs/agent-prompt-guide.md).
 
 Example remote MCP configuration:
 

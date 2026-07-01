@@ -391,6 +391,8 @@ BrowseForge exposes MCP tools at `http://127.0.0.1:19280/mcp` (Streamable HTTP t
 
 Migration note: older clients configured for a separate `:19281` MCP listener should update to the main service port plus `/mcp`.
 
+For recommended agent tool-use prompting, see [docs/agent-prompt-guide.md](docs/agent-prompt-guide.md).
+
 ### Authentication
 
 All MCP requests require Bearer token authentication:
@@ -425,6 +427,20 @@ Authorization: Bearer <token>
 | `destroy_session` | Destroy an agent web session and close its page |
 | `list_sessions` | List active agent web sessions |
 | `gc_sessions` | Trigger web session garbage collection |
+| `wait_for` | Wait for a page selector state |
+| `get_page_state` | Get URL/title/text/focus/tab state for the current page |
+| `get_cookies` | Read browser context cookies |
+| `set_cookies` | Add browser context cookies |
+| `run_workflow` | Execute a BrowseForge workflow through the workflow engine |
+| `form_fill` | Fill multiple fields with humanized typing |
+| `select_option` | Select `<select>` options |
+| `check` | Check or uncheck checkbox/radio elements |
+| `press_key` | Press a keyboard key or shortcut |
+| `list_downloads` | List files in a profile downloads directory |
+| `read_download` | Read a small file from a profile downloads directory |
+| `delete_download` | Delete a file from a profile downloads directory |
+| `web_extract` | Extract structured fields from the current page with selector schema |
+| `doctor_profile` | Diagnose profile/browser/session readiness |
 
 ### Agent Web Sessions
 
@@ -582,6 +598,118 @@ Run session GC immediately.
 **Parameters:** none.
 
 **Returns:** text confirmation such as `GC completed: closed 2 sessions`.
+
+### Agent Page Utilities
+
+These tools accept either `profile_id` for the active profile browser page or `session_id` for an agent web session page.
+
+#### `wait_for`
+
+Wait for a selector instead of using fixed sleeps.
+
+Parameters: `selector` required; optional `profile_id`, `session_id`, `state` (`attached`, `visible`, `hidden`, `detached`; default `visible`), and `timeout` in milliseconds.
+
+Returns top-level `matched`, `selector`, `state`, `url`, `title`, `elapsed_ms`, and session/profile metadata.
+
+#### `get_page_state`
+
+Return a compact page observation for agent planning: `url`, `title`, visible text excerpt, active element metadata, tab index, tab count, and session/profile metadata.
+
+Optional `text_max_length` controls the visible text excerpt length.
+
+#### `form_fill`
+
+Fill multiple fields using BrowseForge's existing humanized typing path:
+
+```json
+{
+  "profile_id": "prof_abc123",
+  "fields": [
+    {"selector": "#email", "text": "user@example.com", "clear": true},
+    {"selector": "#password", "text": "secret", "clear": true}
+  ]
+}
+```
+
+#### `select_option`, `check`, and `press_key`
+
+Use Playwright-native page APIs for common input actions:
+
+- `select_option`: `selector` plus one of `values`, `labels`, or `indexes`.
+- `check`: `selector`, optional `checked` boolean (`true` by default).
+- `press_key`: `key`, optional `delay` milliseconds.
+
+#### `web_extract`
+
+Extract structured page data using a deterministic selector schema. This tool does not call an LLM.
+
+```json
+{
+  "session_id": "sess_search_0123abcd",
+  "schema": {
+    "headline": {"selector": "h1", "attr": "text"},
+    "canonical": {"selector": "link[rel=canonical]", "attr": "href"},
+    "links": {"selector": "main a", "attr": "href", "all": true}
+  }
+}
+```
+
+Returns `url`, `title`, extracted `data`, and selector `evidence`.
+
+### Cookies, Downloads, And Artifacts
+
+#### `get_cookies` / `set_cookies`
+
+Read or add Playwright browser-context cookies for a profile. `set_cookies` accepts a Playwright `OptionalCookie` array in `cookies`.
+
+#### `screenshot` artifact saving
+
+`screenshot` still returns an MCP image block. It also accepts:
+
+| Parameter | Type | Description |
+|------|------|-------------|
+| `format` | string | `jpeg` or `png`; default `jpeg` |
+| `save_path` | string | Optional path under the profile `artifacts` directory |
+
+Absolute paths and path traversal are rejected; saved files stay under the profile artifacts directory.
+
+#### `list_downloads`, `read_download`, `delete_download`
+
+Manage files in a profile's `downloads` directory:
+
+- `list_downloads`: optional `limit`, default `50`.
+- `read_download`: `name` plus optional `max_bytes`, default `1048576`. Text-like files return `text`; binary files return `base64`.
+- `delete_download`: removes one file by `name`.
+
+Only direct file names inside `downloads` are accepted.
+
+### Workflow And Diagnostics
+
+#### `run_workflow`
+
+Execute the existing BrowseForge workflow engine from MCP. HTTP MCP supports this when the server injects the workflow engine; stdio MCP reports unavailable because it does not own an HTTP API base.
+
+Input can be a workflow object:
+
+```json
+{
+  "workflow": {
+    "name": "login-smoke",
+    "steps": [
+      {"name": "open", "action": "open_browser", "profile_id": "prof_abc123"},
+      {"name": "go", "action": "navigate", "profile_id": "prof_abc123", "params": {"url": "https://example.com"}}
+    ]
+  }
+}
+```
+
+or a `yaml` string with the same workflow shape.
+
+Workflow `screenshot` actions now call the REST screenshot endpoint and save the image to `params.path` or a generated `artifacts/workflow-*.png` path.
+
+#### `doctor_profile`
+
+Return profile readiness data: engine, profile/download directories, browser running status, Playwright Bind endpoint presence, active URL, tab count, proxy configuration, and active agent web sessions.
 
 ### Common Patterns
 

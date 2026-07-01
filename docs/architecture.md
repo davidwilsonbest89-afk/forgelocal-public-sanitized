@@ -29,7 +29,7 @@ Do not add a second browser/session framework for a new feature. New browser beh
 | REST routes | `internal/api/router.go`, `internal/api/sessions.go` | HTTP API routing and browser page operations |
 | MCP transport/server | `internal/mcp/server.go`, `internal/mcp/protocol.go` | JSON-RPC handling, auth, request dispatch |
 | MCP tool schemas | `internal/mcp/tool_schema.go` | Tool list and JSON schema definitions |
-| MCP browser tools | `internal/mcp/web_tools.go` | Tool argument parsing and result formatting |
+| MCP browser tools | `internal/mcp/web_tools.go`, `internal/mcp/advanced_tools.go` | Tool argument parsing, page utilities, cookies, downloads, workflow, diagnostics |
 | MCP web session lifecycle | `internal/mcp/web_session_pool.go` | Per-agent page sessions, profile pool connection, GC |
 | MCP search/explore behavior | `internal/mcp/web_search.go`, `internal/mcp/search_provider.go` | Search providers, navigation, extraction, fallback parsing |
 | Humanized input | `internal/humanize` | Mouse/keyboard behavior wrappers |
@@ -38,7 +38,7 @@ Do not add a second browser/session framework for a new feature. New browser beh
 
 ## Change Rules
 
-- Add a new MCP tool in `internal/mcp/tool_schema.go`, dispatch it from `internal/mcp/server.go`, and place tool-specific argument/result code in a focused file near related tools.
+- Add a new MCP tool in `internal/mcp/tool_schema.go`, dispatch it from `internal/mcp/server.go`, and place tool-specific argument/result code in a focused file near related tools. Browser-page utility tools belong in `internal/mcp/advanced_tools.go`.
 - Add browser launch behavior in `launch_chromium.go` or `launch_firefox.go`; keep `manager.go` focused on public session lifecycle.
 - Add page-level agent behavior to `WebSession` methods in `web_search.go` or a sibling file. Use `SessionPool` for lifecycle and never close `browser.Manager` owned profile browsers from MCP cleanup paths.
 - Add REST page operations in `internal/api/sessions.go` only when the behavior belongs to the public HTTP API. Do not call MCP handlers from REST or REST handlers from MCP.

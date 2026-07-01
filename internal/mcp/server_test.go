@@ -190,6 +190,20 @@ func TestToolSchemasRequiredFields(t *testing.T) {
 		"destroy_session": {"session_id"},
 		"list_sessions":   {},
 		"gc_sessions":     {},
+		"wait_for":        {"selector"},
+		"get_page_state":  {},
+		"get_cookies":     {},
+		"set_cookies":     {"cookies"},
+		"run_workflow":    {},
+		"form_fill":       {"fields"},
+		"select_option":   {"selector"},
+		"check":           {"selector"},
+		"press_key":       {"key"},
+		"list_downloads":  {},
+		"delete_download": {"name"},
+		"read_download":   {"name"},
+		"web_extract":     {"schema"},
+		"doctor_profile":  {"profile_id"},
 	}
 
 	seen := map[string]bool{}
@@ -220,5 +234,59 @@ func TestToolSchemasRequiredFields(t *testing.T) {
 		if !seen[name] {
 			t.Fatalf("expected tool missing from registry: %s", name)
 		}
+	}
+}
+
+func TestParseWorkflowArgsRequiresWorkflow(t *testing.T) {
+	_, err := parseWorkflowArgs(map[string]any{})
+	if err == nil || !strings.Contains(err.Error(), "workflow or yaml is required") {
+		t.Fatalf("err = %v", err)
+	}
+}
+
+func TestParseWorkflowArgsFromObject(t *testing.T) {
+	wf, err := parseWorkflowArgs(map[string]any{
+		"workflow": map[string]any{
+			"name": "test workflow",
+			"steps": []any{
+				map[string]any{"name": "sleep", "action": "sleep", "params": map[string]any{"seconds": 1}},
+			},
+		},
+	})
+	if err != nil {
+		t.Fatalf("parseWorkflowArgs: %v", err)
+	}
+	if wf.Name != "test workflow" || len(wf.Steps) != 1 || wf.Steps[0].Action != "sleep" {
+		t.Fatalf("workflow = %+v", wf)
+	}
+}
+
+func TestResolveArtifactPathStaysInProfileArtifacts(t *testing.T) {
+	got, err := resolveArtifactPath("/tmp/profile", "shots/home", ".jpg")
+	if err != nil {
+		t.Fatalf("resolveArtifactPath: %v", err)
+	}
+	if got != "/tmp/profile/artifacts/shots/home.jpg" {
+		t.Fatalf("path = %q", got)
+	}
+
+	if _, err := resolveArtifactPath("/tmp/profile", "../escape.jpg", ".jpg"); err == nil {
+		t.Fatal("expected traversal error")
+	}
+	if _, err := resolveArtifactPath("/tmp/profile", "/tmp/escape.jpg", ".jpg"); err == nil {
+		t.Fatal("expected absolute path error")
+	}
+}
+
+func TestResolveDownloadPathRequiresFileName(t *testing.T) {
+	got, name, err := resolveDownloadPath("/tmp/profile", map[string]any{"name": "report.csv"})
+	if err != nil {
+		t.Fatalf("resolveDownloadPath: %v", err)
+	}
+	if name != "report.csv" || got != "/tmp/profile/downloads/report.csv" {
+		t.Fatalf("path=%q name=%q", got, name)
+	}
+	if _, _, err := resolveDownloadPath("/tmp/profile", map[string]any{"name": "../report.csv"}); err == nil {
+		t.Fatal("expected traversal error")
 	}
 }

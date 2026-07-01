@@ -11,6 +11,7 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
+	"browseforge/internal/workflow"
 
 	"github.com/playwright-community/playwright-go"
 )
@@ -22,6 +23,7 @@ type Server struct {
 	mgr         *browser.Manager
 	hcfg        humanize.Config
 	sessionPool *SessionPool
+	workflow    *workflow.Engine
 	token       string
 	version     string
 	reqID       atomic.Int64
@@ -32,6 +34,10 @@ func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config,
 		version = "dev"
 	}
 	return &Server{store: store, mgr: mgr, hcfg: hcfg, sessionPool: sessionPool, token: token, version: version}
+}
+
+func (s *Server) SetWorkflowEngine(engine *workflow.Engine) {
+	s.workflow = engine
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -148,6 +154,34 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 		return s.toolListSessions(call.Arguments)
 	case "gc_sessions":
 		return s.toolGCSessions(call.Arguments)
+	case "wait_for":
+		return s.toolWaitFor(call.Arguments)
+	case "get_page_state":
+		return s.toolGetPageState(call.Arguments)
+	case "get_cookies":
+		return s.toolGetCookies(call.Arguments)
+	case "set_cookies":
+		return s.toolSetCookies(call.Arguments)
+	case "run_workflow":
+		return s.toolRunWorkflow(call.Arguments)
+	case "form_fill":
+		return s.toolFormFill(call.Arguments)
+	case "select_option":
+		return s.toolSelectOption(call.Arguments)
+	case "check":
+		return s.toolCheck(call.Arguments)
+	case "press_key":
+		return s.toolPressKey(call.Arguments)
+	case "list_downloads":
+		return s.toolListDownloads(call.Arguments)
+	case "delete_download":
+		return s.toolDeleteDownload(call.Arguments)
+	case "read_download":
+		return s.toolReadDownload(call.Arguments)
+	case "web_extract":
+		return s.toolWebExtract(call.Arguments)
+	case "doctor_profile":
+		return s.toolDoctorProfile(call.Arguments)
 	default:
 		return nil, newError(-32602, "Unknown tool: "+call.Name)
 	}
@@ -324,16 +358,33 @@ func (s *Server) toolScreenshot(args map[string]any) (any, *mcpError) {
 		fullPage = fp
 	}
 
+	format := "jpeg"
+	if raw, _ := args["format"].(string); raw != "" {
+		format = strings.ToLower(raw)
+	}
+	if format != "jpeg" && format != "jpg" && format != "png" {
+		return nil, newError(-32602, "format must be jpeg or png")
+	}
+	mimeType := "image/jpeg"
+	ext := ".jpg"
+	screenshotType := playwright.ScreenshotTypeJpeg
+	if format == "png" {
+		mimeType = "image/png"
+		ext = ".png"
+		screenshotType = playwright.ScreenshotTypePng
+	}
 	opts := playwright.PageScreenshotOptions{
-		Type:     playwright.ScreenshotTypeJpeg,
-		Quality:  playwright.Int(quality),
+		Type:     screenshotType,
 		FullPage: playwright.Bool(fullPage),
+	}
+	if screenshotType == playwright.ScreenshotTypeJpeg {
+		opts.Quality = playwright.Int(quality)
 	}
 	data, err := sess.Page.Screenshot(opts)
 	if err != nil {
 		return nil, newError(-32000, err.Error())
 	}
-	return imageResult(data), nil
+	return s.finishScreenshotResult(args, id, data, mimeType, ext)
 }
 
 func (s *Server) toolGetContent(args map[string]any) (any, *mcpError) {

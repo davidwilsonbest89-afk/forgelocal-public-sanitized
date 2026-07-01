@@ -368,6 +368,7 @@ func runServer(flags *serveFlags) {
 
 	// MCP Server (same HTTP service port, integrated with the main router)
 	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, cfg.APIToken, cfg.Version)
+	mcpServer.SetWorkflowEngine(wfEngine)
 	router.Post("/mcp", mcpServer.ServeHTTP)
 
 	// HTTP Server with error channel (no os.Exit in goroutine)
