@@ -17,9 +17,12 @@ These documents should remain understandable for international users:
 - [Dual-Browser Anti-Detection Architecture](dual-browser-architecture.md)
 - [Playwright Patch Status](playwright-patches.md)
 - [Internationalization](i18n.md)
+- [Documentation Language Audit](documentation-language-audit.md)
+- [Docker Runtime](../docker/README.md)
 
 Traditional Chinese translations are available for:
 
+- [Docker Runtime zh-TW](../docker/README.zh-TW.md)
 - [Platform Support zh-TW](platform-support.zh-TW.md)
 - [Linux Server Deployment zh-TW](linux-server.zh-TW.md)
 - [Dual-Browser Anti-Detection Architecture zh-TW](dual-browser-architecture.zh-TW.md)

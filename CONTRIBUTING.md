@@ -20,6 +20,7 @@ go test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')
 go vet ./...
 bash -n scripts/release-preflight.sh scripts/release-push.sh
 node scripts/check-i18n.js
+node scripts/check-doc-language.js
 docker compose -f docker/docker-compose.yml config
 ```
 
@@ -43,6 +44,7 @@ Every PR should include:
 - Tests or a concrete explanation for why tests are not practical.
 - Platform notes when touching browser launch, Docker, Playwright integration, MCP, REST API, profiles, or release packaging.
 - Documentation updates for user-visible changes.
+- Public documentation kept English-first, with Traditional Chinese content in `.zh-TW.md` companions when localized.
 - i18n updates for new user-facing UI text.
 
 Do not remove tests to make CI pass. Fix the root cause, narrow the test, or document the platform-specific limitation.
@@ -59,4 +61,4 @@ gh run watch
 
 ## Internationalization
 
-User-facing UI text must be localizable. Keep locale keys stable and update both English and Traditional Chinese strings when adding Dashboard or extension UI text. See [docs/i18n.md](docs/i18n.md).
+User-facing UI text must be localizable. Keep locale keys stable and update both English and Traditional Chinese strings when adding Dashboard or extension UI text. Public documentation uses English canonical files and `.zh-TW.md` Traditional Chinese companions. See [docs/i18n.md](docs/i18n.md).

@@ -2,6 +2,7 @@
   "name": "browseforge-tools",
   "private": true,
   "scripts": {
+    "check-doc-language": "node scripts/check-doc-language.js",
     "generate-fingerprints": "node scripts/generate-fingerprints.js"
   },
   "dependencies": {

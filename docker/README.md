@@ -1,10 +1,12 @@
 # BrowseForge Docker
 
-一鍵部署 BrowseForge + KasmVNC 遠端桌面。
+[Traditional Chinese](README.zh-TW.md)
 
-## 使用方式
+Deploy BrowseForge with the bundled KasmVNC remote desktop.
 
-建議正式部署 pin 版本 tag，避免 `latest` 在重啟或重新拉取時非預期升級：
+## Usage
+
+For production deployments, pin a version tag instead of `latest` so a restart or pull does not upgrade the service unexpectedly:
 
 ```bash
 mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
@@ -22,7 +24,7 @@ docker run -d --name browseforge \
   ghcr.io/nczz/browseforge:v1.9.0
 ```
 
-本地從原始碼 build：
+Build from the local source tree:
 
 ```bash
 cd docker
@@ -30,15 +32,19 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-compose 預設會建置 `v1.9.0` release image。要測其他版本：
+The Compose file builds the `v1.9.0` release image by default. To test another version:
 
 ```bash
 BROWSEFORGE_VERSION=v1.9.0 docker compose up -d --build
 ```
 
-若 image 沒有預載 browser engines，首次啟動需要 3-5 分鐘下載瀏覽器引擎（~440MB）。
+## First Startup
 
-新版 image 會在 build 階段預先安裝 browser engines，並在啟動時如果 `/app/browsers/{engine}/.version` 缺失或不同，就用 image 內建版本更新 host mount。若使用舊版 image、關閉 `BROWSEFORGE_PREINSTALL_BROWSERS`，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，第一次啟動仍可能需要下載；這段期間 dashboard 還不會 ready。可用以下方式確認：
+Current release images install the browser engines during the Docker build. On startup, BrowseForge seeds the host-mounted `/app/browsers` cache from the image when `/app/browsers/{engine}/.version` is missing or differs from the packaged version.
+
+The first startup may still take 3-5 minutes and download browser engines when you use an older image, disable `BROWSEFORGE_PREINSTALL_BROWSERS`, or set `BROWSEFORGE_SEED_BROWSERS=0`. During that window, the dashboard may not be ready yet.
+
+Use these commands to verify startup state:
 
 ```bash
 docker logs -f browseforge
@@ -46,40 +52,48 @@ docker exec browseforge /app/BrowseForge browsers status --json
 docker exec browseforge /app/BrowseForge smoke rest --wait --timeout 5m --json
 ```
 
-## 連線
+## Connections
 
-| 服務 | URL |
-|------|-----|
+| Service | URL |
+|---------|-----|
 | Dashboard + REST API + Playwright proxy | http://localhost:19280 |
 | MCP Streamable HTTP | http://localhost:19280/mcp |
-| 遠端桌面 (KasmVNC) | http://localhost:6901 |
-| VNC 帳號 | `user` / 環境變數 `VNC_PASSWORD`（預設 `browseforge`） |
+| Remote desktop (KasmVNC) | http://localhost:6901 |
+| VNC login | `user` / `VNC_PASSWORD` environment variable, default `browseforge` |
 
-## 取得 API Token
+## API Token
 
 ```bash
 docker compose logs | grep "API Token"
-# 或
+# or
 docker compose exec browseforge /app/BrowseForge token
 ```
 
-## 持久化、升級與備份
+For a `docker run` deployment:
 
-正式部署預設使用 host bind mounts：
+```bash
+docker logs browseforge | grep "API Token"
+# or
+docker exec browseforge /app/BrowseForge token
+```
 
-| Host path | Container path | 用途 |
-|-----------|----------------|------|
-| `./browseforge/profiles` | `/app/profiles` | Profile metadata 與 browser user data。 |
-| `./browseforge/data` | `/app/data` | `.api-token` API token 與 fingerprint data。 |
-| `./browseforge/browsers` | `/app/browsers` | 已下載的 Camoufox/CloakBrowser engines。 |
-| `./browseforge/logs` | `/app/logs` | Server logs。 |
-| `./browseforge/backups` | `/app/backups` | Filesystem 與 API backup 輸出。 |
+## Persistence, Upgrades, and Backups
 
-Pull 新 image 或重建容器時，必須沿用同一組 `-v "$PWD/browseforge/...:/app/..."` mounts。這樣 token 與使用者產生的 profile/browser data 不會因 container 被刪除而消失。
+Production deployments should use host bind mounts:
 
-`/app/browsers` 是 BF-managed browser cache。預設 `BROWSEFORGE_SEED_BROWSERS=1` 會讓它跟著 image 內建 browser version 更新；若特殊 debug 需要保留手動放置的 browser，可設為 `0`。
+| Host path | Container path | Purpose |
+|-----------|----------------|---------|
+| `./browseforge/profiles` | `/app/profiles` | Profile metadata and browser user data. |
+| `./browseforge/data` | `/app/data` | `.api-token` API token and fingerprint data. |
+| `./browseforge/browsers` | `/app/browsers` | Downloaded or seeded Camoufox/CloakBrowser engines. |
+| `./browseforge/logs` | `/app/logs` | Server logs. |
+| `./browseforge/backups` | `/app/backups` | Filesystem and API backup output. |
 
-升級範例：
+When you pull a new image or recreate the container, reuse the same `-v "$PWD/browseforge/...:/app/..."` mounts. This keeps the API token, profiles, browser user data, browser cache, logs, and backups outside the container lifecycle.
+
+`/app/browsers` is a BrowseForge-managed browser cache. The default `BROWSEFORGE_SEED_BROWSERS=1` updates it to the browser version packaged in the image. Set it to `0` only for debugging cases where you intentionally want to preserve a manually installed browser engine.
+
+Upgrade example:
 
 ```bash
 docker pull ghcr.io/nczz/browseforge:v1.9.0
@@ -98,7 +112,7 @@ docker run -d --name browseforge \
   ghcr.io/nczz/browseforge:v1.9.0
 ```
 
-完整 filesystem 備份：
+Full filesystem backup:
 
 ```bash
 docker stop browseforge
@@ -106,30 +120,30 @@ tar -czf ./browseforge/backups/browseforge-runtime-$(date +%Y%m%d-%H%M%S).tgz ./
 docker start browseforge
 ```
 
-容器執行中的便利備份指令：
+Convenience backup command while the container is running:
 
 ```bash
 docker exec browseforge /app/BrowseForge backup create --full --output /app/backups --json
 ```
 
-REST API 的 `/api/backup` 是較輕量的 profile metadata backup；若要保留完整 browser user data 與 token，請備份 host runtime 目錄。
+The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back up the host runtime directory when you need to preserve full browser user data and the API token.
 
-## 特性
+## Features
 
-- **KasmVNC** — 比 noVNC 更好的剪貼簿支援（Chrome 上 seamless）、IME 中文輸入
-- **WebGL 完整偽裝** — GLX + 軟體渲染 + 完整 WebGL 指紋
-- **Docker 自動偵測** — 自動啟用 `0.0.0.0` 綁定和 `--no-sandbox`
-- **Playwright proxy** — Dashboard + API + Playwright WebSocket proxy 都走 19280
-- **MCP HTTP** — Streamable HTTP MCP 走 `19280/mcp`，使用與 REST API 相同的 Bearer Token
+- **KasmVNC**: better clipboard support than noVNC in Chrome, plus IME input support.
+- **Complete WebGL spoofing**: GLX, software rendering, and full WebGL fingerprint control.
+- **Docker auto-detection**: automatically enables `0.0.0.0` binding and `--no-sandbox`.
+- **Playwright proxy**: dashboard, API, and Playwright WebSocket proxy all use port `19280`.
+- **MCP HTTP**: Streamable HTTP MCP uses `19280/mcp` with the same Bearer token as the REST API.
 
-## 注意事項
+## Notes
 
-- GHCR Docker image 目前發佈 `linux/amd64`。Apple Silicon 或 ARM server 會透過 emulation 執行。
-- VNC 用於觀看瀏覽器畫面和基本操作
-- 中文輸入和剪貼簿在 Chrome 瀏覽器上 seamless 支援
-- 瀏覽器引擎、Profile 資料、Token、logs 預設 mount 到 host `./browseforge/` 目錄，重建容器不會遺失
+- The GHCR Docker image currently publishes `linux/amd64`. Apple Silicon and ARM servers run it through emulation.
+- VNC is intended for watching browser state and basic remote operation.
+- Browser engines, profiles, token data, logs, and backups are host-mounted under `./browseforge/` by default, so recreating the container does not delete them.
 
 ## Apple Silicon (M1/M2/M3)
 
-docker-compose.yml 已設定 `platform: linux/amd64`，透過 Rosetta/QEMU 模擬執行。
-原生 `linux/arm64` image 會在 KasmVNC、Camoufox、CloakBrowser runtime 都驗證完成後再開啟。
+`docker-compose.yml` sets `platform: linux/amd64` and runs through Rosetta/QEMU emulation.
+
+Native `linux/arm64` images should only be enabled after KasmVNC, Camoufox, and CloakBrowser have all passed runtime validation inside an ARM container.

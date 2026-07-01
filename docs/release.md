@@ -23,7 +23,7 @@ BrowseForge releases are tag driven. Do not create or push release tags by hand.
    scripts/release-preflight.sh v1.9.0
    ```
 
-The preflight checks the working tree, version references, Go tests, vet, UI i18n syntax, workflow YAML, Docker Compose config, the Camoufox Bind spike, the CloakBrowser Bind spike when a local binary is available, and a real `linux/amd64` Docker build.
+The preflight checks the working tree, version references, Go tests, vet, UI i18n syntax, public documentation language, workflow YAML, Docker Compose config, the Camoufox Bind spike, the CloakBrowser Bind spike when a local binary is available, and a real `linux/amd64` Docker build.
 
 For release machines that must prove both browser engines before publishing, enforce the CloakBrowser spike:
 
