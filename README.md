@@ -107,21 +107,50 @@ See [docs/linux-server.md](docs/linux-server.md) for server deployment details.
 ## CLI
 
 ```bash
-# Start the server
-./BrowseForge
+# Show commands and version
+./BrowseForge --help
+./BrowseForge version
 
-# Bind to all interfaces and disable Chromium sandbox for containers
-./BrowseForge serve --host 0.0.0.0 --no-sandbox
+# Initialize config.json, profiles/, data/, and logs/
+./BrowseForge init
+
+# Start the server
+./BrowseForge serve
+./BrowseForge serve --host 0.0.0.0 --no-sandbox --no-open
 
 # Print the API token
 ./BrowseForge token
+./BrowseForge token --json
 
 # Check local browser/runtime state
 ./BrowseForge doctor
+./BrowseForge doctor --strict --json
+
+# Show integration capabilities and validate server transports
+./BrowseForge capabilities --json
+./BrowseForge smoke rest --base-url http://127.0.0.1:19280 --json
+./BrowseForge smoke mcp --base-url http://127.0.0.1:19280 --token "$TOKEN" --json
+
+# Run server-backed workflows and inspect API resources
+./BrowseForge workflow run examples/multi-login.yaml --token "$TOKEN" --json
+./BrowseForge profiles list --token "$TOKEN" --json
+./BrowseForge sessions list --token "$TOKEN" --json
 
 # MCP stdio mode
 ./BrowseForge --mcp
+./BrowseForge mcp-stdio
 ```
+
+Global CLI flags:
+
+| Flag | Description |
+|------|-------------|
+| `--base-dir DIR` | Runtime directory for config, profiles, data, logs, and browser engines. Defaults to the binary directory. |
+| `--config PATH` | Config file path. Relative paths are resolved from `--base-dir`. Defaults to `config.json`. |
+
+Agent and CI integrations should prefer `--json` on `token`, `doctor`, `capabilities`, and `smoke` so outputs are stable to parse. Unknown commands return a non-zero exit code and print usage instead of starting the server.
+
+See [docs/cli.md](docs/cli.md) for the full command reference, exit codes, JSON shapes, and agent integration checklist.
 
 ## Configuration
 

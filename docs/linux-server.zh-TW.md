@@ -5,9 +5,15 @@
 ## 推薦：Docker 部署
 
 ```bash
+mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
+
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.8.1
 ```
@@ -33,16 +39,33 @@ docker exec browseforge /app/BrowseForge token
 
 ### 持久化資料
 
+正式部署建議把 runtime data mount 到 host 目錄。這樣 profiles、API token、下載的 browser engines、logs 都在容器外；執行 `docker pull`、`docker stop`、`docker rm`、重新 `docker run` 時，不會刪掉使用者內容。
+
 ```bash
+mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
+
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
-  -v browseforge-profiles:/app/profiles \
-  -v browseforge-data:/app/data \
-  -v browseforge-browsers:/app/browsers \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.8.1
 ```
+
+持久化路徑：
+
+| Host path | Container path | 用途 |
+|-----------|----------------|------|
+| `./browseforge/profiles` | `/app/profiles` | Profile metadata 與 browser user data。 |
+| `./browseforge/data` | `/app/data` | `.api-token` API token 與 fingerprint data。 |
+| `./browseforge/browsers` | `/app/browsers` | 已下載的 Camoufox/CloakBrowser engines。 |
+| `./browseforge/logs` | `/app/logs` | Server logs。 |
+| `./browseforge/backups` | Host only | Filesystem 與 API backup 輸出。 |
+
+Docker named volumes 也能持久化，但 host bind mounts 比較容易檢查、複製、snapshot 與備份。
 
 ### Docker Compose
 
@@ -55,17 +78,13 @@ services:
       - "19280:19280"
       - "6901:6901"
     volumes:
-      - browseforge-profiles:/app/profiles
-      - browseforge-data:/app/data
-      - browseforge-browsers:/app/browsers
+      - ./browseforge/profiles:/app/profiles
+      - ./browseforge/data:/app/data
+      - ./browseforge/browsers:/app/browsers
+      - ./browseforge/logs:/app/logs
     environment:
       - VNC_PASSWORD=browseforge
     restart: unless-stopped
-
-volumes:
-  browseforge-profiles:
-  browseforge-data:
-  browseforge-browsers:
 ```
 
 ## 防火牆設定
@@ -97,18 +116,41 @@ ssh -L 19280:localhost:19280 -L 6901:localhost:6901 user@server
 
 ```bash
 docker pull ghcr.io/nczz/browseforge:v1.8.1
-docker stop browseforge && docker rm browseforge
+docker stop browseforge
+docker rm browseforge
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
-  -v browseforge-profiles:/app/profiles \
-  -v browseforge-data:/app/data \
-  -v browseforge-browsers:/app/browsers \
   -e VNC_PASSWORD=browseforge \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.8.1
 ```
 
-Profiles、Token、瀏覽器引擎都在 volumes 中保留，只更新 BrowseForge。
+Profiles、Token、下載的 browser engines、logs 都保留在 host 的 `./browseforge/` 目錄。Pull 新 image 並重建容器時，必須沿用同一組 bind mounts。
+
+## 備份
+
+完整備份包含 browser user data；建議停止容器後直接封存 host runtime 目錄：
+
+```bash
+docker stop browseforge
+tar -czf ./browseforge/backups/browseforge-runtime-$(date +%Y%m%d-%H%M%S).tgz ./browseforge/profiles ./browseforge/data ./browseforge/browsers ./browseforge/logs
+docker start browseforge
+```
+
+若只需要透過 REST API 做較輕量的 profile metadata backup：
+
+```bash
+TOKEN=$(docker exec browseforge /app/BrowseForge token)
+curl -fsS -X POST http://127.0.0.1:19280/api/backup \
+  -H "Authorization: Bearer $TOKEN" \
+  -o ./browseforge/backups/browseforge-api-backup-$(date +%Y%m%d).zip
+```
+
+REST backup 適合 profile metadata import/export。若要保存完整 browser user data 與 API token，請使用 filesystem backup。
 
 ## 特性
 

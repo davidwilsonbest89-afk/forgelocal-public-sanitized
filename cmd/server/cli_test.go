@@ -1,0 +1,179 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestCLIHelpAndVersion(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"--help"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("help exit = %d, stderr = %s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "BrowseForge CLI") {
+		t.Fatalf("help output missing title: %s", stdout.String())
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	if code := runCLI([]string{"version"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("version exit = %d, stderr = %s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "BrowseForge") {
+		t.Fatalf("version output = %s", stdout.String())
+	}
+}
+
+func TestCLISubcommandHelp(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"serve", "--help"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("serve help exit = %d, stderr = %s", code, stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "BrowseForge CLI") {
+		t.Fatalf("serve help output = %s", stdout.String())
+	}
+}
+
+func TestCLIUnknownCommandFails(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"nope"}, &stdout, &stderr); code == 0 {
+		t.Fatalf("unknown command unexpectedly succeeded")
+	}
+	if !strings.Contains(stderr.String(), "Unknown command: nope") {
+		t.Fatalf("stderr = %s", stderr.String())
+	}
+}
+
+func TestCLIInitConfigTokenAndDoctorJSON(t *testing.T) {
+	baseDir := t.TempDir()
+	var stdout, stderr bytes.Buffer
+
+	if code := runCLI([]string{"--base-dir", baseDir, "init", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("init exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	if _, err := os.Stat(filepath.Join(baseDir, "config.json")); err != nil {
+		t.Fatalf("config not created: %v", err)
+	}
+	for _, dir := range []string{"profiles", "data", "logs"} {
+		if _, err := os.Stat(filepath.Join(baseDir, dir)); err != nil {
+			t.Fatalf("%s dir not created: %v", dir, err)
+		}
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	if code := runCLI([]string{"--base-dir", baseDir, "config", "validate", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("config validate exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var validation map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &validation); err != nil {
+		t.Fatalf("decode config validate: %v\n%s", err, stdout.String())
+	}
+	if validation["ok"] != true {
+		t.Fatalf("validation = %#v", validation)
+	}
+
+	tokenDir := filepath.Join(baseDir, "data")
+	if err := os.WriteFile(filepath.Join(tokenDir, ".api-token"), []byte("test-token\n"), 0600); err != nil {
+		t.Fatalf("write token: %v", err)
+	}
+	stdout.Reset()
+	stderr.Reset()
+	if code := runCLI([]string{"--base-dir", baseDir, "token", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("token exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var token map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &token); err != nil {
+		t.Fatalf("decode token: %v\n%s", err, stdout.String())
+	}
+	if token["token"] != "test-token" {
+		t.Fatalf("token output = %#v", token)
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	code := runCLI([]string{"--base-dir", baseDir, "doctor", "--json"}, &stdout, &stderr)
+	if code != 0 && code != 1 {
+		t.Fatalf("doctor exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var report doctorReport
+	if err := json.Unmarshal(stdout.Bytes(), &report); err != nil {
+		t.Fatalf("decode doctor: %v\n%s", err, stdout.String())
+	}
+	if report.Version == "" || len(report.Checks) == 0 {
+		t.Fatalf("doctor report = %#v", report)
+	}
+}
+
+func TestCLICapabilitiesJSON(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"capabilities", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("capabilities exit = %d, stderr = %s", code, stderr.String())
+	}
+	var caps map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &caps); err != nil {
+		t.Fatalf("decode capabilities: %v\n%s", err, stdout.String())
+	}
+	commands, ok := caps["commands"].([]any)
+	if !ok || len(commands) == 0 {
+		t.Fatalf("commands missing: %#v", caps)
+	}
+}
+
+func TestCLIInvalidConfigDoesNotPanic(t *testing.T) {
+	baseDir := t.TempDir()
+	configPath := filepath.Join(baseDir, "config.json")
+	if err := os.WriteFile(configPath, []byte("{"), 0644); err != nil {
+		t.Fatalf("write config: %v", err)
+	}
+
+	var stdout, stderr bytes.Buffer
+	code := runCLI([]string{"--base-dir", baseDir, "smoke", "rest", "--json"}, &stdout, &stderr)
+	if code != 1 {
+		t.Fatalf("smoke exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var result map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &result); err != nil {
+		t.Fatalf("decode smoke error: %v\n%s", err, stdout.String())
+	}
+	errMsg, _ := result["error"].(string)
+	if result["ok"] != false || !strings.Contains(errMsg, "config error") {
+		t.Fatalf("smoke result = %#v", result)
+	}
+}
+
+func TestCLIAPIListReportsMissingToken(t *testing.T) {
+	baseDir := t.TempDir()
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"--base-dir", baseDir, "init"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("init exit = %d, stderr = %s", code, stderr.String())
+	}
+
+	stdout.Reset()
+	stderr.Reset()
+	code := runCLI([]string{"--base-dir", baseDir, "profiles", "list", "--base-url", "http://127.0.0.1:1", "--json"}, &stdout, &stderr)
+	if code != 1 {
+		t.Fatalf("profiles list exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	var result map[string]any
+	if err := json.Unmarshal(stdout.Bytes(), &result); err != nil {
+		t.Fatalf("decode profiles error: %v\n%s", err, stdout.String())
+	}
+	errMsg, _ := result["error"].(string)
+	if result["ok"] != false || !strings.Contains(errMsg, "token error") {
+		t.Fatalf("profiles result = %#v", result)
+	}
+}
+
+func TestTokenPreviewShortToken(t *testing.T) {
+	if got := tokenPreview("short"); got != "short" {
+		t.Fatalf("tokenPreview short = %q", got)
+	}
+	if got := tokenPreview("1234567890abcdefX"); got != "1234567890abcdef" {
+		t.Fatalf("tokenPreview long = %q", got)
+	}
+}

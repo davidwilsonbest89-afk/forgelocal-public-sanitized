@@ -11,14 +11,10 @@ services:
       - "19280:19280"  # Dashboard + REST API
       - "6901:6901"    # KasmVNC web client
     volumes:
-      - browseforge-profiles:/app/profiles
-      - browseforge-data:/app/data
-      - browseforge-browsers:/app/browsers
+      - ./browseforge/profiles:/app/profiles
+      - ./browseforge/data:/app/data
+      - ./browseforge/browsers:/app/browsers
+      - ./browseforge/logs:/app/logs
     environment:
       - VNC_PASSWORD=browseforge
     restart: unless-stopped
-
-volumes:
-  browseforge-profiles:
-  browseforge-data:
-  browseforge-browsers:

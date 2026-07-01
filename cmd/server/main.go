@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"flag"
 	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
 	"os"
@@ -12,7 +12,6 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"syscall"
 	"time"
 
@@ -29,108 +28,17 @@ import (
 var Version = "dev"
 
 func main() {
-	if len(os.Args) < 2 {
-		runServer(nil)
-		return
-	}
-
-	switch os.Args[1] {
-	case "--mcp":
-		runMCPStdio()
-	case "serve":
-		flags := parseServeFlags(os.Args[2:])
-		runServer(flags)
-	case "token":
-		runToken()
-	case "doctor":
-		runDoctor()
-	default:
-		runServer(nil)
-	}
+	os.Exit(runCLI(os.Args[1:], os.Stdout, os.Stderr))
 }
 
 // serveFlags holds CLI overrides for serve mode
 type serveFlags struct {
-	host      string
-	port      string
-	noSandbox bool
-}
-
-func parseServeFlags(args []string) *serveFlags {
-	fs := flag.NewFlagSet("serve", flag.ExitOnError)
-	f := &serveFlags{}
-	fs.StringVar(&f.host, "host", "", "Listen address (default: 127.0.0.1, Docker auto-detects 0.0.0.0)")
-	fs.StringVar(&f.port, "port", "", "API port (default: 19280)")
-	fs.BoolVar(&f.noSandbox, "no-sandbox", false, "Disable Chromium sandbox (required in Docker)")
-	fs.Parse(args)
-	return f
-}
-
-func runToken() {
-	exe, _ := os.Executable()
-	baseDir := filepath.Dir(exe)
-	tokenPath := filepath.Join(baseDir, "data", ".api-token")
-	data, err := os.ReadFile(tokenPath)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Token not found. Start the server first.\n")
-		os.Exit(1)
-	}
-	fmt.Println(strings.TrimSpace(string(data)))
-}
-
-func runDoctor() {
-	exe, _ := os.Executable()
-	baseDir := filepath.Dir(exe)
-
-	fmt.Printf("BrowseForge v%s — Environment Check\n\n", Version)
-
-	// Docker detection
-	if isDocker() {
-		fmt.Println("🐳 Docker: detected")
-	} else {
-		fmt.Println("💻 Docker: no (native)")
-	}
-
-	// Display
-	display := os.Getenv("DISPLAY")
-	if display != "" {
-		fmt.Printf("🖥️  Display: %s\n", display)
-	} else {
-		fmt.Println("⚠️  Display: not set (browsers need DISPLAY or --headless)")
-	}
-
-	// Camoufox
-	ver := browser.InstalledVersion(baseDir, "camoufox")
-	if ver != "" {
-		path := browser.FindBinary(baseDir, "camoufox")
-		fmt.Printf("✅ Camoufox: %s (%s)\n", ver, path)
-	} else {
-		fmt.Println("❌ Camoufox: not installed (will download on first run)")
-	}
-
-	// CloakBrowser
-	ver = browser.InstalledVersion(baseDir, "cloakbrowser")
-	if ver != "" {
-		path := browser.FindBinary(baseDir, "cloakbrowser")
-		fmt.Printf("✅ CloakBrowser: %s (%s)\n", ver, path)
-	} else {
-		fmt.Println("❌ CloakBrowser: not installed (will download on first run)")
-	}
-
-	// Sandbox
-	if isDocker() {
-		fmt.Println("⚠️  Sandbox: Docker detected — use 'serve --no-sandbox'")
-	} else {
-		fmt.Println("✅ Sandbox: native environment (should work)")
-	}
-
-	// Token
-	tokenPath := filepath.Join(baseDir, "data", ".api-token")
-	if _, err := os.Stat(tokenPath); err == nil {
-		fmt.Println("✅ API Token: configured")
-	} else {
-		fmt.Println("ℹ️  API Token: will be generated on first start")
-	}
+	baseDir    string
+	configPath string
+	host       string
+	port       string
+	noSandbox  bool
+	noOpen     bool
 }
 
 func isDocker() bool {
@@ -138,13 +46,8 @@ func isDocker() bool {
 	return err == nil
 }
 
-func runMCPStdio() {
-	exe, err := os.Executable()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Executable path error: %v\n", err)
-		os.Exit(1)
-	}
-	baseDir := filepath.Dir(exe)
+func runMCPStdio(opts mcpStdioOptions) {
+	baseDir := opts.baseDir
 	if err := os.Chdir(baseDir); err != nil {
 		fmt.Fprintf(os.Stderr, "Chdir error: %v\n", err)
 		os.Exit(1)
@@ -159,26 +62,14 @@ func runMCPStdio() {
 	}
 
 	// Reuse existing config (don't download browsers in MCP mode)
-	if _, err := os.Stat("config.json"); os.IsNotExist(err) {
-		camoufoxPath := browser.FindBinary(baseDir, "camoufox")
-		chromiumPath := browser.FindBinary(baseDir, "cloakbrowser")
-		cfg := &config.Config{
-			Host: "127.0.0.1", Port: "19280", ProfilesDir: "profiles", DataDir: "data",
-			LogFile: "logs/server.log", FingerprintDir: "data",
-			CamoufoxPath: camoufoxPath, CloakBrowserPath: chromiumPath,
-		}
-		cfgJSON, err := json.MarshalIndent(cfg, "", "  ")
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Config encode error: %v\n", err)
-			os.Exit(1)
-		}
-		if err := os.WriteFile("config.json", cfgJSON, 0644); err != nil {
-			fmt.Fprintf(os.Stderr, "Config write error: %v\n", err)
+	if _, err := os.Stat(opts.configPath); os.IsNotExist(err) {
+		if err := writeDefaultConfig(opts.configPath, baseDir, false); err != nil {
+			fmt.Fprintf(os.Stderr, "Config init error: %v\n", err)
 			os.Exit(1)
 		}
 	}
 
-	cfg, err := config.Load("config.json")
+	cfg, err := config.Load(opts.configPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
 		os.Exit(1)
@@ -211,13 +102,16 @@ func runMCPStdio() {
 }
 
 func runServer(flags *serveFlags) {
-	// Auto-detect base directory (where the binary lives)
-	exe, err := os.Executable()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Executable path error: %v\n", err)
-		os.Exit(1)
+	if flags == nil {
+		baseDir, err := defaultBaseDir()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Executable path error: %v\n", err)
+			os.Exit(1)
+		}
+		flags = &serveFlags{baseDir: baseDir, configPath: filepath.Join(baseDir, "config.json")}
 	}
-	baseDir := filepath.Dir(exe)
+	// Auto-detect base directory (where the binary lives)
+	baseDir := flags.baseDir
 	if err := os.Chdir(baseDir); err != nil {
 		fmt.Fprintf(os.Stderr, "Chdir error: %v\n", err)
 		os.Exit(1)
@@ -238,7 +132,7 @@ func runServer(flags *serveFlags) {
 	}
 
 	// Load config once
-	cfg, err := config.Load("config.json")
+	cfg, err := config.Load(flags.configPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
 		os.Exit(1)
@@ -325,7 +219,7 @@ func runServer(flags *serveFlags) {
 			slog.Error("config encode", "error", err)
 			os.Exit(1)
 		}
-		if err := os.WriteFile("config.json", cfgJSON, 0644); err != nil {
+		if err := os.WriteFile(flags.configPath, cfgJSON, 0644); err != nil {
 			slog.Error("config write", "error", err)
 			os.Exit(1)
 		}
@@ -394,9 +288,9 @@ func runServer(flags *serveFlags) {
 				fmt.Println("╠══════════════════════════════════════════╣")
 				fmt.Printf("║  Dashboard: http://%s:%-12s║\n", cfg.Host, cfg.Port)
 				fmt.Printf("║  MCP:       http://%s:%-12s║\n", cfg.Host, cfg.Port+"/mcp")
-				fmt.Printf("║  Token:     %s...  ║\n", token[:16])
+				fmt.Printf("║  Token:     %s...  ║\n", tokenPreview(token))
 				fmt.Println("╚══════════════════════════════════════════╝")
-				if cfg.Host == "127.0.0.1" {
+				if cfg.Host == "127.0.0.1" && !flags.noOpen {
 					openBrowser(fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token))
 				}
 				return
@@ -420,6 +314,19 @@ func runServer(flags *serveFlags) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	srv.Shutdown(ctx)
+}
+
+func writeJSON(w io.Writer, v any) error {
+	enc := json.NewEncoder(w)
+	enc.SetIndent("", "  ")
+	return enc.Encode(v)
+}
+
+func tokenPreview(token string) string {
+	if len(token) <= 16 {
+		return token
+	}
+	return token[:16]
 }
 
 // openBrowser opens URL in the default system browser

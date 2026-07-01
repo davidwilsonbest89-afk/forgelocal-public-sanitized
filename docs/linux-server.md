@@ -5,9 +5,15 @@
 ## Recommended: Docker
 
 ```bash
+mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
+
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.8.1
 ```
@@ -32,16 +38,33 @@ docker exec browseforge /app/BrowseForge token
 
 ## Persistent Data
 
+Production deployments should mount runtime data to host directories. This keeps profile data, the API token, downloaded browser engines, and logs outside the container so `docker pull`, `docker stop`, `docker rm`, and `docker run` do not delete user content.
+
 ```bash
+mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
+
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
-  -v browseforge-profiles:/app/profiles \
-  -v browseforge-data:/app/data \
-  -v browseforge-browsers:/app/browsers \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.8.1
 ```
+
+Persisted paths:
+
+| Host path | Container path | Purpose |
+|-----------|----------------|---------|
+| `./browseforge/profiles` | `/app/profiles` | Profile metadata and browser user data. |
+| `./browseforge/data` | `/app/data` | API token at `.api-token` and fingerprint data. |
+| `./browseforge/browsers` | `/app/browsers` | Downloaded Camoufox/CloakBrowser engines. |
+| `./browseforge/logs` | `/app/logs` | Server logs. |
+| `./browseforge/backups` | Host only | Filesystem and API backup output. |
+
+Named Docker volumes also work, but host bind mounts are easier to inspect, copy, snapshot, and back up.
 
 ## Docker Compose
 
@@ -54,17 +77,13 @@ services:
       - "19280:19280"
       - "6901:6901"
     volumes:
-      - browseforge-profiles:/app/profiles
-      - browseforge-data:/app/data
-      - browseforge-browsers:/app/browsers
+      - ./browseforge/profiles:/app/profiles
+      - ./browseforge/data:/app/data
+      - ./browseforge/browsers:/app/browsers
+      - ./browseforge/logs:/app/logs
     environment:
       - VNC_PASSWORD=browseforge
     restart: unless-stopped
-
-volumes:
-  browseforge-profiles:
-  browseforge-data:
-  browseforge-browsers:
 ```
 
 ## Firewall
@@ -103,18 +122,41 @@ Then open:
 
 ```bash
 docker pull ghcr.io/nczz/browseforge:v1.8.1
-docker stop browseforge && docker rm browseforge
+docker stop browseforge
+docker rm browseforge
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
-  -v browseforge-profiles:/app/profiles \
-  -v browseforge-data:/app/data \
-  -v browseforge-browsers:/app/browsers \
   -e VNC_PASSWORD=browseforge \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.8.1
 ```
 
-Profiles, tokens, and browser engines remain in Docker volumes.
+Profiles, tokens, downloaded browser engines, and logs remain in the host `./browseforge/` directory. Pulling a new image and recreating the container must reuse the same bind mounts.
+
+## Backup
+
+For a full backup that includes browser user data, stop the container and archive the host runtime directory:
+
+```bash
+docker stop browseforge
+tar -czf ./browseforge/backups/browseforge-runtime-$(date +%Y%m%d-%H%M%S).tgz ./browseforge/profiles ./browseforge/data ./browseforge/browsers ./browseforge/logs
+docker start browseforge
+```
+
+For a lighter metadata-level backup through the REST API:
+
+```bash
+TOKEN=$(docker exec browseforge /app/BrowseForge token)
+curl -fsS -X POST http://127.0.0.1:19280/api/backup \
+  -H "Authorization: Bearer $TOKEN" \
+  -o ./browseforge/backups/browseforge-api-backup-$(date +%Y%m%d).zip
+```
+
+The REST backup is useful for profile metadata import/export. Use the filesystem backup when you need to preserve complete browser user data and the API token.
 
 ## Runtime Features
 

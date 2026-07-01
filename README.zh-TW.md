@@ -107,21 +107,50 @@ Linux server 部署細節見 [docs/linux-server.md](docs/linux-server.md)。
 ## CLI
 
 ```bash
-# 啟動 server
-./BrowseForge
+# 顯示指令與版本
+./BrowseForge --help
+./BrowseForge version
 
-# Docker 部署常用：監聽所有 interface 並停用 Chromium sandbox
-./BrowseForge serve --host 0.0.0.0 --no-sandbox
+# 初始化 config.json、profiles/、data/、logs/
+./BrowseForge init
+
+# 啟動 server
+./BrowseForge serve
+./BrowseForge serve --host 0.0.0.0 --no-sandbox --no-open
 
 # 顯示 API Token
 ./BrowseForge token
+./BrowseForge token --json
 
 # 環境檢查
 ./BrowseForge doctor
+./BrowseForge doctor --strict --json
+
+# 顯示整合能力並驗證 server transport
+./BrowseForge capabilities --json
+./BrowseForge smoke rest --base-url http://127.0.0.1:19280 --json
+./BrowseForge smoke mcp --base-url http://127.0.0.1:19280 --token "$TOKEN" --json
+
+# 執行 server-backed workflow 並檢視 API resources
+./BrowseForge workflow run examples/multi-login.yaml --token "$TOKEN" --json
+./BrowseForge profiles list --token "$TOKEN" --json
+./BrowseForge sessions list --token "$TOKEN" --json
 
 # MCP stdio 模式
 ./BrowseForge --mcp
+./BrowseForge mcp-stdio
 ```
+
+全域 CLI flags：
+
+| Flag | 說明 |
+|------|------|
+| `--base-dir DIR` | runtime 目錄，包含 config、profiles、data、logs、browser engines；預設為 binary 所在目錄。 |
+| `--config PATH` | config 檔路徑；相對路徑會以 `--base-dir` 解析，預設為 `config.json`。 |
+
+Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使用 `--json`，輸出才穩定可解析。未知指令會回傳非 0 exit code 並顯示 usage，不會意外啟動 server。
+
+完整 command reference、exit codes、JSON schema 與 agent integration checklist 見 [docs/cli.md](docs/cli.md)。
 
 ## 設定檔
 
