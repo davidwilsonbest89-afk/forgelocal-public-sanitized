@@ -24,6 +24,7 @@ Traditional Chinese translations are available for:
 
 These documents describe implementation strategy and browser-runtime behavior. They may include research details and historical notes:
 
+- [Architecture Guide](architecture.md)
 - [Anti-Detection Mechanisms](anti-detection.md)
 - [WebGL Fingerprint Strategy](webgl-fingerprint-strategy.md)
 - [Humanize Research](humanize-research.md)
