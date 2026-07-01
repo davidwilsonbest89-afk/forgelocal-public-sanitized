@@ -78,12 +78,22 @@ The Dashboard opens at `http://127.0.0.1:19280`. Browser engines are downloaded 
 For production deployments, pin a release tag instead of using `latest`:
 
 ```bash
+mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
+
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -v "$PWD/browseforge/profiles:/app/profiles" \
+  -v "$PWD/browseforge/data:/app/data" \
+  -v "$PWD/browseforge/browsers:/app/browsers" \
+  -v "$PWD/browseforge/logs:/app/logs" \
+  -v "$PWD/browseforge/backups:/app/backups" \
+  -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
   ghcr.io/nczz/browseforge:v1.9.0
 ```
+
+The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.
 
 | Service | URL |
 |------|-----|
