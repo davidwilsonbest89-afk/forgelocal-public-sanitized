@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -12,6 +13,8 @@ import (
 	"os/signal"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -33,12 +36,13 @@ func main() {
 
 // serveFlags holds CLI overrides for serve mode
 type serveFlags struct {
-	baseDir    string
-	configPath string
-	host       string
-	port       string
-	noSandbox  bool
-	noOpen     bool
+	baseDir      string
+	configPath   string
+	host         string
+	port         string
+	noSandbox    bool
+	noOpen       bool
+	pauseOnError bool
 }
 
 func isDocker() bool {
@@ -105,37 +109,31 @@ func runServer(flags *serveFlags) {
 	if flags == nil {
 		baseDir, err := defaultBaseDir()
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Executable path error: %v\n", err)
-			os.Exit(1)
+			exitServerError(flags, "Executable path error: %v", err)
 		}
 		flags = &serveFlags{baseDir: baseDir, configPath: filepath.Join(baseDir, "config.json")}
 	}
 	// Auto-detect base directory (where the binary lives)
 	baseDir := flags.baseDir
 	if err := os.Chdir(baseDir); err != nil {
-		fmt.Fprintf(os.Stderr, "Chdir error: %v\n", err)
-		os.Exit(1)
+		exitServerError(flags, "Chdir error: %v", err)
 	}
 
 	// Auto-create directories
 	if err := os.MkdirAll("profiles", 0755); err != nil {
-		fmt.Fprintf(os.Stderr, "Create profiles dir error: %v\n", err)
-		os.Exit(1)
+		exitServerError(flags, "Create profiles dir error: %v", err)
 	}
 	if err := os.MkdirAll("data", 0755); err != nil {
-		fmt.Fprintf(os.Stderr, "Create data dir error: %v\n", err)
-		os.Exit(1)
+		exitServerError(flags, "Create data dir error: %v", err)
 	}
 	if err := os.MkdirAll("logs", 0755); err != nil {
-		fmt.Fprintf(os.Stderr, "Create logs dir error: %v\n", err)
-		os.Exit(1)
+		exitServerError(flags, "Create logs dir error: %v", err)
 	}
 
 	// Load config once
 	cfg, err := config.Load(flags.configPath)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Config error: %v\n", err)
-		os.Exit(1)
+		exitServerError(flags, "Config error: %v", err)
 	}
 	cfg.Version = Version
 
@@ -186,7 +184,7 @@ func runServer(flags *serveFlags) {
 		camoufoxPath, err = browser.DownloadCamoufox(baseDir)
 		if err != nil {
 			slog.Error("download Camoufox", "error", err)
-			os.Exit(1)
+			exitServerError(flags, "Download Camoufox error: %v", err)
 		}
 	}
 
@@ -206,7 +204,7 @@ func runServer(flags *serveFlags) {
 		chromiumPath, err = browser.DownloadCloakBrowser(baseDir)
 		if err != nil {
 			slog.Error("download CloakBrowser", "error", err)
-			os.Exit(1)
+			exitServerError(flags, "Download CloakBrowser error: %v", err)
 		}
 	}
 
@@ -217,18 +215,18 @@ func runServer(flags *serveFlags) {
 		cfgJSON, err := json.MarshalIndent(cfg, "", "  ")
 		if err != nil {
 			slog.Error("config encode", "error", err)
-			os.Exit(1)
+			exitServerError(flags, "Config encode error: %v", err)
 		}
 		if err := os.WriteFile(flags.configPath, cfgJSON, 0644); err != nil {
 			slog.Error("config write", "error", err)
-			os.Exit(1)
+			exitServerError(flags, "Config write error: %v", err)
 		}
 	}
 
 	profileStore, err := profile.NewStore(cfg.ProfilesDir)
 	if err != nil {
 		slog.Error("profile store", "error", err)
-		os.Exit(1)
+		exitServerError(flags, "Profile store error: %v", err)
 	}
 
 	fpPool, _ := fingerprint.NewPool(cfg.FingerprintDir)
@@ -236,14 +234,14 @@ func runServer(flags *serveFlags) {
 	browserMgr, err := browser.NewManager(cfg)
 	if err != nil {
 		slog.Error("browser manager", "error", err)
-		os.Exit(1)
+		exitServerError(flags, "Browser manager error: %v", err)
 	}
 	defer browserMgr.Close()
 
 	router, err := api.NewRouter(cfg, profileStore, browserMgr, fpPool)
 	if err != nil {
 		slog.Error("api router", "error", err)
-		os.Exit(1)
+		exitServerError(flags, "API router error: %v", err)
 	}
 
 	// Web Search & Explore agent sessions (profile browser + Playwright Bind + independent pages)
@@ -307,13 +305,50 @@ func runServer(flags *serveFlags) {
 	case <-quit:
 		fmt.Println("\nShutting down...")
 	case err := <-serverErr:
-		fmt.Fprintf(os.Stderr, "❌ Server failed: %v\n", err)
-		os.Exit(1)
+		exitServerError(flags, "%s", formatListenError(err, cfg.Host, cfg.Port))
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	srv.Shutdown(ctx)
+}
+
+func exitServerError(flags *serveFlags, format string, args ...any) {
+	fmt.Fprintf(os.Stderr, "Server failed: "+format+"\n", args...)
+	maybePauseAfterServerError(flags)
+	os.Exit(1)
+}
+
+func maybePauseAfterServerError(flags *serveFlags) {
+	if flags == nil || !flags.pauseOnError || runtime.GOOS != "windows" {
+		return
+	}
+	fmt.Fprintln(os.Stderr)
+	fmt.Fprint(os.Stderr, "Press Enter to close this window...")
+	_, _ = bufio.NewReader(os.Stdin).ReadString('\n')
+}
+
+func formatListenError(err error, host, port string) string {
+	message := fmt.Sprintf("could not listen on %s:%s: %v", host, port, err)
+	if isPortInUseError(err) {
+		return fmt.Sprintf("%s\nPort %s is already in use. Close the other BrowseForge instance or start BrowseForge with a different port, for example: BrowseForge serve --port %s", message, port, nextPortSuggestion(port))
+	}
+	return message
+}
+
+func nextPortSuggestion(port string) string {
+	n, err := strconv.Atoi(port)
+	if err != nil || n <= 0 || n >= 65535 {
+		return "19281"
+	}
+	return strconv.Itoa(n + 1)
+}
+
+func isPortInUseError(err error) bool {
+	text := strings.ToLower(err.Error())
+	return strings.Contains(text, "address already in use") ||
+		strings.Contains(text, "only one usage of each socket address") ||
+		strings.Contains(text, "bind: address already in use")
 }
 
 func writeJSON(w io.Writer, v any) error {

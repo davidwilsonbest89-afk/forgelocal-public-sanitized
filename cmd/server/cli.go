@@ -77,7 +77,7 @@ func runCLI(args []string, stdout, stderr io.Writer) int {
 		return 2
 	}
 	if len(rest) == 0 {
-		runServer(&serveFlags{baseDir: global.baseDir, configPath: global.configPath})
+		runServer(&serveFlags{baseDir: global.baseDir, configPath: global.configPath, pauseOnError: true})
 		return 0
 	}
 	if hasHelpFlag(rest[1:]) {

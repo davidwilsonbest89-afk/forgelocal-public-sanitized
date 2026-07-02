@@ -279,3 +279,52 @@ func TestTokenPreviewShortToken(t *testing.T) {
 		t.Fatalf("tokenPreview long = %q", got)
 	}
 }
+
+func TestFormatListenErrorIncludesPortGuidance(t *testing.T) {
+	err := os.ErrInvalid
+	if isPortInUseError(err) {
+		t.Fatalf("os.ErrInvalid should not be treated as port-in-use")
+	}
+
+	for _, rawErr := range []string{
+		"listen tcp 127.0.0.1:19280: bind: address already in use",
+		"listen tcp 127.0.0.1:19280: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.",
+	} {
+		msg := formatListenError(
+			&listenErrorString{rawErr},
+			"127.0.0.1",
+			"19280",
+		)
+		for _, want := range []string{
+			"could not listen on 127.0.0.1:19280",
+			"Port 19280 is already in use",
+			"BrowseForge serve --port 19281",
+		} {
+			if !strings.Contains(msg, want) {
+				t.Fatalf("listen error guidance missing %q for %q: %s", want, rawErr, msg)
+			}
+		}
+	}
+}
+
+func TestNextPortSuggestion(t *testing.T) {
+	tests := map[string]string{
+		"19280": "19281",
+		"19281": "19282",
+		"65535": "19281",
+		"port":  "19281",
+	}
+	for port, want := range tests {
+		if got := nextPortSuggestion(port); got != want {
+			t.Fatalf("nextPortSuggestion(%q) = %q, want %q", port, got, want)
+		}
+	}
+}
+
+type listenErrorString struct {
+	message string
+}
+
+func (e *listenErrorString) Error() string {
+	return e.message
+}

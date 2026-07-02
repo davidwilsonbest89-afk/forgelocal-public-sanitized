@@ -41,6 +41,8 @@ BrowseForge serve --host 0.0.0.0 --port 19280 --no-sandbox --no-open
 
 Running `BrowseForge` with no subcommand is kept as a compatibility alias for `BrowseForge serve`.
 
+On Windows, launching `BrowseForge.exe` directly starts the same default server mode. If startup fails before the dashboard opens, for example because port `19280` is already in use, the console window keeps the error visible and waits for Enter before closing. CLI and agent invocations such as `BrowseForge serve --port 19281` still exit normally with a non-zero status on failure.
+
 ### `mcp-stdio`
 
 Starts the MCP server over stdio for local agent clients.
@@ -290,3 +292,23 @@ For production and containers, persist at least:
 - `logs/`: server logs, useful for diagnosis.
 
 When using Docker, prefer host bind mounts for these directories if you want normal filesystem backups. See [Linux Server Deployment](linux-server.md).
+
+## Troubleshooting
+
+### Port Already in Use
+
+The default Dashboard, REST API, MCP HTTP endpoint, and Playwright proxy all listen on port `19280`. If another BrowseForge instance or another service is already using that port, startup fails with guidance similar to:
+
+```text
+Server failed: could not listen on 127.0.0.1:19280: ...
+Port 19280 is already in use. Close the other BrowseForge instance or start BrowseForge with a different port, for example: BrowseForge serve --port 19281
+```
+
+Use one of these options:
+
+```bash
+BrowseForge serve --port 19281
+BrowseForge smoke rest --base-url http://127.0.0.1:19281 --wait --json
+```
+
+Or close the process already using port `19280` and start BrowseForge again.
