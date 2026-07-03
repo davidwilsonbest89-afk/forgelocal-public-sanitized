@@ -627,6 +627,7 @@ func (s *Server) toolDoctorProfile(args map[string]any) (any, *mcpError) {
 	info := map[string]any{
 		"profile_id":          p.ID,
 		"name":                p.Name,
+		"group":               p.Group,
 		"engine":              p.Engine,
 		"profile_dir":         p.ProfileDir,
 		"downloads_dir":       filepath.Join(p.ProfileDir, "downloads"),
@@ -634,9 +635,18 @@ func (s *Server) toolDoctorProfile(args map[string]any) (any, *mcpError) {
 		"web_sessions":        []SessionInfo{},
 		"connect_url_present": false,
 		"proxy_configured":    false,
+		"proxy_source":        "none",
 	}
-	if p.Proxy != nil {
+	if s.groupStore != nil {
+		effectiveProxy := s.groupStore.EffectiveProxy(p)
+		info["proxy_configured"] = effectiveProxy.Proxy != nil
+		info["proxy_source"] = effectiveProxy.Source
+		info["proxy_mode"] = effectiveProxy.Mode
+	} else if p.Proxy != nil {
 		info["proxy_configured"] = p.Proxy.Host != ""
+		if p.Proxy.Host != "" {
+			info["proxy_source"] = "profile"
+		}
 	}
 	if running {
 		info["browser_session_id"] = browserSession.ID

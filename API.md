@@ -162,6 +162,74 @@ curl -X POST http://127.0.0.1:19280/api/profiles/prof_a1b2c3d4e5f6/export \
   -o profile.zip
 ```
 
+## Groups
+
+Groups are profile labels plus optional proxy policy. A group proxy is resolved at browser launch time:
+
+| Mode | Effective proxy order |
+|------|-----------------------|
+| `default` | Profile proxy override, then group proxy, then no proxy |
+| `enforced` | Group proxy override, then profile proxy, then no proxy |
+
+Proxy changes affect newly opened browser sessions. Close and reopen active profile browsers in that group to apply a changed group proxy policy.
+
+### GET `/api/groups`
+
+Lists configured group proxy policies.
+
+```bash
+curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:19280/api/groups
+```
+
+### GET `/api/groups/{name}`
+
+Gets one group proxy policy.
+
+```bash
+curl -H "Authorization: Bearer $TOKEN" \
+  http://127.0.0.1:19280/api/groups/Client%20A
+```
+
+### PUT `/api/groups/{name}`
+
+Creates or updates a group proxy policy.
+
+```bash
+curl -X PUT http://127.0.0.1:19280/api/groups/Client%20A \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "proxy_mode": "default",
+    "proxy": {
+      "type": "socks5",
+      "host": "proxy.example.com",
+      "port": 1080,
+      "username": "user",
+      "password": "pass"
+    }
+  }'
+```
+
+Response includes `active_sessions` and `restart_required` so callers can warn operators when existing browsers need to be reopened.
+
+### DELETE `/api/groups/{name}`
+
+Deletes the group label and its group proxy setting without deleting profiles. Profiles in the group become ungrouped. If the group has active browser sessions, the request returns `409 GROUP_HAS_ACTIVE_SESSIONS`; close those browsers first so runtime proxy state cannot become ambiguous.
+
+```bash
+curl -X DELETE http://127.0.0.1:19280/api/groups/Client%20A \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+### DELETE `/api/groups/{name}/proxy`
+
+Clears the group proxy policy without deleting profiles in the group.
+
+```bash
+curl -X DELETE http://127.0.0.1:19280/api/groups/Client%20A/proxy \
+  -H "Authorization: Bearer $TOKEN"
+```
+
 ### POST `/api/profiles/import`
 
 Imports a profile ZIP.
@@ -311,7 +379,7 @@ curl -X POST http://127.0.0.1:19280/api/sessions/$SID/cookies \
 
 ### POST `/api/backup`
 
-Exports all profiles as a ZIP archive.
+Exports all profiles and group proxy policies as a ZIP archive.
 
 ```bash
 curl -X POST http://127.0.0.1:19280/api/backup \
@@ -321,7 +389,7 @@ curl -X POST http://127.0.0.1:19280/api/backup \
 
 ### POST `/api/restore`
 
-Restores profiles from a backup ZIP. Existing profiles are not overwritten.
+Restores profiles and group proxy policies from a backup ZIP. Existing profiles are not overwritten; group proxy policies in the backup update matching group names.
 
 ```bash
 curl -X POST http://127.0.0.1:19280/api/restore \
@@ -409,6 +477,11 @@ Authorization: Bearer <token>
 | `create_profile` | Create a new browser profile |
 | `delete_profile` | Delete a profile |
 | `update_profile` | Update profile settings |
+| `list_groups` | List group proxy policies |
+| `get_group` | Read one group proxy policy |
+| `update_group_proxy` | Set a group-scoped proxy policy |
+| `clear_group_proxy` | Clear a group proxy policy |
+| `delete_group` | Delete a group label and proxy policy without deleting profiles |
 | `open_browser` | Open a browser session for a profile |
 | `close_browser` | Close a browser session |
 | `navigate` | Navigate to a URL |
@@ -709,7 +782,7 @@ Workflow `screenshot` actions now call the REST screenshot endpoint and save the
 
 #### `doctor_profile`
 
-Return profile readiness data: engine, profile/download directories, browser running status, Playwright Bind endpoint presence, active URL, tab count, proxy configuration, and active agent web sessions.
+Return profile readiness data: engine, group, profile/download directories, browser running status, Playwright Bind endpoint presence, active URL, tab count, effective proxy source/mode, and active agent web sessions.
 
 ### Common Patterns
 

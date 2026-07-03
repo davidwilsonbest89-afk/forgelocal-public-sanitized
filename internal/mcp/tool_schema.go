@@ -15,6 +15,21 @@ var tools = []map[string]any{
 		"group":      prop("string", "Optional new group."),
 		"proxy":      prop("object", "Optional proxy settings."),
 	}, []string{"profile_id"}),
+	tool("list_groups", "List group proxy policies with active_sessions and restart_required. Use before changing group-scoped proxy behavior.", map[string]any{}),
+	toolWithRequired("get_group", "Read one group proxy policy with active_sessions and restart_required. Group proxy mode default means profile proxy overrides group proxy; enforced means group proxy overrides profile proxy.", map[string]any{
+		"group": prop("string", "Group name."),
+	}, []string{"group"}),
+	toolWithRequired("update_group_proxy", "Set a group-scoped proxy policy. proxy_mode default means profile proxy overrides group proxy; enforced means group proxy overrides profile proxy. Check restart_required in the result before asking the operator to reopen browsers.", map[string]any{
+		"group":      prop("string", "Group name."),
+		"proxy_mode": prop("string", "default or enforced. Defaults to default."),
+		"proxy":      prop("object", "Proxy settings with type, host, port, and optional username/password."),
+	}, []string{"group", "proxy"}),
+	toolWithRequired("clear_group_proxy", "Clear a group proxy policy. Check restart_required in the result before asking the operator to reopen browsers.", map[string]any{
+		"group": prop("string", "Group name."),
+	}, []string{"group"}),
+	toolWithRequired("delete_group", "Delete a group label and its group proxy policy without deleting profiles. Fails when the group has active browser sessions; close those browsers first.", map[string]any{
+		"group": prop("string", "Group name."),
+	}, []string{"group"}),
 	tool("open_browser", "Open or reuse the profile browser. Use doctor_profile first when diagnosing; after open_browser, call get_page_state or navigate.", map[string]any{"profile_id": prop("string", "Profile ID.")}),
 	tool("close_browser", "Close the profile browser. This ends profile-page operations; it also invalidates active profile browser state.", map[string]any{"profile_id": prop("string", "Profile ID.")}),
 	toolWithRequired("navigate", "Navigate the active profile page. After navigation, prefer wait_for on a meaningful selector before clicking or extracting.", map[string]any{

@@ -17,11 +17,12 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
+	"browseforge/internal/groups"
 	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
 )
 
-func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool) (*chi.Mux, error) {
+func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, groupStores ...*groups.Store) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
@@ -38,7 +39,11 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg}
+	var groupStore *groups.Store
+	if len(groupStores) > 0 {
+		groupStore = groupStores[0]
+	}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -55,6 +60,11 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
 		r.Post("/api/profiles/{id}/export", h.exportProfile)
 		r.Post("/api/profiles/import", h.importProfile)
+		r.Get("/api/groups", h.listGroups)
+		r.Get("/api/groups/{name}", h.getGroup)
+		r.Put("/api/groups/{name}", h.upsertGroup)
+		r.Delete("/api/groups/{name}", h.deleteGroup)
+		r.Delete("/api/groups/{name}/proxy", h.clearGroupProxy)
 
 		r.Post("/api/sessions", h.createSession)
 		r.Get("/api/sessions", h.listSessions)
@@ -81,12 +91,13 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 }
 
 type handler struct {
-	cfg    *config.Config
-	store  *profile.Store
-	mgr    *browser.Manager
-	fpPool *fingerprint.Pool
-	hcfg   humanize.Config
-	token  string
+	cfg        *config.Config
+	store      *profile.Store
+	groupStore *groups.Store
+	mgr        *browser.Manager
+	fpPool     *fingerprint.Pool
+	hcfg       humanize.Config
+	token      string
 }
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {
@@ -134,8 +145,10 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 				fp, err = h.fpPool.Pick(fpBrowser, "macos")
 			}
 			if err == nil {
-				if p.Proxy != nil && p.Proxy.Host != "" {
-					tz, locale := fingerprint.DetectProxyGeoResult(p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
+				effectiveProxy := h.effectiveProxyForProfile(&p)
+				if effectiveProxy.Proxy != nil {
+					proxy := effectiveProxy.Proxy
+					tz, locale := fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
 					fp["timezone"] = tz
 					fp["navigator.language"] = locale
 				} else {

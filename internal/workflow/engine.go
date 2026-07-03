@@ -120,6 +120,12 @@ func (e *Engine) executeStep(action, profileID string, params map[string]any, va
 	switch action {
 	case "create_profile":
 		body := map[string]any{"name": params["name"], "engine": params["engine"]}
+		if v, ok := params["group"]; ok {
+			body["group"] = v
+		}
+		if v, ok := params["proxy"]; ok {
+			body["proxy"] = v
+		}
 		resp, err := e.apiCall("POST", "/api/profiles", body)
 		if err != nil {
 			return "", err

@@ -137,6 +137,19 @@ func (h *handler) backup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	if h.groupStore != nil {
+		data, err := h.groupStore.Export()
+		if err != nil {
+			return
+		}
+		f, err := zw.Create("groups.json")
+		if err != nil {
+			return
+		}
+		if _, err := f.Write(data); err != nil {
+			return
+		}
+	}
 }
 
 func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
@@ -163,7 +176,23 @@ func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
 	}
 
 	imported := 0
+	groupsImported := 0
 	for _, f := range zr.File {
+		if f.Name == "groups.json" && h.groupStore != nil {
+			rc, err := f.Open()
+			if err != nil {
+				continue
+			}
+			data, err := io.ReadAll(rc)
+			rc.Close()
+			if err != nil {
+				continue
+			}
+			if n, err := h.groupStore.Import(data); err == nil {
+				groupsImported = n
+			}
+			continue
+		}
 		if filepath.Base(f.Name) != "profile.json" {
 			continue
 		}
@@ -187,7 +216,7 @@ func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
 			imported++
 		}
 	}
-	writeJSON(w, 200, map[string]any{"data": map[string]any{"imported": imported}})
+	writeJSON(w, 200, map[string]any{"data": map[string]any{"imported": imported, "groups_imported": groupsImported}})
 }
 
 func (h *handler) shutdown(w http.ResponseWriter, r *http.Request) {

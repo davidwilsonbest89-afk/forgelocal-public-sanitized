@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"browseforge/internal/config"
+	"browseforge/internal/groups"
 	"browseforge/internal/profile"
 
 	"github.com/playwright-community/playwright-go"
@@ -25,13 +26,14 @@ type Session struct {
 
 // Manager handles browser instances (multi-instance: one process per profile)
 type Manager struct {
-	cfg      *config.Config
-	pw       *playwright.Playwright
-	mu       sync.RWMutex
-	sessions map[string]*Session // sessionID → Session
+	cfg        *config.Config
+	groupStore *groups.Store
+	pw         *playwright.Playwright
+	mu         sync.RWMutex
+	sessions   map[string]*Session // sessionID → Session
 }
 
-func NewManager(cfg *config.Config) (*Manager, error) {
+func NewManager(cfg *config.Config, groupStores ...*groups.Store) (*Manager, error) {
 	if err := playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true}); err != nil {
 		return nil, fmt.Errorf("playwright.Install: %w", err)
 	}
@@ -41,10 +43,15 @@ func NewManager(cfg *config.Config) (*Manager, error) {
 		return nil, fmt.Errorf("playwright.Run: %w", err)
 	}
 
+	var groupStore *groups.Store
+	if len(groupStores) > 0 {
+		groupStore = groupStores[0]
+	}
 	m := &Manager{
-		cfg:      cfg,
-		pw:       pw,
-		sessions: make(map[string]*Session),
+		cfg:        cfg,
+		groupStore: groupStore,
+		pw:         pw,
+		sessions:   make(map[string]*Session),
 	}
 	m.recoverOrphanSessions()
 	return m, nil
@@ -122,6 +129,16 @@ func (m *Manager) launchProfile(p *profile.Profile) (*Session, error) {
 	default:
 		return m.launchFirefox(p)
 	}
+}
+
+func (m *Manager) effectiveProxy(p *profile.Profile) groups.EffectiveProxy {
+	if m.groupStore != nil {
+		return m.groupStore.EffectiveProxy(p)
+	}
+	if p != nil && p.Proxy != nil && p.Proxy.Host != "" {
+		return groups.EffectiveProxy{Proxy: p.Proxy, Source: "profile", Mode: groups.ProxyModeDefault}
+	}
+	return groups.EffectiveProxy{Source: "none", Mode: groups.ProxyModeDefault}
 }
 
 func (m *Manager) restartPlaywright() error {

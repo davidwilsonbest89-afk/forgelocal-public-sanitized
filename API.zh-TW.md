@@ -119,6 +119,48 @@ curl -X DELETE -H "Authorization: Bearer $TOKEN" \
 
 ---
 
+### Groups（Group Proxy Policy）
+
+Group 是 Profile 的分組標籤，也可以設定 group-scoped proxy policy。實際 proxy 會在瀏覽器啟動時決定：
+
+| 模式 | Effective proxy 順序 |
+|------|----------------------|
+| `default` | Profile proxy 優先，接著 group proxy，最後無 proxy |
+| `enforced` | Group proxy 優先，接著 profile proxy，最後無 proxy |
+
+Group proxy 變更只會套用到新開啟的瀏覽器；已開啟的 profile browser 需要關閉後重新開啟才會套用。
+
+#### GET /api/groups — 列出 Group Proxy Policy
+```bash
+curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:19280/api/groups
+```
+
+#### PUT /api/groups/:name — 建立或更新 Group Proxy Policy
+```bash
+curl -X PUT http://127.0.0.1:19280/api/groups/%E5%AE%A2%E6%88%B6A \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"proxy_mode":"default","proxy":{"type":"socks5","host":"proxy.example.com","port":1080}}'
+```
+
+回應會包含 `active_sessions` 與 `restart_required`，方便提醒操作者是否需要重新開啟既有瀏覽器。
+
+#### DELETE /api/groups/:name/proxy — 清除 Group Proxy
+```bash
+curl -X DELETE -H "Authorization: Bearer $TOKEN" \
+  http://127.0.0.1:19280/api/groups/%E5%AE%A2%E6%88%B6A/proxy
+```
+
+#### DELETE /api/groups/:name — 刪除 Group
+刪除 group label 與 group proxy 設定，但不會刪除 Profile；該 group 內的 Profile 會改為未分組。若 group 內還有已開啟的 browser session，API 會回傳 `409 GROUP_HAS_ACTIVE_SESSIONS`，需要先關閉那些瀏覽器，避免 runtime proxy 狀態不明確。
+
+```bash
+curl -X DELETE -H "Authorization: Bearer $TOKEN" \
+  http://127.0.0.1:19280/api/groups/%E5%AE%A2%E6%88%B6A
+```
+
+---
+
 ### Session（瀏覽器控制）
 
 #### POST /api/sessions — 開啟瀏覽器
@@ -249,9 +291,12 @@ curl -X POST http://127.0.0.1:19280/api/profiles/import \
 ```
 
 #### POST /api/backup — 全量備份
-回傳包含所有 Profile 的 .zip。
+匯出所有 profiles 與 group proxy policies。
+回傳包含所有 Profile metadata 與 `groups.json` 的 .zip。
 
 #### POST /api/restore — 全量還原
+從備份 ZIP 還原 profiles 與 group proxy policies。既有 Profile 不會被覆蓋；備份內同名 group proxy policy 會更新。
+
 ```bash
 curl -X POST http://127.0.0.1:19280/api/restore \
   -H "Authorization: Bearer $TOKEN" \
@@ -322,6 +367,12 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
 | `list_profiles` | 列出所有 Profile | — |
 | `create_profile` | 建立 Profile | `name`, `engine`, `group` |
 | `delete_profile` | 刪除 Profile | `profile_id` |
+| `update_profile` | 更新 Profile 設定 | `profile_id` |
+| `list_groups` | 列出 group proxy policies | — |
+| `get_group` | 讀取單一 group proxy policy | `group` |
+| `update_group_proxy` | 設定 group-scoped proxy policy | `group`, `proxy`, `proxy_mode`（選填） |
+| `clear_group_proxy` | 清除 group proxy policy | `group` |
+| `delete_group` | 刪除 group label 與 group proxy policy，不刪除 Profile | `group` |
 | `open_browser` | 開啟瀏覽器 | `profile_id` |
 | `close_browser` | 關閉瀏覽器 | `profile_id` |
 | `navigate` | 導航到 URL | `profile_id`, `url` |

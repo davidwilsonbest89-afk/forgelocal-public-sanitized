@@ -13,6 +13,7 @@ data/.api-token
 logs/
 profiles/prof_*
 docker/browseforge/
+.docker-review/
 
 # Fingerprint pool (generated via npm script)
 data/fingerprints-*.json

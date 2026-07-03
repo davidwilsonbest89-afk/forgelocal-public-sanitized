@@ -144,7 +144,7 @@ JSON shape:
 
 ```json
 {
-  "version": "v1.9.0",
+  "version": "v1.10.0",
   "base_dir": "/srv/browseforge",
   "checks": [
     {"name": "config", "status": "ok", "message": "/srv/browseforge/config.json"}
@@ -280,7 +280,7 @@ BrowseForge backup restore --full ./backups/browseforge-runtime-YYYYMMDD-HHMMSS.
 BrowseForge backup create --metadata --base-url http://127.0.0.1:19280 --json
 ```
 
-Full backups archive `profiles/`, `data/`, `browsers/`, and `logs/`. Metadata backups use the REST `/api/backup` endpoint and do not include complete browser user data.
+Full backups archive `profiles/`, `data/`, `browsers/`, and `logs/`. Metadata backups use the REST `/api/backup` endpoint, include group proxy policies, and do not include complete browser user data.
 
 ## Data Persistence
 

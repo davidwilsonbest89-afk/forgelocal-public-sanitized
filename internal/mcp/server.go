@@ -9,6 +9,7 @@ import (
 	"sync/atomic"
 
 	"browseforge/internal/browser"
+	"browseforge/internal/groups"
 	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
 	"browseforge/internal/workflow"
@@ -20,6 +21,7 @@ import (
 
 type Server struct {
 	store       *profile.Store
+	groupStore  *groups.Store
 	mgr         *browser.Manager
 	hcfg        humanize.Config
 	sessionPool *SessionPool
@@ -29,11 +31,15 @@ type Server struct {
 	reqID       atomic.Int64
 }
 
-func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, sessionPool *SessionPool, token, version string) *Server {
+func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, sessionPool *SessionPool, token, version string, groupStores ...*groups.Store) *Server {
 	if version == "" {
 		version = "dev"
 	}
-	return &Server{store: store, mgr: mgr, hcfg: hcfg, sessionPool: sessionPool, token: token, version: version}
+	var groupStore *groups.Store
+	if len(groupStores) > 0 {
+		groupStore = groupStores[0]
+	}
+	return &Server{store: store, groupStore: groupStore, mgr: mgr, hcfg: hcfg, sessionPool: sessionPool, token: token, version: version}
 }
 
 func (s *Server) SetWorkflowEngine(engine *workflow.Engine) {
@@ -118,6 +124,16 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 		return s.toolDeleteProfile(call.Arguments)
 	case "update_profile":
 		return s.toolUpdateProfile(call.Arguments)
+	case "list_groups":
+		return s.toolListGroups(call.Arguments)
+	case "get_group":
+		return s.toolGetGroup(call.Arguments)
+	case "update_group_proxy":
+		return s.toolUpdateGroupProxy(call.Arguments)
+	case "clear_group_proxy":
+		return s.toolClearGroupProxy(call.Arguments)
+	case "delete_group":
+		return s.toolDeleteGroup(call.Arguments)
 	case "open_browser":
 		return s.toolOpenBrowser(call.Arguments)
 	case "close_browser":
@@ -249,6 +265,196 @@ func (s *Server) toolUpdateProfile(args map[string]any) (any, *mcpError) {
 		return nil, newError(-32000, err.Error())
 	}
 	return textResult(fmt.Sprintf("Updated profile %s (%s)", p.ID, p.Name)), nil
+}
+
+func (s *Server) toolListGroups(args map[string]any) (any, *mcpError) {
+	if s.groupStore == nil {
+		return nil, newError(-32000, "group store is not available")
+	}
+	items := s.groupStore.List()
+	groups := make([]map[string]any, 0, len(items))
+	for _, g := range items {
+		groups = append(groups, s.groupResponse(g))
+	}
+	res := textResult(mustJSON(groups))
+	res["groups"] = groups
+	res["total"] = len(groups)
+	return res, nil
+}
+
+func (s *Server) toolGetGroup(args map[string]any) (any, *mcpError) {
+	if s.groupStore == nil {
+		return nil, newError(-32000, "group store is not available")
+	}
+	name, _ := args["group"].(string)
+	if name == "" {
+		return nil, newError(-32602, "group is required")
+	}
+	g, ok := s.groupStore.Get(name)
+	if !ok {
+		return nil, newError(-32000, "group not found: "+name)
+	}
+	res := textResult(mustJSON(g))
+	for k, v := range s.groupResponse(g) {
+		res[k] = v
+	}
+	return res, nil
+}
+
+func (s *Server) toolUpdateGroupProxy(args map[string]any) (any, *mcpError) {
+	if s.groupStore == nil {
+		return nil, newError(-32000, "group store is not available")
+	}
+	name, _ := args["group"].(string)
+	if name == "" {
+		return nil, newError(-32602, "group is required")
+	}
+	proxyArg, ok := args["proxy"].(map[string]any)
+	if !ok {
+		return nil, newError(-32602, "proxy object is required")
+	}
+	proxyCfg, err := parseProxyConfig(proxyArg)
+	if err != nil {
+		return nil, newError(-32602, err.Error())
+	}
+	mode, _ := args["proxy_mode"].(string)
+	g, err := s.groupStore.Upsert(name, proxyCfg, mode)
+	if err != nil {
+		return nil, newError(-32602, err.Error())
+	}
+	active := s.activeBrowserSessionsForGroup(g.Name)
+	msg := fmt.Sprintf("Updated group proxy for %s (mode: %s).", g.Name, g.ProxyMode)
+	if active > 0 {
+		msg += " Close and reopen active profile browsers in this group for the change to take effect."
+	}
+	res := textResult(msg)
+	for k, v := range s.groupResponse(g) {
+		res[k] = v
+	}
+	return res, nil
+}
+
+func (s *Server) toolClearGroupProxy(args map[string]any) (any, *mcpError) {
+	if s.groupStore == nil {
+		return nil, newError(-32000, "group store is not available")
+	}
+	name, _ := args["group"].(string)
+	if name == "" {
+		return nil, newError(-32602, "group is required")
+	}
+	g, err := s.groupStore.ClearProxy(name)
+	if err != nil {
+		return nil, newError(-32602, err.Error())
+	}
+	active := s.activeBrowserSessionsForGroup(g.Name)
+	msg := fmt.Sprintf("Cleared group proxy for %s.", g.Name)
+	if active > 0 {
+		msg += " Close and reopen active profile browsers in this group for the change to take effect."
+	}
+	res := textResult(msg)
+	for k, v := range s.groupResponse(g) {
+		res[k] = v
+	}
+	return res, nil
+}
+
+func (s *Server) toolDeleteGroup(args map[string]any) (any, *mcpError) {
+	if s.groupStore == nil {
+		return nil, newError(-32000, "group store is not available")
+	}
+	name, _ := args["group"].(string)
+	name = strings.TrimSpace(name)
+	if name == "" {
+		return nil, newError(-32602, "group is required")
+	}
+	active := s.activeBrowserSessionsForGroup(name)
+	if active > 0 {
+		return nil, activeGroupDeleteError(name, active)
+	}
+	ungrouped := 0
+	if s.store != nil {
+		for _, p := range s.store.List("", "") {
+			if strings.TrimSpace(p.Group) != name {
+				continue
+			}
+			if _, err := s.store.Update(p.ID, map[string]any{"group": ""}); err != nil {
+				return nil, newError(-32000, err.Error())
+			}
+			ungrouped++
+		}
+	}
+	if _, err := s.groupStore.ClearProxy(name); err != nil {
+		return nil, newError(-32602, err.Error())
+	}
+	res := textResult(fmt.Sprintf("Deleted group %s. Ungrouped %d profile(s); profiles were not deleted.", name, ungrouped))
+	res["name"] = name
+	res["profiles_ungrouped"] = ungrouped
+	res["proxy_cleared"] = true
+	res["active_sessions"] = 0
+	res["restart_required"] = false
+	return res, nil
+}
+
+func activeGroupDeleteError(name string, active int) *mcpError {
+	return newErrorData(-32000, fmt.Sprintf("group %s has %d active browser session(s); close them before deleting the group", name, active), map[string]any{
+		"code":             "GROUP_HAS_ACTIVE_SESSIONS",
+		"group":            name,
+		"active_sessions":  active,
+		"restart_required": true,
+	})
+}
+
+func (s *Server) groupResponse(g *groups.Group) map[string]any {
+	active := s.activeBrowserSessionsForGroup(g.Name)
+	return map[string]any{
+		"group":            g,
+		"name":             g.Name,
+		"proxy_mode":       g.ProxyMode,
+		"proxy":            g.Proxy,
+		"created_at":       g.CreatedAt,
+		"updated_at":       g.UpdatedAt,
+		"active_sessions":  active,
+		"restart_required": active > 0,
+	}
+}
+
+func (s *Server) activeBrowserSessionsForGroup(groupName string) int {
+	groupName = strings.TrimSpace(groupName)
+	if s.mgr == nil || s.store == nil || groupName == "" {
+		return 0
+	}
+	count := 0
+	for _, sess := range s.mgr.ListSessions() {
+		p, err := s.store.Get(sess.ProfileID)
+		if err == nil && strings.TrimSpace(p.Group) == groupName {
+			count++
+		}
+	}
+	return count
+}
+
+func parseProxyConfig(raw map[string]any) (*profile.ProxyConfig, error) {
+	proxyType, _ := raw["type"].(string)
+	host, _ := raw["host"].(string)
+	port := 0
+	switch v := raw["port"].(type) {
+	case float64:
+		port = int(v)
+	case int:
+		port = v
+	}
+	username, _ := raw["username"].(string)
+	password, _ := raw["password"].(string)
+	if proxyType == "" {
+		return nil, fmt.Errorf("proxy.type is required")
+	}
+	if host == "" {
+		return nil, fmt.Errorf("proxy.host is required")
+	}
+	if port <= 0 {
+		return nil, fmt.Errorf("proxy.port is required")
+	}
+	return &profile.ProxyConfig{Type: proxyType, Host: host, Port: port, Username: username, Password: password}, nil
 }
 
 func (s *Server) toolOpenBrowser(args map[string]any) (any, *mcpError) {

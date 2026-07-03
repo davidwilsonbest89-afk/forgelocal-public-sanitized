@@ -7,7 +7,9 @@ import (
 	"strings"
 	"testing"
 
+	"browseforge/internal/groups"
 	"browseforge/internal/humanize"
+	"browseforge/internal/profile"
 )
 
 func TestBuildWebSearchMCPResultRawFallback(t *testing.T) {
@@ -168,42 +170,47 @@ func TestSearchProviderURLs(t *testing.T) {
 
 func TestToolSchemasRequiredFields(t *testing.T) {
 	expected := map[string][]string{
-		"list_profiles":   {},
-		"create_profile":  {"name", "engine", "group"},
-		"delete_profile":  {"profile_id"},
-		"update_profile":  {"profile_id"},
-		"open_browser":    {"profile_id"},
-		"close_browser":   {"profile_id"},
-		"navigate":        {"profile_id", "url"},
-		"click":           {"profile_id", "selector"},
-		"type_text":       {"profile_id", "selector", "text"},
-		"screenshot":      {"profile_id"},
-		"get_content":     {"profile_id"},
-		"evaluate":        {"profile_id", "script"},
-		"new_tab":         {"profile_id"},
-		"list_tabs":       {"profile_id"},
-		"switch_tab":      {"profile_id", "index"},
-		"close_tab":       {"profile_id", "index"},
-		"web_search":      {"query"},
-		"web_explore":     {"url"},
-		"create_session":  {"profile_id"},
-		"destroy_session": {"session_id"},
-		"list_sessions":   {},
-		"gc_sessions":     {},
-		"wait_for":        {"selector"},
-		"get_page_state":  {},
-		"get_cookies":     {},
-		"set_cookies":     {"cookies"},
-		"run_workflow":    {},
-		"form_fill":       {"fields"},
-		"select_option":   {"selector"},
-		"check":           {"selector"},
-		"press_key":       {"key"},
-		"list_downloads":  {},
-		"delete_download": {"name"},
-		"read_download":   {"name"},
-		"web_extract":     {"schema"},
-		"doctor_profile":  {"profile_id"},
+		"list_profiles":      {},
+		"create_profile":     {"name", "engine", "group"},
+		"delete_profile":     {"profile_id"},
+		"update_profile":     {"profile_id"},
+		"list_groups":        {},
+		"get_group":          {"group"},
+		"update_group_proxy": {"group", "proxy"},
+		"clear_group_proxy":  {"group"},
+		"delete_group":       {"group"},
+		"open_browser":       {"profile_id"},
+		"close_browser":      {"profile_id"},
+		"navigate":           {"profile_id", "url"},
+		"click":              {"profile_id", "selector"},
+		"type_text":          {"profile_id", "selector", "text"},
+		"screenshot":         {"profile_id"},
+		"get_content":        {"profile_id"},
+		"evaluate":           {"profile_id", "script"},
+		"new_tab":            {"profile_id"},
+		"list_tabs":          {"profile_id"},
+		"switch_tab":         {"profile_id", "index"},
+		"close_tab":          {"profile_id", "index"},
+		"web_search":         {"query"},
+		"web_explore":        {"url"},
+		"create_session":     {"profile_id"},
+		"destroy_session":    {"session_id"},
+		"list_sessions":      {},
+		"gc_sessions":        {},
+		"wait_for":           {"selector"},
+		"get_page_state":     {},
+		"get_cookies":        {},
+		"set_cookies":        {"cookies"},
+		"run_workflow":       {},
+		"form_fill":          {"fields"},
+		"select_option":      {"selector"},
+		"check":              {"selector"},
+		"press_key":          {"key"},
+		"list_downloads":     {},
+		"delete_download":    {"name"},
+		"read_download":      {"name"},
+		"web_extract":        {"schema"},
+		"doctor_profile":     {"profile_id"},
 	}
 
 	seen := map[string]bool{}
@@ -234,6 +241,96 @@ func TestToolSchemasRequiredFields(t *testing.T) {
 		if !seen[name] {
 			t.Fatalf("expected tool missing from registry: %s", name)
 		}
+	}
+}
+
+func TestToolUpdateGroupProxyReportsRestartOnlyWhenActive(t *testing.T) {
+	groupStore, err := groups.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := NewServer(nil, nil, humanize.Config{}, nil, "", "test", groupStore)
+
+	raw, mcpErr := s.toolUpdateGroupProxy(map[string]any{
+		"group":      "Client A",
+		"proxy_mode": groups.ProxyModeEnforced,
+		"proxy": map[string]any{
+			"type": "socks5",
+			"host": "proxy.example.com",
+			"port": float64(1080),
+		},
+	})
+	if mcpErr != nil {
+		t.Fatalf("toolUpdateGroupProxy error = %v", mcpErr)
+	}
+	res, ok := raw.(map[string]any)
+	if !ok {
+		t.Fatalf("result type = %T", raw)
+	}
+	if res["restart_required"] != false {
+		t.Fatalf("restart_required = %v", res["restart_required"])
+	}
+	if res["active_sessions"] != 0 {
+		t.Fatalf("active_sessions = %v", res["active_sessions"])
+	}
+	g, ok := res["group"].(*groups.Group)
+	if !ok || g.Proxy == nil || g.Proxy.Host != "proxy.example.com" {
+		t.Fatalf("group result = %#v", res["group"])
+	}
+}
+
+func TestToolDeleteGroupUngroupsProfilesAndClearsProxy(t *testing.T) {
+	profileStore, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	p := &profile.Profile{Name: "Profile A", Engine: "firefox", Group: "Client A"}
+	if err := profileStore.Create(p); err != nil {
+		t.Fatal(err)
+	}
+	groupStore, err := groups.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := groupStore.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "proxy.example.com", Port: 1080}, groups.ProxyModeDefault); err != nil {
+		t.Fatal(err)
+	}
+	s := NewServer(profileStore, nil, humanize.Config{}, nil, "", "test", groupStore)
+
+	raw, mcpErr := s.toolDeleteGroup(map[string]any{"group": "Client A"})
+	if mcpErr != nil {
+		t.Fatalf("toolDeleteGroup error = %v", mcpErr)
+	}
+	res, ok := raw.(map[string]any)
+	if !ok {
+		t.Fatalf("result type = %T", raw)
+	}
+	if res["profiles_ungrouped"] != 1 {
+		t.Fatalf("profiles_ungrouped = %v", res["profiles_ungrouped"])
+	}
+	updated, err := profileStore.Get(p.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if updated.Group != "" {
+		t.Fatalf("profile group = %q, want empty", updated.Group)
+	}
+	if g, ok := groupStore.Get("Client A"); ok {
+		t.Fatalf("group proxy still exists = %+v", g)
+	}
+}
+
+func TestActiveGroupDeleteErrorIsStructured(t *testing.T) {
+	err := activeGroupDeleteError("Client A", 2)
+	if err.Code != -32000 {
+		t.Fatalf("code = %d", err.Code)
+	}
+	data, ok := err.Data.(map[string]any)
+	if !ok {
+		t.Fatalf("data type = %T", err.Data)
+	}
+	if data["code"] != "GROUP_HAS_ACTIVE_SESSIONS" || data["group"] != "Client A" || data["active_sessions"] != 2 || data["restart_required"] != true {
+		t.Fatalf("data = %#v", data)
 	}
 }
 

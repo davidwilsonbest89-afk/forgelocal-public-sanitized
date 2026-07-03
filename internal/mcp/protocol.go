@@ -15,9 +15,14 @@ type mcpRequest struct {
 type mcpError struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+	Data    any    `json:"data,omitempty"`
 }
 
 func newError(code int, msg string) *mcpError { return &mcpError{Code: code, Message: msg} }
+
+func newErrorData(code int, msg string, data any) *mcpError {
+	return &mcpError{Code: code, Message: msg, Data: data}
+}
 
 func writeJSONRPC(w http.ResponseWriter, id any, err *mcpError, result ...any) {
 	writeJSONRPCStatus(w, http.StatusOK, id, err, result...)

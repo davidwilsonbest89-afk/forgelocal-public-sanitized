@@ -22,6 +22,7 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
+	"browseforge/internal/groups"
 	"browseforge/internal/humanize"
 	"browseforge/internal/mcp"
 	"browseforge/internal/profile"
@@ -79,12 +80,17 @@ func runMCPStdio(opts mcpStdioOptions) {
 		os.Exit(1)
 	}
 	cfg.Version = Version
+	groupStore, err := groups.NewStore(cfg.DataDir)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Group store error: %v\n", err)
+		os.Exit(1)
+	}
 	profileStore, err := profile.NewStore(cfg.ProfilesDir)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Profile store error: %v\n", err)
 		os.Exit(1)
 	}
-	browserMgr, err := browser.NewManager(cfg)
+	browserMgr, err := browser.NewManager(cfg, groupStore)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Browser manager error: %v\n", err)
 		os.Exit(1)
@@ -101,7 +107,7 @@ func runMCPStdio(opts mcpStdioOptions) {
 		defer sessionPool.CloseAll()
 	}
 
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, "", cfg.Version)
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, "", cfg.Version, groupStore)
 	mcpServer.RunStdio()
 }
 
@@ -136,6 +142,10 @@ func runServer(flags *serveFlags) {
 		exitServerError(flags, "Config error: %v", err)
 	}
 	cfg.Version = Version
+	groupStore, err := groups.NewStore(cfg.DataDir)
+	if err != nil {
+		exitServerError(flags, "Group store error: %v", err)
+	}
 
 	// Docker auto-detection
 	if isDocker() {
@@ -231,14 +241,14 @@ func runServer(flags *serveFlags) {
 
 	fpPool, _ := fingerprint.NewPool(cfg.FingerprintDir)
 
-	browserMgr, err := browser.NewManager(cfg)
+	browserMgr, err := browser.NewManager(cfg, groupStore)
 	if err != nil {
 		slog.Error("browser manager", "error", err)
 		exitServerError(flags, "Browser manager error: %v", err)
 	}
 	defer browserMgr.Close()
 
-	router, err := api.NewRouter(cfg, profileStore, browserMgr, fpPool)
+	router, err := api.NewRouter(cfg, profileStore, browserMgr, fpPool, groupStore)
 	if err != nil {
 		slog.Error("api router", "error", err)
 		exitServerError(flags, "API router error: %v", err)
@@ -259,7 +269,7 @@ func runServer(flags *serveFlags) {
 	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
 
 	// MCP Server (same HTTP service port, integrated with the main router)
-	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, cfg.APIToken, cfg.Version)
+	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, cfg.APIToken, cfg.Version, groupStore)
 	mcpServer.SetWorkflowEngine(wfEngine)
 	router.Post("/mcp", mcpServer.ServeHTTP)
 

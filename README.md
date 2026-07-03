@@ -32,9 +32,9 @@ It combines Firefox/Camoufox and Chromium/CloakBrowser runtime support with prof
 ## Features
 
 - Dual browser engines: Firefox via Camoufox and Chromium via CloakBrowser.
-- Isolated profiles: each profile has separate cookies, local storage, proxy settings, and fingerprint settings.
+- Isolated profiles: each profile has separate cookies, local storage, proxy settings, group proxy policy, and fingerprint settings.
 - Fingerprint pool: generated fingerprints with local/proxy-aware timezone and locale adjustment.
-- Web Dashboard: profile and session management at `http://127.0.0.1:19280`.
+- Web Dashboard: searchable profile, tag, session, and group proxy management at `http://127.0.0.1:19280`.
 - REST API: programmatic profile, session, backup, restore, and workflow control.
 - MCP server: stdio and Streamable HTTP modes for AI agents.
 - Playwright connect: external Playwright clients can attach to running BrowseForge sessions.
@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.9.0
+  ghcr.io/nczz/browseforge:v1.10.0
 ```
 
 The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.

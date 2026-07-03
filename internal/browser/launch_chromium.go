@@ -42,8 +42,10 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 
 	var tz, locale string
-	if p.Proxy != nil && p.Proxy.Host != "" {
-		tz, locale = fingerprint.DetectProxyGeoResult(p.Proxy.Type, p.Proxy.Host, p.Proxy.Port, p.Proxy.Username, p.Proxy.Password)
+	effectiveProxy := m.effectiveProxy(p)
+	if effectiveProxy.Proxy != nil {
+		proxy := effectiveProxy.Proxy
+		tz, locale = fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
 		args = append(args, "--fingerprint-webrtc-ip=auto")
 	} else {
 		tz, locale = fingerprint.DetectLocalGeoResult()
@@ -125,22 +127,23 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 
 	var relay *SOCKS5Relay
-	if p.Proxy != nil {
-		needsRelay := p.Proxy.Type == "socks5" && p.Proxy.Username != ""
+	if effectiveProxy.Proxy != nil {
+		proxy := effectiveProxy.Proxy
+		needsRelay := proxy.Type == "socks5" && proxy.Username != ""
 		if needsRelay {
-			upstream := fmt.Sprintf("%s:%d", p.Proxy.Host, p.Proxy.Port)
+			upstream := fmt.Sprintf("%s:%d", proxy.Host, proxy.Port)
 			var localAddr string
-			relay, localAddr, err = StartSOCKS5Relay(upstream, p.Proxy.Username, p.Proxy.Password)
+			relay, localAddr, err = StartSOCKS5Relay(upstream, proxy.Username, proxy.Password)
 			if err != nil {
 				return nil, fmt.Errorf("socks5 relay: %w", err)
 			}
 			opts.Proxy = &playwright.Proxy{Server: "socks5://" + localAddr}
 		} else {
-			server := fmt.Sprintf("%s://%s:%d", p.Proxy.Type, p.Proxy.Host, p.Proxy.Port)
+			server := fmt.Sprintf("%s://%s:%d", proxy.Type, proxy.Host, proxy.Port)
 			opts.Proxy = &playwright.Proxy{
 				Server:   server,
-				Username: playwright.String(p.Proxy.Username),
-				Password: playwright.String(p.Proxy.Password),
+				Username: playwright.String(proxy.Username),
+				Password: playwright.String(proxy.Password),
 			}
 		}
 	}
