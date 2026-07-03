@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Validate tag
         run: |
@@ -19,9 +19,10 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "1.22"
+          cache: false
 
       - name: Test
         run: go test -count=1 -timeout 5m $(go list ./... | grep -v '/internal/spike$')
@@ -58,13 +59,14 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version: "1.22"
+          cache: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "22"
 
@@ -108,7 +110,7 @@ jobs:
           zip -r $ZIPNAME $DIR/
           echo "ZIPNAME=$ZIPNAME" >> $GITHUB_ENV
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: BrowseForge-${{ matrix.suffix }}
           path: ${{ env.ZIPNAME }}
@@ -120,7 +122,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: artifacts
 
@@ -156,7 +158,7 @@ jobs:
           chmod +x "$tmp/BrowseForge-lite/BrowseForge"
           "$tmp/BrowseForge-lite/BrowseForge" doctor | grep "BrowseForge ${GITHUB_REF_NAME#v}"
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: artifacts/**/*.zip
           generate_release_notes: true
@@ -169,15 +171,15 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: docker
           file: docker/Dockerfile.run
