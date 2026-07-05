@@ -6,6 +6,12 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.10.2 - 2026-07-05
+
+### Fixed
+
+- Strengthened CloakBrowser safe GPU fallback for Windows VM environments by adding GPU sandbox bypass and in-process GPU launch flags. This covers hosts where `--disable-gpu` alone still fails with `GPU process isn't usable`.
+
 ## v1.10.1 - 2026-07-05
 
 ### Added

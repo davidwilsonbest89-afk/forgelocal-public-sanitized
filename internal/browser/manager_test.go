@@ -172,7 +172,9 @@ func TestApplyCloakBrowserLaunchPolicyFallbackArgs(t *testing.T) {
 	for _, want := range []string{
 		"--disable-gpu",
 		"--disable-gpu-compositing",
+		"--disable-gpu-sandbox",
 		"--disable-gpu-shader-disk-cache",
+		"--in-process-gpu",
 		"--disable-features=Translate",
 		"--disk-cache-dir=",
 	} {

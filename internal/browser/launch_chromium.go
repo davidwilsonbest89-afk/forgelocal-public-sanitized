@@ -245,7 +245,9 @@ func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *co
 		out = appendUniqueChromiumArgs(out,
 			"--disable-gpu",
 			"--disable-gpu-compositing",
+			"--disable-gpu-sandbox",
 			"--disable-gpu-shader-disk-cache",
+			"--in-process-gpu",
 		)
 	}
 	if policy.IsolatedRuntimeCache || fallback {
