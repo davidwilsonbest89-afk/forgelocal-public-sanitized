@@ -649,6 +649,7 @@ func defaultConfig(baseDir string) *config.Config {
 		FingerprintDir:   "data",
 		CamoufoxPath:     browser.FindBinary(baseDir, "camoufox"),
 		CloakBrowserPath: browser.FindBinary(baseDir, "cloakbrowser"),
+		CloakBrowser:     &config.CloakBrowserConfig{ExtraArgs: []string{}},
 	}
 }
 

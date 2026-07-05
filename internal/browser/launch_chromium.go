@@ -3,10 +3,13 @@ package browser
 import (
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"runtime"
+	"time"
 
+	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
 	"browseforge/internal/profile"
 
@@ -79,6 +82,12 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, "--fingerprint-fonts-dir=/usr/share/fonts")
 	}
 
+	baseArgs := append([]string(nil), args...)
+	args, err = applyCloakBrowserLaunchPolicy(baseArgs, userDataDir, m.cfg.CloakBrowser, false)
+	if err != nil {
+		return nil, err
+	}
+
 	downloadsDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "downloads"))
 	if err != nil {
 		return nil, fmt.Errorf("downloads path: %w", err)
@@ -117,41 +126,79 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		ignoreArgs = append(ignoreArgs, "--no-sandbox")
 	}
 
-	opts := playwright.BrowserTypeLaunchPersistentContextOptions{
-		ExecutablePath:    playwright.String(absChromiumPath),
-		Headless:          playwright.Bool(false),
-		AcceptDownloads:   playwright.Bool(true),
-		Args:              args,
-		Viewport:          &playwright.Size{Width: 1280, Height: 800},
-		IgnoreDefaultArgs: ignoreArgs,
+	launch := func(launchArgs []string) (playwright.BrowserContext, *SOCKS5Relay, error) {
+		opts := playwright.BrowserTypeLaunchPersistentContextOptions{
+			ExecutablePath:    playwright.String(absChromiumPath),
+			Headless:          playwright.Bool(false),
+			AcceptDownloads:   playwright.Bool(true),
+			Args:              launchArgs,
+			Viewport:          &playwright.Size{Width: 1280, Height: 800},
+			IgnoreDefaultArgs: ignoreArgs,
+		}
+
+		var relay *SOCKS5Relay
+		if effectiveProxy.Proxy != nil {
+			proxy := effectiveProxy.Proxy
+			needsRelay := proxy.Type == "socks5" && proxy.Username != ""
+			if needsRelay {
+				upstream := fmt.Sprintf("%s:%d", proxy.Host, proxy.Port)
+				var localAddr string
+				relay, localAddr, err = StartSOCKS5Relay(upstream, proxy.Username, proxy.Password)
+				if err != nil {
+					return nil, nil, fmt.Errorf("socks5 relay: %w", err)
+				}
+				opts.Proxy = &playwright.Proxy{Server: "socks5://" + localAddr}
+			} else {
+				server := fmt.Sprintf("%s://%s:%d", proxy.Type, proxy.Host, proxy.Port)
+				opts.Proxy = &playwright.Proxy{
+					Server:   server,
+					Username: playwright.String(proxy.Username),
+					Password: playwright.String(proxy.Password),
+				}
+			}
+		}
+
+		ctx, err := m.pw.Chromium.LaunchPersistentContext(userDataDir, opts)
+		if err != nil {
+			if relay != nil {
+				relay.Close()
+			}
+			return nil, nil, err
+		}
+		return ctx, relay, nil
 	}
 
-	var relay *SOCKS5Relay
-	if effectiveProxy.Proxy != nil {
-		proxy := effectiveProxy.Proxy
-		needsRelay := proxy.Type == "socks5" && proxy.Username != ""
-		if needsRelay {
-			upstream := fmt.Sprintf("%s:%d", proxy.Host, proxy.Port)
-			var localAddr string
-			relay, localAddr, err = StartSOCKS5Relay(upstream, proxy.Username, proxy.Password)
-			if err != nil {
-				return nil, fmt.Errorf("socks5 relay: %w", err)
+	ctx, relay, err := launch(args)
+	fallbackAttempted := false
+	if err != nil {
+		if m.cfg.CloakBrowser != nil &&
+			(m.cfg.CloakBrowser.RepairTransientCacheOnLaunchFailure || m.cfg.CloakBrowser.AutoSafeGPUFallback) &&
+			isChromiumGPUOrCacheLaunchFailure(err) {
+			slog.Warn("repairing transient chromium cache after launch failure", "profile", p.ID, "userDataDir", userDataDir, "error", err)
+			repairTransientChromiumData(userDataDir)
+		}
+		if shouldAutoFallbackCloakBrowserLaunch(m.cfg.CloakBrowser, err) {
+			fallbackAttempted = true
+			slog.Warn("retrying CloakBrowser launch with safe GPU fallback", "profile", p.ID, "userDataDir", userDataDir, "error", err)
+			if len(m.sessions) > 0 {
+				m.dropSessionsLocked("playwright driver restart before CloakBrowser safe GPU fallback")
 			}
-			opts.Proxy = &playwright.Proxy{Server: "socks5://" + localAddr}
-		} else {
-			server := fmt.Sprintf("%s://%s:%d", proxy.Type, proxy.Host, proxy.Port)
-			opts.Proxy = &playwright.Proxy{
-				Server:   server,
-				Username: playwright.String(proxy.Username),
-				Password: playwright.String(proxy.Password),
+			if restartErr := m.restartPlaywright(); restartErr != nil {
+				return nil, fmt.Errorf("launch chromium: %w; safe GPU fallback playwright restart failed: %v", humanizeError(err), restartErr)
+			}
+			fallbackArgs, fallbackArgErr := applyCloakBrowserLaunchPolicy(baseArgs, userDataDir, m.cfg.CloakBrowser, true)
+			if fallbackArgErr != nil {
+				return nil, fallbackArgErr
+			}
+			ctx, relay, err = launch(fallbackArgs)
+			if err == nil {
+				slog.Info("CloakBrowser launch recovered with safe GPU fallback", "profile", p.ID)
 			}
 		}
 	}
-
-	ctx, err := m.pw.Chromium.LaunchPersistentContext(userDataDir, opts)
 	if err != nil {
-		if relay != nil {
-			relay.Close()
+		if fallbackAttempted {
+			return nil, fmt.Errorf("launch chromium: %w", noManagerRetryError{err: humanizeError(err)})
 		}
 		return nil, fmt.Errorf("launch chromium: %w", humanizeError(err))
 	}
@@ -186,4 +233,50 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		Page:      page,
 		relay:     relay,
 	}, nil
+}
+
+func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *config.CloakBrowserConfig, fallback bool) ([]string, error) {
+	out := append([]string(nil), args...)
+	if policy == nil {
+		return out, nil
+	}
+
+	if policy.SafeGPU || fallback {
+		out = appendUniqueChromiumArgs(out,
+			"--disable-gpu",
+			"--disable-gpu-compositing",
+			"--disable-gpu-shader-disk-cache",
+		)
+	}
+	if policy.IsolatedRuntimeCache || fallback {
+		cacheDir := filepath.Join(userDataDir, "BrowseForgeRuntimeCache", fmt.Sprintf("cache-%d-%d", os.Getpid(), time.Now().UnixNano()))
+		if err := os.MkdirAll(cacheDir, 0755); err != nil {
+			return nil, fmt.Errorf("create chromium runtime cache dir: %w", err)
+		}
+		out = append(out, "--disk-cache-dir="+cacheDir)
+	}
+	out = appendUniqueChromiumArgs(out, sanitizeExtraChromiumArgs(policy.ExtraArgs)...)
+	return out, nil
+}
+
+func shouldAutoFallbackCloakBrowserLaunch(policy *config.CloakBrowserConfig, err error) bool {
+	return policy != nil &&
+		policy.AutoSafeGPUFallback &&
+		isChromiumGPUOrCacheLaunchFailure(err) &&
+		(!policy.SafeGPU || !policy.IsolatedRuntimeCache)
+}
+
+func appendUniqueChromiumArgs(args []string, extra ...string) []string {
+	seen := make(map[string]bool, len(args)+len(extra))
+	for _, arg := range args {
+		seen[arg] = true
+	}
+	for _, arg := range extra {
+		if arg == "" || seen[arg] {
+			continue
+		}
+		seen[arg] = true
+		args = append(args, arg)
+	}
+	return args
 }

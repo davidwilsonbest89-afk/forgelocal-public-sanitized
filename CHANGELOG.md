@@ -6,6 +6,17 @@ All notable changes should be documented here. This project follows semantic ver
 
 Nothing yet.
 
+## v1.10.1 - 2026-07-05
+
+### Added
+
+- Added opt-in CloakBrowser launch compatibility settings for Windows VM environments, including safe GPU launch flags, isolated runtime cache, transient cache repair, and sanitized extra Chromium args.
+
+### Fixed
+
+- CloakBrowser launches can now retry once with a safe GPU fallback after GPU/cache startup failures such as `GPU process isn't usable` or `Unable to create cache`, without changing the first-launch anti-detection behavior by default.
+- Safe GPU fallback restarts the Playwright driver cleanly, drops stale sessions after the restart, and avoids repeated manager-level retries once the fallback path has already been exhausted.
+
 ## v1.9.0 - 2026-07-01
 
 ### Added

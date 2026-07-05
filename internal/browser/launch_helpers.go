@@ -1,6 +1,7 @@
 package browser
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -20,6 +21,8 @@ func splitLocale(locale string) [2]string {
 func humanizeError(err error) error {
 	msg := err.Error()
 	switch {
+	case isChromiumGPUOrCacheLaunchFailure(err):
+		return fmt.Errorf("CloakBrowser/Chromium 啟動時 GPU 或暫存 cache 初始化失敗。Windows VM 可在 config.json 的 cloakbrowser 區塊啟用 safe_gpu、isolated_runtime_cache 與 repair_transient_cache_on_launch_failure。原始錯誤: %w", err)
 	case shouldRetryLaunch(err):
 		return fmt.Errorf("瀏覽器啟動時 Playwright protocol 連線中斷。BrowseForge 會自動重試一次；若仍失敗，請重啟服務或容器。原始錯誤: %w", err)
 	case strings.Contains(msg, "sandboxing failed") || strings.Contains(msg, "sandbox"):
@@ -39,10 +42,27 @@ func shouldRetryLaunch(err error) bool {
 	if err == nil {
 		return false
 	}
+	var noManagerRetry noManagerRetryError
+	if errors.As(err, &noManagerRetry) {
+		return false
+	}
 	msg := err.Error()
 	return strings.Contains(msg, "could not read protocol padding") ||
 		strings.Contains(msg, "target closed") ||
+		isChromiumGPUOrCacheLaunchFailure(err) ||
 		strings.Contains(msg, "EOF")
+}
+
+type noManagerRetryError struct {
+	err error
+}
+
+func (e noManagerRetryError) Error() string {
+	return e.err.Error()
+}
+
+func (e noManagerRetryError) Unwrap() error {
+	return e.err
 }
 
 func cleanProfileLocks(userDataDir string) {
@@ -50,6 +70,73 @@ func cleanProfileLocks(userDataDir string) {
 		path := filepath.Join(userDataDir, name)
 		if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
 			slog.Warn("remove stale profile lock failed", "path", path, "error", err)
+		}
+	}
+}
+
+func isChromiumGPUOrCacheLaunchFailure(err error) bool {
+	if err == nil {
+		return false
+	}
+	msg := strings.ToLower(err.Error())
+	return strings.Contains(msg, "gpu process isn't usable") ||
+		strings.Contains(msg, "gpu process launch failed") ||
+		strings.Contains(msg, "gpu cache creation failed") ||
+		strings.Contains(msg, "unable to create cache") ||
+		strings.Contains(msg, "unable to move the cache") ||
+		strings.Contains(msg, "cache_util_win") ||
+		strings.Contains(msg, "存取被拒")
+}
+
+func sanitizeExtraChromiumArgs(args []string) []string {
+	if len(args) == 0 {
+		return nil
+	}
+	blockedPrefixes := []string{
+		"--user-data-dir",
+		"--remote-debugging-pipe",
+		"--remote-debugging-port",
+		"--profile-directory",
+		"--disk-cache-dir",
+		"--proxy-server",
+	}
+	out := make([]string, 0, len(args))
+	seen := map[string]bool{}
+	for _, arg := range args {
+		arg = strings.TrimSpace(arg)
+		if arg == "" {
+			continue
+		}
+		blocked := false
+		for _, prefix := range blockedPrefixes {
+			if arg == prefix || strings.HasPrefix(arg, prefix+"=") {
+				slog.Warn("ignored unsafe extra chromium arg", "arg", arg)
+				blocked = true
+				break
+			}
+		}
+		if blocked || seen[arg] {
+			continue
+		}
+		seen[arg] = true
+		out = append(out, arg)
+	}
+	return out
+}
+
+func repairTransientChromiumData(userDataDir string) {
+	for _, rel := range []string{
+		filepath.Join("Default", "Cache"),
+		filepath.Join("Default", "Code Cache"),
+		filepath.Join("Default", "GPUCache"),
+		"BrowseForgeRuntimeCache",
+		"ShaderCache",
+		"GrShaderCache",
+		"component_crx_cache",
+	} {
+		path := filepath.Join(userDataDir, rel)
+		if err := os.RemoveAll(path); err != nil {
+			slog.Warn("remove transient chromium cache failed", "path", path, "error", err)
 		}
 	}
 }

@@ -58,6 +58,15 @@ func TestCLIInitConfigTokenAndDoctorJSON(t *testing.T) {
 	if _, err := os.Stat(filepath.Join(baseDir, "config.json")); err != nil {
 		t.Fatalf("config not created: %v", err)
 	}
+	configData, err := os.ReadFile(filepath.Join(baseDir, "config.json"))
+	if err != nil {
+		t.Fatalf("read config: %v", err)
+	}
+	if !strings.Contains(string(configData), `"cloakbrowser"`) ||
+		!strings.Contains(string(configData), `"safe_gpu": false`) ||
+		!strings.Contains(string(configData), `"auto_safe_gpu_fallback": false`) {
+		t.Fatalf("generated config missing cloakbrowser defaults: %s", string(configData))
+	}
 	for _, dir := range []string{"profiles", "data", "logs"} {
 		if _, err := os.Stat(filepath.Join(baseDir, dir)); err != nil {
 			t.Fatalf("%s dir not created: %v", dir, err)

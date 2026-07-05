@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.10.0
+  ghcr.io/nczz/browseforge:v1.10.1
 ```
 
 `./browseforge/` host 目錄就是持久化 runtime。之後 pull 新 image 或重建 container 時沿用這組 mounts，profiles、token、browser data、logs、backups 都會保留。
@@ -183,6 +183,13 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
   "log_file": "logs/server.log",
   "camoufox_path": "/path/to/browsers/camoufox/...",
   "cloakbrowser_path": "/path/to/browsers/cloakbrowser/...",
+  "cloakbrowser": {
+    "safe_gpu": false,
+    "auto_safe_gpu_fallback": false,
+    "isolated_runtime_cache": false,
+    "repair_transient_cache_on_launch_failure": false,
+    "extra_args": []
+  },
   "fingerprint_dir": "data"
 }
 ```
@@ -197,7 +204,23 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
 | `log_file` | 日誌檔案 | `logs/server.log` |
 | `camoufox_path` | Camoufox 執行檔路徑 | 自動偵測 |
 | `cloakbrowser_path` | CloakBrowser 執行檔路徑 | 自動偵測 |
+| `cloakbrowser.safe_gpu` | 為 Windows VM/headful 相容性加入 Chromium GPU-safe 啟動參數 | `false` |
+| `cloakbrowser.auto_safe_gpu_fallback` | 第一次啟動維持原始行為，只在 GPU/cache 啟動失敗後才自動用 safe GPU 與 isolated runtime cache 重試一次 | `false` |
+| `cloakbrowser.isolated_runtime_cache` | 將 Chromium disk cache 導到 profile 底下的每次啟動 runtime cache 目錄 | `false` |
+| `cloakbrowser.repair_transient_cache_on_launch_failure` | GPU/cache 啟動失敗後，在自動重試前清除可重建的 Chromium cache 目錄 | `false` |
+| `cloakbrowser.extra_args` | 額外 CloakBrowser/Chromium args；BrowseForge 會忽略會覆蓋 profile、proxy、cache 或 debugging ownership 的 args | `[]` |
 | `fingerprint_dir` | 指紋池 JSON 目錄 | `data` |
+
+`cloakbrowser` 區塊是主機 runtime policy，不是 profile identity。它只影響 Chromium/CloakBrowser 啟動；Firefox/Camoufox profile 不會讀取這些設定。若 Windows VM 環境出現 `GPU process isn't usable` 或 `Unable to create cache` 這類 Chromium 啟動錯誤，可使用：
+
+```json
+{
+  "cloakbrowser": {
+    "auto_safe_gpu_fallback": true,
+    "repair_transient_cache_on_launch_failure": true
+  }
+}
+```
 
 ## MCP
 

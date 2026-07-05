@@ -7,18 +7,29 @@ import (
 )
 
 type Config struct {
-	Host             string          `json:"host,omitempty"`
-	Port             string          `json:"port"`
-	NoSandbox        bool            `json:"no_sandbox,omitempty"`
-	ProfilesDir      string          `json:"profiles_dir"`
-	DataDir          string          `json:"data_dir"`
-	LogFile          string          `json:"log_file"`
-	CamoufoxPath     string          `json:"camoufox_path"`
-	CloakBrowserPath string          `json:"cloakbrowser_path"`
-	FingerprintDir   string          `json:"fingerprint_dir"`
-	Humanize         *HumanizeConfig `json:"humanize,omitempty"`
-	APIToken         string          `json:"-"` // generated at runtime
-	Version          string          `json:"-"` // set from main
+	Host             string              `json:"host,omitempty"`
+	Port             string              `json:"port"`
+	NoSandbox        bool                `json:"no_sandbox,omitempty"`
+	ProfilesDir      string              `json:"profiles_dir"`
+	DataDir          string              `json:"data_dir"`
+	LogFile          string              `json:"log_file"`
+	CamoufoxPath     string              `json:"camoufox_path"`
+	CloakBrowserPath string              `json:"cloakbrowser_path"`
+	CloakBrowser     *CloakBrowserConfig `json:"cloakbrowser,omitempty"`
+	FingerprintDir   string              `json:"fingerprint_dir"`
+	Humanize         *HumanizeConfig     `json:"humanize,omitempty"`
+	APIToken         string              `json:"-"` // generated at runtime
+	Version          string              `json:"-"` // set from main
+}
+
+// CloakBrowserConfig controls Chromium/CloakBrowser launch compatibility.
+// These settings are host runtime policy, not profile identity.
+type CloakBrowserConfig struct {
+	SafeGPU                             bool     `json:"safe_gpu"`
+	AutoSafeGPUFallback                 bool     `json:"auto_safe_gpu_fallback"`
+	IsolatedRuntimeCache                bool     `json:"isolated_runtime_cache"`
+	RepairTransientCacheOnLaunchFailure bool     `json:"repair_transient_cache_on_launch_failure"`
+	ExtraArgs                           []string `json:"extra_args"`
 }
 
 // HumanizeConfig controls human-like behavior simulation.

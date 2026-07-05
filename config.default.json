@@ -5,5 +5,12 @@
   "log_file": "logs/server.log",
   "camoufox_path": "camoufox/camoufox",
   "cloakbrowser_path": "",
+  "cloakbrowser": {
+    "safe_gpu": false,
+    "auto_safe_gpu_fallback": false,
+    "isolated_runtime_cache": false,
+    "repair_transient_cache_on_launch_failure": false,
+    "extra_args": []
+  },
   "fingerprint_dir": "data"
 }

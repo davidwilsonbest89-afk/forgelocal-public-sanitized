@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.10.0
+  ghcr.io/nczz/browseforge:v1.10.1
 ```
 
 The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.
@@ -183,6 +183,13 @@ BrowseForge creates `config.json` on first launch:
   "log_file": "logs/server.log",
   "camoufox_path": "/path/to/browsers/camoufox/...",
   "cloakbrowser_path": "/path/to/browsers/cloakbrowser/...",
+  "cloakbrowser": {
+    "safe_gpu": false,
+    "auto_safe_gpu_fallback": false,
+    "isolated_runtime_cache": false,
+    "repair_transient_cache_on_launch_failure": false,
+    "extra_args": []
+  },
   "fingerprint_dir": "data"
 }
 ```
@@ -197,7 +204,23 @@ BrowseForge creates `config.json` on first launch:
 | `log_file` | Server log file | `logs/server.log` |
 | `camoufox_path` | Camoufox binary path | Auto-detected |
 | `cloakbrowser_path` | CloakBrowser binary path | Auto-detected |
+| `cloakbrowser.safe_gpu` | Add Chromium GPU-safe launch flags for Windows VM/headful compatibility | `false` |
+| `cloakbrowser.auto_safe_gpu_fallback` | Keep the first launch unchanged, then retry once with safe GPU and isolated runtime cache only after a GPU/cache launch failure | `false` |
+| `cloakbrowser.isolated_runtime_cache` | Use a per-launch Chromium disk cache directory under the profile runtime cache | `false` |
+| `cloakbrowser.repair_transient_cache_on_launch_failure` | Remove rebuildable Chromium cache directories after GPU/cache launch failures before the automatic retry | `false` |
+| `cloakbrowser.extra_args` | Additional CloakBrowser/Chromium args. BrowseForge ignores args that would override profile, proxy, cache, or debugging ownership. | `[]` |
 | `fingerprint_dir` | Fingerprint JSON directory | `data` |
+
+The `cloakbrowser` block is host runtime policy, not profile identity. It only affects Chromium/CloakBrowser launches; Firefox/Camoufox profiles do not read these settings. For Windows VM environments where Chromium exits with GPU/cache errors such as `GPU process isn't usable` or `Unable to create cache`, use:
+
+```json
+{
+  "cloakbrowser": {
+    "auto_safe_gpu_fallback": true,
+    "repair_transient_cache_on_launch_failure": true
+  }
+}
+```
 
 ## MCP
 
