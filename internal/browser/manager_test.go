@@ -390,6 +390,7 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 			"screen.availHeight":            float64(1032),
 			"canvas:seed":                   float64(12345),
 			"audio:seed":                    float64(67890),
+			"fonts":                         []any{"Segoe UI", "Calibri", "Consolas"},
 			"webGl:vendor":                  "Google Inc. (NVIDIA)",
 			"webGl:renderer":                "ANGLE (NVIDIA, NVIDIA GeForce RTX 4050 Laptop GPU Direct3D11)",
 		},
@@ -422,6 +423,7 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		"--fingerprint-screen-avail-height=1032",
 		"--fingerprint-canvas-noise=12345",
 		"--fingerprint-audio-noise=67890",
+		"--fingerprint-fonts-list=Segoe UI|Calibri|Consolas",
 		"--fingerprint-webgl-vendor=Google Inc. (NVIDIA)",
 		"--fingerprint-webgl-renderer=ANGLE (NVIDIA, NVIDIA GeForce RTX 4050 Laptop GPU Direct3D11)",
 		"--fingerprint-storage-quota=2048",
@@ -638,6 +640,7 @@ func TestApplyCloakBrowserLaunchPolicyKeepsManagedFingerprintArgsOwnedByManager(
 		"--fingerprint-audio-noise=222",
 		"--fingerprint-canvas-noise=333",
 		"--fingerprint-webgl-vendor=Google Inc. (NVIDIA)",
+		"--fingerprint-fonts-list=Segoe UI|Calibri",
 		"--fingerprint-webgl-renderer=ANGLE (NVIDIA)",
 	}
 	extraArgs := []string{
@@ -659,6 +662,7 @@ func TestApplyCloakBrowserLaunchPolicyKeepsManagedFingerprintArgsOwnedByManager(
 		"--fingerprint-audio-noise=1",
 		"--fingerprint-canvas-noise=1",
 		"--fingerprint-webgl-vendor=evil",
+		"--fingerprint-fonts-list=evil",
 		"--fingerprint-webgl-renderer=evil",
 		"--disable-background-networking",
 	}

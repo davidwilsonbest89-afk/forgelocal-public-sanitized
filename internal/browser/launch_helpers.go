@@ -111,6 +111,7 @@ func sanitizeExtraChromiumArgs(args []string) []string {
 		"--fingerprint-accept-language",
 		"--fingerprint-user-agent",
 		"--fingerprint-fonts-dir",
+		"--fingerprint-fonts-list",
 		"--fingerprint-storage-quota",
 		"--fingerprint-screen-width",
 		"--fingerprint-screen-height",

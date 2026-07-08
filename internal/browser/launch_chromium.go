@@ -383,6 +383,9 @@ func appendProfileFingerprintArgs(args []string, fp map[string]any) []string {
 	if v, ok := fingerprintInt(fp, "audio:seed"); ok {
 		args = append(args, fmt.Sprintf("--fingerprint-audio-noise=%d", v))
 	}
+	if v, ok := fingerprintStringList(fp, "fonts", "|"); ok {
+		args = append(args, "--fingerprint-fonts-list="+v)
+	}
 	if v, ok := fingerprintString(fp, "webGl:vendor"); ok {
 		args = append(args, "--fingerprint-webgl-vendor="+v)
 	}
@@ -428,6 +431,41 @@ func fingerprintAcceptLanguage(fp map[string]any) (string, bool) {
 		}
 	}
 	return fingerprintString(fp, "navigator.language")
+}
+
+func fingerprintStringList(fp map[string]any, key string, sep string) (string, bool) {
+	if fp == nil {
+		return "", false
+	}
+	value, ok := fp[key]
+	if !ok {
+		return "", false
+	}
+	var items []string
+	switch typed := value.(type) {
+	case []string:
+		items = typed
+	case []any:
+		items = make([]string, 0, len(typed))
+		for _, item := range typed {
+			if s, ok := item.(string); ok {
+				items = append(items, s)
+			}
+		}
+	default:
+		return "", false
+	}
+	cleaned := make([]string, 0, len(items))
+	for _, item := range items {
+		item = strings.TrimSpace(item)
+		if item != "" && !strings.Contains(item, sep) {
+			cleaned = append(cleaned, item)
+		}
+	}
+	if len(cleaned) == 0 {
+		return "", false
+	}
+	return strings.Join(cleaned, sep), true
 }
 
 func fingerprintInt(fp map[string]any, key string) (int64, bool) {
