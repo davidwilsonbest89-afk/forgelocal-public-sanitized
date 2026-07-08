@@ -138,7 +138,7 @@ func (m *Manager) launchProfile(p *profile.Profile) (*Session, error) {
 		return nil, fmt.Errorf("runtime %q is disabled", desc.ID)
 	}
 	switch desc.ID {
-	case bfruntime.CloakBrowser:
+	case bfruntime.CloakBrowser, bfruntime.BrowseForgeChromium:
 		return m.launchChromium(p)
 	case bfruntime.Camoufox:
 		return m.launchFirefox(p)

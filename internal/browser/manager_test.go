@@ -305,6 +305,41 @@ func TestLaunchChromiumRejectsNegativeStorageQuotaBeforeBrowserLaunch(t *testing
 	}
 }
 
+func TestLaunchProfileDispatchesBrowseForgeChromiumToChromiumLauncher(t *testing.T) {
+	enabled := true
+	launchErr := errors.New("captured browseforge-chromium launch")
+	browserType := &capturingBrowserType{t: t, launchErr: launchErr}
+	cfg := &config.Config{
+		Runtimes: map[string]config.RuntimeConfig{
+			"browseforge-chromium": {
+				BinaryPath: filepath.Join(t.TempDir(), "browseforge-chromium"),
+				Enabled:    &enabled,
+				Settings: &config.CloakBrowserConfig{
+					TargetPlatformPolicy: "allow",
+				},
+			},
+		},
+	}
+	manager := &Manager{
+		cfg:      cfg,
+		runtimes: bfruntime.NewRegistry(cfg),
+		pw:       &playwright.Playwright{Chromium: browserType},
+		sessions: make(map[string]*Session),
+	}
+
+	_, err := manager.launchProfile(&profile.Profile{
+		ID:         "browseforge-chromium-dispatch",
+		RuntimeID:  "browseforge-chromium",
+		ProfileDir: t.TempDir(),
+	})
+	if !errors.Is(err, launchErr) {
+		t.Fatalf("launch error = %v, want captured launch error", err)
+	}
+	if browserType.calls != 1 {
+		t.Fatalf("launch calls = %d, want 1", browserType.calls)
+	}
+}
+
 func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *testing.T) {
 	enabled := true
 	fontsDir := t.TempDir()
