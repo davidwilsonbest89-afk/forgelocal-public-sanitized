@@ -198,8 +198,8 @@ func TestShouldAutoFallbackCloakBrowserLaunch(t *testing.T) {
 		{
 			name: "policy already using fallback-equivalent settings does not fallback again",
 			policy: &config.CloakBrowserConfig{
-				AutoSafeGPUFallback: true,
-				SafeGPU:             true,
+				AutoSafeGPUFallback:  true,
+				SafeGPU:              true,
 				IsolatedRuntimeCache: true,
 			},
 			err: errors.New("GPU process isn't usable. Goodbye."),
@@ -271,8 +271,8 @@ func TestLaunchChromiumRejectsNegativeStorageQuotaBeforeBrowserLaunch(t *testing
 	enabled := true
 	cfg := &config.Config{
 		Runtimes: map[string]config.RuntimeConfig{
-			"cloakbrowser": {
-				BinaryPath: filepath.Join(t.TempDir(), "cloakbrowser"),
+			"browseforge-chromium": {
+				BinaryPath: filepath.Join(t.TempDir(), "browseforge-chromium"),
 				Enabled:    &enabled,
 				Settings: &config.CloakBrowserConfig{
 					StorageQuotaMB:       -1,
@@ -289,7 +289,7 @@ func TestLaunchChromiumRejectsNegativeStorageQuotaBeforeBrowserLaunch(t *testing
 
 	_, err := manager.launchChromium(&profile.Profile{
 		ID:        "storage-quota-negative",
-		RuntimeID: "cloakbrowser",
+		RuntimeID: "browseforge-chromium",
 		Proxy: &profile.ProxyConfig{
 			Type: "http",
 			Host: "127.0.0.1",
@@ -300,7 +300,7 @@ func TestLaunchChromiumRejectsNegativeStorageQuotaBeforeBrowserLaunch(t *testing
 	if err == nil {
 		t.Fatal("expected negative storage quota to fail before launching Chromium")
 	}
-	if !strings.Contains(err.Error(), "storage_quota_mb must be >= 0") {
+	if !strings.Contains(err.Error(), "browseforge-chromium storage_quota_mb must be >= 0") {
 		t.Fatalf("error = %q, want storage quota validation", err.Error())
 	}
 }
@@ -312,8 +312,8 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	browserType := &capturingBrowserType{t: t, launchErr: launchErr}
 	cfg := &config.Config{
 		Runtimes: map[string]config.RuntimeConfig{
-			"cloakbrowser": {
-				BinaryPath: filepath.Join(t.TempDir(), "cloakbrowser"),
+			"browseforge-chromium": {
+				BinaryPath: filepath.Join(t.TempDir(), "browseforge-chromium"),
 				Enabled:    &enabled,
 				Settings: &config.CloakBrowserConfig{
 					FontsDir:             fontsDir,
@@ -332,7 +332,7 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 
 	_, err := manager.launchChromium(&profile.Profile{
 		ID:        "proxy-fingerprint-args",
-		RuntimeID: "cloakbrowser",
+		RuntimeID: "browseforge-chromium",
 		Proxy: &profile.ProxyConfig{
 			Type: "http",
 			Host: "127.0.0.1",

@@ -62,9 +62,13 @@ func (cfg *Config) Runtime(id string) RuntimeConfig {
 	return cfg.Runtimes[id]
 }
 
-func (cfg *Config) CloakBrowserSettings() *CloakBrowserConfig {
-	raw := cfg.Runtime("cloakbrowser")
+func (cfg *Config) ChromiumRuntimeSettings(id string) *CloakBrowserConfig {
+	raw := cfg.Runtime(id)
 	return raw.Settings
+}
+
+func (cfg *Config) CloakBrowserSettings() *CloakBrowserConfig {
+	return cfg.ChromiumRuntimeSettings("cloakbrowser")
 }
 
 func Load(path string) (*Config, error) {

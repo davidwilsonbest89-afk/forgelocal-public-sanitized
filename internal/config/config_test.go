@@ -70,6 +70,42 @@ func TestLoadCloakBrowserConfig(t *testing.T) {
 	}
 }
 
+func TestLoadChromiumRuntimeSettingsByRuntimeID(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "config.json")
+	data := []byte(`{
+  "port": "19280",
+  "profiles_dir": "profiles",
+  "data_dir": "data",
+  "log_file": "logs/server.log",
+  "fingerprint_dir": "data",
+  "runtimes": {
+    "browseforge-chromium": {
+      "binary_path": "/opt/browseforge/chromium",
+      "settings": {
+        "safe_gpu": true,
+        "fingerprint_platform": "linux",
+        "storage_quota_mb": 1024
+      }
+    }
+  }
+}`)
+	if err := os.WriteFile(path, data, 0644); err != nil {
+		t.Fatalf("write config: %v", err)
+	}
+
+	cfg, err := Load(path)
+	if err != nil {
+		t.Fatalf("load config: %v", err)
+	}
+	settings := cfg.ChromiumRuntimeSettings("browseforge-chromium")
+	if settings == nil {
+		t.Fatal("browseforge-chromium settings missing")
+	}
+	if !settings.SafeGPU || settings.FingerprintPlatform != "linux" || settings.StorageQuotaMB != 1024 {
+		t.Fatalf("browseforge-chromium settings = %#v", settings)
+	}
+}
+
 func TestLoadMigratesLegacyRootRuntimeFieldsToV2Runtimes(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "config.json")
 	data := []byte(`{

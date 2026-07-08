@@ -12,8 +12,9 @@ import (
 type ID string
 
 const (
-	Camoufox     ID = "camoufox"
-	CloakBrowser ID = "cloakbrowser"
+	Camoufox            ID = "camoufox"
+	CloakBrowser        ID = "cloakbrowser"
+	BrowseForgeChromium ID = "browseforge-chromium"
 )
 
 // Family identifies the browser engine family exposed by a runtime.
@@ -96,10 +97,29 @@ func NewRegistry(cfg *config.Config) *Registry {
 			RequiresExternalBinary:    true,
 		},
 	}
+	browseForgeChromium := Descriptor{
+		ID:          BrowseForgeChromium,
+		DisplayName: "BrowseForge Chromium",
+		Family:      FamilyChromium,
+		BinaryPath:  runtimeBinaryPath(cfg, BrowseForgeChromium),
+		Enabled:     false,
+		Capabilities: Capabilities{
+			Family:                    FamilyChromium,
+			SupportsPersistentContext: true,
+			SupportsPlaywrightBind:    true,
+			SupportsAgentWebSessions:  true,
+			SupportsSeedFingerprint:   true,
+			SupportsStructuredConfig:  true,
+			SupportsNativeProxy:       true,
+			SupportsWebRTCMasking:     true,
+			RequiresExternalBinary:    true,
+		},
+	}
 	reg := &Registry{
 		byID: map[ID]Descriptor{
-			Camoufox:     applyRuntimeConfig(camoufox, cfg.Runtimes[string(Camoufox)]),
-			CloakBrowser: applyRuntimeConfig(cloak, cfg.Runtimes[string(CloakBrowser)]),
+			BrowseForgeChromium: applyRuntimeConfig(browseForgeChromium, cfg.Runtimes[string(BrowseForgeChromium)]),
+			Camoufox:            applyRuntimeConfig(camoufox, cfg.Runtimes[string(Camoufox)]),
+			CloakBrowser:        applyRuntimeConfig(cloak, cfg.Runtimes[string(CloakBrowser)]),
 		},
 		defaultID: Camoufox,
 	}

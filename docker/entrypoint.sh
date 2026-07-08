@@ -8,7 +8,7 @@ mkdir -p /app/profiles /app/data /app/browsers /app/logs /app/backups
 # Seed or update host-mounted browser cache from the image so browser engines
 # follow the BrowseForge image version contract instead of drifting silently.
 if [ "$BROWSEFORGE_SEED_BROWSERS" = "1" ] && [ -d /opt/browseforge/browsers ]; then
-  for engine in camoufox cloakbrowser; do
+  for engine in camoufox cloakbrowser browseforge-chromium; do
     image_version=""
     current_version=""
     [ -f "/opt/browseforge/browsers/${engine}/.version" ] && image_version="$(cat "/opt/browseforge/browsers/${engine}/.version")"

@@ -18,6 +18,7 @@ func TestRegistryResolvesExplicitRuntimeID(t *testing.T) {
 	}{
 		{name: "camoufox runtime", runtimeID: "camoufox", wantID: Camoufox},
 		{name: "cloakbrowser runtime", runtimeID: "cloakbrowser", wantID: CloakBrowser},
+		{name: "browseforge chromium runtime", runtimeID: "browseforge-chromium", wantID: BrowseForgeChromium},
 	}
 
 	for _, tc := range tests {
@@ -50,12 +51,12 @@ func TestRegistryRequiresExplicitRuntimeID(t *testing.T) {
 func TestRegistryResolvesRuntimeID(t *testing.T) {
 	reg := NewRegistry(&config.Config{})
 
-	got, err := reg.ResolveID("cloakbrowser")
+	got, err := reg.ResolveID("browseforge-chromium")
 	if err != nil {
 		t.Fatalf("ResolveID: %v", err)
 	}
-	if got != CloakBrowser {
-		t.Fatalf("runtime ID = %q, want %q", got, CloakBrowser)
+	if got != BrowseForgeChromium {
+		t.Fatalf("runtime ID = %q, want %q", got, BrowseForgeChromium)
 	}
 }
 
@@ -72,19 +73,31 @@ func TestRegistryRejectsUnsupportedRuntimeSelectors(t *testing.T) {
 
 func TestRegistryListReturnsStableRuntimeMetadata(t *testing.T) {
 	reg := NewRegistry(&config.Config{Runtimes: map[string]config.RuntimeConfig{
-		"camoufox":     {BinaryPath: "/opt/camoufox"},
-		"cloakbrowser": {BinaryPath: "/opt/cloakbrowser"},
+		"camoufox":             {BinaryPath: "/opt/camoufox"},
+		"browseforge-chromium": {BinaryPath: "/opt/browseforge-chromium"},
+		"cloakbrowser":         {BinaryPath: "/opt/cloakbrowser"},
 	}})
 
 	got := reg.List()
-	if len(got) != 2 {
-		t.Fatalf("runtime count = %d, want 2: %#v", len(got), got)
+	if len(got) != 3 {
+		t.Fatalf("runtime count = %d, want 3: %#v", len(got), got)
 	}
-	if got[0].ID != Camoufox || got[1].ID != CloakBrowser {
-		t.Fatalf("runtime order = [%q %q], want [%q %q]", got[0].ID, got[1].ID, Camoufox, CloakBrowser)
+	if got[0].ID != BrowseForgeChromium || got[1].ID != Camoufox || got[2].ID != CloakBrowser {
+		t.Fatalf("runtime order = [%q %q %q], want [%q %q %q]", got[0].ID, got[1].ID, got[2].ID, BrowseForgeChromium, Camoufox, CloakBrowser)
 	}
 
-	camoufox := got[0]
+	browseforge := got[0]
+	if browseforge.DisplayName != "BrowseForge Chromium" || browseforge.Family != FamilyChromium {
+		t.Fatalf("BrowseForge Chromium metadata = %+v", browseforge)
+	}
+	if browseforge.BinaryPath != "/opt/browseforge-chromium" || !browseforge.Enabled {
+		t.Fatalf("BrowseForge Chromium binary/enabled = %q/%v", browseforge.BinaryPath, browseforge.Enabled)
+	}
+	if !browseforge.Capabilities.SupportsAgentWebSessions || !browseforge.Capabilities.SupportsSeedFingerprint || !browseforge.Capabilities.SupportsPlaywrightBind {
+		t.Fatalf("BrowseForge Chromium capabilities = %+v", browseforge.Capabilities)
+	}
+
+	camoufox := got[1]
 	if camoufox.DisplayName != "Camoufox" || camoufox.Family != FamilyFirefox {
 		t.Fatalf("Camoufox metadata = %+v", camoufox)
 	}
@@ -98,7 +111,7 @@ func TestRegistryListReturnsStableRuntimeMetadata(t *testing.T) {
 		t.Fatalf("Camoufox capabilities = %+v", camoufox.Capabilities)
 	}
 
-	cloak := got[1]
+	cloak := got[2]
 	if cloak.DisplayName != "CloakBrowser" || cloak.Family != FamilyChromium {
 		t.Fatalf("CloakBrowser metadata = %+v", cloak)
 	}

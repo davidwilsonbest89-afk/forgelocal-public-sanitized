@@ -12,7 +12,6 @@ import (
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
 	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
 
 	"github.com/playwright-community/playwright-go"
 )
@@ -24,7 +23,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 	chromiumPath := desc.BinaryPath
 	if chromiumPath == "" {
-		return nil, fmt.Errorf("runtimes.cloakbrowser.binary_path is not configured")
+		return nil, fmt.Errorf("runtimes.%s.binary_path is not configured", desc.ID)
 	}
 
 	userDataDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
@@ -38,7 +37,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 
 	absChromiumPath, err := filepath.Abs(chromiumPath)
 	if err != nil {
-		return nil, fmt.Errorf("cloakbrowser path: %w", err)
+		return nil, fmt.Errorf("%s path: %w", desc.ID, err)
 	}
 
 	args := []string{
@@ -58,7 +57,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	} else {
 		tz, locale = fingerprint.DetectLocalGeoResult()
 	}
-	policy := m.cfg.CloakBrowserSettings()
+	policy := m.cfg.ChromiumRuntimeSettings(string(desc.ID))
 	platform, err := resolveCloakFingerprintPlatform(policy, runtime.GOOS)
 	if err != nil {
 		return nil, err
@@ -71,7 +70,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if quota := cloakStorageQuotaMB(policy); quota > 0 {
 		args = append(args, fmt.Sprintf("--fingerprint-storage-quota=%d", quota))
 	} else if quota < 0 {
-		return nil, fmt.Errorf("cloakbrowser storage_quota_mb must be >= 0")
+		return nil, fmt.Errorf("%s storage_quota_mb must be >= 0", desc.ID)
 	}
 
 	if p.Fingerprint != nil {
@@ -247,7 +246,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	return &Session{
 		ID:        fmt.Sprintf("sess_%s", p.ID),
 		ProfileID: p.ID,
-		RuntimeID: string(bfruntime.CloakBrowser),
+		RuntimeID: string(desc.ID),
 		Context:   ctx,
 		Page:      page,
 		relay:     relay,
