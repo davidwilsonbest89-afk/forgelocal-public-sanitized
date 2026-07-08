@@ -16,6 +16,35 @@ import (
 	"github.com/playwright-community/playwright-go"
 )
 
+const chromiumAutomationControlledArg = "--disable-blink-features=AutomationControlled"
+
+const chromiumWebRTCIPHandlingArg = "--force-webrtc-ip-handling-policy=disable_non_proxied_udp"
+
+const chromiumAutomationMitigationInitScript = `(() => {
+	const defineGetter = (target, prop, getter) => {
+		try {
+			Object.defineProperty(target, prop, { get: getter, configurable: true });
+		} catch (_) {}
+	};
+	defineGetter(Navigator.prototype, "webdriver", () => undefined);
+	try { delete window.navigator.webdriver; } catch (_) {}
+	for (const key of Object.keys(window)) {
+		if (/^(cdc_|__webdriver|__driver_evaluate|__webdriver_script_fn|__selenium)/.test(key)) {
+			try { delete window[key]; } catch (_) {}
+		}
+	}
+	if (!("chrome" in window)) {
+		try {
+			Object.defineProperty(window, "chrome", {
+				value: { runtime: {} },
+				configurable: true,
+				enumerable: true,
+				writable: false
+			});
+		} catch (_) {}
+	}
+})();`
+
 func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	desc, err := m.runtimes.ResolveProfile(p)
 	if err != nil {
@@ -43,6 +72,8 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	args := []string{
 		"--no-first-run",
 		"--test-type",
+		chromiumAutomationControlledArg,
+		chromiumWebRTCIPHandlingArg,
 	}
 	if p.FingerprintSeed > 0 {
 		args = append(args, fmt.Sprintf("--fingerprint=%d", p.FingerprintSeed))
@@ -127,6 +158,11 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 	prefs["savefile"] = map[string]any{"default_directory": downloadsDir}
 	prefs["download"] = map[string]any{"default_directory": downloadsDir, "prompt_for_download": false}
+	prefs["webrtc"] = map[string]any{
+		"ip_handling_policy":      "disable_non_proxied_udp",
+		"multiple_routes_enabled": false,
+		"nonproxied_udp_enabled":  false,
+	}
 	out, err := json.Marshal(prefs)
 	if err != nil {
 		return nil, fmt.Errorf("encode chromium preferences: %w", err)
@@ -137,7 +173,6 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 
 	ignoreArgs := []string{
 		"--enable-automation",
-		"--disable-blink-features=AutomationControlled",
 		"--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1",
 	}
 	if !m.cfg.NoSandbox {
@@ -220,6 +255,13 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		}
 		return nil, fmt.Errorf("launch chromium: %w", humanizeError(err))
 	}
+	if err := installChromiumAutomationMitigations(ctx); err != nil {
+		if relay != nil {
+			relay.Close()
+		}
+		ctx.Close()
+		return nil, fmt.Errorf("install chromium automation mitigations: %w", err)
+	}
 
 	dlDir := downloadsDir
 	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
@@ -251,6 +293,19 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		Page:      page,
 		relay:     relay,
 	}, nil
+}
+
+func installChromiumAutomationMitigations(ctx playwright.BrowserContext) error {
+	script := playwright.Script{Content: playwright.String(chromiumAutomationMitigationInitScript)}
+	if err := ctx.AddInitScript(script); err != nil {
+		return err
+	}
+	for _, page := range ctx.Pages() {
+		if err := page.AddInitScript(script); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *config.CloakBrowserConfig, fallback bool) ([]string, error) {

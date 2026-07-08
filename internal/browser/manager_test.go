@@ -1,6 +1,7 @@
 package browser
 
 import (
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
@@ -69,6 +70,9 @@ func TestSanitizeExtraChromiumArgs(t *testing.T) {
 		"--remote-debugging-pipe",
 		"--disk-cache-dir=C:\\temp\\cache",
 		"--proxy-server=http://proxy.example",
+		"--enable-automation",
+		"--disable-blink-features=Other",
+		"--force-webrtc-ip-handling-policy=default_public_interface_only",
 		"--disable-features=Translate",
 		"",
 		"--disable-background-networking",
@@ -365,6 +369,7 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		sessions: make(map[string]*Session),
 	}
 
+	profileDir := t.TempDir()
 	_, err := manager.launchChromium(&profile.Profile{
 		ID:        "proxy-fingerprint-args",
 		RuntimeID: "browseforge-chromium",
@@ -373,7 +378,7 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 			Host: "127.0.0.1",
 			Port: 1,
 		},
-		ProfileDir: t.TempDir(),
+		ProfileDir: profileDir,
 	})
 	if !errors.Is(err, launchErr) {
 		t.Fatalf("launch error = %v, want captured launch error", err)
@@ -386,6 +391,8 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		t.Fatalf("abs fonts dir: %v", err)
 	}
 	for _, want := range []string{
+		chromiumAutomationControlledArg,
+		chromiumWebRTCIPHandlingArg,
 		"--fingerprint-webrtc-ip=auto",
 		"--fingerprint-timezone=America/New_York",
 		"--fingerprint-locale=en-US",
@@ -401,6 +408,28 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	}
 	if got := browserType.options.Proxy.Server; got != "http://127.0.0.1:1" {
 		t.Fatalf("proxy server = %q, want http://127.0.0.1:1", got)
+	}
+	prefsPath := filepath.Join(profileDir, "browser-data", "Default", "Preferences")
+	prefsData, err := os.ReadFile(prefsPath)
+	if err != nil {
+		t.Fatalf("read prefs: %v", err)
+	}
+	var prefs map[string]any
+	if err := json.Unmarshal(prefsData, &prefs); err != nil {
+		t.Fatalf("decode prefs: %v", err)
+	}
+	webrtcPrefs, ok := prefs["webrtc"].(map[string]any)
+	if !ok {
+		t.Fatalf("webrtc prefs missing: %#v", prefs)
+	}
+	if got := webrtcPrefs["ip_handling_policy"]; got != "disable_non_proxied_udp" {
+		t.Fatalf("webrtc ip_handling_policy = %#v, want disable_non_proxied_udp", got)
+	}
+	if got := webrtcPrefs["multiple_routes_enabled"]; got != false {
+		t.Fatalf("webrtc multiple_routes_enabled = %#v, want false", got)
+	}
+	if got := webrtcPrefs["nonproxied_udp_enabled"]; got != false {
+		t.Fatalf("webrtc nonproxied_udp_enabled = %#v, want false", got)
 	}
 }
 
