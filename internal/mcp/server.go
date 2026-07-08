@@ -116,6 +116,8 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 	}
 
 	switch call.Name {
+	case "list_runtimes":
+		return s.toolListRuntimes(call.Arguments)
 	case "list_profiles":
 		return s.toolListProfiles(call.Arguments)
 	case "create_profile":
@@ -205,13 +207,17 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 
 // --- Tool implementations ---
 
+func (s *Server) toolListRuntimes(args map[string]any) (any, *mcpError) {
+	return textResult(mustJSON(s.mgr.RuntimeRegistry().List())), nil
+}
+
 func (s *Server) toolListProfiles(args map[string]any) (any, *mcpError) {
 	group, _ := args["group"].(string)
 	tag, _ := args["tag"].(string)
 	profiles := s.store.List(group, tag)
 	var items []map[string]string
 	for _, p := range profiles {
-		items = append(items, map[string]string{"id": p.ID, "name": p.Name, "engine": p.Engine, "group": p.Group})
+		items = append(items, map[string]string{"id": p.ID, "name": p.Name, "runtime_id": p.RuntimeID, "group": p.Group})
 	}
 	return textResult(fmt.Sprintf("Found %d profiles:\n%s", len(items), mustJSON(items))), nil
 }
@@ -221,17 +227,24 @@ func (s *Server) toolCreateProfile(args map[string]any) (any, *mcpError) {
 	if name == "" {
 		return nil, newError(-32602, "name is required")
 	}
-	engine, _ := args["engine"].(string)
-	if engine == "" {
-		engine = "firefox"
+	if _, ok := args["engine"]; ok {
+		return nil, newError(-32602, "engine was removed in v2; use runtime_id")
 	}
+	runtimeID, _ := args["runtime_id"].(string)
 	group, _ := args["group"].(string)
 
-	p := &profile.Profile{Name: name, Engine: engine, Group: group}
+	p := &profile.Profile{Name: name, RuntimeID: runtimeID, Group: group}
+	desc, err := s.mgr.RuntimeRegistry().ApplyProfileDefaults(p)
+	if err != nil {
+		return nil, newError(-32602, err.Error())
+	}
+	if !desc.Enabled {
+		return nil, newError(-32602, fmt.Sprintf("runtime %q is disabled", desc.ID))
+	}
 	if err := s.store.Create(p); err != nil {
 		return nil, newError(-32000, err.Error())
 	}
-	return textResult(fmt.Sprintf("Created profile %s (%s, %s)", p.ID, p.Name, p.Engine)), nil
+	return textResult(fmt.Sprintf("Created profile %s (%s, runtime: %s)", p.ID, p.Name, p.RuntimeID)), nil
 }
 
 func (s *Server) toolDeleteProfile(args map[string]any) (any, *mcpError) {
@@ -257,8 +270,34 @@ func (s *Server) toolUpdateProfile(args map[string]any) (any, *mcpError) {
 	if v, ok := args["group"]; ok {
 		updates["group"] = v
 	}
+	if v, ok := args["runtime_id"]; ok {
+		updates["runtime_id"] = v
+	}
+	if _, ok := args["engine"]; ok {
+		return nil, newError(-32602, "engine was removed in v2; use runtime_id")
+	}
 	if v, ok := args["proxy"]; ok {
 		updates["proxy"] = v
+	}
+	if _, runtimeChanged := updates["runtime_id"]; runtimeChanged {
+		current, err := s.store.Get(id)
+		if err != nil {
+			return nil, newError(-32000, err.Error())
+		}
+		draft := *current
+		v, ok := updates["runtime_id"].(string)
+		if !ok {
+			return nil, newError(-32602, "runtime_id must be a string")
+		}
+		draft.RuntimeID = v
+		desc, err := s.mgr.RuntimeRegistry().ApplyProfileDefaults(&draft)
+		if err != nil {
+			return nil, newError(-32602, err.Error())
+		}
+		if !desc.Enabled {
+			return nil, newError(-32602, fmt.Sprintf("runtime %q is disabled", desc.ID))
+		}
+		updates["runtime_id"] = draft.RuntimeID
 	}
 	p, err := s.store.Update(id, updates)
 	if err != nil {
@@ -467,7 +506,7 @@ func (s *Server) toolOpenBrowser(args map[string]any) (any, *mcpError) {
 	if err != nil {
 		return nil, newError(-32000, err.Error())
 	}
-	return textResult(fmt.Sprintf("Opened browser for %s (session: %s, engine: %s)", p.Name, sess.ID, sess.Engine)), nil
+	return textResult(fmt.Sprintf("Opened browser for %s (session: %s, runtime: %s)", p.Name, sess.ID, sess.RuntimeID)), nil
 }
 
 func (s *Server) closeProfileBrowser(profileID string, ignoreNotFound bool) *mcpError {

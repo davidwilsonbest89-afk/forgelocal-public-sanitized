@@ -4,14 +4,14 @@ steps:
     action: create_profile
     params:
       name: "FB Account A"
-      engine: firefox
+      runtime_id: camoufox
       var: profile_a
 
   - name: 建立 Profile B
     action: create_profile
     params:
       name: "FB Account B"
-      engine: firefox
+      runtime_id: camoufox
       var: profile_b
 
   - name: 開啟 A

@@ -37,9 +37,9 @@ button.danger{background:#f38ba8;color:#1e1e2e}
 .card .name{font-size:15px;font-weight:600;margin-bottom:4px}
 .card .meta{font-size:12px;color:#6c7086;margin-bottom:12px}
 .card .tags{display:flex;gap:4px;flex-wrap:wrap;margin:8px 0}
-.card .engine{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:#313244}
-.card .engine.firefox{color:#f9e2af}
-.card .engine.chromium{color:#89b4fa}
+.card .runtime{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:#313244}
+.card .runtime.firefox{color:#f9e2af}
+.card .runtime.chromium{color:#89b4fa}
 .card .fp{font-size:11px;color:#6c7086;margin:8px 0;line-height:1.6}
 .card .fp span{color:#a6adc8}
 .card .actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
@@ -99,10 +99,8 @@ button.danger{background:#f38ba8;color:#1e1e2e}
   <button onclick="refreshAll()" data-i18n="refresh">🔄 Refresh</button>
   <input id="filter-search" data-i18n-placeholder="searchPlaceholder" placeholder="Search" oninput="setFilter('search', this.value)">
   <select id="filter-group" onchange="setFilter('group', this.value)"></select>
-  <select id="filter-engine" onchange="setFilter('engine', this.value)">
-    <option value="" data-i18n="allEngines">All engines</option>
-    <option value="firefox">Firefox</option>
-    <option value="chromium">Chromium</option>
+  <select id="filter-runtime" onchange="setFilter('runtime', this.value)">
+    <option value="" data-i18n="allRuntimes">All runtimes</option>
   </select>
   <select id="filter-status" onchange="setFilter('status', this.value)">
     <option value="" data-i18n="allStatuses">All statuses</option>
@@ -113,7 +111,7 @@ button.danger{background:#f38ba8;color:#1e1e2e}
   <select id="sort-profiles" onchange="setFilter('sort', this.value)">
     <option value="name" data-i18n="sortName">Name</option>
     <option value="group" data-i18n="sortGroup">Group</option>
-    <option value="engine" data-i18n="sortEngine">Engine</option>
+    <option value="runtime" data-i18n="sortRuntime">Runtime</option>
     <option value="created_desc" data-i18n="sortNewest">Newest</option>
     <option value="last_used_desc" data-i18n="sortLastUsed">Last used</option>
   </select>
@@ -165,7 +163,7 @@ button.danger{background:#f38ba8;color:#1e1e2e}
   <div class="modal">
     <h2 data-i18n="newProfileTitle">New Profile</h2>
     <label data-i18n="name">Name</label><input id="f-name" placeholder="FB Brand #1">
-    <label data-i18n="engine">Engine</label><select id="f-engine"><option value="firefox">🦊 Firefox (Camoufox)</option><option value="chromium">🌐 Chromium (CloakBrowser)</option></select>
+    <label data-i18n="runtime">Runtime</label><select id="f-runtime"></select>
     <label data-i18n="group">Group</label>
     <div class="group-picker">
       <input id="f-group" list="groupOptions" data-i18n-placeholder="groupPlaceholder" placeholder="Client A" oninput="syncGroupPicker('f')">
@@ -229,14 +227,15 @@ const LOCALES = {
     groupManager: 'Group Manager',
     searchPlaceholder: 'Search profiles',
     allGroups: 'All groups',
-    allEngines: 'All engines',
+    allRuntimes: 'All runtimes',
     allStatuses: 'All statuses',
     activeOnly: 'Active',
     inactiveOnly: 'Inactive',
     tagFilterPlaceholder: 'Tag',
     sortName: 'Name',
     sortGroup: 'Group',
-    sortEngine: 'Engine',
+    sortRuntime: 'Runtime',
+    runtime: 'Runtime',
     sortNewest: 'Newest',
     sortLastUsed: 'Last used',
     showingProfiles: 'Showing {shown} of {total} profiles',
@@ -331,14 +330,15 @@ const LOCALES = {
     groupManager: 'Group 管理',
     searchPlaceholder: '搜尋 Profile',
     allGroups: '所有分組',
-    allEngines: '所有引擎',
+    allRuntimes: '所有 Runtime',
     allStatuses: '所有狀態',
     activeOnly: '已開啟',
     inactiveOnly: '未開啟',
     tagFilterPlaceholder: '標籤',
     sortName: '名稱',
     sortGroup: '分組',
-    sortEngine: '引擎',
+    sortRuntime: 'Runtime',
+    runtime: 'Runtime',
     sortNewest: '最新建立',
     sortLastUsed: '最近使用',
     showingProfiles: '顯示 {shown} / {total} 個 Profile',
@@ -421,11 +421,13 @@ let locale = localStorage.getItem('bf-locale') || (navigator.language === 'zh-TW
 let TOKEN = '';
 let profiles = [];
 let groups = [];
+let runtimes = [];
+let defaultRuntimeID = '';
 let sessions = new Set();
 let screenshots = {}; // profileId → blob URL
 let statusState = 'connecting';
 let statusVersion = '';
-let filters = { search: '', group: '', engine: '', status: '', tag: '', sort: 'name' };
+let filters = { search: '', group: '', runtime: '', status: '', tag: '', sort: 'name' };
 let groupManagerOpen = false;
 
 function t(key, vars = {}) {
@@ -502,10 +504,10 @@ function showApp() {
   document.getElementById('loginOverlay').style.display = 'none';
   document.getElementById('toolbar').style.display = 'flex';
   checkStatus();
+  loadRuntimes();
   loadGroups();
   loadProfiles();
   loadSessions();
-  setInterval(loadSessions, 5000);
 }
 
 // --- API ---
@@ -529,6 +531,13 @@ async function checkStatus() {
   updateStatusText();
 }
 
+async function loadRuntimes() {
+  const d = await api('GET', '/runtimes');
+  runtimes = d.data || [];
+  defaultRuntimeID = d.default_runtime_id || '';
+  renderAll();
+}
+
 async function loadProfiles() {
   const d = await api('GET', '/profiles');
   profiles = d.data || [];
@@ -548,11 +557,12 @@ async function loadSessions() {
 }
 
 async function refreshAll() {
-  await Promise.all([loadGroups(), loadProfiles(), loadSessions()]);
+  await Promise.all([loadRuntimes(), loadGroups(), loadProfiles(), loadSessions()]);
 }
 
 function renderAll() {
   refreshGroupOptions();
+  refreshRuntimeOptions();
   refreshFilterControls();
   renderGroupManager();
   render();
@@ -571,12 +581,32 @@ function refreshFilterControls() {
   groupSelect.innerHTML = `<option value="">${t('allGroups')}</option>` + knownGroupNames().map(name => `<option value="${esc(name)}">${esc(name)}</option>`).join('');
   groupSelect.value = knownGroupNames().includes(current) ? current : '';
   filters.group = groupSelect.value;
-  const engine = document.getElementById('filter-engine');
+  const runtime = document.getElementById('filter-runtime');
   const status = document.getElementById('filter-status');
   const sort = document.getElementById('sort-profiles');
-  if (engine) engine.value = filters.engine;
+  if (runtime) runtime.innerHTML = `<option value="">${t('allRuntimes')}</option>` + runtimes.map(rt => `<option value="${esc(rt.id)}">${esc(rt.display_name || rt.id)}</option>`).join('');
+  if (runtime) runtime.value = filters.runtime;
   if (status) status.value = filters.status;
   if (sort) sort.value = filters.sort;
+}
+
+function runtimeLabel(id) {
+  const rt = runtimes.find(r => r.id === id);
+  if (rt) return rt.display_name || rt.id;
+  return id || 'Unknown runtime';
+}
+
+function runtimeFamily(id) {
+  const rt = runtimes.find(r => r.id === id);
+  return (rt && rt.family) || 'unknown';
+}
+
+function refreshRuntimeOptions() {
+  const select = document.getElementById('f-runtime');
+  if (!select) return;
+  const options = runtimes.filter(rt => rt.enabled);
+  select.innerHTML = options.length ? options.map(rt => `<option value="${esc(rt.id)}">${esc(rt.display_name || rt.id)} (${esc(rt.family || '')})</option>`).join('') : '<option value="">No enabled runtimes</option>';
+  if (options.some(rt => rt.id === defaultRuntimeID)) select.value = defaultRuntimeID;
 }
 
 function knownGroupNames() {
@@ -623,11 +653,12 @@ function filteredProfiles() {
   const search = filters.search.trim().toLowerCase();
   const tag = filters.tag.trim().toLowerCase();
   let items = profiles.filter(p => {
+    const runtimeName = runtimeLabel(p.runtime_id);
     const tags = p.tags || [];
-    const haystack = [p.name, p.id, p.group, p.engine, ...(tags || [])].join(' ').toLowerCase();
+    const haystack = [p.name, p.id, p.group, p.runtime_id, runtimeName, ...(tags || [])].join(' ').toLowerCase();
     if (search && !haystack.includes(search)) return false;
     if (filters.group && (p.group || '').trim() !== filters.group) return false;
-    if (filters.engine && p.engine !== filters.engine) return false;
+    if (filters.runtime && p.runtime_id !== filters.runtime) return false;
     if (filters.status === 'active' && !sessions.has(p.id)) return false;
     if (filters.status === 'inactive' && sessions.has(p.id)) return false;
     if (tag && !tags.some(x => (x || '').toLowerCase().includes(tag))) return false;
@@ -637,8 +668,8 @@ function filteredProfiles() {
     switch (filters.sort) {
     case 'group':
       return ((a.group || '') + a.name).localeCompare((b.group || '') + b.name);
-    case 'engine':
-      return ((a.engine || '') + a.name).localeCompare((b.engine || '') + b.name);
+    case 'runtime':
+      return ((a.runtime_id || '') + a.name).localeCompare((b.runtime_id || '') + b.name);
     case 'created_desc':
       return new Date(b.created_at || 0) - new Date(a.created_at || 0);
     case 'last_used_desc':
@@ -682,7 +713,7 @@ function render() {
     return `<div class="card">
       <div class="name"><span class="badge ${active ? 'active' : 'inactive'}"></span>${esc(p.name)}</div>
       <div class="meta">
-        <span class="engine ${p.engine}">${p.engine === 'chromium' ? '🌐 Chromium' : '🦊 Firefox'}</span>
+        <span class="runtime ${escAttr(runtimeFamily(p.runtime_id))}">${esc(runtimeLabel(p.runtime_id))}</span>
         · ${esc(p.group || t('ungrouped'))}
         ${proxyInfo ? ' · 🔒 ' + esc(proxyInfo.host) + ' (' + esc(proxyInfo.label) + ')' : ''}
       </div>
@@ -812,6 +843,7 @@ async function closeSession(profileId) {
 // --- Profile CRUD ---
 function showCreate() {
   refreshGroupOptions();
+  refreshRuntimeOptions();
   syncGroupPicker('f');
   document.getElementById('createModal').classList.add('show');
 }
@@ -873,7 +905,7 @@ async function saveProfile() {
 async function createProfile() {
   const name = document.getElementById('f-name').value;
   if (!name) { toast(t('nameRequired')); return; }
-  const body = { name, engine: document.getElementById('f-engine').value, group: document.getElementById('f-group').value.trim() || undefined, tags: parseTags(document.getElementById('f-tags').value) };
+  const body = { name, runtime_id: document.getElementById('f-runtime').value, group: document.getElementById('f-group').value.trim() || undefined, tags: parseTags(document.getElementById('f-tags').value) };
   const proxyType = document.getElementById('f-proxy-type').value;
   if (proxyType) {
     body.proxy = { type: proxyType, host: document.getElementById('f-proxy-host').value, port: parseInt(document.getElementById('f-proxy-port').value) || 1080, username: document.getElementById('f-proxy-user').value || undefined, password: document.getElementById('f-proxy-pass').value || undefined };

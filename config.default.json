@@ -3,14 +3,31 @@
   "profiles_dir": "profiles",
   "data_dir": "data",
   "log_file": "logs/server.log",
-  "camoufox_path": "camoufox/camoufox",
-  "cloakbrowser_path": "",
-  "cloakbrowser": {
-    "safe_gpu": false,
-    "auto_safe_gpu_fallback": false,
-    "isolated_runtime_cache": false,
-    "repair_transient_cache_on_launch_failure": false,
-    "extra_args": []
+  "default_runtime_id": "camoufox",
+  "runtimes": {
+    "camoufox": {
+      "enabled": true,
+      "binary_path": "camoufox/camoufox",
+      "family": "firefox",
+      "display_name": "Camoufox"
+    },
+    "cloakbrowser": {
+      "enabled": false,
+      "binary_path": "",
+      "family": "chromium",
+      "display_name": "CloakBrowser",
+      "settings": {
+        "safe_gpu": false,
+        "auto_safe_gpu_fallback": false,
+        "isolated_runtime_cache": false,
+        "repair_transient_cache_on_launch_failure": false,
+        "fingerprint_platform": "auto",
+        "fonts_dir": "",
+        "storage_quota_mb": 0,
+        "target_platform_policy": "warn",
+        "extra_args": []
+      }
+    }
   },
   "fingerprint_dir": "data"
 }

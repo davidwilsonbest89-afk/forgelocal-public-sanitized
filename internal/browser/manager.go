@@ -8,6 +8,7 @@ import (
 	"browseforge/internal/config"
 	"browseforge/internal/groups"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 
 	"github.com/playwright-community/playwright-go"
 )
@@ -16,7 +17,7 @@ import (
 type Session struct {
 	ID         string
 	ProfileID  string
-	Engine     string
+	RuntimeID  string
 	Browser    playwright.Browser
 	Context    playwright.BrowserContext
 	Page       playwright.Page
@@ -28,6 +29,7 @@ type Session struct {
 type Manager struct {
 	cfg        *config.Config
 	groupStore *groups.Store
+	runtimes   *bfruntime.Registry
 	pw         *playwright.Playwright
 	mu         sync.RWMutex
 	sessions   map[string]*Session // sessionID → Session
@@ -50,6 +52,7 @@ func NewManager(cfg *config.Config, groupStores ...*groups.Store) (*Manager, err
 	m := &Manager{
 		cfg:        cfg,
 		groupStore: groupStore,
+		runtimes:   bfruntime.NewRegistry(cfg),
 		pw:         pw,
 		sessions:   make(map[string]*Session),
 	}
@@ -61,6 +64,10 @@ func NewManager(cfg *config.Config, groupStores ...*groups.Store) (*Manager, err
 // Used by integration components that need to reuse the same Playwright process.
 func (m *Manager) Playwright() *playwright.Playwright {
 	return m.pw
+}
+
+func (m *Manager) RuntimeRegistry() *bfruntime.Registry {
+	return m.runtimes
 }
 
 // recoverOrphanSessions cleans up stale session state on startup
@@ -85,7 +92,7 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 
 	if err != nil {
 		if shouldRetryLaunch(err) {
-			slog.Warn("browser launch failed with recoverable protocol error; restarting Playwright and retrying", "profile", p.ID, "engine", p.Engine, "error", err)
+			slog.Warn("browser launch failed with recoverable protocol error; restarting Playwright and retrying", "profile", p.ID, "runtime_id", p.RuntimeID, "error", err)
 			if len(m.sessions) > 0 {
 				m.dropSessionsLocked("playwright driver restart after protocol error")
 			}
@@ -94,7 +101,7 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 			}
 			session, err = m.launchProfile(p)
 			if err == nil {
-				slog.Info("browser launch recovered after Playwright restart", "profile", p.ID, "engine", p.Engine)
+				slog.Info("browser launch recovered after Playwright restart", "profile", p.ID, "runtime_id", p.RuntimeID)
 			}
 		}
 	}
@@ -118,16 +125,25 @@ func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 	}
 
 	m.sessions[session.ID] = session
-	slog.Info("session launched", "session", session.ID, "profile", p.ID, "engine", p.Engine, "connectURL", session.ConnectURL)
+	slog.Info("session launched", "session", session.ID, "profile", p.ID, "runtime_id", session.RuntimeID, "connectURL", session.ConnectURL)
 	return session, nil
 }
 
 func (m *Manager) launchProfile(p *profile.Profile) (*Session, error) {
-	switch p.Engine {
-	case "chromium":
+	desc, err := m.runtimes.ResolveProfile(p)
+	if err != nil {
+		return nil, err
+	}
+	if !desc.Enabled {
+		return nil, fmt.Errorf("runtime %q is disabled", desc.ID)
+	}
+	switch desc.ID {
+	case bfruntime.CloakBrowser:
 		return m.launchChromium(p)
-	default:
+	case bfruntime.Camoufox:
 		return m.launchFirefox(p)
+	default:
+		return nil, fmt.Errorf("runtime %q is registered but has no launcher", desc.ID)
 	}
 }
 

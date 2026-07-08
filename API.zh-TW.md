@@ -48,7 +48,7 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
   -H "Content-Type: application/json" \
   -d '{
     "name": "FB Brand #1",
-    "engine": "firefox",
+    "runtime_id": "camoufox",
     "group": "客戶A",
     "tags": ["facebook", "品牌"],
     "proxy": {
@@ -67,7 +67,7 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
   "data": {
     "id": "prof_a1b2c3d4e5f6",
     "name": "FB Brand #1",
-    "engine": "firefox",
+    "runtime_id": "camoufox",
     "group": "客戶A",
     "fingerprint": {
       "navigator.userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) ...",
@@ -82,7 +82,7 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
 }
 ```
 
-- `engine`：`"firefox"`（Camoufox）或 `"chromium"`（CloakBrowser）
+- `runtime_id`：runtime provider，例如 `"camoufox"` 或 `"cloakbrowser"`
 - `fingerprint`：未提供時自動從指紋池分配
 - `proxy`：選填，支援 `socks5` 和 `http`
 
@@ -171,7 +171,7 @@ curl -X POST http://127.0.0.1:19280/api/sessions \
   -d '{"profile_id": "prof_a1b2c3d4e5f6"}'
 ```
 ```json
-{"data": {"session_id": "sess_prof_a1b2c3d4e5f6", "profile_id": "prof_a1b2c3d4e5f6", "engine": "firefox"}}
+{"data": {"session_id": "sess_prof_a1b2c3d4e5f6", "profile_id": "prof_a1b2c3d4e5f6", "runtime_id": "camoufox"}}
 ```
 
 開啟一個帶有該 Profile 指紋和 Proxy 的瀏覽器視窗。
@@ -315,7 +315,7 @@ curl -X POST http://127.0.0.1:19280/api/workflow/run \
   -d '{
     "name": "自動登入",
     "steps": [
-      {"name": "建立", "action": "create_profile", "params": {"name": "Auto", "engine": "firefox", "var": "p1"}},
+      {"name": "建立", "action": "create_profile", "params": {"name": "Auto", "runtime_id": "camoufox", "var": "p1"}},
       {"name": "開啟", "action": "open_browser", "profile_id": "$p1"},
       {"name": "導航", "action": "navigate", "profile_id": "$p1", "params": {"url": "https://facebook.com"}},
       {"name": "等待", "action": "sleep", "params": {"seconds": 5}},
@@ -327,7 +327,7 @@ curl -X POST http://127.0.0.1:19280/api/workflow/run \
 支援的 action：
 | Action | 說明 | 參數 |
 |--------|------|------|
-| `create_profile` | 建立 Profile | `name`, `engine`, `var`（變數名） |
+| `create_profile` | 建立 Profile | `name`, `runtime_id`, `var`（變數名） |
 | `open_browser` | 開啟瀏覽器 | `profile_id` |
 | `close_browser` | 關閉瀏覽器 | `profile_id` |
 | `navigate` | 導航 | `profile_id`, `url` |
@@ -365,7 +365,7 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
 | Tool | 說明 | 參數 |
 |------|------|------|
 | `list_profiles` | 列出所有 Profile | — |
-| `create_profile` | 建立 Profile | `name`, `engine`, `group` |
+| `create_profile` | 建立 Profile | `name`, `runtime_id`, `group` |
 | `delete_profile` | 刪除 Profile | `profile_id` |
 | `update_profile` | 更新 Profile 設定 | `profile_id` |
 | `list_groups` | 列出 group proxy policies | — |
@@ -385,8 +385,8 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
 | `list_tabs` | 列出分頁 | `profile_id` |
 | `switch_tab` | 切換分頁 | `profile_id`, `index` |
 | `close_tab` | 關閉分頁 | `profile_id`, `index` |
-| `web_search` | 使用 Chromium profile 執行 provider-backed web search | `query`, `engine`（選填，`google`/`bing`/`duckduckgo`）, `profile_id` 或 `session_id`, `max_results`（選填） |
-| `web_explore` | 使用 Chromium profile 探索網頁內容 | `url`, `profile_id` 或 `session_id`, `max_text_length`（選填）, `max_links`（選填） |
+| `web_search` | 使用支援 agent web session 的 runtime profile 執行 provider-backed web search | `query`, `engine`（選填，`google`/`bing`/`duckduckgo`）, `profile_id` 或 `session_id`, `max_results`（選填） |
+| `web_explore` | 使用支援 agent web session 的 runtime profile 探索網頁內容 | `url`, `profile_id` 或 `session_id`, `max_text_length`（選填）, `max_links`（選填） |
 | `create_session` | 建立 agent web session | `profile_id` |
 | `destroy_session` | 銷毀 agent web session | `session_id` |
 | `list_sessions` | 列出 agent web sessions | `profile_id`（選填） |
@@ -440,7 +440,7 @@ Claude: [呼叫 create_profile] → 建立了 prof_xxx
     {
       "session_id": "sess_prof_abc123",
       "profile_id": "prof_abc123",
-      "engine": "chromium",
+      "runtime_id": "cloakbrowser",
       "endpoint": "ws://127.0.0.1:54321/abcdef...",
       "proxy": "ws://your-host:19280/api/playwright/ws/sess_prof_abc123"
     }

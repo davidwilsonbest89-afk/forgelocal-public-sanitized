@@ -6,16 +6,322 @@ import (
 	"context"
 	"encoding/json"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"strings"
 	"testing"
+	"unsafe"
 
+	"browseforge/internal/browser"
+	"browseforge/internal/config"
 	"browseforge/internal/groups"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 
 	"github.com/go-chi/chi/v5"
 )
+
+func TestListRuntimesReturnsRuntimeDescriptors(t *testing.T) {
+	h := &handler{mgr: testManagerWithRuntimeConfig(t, &config.Config{
+		DefaultRuntimeID: "cloakbrowser",
+		Runtimes: map[string]config.RuntimeConfig{
+			"camoufox":     {BinaryPath: "/opt/camoufox"},
+			"cloakbrowser": {BinaryPath: "/opt/cloakbrowser"},
+		},
+	})}
+
+	rec := httptest.NewRecorder()
+	h.listRuntimes(rec, httptest.NewRequest(http.MethodGet, "/api/runtimes", nil))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+
+	var body struct {
+		Data             []bfruntime.Descriptor `json:"data"`
+		DefaultRuntimeID string                 `json:"default_runtime_id"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil {
+		t.Fatalf("decode runtimes response: %v", err)
+	}
+	if body.DefaultRuntimeID != "cloakbrowser" {
+		t.Fatalf("default_runtime_id = %q, want cloakbrowser", body.DefaultRuntimeID)
+	}
+	if len(body.Data) != 2 {
+		t.Fatalf("runtime count = %d, want 2: %#v", len(body.Data), body.Data)
+	}
+	if body.Data[0].ID != bfruntime.Camoufox || body.Data[0].BinaryPath != "/opt/camoufox" {
+		t.Fatalf("first runtime = %+v, want Camoufox with configured binary path", body.Data[0])
+	}
+	if body.Data[1].ID != bfruntime.CloakBrowser || body.Data[1].BinaryPath != "/opt/cloakbrowser" {
+		t.Fatalf("second runtime = %+v, want CloakBrowser with configured binary path", body.Data[1])
+	}
+	if body.Data[0].Capabilities.SupportsAgentWebSessions {
+		t.Fatalf("Camoufox should not advertise agent web sessions: %+v", body.Data[0].Capabilities)
+	}
+	if !body.Data[1].Capabilities.SupportsAgentWebSessions {
+		t.Fatalf("CloakBrowser should advertise agent web sessions: %+v", body.Data[1].Capabilities)
+	}
+}
+
+func TestCreateProfileAcceptsRuntimeID(t *testing.T) {
+	enabled := true
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"cloakbrowser": {Enabled: &enabled},
+	}})}
+
+	req := httptest.NewRequest(http.MethodPost, "/api/profiles", strings.NewReader(`{"name":"Cloaked","runtime_id":"cloakbrowser"}`))
+	rec := httptest.NewRecorder()
+	h.createProfile(rec, req)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+
+	var body struct {
+		Data profile.Profile `json:"data"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &body); err != nil {
+		t.Fatalf("decode create profile response: %v", err)
+	}
+	if body.Data.RuntimeID != "cloakbrowser" {
+		t.Fatalf("response runtime_id = %q, want cloakbrowser", body.Data.RuntimeID)
+	}
+	got, err := store.Get(body.Data.ID)
+	if err != nil {
+		t.Fatalf("stored profile missing: %v", err)
+	}
+	if got.RuntimeID != "cloakbrowser" {
+		t.Fatalf("stored runtime_id = %q, want cloakbrowser", got.RuntimeID)
+	}
+}
+
+func TestCreateProfileRejectsDisabledRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	disabled := false
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox": {Enabled: &disabled},
+	}})}
+
+	req := httptest.NewRequest(http.MethodPost, "/api/profiles", strings.NewReader(`{"name":"Disabled","runtime_id":"camoufox"}`))
+	rec := httptest.NewRecorder()
+	h.createProfile(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
+		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	}
+	if profiles := store.List("", ""); len(profiles) != 0 {
+		t.Fatalf("stored profiles = %d, want 0 after disabled runtime rejection", len(profiles))
+	}
+}
+
+func TestUpdateProfileRejectsDisabledRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Runtime Profile", RuntimeID: "cloakbrowser"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	enabled := true
+	disabled := false
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox":     {Enabled: &disabled},
+		"cloakbrowser": {Enabled: &enabled},
+	}})}
+
+	req := requestWithProfileID(http.MethodPatch, "/api/profiles/"+p.ID, p.ID, strings.NewReader(`{"runtime_id":"camoufox"}`))
+	rec := httptest.NewRecorder()
+	h.updateProfile(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
+		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	}
+	got, err := store.Get(p.ID)
+	if err != nil {
+		t.Fatalf("stored profile missing: %v", err)
+	}
+	if got.RuntimeID != "cloakbrowser" {
+		t.Fatalf("stored runtime_id = %q, want unchanged cloakbrowser", got.RuntimeID)
+	}
+}
+
+func TestDuplicateProfileRejectsDisabledRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Disabled Runtime Source", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	disabled := false
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox": {Enabled: &disabled},
+	}})}
+
+	req := requestWithProfileID(http.MethodPost, "/api/profiles/"+p.ID+"/duplicate", p.ID, nil)
+	rec := httptest.NewRecorder()
+	h.duplicateProfile(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
+		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	}
+	if profiles := store.List("", ""); len(profiles) != 1 {
+		t.Fatalf("stored profiles = %d, want original only after disabled runtime duplicate rejection", len(profiles))
+	}
+}
+
+func TestImportProfileRejectsDisabledRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	disabled := false
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox": {Enabled: &disabled},
+	}})}
+	body, contentType := multipartZipUpload(t, map[string][]byte{
+		"profile.json": []byte(`{"id":"legacy","name":"Legacy Import","runtime_id":"camoufox"}`),
+	})
+
+	req := httptest.NewRequest(http.MethodPost, "/api/profiles/import", bytes.NewReader(body))
+	req.Header.Set("Content-Type", contentType)
+	rec := httptest.NewRecorder()
+	h.importProfile(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
+		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	}
+	if profiles := store.List("", ""); len(profiles) != 0 {
+		t.Fatalf("stored profiles = %d, want 0 after disabled runtime import rejection", len(profiles))
+	}
+}
+
+func TestRestoreRejectsDisabledRuntimeIDWithoutCreatingProfiles(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	existing := &profile.Profile{Name: "Existing", RuntimeID: "cloakbrowser"}
+	if err := store.Create(existing); err != nil {
+		t.Fatalf("Create existing profile: %v", err)
+	}
+	enabled := true
+	disabled := false
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox":     {Enabled: &disabled},
+		"cloakbrowser": {Enabled: &enabled},
+	}})}
+	body, contentType := multipartZipUpload(t, map[string][]byte{
+		"disabled/profile.json": []byte(`{"id":"disabled","name":"Disabled Restore","runtime_id":"camoufox"}`),
+	})
+
+	req := httptest.NewRequest(http.MethodPost, "/api/restore", bytes.NewReader(body))
+	req.Header.Set("Content-Type", contentType)
+	rec := httptest.NewRecorder()
+	h.restore(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
+		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	}
+	if profiles := store.List("", ""); len(profiles) != 1 {
+		t.Fatalf("stored profiles = %d, want original only after disabled runtime restore rejection", len(profiles))
+	}
+	if _, err := store.Get(existing.ID); err != nil {
+		t.Fatalf("existing profile missing after rejected restore: %v", err)
+	}
+}
+
+func TestCreateProfileRejectsDeprecatedEngine(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{})}
+
+	req := httptest.NewRequest(http.MethodPost, "/api/profiles", strings.NewReader(`{"name":"Legacy","engine":"firefox","runtime_id":"camoufox"}`))
+	rec := httptest.NewRecorder()
+	h.createProfile(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"DEPRECATED_FIELD"`) {
+		t.Fatalf("body missing DEPRECATED_FIELD: %s", rec.Body.String())
+	}
+}
+
+func TestUpdateProfileRejectsDeprecatedEngine(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Runtime Profile", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{})}
+
+	req := requestWithProfileID(http.MethodPatch, "/api/profiles/"+p.ID, p.ID, strings.NewReader(`{"engine":"firefox"}`))
+	rec := httptest.NewRecorder()
+	h.updateProfile(rec, req)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"code":"DEPRECATED_FIELD"`) {
+		t.Fatalf("body missing DEPRECATED_FIELD: %s", rec.Body.String())
+	}
+}
+
+func TestUpdateProfileRejectsNonStringRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Runtime Profile", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{})}
+
+	for _, tc := range []struct {
+		name string
+		body string
+	}{
+		{name: "null", body: `{"runtime_id":null}`},
+		{name: "number", body: `{"runtime_id":42}`},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			req := requestWithProfileID(http.MethodPut, "/api/profiles/"+p.ID, p.ID, strings.NewReader(tc.body))
+			rec := httptest.NewRecorder()
+			h.updateProfile(rec, req)
+			if rec.Code != http.StatusBadRequest {
+				t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
+			}
+			if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) {
+				t.Fatalf("body missing INVALID_RUNTIME: %s", rec.Body.String())
+			}
+		})
+	}
+}
 
 func TestGroupProxyAPI(t *testing.T) {
 	groupStore, err := groups.NewStore(t.TempDir())
@@ -76,7 +382,7 @@ func TestDeleteGroupUngroupsProfilesAndClearsProxy(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	p := &profile.Profile{Name: "Profile A", Engine: "firefox", Group: "Client A"}
+	p := &profile.Profile{Name: "Profile A", RuntimeID: "camoufox", Group: "Client A"}
 	if err := profileStore.Create(p); err != nil {
 		t.Fatal(err)
 	}
@@ -155,9 +461,61 @@ func TestBackupIncludesGroupPolicies(t *testing.T) {
 	t.Fatal("groups.json not found in backup")
 }
 
+func multipartZipUpload(t *testing.T, files map[string][]byte) ([]byte, string) {
+	t.Helper()
+
+	var zipBuf bytes.Buffer
+	zw := zip.NewWriter(&zipBuf)
+	for name, data := range files {
+		f, err := zw.Create(name)
+		if err != nil {
+			t.Fatalf("create zip entry %s: %v", name, err)
+		}
+		if _, err := f.Write(data); err != nil {
+			t.Fatalf("write zip entry %s: %v", name, err)
+		}
+	}
+	if err := zw.Close(); err != nil {
+		t.Fatalf("close zip: %v", err)
+	}
+
+	var body bytes.Buffer
+	mw := multipart.NewWriter(&body)
+	part, err := mw.CreateFormFile("file", "profiles.zip")
+	if err != nil {
+		t.Fatalf("create multipart file: %v", err)
+	}
+	if _, err := part.Write(zipBuf.Bytes()); err != nil {
+		t.Fatalf("write multipart file: %v", err)
+	}
+	if err := mw.Close(); err != nil {
+		t.Fatalf("close multipart: %v", err)
+	}
+	return body.Bytes(), mw.FormDataContentType()
+}
+
 func requestWithGroupName(method, target, name string, body io.Reader) *http.Request {
 	req := httptest.NewRequest(method, target, body)
 	routeCtx := chi.NewRouteContext()
 	routeCtx.URLParams.Add("name", name)
 	return req.WithContext(context.WithValue(req.Context(), chi.RouteCtxKey, routeCtx))
+}
+
+func requestWithProfileID(method, target, id string, body io.Reader) *http.Request {
+	req := httptest.NewRequest(method, target, body)
+	routeCtx := chi.NewRouteContext()
+	routeCtx.URLParams.Add("id", id)
+	return req.WithContext(context.WithValue(req.Context(), chi.RouteCtxKey, routeCtx))
+}
+
+func testManagerWithRuntimeConfig(t *testing.T, cfg *config.Config) *browser.Manager {
+	t.Helper()
+
+	mgr := &browser.Manager{}
+	field := reflect.ValueOf(mgr).Elem().FieldByName("runtimes")
+	if !field.IsValid() {
+		t.Fatal("browser.Manager.runtimes field missing")
+	}
+	reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())).Elem().Set(reflect.ValueOf(bfruntime.NewRegistry(cfg)))
+	return mgr
 }

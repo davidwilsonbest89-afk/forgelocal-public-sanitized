@@ -41,7 +41,7 @@ Agent MCP call
 
 `browser.Manager.LaunchSession(profileID)` starts or returns the persistent browser for the profile and exposes its Playwright Bind endpoint as `Session.ConnectURL`.
 
-For MCP web sessions, the profile must be Chromium/CloakBrowser (`profile.Engine == "chromium"`). This keeps the web search/explore feature aligned with the anti-detect Chromium browser path.
+For MCP web sessions, the profile runtime must support agent web sessions. The built-in `cloakbrowser` runtime does; `camoufox` currently returns `-32000` for this path. This keeps web search/explore aligned with runtime capabilities instead of browser-family fields.
 
 ### One agent session = one page
 
@@ -131,7 +131,7 @@ flowchart TD
   D --> E{session_id exists?}
   E -->|yes| F[Reuse WebSession Page]
   E -->|no| G[profile.Store.Get profile]
-  G --> H{engine == chromium?}
+  G --> H{runtime supports agent web sessions?}
   H -->|no| X[Return -32000]
   H -->|yes| I[browser.Manager.LaunchSession]
   I --> J[Read browser.Session.ConnectURL]

@@ -25,7 +25,8 @@ func TestE2EFullFlow(t *testing.T) {
 		"profiles_dir": "/tmp/browseforge-test-profiles",
 		"data_dir": "/tmp/browseforge-test-data",
 		"log_file": "/tmp/browseforge-test.log",
-		"camoufox_path": %q,
+		"default_runtime_id": "camoufox",
+		"runtimes": {"camoufox": {"enabled": true, "binary_path": %q, "family": "firefox", "display_name": "Camoufox"}},
 		"fingerprint_dir": "data"
 	}`, camoufoxPath)
 	os.WriteFile("/tmp/browseforge-test-config.json", []byte(config), 0644)
@@ -84,8 +85,8 @@ func TestE2EFullFlow(t *testing.T) {
 
 	// 1. Create profile
 	status, result := doReq("POST", "/api/profiles", map[string]any{
-		"name":   "Test Profile",
-		"engine": "firefox",
+		"name":       "Test Profile",
+		"runtime_id": "camoufox",
 	})
 	if status != 201 {
 		t.Fatalf("create profile: status %d, %v", status, result)

@@ -130,6 +130,8 @@ func runCLI(args []string, stdout, stderr io.Writer) int {
 		return runBackupCommand(rest[1:], global, stdout, stderr)
 	case "smoke":
 		return runSmokeCommand(rest[1:], global, stdout, stderr)
+	case "migrate":
+		return runMigrateCommand(rest[1:], global, stdout, stderr)
 	case "workflow":
 		return runWorkflowCommand(rest[1:], global, stdout, stderr)
 	case "profiles":
@@ -395,9 +397,9 @@ func runCapabilitiesCommand(args []string, stdout, stderr io.Writer) int {
 		"commands": []string{
 			"serve", "mcp-stdio", "init", "config", "token", "doctor",
 			"status", "capabilities", "open", "mcp-config", "browsers",
-			"backup", "smoke", "workflow", "profiles", "sessions",
+			"backup", "smoke", "workflow", "profiles", "sessions", "migrate",
 		},
-		"browser_engines":  []string{"firefox", "chromium"},
+		"browser_runtimes": []string{"camoufox", "cloakbrowser"},
 		"machine_readable": []string{"token --json", "doctor --json", "status --json", "config validate --json", "capabilities --json", "smoke --json"},
 	}
 	if *jsonOut {
@@ -405,8 +407,8 @@ func runCapabilitiesCommand(args []string, stdout, stderr io.Writer) int {
 	} else {
 		fmt.Fprintf(stdout, "BrowseForge %s\n", Version)
 		fmt.Fprintln(stdout, "Transports: REST, MCP HTTP, MCP stdio, Playwright proxy")
-		fmt.Fprintln(stdout, "Browser engines: firefox, chromium")
-		fmt.Fprintln(stdout, "Agent-ready commands: init, config, token, doctor, status, capabilities, open, mcp-config, browsers, backup, smoke, workflow, profiles, sessions")
+		fmt.Fprintln(stdout, "Browser runtimes: camoufox, cloakbrowser")
+		fmt.Fprintln(stdout, "Agent-ready commands: init, config, token, doctor, status, capabilities, open, mcp-config, browsers, backup, smoke, workflow, profiles, sessions, migrate")
 	}
 	return 0
 }
@@ -495,6 +497,125 @@ func runSmokeCommand(args []string, global cliGlobal, stdout, stderr io.Writer) 
 	}
 	if err != nil {
 		return 1
+	}
+	return 0
+}
+
+func runMigrateCommand(args []string, global cliGlobal, stdout, stderr io.Writer) int {
+	if len(args) == 0 || args[0] != "profiles" {
+		fmt.Fprintln(stderr, "migrate requires subcommand: profiles --from v1 --to v2 [--apply]")
+		return 2
+	}
+	fs := newFlagSet("migrate profiles", stderr)
+	from := fs.String("from", "", "Source schema version")
+	to := fs.String("to", "", "Target schema version")
+	apply := fs.Bool("apply", false, "Write migrated profile files")
+	jsonOut := fs.Bool("json", false, "Write JSON output")
+	if err := fs.Parse(args[1:]); err != nil {
+		return 2
+	}
+	if *from != "v1" || *to != "v2" {
+		fmt.Fprintln(stderr, "only --from v1 --to v2 is supported")
+		return 2
+	}
+	cfg, err := config.Load(global.configPath)
+	if err != nil {
+		fmt.Fprintf(stderr, "migrate config error: %v\n", err)
+		return 1
+	}
+	profilesDir := resolvePath(global.baseDir, cfg.ProfilesDir)
+	entries, err := os.ReadDir(profilesDir)
+	if err != nil {
+		fmt.Fprintf(stderr, "migrate read profiles failed: %v\n", err)
+		return 1
+	}
+	type migratedProfile struct {
+		ID         string `json:"id"`
+		FromEngine string `json:"from_engine,omitempty"`
+		RuntimeID  string `json:"runtime_id"`
+		Status     string `json:"status"`
+	}
+	type migrationPlan struct {
+		path   string
+		data   []byte
+		out    []byte
+		result migratedProfile
+	}
+	var migrated []migratedProfile
+	var plans []migrationPlan
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			continue
+		}
+		path := filepath.Join(profilesDir, entry.Name(), "profile.json")
+		data, err := os.ReadFile(path)
+		if err != nil {
+			if os.IsNotExist(err) {
+				continue
+			}
+			fmt.Fprintf(stderr, "migrate read %s failed: %v\n", path, err)
+			return 1
+		}
+		var raw map[string]any
+		if err := json.Unmarshal(data, &raw); err != nil {
+			fmt.Fprintf(stderr, "migrate decode %s failed: %v\n", path, err)
+			return 1
+		}
+		id, _ := raw["id"].(string)
+		engine, _ := raw["engine"].(string)
+		runtimeID, _ := raw["runtime_id"].(string)
+		status := "migrated"
+		if runtimeID != "" {
+			if engine == "" {
+				continue
+			}
+			status = "removed_engine"
+		} else {
+			switch engine {
+			case "firefox", "":
+				runtimeID = "camoufox"
+			case "chromium":
+				runtimeID = "cloakbrowser"
+			default:
+				fmt.Fprintf(stderr, "unsupported v1 engine %q in %s\n", engine, path)
+				return 1
+			}
+			raw["runtime_id"] = runtimeID
+		}
+		delete(raw, "engine")
+		out, err := json.MarshalIndent(raw, "", "  ")
+		if err != nil {
+			fmt.Fprintf(stderr, "migrate encode %s failed: %v\n", path, err)
+			return 1
+		}
+		result := migratedProfile{ID: id, FromEngine: engine, RuntimeID: runtimeID, Status: status}
+		plans = append(plans, migrationPlan{path: path, data: data, out: append(out, '\n'), result: result})
+		migrated = append(migrated, result)
+	}
+	if *apply {
+		for _, plan := range plans {
+			backup := plan.path + ".v1.bak"
+			if _, err := os.Stat(backup); os.IsNotExist(err) {
+				if err := os.WriteFile(backup, plan.data, 0644); err != nil {
+					fmt.Fprintf(stderr, "migrate backup %s failed: %v\n", plan.path, err)
+					return 1
+				}
+			}
+			if err := os.WriteFile(plan.path, plan.out, 0644); err != nil {
+				fmt.Fprintf(stderr, "migrate write %s failed: %v\n", plan.path, err)
+				return 1
+			}
+		}
+	}
+	result := map[string]any{"ok": true, "apply": *apply, "profiles_dir": profilesDir, "profiles": migrated, "count": len(migrated)}
+	if *jsonOut {
+		_ = writeJSON(stdout, result)
+	} else {
+		mode := "dry-run"
+		if *apply {
+			mode = "applied"
+		}
+		fmt.Fprintf(stdout, "v1-to-v2 profile migration %s: %d profile(s)\n", mode, len(migrated))
 	}
 	return 0
 }
@@ -640,16 +761,37 @@ func writeDefaultConfig(path, baseDir string, force bool) error {
 }
 
 func defaultConfig(baseDir string) *config.Config {
+	camoufoxPath := browser.FindBinary(baseDir, "camoufox")
+	cloakBrowserPath := browser.FindBinary(baseDir, "cloakbrowser")
+	camoufoxEnabled := camoufoxPath != ""
+	cloakBrowserEnabled := cloakBrowserPath != ""
 	return &config.Config{
 		Host:             "127.0.0.1",
 		Port:             "19280",
 		ProfilesDir:      "profiles",
 		DataDir:          "data",
 		LogFile:          "logs/server.log",
+		DefaultRuntimeID: "camoufox",
 		FingerprintDir:   "data",
-		CamoufoxPath:     browser.FindBinary(baseDir, "camoufox"),
-		CloakBrowserPath: browser.FindBinary(baseDir, "cloakbrowser"),
-		CloakBrowser:     &config.CloakBrowserConfig{ExtraArgs: []string{}},
+		Runtimes: map[string]config.RuntimeConfig{
+			"camoufox": {
+				Enabled:     &camoufoxEnabled,
+				BinaryPath:  camoufoxPath,
+				Family:      "firefox",
+				DisplayName: "Camoufox",
+			},
+			"cloakbrowser": {
+				Enabled:     &cloakBrowserEnabled,
+				BinaryPath:  cloakBrowserPath,
+				Family:      "chromium",
+				DisplayName: "CloakBrowser",
+				Settings: &config.CloakBrowserConfig{
+					FingerprintPlatform:  "auto",
+					TargetPlatformPolicy: "warn",
+					ExtraArgs:            []string{},
+				},
+			},
+		},
 	}
 }
 

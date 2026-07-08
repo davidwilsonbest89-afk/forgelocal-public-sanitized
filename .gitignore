@@ -1,6 +1,6 @@
 # Build outputs
 dist/
-
+.codebase-memory/
 # Browser binaries (downloaded at runtime)
 browsers/
 

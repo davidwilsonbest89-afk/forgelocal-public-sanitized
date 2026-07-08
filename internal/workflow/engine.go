@@ -119,7 +119,10 @@ func (e *Engine) Execute(w *Workflow) []Result {
 func (e *Engine) executeStep(action, profileID string, params map[string]any, vars map[string]string) (string, error) {
 	switch action {
 	case "create_profile":
-		body := map[string]any{"name": params["name"], "engine": params["engine"]}
+		if _, ok := params["engine"]; ok {
+			return "", fmt.Errorf("engine was removed in v2; use runtime_id")
+		}
+		body := map[string]any{"name": params["name"], "runtime_id": params["runtime_id"]}
 		if v, ok := params["group"]; ok {
 			body["group"] = v
 		}

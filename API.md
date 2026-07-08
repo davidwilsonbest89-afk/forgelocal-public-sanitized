@@ -81,7 +81,7 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Brand Account 1",
-    "engine": "firefox",
+    "runtime_id": "camoufox",
     "group": "Client A",
     "tags": ["facebook", "brand"],
     "proxy": {
@@ -99,7 +99,7 @@ Fields:
 | Field | Description |
 |------|-------------|
 | `name` | Required profile name |
-| `engine` | `firefox` for Camoufox or `chromium` for CloakBrowser |
+| `runtime_id` | Runtime provider id, for example `camoufox` or `cloakbrowser` |
 | `group` | Optional grouping label |
 | `tags` | Optional string tags |
 | `proxy` | Optional SOCKS5 or HTTP proxy configuration |
@@ -258,7 +258,7 @@ curl -X POST http://127.0.0.1:19280/api/sessions \
   "data": {
     "session_id": "sess_prof_a1b2c3d4e5f6",
     "profile_id": "prof_a1b2c3d4e5f6",
-    "engine": "firefox"
+    "runtime_id": "camoufox"
   }
 }
 ```
@@ -558,7 +558,7 @@ Search the web with a provider-backed search engine and return structured result
 |------|------|------|-------------|
 | `query` | string | Yes | Search query |
 | `engine` | string | No | Search engine: `google`, `bing`, or `duckduckgo`. Default `google` |
-| `profile_id` | string | Required if `session_id` is omitted | Chromium/CloakBrowser profile to use |
+| `profile_id` | string | Required if `session_id` is omitted | Profile whose runtime supports agent web sessions |
 | `session_id` | string | No | Existing agent session to reuse; when omitted, a new session/page is created |
 | `max_results` | number | No | Maximum results. Default `10`; values above `30` are clamped by `WebSearch` |
 
@@ -600,7 +600,7 @@ Navigate to a URL and extract structured content: URL, title, optional meta desc
 | Parameter | Type | Required | Description |
 |------|------|------|-------------|
 | `url` | string | Yes | URL to explore; `https://` is prepended when no `http://` or `https://` prefix is provided |
-| `profile_id` | string | Required if `session_id` is omitted | Chromium/CloakBrowser profile to use |
+| `profile_id` | string | Required if `session_id` is omitted | Profile whose runtime supports agent web sessions |
 | `session_id` | string | No | Existing agent session to reuse; when omitted, a new session/page is created |
 | `max_text_length` | number | No | Maximum text length. Default `3000`; extraction clamps to `10000` |
 | `max_links` | number | No | Maximum links to extract. Default `50`; extraction clamps to `200` |
@@ -782,7 +782,7 @@ Workflow `screenshot` actions now call the REST screenshot endpoint and save the
 
 #### `doctor_profile`
 
-Return profile readiness data: engine, group, profile/download directories, browser running status, Playwright Bind endpoint presence, active URL, tab count, effective proxy source/mode, and active agent web sessions.
+Return profile readiness data: runtime_id, group, profile/download directories, browser running status, Playwright Bind endpoint presence, active URL, tab count, effective proxy source/mode, and active agent web sessions.
 
 ### Common Patterns
 

@@ -628,7 +628,7 @@ func (s *Server) toolDoctorProfile(args map[string]any) (any, *mcpError) {
 		"profile_id":          p.ID,
 		"name":                p.Name,
 		"group":               p.Group,
-		"engine":              p.Engine,
+		"runtime_id":          p.RuntimeID,
 		"profile_dir":         p.ProfileDir,
 		"downloads_dir":       filepath.Join(p.ProfileDir, "downloads"),
 		"browser_running":     running,

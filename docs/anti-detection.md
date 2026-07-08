@@ -19,12 +19,13 @@ CloakBrowser 使用**單一種子（seed）**在 C++ 層面自動生成所有指
 | `--fingerprint=SEED` | `profile.FingerprintSeed` | 主種子，決定所有指紋值 |
 | `--fingerprint-timezone=TZ` | GeoIP 偵測 | 時區（如 `Asia/Taipei`） |
 | `--fingerprint-locale=LOCALE` | GeoIP 偵測 | 語系（如 `zh-TW`） |
-| `--fingerprint-platform=windows` | Linux 自動加 | OS 偽裝（Linux→Windows） |
+| `--fingerprint-platform=PLATFORM` | `runtimes.cloakbrowser.settings.fingerprint_platform` 或平台預設 | CloakBrowser 指紋平台；`auto` 時 macOS→`macos`，其他平台→`windows` |
 | `--fingerprint-webrtc-ip=auto` | 有 proxy 時自動加 | WebRTC IP 偽裝 |
 | `--fingerprint-hardware-concurrency=N` | 指紋池 | CPU 核心數 |
 | `--fingerprint-screen-width=W` | 指紋池 | 螢幕寬度 |
 | `--fingerprint-screen-height=H` | 指紋池 | 螢幕高度 |
-| `--fingerprint-fonts-dir=PATH` | Docker 自動偵測 | 字型目錄（對抗 Kasada/Akamai） |
+| `--fingerprint-fonts-dir=PATH` | `runtimes.cloakbrowser.settings.fonts_dir` 或 Linux `/usr/share/fonts` | 目標平台字型目錄；Windows 身份需真正 Windows 字型以改善 Pixelscan/CreepJS 字型一致性 |
+| `--fingerprint-storage-quota=MB` | `runtimes.cloakbrowser.settings.storage_quota_mb` | Storage quota 覆寫；可改善 BrowserScan non-incognito，但可能和 FingerprintJS 取捨 |
 | `--no-sandbox` | Docker 自動偵測 | 停用 kernel sandbox |
 
 ### 自動生成的值（由 seed 決定，不需外部傳入）
@@ -42,12 +43,13 @@ CloakBrowser 使用**單一種子（seed）**在 C++ 層面自動生成所有指
 - **無 GPU 環境也能通過 WebGL 偵測** — seed 在渲染管線層面生成一致的假輸出
 - **同一 seed = 同一身份** — 適合「回訪者」場景
 - **不同 seed = 不同身份** — 每個 profile 自動分配不同 seed
-- **49+ C++ 層級 patch** — canvas, WebGL, audio, fonts, GPU, screen, WebRTC, network timing, CDP
+- **57 個 source-level fingerprint patches（CloakBrowser v146 Linux/Windows）** — canvas, WebGL, audio, fonts, GPU, screen, WebRTC, storage quota, CDP 等。BrowseForge 使用公開 wrapper/flag contract；CloakBrowser public repo 不含完整 Chromium C++ patch source。
 
-### 已知限制
+### 已知限制與取捨
 
-- macOS binary 只有 26 patches（Linux/Windows 有 57）
-- `--fingerprint-storage-quota` 未設定（FingerprintJS vs BrowserScan 的 incognito 偵測取捨）
+- macOS fingerprint profile 對 aggressive detector 有已知不一致；CloakBrowser wrapper 預設 macOS 使用 `--fingerprint-platform=macos`，Linux/Windows 使用 `windows`。
+- `--fingerprint-storage-quota` 是取捨：預設 auto 約 500MB 偏向通過 FingerprintJS，但 BrowserScan 可能仍扣 non-incognito；較高值（例如 5000MB）可通過 BrowserScan，但可能觸發 FingerprintJS。
+- `safe_gpu`、`auto_safe_gpu_fallback`、`isolated_runtime_cache` 是啟動穩定性策略，不是 stealth 加分策略；無 GPU VM 優先用 `auto_safe_gpu_fallback`，避免預設關 GPU 造成 WebGL authenticity 下降。
 
 ---
 
@@ -90,25 +92,29 @@ Camoufox 透過 `CAMOU_CONFIG` 環境變數接收 JSON，在 C++ 層面攔截對
 
 **原因**：只傳 renderer/vendor 會導致字串宣稱是 NVIDIA 但 `getParameter()` 回傳軟體渲染器的值，被 WAF 偵測為不一致。
 
-### 不傳給 Camoufox 的欄位
+### Camoufox schema 注意事項
 
-以下欄位曾經存在於指紋池但已移除（Camoufox 不認識）：
-- ~~`headers.User-Agent`~~ — Camoufox 從 `navigator.userAgent` 自動生成
-- ~~`headers.Accept-Language`~~ — Camoufox 從 locale 自動生成
-- ~~`_meta`~~ — 內部標記
-- ~~`audio:seed`~~ — 非有效 Camoufox key
+Camoufox v135 的 `settings/camoucfg.jvv` 確認下列欄位有效：
+
+- `headers.User-Agent`、`headers.Accept-Language`
+- `navigator.userAgent`、`navigator.platform`、`navigator.oscpu`
+- `navigator.language`、`navigator.languages`
+- `fonts`、`fonts:spacing_seed`
+- `AudioContext:sampleRate`、`AudioContext:outputLatency`、`AudioContext:maxChannelCount`
+- `webGl:*` / `webGl2:*` 的 extensions、parameters、shader precision、context attributes
+
+`audio:seed` 不是有效 Camoufox key。需要 audio 控制時應使用 `AudioContext:*` 欄位，且值必須來自真實裝置分布或保守平台預設。
 
 ### 環境變數傳遞
 
 ```go
-Env: map[string]string{
-    "CAMOU_CONFIG": string(configJSON),
-    "DISPLAY":      os.Getenv("DISPLAY"),  // Docker/Xvfb 需要
-    "HOME":         os.Getenv("HOME"),
-}
+Env: camoufoxEnv(configJSON, map[string]string{
+    "DISPLAY": os.Getenv("DISPLAY"),  // Docker/Xvfb 需要
+    "HOME":    os.Getenv("HOME"),
+})
 ```
 
-注意：Playwright 的 `Env` 欄位是**替換**而非合併，必須明確傳入 `DISPLAY` 和 `HOME`。
+Camoufox 的 `MaskConfig` 會優先讀取 `CAMOU_CONFIG_1`、`CAMOU_CONFIG_2` ...，再 fallback 到單一 `CAMOU_CONFIG`。BrowseForge 對大型 WebGL/voices/fonts 設定使用 chunked env，避免單一環境變數過長。
 
 ### 已知限制
 

@@ -62,10 +62,29 @@ func TestCLIInitConfigTokenAndDoctorJSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read config: %v", err)
 	}
-	if !strings.Contains(string(configData), `"cloakbrowser"`) ||
-		!strings.Contains(string(configData), `"safe_gpu": false`) ||
-		!strings.Contains(string(configData), `"auto_safe_gpu_fallback": false`) {
-		t.Fatalf("generated config missing cloakbrowser defaults: %s", string(configData))
+	var generated map[string]any
+	if err := json.Unmarshal(configData, &generated); err != nil {
+		t.Fatalf("decode generated config: %v\n%s", err, string(configData))
+	}
+	if _, ok := generated["camoufox_path"]; ok {
+		t.Fatalf("generated config includes legacy camoufox_path: %#v", generated)
+	}
+	if _, ok := generated["cloakbrowser_path"]; ok {
+		t.Fatalf("generated config includes legacy cloakbrowser_path: %#v", generated)
+	}
+	if _, ok := generated["cloakbrowser"]; ok {
+		t.Fatalf("generated config includes legacy root cloakbrowser settings: %#v", generated)
+	}
+	runtimes, ok := generated["runtimes"].(map[string]any)
+	if !ok {
+		t.Fatalf("generated config missing runtimes object: %#v", generated)
+	}
+	cloak, ok := runtimes["cloakbrowser"].(map[string]any)
+	if !ok {
+		t.Fatalf("generated config missing cloakbrowser runtime: %#v", runtimes)
+	}
+	if _, ok := cloak["settings"].(map[string]any); !ok {
+		t.Fatalf("generated cloakbrowser runtime missing settings: %#v", cloak)
 	}
 	for _, dir := range []string{"profiles", "data", "logs"} {
 		if _, err := os.Stat(filepath.Join(baseDir, dir)); err != nil {
@@ -232,6 +251,135 @@ func TestCLIFullBackupCreateAndRestore(t *testing.T) {
 	}
 	if linkTarget != "target.txt" {
 		t.Fatalf("browser symlink target = %q", linkTarget)
+	}
+}
+
+func TestCLIMigrateProfilesApplyBacksUpRuntimeProfileWhenRemovingEngine(t *testing.T) {
+	baseDir := t.TempDir()
+	profilePath := filepath.Join(baseDir, "profiles", "prof_runtime", "profile.json")
+	original := []byte(`{"id":"prof_runtime","name":"Has runtime","engine":"chromium","runtime_id":"cloakbrowser"}`)
+	if err := os.MkdirAll(filepath.Dir(profilePath), 0755); err != nil {
+		t.Fatalf("mkdir profile: %v", err)
+	}
+	if err := os.WriteFile(profilePath, original, 0644); err != nil {
+		t.Fatalf("write profile: %v", err)
+	}
+
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"--base-dir", baseDir, "migrate", "profiles", "--from", "v1", "--to", "v2", "--apply", "--json"}, &stdout, &stderr); code != 0 {
+		t.Fatalf("migrate exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+
+	backup, err := os.ReadFile(profilePath + ".v1.bak")
+	if err != nil {
+		t.Fatalf("read backup: %v", err)
+	}
+	if string(backup) != string(original) {
+		t.Fatalf("backup = %s, want original %s", string(backup), string(original))
+	}
+	migrated, err := os.ReadFile(profilePath)
+	if err != nil {
+		t.Fatalf("read migrated profile: %v", err)
+	}
+	var got map[string]any
+	if err := json.Unmarshal(migrated, &got); err != nil {
+		t.Fatalf("decode migrated profile: %v\n%s", err, string(migrated))
+	}
+	if _, ok := got["engine"]; ok {
+		t.Fatalf("migrated profile still has engine: %#v", got)
+	}
+	if got["runtime_id"] != "cloakbrowser" {
+		t.Fatalf("runtime_id = %v, want existing cloakbrowser", got["runtime_id"])
+	}
+}
+
+func TestCLIMigrateProfilesApplyValidatesAllProfilesBeforeWriting(t *testing.T) {
+	baseDir := t.TempDir()
+	goodPath := filepath.Join(baseDir, "profiles", "01-good", "profile.json")
+	badPath := filepath.Join(baseDir, "profiles", "02-bad", "profile.json")
+	goodOriginal := []byte(`{"id":"prof_good","name":"Good","engine":"firefox"}`)
+	badOriginal := []byte(`{"id":"prof_bad","name":"Bad","engine":"webkit"}`)
+	for path, data := range map[string][]byte{
+		goodPath: goodOriginal,
+		badPath:  badOriginal,
+	} {
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatalf("mkdir %s: %v", path, err)
+		}
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			t.Fatalf("write %s: %v", path, err)
+		}
+	}
+
+	var stdout, stderr bytes.Buffer
+	code := runCLI([]string{"--base-dir", baseDir, "migrate", "profiles", "--from", "v1", "--to", "v2", "--apply", "--json"}, &stdout, &stderr)
+	if code != 1 {
+		t.Fatalf("migrate exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), `unsupported v1 engine "webkit"`) {
+		t.Fatalf("stderr missing unsupported engine: %s", stderr.String())
+	}
+	goodAfter, err := os.ReadFile(goodPath)
+	if err != nil {
+		t.Fatalf("read good profile: %v", err)
+	}
+	if string(goodAfter) != string(goodOriginal) {
+		t.Fatalf("good profile was rewritten before later validation failed: %s", string(goodAfter))
+	}
+	if _, err := os.Stat(goodPath + ".v1.bak"); !os.IsNotExist(err) {
+		t.Fatalf("good profile backup err = %v, want no backup before validation completes", err)
+	}
+	badAfter, err := os.ReadFile(badPath)
+	if err != nil {
+		t.Fatalf("read bad profile: %v", err)
+	}
+	if string(badAfter) != string(badOriginal) {
+		t.Fatalf("bad profile = %s, want unchanged %s", string(badAfter), string(badOriginal))
+	}
+}
+
+func TestCLIMigrateProfilesApplyRejectsMalformedProfileBeforeWriting(t *testing.T) {
+	baseDir := t.TempDir()
+	goodPath := filepath.Join(baseDir, "profiles", "01-good", "profile.json")
+	badPath := filepath.Join(baseDir, "profiles", "02-bad", "profile.json")
+	goodOriginal := []byte(`{"id":"prof_good","name":"Good","engine":"firefox"}`)
+	badOriginal := []byte(`{"id":"prof_bad","name":"Bad","engine":`)
+	for path, data := range map[string][]byte{
+		goodPath: goodOriginal,
+		badPath:  badOriginal,
+	} {
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatalf("mkdir %s: %v", path, err)
+		}
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			t.Fatalf("write %s: %v", path, err)
+		}
+	}
+
+	var stdout, stderr bytes.Buffer
+	code := runCLI([]string{"--base-dir", baseDir, "migrate", "profiles", "--from", "v1", "--to", "v2", "--apply", "--json"}, &stdout, &stderr)
+	if code != 1 {
+		t.Fatalf("migrate exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stderr.String(), badPath) {
+		t.Fatalf("stderr missing malformed profile path %s: %s", badPath, stderr.String())
+	}
+	goodAfter, err := os.ReadFile(goodPath)
+	if err != nil {
+		t.Fatalf("read good profile: %v", err)
+	}
+	if string(goodAfter) != string(goodOriginal) {
+		t.Fatalf("good profile was rewritten before malformed profile failed validation: %s", string(goodAfter))
+	}
+	if _, err := os.Stat(goodPath + ".v1.bak"); !os.IsNotExist(err) {
+		t.Fatalf("good profile backup err = %v, want no backup before validation completes", err)
+	}
+	badAfter, err := os.ReadFile(badPath)
+	if err != nil {
+		t.Fatalf("read bad profile: %v", err)
+	}
+	if string(badAfter) != string(badOriginal) {
+		t.Fatalf("bad profile = %s, want unchanged %s", string(badAfter), string(badOriginal))
 	}
 }
 

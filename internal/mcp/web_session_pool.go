@@ -24,8 +24,8 @@ const (
 // SessionPool manages agent web_search/web_explore sessions.
 //
 // Design:
-//   - browser.Manager owns one CloakBrowser/Chromium browser per profile.
-//   - Each browser.Manager session exposes a Playwright Bind endpoint (ConnectURL).
+//   - browser.Manager owns one browser runtime per profile.
+//   - Agent session support is selected by runtime capability, not legacy engine name.
 //   - SessionPool connects to that endpoint and creates one independent Page per agent session.
 //   - GC only closes per-agent pages; it never closes the profile browser.
 type SessionPool struct {
@@ -122,17 +122,14 @@ func (sp *SessionPool) StartGC(interval time.Duration) func() {
 	return func() { close(stop) }
 }
 
-// CreateSession creates a new agent page session for a Chromium profile.
+// CreateSession creates a new agent page session for a runtime that supports it.
 func (sp *SessionPool) CreateSession(profileID string) (*WebSession, error) {
 	if profileID == "" {
 		return nil, fmt.Errorf("profile_id is required")
 	}
-	p, pool, err := sp.ensureProfilePool(profileID)
+	_, pool, err := sp.ensureProfilePool(profileID)
 	if err != nil {
 		return nil, err
-	}
-	if p.Engine != "chromium" {
-		return nil, fmt.Errorf("profile %s is not a Chromium profile (web search requires Chrome/CloakBrowser)", profileID)
 	}
 
 	pool.mu.Lock()
@@ -379,8 +376,12 @@ func (sp *SessionPool) ensureProfilePool(profileID string) (*profile.Profile, *P
 	if err != nil {
 		return nil, nil, err
 	}
-	if p.Engine != "chromium" {
-		return nil, nil, fmt.Errorf("profile %s is not a Chromium profile (web search requires Chrome/CloakBrowser)", profileID)
+	desc, err := sp.mgr.RuntimeRegistry().ResolveProfile(p)
+	if err != nil {
+		return nil, nil, err
+	}
+	if !desc.Capabilities.SupportsAgentWebSessions || !desc.Capabilities.SupportsPlaywrightBind {
+		return nil, nil, fmt.Errorf("profile %s runtime %s does not support agent web sessions", profileID, desc.ID)
 	}
 
 	browserSession, ok := sp.mgr.GetSession("sess_" + profileID)
@@ -390,8 +391,8 @@ func (sp *SessionPool) ensureProfilePool(profileID string) (*profile.Profile, *P
 			return nil, nil, fmt.Errorf("launch profile browser: %w", err)
 		}
 	}
-	if browserSession.Engine != "chromium" {
-		return nil, nil, fmt.Errorf("browser session %s is not chromium", browserSession.ID)
+	if browserSession.RuntimeID != "" && browserSession.RuntimeID != string(desc.ID) {
+		return nil, nil, fmt.Errorf("browser session %s runtime %s does not match profile runtime %s", browserSession.ID, browserSession.RuntimeID, desc.ID)
 	}
 	if browserSession.ConnectURL == "" {
 		return nil, nil, fmt.Errorf("browser session %s has no Playwright bind endpoint", browserSession.ID)

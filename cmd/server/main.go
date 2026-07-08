@@ -218,10 +218,28 @@ func runServer(flags *serveFlags) {
 		}
 	}
 
-	// Update config with browser paths if changed
-	if camoufoxPath != cfg.CamoufoxPath || chromiumPath != cfg.CloakBrowserPath {
-		cfg.CamoufoxPath = camoufoxPath
-		cfg.CloakBrowserPath = chromiumPath
+	// Update v2 runtime config with browser paths if changed.
+	if cfg.Runtimes == nil {
+		cfg.Runtimes = map[string]config.RuntimeConfig{}
+	}
+	camoufoxRuntime := cfg.Runtimes["camoufox"]
+	cloakRuntime := cfg.Runtimes["cloakbrowser"]
+	if camoufoxPath != camoufoxRuntime.BinaryPath || chromiumPath != cloakRuntime.BinaryPath {
+		camoufoxEnabled := camoufoxPath != ""
+		cloakEnabled := chromiumPath != ""
+		camoufoxRuntime.BinaryPath = camoufoxPath
+		camoufoxRuntime.Enabled = &camoufoxEnabled
+		camoufoxRuntime.Family = "firefox"
+		camoufoxRuntime.DisplayName = "Camoufox"
+		cloakRuntime.BinaryPath = chromiumPath
+		cloakRuntime.Enabled = &cloakEnabled
+		cloakRuntime.Family = "chromium"
+		cloakRuntime.DisplayName = "CloakBrowser"
+		if cloakRuntime.Settings == nil {
+			cloakRuntime.Settings = &config.CloakBrowserConfig{FingerprintPlatform: "auto", TargetPlatformPolicy: "warn", ExtraArgs: []string{}}
+		}
+		cfg.Runtimes["camoufox"] = camoufoxRuntime
+		cfg.Runtimes["cloakbrowser"] = cloakRuntime
 		cfgJSON, err := json.MarshalIndent(cfg, "", "  ")
 		if err != nil {
 			slog.Error("config encode", "error", err)

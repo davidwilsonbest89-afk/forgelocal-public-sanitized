@@ -4,13 +4,13 @@ BrowseForge now treats dual-browser support as the core product contract. The ea
 
 ## Current Runtime Contract
 
-Every profile has an `engine` value:
+Every v2 profile has one runtime identity:
 
-- `firefox` launches Camoufox.
-- `chromium` launches CloakBrowser.
-- Empty or older profiles default to `firefox` for backward compatibility.
+- `runtime_id` identifies the concrete provider. Built-in values are `camoufox` and `cloakbrowser`.
+- Browser family is runtime metadata (`firefox` or `chromium`), not a profile field.
+- v1 profiles that only contain `engine` must be migrated with `BrowseForge migrate profiles --from v1 --to v2 --apply`.
 
-The REST API, MCP server, dashboard, workflow runner, session store, backups, and Playwright connection model use the same profile contract. Engine-specific behavior is isolated in the browser manager and browser download layer.
+The REST API, MCP server, dashboard, workflow runner, session store, backups, and Playwright connection model use the same runtime-provider contract. Clients must send `runtime_id`; `engine` was removed from profile create/update APIs. Provider-specific behavior is isolated in runtime providers, the browser manager, and the browser download layer.
 
 ## Firefox/Camoufox Path
 
@@ -52,4 +52,4 @@ Treat these as historical unless they are explicitly refreshed:
 - Run release preflight with `REQUIRE_CLOAKBROWSER=1` on release machines that provide a verified CloakBrowser binary.
 - Keep public docs English-first with Traditional Chinese counterparts for release-critical workflows.
 - Continue replacing old internal names such as `camoufoxmulti` and `cmfx` when they are not part of backward-compatible persisted data.
-- Document any future move from CloakBrowser to a maintained Chromium fork as an engine-provider change, not as an API contract change.
+- Register future providers as runtime-provider changes; do not encode a new fork or vendor as another public `engine` value unless the browser family itself changes.

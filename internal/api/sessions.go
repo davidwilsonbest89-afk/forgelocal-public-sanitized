@@ -39,7 +39,7 @@ func (h *handler) createSession(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, 201, map[string]any{"data": map[string]any{
 		"session_id": sess.ID,
 		"profile_id": sess.ProfileID,
-		"engine":     sess.Engine,
+		"runtime_id": sess.RuntimeID,
 	}})
 }
 
@@ -50,7 +50,7 @@ func (h *handler) listSessions(w http.ResponseWriter, r *http.Request) {
 		result = append(result, map[string]any{
 			"session_id": s.ID,
 			"profile_id": s.ProfileID,
-			"engine":     s.Engine,
+			"runtime_id": s.RuntimeID,
 		})
 	}
 	writeJSON(w, 200, map[string]any{"data": result, "total": len(result)})
@@ -315,7 +315,7 @@ func (h *handler) playwrightEndpoint(w http.ResponseWriter, r *http.Request) {
 			entry := map[string]string{
 				"session_id": s.ID,
 				"profile_id": s.ProfileID,
-				"engine":     s.Engine,
+				"runtime_id": s.RuntimeID,
 				"endpoint":   s.ConnectURL,
 			}
 			if h.cfg.Host != "127.0.0.1" {

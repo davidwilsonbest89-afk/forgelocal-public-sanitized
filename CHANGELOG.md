@@ -2,9 +2,23 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
-## Unreleased
+## v2.0.0 - 2026-07-07
 
-Nothing yet.
+### Changed
+
+- Replaced the public profile browser-family contract with explicit runtime providers. Profile create/update APIs, MCP profile tools, workflows, dashboard forms, and profile storage now use `runtime_id` values such as `camoufox` and `cloakbrowser`.
+- Moved runtime binary paths and CloakBrowser launch/fingerprint settings under `runtimes.<id>` configuration, with `default_runtime_id` for UI defaults and `/api/runtimes` metadata.
+- Updated Docker, Linux server, release, and platform documentation for the `v2.0.0` release tag.
+
+### Added
+
+- Added `BrowseForge migrate profiles --from v1 --to v2 [--apply]` to migrate legacy profile JSON safely, including original-file `.v1.bak` backups for every rewritten profile.
+- Added runtime capability metadata so API, MCP web sessions, dashboard, and browser manager code gate behavior on provider capabilities instead of hard-coded engine strings.
+
+### Fixed
+
+- Rejected deprecated `engine` profile create/update inputs at REST and MCP boundaries, rejected non-string or disabled `runtime_id` updates, and prevented dashboard selection of disabled runtimes before metadata loads.
+- Preserved anti-detection ownership of managed CloakBrowser fingerprint flags, Camoufox WebGL normalization, and large `CAMOU_CONFIG` chunking after the runtime-provider refactor.
 
 ## v1.10.2 - 2026-07-05
 

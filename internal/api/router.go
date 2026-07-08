@@ -20,6 +20,7 @@ import (
 	"browseforge/internal/groups"
 	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 )
 
 func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, groupStores ...*groups.Store) (*chi.Mux, error) {
@@ -53,6 +54,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Use(h.authMiddleware)
 
 		r.Post("/api/profiles", h.createProfile)
+		r.Get("/api/runtimes", h.listRuntimes)
 		r.Get("/api/profiles", h.listProfiles)
 		r.Get("/api/profiles/{id}", h.getProfile)
 		r.Put("/api/profiles/{id}", h.updateProfile)
@@ -121,9 +123,35 @@ func (h *handler) health(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]any{"status": "ok"})
 }
 
+func (h *handler) listRuntimes(w http.ResponseWriter, r *http.Request) {
+	reg := h.mgr.RuntimeRegistry()
+	writeJSON(w, http.StatusOK, map[string]any{"data": reg.List(), "default_runtime_id": reg.DefaultID()})
+}
+
+func requireEnabledRuntime(desc bfruntime.Descriptor) error {
+	if !desc.Enabled {
+		return fmt.Errorf("runtime %q is disabled", desc.ID)
+	}
+	return nil
+}
+
 func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
+	var raw map[string]json.RawMessage
+	if err := json.NewDecoder(r.Body).Decode(&raw); err != nil {
+		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
+		return
+	}
+	if _, ok := raw["engine"]; ok {
+		writeError(w, http.StatusBadRequest, "DEPRECATED_FIELD", "engine was removed in v2; use runtime_id")
+		return
+	}
+	data, err := json.Marshal(raw)
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
+		return
+	}
 	var p profile.Profile
-	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
+	if err := json.Unmarshal(data, &p); err != nil {
 		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
 		return
 	}
@@ -131,47 +159,53 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, "MISSING_NAME", "name is required")
 		return
 	}
-	// Auto-assign fingerprint from pool if not provided
-	if p.Fingerprint == nil && h.fpPool != nil {
-		engine := p.Engine
-		if engine == "" {
-			engine = "firefox"
-		}
-		// Chromium (CloakBrowser) uses seed-based fingerprint at C++ level — skip pool
-		if engine != "chromium" {
-			fpBrowser := engine
-			fp, err := h.fpPool.Pick(fpBrowser, "windows")
-			if err != nil {
-				fp, err = h.fpPool.Pick(fpBrowser, "macos")
-			}
-			if err == nil {
-				effectiveProxy := h.effectiveProxyForProfile(&p)
-				if effectiveProxy.Proxy != nil {
-					proxy := effectiveProxy.Proxy
-					tz, locale := fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
-					fp["timezone"] = tz
-					fp["navigator.language"] = locale
-				} else {
-					fingerprint.AdjustToLocal(fp)
-				}
-				p.Fingerprint = fp
-			}
-		}
+	desc, err := h.mgr.RuntimeRegistry().ApplyProfileDefaults(&p)
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		return
 	}
-	// Auto-generate fingerprint seed for Chromium (CloakBrowser)
-	if p.Engine == "chromium" && p.FingerprintSeed == 0 {
-		b := make([]byte, 4)
-		if _, err := rand.Read(b); err != nil {
-			writeError(w, http.StatusInternalServerError, "RANDOM_FAILED", err.Error())
-			return
-		}
-		p.FingerprintSeed = uint32(b[0])<<24 | uint32(b[1])<<16 | uint32(b[2])<<8 | uint32(b[3])
+	if err := requireEnabledRuntime(desc); err != nil {
+		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		return
+	}
+	if err := h.prepareProfileIdentity(&p, desc); err != nil {
+		writeError(w, http.StatusInternalServerError, "PREPARE_PROFILE_FAILED", err.Error())
+		return
 	}
 	if err := h.store.Create(&p); err != nil {
 		writeError(w, http.StatusInternalServerError, "CREATE_FAILED", err.Error())
 		return
 	}
 	writeJSON(w, http.StatusCreated, map[string]any{"data": p})
+}
+
+func (h *handler) prepareProfileIdentity(p *profile.Profile, desc bfruntime.Descriptor) error {
+	if p.Fingerprint == nil && h.fpPool != nil && desc.FingerprintPoolKey != "" {
+		fp, err := h.fpPool.Pick(desc.FingerprintPoolKey, "windows")
+		if err != nil {
+			fp, err = h.fpPool.Pick(desc.FingerprintPoolKey, "macos")
+		}
+		if err == nil {
+			effectiveProxy := h.effectiveProxyForProfile(p)
+			if effectiveProxy.Proxy != nil {
+				proxy := effectiveProxy.Proxy
+				tz, locale := fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
+				fp["timezone"] = tz
+				fp["navigator.language"] = locale
+			} else {
+				fingerprint.AdjustToLocal(fp)
+			}
+			p.Fingerprint = fp
+		}
+	}
+	if desc.Capabilities.SupportsSeedFingerprint && p.FingerprintSeed == 0 {
+		b := make([]byte, 4)
+		if _, err := rand.Read(b); err != nil {
+			return fmt.Errorf("generate fingerprint seed: %w", err)
+		}
+		p.FingerprintSeed = uint32(b[0])<<24 | uint32(b[1])<<16 | uint32(b[2])<<8 | uint32(b[3])
+	}
+	return nil
 }
 
 func (h *handler) listProfiles(w http.ResponseWriter, r *http.Request) {
@@ -196,6 +230,34 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
 		return
 	}
+	if _, ok := updates["engine"]; ok {
+		writeError(w, http.StatusBadRequest, "DEPRECATED_FIELD", "engine was removed in v2; use runtime_id")
+		return
+	}
+	if _, runtimeChanged := updates["runtime_id"]; runtimeChanged {
+		current, err := h.store.Get(chi.URLParam(r, "id"))
+		if err != nil {
+			writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+			return
+		}
+		draft := *current
+		v, ok := updates["runtime_id"].(string)
+		if !ok {
+			writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", "runtime_id must be a string")
+			return
+		}
+		draft.RuntimeID = v
+		desc, err := h.mgr.RuntimeRegistry().ApplyProfileDefaults(&draft)
+		if err != nil {
+			writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+			return
+		}
+		if err := requireEnabledRuntime(desc); err != nil {
+			writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+			return
+		}
+		updates["runtime_id"] = draft.RuntimeID
+	}
 	p, err := h.store.Update(chi.URLParam(r, "id"), updates)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
@@ -213,7 +275,21 @@ func (h *handler) deleteProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) duplicateProfile(w http.ResponseWriter, r *http.Request) {
-	p, err := h.store.Duplicate(chi.URLParam(r, "id"))
+	src, err := h.store.Get(chi.URLParam(r, "id"))
+	if err != nil {
+		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+		return
+	}
+	desc, err := h.mgr.RuntimeRegistry().ApplyProfileDefaults(src)
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		return
+	}
+	if err := requireEnabledRuntime(desc); err != nil {
+		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		return
+	}
+	p, err := h.store.Duplicate(src.ID)
 	if err != nil {
 		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
 		return

@@ -107,6 +107,15 @@ func (h *handler) importProfile(w http.ResponseWriter, r *http.Request) {
 	}
 	p.ID = "" // generate new ID
 	p.ContainerID = ""
+	desc, err := h.mgr.RuntimeRegistry().ApplyProfileDefaults(&p)
+	if err != nil {
+		writeError(w, 400, "INVALID_RUNTIME", err.Error())
+		return
+	}
+	if err := requireEnabledRuntime(desc); err != nil {
+		writeError(w, 400, "INVALID_RUNTIME", err.Error())
+		return
+	}
 
 	if err := h.store.Create(&p); err != nil {
 		writeError(w, 500, "IMPORT_FAILED", err.Error())
@@ -175,46 +184,71 @@ func (h *handler) restore(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	imported := 0
-	groupsImported := 0
+	var profilesToImport []profile.Profile
 	for _, f := range zr.File {
-		if f.Name == "groups.json" && h.groupStore != nil {
-			rc, err := f.Open()
-			if err != nil {
-				continue
-			}
-			data, err := io.ReadAll(rc)
-			rc.Close()
-			if err != nil {
-				continue
-			}
-			if n, err := h.groupStore.Import(data); err == nil {
-				groupsImported = n
-			}
-			continue
-		}
 		if filepath.Base(f.Name) != "profile.json" {
 			continue
 		}
 		rc, err := f.Open()
 		if err != nil {
-			continue
+			writeError(w, 400, "READ_FAILED", err.Error())
+			return
 		}
 		data, err := io.ReadAll(rc)
 		rc.Close()
 		if err != nil {
-			continue
+			writeError(w, 400, "READ_FAILED", err.Error())
+			return
 		}
-
 		var p profile.Profile
 		if err := json.Unmarshal(data, &p); err != nil {
-			continue
+			writeError(w, 400, "INVALID_PROFILE", err.Error())
+			return
 		}
 		p.ID = ""
 		p.ContainerID = ""
-		if h.store.Create(&p) == nil {
-			imported++
+		desc, err := h.mgr.RuntimeRegistry().ApplyProfileDefaults(&p)
+		if err != nil {
+			writeError(w, 400, "INVALID_RUNTIME", err.Error())
+			return
 		}
+		if err := requireEnabledRuntime(desc); err != nil {
+			writeError(w, 400, "INVALID_RUNTIME", err.Error())
+			return
+		}
+		profilesToImport = append(profilesToImport, p)
+	}
+
+	imported := 0
+	groupsImported := 0
+	for _, f := range zr.File {
+		if f.Name != "groups.json" || h.groupStore == nil {
+			continue
+		}
+		rc, err := f.Open()
+		if err != nil {
+			writeError(w, 400, "READ_FAILED", err.Error())
+			return
+		}
+		data, err := io.ReadAll(rc)
+		rc.Close()
+		if err != nil {
+			writeError(w, 400, "READ_FAILED", err.Error())
+			return
+		}
+		n, err := h.groupStore.Import(data)
+		if err != nil {
+			writeError(w, 400, "INVALID_GROUPS", err.Error())
+			return
+		}
+		groupsImported = n
+	}
+	for i := range profilesToImport {
+		if err := h.store.Create(&profilesToImport[i]); err != nil {
+			writeError(w, 500, "RESTORE_FAILED", err.Error())
+			return
+		}
+		imported++
 	}
 	writeJSON(w, 200, map[string]any{"data": map[string]any{"imported": imported, "groups_imported": groupsImported}})
 }

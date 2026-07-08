@@ -76,7 +76,7 @@
 - [ ] 建立 config.json 結構 + 載入邏輯
 
 #### 1-2. Profile 系統（Go）
-- [ ] Profile JSON 結構（Camoufox 扁平格式，含 engine 欄位）
+- [ ] Profile JSON 結構（v2 `runtime_id` provider 欄位；legacy `engine` 需先遷移）
 - [ ] Profile CRUD：Create / Read / Update / Delete / Duplicate
 - [ ] 檔案系統持久化（atomic write）
 - [ ] 啟動時掃描 profiles/ 載入記憶體
@@ -325,14 +325,14 @@
 - [ ] Session 管理（PID tracking、CDP port）
 
 #### 10-2. 雙引擎 API
-- [ ] Profile.engine 欄位生效
-- [ ] POST /api/sessions 根據 engine 分派
+- [ ] Profile.runtime_id 欄位生效
+- [ ] POST /api/sessions 根據 runtime provider capability 分派
 - [ ] 所有瀏覽器操作 API 引擎無關（Playwright 抽象）
 - [ ] Cookie API 引擎分派（Firefox: extension, Chromium: Playwright）
 
 #### 10-3. 指紋池分引擎
 - [ ] fingerprint-suite 生成 Chrome 指紋池
-- [ ] 建立 profile 時根據 engine 取用
+- [ ] 建立 profile 時根據 runtime provider 取用
 
 ### Week 11：Sidebar 雙引擎 + 完善
 

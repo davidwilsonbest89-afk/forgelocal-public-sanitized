@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.10.2
+  ghcr.io/nczz/browseforge:v2.0.0
 ```
 
 The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.
@@ -181,14 +181,31 @@ BrowseForge creates `config.json` on first launch:
   "profiles_dir": "profiles",
   "data_dir": "data",
   "log_file": "logs/server.log",
-  "camoufox_path": "/path/to/browsers/camoufox/...",
-  "cloakbrowser_path": "/path/to/browsers/cloakbrowser/...",
-  "cloakbrowser": {
-    "safe_gpu": false,
-    "auto_safe_gpu_fallback": false,
-    "isolated_runtime_cache": false,
-    "repair_transient_cache_on_launch_failure": false,
-    "extra_args": []
+  "default_runtime_id": "camoufox",
+  "runtimes": {
+    "camoufox": {
+      "enabled": true,
+      "binary_path": "/path/to/browsers/camoufox/...",
+      "family": "firefox",
+      "display_name": "Camoufox"
+    },
+    "cloakbrowser": {
+      "enabled": true,
+      "binary_path": "/path/to/browsers/cloakbrowser/...",
+      "family": "chromium",
+      "display_name": "CloakBrowser",
+      "settings": {
+        "safe_gpu": false,
+        "auto_safe_gpu_fallback": false,
+        "isolated_runtime_cache": false,
+        "repair_transient_cache_on_launch_failure": false,
+        "fingerprint_platform": "auto",
+        "fonts_dir": "",
+        "storage_quota_mb": 0,
+        "target_platform_policy": "warn",
+        "extra_args": []
+      }
+    }
   },
   "fingerprint_dir": "data"
 }
@@ -202,22 +219,33 @@ BrowseForge creates `config.json` on first launch:
 | `profiles_dir` | Profile data directory | `profiles` |
 | `data_dir` | Token and fingerprint data directory | `data` |
 | `log_file` | Server log file | `logs/server.log` |
-| `camoufox_path` | Camoufox binary path | Auto-detected |
-| `cloakbrowser_path` | CloakBrowser binary path | Auto-detected |
-| `cloakbrowser.safe_gpu` | Add Chromium GPU-safe launch flags for Windows VM/headful compatibility | `false` |
-| `cloakbrowser.auto_safe_gpu_fallback` | Keep the first launch unchanged, then retry once with safe GPU and isolated runtime cache only after a GPU/cache launch failure | `false` |
-| `cloakbrowser.isolated_runtime_cache` | Use a per-launch Chromium disk cache directory under the profile runtime cache | `false` |
-| `cloakbrowser.repair_transient_cache_on_launch_failure` | Remove rebuildable Chromium cache directories after GPU/cache launch failures before the automatic retry | `false` |
-| `cloakbrowser.extra_args` | Additional CloakBrowser/Chromium args. BrowseForge ignores args that would override profile, proxy, cache, or debugging ownership. | `[]` |
+| `default_runtime_id` | Default runtime selected by generated config and UI flows | `camoufox` |
+| `runtimes.<id>.enabled` | Whether a runtime provider is available for profile creation/launch | Runtime-specific |
+| `runtimes.<id>.binary_path` | Runtime provider binary path. Current built-in providers are `camoufox` and `cloakbrowser`. | Auto-detected |
+| `runtimes.<id>.family` | Runtime browser family metadata: `firefox` or `chromium` | Provider default |
+| `runtimes.<id>.display_name` | Runtime name shown by `/api/runtimes`, MCP `list_runtimes`, and the Dashboard create form | Provider default |
+| `runtimes.cloakbrowser.settings.safe_gpu` | Add Chromium GPU-safe launch flags for Windows VM/headful compatibility | `false` |
+| `runtimes.cloakbrowser.settings.auto_safe_gpu_fallback` | Keep the first launch unchanged, then retry once with safe GPU and isolated runtime cache only after a GPU/cache launch failure | `false` |
+| `runtimes.cloakbrowser.settings.isolated_runtime_cache` | Use a per-launch Chromium disk cache directory under the profile runtime cache | `false` |
+| `runtimes.cloakbrowser.settings.repair_transient_cache_on_launch_failure` | Remove rebuildable Chromium cache directories after GPU/cache launch failures before the automatic retry | `false` |
+| `runtimes.cloakbrowser.settings.fingerprint_platform` | CloakBrowser fingerprint platform flag: `auto`, `macos`, `windows`, or `linux`; `auto` follows CloakBrowser wrapper defaults (`macos` on macOS, `windows` elsewhere) | `auto` |
+| `runtimes.cloakbrowser.settings.fonts_dir` | Optional directory passed as `--fingerprint-fonts-dir`; use a target-platform font pack to improve font/canvas consistency | empty |
+| `runtimes.cloakbrowser.settings.storage_quota_mb` | Optional `--fingerprint-storage-quota` override in MB; higher values can satisfy BrowserScan non-incognito checks but may trade off against FingerprintJS | `0` |
+| `runtimes.cloakbrowser.settings.target_platform_policy` | Runtime/identity coherence policy: `strict` rejects high-risk target/platform combinations, `warn` logs them, `allow` skips the guardrail | `warn` |
+| `runtimes.cloakbrowser.settings.extra_args` | Additional CloakBrowser/Chromium args. BrowseForge ignores args that would override profile, proxy, cache, or debugging ownership. | `[]` |
 | `fingerprint_dir` | Fingerprint JSON directory | `data` |
 
-The `cloakbrowser` block is host runtime policy, not profile identity. It only affects Chromium/CloakBrowser launches; Firefox/Camoufox profiles do not read these settings. For Windows VM environments where Chromium exits with GPU/cache errors such as `GPU process isn't usable` or `Unable to create cache`, use:
+The `runtimes.cloakbrowser.settings` block separates VM/runtime stability knobs from auditable fingerprint knobs. `safe_gpu`, `auto_safe_gpu_fallback`, `isolated_runtime_cache`, and `repair_transient_cache_on_launch_failure` are launch-stability policy. `fingerprint_platform`, `fonts_dir`, and `storage_quota_mb` are explicit CloakBrowser identity inputs instead of hidden `extra_args`. The block only affects the `cloakbrowser` runtime; `camoufox` profiles do not read these settings. For Windows VM environments where Chromium exits with GPU/cache errors such as `GPU process isn't usable` or `Unable to create cache`, use:
 
 ```json
 {
-  "cloakbrowser": {
-    "auto_safe_gpu_fallback": true,
-    "repair_transient_cache_on_launch_failure": true
+  "runtimes": {
+    "cloakbrowser": {
+      "settings": {
+        "auto_safe_gpu_fallback": true,
+        "repair_transient_cache_on_launch_failure": true
+      }
+    }
   }
 }
 ```
@@ -333,7 +361,7 @@ name: Multi-account login
 steps:
   - name: Create profile
     action: create_profile
-    params: { name: "FB Account", engine: firefox, var: p1 }
+    params: { name: "FB Account", runtime_id: camoufox, var: p1 }
 
   - name: Open browser
     action: open_browser

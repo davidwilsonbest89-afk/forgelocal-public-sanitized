@@ -427,7 +427,7 @@
   - 3.2.1.2.1 映射 `fingerprint.navigator.userAgent` → `"navigator.userAgent"`
   - 3.2.1.2.2 映射 `fingerprint.screen.width` → `"screen.width"`
   - 3.2.1.2.3 映射 `fingerprint.videoCard.renderer` → `"webGl:renderer"`
-  - 3.2.1.2.4 補充 fingerprint-suite 不生成的欄位：`canvas:seed`、`audio:seed`、`fonts:spacing_seed`（隨機 uint32）
+  - 3.2.1.2.4 補充 fingerprint-suite 不生成、且 Camoufox schema 支援的欄位：`canvas:seed`、`fonts:spacing_seed`、`AudioContext:sampleRate`、`AudioContext:outputLatency`、`AudioContext:maxChannelCount`
   - 3.2.1.2.5 轉換器可用 Node.js 或 Go 實作（Go 更適合嵌入 Control Server）
 
 #### 3.2.2 指紋池管理
@@ -491,7 +491,7 @@
       → 從 browser.storage.local 讀取該 container 的指紋設定
       → 透過 wrappedJSObject 呼叫 setter：
         window.wrappedJSObject.setCanvasSeed(fp["canvas:seed"])
-        window.wrappedJSObject.setAudioFingerprintSeed(fp["audio:seed"])
+        // AudioContext 使用 Camoufox schema 欄位（AudioContext:*），不要使用不存在的 audio:seed setter。
         window.wrappedJSObject.setFontSpacingSeed(fp["fonts:spacing_seed"])
         window.wrappedJSObject.setNavigatorPlatform(fp["navigator.platform"])
         window.wrappedJSObject.setNavigatorUserAgent(fp["navigator.userAgent"])
@@ -622,7 +622,7 @@
     {
       "id": "prof_a1b2c3",
       "name": "FB Brand #1",
-      "engine": "firefox",
+      "runtime_id": "camoufox",
       "fingerprint": {
         "navigator.userAgent": "Mozilla/5.0 ...",
         "navigator.platform": "Win32",
@@ -633,7 +633,7 @@
         "webGl:vendor": "Google Inc. (NVIDIA)",
         "timezone": "America/New_York",
         "canvas:seed": 3948271650,
-        "audio:seed": 1293847562,
+        "AudioContext:sampleRate": 48000,
         "fonts:spacing_seed": 2847361952
       },
       "proxy": { "type": "socks5", "host": "...", "port": 1080 },
@@ -641,8 +641,8 @@
       "tags": ["facebook"]
     }
     ```
-  - 5.1.1.1.7 `engine` 欄位：`"firefox"` | `"chromium"`（Phase 1 只有 firefox，Phase 3 加 chromium）
-  - 5.1.1.1.8 Chromium profile 額外欄位：`fingerprint_seed`（uint32，CloakBrowser 用）
+  - 5.1.1.1.7 `runtime_id` 欄位：`"camoufox"` | `"cloakbrowser"`；legacy `engine` 欄位需透過 migration 轉換
+  - 5.1.1.1.8 CloakBrowser profile 額外欄位：`fingerprint_seed`（uint32）
   - 5.1.1.1.9 好處：fingerprint 欄位可直接傳入 CAMOU_CONFIG 或 setter，無需格式轉換
 
 #### 5.1.2 ID 生成策略
@@ -997,7 +997,7 @@
 
 ### 8B.2 Chromium Profile 生命週期
 #### 8B.2.1 建立 Chromium Profile
-- 8B.2.1.1 建立 profile 時指定 engine: "chromium"
+- 8B.2.1.1 建立 profile 時指定 `runtime_id: "cloakbrowser"`
   - 8B.2.1.1.1 從 Chromium 指紋池取一組指紋（fingerprint-suite 生成 `browsers: ['chrome']`）
   - 8B.2.1.1.2 生成 fingerprint seed（uint32）→ 存入 profile.json
   - 8B.2.1.1.3 建立 `profiles/{profile_id}/chromium-data/` 目錄（Chromium user-data-dir）
@@ -1028,8 +1028,8 @@
 ### 8B.3 雙引擎統一 API
 #### 8B.3.1 REST API 引擎無關
 - 8B.3.1.1 所有 API endpoint 不區分引擎
-  - 8B.3.1.1.1 `POST /api/profiles` body 加 `engine` 欄位：`"firefox"` | `"chromium"`
-  - 8B.3.1.1.2 `POST /api/sessions` → server 內部根據 profile.engine 分派到對應 launcher
+  - 8B.3.1.1.1 `POST /api/profiles` body 使用 `runtime_id` 欄位：`"camoufox"` | `"cloakbrowser"`
+  - 8B.3.1.1.2 `POST /api/sessions` → server 內部根據 profile runtime provider 分派到對應 launcher
   - 8B.3.1.1.3 `POST /api/sessions/:id/navigate` → 統一走 Playwright `page.Goto()`，引擎無關
   - 8B.3.1.1.4 `GET /api/sessions/:id/screenshot` → 統一走 Playwright `page.Screenshot()`
 
@@ -1059,7 +1059,7 @@
 - 8B.5.1.1 fingerprint-suite 分別生成 Firefox 和 Chrome 指紋
   - 8B.5.1.1.1 `--browser firefox --count 500` → `data/fingerprints-firefox-*.json`
   - 8B.5.1.1.2 `--browser chrome --count 500` → `data/fingerprints-chrome-*.json`
-  - 8B.5.1.1.3 建立 profile 時根據 engine 從對應池取用
+  - 8B.5.1.1.3 建立 profile 時根據 runtime provider 從對應池取用
 
 ---
 
@@ -1489,7 +1489,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
 
 **Phase 1 — Firefox MVP（5-6 週）：**
 1. **Week 0（2-3 天）**: Phase 0 全部 — spike 驗證（含 0.1.7/0.1.8/0.1.9）+ 介面契約 + 里程碑定義。**Spike 全部 PASS 才進入 Week 1**
-2. **Week 1**: 13（開發環境）+ 1（瀏覽器核心，Playwright 啟動 Camoufox）+ 5（Profile 系統，含 engine 欄位）+ 10.1（日誌）
+2. **Week 1**: 13（開發環境）+ 1（瀏覽器核心，Playwright 啟動 Camoufox）+ 5（Profile 系統，含 `runtime_id` provider 欄位）+ 10.1（日誌）
 3. **Week 2**: 2（Container 隔離）+ 4（Proxy 路由）+ 3.2-3.3（fingerprint-suite 指紋池 + setter 注入）+ 11（API 認證）
 4. **Week 3**: 7（Control Server API，Playwright 瀏覽器操作）+ 6.1-6.2（Extension 骨架 + Sidebar）+ 12（Tab suspend）
 5. **Week 4**: 6.3-6.5（UI 完善）+ 10.2（異常恢復）+ 14（備份/還原）
@@ -1556,7 +1556,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
 - `NewContext()` 透過 `addInitScript()` 注入 JS，呼叫 Camoufox 暴露的 self-destructing setter：
   ```
   window.setCanvasSeed(seed)
-  window.setAudioFingerprintSeed(seed)
+  // AudioContext values come from CAMOU_CONFIG `AudioContext:*` keys or native calibration.
   window.setFontSpacingSeed(seed)
   window.setNavigatorPlatform(val)
   window.setNavigatorUserAgent(val)
@@ -1598,7 +1598,7 @@ Fork Camoufox 後可自行更新 Playwright 支援：
   "locale:language": "en", "locale:region": "US",
   "fonts": ["Arial", "..."],
   "fonts:spacing_seed": "uint32",
-  "audio:seed": "uint32",
+  "AudioContext:sampleRate": "uint32",
   "canvas:seed": "uint32",
   "humanize": "bool"
 }
@@ -1637,7 +1637,7 @@ if (auto value = MaskConfig::GetString("navigator.userAgent"))
 #### 啟動與 Playwright 整合
 
 - 協議：**Juggler**（非 CDP、非 Marionette）— Playwright 專用的 Firefox 自動化協議
-- 啟動方式：`playwright.firefox.launch(executable_path=camoufox_path, env={CAMOU_CONFIG_*})`
+- 啟動方式：`playwright.firefox.launch(executable_path=runtime_descriptor.binary_path, env={CAMOU_CONFIG_*})`
 - 遠端連線：`camoufox server` 啟動 → `playwright.firefox.connect("ws://host:port")`
 - Persistent context：`launch_persistent_context(user_data_dir="/path/to/profile")`
 
@@ -1756,7 +1756,7 @@ creepjs 寫入隨機 pixel → 讀回 → 偵測任何修改。也檢查 `measur
 
 **3. 不能注入 Audio noise**
 creepjs 用 trap value 注入 + readback 比對、`copyFromChannel` vs `getChannelData` 交叉驗證、已知 pattern lookup。
-→ 用 Camoufox 的 `audio:seed` 在 C++ 層做。
+→ 不用 JS monkey patch；Camoufox v135 沒有 `audio:seed` schema，需使用有效的 `AudioContext:*` 欄位或上游/native 校準。
 
 **4. 跨 context 必須一致**
 - `navigator.platform`、`userAgent`、`hardwareConcurrency` 在 main thread 和所有 Worker 中必須相同

@@ -4,13 +4,13 @@ BrowseForge 目前的核心產品契約是雙瀏覽器支援。早期 Camoufox-f
 
 ## 現行 Runtime 契約
 
-每個 profile 都有 `engine`：
+每個 v2 profile 只有一個 runtime identity：
 
-- `firefox` 啟動 Camoufox。
-- `chromium` 啟動 CloakBrowser。
-- 空值或舊 profile 會預設為 `firefox`，維持升級相容。
+- `runtime_id` 表示具體 provider；內建值為 `camoufox` 與 `cloakbrowser`。
+- Browser family 是 runtime metadata（`firefox` 或 `chromium`），不是 profile 欄位。
+- 只有 `engine` 的 v1 profile 必須用 `BrowseForge migrate profiles --from v1 --to v2 --apply` 遷移。
 
-REST API、MCP server、dashboard、workflow runner、session store、backup，以及 Playwright 連線模型都共用同一個 profile 契約。引擎差異集中在 browser manager 與 browser download layer。
+REST API、MCP server、dashboard、workflow runner、session store、backup，以及 Playwright 連線模型都共用同一個 runtime-provider 契約。Client 必須傳 `runtime_id`；profile create/update API 已移除 `engine`。Provider 差異集中在 runtime providers、browser manager 與 browser download layer。
 
 ## Firefox/Camoufox 路徑
 
@@ -52,4 +52,4 @@ CloakBrowser 主要以 `fingerprint_seed` 作為身份來源。seed 會驅動 Ch
 - 提供已驗證 CloakBrowser binary 的 release machine 應使用 `REQUIRE_CLOAKBROWSER=1` 執行 release preflight。
 - Release-critical workflow 維持 English-first public docs，並提供繁體中文對照。
 - 持續替換不屬於相容性 persisted data 的舊內部命名，例如 `camoufoxmulti` 與 `cmfx`。
-- 若未來從 CloakBrowser 改成自維護 Chromium fork，應文件化為 engine provider 變更，而不是 API contract 變更。
+- 未來新增 provider 時應文件化為 runtime-provider 變更；除非 browser family 本身改變，否則不要新增公開 `engine` 值。

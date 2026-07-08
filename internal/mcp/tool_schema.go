@@ -1,18 +1,20 @@
 package mcp
 
 var tools = []map[string]any{
+	tool("list_runtimes", "List available browser runtime providers and capabilities. Use before creating profiles when runtime choice matters.", map[string]any{}),
 	toolWithRequired("list_profiles", "List available profiles before choosing a browser identity. Use this first when the user did not provide a profile_id.", map[string]any{
 		"group": prop("string", "Optional group filter."),
 		"tag":   prop("string", "Optional tag filter."),
 	}, []string{}),
 	tool("create_profile", "Create a new browser profile. Prefer existing profiles for logged-in or stateful tasks; create only when a fresh identity is needed.", map[string]any{
-		"name": prop("string", "Profile name."), "engine": prop("string", "firefox or chromium. Use chromium for web_search/web_explore agent sessions."), "group": prop("string", "Optional group name."),
+		"name": prop("string", "Profile name."), "runtime_id": prop("string", "Runtime provider id such as camoufox or cloakbrowser."), "group": prop("string", "Optional group name."),
 	}),
 	tool("delete_profile", "Delete a profile and its stored data. Use only when explicitly requested; prefer close_browser/destroy_session for cleanup.", map[string]any{"profile_id": prop("string", "Profile ID.")}),
 	toolWithRequired("update_profile", "Update profile metadata or proxy settings. Close and reopen the browser if a runtime setting must take effect.", map[string]any{
 		"profile_id": prop("string", "Profile ID."),
 		"name":       prop("string", "Optional new name."),
 		"group":      prop("string", "Optional new group."),
+		"runtime_id": prop("string", "Optional runtime provider id such as camoufox or cloakbrowser."),
 		"proxy":      prop("object", "Optional proxy settings."),
 	}, []string{"profile_id"}),
 	tool("list_groups", "List group proxy policies with active_sessions and restart_required. Use before changing group-scoped proxy behavior.", map[string]any{}),
@@ -67,16 +69,16 @@ var tools = []map[string]any{
 	tool("list_tabs", "List tabs for a profile browser. Use before switch_tab/close_tab when the active tab is uncertain.", map[string]any{"profile_id": prop("string", "Profile ID with an active browser session.")}),
 	tool("switch_tab", "Switch the active profile page to an existing tab by index. Call get_page_state after switching to verify context.", map[string]any{"profile_id": prop("string", "Profile ID with an active browser session."), "index": prop("number", "Zero-based tab index from list_tabs.")}),
 	tool("close_tab", "Close a tab by index. Avoid closing the only useful tab unless cleanup is intended.", map[string]any{"profile_id": prop("string", "Profile ID with an active browser session."), "index": prop("number", "Zero-based tab index to close.")}),
-	toolWithRequired("web_search", "Search the web in a Chromium/CloakBrowser-backed agent session. Save returned session_id and reuse it for web_explore, wait_for, web_extract, screenshots, or cleanup.", map[string]any{
+	toolWithRequired("web_search", "Search the web in a runtime-backed agent session. Save returned session_id and reuse it for web_explore, wait_for, web_extract, screenshots, or cleanup.", map[string]any{
 		"query":       prop("string", "Search query."),
 		"engine":      prop("string", "Search engine: google, bing, duckduckgo, or ddg. Default google."),
-		"profile_id":  prop("string", "Chromium profile ID. Required when session_id is omitted."),
+		"profile_id":  prop("string", "Profile ID whose runtime supports agent web sessions. Required when session_id is omitted."),
 		"session_id":  prop("string", "Existing agent session ID to reuse the same page."),
 		"max_results": prop("number", "Maximum result count. Default 10; clamped to 30."),
 	}, []string{"query"}),
 	toolWithRequired("web_explore", "Navigate an agent session page to a URL and extract readable text/links. Reuse session_id from web_search to inspect a result without losing session continuity.", map[string]any{
 		"url":             prop("string", "URL to explore. https:// is prepended when no scheme is provided."),
-		"profile_id":      prop("string", "Chromium profile ID. Required when session_id is omitted."),
+		"profile_id":      prop("string", "Profile ID whose runtime supports agent web sessions. Required when session_id is omitted."),
 		"session_id":      prop("string", "Existing agent session ID to reuse the same page."),
 		"max_text_length": prop("number", "Maximum text length. Default 3000; clamped to 10000."),
 		"max_links":       prop("number", "Maximum links. Default 50; clamped to 200."),

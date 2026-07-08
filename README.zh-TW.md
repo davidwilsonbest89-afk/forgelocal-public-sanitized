@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v1.10.2
+  ghcr.io/nczz/browseforge:v2.0.0
 ```
 
 `./browseforge/` host 目錄就是持久化 runtime。之後 pull 新 image 或重建 container 時沿用這組 mounts，profiles、token、browser data、logs、backups 都會保留。
@@ -181,14 +181,31 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
   "profiles_dir": "profiles",
   "data_dir": "data",
   "log_file": "logs/server.log",
-  "camoufox_path": "/path/to/browsers/camoufox/...",
-  "cloakbrowser_path": "/path/to/browsers/cloakbrowser/...",
-  "cloakbrowser": {
-    "safe_gpu": false,
-    "auto_safe_gpu_fallback": false,
-    "isolated_runtime_cache": false,
-    "repair_transient_cache_on_launch_failure": false,
-    "extra_args": []
+  "default_runtime_id": "camoufox",
+  "runtimes": {
+    "camoufox": {
+      "enabled": true,
+      "binary_path": "/path/to/browsers/camoufox/...",
+      "family": "firefox",
+      "display_name": "Camoufox"
+    },
+    "cloakbrowser": {
+      "enabled": true,
+      "binary_path": "/path/to/browsers/cloakbrowser/...",
+      "family": "chromium",
+      "display_name": "CloakBrowser",
+      "settings": {
+        "safe_gpu": false,
+        "auto_safe_gpu_fallback": false,
+        "isolated_runtime_cache": false,
+        "repair_transient_cache_on_launch_failure": false,
+        "fingerprint_platform": "auto",
+        "fonts_dir": "",
+        "storage_quota_mb": 0,
+        "target_platform_policy": "warn",
+        "extra_args": []
+      }
+    }
   },
   "fingerprint_dir": "data"
 }
@@ -202,22 +219,33 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
 | `profiles_dir` | Profile 資料目錄 | `profiles` |
 | `data_dir` | token、指紋池資料目錄 | `data` |
 | `log_file` | 日誌檔案 | `logs/server.log` |
-| `camoufox_path` | Camoufox 執行檔路徑 | 自動偵測 |
-| `cloakbrowser_path` | CloakBrowser 執行檔路徑 | 自動偵測 |
-| `cloakbrowser.safe_gpu` | 為 Windows VM/headful 相容性加入 Chromium GPU-safe 啟動參數 | `false` |
-| `cloakbrowser.auto_safe_gpu_fallback` | 第一次啟動維持原始行為，只在 GPU/cache 啟動失敗後才自動用 safe GPU 與 isolated runtime cache 重試一次 | `false` |
-| `cloakbrowser.isolated_runtime_cache` | 將 Chromium disk cache 導到 profile 底下的每次啟動 runtime cache 目錄 | `false` |
-| `cloakbrowser.repair_transient_cache_on_launch_failure` | GPU/cache 啟動失敗後，在自動重試前清除可重建的 Chromium cache 目錄 | `false` |
-| `cloakbrowser.extra_args` | 額外 CloakBrowser/Chromium args；BrowseForge 會忽略會覆蓋 profile、proxy、cache 或 debugging ownership 的 args | `[]` |
+| `default_runtime_id` | 產生 config 與 UI flow 預設選取的 runtime | `camoufox` |
+| `runtimes.<id>.enabled` | runtime provider 是否可供建立 profile 與啟動 | 依 runtime 而定 |
+| `runtimes.<id>.binary_path` | runtime provider 執行檔路徑；目前內建 provider 為 `camoufox` 與 `cloakbrowser` | 自動偵測 |
+| `runtimes.<id>.family` | runtime 的 browser family metadata：`firefox` 或 `chromium` | provider 預設值 |
+| `runtimes.<id>.display_name` | `/api/runtimes`、MCP `list_runtimes` 與 Dashboard 建立表單顯示的 runtime 名稱 | provider 預設值 |
+| `runtimes.cloakbrowser.settings.safe_gpu` | 為 Windows VM/headful 相容性加入 Chromium GPU-safe 啟動參數 | `false` |
+| `runtimes.cloakbrowser.settings.auto_safe_gpu_fallback` | 第一次啟動維持原始行為，只在 GPU/cache 啟動失敗後才自動用 safe GPU 與 isolated runtime cache 重試一次 | `false` |
+| `runtimes.cloakbrowser.settings.isolated_runtime_cache` | 將 Chromium disk cache 導到 profile 底下的每次啟動 runtime cache 目錄 | `false` |
+| `runtimes.cloakbrowser.settings.repair_transient_cache_on_launch_failure` | GPU/cache 啟動失敗後，在自動重試前清除可重建的 Chromium cache 目錄 | `false` |
+| `runtimes.cloakbrowser.settings.fingerprint_platform` | CloakBrowser 指紋平台 flag：`auto`、`macos`、`windows` 或 `linux`；`auto` 會跟隨 CloakBrowser wrapper 預設（macOS 用 `macos`，其他平台用 `windows`） | `auto` |
+| `runtimes.cloakbrowser.settings.fonts_dir` | 選用字型目錄，會傳成 `--fingerprint-fonts-dir`；使用目標平台字型包可改善字型與 canvas 一致性 | 空值 |
+| `runtimes.cloakbrowser.settings.storage_quota_mb` | 選用 `--fingerprint-storage-quota` MB 覆寫；較高值可滿足 BrowserScan non-incognito 檢查，但可能和 FingerprintJS 取捨 | `0` |
+| `runtimes.cloakbrowser.settings.target_platform_policy` | Runtime/identity 一致性策略：`strict` 拒絕高風險 target/platform 組合，`warn` 記錄警告，`allow` 跳過 guardrail | `warn` |
+| `runtimes.cloakbrowser.settings.extra_args` | 額外 CloakBrowser/Chromium args；BrowseForge 會忽略會覆蓋 profile、proxy、cache 或 debugging ownership 的 args | `[]` |
 | `fingerprint_dir` | 指紋池 JSON 目錄 | `data` |
 
-`cloakbrowser` 區塊是主機 runtime policy，不是 profile identity。它只影響 Chromium/CloakBrowser 啟動；Firefox/Camoufox profile 不會讀取這些設定。若 Windows VM 環境出現 `GPU process isn't usable` 或 `Unable to create cache` 這類 Chromium 啟動錯誤，可使用：
+`runtimes.cloakbrowser.settings` 區塊會分開 VM/runtime 穩定性設定與可稽核的指紋設定。`safe_gpu`、`auto_safe_gpu_fallback`、`isolated_runtime_cache` 與 `repair_transient_cache_on_launch_failure` 是啟動穩定性策略；`fingerprint_platform`、`fonts_dir` 與 `storage_quota_mb` 是明確的 CloakBrowser identity input，不再藏在 `extra_args`。它只影響 `cloakbrowser` runtime；`camoufox` profile 不會讀取這些設定。若 Windows VM 環境出現 `GPU process isn't usable` 或 `Unable to create cache` 這類 Chromium 啟動錯誤，可使用：
 
 ```json
 {
-  "cloakbrowser": {
-    "auto_safe_gpu_fallback": true,
-    "repair_transient_cache_on_launch_failure": true
+  "runtimes": {
+    "cloakbrowser": {
+      "settings": {
+        "auto_safe_gpu_fallback": true,
+        "repair_transient_cache_on_launch_failure": true
+      }
+    }
   }
 }
 ```
@@ -333,7 +361,7 @@ name: Multi-account login
 steps:
   - name: Create profile
     action: create_profile
-    params: { name: "FB Account", engine: firefox, var: p1 }
+    params: { name: "FB Account", runtime_id: camoufox, var: p1 }
 
   - name: Open browser
     action: open_browser

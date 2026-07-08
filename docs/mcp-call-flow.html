@@ -46,7 +46,7 @@ flowchart TD
   K --> L[Reuse existing agent Page]
 
   I -->|no| H
-  H --> M{Profile engine chromium?}
+  H --> M{Runtime supports agent web sessions?}
   M -->|no| X[Return JSON-RPC -32000]
   M -->|yes| N[browser.Manager.LaunchSession(profile_id)]
   N --> O[Use browser.Session.ConnectURL]

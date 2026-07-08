@@ -22,7 +22,7 @@ func humanizeError(err error) error {
 	msg := err.Error()
 	switch {
 	case isChromiumGPUOrCacheLaunchFailure(err):
-		return fmt.Errorf("CloakBrowser/Chromium 啟動時 GPU 或暫存 cache 初始化失敗。Windows VM 可在 config.json 的 cloakbrowser 區塊啟用 safe_gpu、isolated_runtime_cache 與 repair_transient_cache_on_launch_failure。原始錯誤: %w", err)
+		return fmt.Errorf("CloakBrowser/Chromium 啟動時 GPU 或暫存 cache 初始化失敗。Windows VM 可在 config.json 的 runtimes.cloakbrowser.settings 啟用 safe_gpu、isolated_runtime_cache 與 repair_transient_cache_on_launch_failure。原始錯誤: %w", err)
 	case shouldRetryLaunch(err):
 		return fmt.Errorf("瀏覽器啟動時 Playwright protocol 連線中斷。BrowseForge 會自動重試一次；若仍失敗，請重啟服務或容器。原始錯誤: %w", err)
 	case strings.Contains(msg, "sandboxing failed") || strings.Contains(msg, "sandbox"):
@@ -99,6 +99,16 @@ func sanitizeExtraChromiumArgs(args []string) []string {
 		"--profile-directory",
 		"--disk-cache-dir",
 		"--proxy-server",
+		"--fingerprint",
+		"--fingerprint-platform",
+		"--fingerprint-timezone",
+		"--fingerprint-locale",
+		"--fingerprint-webrtc-ip",
+		"--fingerprint-fonts-dir",
+		"--fingerprint-storage-quota",
+		"--fingerprint-screen-width",
+		"--fingerprint-screen-height",
+		"--fingerprint-hardware-concurrency",
 	}
 	out := make([]string, 0, len(args))
 	seen := map[string]bool{}

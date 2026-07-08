@@ -12,14 +12,19 @@ import (
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 
 	"github.com/playwright-community/playwright-go"
 )
 
 func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
-	chromiumPath := m.cfg.CloakBrowserPath
+	desc, err := m.runtimes.ResolveProfile(p)
+	if err != nil {
+		return nil, err
+	}
+	chromiumPath := desc.BinaryPath
 	if chromiumPath == "" {
-		return nil, fmt.Errorf("cloakbrowser_path not configured")
+		return nil, fmt.Errorf("runtimes.cloakbrowser.binary_path is not configured")
 	}
 
 	userDataDir, err := filepath.Abs(filepath.Join(p.ProfileDir, "browser-data"))
@@ -53,13 +58,20 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	} else {
 		tz, locale = fingerprint.DetectLocalGeoResult()
 	}
+	policy := m.cfg.CloakBrowserSettings()
+	platform, err := resolveCloakFingerprintPlatform(policy, runtime.GOOS)
+	if err != nil {
+		return nil, err
+	}
 	args = append(args,
 		"--fingerprint-timezone="+tz,
 		"--fingerprint-locale="+locale,
+		"--fingerprint-platform="+platform,
 	)
-
-	if runtime.GOOS == "linux" {
-		args = append(args, "--fingerprint-platform=windows")
+	if quota := cloakStorageQuotaMB(policy); quota > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-storage-quota=%d", quota))
+	} else if quota < 0 {
+		return nil, fmt.Errorf("cloakbrowser storage_quota_mb must be >= 0")
 	}
 
 	if p.Fingerprint != nil {
@@ -78,12 +90,19 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, "--no-sandbox")
 	}
 
-	if _, err := os.Stat("/usr/share/fonts"); err == nil {
-		args = append(args, "--fingerprint-fonts-dir=/usr/share/fonts")
+	fontsDir, err := resolveCloakFontsDir(policy)
+	if err != nil {
+		return nil, err
+	}
+	if err := validateCloakFingerprintPolicy(policy, platform, runtime.GOOS); err != nil {
+		return nil, err
+	}
+	if fontsDir != "" {
+		args = append(args, "--fingerprint-fonts-dir="+fontsDir)
 	}
 
 	baseArgs := append([]string(nil), args...)
-	args, err = applyCloakBrowserLaunchPolicy(baseArgs, userDataDir, m.cfg.CloakBrowser, false)
+	args, err = applyCloakBrowserLaunchPolicy(baseArgs, userDataDir, policy, false)
 	if err != nil {
 		return nil, err
 	}
@@ -171,13 +190,13 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	ctx, relay, err := launch(args)
 	fallbackAttempted := false
 	if err != nil {
-		if m.cfg.CloakBrowser != nil &&
-			(m.cfg.CloakBrowser.RepairTransientCacheOnLaunchFailure || m.cfg.CloakBrowser.AutoSafeGPUFallback) &&
+		if policy != nil &&
+			(policy.RepairTransientCacheOnLaunchFailure || policy.AutoSafeGPUFallback) &&
 			isChromiumGPUOrCacheLaunchFailure(err) {
 			slog.Warn("repairing transient chromium cache after launch failure", "profile", p.ID, "userDataDir", userDataDir, "error", err)
 			repairTransientChromiumData(userDataDir)
 		}
-		if shouldAutoFallbackCloakBrowserLaunch(m.cfg.CloakBrowser, err) {
+		if shouldAutoFallbackCloakBrowserLaunch(policy, err) {
 			fallbackAttempted = true
 			slog.Warn("retrying CloakBrowser launch with safe GPU fallback", "profile", p.ID, "userDataDir", userDataDir, "error", err)
 			if len(m.sessions) > 0 {
@@ -186,7 +205,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			if restartErr := m.restartPlaywright(); restartErr != nil {
 				return nil, fmt.Errorf("launch chromium: %w; safe GPU fallback playwright restart failed: %v", humanizeError(err), restartErr)
 			}
-			fallbackArgs, fallbackArgErr := applyCloakBrowserLaunchPolicy(baseArgs, userDataDir, m.cfg.CloakBrowser, true)
+			fallbackArgs, fallbackArgErr := applyCloakBrowserLaunchPolicy(baseArgs, userDataDir, policy, true)
 			if fallbackArgErr != nil {
 				return nil, fallbackArgErr
 			}
@@ -228,7 +247,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	return &Session{
 		ID:        fmt.Sprintf("sess_%s", p.ID),
 		ProfileID: p.ID,
-		Engine:    "chromium",
+		RuntimeID: string(bfruntime.CloakBrowser),
 		Context:   ctx,
 		Page:      page,
 		relay:     relay,
@@ -259,6 +278,75 @@ func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *co
 	}
 	out = appendUniqueChromiumArgs(out, sanitizeExtraChromiumArgs(policy.ExtraArgs)...)
 	return out, nil
+}
+
+func resolveCloakFingerprintPlatform(policy *config.CloakBrowserConfig, goos string) (string, error) {
+	platform := "windows"
+	if goos == "darwin" {
+		platform = "macos"
+	}
+	if policy == nil || policy.FingerprintPlatform == "" || policy.FingerprintPlatform == "auto" {
+		return platform, nil
+	}
+	switch policy.FingerprintPlatform {
+	case "macos", "windows", "linux":
+		return policy.FingerprintPlatform, nil
+	default:
+		return "", fmt.Errorf("cloakbrowser fingerprint_platform must be auto, macos, windows, or linux")
+	}
+}
+
+func cloakStorageQuotaMB(policy *config.CloakBrowserConfig) int64 {
+	if policy == nil {
+		return 0
+	}
+	return policy.StorageQuotaMB
+}
+
+func resolveCloakFontsDir(policy *config.CloakBrowserConfig) (string, error) {
+	if policy != nil && policy.FontsDir != "" {
+		fontsDir, err := filepath.Abs(policy.FontsDir)
+		if err != nil {
+			return "", fmt.Errorf("cloakbrowser fonts_dir: %w", err)
+		}
+		info, err := os.Stat(fontsDir)
+		if err != nil {
+			return "", fmt.Errorf("cloakbrowser fonts_dir unavailable: %w", err)
+		}
+		if !info.IsDir() {
+			return "", fmt.Errorf("cloakbrowser fonts_dir is not a directory: %s", fontsDir)
+		}
+		return fontsDir, nil
+	}
+	if info, err := os.Stat("/usr/share/fonts"); err == nil && info.IsDir() {
+		return "/usr/share/fonts", nil
+	}
+	return "", nil
+}
+
+func validateCloakFingerprintPolicy(policy *config.CloakBrowserConfig, platform string, goos string) error {
+	if policy == nil {
+		return nil
+	}
+	mode := policy.TargetPlatformPolicy
+	if mode == "" {
+		mode = "warn"
+	}
+	switch mode {
+	case "allow":
+		return nil
+	case "warn", "strict":
+	default:
+		return fmt.Errorf("cloakbrowser target_platform_policy must be strict, warn, or allow")
+	}
+	if platform == "windows" && goos != "windows" && policy.FontsDir == "" {
+		msg := "Windows CloakBrowser fingerprint on non-Windows host should configure runtimes.cloakbrowser.settings.fonts_dir with a Windows-compatible font pack"
+		if mode == "strict" {
+			return fmt.Errorf("%s", msg)
+		}
+		slog.Warn(msg, "goos", goos, "platform", platform)
+	}
+	return nil
 }
 
 func shouldAutoFallbackCloakBrowserLaunch(policy *config.CloakBrowserConfig, err error) bool {

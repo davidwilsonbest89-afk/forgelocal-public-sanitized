@@ -1,15 +1,21 @@
 package mcp
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"slices"
 	"strings"
 	"testing"
+	"unsafe"
 
+	"browseforge/internal/browser"
+	"browseforge/internal/config"
 	"browseforge/internal/groups"
 	"browseforge/internal/humanize"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 )
 
 func TestBuildWebSearchMCPResultRawFallback(t *testing.T) {
@@ -170,8 +176,9 @@ func TestSearchProviderURLs(t *testing.T) {
 
 func TestToolSchemasRequiredFields(t *testing.T) {
 	expected := map[string][]string{
+		"list_runtimes":      {},
 		"list_profiles":      {},
-		"create_profile":     {"name", "engine", "group"},
+		"create_profile":     {"name", "runtime_id", "group"},
 		"delete_profile":     {"profile_id"},
 		"update_profile":     {"profile_id"},
 		"list_groups":        {},
@@ -236,11 +243,236 @@ func TestToolSchemasRequiredFields(t *testing.T) {
 		if !slices.Equal(got, want) {
 			t.Fatalf("%s required = %v, want %v", name, got, want)
 		}
+		properties, ok := schema["properties"].(map[string]any)
+		if !ok {
+			t.Fatalf("%s properties type = %T", name, schema["properties"])
+		}
+		if name == "create_profile" || name == "update_profile" {
+			if _, ok := properties["engine"]; ok {
+				t.Fatalf("%s schema advertises deprecated profile engine", name)
+			}
+		}
+		if name == "web_search" {
+			if _, ok := properties["engine"]; !ok {
+				t.Fatalf("web_search schema missing search engine property")
+			}
+		}
 	}
 	for name := range expected {
 		if !seen[name] {
 			t.Fatalf("expected tool missing from registry: %s", name)
 		}
+	}
+}
+
+func TestToolListRuntimesReturnsRuntimeDescriptors(t *testing.T) {
+	s := NewServer(nil, testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox":     {BinaryPath: "/opt/camoufox"},
+		"cloakbrowser": {BinaryPath: "/opt/cloakbrowser"},
+	}}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolListRuntimes(nil)
+	if mcpErr != nil {
+		t.Fatalf("toolListRuntimes error = %v", mcpErr)
+	}
+	var got []bfruntime.Descriptor
+	if err := json.Unmarshal([]byte(resultText(t, raw)), &got); err != nil {
+		t.Fatalf("decode list_runtimes text: %v", err)
+	}
+	if len(got) != 2 {
+		t.Fatalf("runtime count = %d, want 2: %#v", len(got), got)
+	}
+	if got[0].ID != bfruntime.Camoufox || got[0].BinaryPath != "/opt/camoufox" {
+		t.Fatalf("first runtime = %+v, want Camoufox with configured binary path", got[0])
+	}
+	if got[1].ID != bfruntime.CloakBrowser || got[1].BinaryPath != "/opt/cloakbrowser" {
+		t.Fatalf("second runtime = %+v, want CloakBrowser with configured binary path", got[1])
+	}
+	if got[0].Capabilities.SupportsAgentWebSessions || !got[1].Capabilities.SupportsAgentWebSessions {
+		t.Fatalf("agent web session capabilities = Camoufox:%v CloakBrowser:%v", got[0].Capabilities.SupportsAgentWebSessions, got[1].Capabilities.SupportsAgentWebSessions)
+	}
+}
+
+func TestToolCreateProfileAcceptsRuntimeID(t *testing.T) {
+	enabled := true
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	s := NewServer(store, testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"cloakbrowser": {Enabled: &enabled},
+	}}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolCreateProfile(map[string]any{
+		"name":       "Cloaked",
+		"runtime_id": "cloakbrowser",
+	})
+	if mcpErr != nil {
+		t.Fatalf("toolCreateProfile error = %v", mcpErr)
+	}
+	text := resultText(t, raw)
+	if !strings.Contains(text, "runtime: cloakbrowser") {
+		t.Fatalf("create_profile text = %s", text)
+	}
+	profiles := store.List("", "")
+	if len(profiles) != 1 {
+		t.Fatalf("stored profiles = %d, want 1", len(profiles))
+	}
+	if profiles[0].RuntimeID != "cloakbrowser" {
+		t.Fatalf("stored runtime_id = %q, want cloakbrowser", profiles[0].RuntimeID)
+	}
+}
+
+func TestToolCreateProfileRejectsDisabledRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	disabled := false
+	s := NewServer(store, testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox": {Enabled: &disabled},
+	}}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolCreateProfile(map[string]any{
+		"name":       "Disabled",
+		"runtime_id": "camoufox",
+	})
+	if raw != nil {
+		t.Fatalf("raw result = %#v, want nil", raw)
+	}
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, `runtime "camoufox" is disabled`) {
+		t.Fatalf("mcpErr = %+v, want -32602 disabled runtime", mcpErr)
+	}
+	if profiles := store.List("", ""); len(profiles) != 0 {
+		t.Fatalf("stored profiles = %d, want 0 after disabled runtime rejection", len(profiles))
+	}
+}
+
+func TestToolUpdateProfileRejectsDisabledRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Runtime Profile", RuntimeID: "cloakbrowser"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	enabled := true
+	disabled := false
+	s := NewServer(store, testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox":     {Enabled: &disabled},
+		"cloakbrowser": {Enabled: &enabled},
+	}}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolUpdateProfile(map[string]any{
+		"profile_id": p.ID,
+		"runtime_id": "camoufox",
+	})
+	if raw != nil {
+		t.Fatalf("raw result = %#v, want nil", raw)
+	}
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, `runtime "camoufox" is disabled`) {
+		t.Fatalf("mcpErr = %+v, want -32602 disabled runtime", mcpErr)
+	}
+	got, err := store.Get(p.ID)
+	if err != nil {
+		t.Fatalf("stored profile missing: %v", err)
+	}
+	if got.RuntimeID != "cloakbrowser" {
+		t.Fatalf("stored runtime_id = %q, want unchanged cloakbrowser", got.RuntimeID)
+	}
+}
+
+func TestToolCreateProfileRejectsDeprecatedEngine(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	s := NewServer(store, testManagerWithRuntimeConfig(t, &config.Config{}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolCreateProfile(map[string]any{
+		"name":       "Legacy",
+		"runtime_id": "camoufox",
+		"engine":     "firefox",
+	})
+	if raw != nil {
+		t.Fatalf("raw result = %#v, want nil", raw)
+	}
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, "engine was removed in v2") {
+		t.Fatalf("mcpErr = %+v, want -32602 deprecated field", mcpErr)
+	}
+}
+
+func TestToolUpdateProfileRejectsDeprecatedEngine(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Runtime Profile", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	s := NewServer(store, testManagerWithRuntimeConfig(t, &config.Config{}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolUpdateProfile(map[string]any{
+		"profile_id": p.ID,
+		"engine":     "firefox",
+	})
+	if raw != nil {
+		t.Fatalf("raw result = %#v, want nil", raw)
+	}
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, "engine was removed in v2") {
+		t.Fatalf("mcpErr = %+v, want -32602 deprecated field", mcpErr)
+	}
+}
+
+func TestToolUpdateProfileRejectsNonStringRuntimeID(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Runtime Profile", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	s := NewServer(store, testManagerWithRuntimeConfig(t, &config.Config{}), humanize.Config{}, nil, "", "test")
+
+	raw, mcpErr := s.toolUpdateProfile(map[string]any{
+		"profile_id": p.ID,
+		"runtime_id": float64(42),
+	})
+	if raw != nil {
+		t.Fatalf("raw result = %#v, want nil", raw)
+	}
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, "runtime_id") {
+		t.Fatalf("mcpErr = %+v, want -32602 runtime_id validation", mcpErr)
+	}
+}
+
+func TestSessionPoolRejectsUnsupportedRuntimeByCapability(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: "Camoufox Agent Session", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	sp := &SessionPool{
+		mgr:   testManagerWithRuntimeConfig(t, &config.Config{}),
+		store: store,
+		pools: map[string]*ProfileSessionPool{},
+	}
+
+	_, err = sp.CreateSession(p.ID)
+	if err == nil {
+		t.Fatal("expected unsupported runtime to reject agent web session")
+	}
+	if !strings.Contains(err.Error(), "runtime camoufox does not support agent web sessions") {
+		t.Fatalf("error = %q, want capability-based runtime rejection", err.Error())
+	}
+	if strings.Contains(err.Error(), "Chromium profile") {
+		t.Fatalf("error = %q, want runtime capability rejection rather than legacy engine rejection", err.Error())
 	}
 }
 
@@ -284,7 +516,7 @@ func TestToolDeleteGroupUngroupsProfilesAndClearsProxy(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	p := &profile.Profile{Name: "Profile A", Engine: "firefox", Group: "Client A"}
+	p := &profile.Profile{Name: "Profile A", RuntimeID: "camoufox", Group: "Client A"}
 	if err := profileStore.Create(p); err != nil {
 		t.Fatal(err)
 	}
@@ -386,4 +618,34 @@ func TestResolveDownloadPathRequiresFileName(t *testing.T) {
 	if _, _, err := resolveDownloadPath("/tmp/profile", map[string]any{"name": "../report.csv"}); err == nil {
 		t.Fatal("expected traversal error")
 	}
+}
+
+func resultText(t *testing.T, raw any) string {
+	t.Helper()
+
+	res, ok := raw.(map[string]any)
+	if !ok {
+		t.Fatalf("result type = %T", raw)
+	}
+	content, ok := res["content"].([]map[string]any)
+	if !ok || len(content) != 1 {
+		t.Fatalf("content = %#v", res["content"])
+	}
+	text, ok := content[0]["text"].(string)
+	if !ok {
+		t.Fatalf("content text type = %T", content[0]["text"])
+	}
+	return text
+}
+
+func testManagerWithRuntimeConfig(t *testing.T, cfg *config.Config) *browser.Manager {
+	t.Helper()
+
+	mgr := &browser.Manager{}
+	field := reflect.ValueOf(mgr).Elem().FieldByName("runtimes")
+	if !field.IsValid() {
+		t.Fatal("browser.Manager.runtimes field missing")
+	}
+	reflect.NewAt(field.Type(), unsafe.Pointer(field.UnsafeAddr())).Elem().Set(reflect.ValueOf(bfruntime.NewRegistry(cfg)))
+	return mgr
 }

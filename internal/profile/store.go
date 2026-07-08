@@ -12,18 +12,28 @@ import (
 )
 
 type Profile struct {
-	ID              string         `json:"id"`
-	Name            string         `json:"name"`
-	Engine          string         `json:"engine"` // "firefox" | "chromium"
-	Group           string         `json:"group,omitempty"`
-	Tags            []string       `json:"tags,omitempty"`
-	CreatedAt       time.Time      `json:"created_at"`
-	LastUsed        time.Time      `json:"last_used"`
-	Fingerprint     map[string]any `json:"fingerprint"`
-	FingerprintSeed uint32         `json:"fingerprint_seed,omitempty"` // CloakBrowser
-	Proxy           *ProxyConfig   `json:"proxy,omitempty"`
-	ContainerID     string         `json:"container_id,omitempty"`
-	ProfileDir      string         `json:"profile_dir"`
+	ID              string          `json:"id"`
+	Name            string          `json:"name"`
+	RuntimeID       string          `json:"runtime_id"` // concrete runtime provider, e.g. "camoufox" | "cloakbrowser"
+	Identity        *IdentityConfig `json:"identity,omitempty"`
+	Group           string          `json:"group,omitempty"`
+	Tags            []string        `json:"tags,omitempty"`
+	CreatedAt       time.Time       `json:"created_at"`
+	LastUsed        time.Time       `json:"last_used"`
+	Fingerprint     map[string]any  `json:"fingerprint,omitempty"`
+	FingerprintSeed uint32          `json:"fingerprint_seed,omitempty"` // CloakBrowser seed
+	Proxy           *ProxyConfig    `json:"proxy,omitempty"`
+	ContainerID     string          `json:"container_id,omitempty"`
+	ProfileDir      string          `json:"profile_dir"`
+}
+
+type IdentityConfig struct {
+	TargetOS     string `json:"target_os,omitempty"` // macos | windows | linux
+	BrowserMajor int    `json:"browser_major,omitempty"`
+	GPUVendor    string `json:"gpu_vendor,omitempty"`
+	GPURenderer  string `json:"gpu_renderer,omitempty"`
+	FontPack     string `json:"font_pack,omitempty"`
+	RiskAccepted bool   `json:"risk_accepted,omitempty"`
 }
 
 type ProxyConfig struct {
@@ -66,11 +76,13 @@ func (s *Store) loadAll() error {
 		if err := json.Unmarshal(data, &p); err != nil {
 			continue
 		}
+		if err := validateV2Profile(&p, path); err != nil {
+			return err
+		}
 		s.profiles[p.ID] = &p
 	}
 	return nil
 }
-
 func (s *Store) Create(p *Profile) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -82,8 +94,8 @@ func (s *Store) Create(p *Profile) error {
 		}
 		p.ID = id
 	}
-	if p.Engine == "" {
-		p.Engine = "firefox"
+	if err := validateV2Profile(p, "new profile"); err != nil {
+		return err
 	}
 	p.CreatedAt = time.Now()
 	p.LastUsed = p.CreatedAt
@@ -100,6 +112,16 @@ func (s *Store) Create(p *Profile) error {
 		return err
 	}
 	s.profiles[p.ID] = p
+	return nil
+}
+
+func validateV2Profile(p *Profile, source string) error {
+	if p == nil {
+		return fmt.Errorf("%s is nil", source)
+	}
+	if p.RuntimeID == "" {
+		return fmt.Errorf("%s uses v1 profile schema: runtime_id is required; run BrowseForge migrate profiles --from v1 --to v2", source)
+	}
 	return nil
 }
 
@@ -153,6 +175,9 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 		return nil, err
 	}
 	if err := json.Unmarshal(merged, p); err != nil {
+		return nil, err
+	}
+	if err := validateV2Profile(p, "updated profile"); err != nil {
 		return nil, err
 	}
 
