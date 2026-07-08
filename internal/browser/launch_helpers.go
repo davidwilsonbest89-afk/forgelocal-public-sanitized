@@ -108,11 +108,20 @@ func sanitizeExtraChromiumArgs(args []string) []string {
 		"--fingerprint-timezone",
 		"--fingerprint-locale",
 		"--fingerprint-webrtc-ip",
+		"--fingerprint-accept-language",
+		"--fingerprint-user-agent",
 		"--fingerprint-fonts-dir",
 		"--fingerprint-storage-quota",
 		"--fingerprint-screen-width",
 		"--fingerprint-screen-height",
 		"--fingerprint-hardware-concurrency",
+		"--fingerprint-device-memory",
+		"--fingerprint-screen-avail-width",
+		"--fingerprint-screen-avail-height",
+		"--fingerprint-audio-noise",
+		"--fingerprint-canvas-noise",
+		"--fingerprint-webgl-vendor",
+		"--fingerprint-webgl-renderer",
 	}
 	out := make([]string, 0, len(args))
 	seen := map[string]bool{}

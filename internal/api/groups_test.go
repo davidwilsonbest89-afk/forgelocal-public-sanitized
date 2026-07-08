@@ -48,20 +48,23 @@ func TestListRuntimesReturnsRuntimeDescriptors(t *testing.T) {
 	if body.DefaultRuntimeID != "cloakbrowser" {
 		t.Fatalf("default_runtime_id = %q, want cloakbrowser", body.DefaultRuntimeID)
 	}
-	if len(body.Data) != 2 {
-		t.Fatalf("runtime count = %d, want 2: %#v", len(body.Data), body.Data)
+	if len(body.Data) != 3 {
+		t.Fatalf("runtime count = %d, want 3: %#v", len(body.Data), body.Data)
 	}
-	if body.Data[0].ID != bfruntime.Camoufox || body.Data[0].BinaryPath != "/opt/camoufox" {
-		t.Fatalf("first runtime = %+v, want Camoufox with configured binary path", body.Data[0])
+	if body.Data[0].ID != bfruntime.BrowseForgeChromium || body.Data[0].Enabled {
+		t.Fatalf("first runtime = %+v, want disabled BrowseForge Chromium descriptor", body.Data[0])
 	}
-	if body.Data[1].ID != bfruntime.CloakBrowser || body.Data[1].BinaryPath != "/opt/cloakbrowser" {
-		t.Fatalf("second runtime = %+v, want CloakBrowser with configured binary path", body.Data[1])
+	if body.Data[1].ID != bfruntime.Camoufox || body.Data[1].BinaryPath != "/opt/camoufox" {
+		t.Fatalf("second runtime = %+v, want Camoufox with configured binary path", body.Data[1])
 	}
-	if body.Data[0].Capabilities.SupportsAgentWebSessions {
-		t.Fatalf("Camoufox should not advertise agent web sessions: %+v", body.Data[0].Capabilities)
+	if body.Data[2].ID != bfruntime.CloakBrowser || body.Data[2].BinaryPath != "/opt/cloakbrowser" {
+		t.Fatalf("third runtime = %+v, want CloakBrowser with configured binary path", body.Data[2])
 	}
-	if !body.Data[1].Capabilities.SupportsAgentWebSessions {
-		t.Fatalf("CloakBrowser should advertise agent web sessions: %+v", body.Data[1].Capabilities)
+	if body.Data[1].Capabilities.SupportsAgentWebSessions {
+		t.Fatalf("Camoufox should not advertise agent web sessions: %+v", body.Data[1].Capabilities)
+	}
+	if !body.Data[2].Capabilities.SupportsAgentWebSessions {
+		t.Fatalf("CloakBrowser should advertise agent web sessions: %+v", body.Data[2].Capabilities)
 	}
 }
 

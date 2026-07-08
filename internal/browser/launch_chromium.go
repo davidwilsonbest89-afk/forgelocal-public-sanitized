@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 	"time"
 
 	"browseforge/internal/config"
@@ -93,6 +95,9 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
+	if profilePlatform, ok := fingerprintString(p.Fingerprint, "navigator.platform"); ok {
+		platform = profilePlatform
+	}
 	args = append(args,
 		"--fingerprint-timezone="+tz,
 		"--fingerprint-locale="+locale,
@@ -104,17 +109,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		return nil, fmt.Errorf("%s storage_quota_mb must be >= 0", desc.ID)
 	}
 
-	if p.Fingerprint != nil {
-		if v, ok := p.Fingerprint["navigator.hardwareConcurrency"]; ok {
-			args = append(args, fmt.Sprintf("--fingerprint-hardware-concurrency=%v", v))
-		}
-		if v, ok := p.Fingerprint["screen.width"]; ok {
-			args = append(args, fmt.Sprintf("--fingerprint-screen-width=%v", v))
-		}
-		if v, ok := p.Fingerprint["screen.height"]; ok {
-			args = append(args, fmt.Sprintf("--fingerprint-screen-height=%v", v))
-		}
-	}
+	args = appendProfileFingerprintArgs(args, p.Fingerprint)
 
 	if m.cfg.NoSandbox {
 		args = append(args, "--no-sandbox")
@@ -335,19 +330,135 @@ func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *co
 }
 
 func resolveCloakFingerprintPlatform(policy *config.CloakBrowserConfig, goos string) (string, error) {
-	platform := "windows"
+	platform := "Win32"
 	if goos == "darwin" {
-		platform = "macos"
+		platform = "MacIntel"
 	}
 	if policy == nil || policy.FingerprintPlatform == "" || policy.FingerprintPlatform == "auto" {
 		return platform, nil
 	}
 	switch policy.FingerprintPlatform {
-	case "macos", "windows", "linux":
-		return policy.FingerprintPlatform, nil
+	case "windows":
+		return "Win32", nil
+	case "macos":
+		return "MacIntel", nil
+	case "linux":
+		return "Linux x86_64", nil
 	default:
 		return "", fmt.Errorf("cloakbrowser fingerprint_platform must be auto, macos, windows, or linux")
 	}
+}
+
+func appendProfileFingerprintArgs(args []string, fp map[string]any) []string {
+	if len(fp) == 0 {
+		return args
+	}
+	if v, ok := fingerprintString(fp, "navigator.userAgent"); ok {
+		args = append(args, "--fingerprint-user-agent="+v)
+	}
+	if v, ok := fingerprintAcceptLanguage(fp); ok {
+		args = append(args, "--fingerprint-accept-language="+v)
+	}
+	if v, ok := fingerprintInt(fp, "navigator.hardwareConcurrency"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-hardware-concurrency=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "navigator.deviceMemory"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-device-memory=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "screen.width"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-width=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "screen.height"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-height=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "screen.availWidth"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-avail-width=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "screen.availHeight"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-avail-height=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "canvas:seed"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-canvas-noise=%d", v))
+	}
+	if v, ok := fingerprintInt(fp, "audio:seed"); ok {
+		args = append(args, fmt.Sprintf("--fingerprint-audio-noise=%d", v))
+	}
+	if v, ok := fingerprintString(fp, "webGl:vendor"); ok {
+		args = append(args, "--fingerprint-webgl-vendor="+v)
+	}
+	if v, ok := fingerprintString(fp, "webGl:renderer"); ok {
+		args = append(args, "--fingerprint-webgl-renderer="+v)
+	}
+	return args
+}
+
+func fingerprintString(fp map[string]any, key string) (string, bool) {
+	if fp == nil {
+		return "", false
+	}
+	value, ok := fp[key]
+	if !ok {
+		return "", false
+	}
+	s, ok := value.(string)
+	if !ok {
+		return "", false
+	}
+	s = strings.TrimSpace(s)
+	return s, s != ""
+}
+
+func fingerprintAcceptLanguage(fp map[string]any) (string, bool) {
+	if value, ok := fp["navigator.languages"]; ok {
+		switch typed := value.(type) {
+		case []string:
+			if len(typed) > 0 {
+				return strings.Join(typed, ","), true
+			}
+		case []any:
+			langs := make([]string, 0, len(typed))
+			for _, item := range typed {
+				if s, ok := item.(string); ok && strings.TrimSpace(s) != "" {
+					langs = append(langs, strings.TrimSpace(s))
+				}
+			}
+			if len(langs) > 0 {
+				return strings.Join(langs, ","), true
+			}
+		}
+	}
+	return fingerprintString(fp, "navigator.language")
+}
+
+func fingerprintInt(fp map[string]any, key string) (int64, bool) {
+	if fp == nil {
+		return 0, false
+	}
+	value, ok := fp[key]
+	if !ok {
+		return 0, false
+	}
+	var n int64
+	switch typed := value.(type) {
+	case int:
+		n = int64(typed)
+	case int64:
+		n = typed
+	case float64:
+		if typed != float64(int64(typed)) {
+			return 0, false
+		}
+		n = int64(typed)
+	case json.Number:
+		parsed, err := strconv.ParseInt(string(typed), 10, 64)
+		if err != nil {
+			return 0, false
+		}
+		n = parsed
+	default:
+		return 0, false
+	}
+	return n, n > 0
 }
 
 func cloakStorageQuotaMB(policy *config.CloakBrowserConfig) int64 {
@@ -393,7 +504,7 @@ func validateCloakFingerprintPolicy(policy *config.CloakBrowserConfig, platform 
 	default:
 		return fmt.Errorf("cloakbrowser target_platform_policy must be strict, warn, or allow")
 	}
-	if platform == "windows" && goos != "windows" && policy.FontsDir == "" {
+	if platform == "Win32" && goos != "windows" && policy.FontsDir == "" {
 		msg := "Windows CloakBrowser fingerprint on non-Windows host should configure runtimes.cloakbrowser.settings.fonts_dir with a Windows-compatible font pack"
 		if mode == "strict" {
 			return fmt.Errorf("%s", msg)

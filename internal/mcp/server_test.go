@@ -279,17 +279,20 @@ func TestToolListRuntimesReturnsRuntimeDescriptors(t *testing.T) {
 	if err := json.Unmarshal([]byte(resultText(t, raw)), &got); err != nil {
 		t.Fatalf("decode list_runtimes text: %v", err)
 	}
-	if len(got) != 2 {
-		t.Fatalf("runtime count = %d, want 2: %#v", len(got), got)
+	if len(got) != 3 {
+		t.Fatalf("runtime count = %d, want 3: %#v", len(got), got)
 	}
-	if got[0].ID != bfruntime.Camoufox || got[0].BinaryPath != "/opt/camoufox" {
-		t.Fatalf("first runtime = %+v, want Camoufox with configured binary path", got[0])
+	if got[0].ID != bfruntime.BrowseForgeChromium || got[0].Enabled {
+		t.Fatalf("first runtime = %+v, want disabled BrowseForge Chromium descriptor", got[0])
 	}
-	if got[1].ID != bfruntime.CloakBrowser || got[1].BinaryPath != "/opt/cloakbrowser" {
-		t.Fatalf("second runtime = %+v, want CloakBrowser with configured binary path", got[1])
+	if got[1].ID != bfruntime.Camoufox || got[1].BinaryPath != "/opt/camoufox" {
+		t.Fatalf("second runtime = %+v, want Camoufox with configured binary path", got[1])
 	}
-	if got[0].Capabilities.SupportsAgentWebSessions || !got[1].Capabilities.SupportsAgentWebSessions {
-		t.Fatalf("agent web session capabilities = Camoufox:%v CloakBrowser:%v", got[0].Capabilities.SupportsAgentWebSessions, got[1].Capabilities.SupportsAgentWebSessions)
+	if got[2].ID != bfruntime.CloakBrowser || got[2].BinaryPath != "/opt/cloakbrowser" {
+		t.Fatalf("third runtime = %+v, want CloakBrowser with configured binary path", got[2])
+	}
+	if got[1].Capabilities.SupportsAgentWebSessions || !got[2].Capabilities.SupportsAgentWebSessions {
+		t.Fatalf("agent web session capabilities = Camoufox:%v CloakBrowser:%v", got[1].Capabilities.SupportsAgentWebSessions, got[2].Capabilities.SupportsAgentWebSessions)
 	}
 }
 
