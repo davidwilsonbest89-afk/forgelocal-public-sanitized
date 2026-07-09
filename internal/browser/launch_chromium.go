@@ -1,6 +1,9 @@
 package browser
 
 import (
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"hash/fnv"
@@ -315,6 +318,92 @@ func installChromiumAutomationMitigations(ctx playwright.BrowserContext) error {
 	return nil
 }
 
+type browseForgeNativePersonaConfig struct {
+	SchemaVersion string                           `json:"schema_version"`
+	RuntimeID     string                           `json:"runtime_id"`
+	Seed          uint64                           `json:"seed"`
+	Browser       browseForgeNativeBrowserIdentity `json:"browser"`
+	Platform      browseForgeNativePlatform        `json:"platform"`
+	Locale        browseForgeNativeLocale          `json:"locale"`
+	Hardware      browseForgeNativeHardware        `json:"hardware"`
+	Screen        browseForgeNativeScreen          `json:"screen"`
+	GPU           browseForgeNativeGPU             `json:"gpu"`
+	WebRTC        browseForgeNativeWebRTC          `json:"webrtc"`
+	Storage       browseForgeNativeStorage         `json:"storage"`
+}
+
+type browseForgeNativePersonaSnapshot struct {
+	SchemaVersion string                           `json:"schema_version"`
+	RuntimeID     string                           `json:"runtime_id"`
+	Seed          uint64                           `json:"seed"`
+	PersonaIDHash string                           `json:"persona_id_hash"`
+	OriginSaltKey string                           `json:"origin_salt_key"`
+	Browser       browseForgeNativeBrowserIdentity `json:"browser"`
+	Platform      browseForgeNativePlatform        `json:"platform"`
+	Locale        browseForgeNativeLocale          `json:"locale"`
+	Hardware      browseForgeNativeHardware        `json:"hardware"`
+	Screen        browseForgeNativeScreen          `json:"screen"`
+	GPU           browseForgeNativeGPU             `json:"gpu"`
+	WebRTC        browseForgeNativeWebRTC          `json:"webrtc"`
+	Storage       browseForgeNativeStorage         `json:"storage"`
+}
+
+type browseForgeNativeBrowserIdentity struct {
+	Family      string   `json:"family"`
+	Major       int      `json:"major"`
+	FullVersion string   `json:"full_version"`
+	Brands      []string `json:"brands"`
+	UserAgent   string   `json:"user_agent"`
+}
+
+type browseForgeNativePlatform struct {
+	OS         string `json:"os"`
+	Arch       string `json:"arch"`
+	Platform   string `json:"platform"`
+	PlatformCH string `json:"platform_ch"`
+	Mobile     bool   `json:"mobile"`
+	Bitness    string `json:"bitness"`
+	Model      string `json:"model"`
+}
+
+type browseForgeNativeLocale struct {
+	Timezone       string `json:"timezone"`
+	Locale         string `json:"locale"`
+	AcceptLanguage string `json:"accept_language"`
+}
+
+type browseForgeNativeHardware struct {
+	HardwareConcurrency int `json:"hardware_concurrency"`
+	DeviceMemoryGB      int `json:"device_memory_gb"`
+}
+
+type browseForgeNativeScreen struct {
+	Width       int     `json:"width"`
+	Height      int     `json:"height"`
+	AvailWidth  int     `json:"avail_width"`
+	AvailHeight int     `json:"avail_height"`
+	DPR         float64 `json:"dpr"`
+	ColorDepth  int     `json:"color_depth"`
+}
+
+type browseForgeNativeGPU struct {
+	Vendor       string            `json:"vendor"`
+	Renderer     string            `json:"renderer"`
+	ANGLEBackend string            `json:"angle_backend"`
+	WebGLParams  map[string]string `json:"webgl_params,omitempty"`
+}
+
+type browseForgeNativeWebRTC struct {
+	Mode              string `json:"mode"`
+	ProxyRegion       string `json:"proxy_region"`
+	DirectIPRedaction bool   `json:"direct_ip_redaction"`
+}
+
+type browseForgeNativeStorage struct {
+	QuotaMB    int  `json:"quota_mb"`
+	Persistent bool `json:"persistent"`
+}
+
 func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, locale, platform string, policy *config.CloakBrowserConfig) (string, error) {
 	if p == nil {
 		return "", fmt.Errorf("profile is nil")
@@ -342,65 +431,69 @@ func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, loc
 	if quota := cloakStorageQuotaMB(policy); quota > 0 {
 		storageQuota = quota
 	}
-	payload := map[string]any{
-		"schema_version": "1.0",
-		"runtime_id":     "browseforge-chromium",
-		"seed":           browseForgePersonaSeed(p),
-		"browser": map[string]any{
-			"family":       "chromium",
-			"major":        chromiumMajorVersion(fullVersion),
-			"full_version": fullVersion,
-			"brands":       []string{"Chromium", "Google Chrome"},
-			"user_agent":   userAgent,
+	persona := browseForgeNativePersonaConfig{
+		SchemaVersion: "1.0",
+		RuntimeID:     "browseforge-chromium",
+		Seed:          browseForgePersonaSeed(p),
+		Browser: browseForgeNativeBrowserIdentity{
+			Family:      "chromium",
+			Major:       chromiumMajorVersion(fullVersion),
+			FullVersion: fullVersion,
+			Brands:      []string{"Chromium", "Google Chrome"},
+			UserAgent:   userAgent,
 		},
-		"platform": map[string]any{
-			"os":          platformOS,
-			"arch":        arch,
-			"platform":    platform,
-			"platform_ch": platformCH,
-			"mobile":      false,
-			"bitness":     bitness,
-			"model":       "",
+		Platform: browseForgeNativePlatform{
+			OS:         platformOS,
+			Arch:       arch,
+			Platform:   platform,
+			PlatformCH: platformCH,
+			Mobile:     false,
+			Bitness:    bitness,
+			Model:      "",
 		},
-		"locale": map[string]any{
-			"timezone":        timezone,
-			"locale":          locale,
-			"accept_language": acceptLanguage,
+		Locale: browseForgeNativeLocale{
+			Timezone:       timezone,
+			Locale:         locale,
+			AcceptLanguage: acceptLanguage,
 		},
-		"hardware": map[string]any{
-			"hardware_concurrency": fingerprintIntDefault(fp, "navigator.hardwareConcurrency", 8),
-			"device_memory_gb":     fingerprintIntDefault(fp, "navigator.deviceMemory", 8),
+		Hardware: browseForgeNativeHardware{
+			HardwareConcurrency: fingerprintIntDefault(fp, "navigator.hardwareConcurrency", 8),
+			DeviceMemoryGB:      fingerprintIntDefault(fp, "navigator.deviceMemory", 8),
 		},
-		"screen": map[string]any{
-			"width":        fingerprintIntDefault(fp, "screen.width", 1920),
-			"height":       fingerprintIntDefault(fp, "screen.height", 1080),
-			"avail_width":  fingerprintIntDefault(fp, "screen.availWidth", 1920),
-			"avail_height": fingerprintIntDefault(fp, "screen.availHeight", 1040),
-			"dpr":          fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1),
-			"color_depth":  fingerprintIntDefault(fp, "screen.colorDepth", 24),
+		Screen: browseForgeNativeScreen{
+			Width:       fingerprintIntDefault(fp, "screen.width", 1920),
+			Height:      fingerprintIntDefault(fp, "screen.height", 1080),
+			AvailWidth:  fingerprintIntDefault(fp, "screen.availWidth", 1920),
+			AvailHeight: fingerprintIntDefault(fp, "screen.availHeight", 1040),
+			DPR:         fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1),
+			ColorDepth:  fingerprintIntDefault(fp, "screen.colorDepth", 24),
 		},
-		"gpu": map[string]any{
-			"vendor":        vendor,
-			"renderer":      renderer,
-			"angle_backend": "",
-			"webgl_params":  map[string]string{},
+		GPU: browseForgeNativeGPU{
+			Vendor:       vendor,
+			Renderer:     renderer,
+			ANGLEBackend: "",
+			WebGLParams:  map[string]string{},
 		},
-		"webrtc": map[string]any{
-			"mode":                "disable_non_proxied_udp",
-			"proxy_region":        "",
-			"direct_ip_redaction": true,
+		WebRTC: browseForgeNativeWebRTC{
+			Mode:              "disable_non_proxied_udp",
+			ProxyRegion:       "",
+			DirectIPRedaction: true,
 		},
-		"storage": map[string]any{
-			"quota_mb":   int(storageQuota),
-			"persistent": true,
+		Storage: browseForgeNativeStorage{
+			QuotaMB:    int(storageQuota),
+			Persistent: true,
 		},
+	}
+	snapshot, err := resolveBrowseForgeNativePersona(persona)
+	if err != nil {
+		return "", err
 	}
 	configDir := filepath.Join(userDataDir, "BrowseForgeNative")
 	if err := os.MkdirAll(configDir, 0755); err != nil {
 		return "", fmt.Errorf("create BrowseForge native config dir: %w", err)
 	}
 	configPath := filepath.Join(configDir, "persona.json")
-	data, err := json.MarshalIndent(payload, "", "  ")
+	data, err := json.MarshalIndent(snapshot, "", "  ")
 	if err != nil {
 		return "", fmt.Errorf("encode BrowseForge native config: %w", err)
 	}
@@ -408,6 +501,31 @@ func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, loc
 		return "", fmt.Errorf("write BrowseForge native config: %w", err)
 	}
 	return configPath, nil
+}
+
+func resolveBrowseForgeNativePersona(cfg browseForgeNativePersonaConfig) (browseForgeNativePersonaSnapshot, error) {
+	canonical, err := json.Marshal(cfg)
+	if err != nil {
+		return browseForgeNativePersonaSnapshot{}, fmt.Errorf("encode BrowseForge native canonical config: %w", err)
+	}
+	personaHash := sha256.Sum256(canonical)
+	originKey := hmac.New(sha256.New, []byte(fmt.Sprintf("browseforge-origin-salt:%d", cfg.Seed)))
+	_, _ = originKey.Write(canonical)
+	return browseForgeNativePersonaSnapshot{
+		SchemaVersion: cfg.SchemaVersion,
+		RuntimeID:     cfg.RuntimeID,
+		Seed:          cfg.Seed,
+		PersonaIDHash: hex.EncodeToString(personaHash[:16]),
+		OriginSaltKey: hex.EncodeToString(originKey.Sum(nil)[:16]),
+		Browser:       cfg.Browser,
+		Platform:      cfg.Platform,
+		Locale:        cfg.Locale,
+		Hardware:      cfg.Hardware,
+		Screen:        cfg.Screen,
+		GPU:           cfg.GPU,
+		WebRTC:        cfg.WebRTC,
+		Storage:       cfg.Storage,
+	}, nil
 }
 
 func browseForgeChromiumNativeMode(policy *config.CloakBrowserConfig) string {

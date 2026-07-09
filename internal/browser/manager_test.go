@@ -450,6 +450,12 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	if got := nativeConfig["seed"]; got != float64(12345) {
 		t.Fatalf("native seed = %#v, want 12345", got)
 	}
+	for _, key := range []string{"persona_id_hash", "origin_salt_key"} {
+		value, ok := nativeConfig[key].(string)
+		if !ok || len(value) != 32 {
+			t.Fatalf("native %s = %#v, want 32-char hex string", key, nativeConfig[key])
+		}
+	}
 	nativeGPU, ok := nativeConfig["gpu"].(map[string]any)
 	if !ok {
 		t.Fatalf("native gpu missing: %#v", nativeConfig)
