@@ -123,6 +123,8 @@ func sanitizeExtraChromiumArgs(args []string) []string {
 		"--fingerprint-canvas-noise",
 		"--fingerprint-webgl-vendor",
 		"--fingerprint-webgl-renderer",
+		"--browseforge-stealth-config",
+		"--browseforge-stealth-mode",
 	}
 	out := make([]string, 0, len(args))
 	seen := map[string]bool{}

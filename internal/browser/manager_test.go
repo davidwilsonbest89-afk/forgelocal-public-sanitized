@@ -428,10 +428,44 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		"--fingerprint-webgl-renderer=ANGLE (NVIDIA, NVIDIA GeForce RTX 4050 Laptop GPU Direct3D11)",
 		"--fingerprint-storage-quota=2048",
 		"--fingerprint-fonts-dir=" + fontsDirAbs,
+		"--browseforge-stealth-config=" + filepath.Join(profileDir, "browser-data", "BrowseForgeNative", "persona.json"),
+		"--browseforge-stealth-mode=enabled",
 	} {
 		if !containsArg(browserType.options.Args, want) {
 			t.Fatalf("launch args missing %q: %#v", want, browserType.options.Args)
 		}
+	}
+	nativeConfigPath := filepath.Join(profileDir, "browser-data", "BrowseForgeNative", "persona.json")
+	nativeConfigData, err := os.ReadFile(nativeConfigPath)
+	if err != nil {
+		t.Fatalf("read native config: %v", err)
+	}
+	var nativeConfig map[string]any
+	if err := json.Unmarshal(nativeConfigData, &nativeConfig); err != nil {
+		t.Fatalf("decode native config: %v", err)
+	}
+	if got := nativeConfig["runtime_id"]; got != "browseforge-chromium" {
+		t.Fatalf("native runtime_id = %#v, want browseforge-chromium", got)
+	}
+	if got := nativeConfig["seed"]; got != float64(12345) {
+		t.Fatalf("native seed = %#v, want 12345", got)
+	}
+	nativeGPU, ok := nativeConfig["gpu"].(map[string]any)
+	if !ok {
+		t.Fatalf("native gpu missing: %#v", nativeConfig)
+	}
+	if got := nativeGPU["vendor"]; got != "Google Inc. (NVIDIA)" {
+		t.Fatalf("native gpu vendor = %#v", got)
+	}
+	if got := nativeGPU["renderer"]; got != "ANGLE (NVIDIA, NVIDIA GeForce RTX 4050 Laptop GPU Direct3D11)" {
+		t.Fatalf("native gpu renderer = %#v", got)
+	}
+	nativeWebRTC, ok := nativeConfig["webrtc"].(map[string]any)
+	if !ok {
+		t.Fatalf("native webrtc missing: %#v", nativeConfig)
+	}
+	if got := nativeWebRTC["direct_ip_redaction"]; got != true {
+		t.Fatalf("native webrtc direct_ip_redaction = %#v, want true", got)
 	}
 	if browserType.options.Proxy == nil {
 		t.Fatalf("launch proxy was not configured")

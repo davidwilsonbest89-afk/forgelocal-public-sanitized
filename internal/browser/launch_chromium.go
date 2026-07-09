@@ -3,6 +3,7 @@ package browser
 import (
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -14,6 +15,7 @@ import (
 	"browseforge/internal/config"
 	"browseforge/internal/fingerprint"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 
 	"github.com/playwright-community/playwright-go"
 )
@@ -109,6 +111,16 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		return nil, fmt.Errorf("%s storage_quota_mb must be >= 0", desc.ID)
 	}
 
+	if desc.ID == bfruntime.BrowseForgeChromium {
+		nativeConfigPath, err := writeBrowseForgeNativeConfig(p, userDataDir, tz, locale, platform, policy)
+		if err != nil {
+			return nil, err
+		}
+		args = append(args,
+			"--browseforge-stealth-config="+nativeConfigPath,
+			"--browseforge-stealth-mode="+browseForgeChromiumNativeMode(policy),
+		)
+	}
 	args = appendProfileFingerprintArgs(args, p.Fingerprint)
 
 	if m.cfg.NoSandbox {
@@ -301,6 +313,205 @@ func installChromiumAutomationMitigations(ctx playwright.BrowserContext) error {
 		}
 	}
 	return nil
+}
+
+func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, locale, platform string, policy *config.CloakBrowserConfig) (string, error) {
+	if p == nil {
+		return "", fmt.Errorf("profile is nil")
+	}
+	fp := p.Fingerprint
+	userAgent, ok := fingerprintString(fp, "navigator.userAgent")
+	if !ok {
+		userAgent = defaultChromiumUserAgent(platform)
+	}
+	fullVersion := chromiumVersionFromUserAgent(userAgent)
+	platformOS, platformCH, arch, bitness := nativePersonaPlatform(platform)
+	acceptLanguage, ok := fingerprintAcceptLanguage(fp)
+	if !ok {
+		acceptLanguage = locale
+	}
+	vendor, ok := fingerprintString(fp, "webGl:vendor")
+	if !ok {
+		vendor = "Intel Inc."
+	}
+	renderer, ok := fingerprintString(fp, "webGl:renderer")
+	if !ok {
+		renderer = "Intel Iris OpenGL Engine"
+	}
+	storageQuota := int64(8192)
+	if quota := cloakStorageQuotaMB(policy); quota > 0 {
+		storageQuota = quota
+	}
+	payload := map[string]any{
+		"schema_version": "1.0",
+		"runtime_id":     "browseforge-chromium",
+		"seed":           browseForgePersonaSeed(p),
+		"browser": map[string]any{
+			"family":       "chromium",
+			"major":        chromiumMajorVersion(fullVersion),
+			"full_version": fullVersion,
+			"brands":       []string{"Chromium", "Google Chrome"},
+			"user_agent":   userAgent,
+		},
+		"platform": map[string]any{
+			"os":          platformOS,
+			"arch":        arch,
+			"platform":    platform,
+			"platform_ch": platformCH,
+			"mobile":      false,
+			"bitness":     bitness,
+			"model":       "",
+		},
+		"locale": map[string]any{
+			"timezone":        timezone,
+			"locale":          locale,
+			"accept_language": acceptLanguage,
+		},
+		"hardware": map[string]any{
+			"hardware_concurrency": fingerprintIntDefault(fp, "navigator.hardwareConcurrency", 8),
+			"device_memory_gb":     fingerprintIntDefault(fp, "navigator.deviceMemory", 8),
+		},
+		"screen": map[string]any{
+			"width":        fingerprintIntDefault(fp, "screen.width", 1920),
+			"height":       fingerprintIntDefault(fp, "screen.height", 1080),
+			"avail_width":  fingerprintIntDefault(fp, "screen.availWidth", 1920),
+			"avail_height": fingerprintIntDefault(fp, "screen.availHeight", 1040),
+			"dpr":          fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1),
+			"color_depth":  fingerprintIntDefault(fp, "screen.colorDepth", 24),
+		},
+		"gpu": map[string]any{
+			"vendor":        vendor,
+			"renderer":      renderer,
+			"angle_backend": "",
+			"webgl_params":  map[string]string{},
+		},
+		"webrtc": map[string]any{
+			"mode":                "disable_non_proxied_udp",
+			"proxy_region":        "",
+			"direct_ip_redaction": true,
+		},
+		"storage": map[string]any{
+			"quota_mb":   int(storageQuota),
+			"persistent": true,
+		},
+	}
+	configDir := filepath.Join(userDataDir, "BrowseForgeNative")
+	if err := os.MkdirAll(configDir, 0755); err != nil {
+		return "", fmt.Errorf("create BrowseForge native config dir: %w", err)
+	}
+	configPath := filepath.Join(configDir, "persona.json")
+	data, err := json.MarshalIndent(payload, "", "  ")
+	if err != nil {
+		return "", fmt.Errorf("encode BrowseForge native config: %w", err)
+	}
+	if err := os.WriteFile(configPath, append(data, '\n'), 0644); err != nil {
+		return "", fmt.Errorf("write BrowseForge native config: %w", err)
+	}
+	return configPath, nil
+}
+
+func browseForgeChromiumNativeMode(policy *config.CloakBrowserConfig) string {
+	if policy != nil && strings.TrimSpace(policy.NativeMode) != "" {
+		return strings.TrimSpace(policy.NativeMode)
+	}
+	return "enabled"
+}
+
+func browseForgePersonaSeed(p *profile.Profile) uint64 {
+	if p.FingerprintSeed > 0 {
+		return uint64(p.FingerprintSeed)
+	}
+	if seed, ok := fingerprintInt(p.Fingerprint, "canvas:seed"); ok {
+		return uint64(seed)
+	}
+	h := fnv.New64a()
+	_, _ = h.Write([]byte(p.ID + ":" + p.RuntimeID))
+	seed := h.Sum64()
+	if seed == 0 {
+		return 1
+	}
+	return seed
+}
+
+func defaultChromiumUserAgent(platform string) string {
+	if platform == "MacIntel" {
+		return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+	}
+	if platform == "Linux x86_64" {
+		return "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+	}
+	return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+}
+
+func chromiumVersionFromUserAgent(userAgent string) string {
+	const token = "Chrome/"
+	idx := strings.Index(userAgent, token)
+	if idx < 0 {
+		return "150.0.7871.101"
+	}
+	version := userAgent[idx+len(token):]
+	if end := strings.IndexAny(version, " )"); end >= 0 {
+		version = version[:end]
+	}
+	if version == "" {
+		return "150.0.7871.101"
+	}
+	return version
+}
+
+func chromiumMajorVersion(fullVersion string) int {
+	major := fullVersion
+	if dot := strings.IndexByte(major, '.'); dot >= 0 {
+		major = major[:dot]
+	}
+	parsed, err := strconv.Atoi(major)
+	if err != nil || parsed <= 0 {
+		return 150
+	}
+	return parsed
+}
+
+func nativePersonaPlatform(platform string) (osName, platformCH, arch, bitness string) {
+	switch platform {
+	case "MacIntel":
+		return "macos", "macOS", "x86", "64"
+	case "Linux x86_64":
+		return "linux", "Linux", "x86", "64"
+	default:
+		return "windows", "Windows", "x86", "64"
+	}
+}
+
+func fingerprintIntDefault(fp map[string]any, key string, fallback int) int {
+	if value, ok := fingerprintInt(fp, key); ok {
+		return int(value)
+	}
+	return fallback
+}
+
+func fingerprintFloatDefault(fp map[string]any, key string, fallback float64) float64 {
+	if fp == nil {
+		return fallback
+	}
+	switch typed := fp[key].(type) {
+	case int:
+		if typed > 0 {
+			return float64(typed)
+		}
+	case int64:
+		if typed > 0 {
+			return float64(typed)
+		}
+	case float64:
+		if typed > 0 {
+			return typed
+		}
+	case json.Number:
+		if parsed, err := strconv.ParseFloat(string(typed), 64); err == nil && parsed > 0 {
+			return parsed
+		}
+	}
+	return fallback
 }
 
 func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *config.CloakBrowserConfig, fallback bool) ([]string, error) {
