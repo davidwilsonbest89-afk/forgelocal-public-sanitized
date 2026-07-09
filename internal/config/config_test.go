@@ -7,6 +7,27 @@ import (
 	"testing"
 )
 
+func TestDefaultConfigAdvertisesBrowseForgeChromium(t *testing.T) {
+	cfg, err := Load(filepath.Join("..", "..", "config.default.json"))
+	if err != nil {
+		t.Fatalf("load default config: %v", err)
+	}
+
+	rt, ok := cfg.Runtimes["browseforge-chromium"]
+	if !ok {
+		t.Fatal("default config missing runtimes.browseforge-chromium")
+	}
+	if rt.DisplayName != "BrowseForge Chromium" || rt.Family != "chromium" {
+		t.Fatalf("browseforge-chromium metadata = %#v", rt)
+	}
+	if rt.BinaryPath != "" {
+		t.Fatalf("browseforge-chromium binary_path = %q, want empty until configured", rt.BinaryPath)
+	}
+	if rt.Enabled == nil || *rt.Enabled {
+		t.Fatalf("browseforge-chromium enabled = %v, want explicit false", rt.Enabled)
+	}
+}
+
 func TestLoadCloakBrowserConfig(t *testing.T) {
 	path := filepath.Join(t.TempDir(), "config.json")
 	data := []byte(`{

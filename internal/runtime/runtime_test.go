@@ -1,12 +1,32 @@
 package runtime
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 
 	"browseforge/internal/config"
 	"browseforge/internal/profile"
 )
+
+func TestNewRegistryLoadsBrowseForgeChromiumFromDefaultConfig(t *testing.T) {
+	cfg, err := config.Load(filepath.Join("..", "..", "config.default.json"))
+	if err != nil {
+		t.Fatalf("load default config: %v", err)
+	}
+
+	reg := NewRegistry(cfg)
+	desc, ok := reg.Get(BrowseForgeChromium)
+	if !ok {
+		t.Fatal("BrowseForge Chromium runtime missing")
+	}
+	if desc.DisplayName != "BrowseForge Chromium" || desc.Family != FamilyChromium || desc.Capabilities.Family != FamilyChromium {
+		t.Fatalf("BrowseForge Chromium metadata = %+v", desc)
+	}
+	if desc.BinaryPath != "" || desc.Enabled {
+		t.Fatalf("BrowseForge Chromium binary/enabled = %q/%v, want empty/false", desc.BinaryPath, desc.Enabled)
+	}
+}
 
 func TestRegistryResolvesExplicitRuntimeID(t *testing.T) {
 	reg := NewRegistry(&config.Config{})
