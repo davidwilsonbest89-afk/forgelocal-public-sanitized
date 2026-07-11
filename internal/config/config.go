@@ -35,6 +35,7 @@ type CloakBrowserConfig struct {
 	StorageQuotaMB                      int64    `json:"storage_quota_mb,omitempty"`
 	TargetPlatformPolicy                string   `json:"target_platform_policy,omitempty"` // strict | warn | allow
 	NativeMode                          string   `json:"native_mode,omitempty"`
+	PluginsPDF                          string   `json:"plugins_pdf,omitempty"`
 	ExtraArgs                           []string `json:"extra_args"`
 }
 

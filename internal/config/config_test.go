@@ -26,6 +26,9 @@ func TestDefaultConfigAdvertisesBrowseForgeChromium(t *testing.T) {
 	if rt.Enabled == nil || *rt.Enabled {
 		t.Fatalf("browseforge-chromium enabled = %v, want explicit false", rt.Enabled)
 	}
+	if rt.Settings == nil || rt.Settings.PluginsPDF != "enabled" {
+		t.Fatalf("browseforge-chromium plugins_pdf = %#v, want enabled", rt.Settings)
+	}
 }
 
 func TestLoadCloakBrowserConfig(t *testing.T) {
@@ -51,6 +54,7 @@ func TestLoadCloakBrowserConfig(t *testing.T) {
         "fonts_dir": "/opt/browseforge/fonts",
         "storage_quota_mb": 2048,
         "target_platform_policy": "warn",
+        "plugins_pdf": "enabled",
         "extra_args": ["--disable-features=Translate"]
       }
     }
@@ -85,6 +89,9 @@ func TestLoadCloakBrowserConfig(t *testing.T) {
 	}
 	if settings.TargetPlatformPolicy != "warn" {
 		t.Fatalf("target platform policy = %q, want warn", settings.TargetPlatformPolicy)
+	}
+	if settings.PluginsPDF != "enabled" {
+		t.Fatalf("plugins_pdf = %q, want enabled", settings.PluginsPDF)
 	}
 	if len(settings.ExtraArgs) != 1 || settings.ExtraArgs[0] != "--disable-features=Translate" {
 		t.Fatalf("extra args = %#v", settings.ExtraArgs)

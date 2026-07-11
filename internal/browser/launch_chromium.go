@@ -113,6 +113,9 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	} else if quota < 0 {
 		return nil, fmt.Errorf("%s storage_quota_mb must be >= 0", desc.ID)
 	}
+	if pluginsPDF := cloakPluginsPDF(policy); pluginsPDF != "" {
+		args = append(args, "--fingerprint-plugins-pdf="+pluginsPDF)
+	}
 
 	if desc.ID == bfruntime.BrowseForgeChromium {
 		nativeConfigPath, err := writeBrowseForgeNativeConfig(p, userDataDir, tz, locale, platform, policy)
@@ -683,7 +686,18 @@ func appendProfileFingerprintArgs(args []string, fp map[string]any) []string {
 		return args
 	}
 	if v, ok := fingerprintString(fp, "navigator.userAgent"); ok {
-		args = append(args, "--fingerprint-user-agent="+v)
+		args = append(args, "--user-agent="+v, "--fingerprint-user-agent="+v)
+		if fullVersion := chromiumVersionFromUserAgent(v); fullVersion != "" {
+			args = append(args, "--fingerprint-ua-full-version="+fullVersion)
+		}
+	}
+	if platform, ok := fingerprintString(fp, "navigator.platform"); ok {
+		_, platformCH, arch, bitness := nativePersonaPlatform(platform)
+		args = append(args,
+			"--fingerprint-ua-platform="+platformCH,
+			"--fingerprint-ua-architecture="+arch,
+			"--fingerprint-ua-bitness="+bitness,
+		)
 	}
 	if v, ok := fingerprintAcceptLanguage(fp); ok {
 		args = append(args, "--fingerprint-accept-language="+v)
@@ -835,6 +849,18 @@ func cloakStorageQuotaMB(policy *config.CloakBrowserConfig) int64 {
 	return policy.StorageQuotaMB
 }
 
+func cloakPluginsPDF(policy *config.CloakBrowserConfig) string {
+	if policy == nil {
+		return ""
+	}
+	switch policy.PluginsPDF {
+	case "", "enabled", "true", "1", "disabled", "false", "0":
+		return policy.PluginsPDF
+	default:
+		return ""
+	}
+}
+
 func resolveCloakFontsDir(policy *config.CloakBrowserConfig) (string, error) {
 	if policy != nil && policy.FontsDir != "" {
 		fontsDir, err := filepath.Abs(policy.FontsDir)
@@ -865,13 +891,16 @@ func validateCloakFingerprintPolicy(policy *config.CloakBrowserConfig, platform 
 		mode = "warn"
 	}
 	switch mode {
-	case "allow":
-		return nil
-	case "warn", "strict":
+	case "allow", "warn", "strict":
 	default:
 		return fmt.Errorf("cloakbrowser target_platform_policy must be strict, warn, or allow")
 	}
-	if platform == "Win32" && goos != "windows" && policy.FontsDir == "" {
+	switch policy.PluginsPDF {
+	case "", "enabled", "true", "1", "disabled", "false", "0":
+	default:
+		return fmt.Errorf("cloakbrowser plugins_pdf must be enabled/true/1 or disabled/false/0")
+	}
+	if mode != "allow" && platform == "Win32" && goos != "windows" && policy.FontsDir == "" {
 		msg := "Windows CloakBrowser fingerprint on non-Windows host should configure runtimes.cloakbrowser.settings.fonts_dir with a Windows-compatible font pack"
 		if mode == "strict" {
 			return fmt.Errorf("%s", msg)

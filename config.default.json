@@ -43,6 +43,7 @@
         "storage_quota_mb": 0,
         "target_platform_policy": "warn",
         "native_mode": "enabled",
+        "plugins_pdf": "enabled",
         "extra_args": []
       }
     }
