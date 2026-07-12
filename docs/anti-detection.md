@@ -1,8 +1,122 @@
 # 反偵測機制技術文件
 
-BrowseForge 整合兩套反偵測瀏覽器引擎，各有不同的指紋偽裝架構。
+BrowseForge 整合多套反偵測瀏覽器 runtime，各有不同的指紋偽裝架構。穩定路線仍可使用 Camoufox / CloakBrowser；`browseforge-chromium` 是新的 source-level Chromium alpha runtime，適合先做 opt-in validation，不應在未簽章前宣稱 production-ready。
 
 > Current architecture source: [Dual-Browser Anti-Detection Architecture](dual-browser-architecture.md).
+
+---
+
+## BrowseForge Chromium Runtime — Source-level Chromium alpha
+
+### 架構
+
+`browseforge-chromium` 是 BrowseForge 專用的 Chromium-family runtime。BrowseForge 仍負責 profile、REST API、MCP、dashboard、workflow、backup/restore 與 session orchestration；runtime artifact 則負責 Chromium binary、source-level stealth patches、native persona config、detector evidence、SBOM/provenance 與 release manifests。
+
+目前 runtime identity：
+
+| 欄位 | 值 |
+|------|----|
+| `runtime_id` | `browseforge-chromium` |
+| `family` | `chromium` |
+| BrowseForge 最低版本 | `v2.0.0` |
+| Runtime 狀態 | `v0.1.0-alpha.0` |
+| 發佈狀態 | alpha validation artifact；尚未 release-grade 簽章 |
+
+### 使用端整合方式
+
+1. 下載或放置對應平台的 `browseforge-runtime-chromium-v0.1.0-alpha.0-<platform>.zip`。
+2. 解壓到 BrowseForge runtime 目錄，例如 `browsers/browseforge-chromium/`。
+3. 在 `config.json` 啟用 runtime：
+
+```json
+{
+  "default_runtime_id": "camoufox",
+  "runtimes": {
+    "browseforge-chromium": {
+      "enabled": true,
+      "binary_path": "browsers/browseforge-chromium/chrome",
+      "family": "chromium",
+      "display_name": "BrowseForge Chromium",
+      "settings": {
+        "auto_safe_gpu_fallback": true,
+        "isolated_runtime_cache": true,
+        "repair_transient_cache_on_launch_failure": true,
+        "fingerprint_platform": "auto",
+        "target_platform_policy": "warn",
+        "native_mode": "enabled",
+        "plugins_pdf": "enabled",
+        "extra_args": []
+      }
+    }
+  }
+}
+```
+
+`binary_path` 要指向 artifact 內的瀏覽器 binary，不是 standalone wrapper：
+
+| 平台 | `binary_path` 指向 |
+|------|--------------------|
+| Linux x64 | `browsers/browseforge-chromium/chrome` |
+| macOS arm64 | `browsers/browseforge-chromium/Chromium.app/Contents/MacOS/Chromium` |
+| Windows x64 | `browsers/browseforge-chromium/chrome.exe` |
+
+建立 profile 時指定 `runtime_id`：
+
+```bash
+curl -X POST http://127.0.0.1:19280/api/profiles \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Chromium Alpha Profile",
+    "runtime_id": "browseforge-chromium",
+    "proxy": {
+      "type": "socks5",
+      "host": "proxy.example.com",
+      "port": 1080,
+      "username": "user",
+      "password": "pass",
+      "region": "us-ny"
+    }
+  }'
+```
+
+`proxy.region` 是去識別化地理標籤，用來讓 native WebRTC persona 和 proxy 出口地區保持一致；不要填入 raw IP、帳密或可識別個資。
+
+### BrowseForge 傳入的 native switches
+
+| Switch | 來源 | 說明 |
+|--------|------|------|
+| `--fingerprint=SEED` | `profile.FingerprintSeed` | 穩定身份主種子 |
+| `--fingerprint-user-agent` / UA-CH switches | 指紋池 + Chromium version | UA、full version、platform、architecture、bitness 一致性 |
+| `--fingerprint-timezone` | proxy/GeoIP profile | JS timezone 與出口地區一致性 |
+| `--fingerprint-locale` / `--fingerprint-accept-language` | proxy/GeoIP profile | navigator language 與 HTTP header 一致性 |
+| `--fingerprint-hardware-concurrency` / `--fingerprint-device-memory` | 指紋池 | CPU / memory plausible range |
+| `--fingerprint-screen-*` | 指紋池 | screen / avail / viewport coherence |
+| `--fingerprint-canvas-noise` | 指紋池 / seed | Canvas 穩定 noise |
+| `--fingerprint-audio-noise` | 指紋池 / seed | AudioContext 穩定 noise |
+| `--fingerprint-fonts-list` | 指紋池 / font pack | 字型清單與目標 OS 一致性 |
+| `--fingerprint-webgl-vendor` / `--fingerprint-webgl-renderer` | 指紋池 / GPU profile | WebGL vendor/renderer |
+| `--browseforge-stealth-config` | BrowseForge native persona JSON | persona hash、origin salt、proxy/WebRTC metadata |
+| `--browseforge-stealth-mode=enabled` | `runtimes.browseforge-chromium.settings.native_mode` | 啟用 native stealth substrate |
+
+### 啟用前驗證
+
+使用端啟用前至少確認：
+
+- `GET /api/runtimes` 會列出 `browseforge-chromium` 且 `enabled=true`。
+- `POST /api/profiles` 可建立 `runtime_id=browseforge-chromium` 的 profile。
+- `POST /api/sessions` 回傳的 session `runtime_id` 仍是 `browseforge-chromium`。
+- Playwright Bind endpoint 可連線第二個 client。
+- MCP `list_runtimes`、`create_profile`、`open_browser` 可用。
+- workflow `create_profile` 會原樣保留 `runtime_id`。
+- Docker / server 部署時，artifact 已 seed 到 `/app/browsers/browseforge-chromium` 或 config 指到正確 binary。
+
+### 已知限制
+
+- 目前 artifact 是 unsigned alpha；可用於 validation / dogfood，不可宣稱 production-ready。
+- release-grade 仍需要 Linux release asset signing policy、macOS Developer ID + notarization、Windows Authenticode。
+- `download_url` 正式化前，自動 installer 應使用本地路徑、Docker seed 或明確的 alpha asset URL。
+- 不建議把 `browseforge-chromium` 設成 `default_runtime_id`，除非 operator 明確接受 alpha runtime 風險。
 
 ---
 

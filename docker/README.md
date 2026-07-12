@@ -21,7 +21,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 Build from the local source tree:
@@ -32,23 +32,23 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-The Compose file builds the `v2.0.0` release image by default. To test another version:
+The Compose file builds the `v2.1.0` release image by default. To test another version:
 
 ```bash
-BROWSEFORGE_VERSION=v2.0.0 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.0 docker compose up -d --build
 ```
 
 ## First Startup
 
-Current release images install the browser engines during the Docker build. On startup, BrowseForge seeds the host-mounted `/app/browsers` cache from the image when `/app/browsers/{engine}/.version` is missing or differs from the packaged version.
+Current release images install Camoufox and BrowseForge Chromium during the Docker build. On startup, BrowseForge seeds the host-mounted `/app/browsers` cache from the image when `/app/browsers/{engine}/.version` is missing or differs from the packaged version. CloakBrowser remains available for manual/custom installs but is no longer part of the default GHCR preinstall set.
 
-The first startup may still take 3-5 minutes and download browser engines when you use an older image, disable `BROWSEFORGE_PREINSTALL_BROWSERS`, or set `BROWSEFORGE_SEED_BROWSERS=0`. During that window, the dashboard may not be ready yet.
+The first startup may still take 3-5 minutes and download browser engines when you use an older image, disable `BROWSEFORGE_PREINSTALL_BROWSERS`, set `BROWSEFORGE_PREINSTALL_RUNTIMES` to a runtime not already present in the image, or set `BROWSEFORGE_SEED_BROWSERS=0`. During that window, the dashboard may not be ready yet.
 
 Use these commands to verify startup state:
 
 ```bash
 docker logs -f browseforge
-docker exec browseforge /app/BrowseForge browsers status --json
+docker exec browseforge /app/BrowseForge browsers status --runtimes camoufox,browseforge-chromium --json
 docker exec browseforge /app/BrowseForge smoke rest --wait --timeout 5m --json
 ```
 
@@ -85,18 +85,18 @@ Production deployments should use host bind mounts:
 |-----------|----------------|---------|
 | `./browseforge/profiles` | `/app/profiles` | Profile metadata and browser user data. |
 | `./browseforge/data` | `/app/data` | `.api-token` API token and fingerprint data. |
-| `./browseforge/browsers` | `/app/browsers` | Downloaded or seeded Camoufox/CloakBrowser engines. |
+| `./browseforge/browsers` | `/app/browsers` | Downloaded or seeded Camoufox, BrowseForge Chromium, and optional CloakBrowser engines. |
 | `./browseforge/logs` | `/app/logs` | Server logs. |
 | `./browseforge/backups` | `/app/backups` | Filesystem and API backup output. |
 
 When you pull a new image or recreate the container, reuse the same `-v "$PWD/browseforge/...:/app/..."` mounts. This keeps the API token, profiles, browser user data, browser cache, logs, and backups outside the container lifecycle.
 
-`/app/browsers` is a BrowseForge-managed browser cache. The default `BROWSEFORGE_SEED_BROWSERS=1` updates it to the browser version packaged in the image. Set it to `0` only for debugging cases where you intentionally want to preserve a manually installed browser engine.
+`/app/browsers` is a BrowseForge-managed browser cache. The default `BROWSEFORGE_SEED_BROWSERS=1` updates it to the browser versions packaged in the image. `BROWSEFORGE_PREINSTALL_RUNTIMES` controls the build-time set and defaults to `camoufox,browseforge-chromium`. Set seeding to `0` only for debugging cases where you intentionally want to preserve a manually installed browser engine.
 
 Upgrade example:
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.0.0
+docker pull ghcr.io/nczz/browseforge:v2.1.0
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -109,7 +109,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 Full filesystem backup:
@@ -139,6 +139,7 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 ## Notes
 
 - The GHCR Docker image currently publishes `linux/amd64`. Apple Silicon and ARM servers run it through emulation.
+- Default GHCR browser preinstall is Camoufox plus BrowseForge Chromium. Use `BROWSEFORGE_PREINSTALL_RUNTIMES` at image build time if you need a different set.
 - VNC is intended for watching browser state and basic remote operation.
 - Browser engines, profiles, token data, logs, and backups are host-mounted under `./browseforge/` by default, so recreating the container does not delete them.
 
@@ -146,4 +147,4 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 
 `docker-compose.yml` sets `platform: linux/amd64` and runs through Rosetta/QEMU emulation.
 
-Native `linux/arm64` images should only be enabled after KasmVNC, Camoufox, and CloakBrowser have all passed runtime validation inside an ARM container.
+Native `linux/arm64` images should only be enabled after KasmVNC, Camoufox, and BrowseForge Chromium have all passed runtime validation inside an ARM container.

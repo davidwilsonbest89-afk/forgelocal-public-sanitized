@@ -13,6 +13,11 @@ import (
 	"golang.org/x/net/proxy"
 )
 
+var (
+	primaryIPGeoURL = "https://undo.im/json"
+	legacyIPGeoURL  = "http://ip-api.com/json/?fields=countryCode,timezone"
+)
+
 // AdjustToLocal adjusts fingerprint geo fields to match the actual public IP
 func AdjustToLocal(fp map[string]any) {
 	// Always check actual public IP first (handles VPN/WireGuard scenarios)
@@ -80,20 +85,52 @@ func DetectLocalGeoResult() (timezone, locale string) {
 }
 
 func queryIPGeo(client *http.Client) (country, timezone string) {
-	resp, err := client.Get("http://ip-api.com/json/?fields=countryCode,timezone")
+	if country, timezone := queryUndoIPGeo(client, primaryIPGeoURL); country != "" && timezone != "" {
+		return country, timezone
+	}
+	return queryLegacyIPGeo(client, legacyIPGeoURL)
+}
+
+func queryUndoIPGeo(client *http.Client, endpoint string) (country, timezone string) {
+	resp, err := client.Get(endpoint)
 	if err != nil {
 		return "", ""
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return "", ""
+	}
+
+	var result struct {
+		CF struct {
+			Country  string `json:"country"`
+			Timezone string `json:"timezone"`
+		} `json:"cf"`
+	}
+	if json.NewDecoder(resp.Body).Decode(&result) != nil {
+		return "", ""
+	}
+	return strings.TrimSpace(result.CF.Country), strings.TrimSpace(result.CF.Timezone)
+}
+
+func queryLegacyIPGeo(client *http.Client, endpoint string) (country, timezone string) {
+	resp, err := client.Get(endpoint)
+	if err != nil {
+		return "", ""
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return "", ""
+	}
 
 	var result struct {
 		CountryCode string `json:"countryCode"`
 		Timezone    string `json:"timezone"`
 	}
-	if json.NewDecoder(resp.Body).Decode(&result) == nil {
-		return result.CountryCode, result.Timezone
+	if json.NewDecoder(resp.Body).Decode(&result) != nil {
+		return "", ""
 	}
-	return "", ""
+	return strings.TrimSpace(result.CountryCode), strings.TrimSpace(result.Timezone)
 }
 
 func buildProxyClient(proxyType, host string, port int, username, password string) *http.Client {
@@ -129,7 +166,7 @@ func buildProxyClient(proxyType, host string, port int, username, password strin
 func detectLocalTimezone() string {
 	// Method 1: Go's time.Local
 	zone, _ := time.Now().Zone()
-	
+
 	// Method 2: macOS/Linux system timezone (more accurate)
 	if out, err := exec.Command("readlink", "/etc/localtime").Output(); err == nil {
 		// /etc/localtime -> /var/db/timezone/zoneinfo/Asia/Taipei
@@ -138,7 +175,7 @@ func detectLocalTimezone() string {
 			return parts[1]
 		}
 	}
-	
+
 	// Method 3: macOS systemsetup
 	if out, err := exec.Command("systemsetup", "-gettimezone").Output(); err == nil {
 		// "Time Zone: Asia/Taipei"
@@ -153,39 +190,39 @@ func detectLocalTimezone() string {
 }
 
 var timezoneCountryMap = map[string]string{
-	"Asia/Taipei":       "TW",
-	"Asia/Tokyo":        "JP",
-	"Asia/Seoul":        "KR",
-	"Asia/Shanghai":     "CN",
-	"Asia/Hong_Kong":    "HK",
-	"Asia/Singapore":    "SG",
-	"Asia/Bangkok":      "TH",
-	"Asia/Ho_Chi_Minh":  "VN",
-	"Asia/Jakarta":      "ID",
-	"Asia/Manila":       "PH",
-	"Asia/Kuala_Lumpur": "MY",
-	"Asia/Kolkata":      "IN",
-	"Asia/Dubai":        "AE",
-	"Asia/Jerusalem":    "IL",
-	"Europe/London":     "GB",
-	"Europe/Berlin":     "DE",
-	"Europe/Paris":      "FR",
-	"Europe/Rome":       "IT",
-	"Europe/Madrid":     "ES",
-	"Europe/Amsterdam":  "NL",
-	"Europe/Stockholm":  "SE",
-	"Europe/Warsaw":     "PL",
-	"Europe/Istanbul":   "TR",
-	"Europe/Kyiv":       "UA",
-	"Europe/Moscow":     "RU",
-	"America/New_York":      "US",
-	"America/Chicago":       "US",
-	"America/Denver":        "US",
-	"America/Los_Angeles":   "US",
-	"America/Toronto":       "CA",
-	"America/Sao_Paulo":     "BR",
-	"America/Mexico_City":   "MX",
-	"Australia/Sydney":      "AU",
+	"Asia/Taipei":         "TW",
+	"Asia/Tokyo":          "JP",
+	"Asia/Seoul":          "KR",
+	"Asia/Shanghai":       "CN",
+	"Asia/Hong_Kong":      "HK",
+	"Asia/Singapore":      "SG",
+	"Asia/Bangkok":        "TH",
+	"Asia/Ho_Chi_Minh":    "VN",
+	"Asia/Jakarta":        "ID",
+	"Asia/Manila":         "PH",
+	"Asia/Kuala_Lumpur":   "MY",
+	"Asia/Kolkata":        "IN",
+	"Asia/Dubai":          "AE",
+	"Asia/Jerusalem":      "IL",
+	"Europe/London":       "GB",
+	"Europe/Berlin":       "DE",
+	"Europe/Paris":        "FR",
+	"Europe/Rome":         "IT",
+	"Europe/Madrid":       "ES",
+	"Europe/Amsterdam":    "NL",
+	"Europe/Stockholm":    "SE",
+	"Europe/Warsaw":       "PL",
+	"Europe/Istanbul":     "TR",
+	"Europe/Kyiv":         "UA",
+	"Europe/Moscow":       "RU",
+	"America/New_York":    "US",
+	"America/Chicago":     "US",
+	"America/Denver":      "US",
+	"America/Los_Angeles": "US",
+	"America/Toronto":     "CA",
+	"America/Sao_Paulo":   "BR",
+	"America/Mexico_City": "MX",
+	"Australia/Sydney":    "AU",
 }
 
 func timezoneToCountry(tz string) string {
@@ -207,15 +244,15 @@ func timezoneToCountry(tz string) string {
 
 func zoneAbbrevToTZ(abbrev string) string {
 	m := map[string]string{
-		"CST": "Asia/Taipei", // Could be US Central, but on a TW machine it's likely Taipei
-		"JST": "Asia/Tokyo",
-		"KST": "Asia/Seoul",
-		"EST": "America/New_York",
-		"PST": "America/Los_Angeles",
-		"MST": "America/Denver",
-		"GMT": "Europe/London",
-		"CET": "Europe/Berlin",
-		"IST": "Asia/Kolkata",
+		"CST":  "Asia/Taipei", // Could be US Central, but on a TW machine it's likely Taipei
+		"JST":  "Asia/Tokyo",
+		"KST":  "Asia/Seoul",
+		"EST":  "America/New_York",
+		"PST":  "America/Los_Angeles",
+		"MST":  "America/Denver",
+		"GMT":  "Europe/London",
+		"CET":  "Europe/Berlin",
+		"IST":  "Asia/Kolkata",
 		"AEST": "Australia/Sydney",
 	}
 	if tz, ok := m[abbrev]; ok {

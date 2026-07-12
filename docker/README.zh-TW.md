@@ -21,7 +21,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 本地從原始碼 build：
@@ -32,10 +32,10 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-compose 預設會建置 `v2.0.0` release image。要測其他版本：
+compose 預設會建置 `v2.1.0` release image。要測其他版本：
 
 ```bash
-BROWSEFORGE_VERSION=v2.0.0 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.0 docker compose up -d --build
 ```
 
 若 image 沒有預載 browser engines，首次啟動需要 3-5 分鐘下載瀏覽器引擎（~440MB）。
@@ -84,7 +84,7 @@ Pull 新 image 或重建容器時，必須沿用同一組 `-v "$PWD/browseforge/
 升級範例：
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.0.0
+docker pull ghcr.io/nczz/browseforge:v2.1.0
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -97,7 +97,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 完整 filesystem 備份：

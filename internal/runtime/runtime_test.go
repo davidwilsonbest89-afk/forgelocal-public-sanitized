@@ -23,8 +23,8 @@ func TestNewRegistryLoadsBrowseForgeChromiumFromDefaultConfig(t *testing.T) {
 	if desc.DisplayName != "BrowseForge Chromium" || desc.Family != FamilyChromium || desc.Capabilities.Family != FamilyChromium {
 		t.Fatalf("BrowseForge Chromium metadata = %+v", desc)
 	}
-	if desc.BinaryPath != "" || desc.Enabled {
-		t.Fatalf("BrowseForge Chromium binary/enabled = %q/%v, want empty/false", desc.BinaryPath, desc.Enabled)
+	if desc.BinaryPath != "browsers/browseforge-chromium/chrome" || !desc.Enabled {
+		t.Fatalf("BrowseForge Chromium binary/enabled = %q/%v, want Docker/GHCR browser path and enabled", desc.BinaryPath, desc.Enabled)
 	}
 }
 

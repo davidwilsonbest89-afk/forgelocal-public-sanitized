@@ -29,8 +29,8 @@
       }
     },
     "browseforge-chromium": {
-      "enabled": false,
-      "binary_path": "",
+      "enabled": true,
+      "binary_path": "browsers/browseforge-chromium/chrome",
       "family": "chromium",
       "display_name": "BrowseForge Chromium",
       "settings": {

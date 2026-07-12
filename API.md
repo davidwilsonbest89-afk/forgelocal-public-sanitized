@@ -100,11 +100,14 @@ Fields:
 | Field | Description |
 |------|-------------|
 | `name` | Required profile name |
-| `runtime_id` | Runtime provider id, for example `camoufox` or `cloakbrowser` |
+| `runtime_id` | Runtime provider id, for example `camoufox`, `cloakbrowser`, or alpha `browseforge-chromium` |
 | `group` | Optional grouping label |
 | `tags` | Optional string tags |
 | `proxy` | Optional SOCKS5 or HTTP proxy configuration. `region` is an optional redacted/geographic label used by BrowseForge Chromium native WebRTC persona metadata; do not put credentials or raw IP addresses in it. |
 | `fingerprint` | Optional explicit fingerprint; auto-assigned when omitted |
+
+
+For BrowseForge Chromium alpha profiles, use the shipped Docker/GHCR default or enable `runtimes.browseforge-chromium` in `config.json` and set `binary_path` to the unpacked browser binary from the runtime artifact (`chrome`, `Chromium.app/Contents/MacOS/Chromium`, or `chrome.exe`). Keep `proxy.region` as a redacted geography label such as `us-ny` or `tw-taipei`; it feeds native WebRTC/proxy persona coherence and must not contain raw IPs, credentials, or customer identifiers.
 
 ### GET `/api/profiles`
 

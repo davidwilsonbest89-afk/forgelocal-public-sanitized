@@ -265,10 +265,12 @@ Checks or installs the browser engines used by BrowseForge.
 
 ```bash
 BrowseForge browsers status --json
+BrowseForge browsers status --runtimes camoufox,browseforge-chromium --json
 BrowseForge browsers install
+BrowseForge browsers install --runtimes camoufox,browseforge-chromium
 ```
 
-`browsers install` is useful for preparing Docker images or local runtimes before the first `serve` command.
+`browsers install` is useful for preparing Docker images or local runtimes before the first `serve` command. Use `--runtimes` with a comma-separated list (`camoufox`, `cloakbrowser`, `browseforge-chromium`) to install or inspect only a selected runtime set; GHCR images use `camoufox,browseforge-chromium`.
 
 ### `backup`
 

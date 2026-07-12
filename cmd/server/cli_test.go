@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"browseforge/internal/browser"
 )
 
 func TestCLIHelpAndVersion(t *testing.T) {
@@ -186,6 +188,96 @@ func TestCLIStatusAndMCPConfigJSON(t *testing.T) {
 	}
 	if _, ok := cfg["browseforge"].(map[string]any); !ok {
 		t.Fatalf("mcp config = %#v", cfg)
+	}
+}
+
+func TestCollectBrowserStatesIncludesReadyBrowseForgeChromium(t *testing.T) {
+	baseDir := t.TempDir()
+	expectedVersion := browser.ExpectedBrowseForgeChromiumVersion()
+	binPath := writeReadyBrowserRuntime(t, baseDir, browser.BrowseForgeChromiumRuntimeID, expectedVersion, "chrome")
+
+	states := collectBrowserStates(baseDir)
+	state := findBrowserState(t, states, browser.BrowseForgeChromiumRuntimeID)
+
+	if state.Expected != expectedVersion {
+		t.Fatalf("expected version = %q, want %q", state.Expected, expectedVersion)
+	}
+	if state.Installed != expectedVersion {
+		t.Fatalf("installed version = %q, want %q", state.Installed, expectedVersion)
+	}
+	if state.Path != binPath {
+		t.Fatalf("binary path = %q, want %q", state.Path, binPath)
+	}
+	if !state.Ready {
+		t.Fatalf("browseforge-chromium state not ready: %#v", state)
+	}
+}
+
+func TestCLIBrowsersRuntimesSelectionFiltersStatusAndInstall(t *testing.T) {
+	baseDir := t.TempDir()
+	expectedVersion := browser.ExpectedBrowseForgeChromiumVersion()
+	binPath := writeReadyBrowserRuntime(t, baseDir, browser.BrowseForgeChromiumRuntimeID, expectedVersion, "chrome")
+
+	tests := []struct {
+		name string
+		args []string
+	}{
+		{name: "status", args: []string{"status", "--json", "--runtimes", browser.BrowseForgeChromiumRuntimeID}},
+		{name: "install", args: []string{"install", "--json", "--runtimes", browser.BrowseForgeChromiumRuntimeID}},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			var stdout, stderr bytes.Buffer
+			args := append([]string{"--base-dir", baseDir, "browsers"}, tc.args...)
+			if code := runCLI(args, &stdout, &stderr); code != 0 {
+				t.Fatalf("browsers %s exit = %d, stdout = %s, stderr = %s", tc.name, code, stdout.String(), stderr.String())
+			}
+			if stderr.Len() != 0 {
+				t.Fatalf("browsers %s wrote stderr despite ready selected runtime: %s", tc.name, stderr.String())
+			}
+
+			var result struct {
+				OK       bool           `json:"ok"`
+				Browsers []browserState `json:"browsers"`
+			}
+			if err := json.Unmarshal(stdout.Bytes(), &result); err != nil {
+				t.Fatalf("decode browsers %s: %v\n%s", tc.name, err, stdout.String())
+			}
+			if !result.OK {
+				t.Fatalf("browsers %s result not ok: %#v", tc.name, result)
+			}
+			if len(result.Browsers) != 1 {
+				t.Fatalf("browsers %s returned %d states, want only browseforge-chromium: %#v", tc.name, len(result.Browsers), result.Browsers)
+			}
+			state := result.Browsers[0]
+			if state.Name != browser.BrowseForgeChromiumRuntimeID || state.Installed != expectedVersion || state.Path != binPath || !state.Ready {
+				t.Fatalf("browsers %s state = %#v, want ready browseforge-chromium at %s", tc.name, state, binPath)
+			}
+		})
+	}
+}
+
+func TestCLIBrowsersRuntimesSelectionRejectsUnknownRuntime(t *testing.T) {
+	for _, subcmd := range []string{"status", "install"} {
+		t.Run(subcmd, func(t *testing.T) {
+			var stdout, stderr bytes.Buffer
+			code := runCLI([]string{
+				"--base-dir", t.TempDir(),
+				"browsers", subcmd,
+				"--json",
+				"--runtimes", browser.BrowseForgeChromiumRuntimeID + ",brave",
+			}, &stdout, &stderr)
+			if code != 2 {
+				t.Fatalf("browsers %s exit = %d, stdout = %s, stderr = %s", subcmd, code, stdout.String(), stderr.String())
+			}
+			if stdout.Len() != 0 {
+				t.Fatalf("browsers %s stdout = %s, want empty on selection error", subcmd, stdout.String())
+			}
+			if !strings.Contains(stderr.String(), `unsupported browser runtime "brave"`) {
+				t.Fatalf("browsers %s stderr = %s, want unsupported runtime error", subcmd, stderr.String())
+			}
+		})
 	}
 }
 
@@ -476,6 +568,33 @@ func TestNextPortSuggestion(t *testing.T) {
 			t.Fatalf("nextPortSuggestion(%q) = %q, want %q", port, got, want)
 		}
 	}
+}
+
+func writeReadyBrowserRuntime(t *testing.T, baseDir, runtimeID, version, binaryRel string) string {
+	t.Helper()
+	runtimeDir := filepath.Join(baseDir, "browsers", runtimeID)
+	binPath := filepath.Join(runtimeDir, binaryRel)
+	if err := os.MkdirAll(filepath.Dir(binPath), 0755); err != nil {
+		t.Fatalf("mkdir runtime binary dir: %v", err)
+	}
+	if err := os.WriteFile(binPath, []byte("browser binary"), 0755); err != nil {
+		t.Fatalf("write runtime binary: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(runtimeDir, ".version"), []byte(version+"\n"), 0644); err != nil {
+		t.Fatalf("write runtime version: %v", err)
+	}
+	return binPath
+}
+
+func findBrowserState(t *testing.T, states []browserState, name string) browserState {
+	t.Helper()
+	for _, state := range states {
+		if state.Name == name {
+			return state
+		}
+	}
+	t.Fatalf("browser state %q missing from %#v", name, states)
+	return browserState{}
 }
 
 type listenErrorString struct {

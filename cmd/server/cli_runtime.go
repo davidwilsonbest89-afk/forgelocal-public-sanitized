@@ -248,6 +248,7 @@ func runBrowsersCommand(args []string, global cliGlobal, stdout, stderr io.Write
 	subcmd := args[0]
 	fs := newFlagSet("browsers "+subcmd, stderr)
 	jsonOut := fs.Bool("json", false, "Write JSON output")
+	runtimesCSV := fs.String("runtimes", "", "Comma-separated browser runtimes to inspect/install: camoufox, cloakbrowser, browseforge-chromium")
 	if err := fs.Parse(args[1:]); err != nil {
 		return 2
 	}
@@ -255,9 +256,13 @@ func runBrowsersCommand(args []string, global cliGlobal, stdout, stderr io.Write
 		fmt.Fprintf(stderr, "browsers %s does not accept positional arguments: %s\n", subcmd, strings.Join(fs.Args(), " "))
 		return 2
 	}
+	if _, err := parseRuntimeSelection(*runtimesCSV); err != nil {
+		fmt.Fprintf(stderr, "browsers %s failed: %v\n", subcmd, err)
+		return 2
+	}
 	switch subcmd {
 	case "status":
-		states := collectBrowserStates(global.baseDir)
+		states := selectBrowserStates(collectBrowserStates(global.baseDir), *runtimesCSV)
 		if *jsonOut {
 			_ = writeJSON(stdout, map[string]any{"ok": browsersReady(states), "browsers": states})
 		} else {
@@ -278,11 +283,11 @@ func runBrowsersCommand(args []string, global cliGlobal, stdout, stderr io.Write
 		var err error
 		if *jsonOut {
 			err = withStdoutRedirect(stderr, func() error {
-				states, err = installBrowsers(global.baseDir, progress)
+				states, err = installBrowsers(global.baseDir, progress, *runtimesCSV)
 				return err
 			})
 		} else {
-			states, err = installBrowsers(global.baseDir, progress)
+			states, err = installBrowsers(global.baseDir, progress, *runtimesCSV)
 		}
 		if *jsonOut {
 			result := map[string]any{"ok": err == nil, "browsers": states}
@@ -326,6 +331,8 @@ func collectBrowserStates(baseDir string) []browserState {
 	camoufoxInstalled := browser.InstalledVersion(baseDir, "camoufox")
 	cloakExpected := browser.ExpectedCloakBrowserVersion()
 	cloakInstalled := browser.InstalledVersion(baseDir, "cloakbrowser")
+	browseForgeChromiumExpected := browser.ExpectedBrowseForgeChromiumVersion()
+	browseForgeChromiumInstalled := browser.InstalledVersion(baseDir, browser.BrowseForgeChromiumRuntimeID)
 	return []browserState{
 		{
 			Name: "camoufox", Expected: browser.CamoufoxVersion, Installed: camoufoxInstalled,
@@ -335,7 +342,45 @@ func collectBrowserStates(baseDir string) []browserState {
 			Name: "cloakbrowser", Expected: cloakExpected, Installed: cloakInstalled,
 			Path: browser.FindBinary(baseDir, "cloakbrowser"), Ready: cloakInstalled == cloakExpected && browser.FindBinary(baseDir, "cloakbrowser") != "",
 		},
+		{
+			Name: browser.BrowseForgeChromiumRuntimeID, Expected: browseForgeChromiumExpected, Installed: browseForgeChromiumInstalled,
+			Path: browser.FindBinary(baseDir, browser.BrowseForgeChromiumRuntimeID), Ready: browseForgeChromiumInstalled == browseForgeChromiumExpected && browser.FindBinary(baseDir, browser.BrowseForgeChromiumRuntimeID) != "",
+		},
 	}
+}
+
+func parseRuntimeSelection(runtimesCSV string) (map[string]bool, error) {
+	selection := map[string]bool{}
+	if strings.TrimSpace(runtimesCSV) == "" {
+		return selection, nil
+	}
+	for _, raw := range strings.Split(runtimesCSV, ",") {
+		name := strings.TrimSpace(raw)
+		if name == "" {
+			continue
+		}
+		switch name {
+		case "camoufox", "cloakbrowser", browser.BrowseForgeChromiumRuntimeID:
+			selection[name] = true
+		default:
+			return nil, fmt.Errorf("unsupported browser runtime %q", name)
+		}
+	}
+	return selection, nil
+}
+
+func selectBrowserStates(states []browserState, runtimesCSV string) []browserState {
+	selection, err := parseRuntimeSelection(runtimesCSV)
+	if err != nil || len(selection) == 0 {
+		return states
+	}
+	out := make([]browserState, 0, len(selection))
+	for _, state := range states {
+		if selection[state.Name] {
+			out = append(out, state)
+		}
+	}
+	return out
 }
 
 func browsersReady(states []browserState) bool {
@@ -347,23 +392,36 @@ func browsersReady(states []browserState) bool {
 	return true
 }
 
-func installBrowsers(baseDir string, stdout io.Writer) ([]browserState, error) {
+func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {
 	if err := os.MkdirAll(filepath.Join(baseDir, "browsers"), 0755); err != nil {
-		return collectBrowserStates(baseDir), err
+		return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
 	}
-	if state := collectBrowserStates(baseDir)[0]; !state.Ready {
+	selection, err := parseRuntimeSelection(runtimesCSV)
+	if err != nil {
+		return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+	}
+	shouldInstall := func(name string) bool {
+		return len(selection) == 0 || selection[name]
+	}
+	if state := collectBrowserStates(baseDir)[0]; shouldInstall(state.Name) && !state.Ready {
 		fmt.Fprintln(stdout, "Installing Camoufox...")
 		if _, err := browser.DownloadCamoufox(baseDir); err != nil {
-			return collectBrowserStates(baseDir), err
+			return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
 		}
 	}
-	if state := collectBrowserStates(baseDir)[1]; !state.Ready {
+	if state := collectBrowserStates(baseDir)[1]; shouldInstall(state.Name) && !state.Ready {
 		fmt.Fprintln(stdout, "Installing CloakBrowser...")
 		if _, err := browser.DownloadCloakBrowser(baseDir); err != nil {
-			return collectBrowserStates(baseDir), err
+			return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
 		}
 	}
-	return collectBrowserStates(baseDir), nil
+	if state := collectBrowserStates(baseDir)[2]; shouldInstall(state.Name) && !state.Ready {
+		fmt.Fprintln(stdout, "Installing BrowseForge Chromium...")
+		if _, err := browser.DownloadBrowseForgeChromium(baseDir); err != nil {
+			return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+		}
+	}
+	return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), nil
 }
 
 func runBackupCommand(args []string, global cliGlobal, stdout, stderr io.Writer) int {

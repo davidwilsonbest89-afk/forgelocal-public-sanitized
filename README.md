@@ -4,7 +4,7 @@
 
 BrowseForge is an automation-ready anti-detect browser workspace for teams that need repeatable, isolated browser identities across desktop, server, Docker, REST API, MCP, and Playwright workflows.
 
-It combines Firefox/Camoufox and Chromium/CloakBrowser runtime support with profile isolation, fingerprint management, remote control, backup/restore, and agent-friendly automation surfaces.
+It combines Firefox/Camoufox, Chromium/CloakBrowser, and the source-level BrowseForge Chromium runtime with profile isolation, fingerprint management, remote control, backup/restore, and agent-friendly automation surfaces.
 
 ## Why BrowseForge
 
@@ -31,7 +31,7 @@ It combines Firefox/Camoufox and Chromium/CloakBrowser runtime support with prof
 
 ## Features
 
-- Dual browser engines: Firefox via Camoufox and Chromium via CloakBrowser.
+- Multi-runtime engines: Firefox via Camoufox, Chromium via CloakBrowser, and alpha source-level Chromium via BrowseForge Chromium.
 - Isolated profiles: each profile has separate cookies, local storage, proxy settings, group proxy policy, and fingerprint settings.
 - Fingerprint pool: generated fingerprints with local/proxy-aware timezone and locale adjustment.
 - Web Dashboard: searchable profile, tag, session, and group proxy management at `http://127.0.0.1:19280`.
@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.
@@ -110,7 +110,7 @@ cd docker
 docker compose up -d --build
 ```
 
-The current GHCR Docker image is `linux/amd64`. Apple Silicon can run it through Docker emulation. Native `linux/arm64` Docker images are deferred until KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
+The current GHCR Docker image is `linux/amd64`. Apple Silicon can run it through Docker emulation. Native `linux/arm64` Docker images are deferred until KasmVNC, Camoufox, and BrowseForge Chromium runtime checks pass inside an ARM container.
 
 See [docs/linux-server.md](docs/linux-server.md) for server deployment details.
 
@@ -146,7 +146,7 @@ See [docs/linux-server.md](docs/linux-server.md) for server deployment details.
 ./BrowseForge mcp-config stdio --json
 
 # Backup and browser preparation
-./BrowseForge browsers install
+./BrowseForge browsers install --runtimes camoufox,browseforge-chromium
 ./BrowseForge backup create --full --output ./backups --json
 
 # Run server-backed workflows and inspect API resources
@@ -205,6 +205,25 @@ BrowseForge creates `config.json` on first launch:
         "target_platform_policy": "warn",
         "extra_args": []
       }
+    },
+    "browseforge-chromium": {
+      "enabled": true,
+      "binary_path": "browsers/browseforge-chromium/chrome",
+      "family": "chromium",
+      "display_name": "BrowseForge Chromium",
+      "settings": {
+        "safe_gpu": false,
+        "auto_safe_gpu_fallback": true,
+        "isolated_runtime_cache": true,
+        "repair_transient_cache_on_launch_failure": true,
+        "fingerprint_platform": "auto",
+        "fonts_dir": "",
+        "storage_quota_mb": 0,
+        "target_platform_policy": "warn",
+        "native_mode": "enabled",
+        "plugins_pdf": "enabled",
+        "extra_args": []
+      }
     }
   },
   "fingerprint_dir": "data"
@@ -221,7 +240,7 @@ BrowseForge creates `config.json` on first launch:
 | `log_file` | Server log file | `logs/server.log` |
 | `default_runtime_id` | Default runtime selected by generated config and UI flows | `camoufox` |
 | `runtimes.<id>.enabled` | Whether a runtime provider is available for profile creation/launch | Runtime-specific |
-| `runtimes.<id>.binary_path` | Runtime provider binary path. Current built-in providers are `camoufox` and `cloakbrowser`. | Auto-detected |
+| `runtimes.<id>.binary_path` | Runtime provider binary path. Built-in/provider ids include `camoufox`, `cloakbrowser`, and alpha `browseforge-chromium`. For BrowseForge Chromium, point to the unpacked browser binary (`chrome`, `Chromium.app/Contents/MacOS/Chromium`, or `chrome.exe`), not the standalone wrapper. | Auto-detected or operator-provided |
 | `runtimes.<id>.family` | Runtime browser family metadata: `firefox` or `chromium` | Provider default |
 | `runtimes.<id>.display_name` | Runtime name shown by `/api/runtimes`, MCP `list_runtimes`, and the Dashboard create form | Provider default |
 | `runtimes.cloakbrowser.settings.safe_gpu` | Add Chromium GPU-safe launch flags for Windows VM/headful compatibility | `false` |
@@ -237,6 +256,7 @@ BrowseForge creates `config.json` on first launch:
 
 The `runtimes.cloakbrowser.settings` block separates VM/runtime stability knobs from auditable fingerprint knobs. `safe_gpu`, `auto_safe_gpu_fallback`, `isolated_runtime_cache`, and `repair_transient_cache_on_launch_failure` are launch-stability policy. `fingerprint_platform`, `fonts_dir`, and `storage_quota_mb` are explicit CloakBrowser identity inputs instead of hidden `extra_args`. The block only affects the `cloakbrowser` runtime; `camoufox` profiles do not read these settings. For Windows VM environments where Chromium exits with GPU/cache errors such as `GPU process isn't usable` or `Unable to create cache`, use:
 
+
 ```json
 {
   "runtimes": {
@@ -249,6 +269,8 @@ The `runtimes.cloakbrowser.settings` block separates VM/runtime stability knobs 
   }
 }
 ```
+
+`browseforge-chromium` is the source-level Chromium alpha runtime consumed from `browseforge-runtime-chromium` release artifacts. It is enabled in the default Docker/GHCR config with `browsers/browseforge-chromium/chrome` so images can preinstall Camoufox plus BrowseForge Chromium and keep CloakBrowser as an opt-in/manual runtime. Release artifacts are currently unsigned alpha outputs; users must verify checksums and self-authorize unsigned binaries on macOS/Windows, and `camoufox` remains the default runtime for production profile creation until signing/notarization policy is resolved.
 
 ## MCP
 
@@ -406,13 +428,13 @@ Treat profiles, backup ZIPs, exported profiles, cookies, and `data/.api-token` a
 
 ## Platform Support
 
-| Platform | BrowseForge | Camoufox | CloakBrowser |
-|------|:---:|:---:|:---:|
-| macOS x64 | Supported | Supported | Supported |
-| macOS arm64 | Supported | Supported | Supported |
-| Linux x64 | Supported | Supported | Supported |
-| Linux arm64 | Binary supported | Supported | Supported |
-| Windows x64 | Supported | Supported | Supported |
+| Platform | BrowseForge | Camoufox | CloakBrowser | BrowseForge Chromium |
+|------|:---:|:---:|:---:|:---:|
+| macOS x64 | Supported | Supported | Supported | Artifact pending |
+| macOS arm64 | Supported | Supported | Supported | Alpha artifact |
+| Linux x64 | Supported | Supported | Supported | Alpha artifact |
+| Linux arm64 | Binary supported | Supported | Supported | Not packaged |
+| Windows x64 | Supported | Supported | Supported | Alpha artifact |
 
 See [docs/platform-support.md](docs/platform-support.md) for detailed support notes.
 

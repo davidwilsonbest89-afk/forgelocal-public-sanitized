@@ -15,25 +15,25 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 ## First Startup
 
-The Docker image is designed to preinstall browser engines at image build time and update `/app/browsers` from the image when the mounted engine is missing or its `.version` differs. This makes browser engines part of the BrowseForge image contract. If the image was built from an older BrowseForge binary, browser preinstall was disabled, or `BROWSEFORGE_SEED_BROWSERS=0` is set, the first startup may spend several minutes downloading browsers before the dashboard responds.
+The Docker image is designed to preinstall Camoufox and BrowseForge Chromium at image build time and update `/app/browsers` from the image when the mounted engine is missing or its `.version` differs. This makes browser engines part of the BrowseForge image contract while keeping CloakBrowser available for manual/custom installs. If the image was built from an older BrowseForge binary, browser preinstall was disabled, `BROWSEFORGE_PREINSTALL_RUNTIMES` names a runtime not present in the image, or `BROWSEFORGE_SEED_BROWSERS=0` is set, the first startup may spend several minutes downloading browsers before the dashboard responds.
 
 Check readiness:
 
 ```bash
 docker logs -f browseforge
-docker exec browseforge /app/BrowseForge status --json
+docker exec browseforge /app/BrowseForge browsers status --runtimes camoufox,browseforge-chromium --json
 docker exec browseforge /app/BrowseForge smoke rest --wait --json
 ```
 
 ## Upgrade
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.0.0
+docker pull ghcr.io/nczz/browseforge:v2.1.0
 docker stop browseforge
 docker rm browseforge
 # Re-run docker run with the same -v "$PWD/browseforge/...:/app/..." mounts.

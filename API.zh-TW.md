@@ -82,9 +82,10 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
 }
 ```
 
-- `runtime_id`：runtime provider，例如 `"camoufox"` 或 `"cloakbrowser"`
+- `runtime_id`：runtime provider，例如 `"camoufox"`、`"cloakbrowser"` 或 opt-in alpha `"browseforge-chromium"`
 - `fingerprint`：未提供時自動從指紋池分配
 - `proxy`：選填，支援 `socks5` 和 `http`；`region` 是選填的已遮罩地理/區域標籤，會保留給 BrowseForge Chromium native WebRTC persona metadata，請勿放入憑證或原始 IP
+- 使用 BrowseForge Chromium alpha profile 前，需先在 `config.json` 啟用 `runtimes.browseforge-chromium`，並將 `binary_path` 指向 runtime artifact 解壓後的瀏覽器 binary。`proxy.region` 僅填去識別化地理標籤（例如 `us-ny`、`tw-taipei`），不可填原始 IP、憑證或客戶識別資訊。
 
 #### GET /api/profiles — 列出 Profile
 ```bash

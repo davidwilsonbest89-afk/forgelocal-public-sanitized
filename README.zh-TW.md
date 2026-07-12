@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.0.0
+  ghcr.io/nczz/browseforge:v2.1.0
 ```
 
 `./browseforge/` host 目錄就是持久化 runtime。之後 pull 新 image 或重建 container 時沿用這組 mounts，profiles、token、browser data、logs、backups 都會保留。
@@ -205,6 +205,25 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
         "target_platform_policy": "warn",
         "extra_args": []
       }
+    },
+    "browseforge-chromium": {
+      "enabled": false,
+      "binary_path": "/path/to/browsers/browseforge-chromium/chrome",
+      "family": "chromium",
+      "display_name": "BrowseForge Chromium",
+      "settings": {
+        "safe_gpu": false,
+        "auto_safe_gpu_fallback": true,
+        "isolated_runtime_cache": true,
+        "repair_transient_cache_on_launch_failure": true,
+        "fingerprint_platform": "auto",
+        "fonts_dir": "",
+        "storage_quota_mb": 0,
+        "target_platform_policy": "warn",
+        "native_mode": "enabled",
+        "plugins_pdf": "enabled",
+        "extra_args": []
+      }
     }
   },
   "fingerprint_dir": "data"
@@ -221,7 +240,7 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
 | `log_file` | 日誌檔案 | `logs/server.log` |
 | `default_runtime_id` | 產生 config 與 UI flow 預設選取的 runtime | `camoufox` |
 | `runtimes.<id>.enabled` | runtime provider 是否可供建立 profile 與啟動 | 依 runtime 而定 |
-| `runtimes.<id>.binary_path` | runtime provider 執行檔路徑；目前內建 provider 為 `camoufox` 與 `cloakbrowser` | 自動偵測 |
+| `runtimes.<id>.binary_path` | runtime provider 執行檔路徑；provider 包含 `camoufox`、`cloakbrowser`，以及 opt-in alpha `browseforge-chromium`。BrowseForge Chromium 必須指向解壓後的瀏覽器 binary（`chrome`、`Chromium.app/Contents/MacOS/Chromium` 或 `chrome.exe`），不是 standalone wrapper。 | 自動偵測或 operator 提供 |
 | `runtimes.<id>.family` | runtime 的 browser family metadata：`firefox` 或 `chromium` | provider 預設值 |
 | `runtimes.<id>.display_name` | `/api/runtimes`、MCP `list_runtimes` 與 Dashboard 建立表單顯示的 runtime 名稱 | provider 預設值 |
 | `runtimes.cloakbrowser.settings.safe_gpu` | 為 Windows VM/headful 相容性加入 Chromium GPU-safe 啟動參數 | `false` |
@@ -249,6 +268,8 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
   }
 }
 ```
+
+`browseforge-chromium` 是由 `browseforge-runtime-chromium` release artifact 提供的 source-level Chromium alpha runtime。請在 operator 明確安裝或 Docker seed artifact 並設定 `binary_path` 後才啟用；目前 artifact 仍是 unsigned alpha，不應在簽章/公證政策完成前設為 production 使用者的預設 runtime。
 
 ## MCP
 

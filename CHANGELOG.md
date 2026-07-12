@@ -2,6 +2,17 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.0 - 2026-07-12
+
+### Changed
+
+- Updated release and Docker references for the `v2.1.0` release tag.
+- Kept Camoufox plus BrowseForge Chromium as the GHCR/Docker preinstall default while retaining CloakBrowser as a manual/custom runtime.
+
+### Added
+
+- Verified BrowseForge can download and install the released BrowseForge Chromium `v0.1.0-alpha.0` runtime asset from GitHub Releases.
+
 ## v2.0.0 - 2026-07-07
 
 ### Changed

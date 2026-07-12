@@ -19,7 +19,11 @@ import (
 
 // Version constants — bump these to trigger auto-update
 const (
-	CamoufoxVersion = "v135.0.1-beta.24"
+	CamoufoxVersion              = "v135.0.1-beta.24"
+	CloakBrowserVersion          = "chromium-v146.0.7680.177.4"
+	BrowseForgeChromiumVersion   = "v0.1.0-alpha.0"
+	BrowseForgeChromiumRelease   = "https://github.com/nczz/browseforge-runtime-chromium/releases/download"
+	BrowseForgeChromiumRuntimeID = "browseforge-chromium"
 )
 
 // ExpectedCloakBrowserVersion returns the expected version for the current platform.
@@ -29,8 +33,6 @@ func ExpectedCloakBrowserVersion() string {
 	}
 	return CloakBrowserVersion
 }
-
-const CloakBrowserVersion = "chromium-v146.0.7680.177.4"
 
 type BrowserInfo struct {
 	Name    string
@@ -87,7 +89,7 @@ func FindBinary(baseDir, browserName string) string {
 			"camoufox",
 		}
 		exeNames = []string{"camoufox.exe", "camoufox"}
-	case "cloakbrowser":
+	case "cloakbrowser", "browseforge-chromium":
 		candidates = []string{
 			filepath.Join("Chromium.app", "Contents", "MacOS", "Chromium"),
 			"chrome.exe",
@@ -114,6 +116,12 @@ func FindBinary(baseDir, browserName string) string {
 		if !entry.IsDir() {
 			continue
 		}
+		for _, c := range candidates {
+			p := filepath.Join(dir, entry.Name(), c)
+			if info, err := os.Stat(p); err == nil && !info.IsDir() {
+				return p
+			}
+		}
 		for _, name := range exeNames {
 			p := filepath.Join(dir, entry.Name(), name)
 			if info, err := os.Stat(p); err == nil && !info.IsDir() {
@@ -122,6 +130,84 @@ func FindBinary(baseDir, browserName string) string {
 		}
 	}
 	return ""
+}
+
+func ExpectedBrowseForgeChromiumVersion() string {
+	return BrowseForgeChromiumVersion
+}
+
+func browseForgeChromiumPlatform() (string, error) {
+	switch runtime.GOOS {
+	case "darwin":
+		if runtime.GOARCH == "arm64" {
+			return "macos-arm64", nil
+		}
+		if runtime.GOARCH == "amd64" {
+			return "macos-x64", nil
+		}
+	case "linux":
+		if runtime.GOARCH == "amd64" {
+			return "linux-x64", nil
+		}
+	case "windows":
+		if runtime.GOARCH == "amd64" {
+			return "windows-x64", nil
+		}
+	}
+	return "", fmt.Errorf("unsupported BrowseForge Chromium platform: %s/%s", runtime.GOOS, runtime.GOARCH)
+}
+
+func BrowseForgeChromiumDownloadURL(version string) (string, string, error) {
+	platform, err := browseForgeChromiumPlatform()
+	if err != nil {
+		return "", "", err
+	}
+	filename := fmt.Sprintf("browseforge-runtime-chromium-%s-%s.zip", version, platform)
+	baseURL := strings.TrimRight(os.Getenv("BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL"), "/")
+	if baseURL == "" {
+		baseURL = BrowseForgeChromiumRelease
+	}
+	return fmt.Sprintf("%s/%s/%s", baseURL, version, filename), filename, nil
+}
+
+func DownloadBrowseForgeChromium(baseDir string) (string, error) {
+	version := BrowseForgeChromiumVersion
+	url, filename, err := BrowseForgeChromiumDownloadURL(version)
+	if err != nil {
+		return "", err
+	}
+	destDir := filepath.Join(baseDir, "browsers", BrowseForgeChromiumRuntimeID)
+	if err := os.MkdirAll(destDir, 0755); err != nil {
+		return "", err
+	}
+
+	tmpFile := filepath.Join(os.TempDir(), filename)
+	slog.Info("downloading BrowseForge Chromium", "url", url)
+	fmt.Printf("📥 Downloading BrowseForge Chromium (%s)...\n", filename)
+
+	if err := download(url, tmpFile); err != nil {
+		return "", err
+	}
+
+	fmt.Println("📦 Extracting...")
+	if err := extract(tmpFile, destDir); err != nil {
+		return "", err
+	}
+	os.Remove(tmpFile)
+
+	if runtime.GOOS == "darwin" {
+		exec.Command("xattr", "-cr", destDir).Run()
+	}
+
+	binPath := FindBinary(baseDir, BrowseForgeChromiumRuntimeID)
+	if binPath == "" {
+		return "", fmt.Errorf("binary not found after extract in %s", destDir)
+	}
+	os.Chmod(binPath, 0755)
+
+	fmt.Println("✅ BrowseForge Chromium installed")
+	writeVersionMarker(destDir, version)
+	return binPath, nil
 }
 
 func DownloadCamoufox(baseDir string) (string, error) {

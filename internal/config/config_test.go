@@ -20,14 +20,17 @@ func TestDefaultConfigAdvertisesBrowseForgeChromium(t *testing.T) {
 	if rt.DisplayName != "BrowseForge Chromium" || rt.Family != "chromium" {
 		t.Fatalf("browseforge-chromium metadata = %#v", rt)
 	}
-	if rt.BinaryPath != "" {
-		t.Fatalf("browseforge-chromium binary_path = %q, want empty until configured", rt.BinaryPath)
+	if rt.BinaryPath != "browsers/browseforge-chromium/chrome" {
+		t.Fatalf("browseforge-chromium binary_path = %q, want Docker/GHCR browser path", rt.BinaryPath)
 	}
-	if rt.Enabled == nil || *rt.Enabled {
-		t.Fatalf("browseforge-chromium enabled = %v, want explicit false", rt.Enabled)
+	if rt.Enabled == nil || !*rt.Enabled {
+		t.Fatalf("browseforge-chromium enabled = %v, want explicit true", rt.Enabled)
 	}
-	if rt.Settings == nil || rt.Settings.PluginsPDF != "enabled" {
-		t.Fatalf("browseforge-chromium plugins_pdf = %#v, want enabled", rt.Settings)
+	if rt.Settings == nil {
+		t.Fatalf("browseforge-chromium settings missing")
+	}
+	if rt.Settings.NativeMode != "enabled" || rt.Settings.PluginsPDF != "enabled" {
+		t.Fatalf("browseforge-chromium native settings = %#v", rt.Settings)
 	}
 }
 
