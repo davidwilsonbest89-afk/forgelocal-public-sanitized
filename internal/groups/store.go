@@ -335,5 +335,6 @@ func cloneProxy(proxy *profile.ProxyConfig) *profile.ProxyConfig {
 	out := *proxy
 	out.Type = strings.TrimSpace(strings.ToLower(out.Type))
 	out.Host = strings.TrimSpace(out.Host)
+	out.Region = strings.TrimSpace(out.Region)
 	return &out
 }

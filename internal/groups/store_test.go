@@ -1,6 +1,7 @@
 package groups
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
@@ -32,7 +33,7 @@ func TestEffectiveProxyEnforcedModeUsesGroupOverride(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := store.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "group.proxy", Port: 1080}, ProxyModeEnforced); err != nil {
+	if _, err := store.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "group.proxy", Port: 1080, Region: "  us-ny  "}, ProxyModeEnforced); err != nil {
 		t.Fatal(err)
 	}
 
@@ -41,7 +42,7 @@ func TestEffectiveProxyEnforcedModeUsesGroupOverride(t *testing.T) {
 		Proxy: &profile.ProxyConfig{Type: "http", Host: "profile.proxy", Port: 8080},
 	}
 	effective := store.EffectiveProxy(p)
-	if effective.Source != "group" || effective.Proxy.Host != "group.proxy" || effective.Mode != ProxyModeEnforced {
+	if effective.Source != "group" || effective.Proxy.Host != "group.proxy" || effective.Proxy.Region != "us-ny" || effective.Mode != ProxyModeEnforced {
 		t.Fatalf("effective proxy = %+v", effective)
 	}
 }
@@ -52,8 +53,12 @@ func TestGroupStorePersistsAndImports(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := store.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "group.proxy", Port: 1080, Username: "u", Password: "p"}, ""); err != nil {
+	upserted, err := store.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "group.proxy", Port: 1080, Username: "u", Password: "p", Region: "  us-ny  "}, "")
+	if err != nil {
 		t.Fatal(err)
+	}
+	if upserted.Proxy.Region != "us-ny" {
+		t.Fatalf("upserted proxy region = %q", upserted.Proxy.Region)
 	}
 	if _, err := os.Stat(filepath.Join(dir, "groups.json")); err != nil {
 		t.Fatalf("groups.json not written: %v", err)
@@ -64,13 +69,20 @@ func TestGroupStorePersistsAndImports(t *testing.T) {
 		t.Fatal(err)
 	}
 	g, ok := reloaded.Get("Client A")
-	if !ok || g.Proxy == nil || g.Proxy.Host != "group.proxy" || g.ProxyMode != ProxyModeDefault {
+	if !ok || g.Proxy == nil || g.Proxy.Host != "group.proxy" || g.Proxy.Region != "us-ny" || g.ProxyMode != ProxyModeDefault {
 		t.Fatalf("reloaded group = %+v ok=%v", g, ok)
 	}
 
 	data, err := reloaded.Export()
 	if err != nil {
 		t.Fatal(err)
+	}
+	var exported groupFile
+	if err := json.Unmarshal(data, &exported); err != nil {
+		t.Fatal(err)
+	}
+	if len(exported.Groups) != 1 || exported.Groups[0].Proxy == nil || exported.Groups[0].Proxy.Region != "us-ny" {
+		t.Fatalf("exported groups = %+v", exported.Groups)
 	}
 	imported, err := NewStore(t.TempDir())
 	if err != nil {
@@ -83,8 +95,19 @@ func TestGroupStorePersistsAndImports(t *testing.T) {
 	if n != 1 {
 		t.Fatalf("imported = %d", n)
 	}
-	if g, ok := imported.Get("Client A"); !ok || g.Proxy.Host != "group.proxy" {
+	if g, ok := imported.Get("Client A"); !ok || g.Proxy == nil || g.Proxy.Host != "group.proxy" || g.Proxy.Region != "us-ny" {
 		t.Fatalf("imported group = %+v ok=%v", g, ok)
+	}
+
+	n, err = imported.Import([]byte(`{"groups":[{"name":"Imported Region","proxy_mode":"default","proxy":{"type":"http","host":"import.proxy","port":8080,"region":"  ca-on  "}}]}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n != 1 {
+		t.Fatalf("imported region policies = %d", n)
+	}
+	if g, ok := imported.Get("Imported Region"); !ok || g.Proxy == nil || g.Proxy.Region != "ca-on" {
+		t.Fatalf("imported region group = %+v ok=%v", g, ok)
 	}
 
 	n, err = imported.Import([]byte(`{"groups":[{"name":"Empty","proxy_mode":"default"}]}`))
