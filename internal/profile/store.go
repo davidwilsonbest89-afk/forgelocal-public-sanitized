@@ -42,6 +42,7 @@ type ProxyConfig struct {
 	Port     int    `json:"port"`
 	Username string `json:"username,omitempty"`
 	Password string `json:"password,omitempty"`
+	Region   string `json:"region,omitempty"`
 }
 
 type Store struct {

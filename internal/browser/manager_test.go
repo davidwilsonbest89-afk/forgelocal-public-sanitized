@@ -375,9 +375,10 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		ID:        "proxy-fingerprint-args",
 		RuntimeID: "browseforge-chromium",
 		Proxy: &profile.ProxyConfig{
-			Type: "http",
-			Host: "127.0.0.1",
-			Port: 1,
+			Type:   "http",
+			Host:   "127.0.0.1",
+			Port:   1,
+			Region: "  us-ny  ",
 		},
 		Fingerprint: map[string]any{
 			"navigator.userAgent":           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150.0.0.0 Safari/537.36",
@@ -479,6 +480,9 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	}
 	if got := nativeWebRTC["direct_ip_redaction"]; got != true {
 		t.Fatalf("native webrtc direct_ip_redaction = %#v, want true", got)
+	}
+	if got := nativeWebRTC["proxy_region"]; got != "us-ny" {
+		t.Fatalf("native webrtc proxy_region = %#v, want us-ny", got)
 	}
 	if browserType.options.Proxy == nil {
 		t.Fatalf("launch proxy was not configured")

@@ -86,11 +86,12 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, fmt.Sprintf("--fingerprint=%d", p.FingerprintSeed))
 	}
 
-	var tz, locale string
+	var tz, locale, proxyRegion string
 	effectiveProxy := m.effectiveProxy(p)
 	if effectiveProxy.Proxy != nil {
 		proxy := effectiveProxy.Proxy
 		tz, locale = fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
+		proxyRegion = strings.TrimSpace(proxy.Region)
 		args = append(args, "--fingerprint-webrtc-ip=auto")
 	} else {
 		tz, locale = fingerprint.DetectLocalGeoResult()
@@ -118,7 +119,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 
 	if desc.ID == bfruntime.BrowseForgeChromium {
-		nativeConfigPath, err := writeBrowseForgeNativeConfig(p, userDataDir, tz, locale, platform, policy)
+		nativeConfigPath, err := writeBrowseForgeNativeConfig(p, userDataDir, tz, locale, platform, proxyRegion, policy)
 		if err != nil {
 			return nil, err
 		}
@@ -407,7 +408,7 @@ type browseForgeNativeStorage struct {
 	Persistent bool `json:"persistent"`
 }
 
-func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, locale, platform string, policy *config.CloakBrowserConfig) (string, error) {
+func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, locale, platform, proxyRegion string, policy *config.CloakBrowserConfig) (string, error) {
 	if p == nil {
 		return "", fmt.Errorf("profile is nil")
 	}
@@ -479,7 +480,7 @@ func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, loc
 		},
 		WebRTC: browseForgeNativeWebRTC{
 			Mode:              "disable_non_proxied_udp",
-			ProxyRegion:       "",
+			ProxyRegion:       proxyRegion,
 			DirectIPRedaction: true,
 		},
 		Storage: browseForgeNativeStorage{
