@@ -89,7 +89,8 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
       "host": "proxy.example.com",
       "port": 1080,
       "username": "user",
-      "password": "pass"
+      "password": "pass",
+      "region": "us-ny"
     }
   }'
 ```
@@ -102,7 +103,7 @@ Fields:
 | `runtime_id` | Runtime provider id, for example `camoufox` or `cloakbrowser` |
 | `group` | Optional grouping label |
 | `tags` | Optional string tags |
-| `proxy` | Optional SOCKS5 or HTTP proxy configuration |
+| `proxy` | Optional SOCKS5 or HTTP proxy configuration. `region` is an optional redacted/geographic label used by BrowseForge Chromium native WebRTC persona metadata; do not put credentials or raw IP addresses in it. |
 | `fingerprint` | Optional explicit fingerprint; auto-assigned when omitted |
 
 ### GET `/api/profiles`
@@ -205,12 +206,15 @@ curl -X PUT http://127.0.0.1:19280/api/groups/Client%20A \
       "host": "proxy.example.com",
       "port": 1080,
       "username": "user",
-      "password": "pass"
+      "password": "pass",
+      "region": "us-ny"
     }
   }'
 ```
 
 Response includes `active_sessions` and `restart_required` so callers can warn operators when existing browsers need to be reopened.
+
+Proxy objects accept `type`, `host`, `port`, optional `username`, optional `password`, and optional `region`. `region` is trimmed and preserved through profile/group storage so Chromium native persona metadata can align WebRTC proxy-region hints with the selected proxy.
 
 ### DELETE `/api/groups/{name}`
 

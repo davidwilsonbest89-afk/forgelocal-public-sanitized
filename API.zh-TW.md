@@ -77,14 +77,14 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
       "canvas:seed": 3948271650,
       "..."
     },
-    "proxy": {"type": "socks5", "host": "proxy.example.com", "port": 1080}
+    "proxy": {"type": "socks5", "host": "proxy.example.com", "port": 1080, "region": "us-ny"}
   }
 }
 ```
 
 - `runtime_id`：runtime provider，例如 `"camoufox"` 或 `"cloakbrowser"`
 - `fingerprint`：未提供時自動從指紋池分配
-- `proxy`：選填，支援 `socks5` 和 `http`
+- `proxy`：選填，支援 `socks5` 和 `http`；`region` 是選填的已遮罩地理/區域標籤，會保留給 BrowseForge Chromium native WebRTC persona metadata，請勿放入憑證或原始 IP
 
 #### GET /api/profiles — 列出 Profile
 ```bash
@@ -140,10 +140,12 @@ curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:19280/api/groups
 curl -X PUT http://127.0.0.1:19280/api/groups/%E5%AE%A2%E6%88%B6A \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"proxy_mode":"default","proxy":{"type":"socks5","host":"proxy.example.com","port":1080}}'
+  -d '{"proxy_mode":"default","proxy":{"type":"socks5","host":"proxy.example.com","port":1080,"region":"us-ny"}}'
 ```
 
 回應會包含 `active_sessions` 與 `restart_required`，方便提醒操作者是否需要重新開啟既有瀏覽器。
+
+Proxy 物件支援 `type`、`host`、`port`、選填的 `username`、`password`、`region`。`region` 會 trim 後保存於 profile/group 設定，讓 Chromium native persona 的 WebRTC proxy-region metadata 能和實際選用的 proxy 對齊。
 
 #### DELETE /api/groups/:name/proxy — 清除 Group Proxy
 ```bash
