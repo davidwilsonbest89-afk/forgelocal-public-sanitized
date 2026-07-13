@@ -143,6 +143,21 @@ func TestRegistryListReturnsStableRuntimeMetadata(t *testing.T) {
 	}
 }
 
+func TestPlatformSupportDisablesUnsupportedRuntime(t *testing.T) {
+	ok, reason := platformSupported(Camoufox, "windows", "amd64")
+	if ok {
+		t.Fatal("Camoufox windows/amd64 should be unsupported for the configured release")
+	}
+	if !strings.Contains(reason, "camoufox") || !strings.Contains(reason, "windows/amd64") {
+		t.Fatalf("unsupported reason = %q", reason)
+	}
+
+	ok, reason = platformSupported(BrowseForgeChromium, "windows", "amd64")
+	if !ok || reason != "" {
+		t.Fatalf("BrowseForge Chromium windows/amd64 support = %v %q, want supported", ok, reason)
+	}
+}
+
 func TestRegistryAppliesRuntimeConfigOverrides(t *testing.T) {
 	disabled := false
 	enabled := true

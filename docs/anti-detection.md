@@ -19,12 +19,12 @@ BrowseForge 整合多套反偵測瀏覽器 runtime，各有不同的指紋偽裝
 | `runtime_id` | `browseforge-chromium` |
 | `family` | `chromium` |
 | BrowseForge 最低版本 | `v2.0.0` |
-| Runtime 狀態 | `v0.1.0-alpha.0` |
+| Runtime 狀態 | `v0.1.1-alpha.0` |
 | 發佈狀態 | alpha validation artifact；尚未 release-grade 簽章 |
 
 ### 使用端整合方式
 
-1. 下載或放置對應平台的 `browseforge-runtime-chromium-v0.1.0-alpha.0-<platform>.zip`。
+1. 下載或放置對應平台的 `browseforge-runtime-chromium-v0.1.1-alpha.0-<platform>.zip`。
 2. 解壓到 BrowseForge runtime 目錄，例如 `browsers/browseforge-chromium/`。
 3. 在 `config.json` 啟用 runtime：
 

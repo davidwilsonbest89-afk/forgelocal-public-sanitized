@@ -2,6 +2,7 @@ package runtime
 
 import (
 	"fmt"
+	goruntime "runtime"
 	"sort"
 
 	"browseforge/internal/config"
@@ -48,6 +49,8 @@ type Descriptor struct {
 	FingerprintPoolKey string       `json:"fingerprint_pool_key,omitempty"`
 	BinaryPath         string       `json:"binary_path,omitempty"`
 	Enabled            bool         `json:"enabled"`
+	PlatformSupported  bool         `json:"platform_supported"`
+	UnsupportedReason  string       `json:"unsupported_reason,omitempty"`
 	Capabilities       Capabilities `json:"capabilities"`
 }
 
@@ -55,6 +58,34 @@ type Descriptor struct {
 type Registry struct {
 	byID      map[ID]Descriptor
 	defaultID ID
+}
+
+func platformSupported(id ID, goos, goarch string) (bool, string) {
+	supported := false
+	switch id {
+	case Camoufox:
+		supported = (goos == "linux" && (goarch == "amd64" || goarch == "arm64")) ||
+			(goos == "darwin" && goarch == "arm64")
+	case CloakBrowser:
+		supported = ((goos == "darwin" || goos == "linux") && (goarch == "amd64" || goarch == "arm64")) ||
+			(goos == "windows" && goarch == "amd64")
+	case BrowseForgeChromium:
+		supported = ((goos == "darwin" || goos == "linux") && (goarch == "amd64" || goarch == "arm64")) ||
+			(goos == "windows" && goarch == "amd64")
+	}
+	if supported {
+		return true, ""
+	}
+	return false, fmt.Sprintf("%s is not available for %s/%s", id, goos, goarch)
+}
+
+func applyPlatformSupport(desc Descriptor) Descriptor {
+	desc.PlatformSupported, desc.UnsupportedReason = platformSupported(desc.ID, goruntime.GOOS, goruntime.GOARCH)
+	if !desc.PlatformSupported {
+		desc.Enabled = false
+		desc.BinaryPath = ""
+	}
+	return desc
 }
 
 // NewRegistry builds the default BrowseForge runtime registry from the v2
@@ -117,15 +148,23 @@ func NewRegistry(cfg *config.Config) *Registry {
 	}
 	reg := &Registry{
 		byID: map[ID]Descriptor{
-			BrowseForgeChromium: applyRuntimeConfig(browseForgeChromium, cfg.Runtimes[string(BrowseForgeChromium)]),
-			Camoufox:            applyRuntimeConfig(camoufox, cfg.Runtimes[string(Camoufox)]),
-			CloakBrowser:        applyRuntimeConfig(cloak, cfg.Runtimes[string(CloakBrowser)]),
+			BrowseForgeChromium: applyPlatformSupport(applyRuntimeConfig(browseForgeChromium, cfg.Runtimes[string(BrowseForgeChromium)])),
+			Camoufox:            applyPlatformSupport(applyRuntimeConfig(camoufox, cfg.Runtimes[string(Camoufox)])),
+			CloakBrowser:        applyPlatformSupport(applyRuntimeConfig(cloak, cfg.Runtimes[string(CloakBrowser)])),
 		},
 		defaultID: Camoufox,
 	}
 	if cfg.DefaultRuntimeID != "" {
 		if id, err := reg.ResolveID(cfg.DefaultRuntimeID); err == nil {
 			reg.defaultID = id
+		}
+	}
+	if desc, ok := reg.byID[reg.defaultID]; !ok || !desc.Enabled {
+		for _, id := range []ID{BrowseForgeChromium, Camoufox, CloakBrowser} {
+			if candidate := reg.byID[id]; candidate.Enabled {
+				reg.defaultID = id
+				break
+			}
 		}
 	}
 	return reg

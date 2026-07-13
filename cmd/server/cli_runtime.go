@@ -19,11 +19,13 @@ import (
 )
 
 type browserState struct {
-	Name      string `json:"name"`
-	Expected  string `json:"expected"`
-	Installed string `json:"installed,omitempty"`
-	Path      string `json:"path,omitempty"`
-	Ready     bool   `json:"ready"`
+	Name              string `json:"name"`
+	Expected          string `json:"expected"`
+	Installed         string `json:"installed,omitempty"`
+	Path              string `json:"path,omitempty"`
+	Ready             bool   `json:"ready"`
+	PlatformSupported bool   `json:"platform_supported"`
+	UnsupportedReason string `json:"unsupported_reason,omitempty"`
 }
 
 type statusReport struct {
@@ -267,7 +269,7 @@ func runBrowsersCommand(args []string, global cliGlobal, stdout, stderr io.Write
 			_ = writeJSON(stdout, map[string]any{"ok": browsersReady(states), "browsers": states})
 		} else {
 			for _, state := range states {
-				fmt.Fprintf(stdout, "%s ready=%v installed=%s expected=%s path=%s\n", state.Name, state.Ready, state.Installed, state.Expected, state.Path)
+				fmt.Fprintf(stdout, "%s ready=%v supported=%v installed=%s expected=%s path=%s reason=%s\n", state.Name, state.Ready, state.PlatformSupported, state.Installed, state.Expected, state.Path, state.UnsupportedReason)
 			}
 		}
 		if !browsersReady(states) {
@@ -329,22 +331,29 @@ func withStdoutRedirect(w io.Writer, fn func() error) error {
 
 func collectBrowserStates(baseDir string) []browserState {
 	camoufoxInstalled := browser.InstalledVersion(baseDir, "camoufox")
-	cloakExpected := browser.ExpectedCloakBrowserVersion()
+	camoufoxSupport := browser.CurrentRuntimeSupport("camoufox")
+	camoufoxPath := browser.FindBinary(baseDir, "camoufox")
+	cloakSupport := browser.CurrentRuntimeSupport("cloakbrowser")
 	cloakInstalled := browser.InstalledVersion(baseDir, "cloakbrowser")
-	browseForgeChromiumExpected := browser.ExpectedBrowseForgeChromiumVersion()
+	cloakPath := browser.FindBinary(baseDir, "cloakbrowser")
+	browseForgeChromiumSupport := browser.CurrentRuntimeSupport(browser.BrowseForgeChromiumRuntimeID)
 	browseForgeChromiumInstalled := browser.InstalledVersion(baseDir, browser.BrowseForgeChromiumRuntimeID)
+	browseForgeChromiumPath := browser.FindBinary(baseDir, browser.BrowseForgeChromiumRuntimeID)
 	return []browserState{
 		{
 			Name: "camoufox", Expected: browser.CamoufoxVersion, Installed: camoufoxInstalled,
-			Path: browser.FindBinary(baseDir, "camoufox"), Ready: camoufoxInstalled == browser.CamoufoxVersion && browser.FindBinary(baseDir, "camoufox") != "",
+			Path: camoufoxPath, Ready: camoufoxSupport.PlatformSupported && camoufoxInstalled == browser.CamoufoxVersion && camoufoxPath != "",
+			PlatformSupported: camoufoxSupport.PlatformSupported, UnsupportedReason: camoufoxSupport.UnsupportedReason,
 		},
 		{
-			Name: "cloakbrowser", Expected: cloakExpected, Installed: cloakInstalled,
-			Path: browser.FindBinary(baseDir, "cloakbrowser"), Ready: cloakInstalled == cloakExpected && browser.FindBinary(baseDir, "cloakbrowser") != "",
+			Name: "cloakbrowser", Expected: cloakSupport.Version, Installed: cloakInstalled,
+			Path: cloakPath, Ready: cloakSupport.PlatformSupported && cloakInstalled == cloakSupport.Version && cloakPath != "",
+			PlatformSupported: cloakSupport.PlatformSupported, UnsupportedReason: cloakSupport.UnsupportedReason,
 		},
 		{
-			Name: browser.BrowseForgeChromiumRuntimeID, Expected: browseForgeChromiumExpected, Installed: browseForgeChromiumInstalled,
-			Path: browser.FindBinary(baseDir, browser.BrowseForgeChromiumRuntimeID), Ready: browseForgeChromiumInstalled == browseForgeChromiumExpected && browser.FindBinary(baseDir, browser.BrowseForgeChromiumRuntimeID) != "",
+			Name: browser.BrowseForgeChromiumRuntimeID, Expected: browseForgeChromiumSupport.Version, Installed: browseForgeChromiumInstalled,
+			Path: browseForgeChromiumPath, Ready: browseForgeChromiumSupport.PlatformSupported && browseForgeChromiumInstalled == browseForgeChromiumSupport.Version && browseForgeChromiumPath != "",
+			PlatformSupported: browseForgeChromiumSupport.PlatformSupported, UnsupportedReason: browseForgeChromiumSupport.UnsupportedReason,
 		},
 	}
 }
@@ -403,22 +412,33 @@ func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]br
 	shouldInstall := func(name string) bool {
 		return len(selection) == 0 || selection[name]
 	}
-	if state := collectBrowserStates(baseDir)[0]; shouldInstall(state.Name) && !state.Ready {
-		fmt.Fprintln(stdout, "Installing Camoufox...")
-		if _, err := browser.DownloadCamoufox(baseDir); err != nil {
-			return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+	for _, state := range collectBrowserStates(baseDir) {
+		if !shouldInstall(state.Name) || state.Ready {
+			continue
 		}
-	}
-	if state := collectBrowserStates(baseDir)[1]; shouldInstall(state.Name) && !state.Ready {
-		fmt.Fprintln(stdout, "Installing CloakBrowser...")
-		if _, err := browser.DownloadCloakBrowser(baseDir); err != nil {
-			return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+		if !state.PlatformSupported {
+			fmt.Fprintf(stdout, "Skipping %s: %s\n", state.Name, state.UnsupportedReason)
+			if len(selection) == 1 && selection[state.Name] {
+				return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), fmt.Errorf("%s: %w", state.UnsupportedReason, browser.ErrUnsupportedRuntimePlatform)
+			}
+			continue
 		}
-	}
-	if state := collectBrowserStates(baseDir)[2]; shouldInstall(state.Name) && !state.Ready {
-		fmt.Fprintln(stdout, "Installing BrowseForge Chromium...")
-		if _, err := browser.DownloadBrowseForgeChromium(baseDir); err != nil {
-			return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+		switch state.Name {
+		case "camoufox":
+			fmt.Fprintln(stdout, "Installing Camoufox...")
+			if _, err := browser.DownloadCamoufox(baseDir); err != nil {
+				return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+			}
+		case "cloakbrowser":
+			fmt.Fprintln(stdout, "Installing CloakBrowser...")
+			if _, err := browser.DownloadCloakBrowser(baseDir); err != nil {
+				return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+			}
+		case browser.BrowseForgeChromiumRuntimeID:
+			fmt.Fprintln(stdout, "Installing BrowseForge Chromium...")
+			if _, err := browser.DownloadBrowseForgeChromium(baseDir); err != nil {
+				return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+			}
 		}
 	}
 	return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), nil

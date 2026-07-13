@@ -9,6 +9,8 @@ All notable changes should be documented here. This project follows semantic ver
 - Updated BrowseForge to the maintained `github.com/mxschmitt/playwright-go` driver package.
 - Preinstalled the Playwright control driver in GHCR Docker images so container startup does not depend on runtime downloads from npm or nodejs.org.
 - Bumped Docker, Linux server, release, and platform documentation references to the `v2.1.2` release tag.
+- Decoupled BrowseForge release support from browser runtime release support so unsupported runtime/platform pairs are skipped and disabled at runtime instead of blocking BF startup.
+- Updated Camoufox runtime selection to `v152.0.2-alpha` where upstream publishes compatible assets and updated BrowseForge Chromium runtime selection to `v0.1.1-alpha.0`.
 
 ## v2.1.1 - 2026-07-13
 

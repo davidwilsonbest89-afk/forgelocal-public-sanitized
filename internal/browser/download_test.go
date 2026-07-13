@@ -3,6 +3,7 @@ package browser
 import (
 	"archive/zip"
 	"bytes"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -30,11 +31,11 @@ func TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts(t *testing.T) {
 		},
 		{
 			name:      "extracted artifact root with app bundle",
-			binaryRel: filepath.Join("browseforge-runtime-chromium-v0.1.0-alpha.0-macos-x64", "Chromium.app", "Contents", "MacOS", "Chromium"),
+			binaryRel: filepath.Join("browseforge-runtime-chromium-v0.1.1-alpha.0-macos-x64", "Chromium.app", "Contents", "MacOS", "Chromium"),
 		},
 		{
 			name:      "extracted artifact root with linux executable",
-			binaryRel: filepath.Join("browseforge-runtime-chromium-v0.1.0-alpha.0-linux-x64", "chrome"),
+			binaryRel: filepath.Join("browseforge-runtime-chromium-v0.1.1-alpha.0-linux-x64", "chrome"),
 		},
 	}
 
@@ -105,14 +106,58 @@ func TestBrowseForgeChromiumDownloadURLForLinuxArm64(t *testing.T) {
 		t.Fatalf("browseForgeChromiumDownloadURLFor() error = %v", err)
 	}
 
-	wantFilename := "browseforge-runtime-chromium-v0.1.0-alpha.0-linux-arm64.zip"
+	wantFilename := "browseforge-runtime-chromium-v0.1.1-alpha.0-linux-arm64.zip"
 	if gotFilename != wantFilename {
 		t.Fatalf("filename = %q, want %q", gotFilename, wantFilename)
 	}
 
-	wantURL := "https://runtime.example/releases/v0.1.0-alpha.0/" + wantFilename
+	wantURL := "https://runtime.example/releases/v0.1.1-alpha.0/" + wantFilename
 	if gotURL != wantURL {
 		t.Fatalf("url = %q, want %q", gotURL, wantURL)
+	}
+}
+
+func TestCamoufoxDownloadURLForSupportedPlatforms(t *testing.T) {
+	tests := []struct {
+		name         string
+		goos         string
+		goarch       string
+		wantFilename string
+	}{
+		{name: "Linux x64", goos: "linux", goarch: "amd64", wantFilename: "camoufox-152.0.4-alpha.25-lin.x86_64.zip"},
+		{name: "Linux arm64", goos: "linux", goarch: "arm64", wantFilename: "camoufox-152.0.4-alpha.25-lin.arm64.zip"},
+		{name: "macOS arm64", goos: "darwin", goarch: "arm64", wantFilename: "camoufox-152.0.4-alpha.25-mac.arm64.zip"},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			gotURL, gotFilename, err := camoufoxDownloadURLFor(CamoufoxVersion, tc.goos, tc.goarch)
+			if err != nil {
+				t.Fatalf("camoufoxDownloadURLFor() error = %v", err)
+			}
+			if gotFilename != tc.wantFilename {
+				t.Fatalf("filename = %q, want %q", gotFilename, tc.wantFilename)
+			}
+			wantURL := "https://github.com/daijro/camoufox/releases/download/" + CamoufoxVersion + "/" + tc.wantFilename
+			if gotURL != wantURL {
+				t.Fatalf("url = %q, want %q", gotURL, wantURL)
+			}
+		})
+	}
+}
+
+func TestCamoufoxDownloadURLForUnsupportedPlatforms(t *testing.T) {
+	for _, tc := range []struct {
+		goos   string
+		goarch string
+	}{
+		{goos: "windows", goarch: "amd64"},
+		{goos: "windows", goarch: "arm64"},
+		{goos: "darwin", goarch: "amd64"},
+	} {
+		_, _, err := camoufoxDownloadURLFor(CamoufoxVersion, tc.goos, tc.goarch)
+		if !errors.Is(err, ErrUnsupportedRuntimePlatform) {
+			t.Fatalf("camoufoxDownloadURLFor(%s/%s) error = %v, want ErrUnsupportedRuntimePlatform", tc.goos, tc.goarch, err)
+		}
 	}
 }
 

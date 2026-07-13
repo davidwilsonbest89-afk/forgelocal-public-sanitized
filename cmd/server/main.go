@@ -178,68 +178,100 @@ func runServer(flags *serveFlags) {
 		slog.SetDefault(logger)
 	}
 
-	// Find or download browsers
-	camoufoxPath := ""
-	if browser.InstalledVersion(baseDir, "camoufox") == browser.CamoufoxVersion {
-		camoufoxPath = browser.FindBinary(baseDir, "camoufox")
-	}
-	if camoufoxPath == "" {
-		if browser.InstalledVersion(baseDir, "camoufox") == "" {
-			fmt.Println("🦊 Camoufox not found. Downloading...")
-		} else {
-			fmt.Printf("🦊 Camoufox update available (%s → %s). Downloading...\n",
-				browser.InstalledVersion(baseDir, "camoufox"), browser.CamoufoxVersion)
-		}
-		var err error
-		camoufoxPath, err = browser.DownloadCamoufox(baseDir)
-		if err != nil {
-			slog.Error("download Camoufox", "error", err)
-			exitServerError(flags, "Download Camoufox error: %v", err)
-		}
-	}
-
-	chromiumPath := ""
-	expectedCloak := browser.ExpectedCloakBrowserVersion()
-	if browser.InstalledVersion(baseDir, "cloakbrowser") == expectedCloak {
-		chromiumPath = browser.FindBinary(baseDir, "cloakbrowser")
-	}
-	if chromiumPath == "" {
-		if browser.InstalledVersion(baseDir, "cloakbrowser") == "" {
-			fmt.Println("🌐 CloakBrowser not found. Downloading...")
-		} else {
-			fmt.Printf("🌐 CloakBrowser update available (%s → %s). Downloading...\n",
-				browser.InstalledVersion(baseDir, "cloakbrowser"), expectedCloak)
-		}
-		var err error
-		chromiumPath, err = browser.DownloadCloakBrowser(baseDir)
-		if err != nil {
-			slog.Error("download CloakBrowser", "error", err)
-			exitServerError(flags, "Download CloakBrowser error: %v", err)
-		}
-	}
-
-	// Update v2 runtime config with browser paths if changed.
+	// Find or download browser runtimes that are both configured and supported on
+	// the current OS/architecture. A BrowseForge release can target more
+	// platforms than a specific browser runtime release; unsupported runtimes are
+	// disabled instead of blocking server startup.
 	if cfg.Runtimes == nil {
 		cfg.Runtimes = map[string]config.RuntimeConfig{}
 	}
+	runtimeEnabled := func(id string, fallback bool) bool {
+		raw := cfg.Runtimes[id]
+		if raw.Enabled != nil {
+			return *raw.Enabled
+		}
+		return fallback || raw.BinaryPath != ""
+	}
+	ensureRuntime := func(id, label string, fallbackEnabled bool, download func(string) (string, error)) (string, bool) {
+		support := browser.CurrentRuntimeSupport(id)
+		enabled := runtimeEnabled(id, fallbackEnabled)
+		if !support.PlatformSupported {
+			if enabled {
+				fmt.Printf("Skipping %s: %s\n", label, support.UnsupportedReason)
+			}
+			return "", false
+		}
+		if !enabled {
+			return cfg.Runtimes[id].BinaryPath, false
+		}
+		path := ""
+		if browser.InstalledVersion(baseDir, id) == support.Version {
+			path = browser.FindBinary(baseDir, id)
+		}
+		if path != "" {
+			return path, true
+		}
+		installed := browser.InstalledVersion(baseDir, id)
+		if installed == "" {
+			fmt.Printf("%s not found. Downloading...\n", label)
+		} else {
+			fmt.Printf("%s update available (%s → %s). Downloading...\n", label, installed, support.Version)
+		}
+		var err error
+		path, err = download(baseDir)
+		if err != nil {
+			slog.Error("download "+label, "error", err)
+			exitServerError(flags, "Download %s error: %v", label, err)
+		}
+		return path, true
+	}
+
+	camoufoxPath, camoufoxEnabled := ensureRuntime("camoufox", "Camoufox", true, browser.DownloadCamoufox)
+	cloakPath, cloakEnabled := ensureRuntime("cloakbrowser", "CloakBrowser", false, browser.DownloadCloakBrowser)
+	browseForgeChromiumPath, browseForgeChromiumEnabled := ensureRuntime(browser.BrowseForgeChromiumRuntimeID, "BrowseForge Chromium", true, browser.DownloadBrowseForgeChromium)
+
 	camoufoxRuntime := cfg.Runtimes["camoufox"]
 	cloakRuntime := cfg.Runtimes["cloakbrowser"]
-	if camoufoxPath != camoufoxRuntime.BinaryPath || chromiumPath != cloakRuntime.BinaryPath {
-		camoufoxEnabled := camoufoxPath != ""
-		cloakEnabled := chromiumPath != ""
-		camoufoxRuntime.BinaryPath = camoufoxPath
-		camoufoxRuntime.Enabled = &camoufoxEnabled
-		camoufoxRuntime.Family = "firefox"
-		camoufoxRuntime.DisplayName = "Camoufox"
-		cloakRuntime.BinaryPath = chromiumPath
-		cloakRuntime.Enabled = &cloakEnabled
-		cloakRuntime.Family = "chromium"
-		cloakRuntime.DisplayName = "CloakBrowser"
-		if cloakRuntime.Settings == nil {
-			cloakRuntime.Settings = &config.CloakBrowserConfig{FingerprintPlatform: "auto", TargetPlatformPolicy: "warn", ExtraArgs: []string{}}
+	browseForgeChromiumRuntime := cfg.Runtimes[browser.BrowseForgeChromiumRuntimeID]
+	configChanged := false
+	updateRuntime := func(id, path, family, display string, enabled bool, raw *config.RuntimeConfig) {
+		if raw.BinaryPath != path || raw.Enabled == nil || *raw.Enabled != enabled || raw.Family != family || raw.DisplayName != display {
+			raw.BinaryPath = path
+			raw.Enabled = &enabled
+			raw.Family = family
+			raw.DisplayName = display
+			cfg.Runtimes[id] = *raw
+			configChanged = true
 		}
-		cfg.Runtimes["camoufox"] = camoufoxRuntime
+	}
+	updateRuntime("camoufox", camoufoxPath, "firefox", "Camoufox", camoufoxEnabled, &camoufoxRuntime)
+	updateRuntime("cloakbrowser", cloakPath, "chromium", "CloakBrowser", cloakEnabled, &cloakRuntime)
+	if browseForgeChromiumRuntime.Settings == nil {
+		browseForgeChromiumRuntime.Settings = &config.CloakBrowserConfig{FingerprintPlatform: "auto", TargetPlatformPolicy: "warn", ExtraArgs: []string{}}
+	}
+	updateRuntime(browser.BrowseForgeChromiumRuntimeID, browseForgeChromiumPath, "chromium", "BrowseForge Chromium", browseForgeChromiumEnabled, &browseForgeChromiumRuntime)
+	if cloakRuntime.Settings == nil {
+		cloakRuntime.Settings = &config.CloakBrowserConfig{FingerprintPlatform: "auto", TargetPlatformPolicy: "warn", ExtraArgs: []string{}}
 		cfg.Runtimes["cloakbrowser"] = cloakRuntime
+		configChanged = true
+	}
+	defaultReady := func(id string) bool {
+		raw, ok := cfg.Runtimes[id]
+		return ok && raw.Enabled != nil && *raw.Enabled && raw.BinaryPath != ""
+	}
+	if !defaultReady(cfg.DefaultRuntimeID) {
+		for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "camoufox", "cloakbrowser"} {
+			if defaultReady(id) {
+				cfg.DefaultRuntimeID = id
+				configChanged = true
+				break
+			}
+		}
+	}
+	if !defaultReady(cfg.DefaultRuntimeID) {
+		exitServerError(flags, "No supported browser runtime is available for %s/%s", runtime.GOOS, runtime.GOARCH)
+	}
+	if configChanged {
 		cfgJSON, err := json.MarshalIndent(cfg, "", "  ")
 		if err != nil {
 			slog.Error("config encode", "error", err)

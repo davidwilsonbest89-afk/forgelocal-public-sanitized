@@ -9,30 +9,30 @@ This matrix defines the currently supported platforms and browser-runtime availa
 | Component | Version | Updated |
 |------|------|---------|
 | BrowseForge | v2.1.2 | 2026-07-13 |
-| Camoufox | v135.0.1-beta.24 | 2025-03-15 |
+| Camoufox | v152.0.2-alpha | 2026-07-06 |
 | CloakBrowser macOS | chromium-v145.0.7632.109.2 | 2026-03-04 |
 | CloakBrowser Linux/Windows | chromium-v146.0.7680.177.4 | 2026-04-28 |
-| BrowseForge Chromium | v0.1.0-alpha.0 | 2026-07-12 |
+| BrowseForge Chromium | v0.1.1-alpha.0 | 2026-07-13 |
 
 ## Support Matrix
 
 | Platform | BrowseForge | Camoufox | CloakBrowser | BrowseForge Chromium | Notes |
 |------|:---:|:---:|:---:|:---:|------|
-| macOS x64 (Intel) | Supported | v135 | v145 | Artifact pending | Runtime contract exists; release artifact and detector evidence are blocked |
-| macOS arm64 (Apple Silicon) | Supported | v135 | v145 | Alpha artifact | Native binary |
-| Linux x64 | Supported | v135 | v146 | Alpha artifact | Display server or Docker runtime required |
-| Linux arm64 | Binary supported | v135 | v146 | Alpha artifact | Native binary; GHCR publishes a `linux/arm64` image |
-| Windows x64 | Supported | v135 | v146 | Alpha artifact | Native binary; manual Windows validation remains required |
-| Windows i686 (32-bit) | Not supported | v135 available | Not supported | Not packaged | BrowseForge does not publish 32-bit builds |
-| Linux i686 (32-bit) | Not supported | v135 available | Not supported | Not packaged | BrowseForge does not publish 32-bit builds |
+| macOS x64 (Intel) | Supported | Not supported | v145 | Alpha artifact | Camoufox v152 has no macOS x64 artifact; BrowseForge Chromium is available |
+| macOS arm64 (Apple Silicon) | Supported | v152 | v145 | Alpha artifact | Native binaries |
+| Linux x64 | Supported | v152 | v146 | Alpha artifact | Display server or Docker runtime required |
+| Linux arm64 | Binary supported | v152 | v146 | Alpha artifact | Native binary; GHCR publishes a `linux/arm64` image |
+| Windows x64 | Supported | Not supported | v146 | Alpha artifact | Camoufox v152 has no Windows artifact; BrowseForge Chromium is available |
+| Windows i686 (32-bit) | Not supported | Not supported | Not supported | Not packaged | BrowseForge does not publish 32-bit builds |
+| Linux i686 (32-bit) | Not supported | Not supported | Not supported | Not packaged | BrowseForge does not publish 32-bit builds |
 
 ## Browser Runtime Selection
 
-The default browser runtime versions prioritize the newest build that is still usable across BrowseForge's supported platforms.
+BrowseForge releases are independent from browser runtime releases. At startup and during `browsers install`, BrowseForge enables and downloads only the runtimes that support the current `GOOS/GOARCH`; unsupported runtimes are skipped and reported as disabled.
 
-- Camoufox `v150.0.2-beta.25` is newer than `v135.0.1-beta.24`, but its upstream release does not provide the full platform set used by BrowseForge. Keep `v135.0.1-beta.24` until a newer Camoufox release has macOS x64/arm64, Linux x64/arm64, and Windows x64 assets that pass runtime validation.
+- Camoufox `v152.0.2-alpha` is used where upstream provides assets: Linux x64, Linux arm64, and macOS arm64. Windows x64 and macOS x64 BrowseForge builds still ship, but Camoufox is disabled there because this Camoufox release has no matching artifact.
 - CloakBrowser `chromium-v146.0.7680.177.5` is newer than `.4`, but upstream publishes it for Linux x64 and Windows x64 only; Linux arm64 remains on an earlier v146 build and macOS remains on v145. Keep BrowseForge on `chromium-v146.0.7680.177.4` for Linux/Windows and `chromium-v145.0.7632.109.2` for macOS unless a future release restores a cleaner cross-platform set.
-- BrowseForge Chromium `v0.1.0-alpha.0` is the source-level Chromium alpha runtime from the `browseforge-runtime-chromium` release channel. GHCR defaults preinstall Camoufox plus BrowseForge Chromium for native `linux/amd64` and `linux/arm64` images. macOS x64 is contract-defined but remains blocked until a real package, checksum, SBOM, provenance, launch smoke, and detector evidence exist.
+- BrowseForge Chromium `v0.1.1-alpha.0` is the source-level Chromium alpha runtime from the `browseforge-runtime-chromium` release channel and is the fallback runtime on platforms where Camoufox is unsupported. GHCR defaults preinstall Camoufox plus BrowseForge Chromium for native `linux/amd64` and `linux/arm64` images.
 
 ## Docker Platform Policy
 
@@ -42,14 +42,14 @@ Docker pulls the host-native image automatically on x64 servers, Apple Silicon, 
 
 ## Download URL Reference
 
-### Camoufox v135.0.1-beta.24
+### Camoufox v152.0.2-alpha
 
 ```text
-macOS x64:    https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-mac.x86_64.zip
-macOS arm64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-mac.arm64.zip
-Linux x64:    https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-lin.x86_64.zip
-Linux arm64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-lin.arm64.zip
-Windows x64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-win.x86_64.zip
+macOS arm64:  https://github.com/daijro/camoufox/releases/download/v152.0.2-alpha/camoufox-152.0.4-alpha.25-mac.arm64.zip
+Linux x64:    https://github.com/daijro/camoufox/releases/download/v152.0.2-alpha/camoufox-152.0.4-alpha.25-lin.x86_64.zip
+Linux arm64:  https://github.com/daijro/camoufox/releases/download/v152.0.2-alpha/camoufox-152.0.4-alpha.25-lin.arm64.zip
+macOS x64:    not published by upstream for this Camoufox release
+Windows x64:  not published by upstream for this Camoufox release
 ```
 
 ### CloakBrowser macOS chromium-v145.0.7632.109.2
@@ -67,14 +67,14 @@ Linux arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium
 Windows x64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.4/cloakbrowser-windows-x64.zip
 ```
 
-### BrowseForge Chromium v0.1.0-alpha.0
+### BrowseForge Chromium v0.1.1-alpha.0
 
 ```text
-Linux x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.0-alpha.0/browseforge-runtime-chromium-v0.1.0-alpha.0-linux-x64.zip
-Linux arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.0-alpha.0/browseforge-runtime-chromium-v0.1.0-alpha.0-linux-arm64.zip
-macOS arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.0-alpha.0/browseforge-runtime-chromium-v0.1.0-alpha.0-macos-arm64.zip
-macOS x64:      pending; do not use a placeholder or another platform artifact
-Windows x64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.0-alpha.0/browseforge-runtime-chromium-v0.1.0-alpha.0-windows-x64.zip
+Linux x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-linux-x64.zip
+Linux arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-linux-arm64.zip
+macOS arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-macos-arm64.zip
+macOS x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-macos-x64.zip
+Windows x64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-windows-x64.zip
 ```
 
 ## Upgrade Checklist
