@@ -124,9 +124,11 @@ func TestCamoufoxDownloadURLForSupportedPlatforms(t *testing.T) {
 		goarch       string
 		wantFilename string
 	}{
-		{name: "Linux x64", goos: "linux", goarch: "amd64", wantFilename: "camoufox-152.0.4-alpha.25-lin.x86_64.zip"},
-		{name: "Linux arm64", goos: "linux", goarch: "arm64", wantFilename: "camoufox-152.0.4-alpha.25-lin.arm64.zip"},
-		{name: "macOS arm64", goos: "darwin", goarch: "arm64", wantFilename: "camoufox-152.0.4-alpha.25-mac.arm64.zip"},
+		{name: "macOS x64", goos: "darwin", goarch: "amd64", wantFilename: "camoufox-135.0.1-beta.24-mac.x86_64.zip"},
+		{name: "macOS arm64", goos: "darwin", goarch: "arm64", wantFilename: "camoufox-135.0.1-beta.24-mac.arm64.zip"},
+		{name: "Linux x64", goos: "linux", goarch: "amd64", wantFilename: "camoufox-135.0.1-beta.24-lin.x86_64.zip"},
+		{name: "Linux arm64", goos: "linux", goarch: "arm64", wantFilename: "camoufox-135.0.1-beta.24-lin.arm64.zip"},
+		{name: "Windows x64", goos: "windows", goarch: "amd64", wantFilename: "camoufox-135.0.1-beta.24-win.x86_64.zip"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
@@ -150,9 +152,9 @@ func TestCamoufoxDownloadURLForUnsupportedPlatforms(t *testing.T) {
 		goos   string
 		goarch string
 	}{
-		{goos: "windows", goarch: "amd64"},
 		{goos: "windows", goarch: "arm64"},
-		{goos: "darwin", goarch: "amd64"},
+		{goos: "linux", goarch: "386"},
+		{goos: "freebsd", goarch: "amd64"},
 	} {
 		_, _, err := camoufoxDownloadURLFor(CamoufoxVersion, tc.goos, tc.goarch)
 		if !errors.Is(err, ErrUnsupportedRuntimePlatform) {

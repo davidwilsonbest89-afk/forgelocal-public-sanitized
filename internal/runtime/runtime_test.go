@@ -144,11 +144,11 @@ func TestRegistryListReturnsStableRuntimeMetadata(t *testing.T) {
 }
 
 func TestPlatformSupportDisablesUnsupportedRuntime(t *testing.T) {
-	ok, reason := platformSupported(Camoufox, "windows", "amd64")
+	ok, reason := platformSupported(Camoufox, "windows", "arm64")
 	if ok {
-		t.Fatal("Camoufox windows/amd64 should be unsupported for the configured release")
+		t.Fatal("Camoufox windows/arm64 should be unsupported for the configured release")
 	}
-	if !strings.Contains(reason, "camoufox") || !strings.Contains(reason, "windows/amd64") {
+	if !strings.Contains(reason, "camoufox") || !strings.Contains(reason, "windows/arm64") {
 		t.Fatalf("unsupported reason = %q", reason)
 	}
 

@@ -10,7 +10,7 @@
 | 元件 | 版本 | 更新日期 |
 |------|------|---------|
 | BrowseForge | v2.1.2 | 2026-07-13 |
-| Camoufox | v152.0.2-alpha | 2026-07-06 |
+| Camoufox | v135.0.1-beta.24 | 2025-03-15 |
 | CloakBrowser macOS | chromium-v145.0.7632.109.2 | 2026-03-04 |
 | CloakBrowser Linux/Windows | chromium-v146.0.7680.177.4 | 2026-04-28 |
 | BrowseForge Chromium | v0.1.1-alpha.0 | 2026-07-13 |
@@ -19,11 +19,11 @@
 
 | 平台 | BrowseForge | Camoufox | CloakBrowser | BrowseForge Chromium | 備註 |
 |------|:---:|:---:|:---:|:---:|------|
-| macOS x64 (Intel) | 支援 | 不支援 | v145 | Alpha artifact | Camoufox v152 無 macOS x64 artifact；可用 BrowseForge Chromium |
-| macOS arm64 (Apple Silicon) | 支援 | v152 | v145 | Alpha artifact | 原生 binary |
-| Linux x64 | 支援 | v152 | v146 | Alpha artifact | 需要 display server 或 Docker runtime |
-| Linux arm64 | Binary supported | v152 | v146 | Alpha artifact | 原生 binary；GHCR 發佈 `linux/arm64` image |
-| Windows x64 | 支援 | 不支援 | v146 | Alpha artifact | Camoufox v152 無 Windows artifact；可用 BrowseForge Chromium |
+| macOS x64 (Intel) | 支援 | v135 | v145 | Alpha artifact | 原生 binary |
+| macOS arm64 (Apple Silicon) | 支援 | v135 | v145 | Alpha artifact | 原生 binary |
+| Linux x64 | 支援 | v135 | v146 | Alpha artifact | 需要 display server 或 Docker runtime |
+| Linux arm64 | Binary supported | v135 | v146 | Alpha artifact | 原生 binary；GHCR 發佈 `linux/arm64` image |
+| Windows x64 | 支援 | v135 | v146 | Alpha artifact | 原生 binary |
 | Windows i686 (32-bit) | 不支援 | 不支援 | 不支援 | Not packaged | BrowseForge 不提供 32-bit build |
 | Linux i686 (32-bit) | 不支援 | 不支援 | 不支援 | Not packaged | 同上 |
 
@@ -31,7 +31,7 @@
 
 BrowseForge 版本與瀏覽器 runtime 版本分開。啟動與 `browsers install` 時，BrowseForge 依目前 `GOOS/GOARCH` 只啟用並下載支援的平台 runtime；不支援的 runtime 會被略過並標示為停用。
 
-- Camoufox `v152.0.2-alpha` 只在上游有提供 artifact 的平台啟用：Linux x64、Linux arm64、macOS arm64。Windows x64 與 macOS x64 的 BrowseForge 仍照發，但因該 Camoufox release 沒有對應 artifact，Camoufox 會被停用。
+- Camoufox 維持使用 `v135.0.1-beta.24`，因為該上游 release 有完整瀏覽器 binary：macOS x64/arm64、Linux x64/arm64、Windows x64。較新的 `v152.0.2-alpha` 公開 ZIP 目前包含 fingerprint/font payload，但沒有可執行瀏覽器 binary，因此 BrowseForge 不選它做 runtime 下載。
 - CloakBrowser `chromium-v146.0.7680.177.5` 比 `.4` 新，但上游只提供 Linux x64 與 Windows x64；Linux arm64 與 macOS 仍停在不同版本。因此 BrowseForge 維持 Linux/Windows 使用 `chromium-v146.0.7680.177.4`、macOS 使用 `chromium-v145.0.7632.109.2`，直到上游恢復更乾淨的跨平台組合。
 - BrowseForge Chromium `v0.1.1-alpha.0` 是 `browseforge-runtime-chromium` release channel 的 source-level Chromium alpha runtime，也是 Camoufox 不支援平台上的 fallback runtime。GHCR 預設會在原生 `linux/amd64` 與 `linux/arm64` image 內預載 Camoufox 與 BrowseForge Chromium。
 
@@ -43,14 +43,14 @@ Docker 會在 x64 server、Apple Silicon 與 ARM server 自動拉取 host-native
 
 ## 下載 URL 對照表
 
-### Camoufox (v152.0.2-alpha)
+### Camoufox (v135.0.1-beta.24)
 
 ```
-macOS arm64:  https://github.com/daijro/camoufox/releases/download/v152.0.2-alpha/camoufox-152.0.4-alpha.25-mac.arm64.zip
-Linux x64:    https://github.com/daijro/camoufox/releases/download/v152.0.2-alpha/camoufox-152.0.4-alpha.25-lin.x86_64.zip
-Linux arm64:  https://github.com/daijro/camoufox/releases/download/v152.0.2-alpha/camoufox-152.0.4-alpha.25-lin.arm64.zip
-macOS x64:    此 Camoufox release 上游未發佈
-Windows x64:  此 Camoufox release 上游未發佈
+macOS x64:    https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-mac.x86_64.zip
+macOS arm64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-mac.arm64.zip
+Linux x64:    https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-lin.x86_64.zip
+Linux arm64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-lin.arm64.zip
+Windows x64:  https://github.com/daijro/camoufox/releases/download/v135.0.1-beta.24/camoufox-135.0.1-beta.24-win.x86_64.zip
 ```
 
 ### CloakBrowser macOS (chromium-v145.0.7632.109.2)

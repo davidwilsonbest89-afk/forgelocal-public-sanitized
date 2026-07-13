@@ -20,7 +20,7 @@ import (
 
 // Version constants — bump these to trigger auto-update
 const (
-	CamoufoxVersion              = "v152.0.2-alpha"
+	CamoufoxVersion              = "v135.0.1-beta.24"
 	CloakBrowserVersion          = "chromium-v146.0.7680.177.4"
 	BrowseForgeChromiumVersion   = "v0.1.1-alpha.0"
 	BrowseForgeChromiumRelease   = "https://github.com/nczz/browseforge-runtime-chromium/releases/download"
@@ -250,15 +250,22 @@ func CamoufoxSupportFor(goos, goarch string) RuntimeSupport {
 func camoufoxDownloadFilenameFor(version, goos, goarch string) (string, error) {
 	switch goos {
 	case "darwin":
-		if goarch == "arm64" {
-			return "camoufox-152.0.4-alpha.25-mac.arm64.zip", nil
+		switch goarch {
+		case "amd64":
+			return "camoufox-135.0.1-beta.24-mac.x86_64.zip", nil
+		case "arm64":
+			return "camoufox-135.0.1-beta.24-mac.arm64.zip", nil
 		}
 	case "linux":
 		switch goarch {
 		case "amd64":
-			return "camoufox-152.0.4-alpha.25-lin.x86_64.zip", nil
+			return "camoufox-135.0.1-beta.24-lin.x86_64.zip", nil
 		case "arm64":
-			return "camoufox-152.0.4-alpha.25-lin.arm64.zip", nil
+			return "camoufox-135.0.1-beta.24-lin.arm64.zip", nil
+		}
+	case "windows":
+		if goarch == "amd64" {
+			return "camoufox-135.0.1-beta.24-win.x86_64.zip", nil
 		}
 	}
 	return "", UnsupportedRuntimePlatformError{Runtime: "Camoufox", Version: version, GOOS: goos, GOARCH: goarch}
