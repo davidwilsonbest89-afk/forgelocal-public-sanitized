@@ -97,7 +97,7 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 			"webgl.force-enabled":                    true,
 			"webgl.forbid-software":                  false,
 		},
-		Viewport: &playwright.Size{Width: 1280, Height: 800},
+		NoViewport: playwright.Bool(true),
 	}
 
 	var relay *SOCKS5Relay

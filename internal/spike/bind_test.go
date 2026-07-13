@@ -29,6 +29,7 @@ func TestPlaywrightBindEndpointWithCamoufox(t *testing.T) {
 	ctx, err := pw.Firefox.LaunchPersistentContext(userDataDir, playwright.BrowserTypeLaunchPersistentContextOptions{
 		ExecutablePath: playwright.String(camoufoxPath),
 		Headless:       playwright.Bool(true),
+		NoViewport:     playwright.Bool(true),
 	})
 	if err != nil {
 		t.Fatalf("launch persistent context: %v", err)
@@ -69,7 +70,7 @@ func TestPlaywrightBindEndpointWithCamoufox(t *testing.T) {
 	}
 	defer connected.Close()
 
-	page, err := connected.NewPage()
+	page, err := connected.NewPage(playwright.BrowserNewPageOptions{NoViewport: playwright.Bool(true)})
 	if err != nil {
 		t.Fatalf("new page through bind endpoint: %v", err)
 	}
