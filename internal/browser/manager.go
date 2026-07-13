@@ -10,7 +10,7 @@ import (
 	"browseforge/internal/profile"
 	bfruntime "browseforge/internal/runtime"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 // Session represents a running browser profile
@@ -35,8 +35,16 @@ type Manager struct {
 	sessions   map[string]*Session // sessionID → Session
 }
 
+// InstallPlaywrightDriver installs the Playwright control driver without
+// downloading Playwright-managed browsers. BrowseForge manages browser binaries
+// separately, but the Go client still needs playwright-core and Node.js to
+// connect to those browsers.
+func InstallPlaywrightDriver() error {
+	return playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+}
+
 func NewManager(cfg *config.Config, groupStores ...*groups.Store) (*Manager, error) {
-	if err := playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true}); err != nil {
+	if err := InstallPlaywrightDriver(); err != nil {
 		return nil, fmt.Errorf("playwright.Install: %w", err)
 	}
 

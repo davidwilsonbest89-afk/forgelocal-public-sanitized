@@ -13,7 +13,7 @@ import (
 	"browseforge/internal/humanize"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 // --- Session endpoints ---

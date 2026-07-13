@@ -6,7 +6,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 var adjacentKeys = map[rune][]rune{

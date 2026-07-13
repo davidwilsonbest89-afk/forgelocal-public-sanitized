@@ -61,6 +61,14 @@ RUN test -n "$BROWSEFORGE_VERSION" && \
     rm -rf /tmp/bf.zip /tmp/BrowseForge-lite && \
     chmod +x /app/BrowseForge
 
+# Preinstall the Playwright control driver so runtime startup does not depend on
+# downloading playwright-core or Node.js from npm/nodejs.org.
+RUN if /app/BrowseForge --help 2>/dev/null | grep -q "playwright install-driver"; then \
+      /app/BrowseForge playwright install-driver; \
+    else \
+      echo "Skipping Playwright driver preinstall for this BrowseForge binary"; \
+    fi
+
 # Newer BrowseForge releases can preinstall browser engines during image build.
 # Older release binaries skip this step so historical builds remain reproducible.
 RUN if [ "$BROWSEFORGE_PREINSTALL_BROWSERS" = "1" ] && /app/BrowseForge --help 2>/dev/null | grep -q "browsers status"; then \

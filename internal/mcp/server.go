@@ -14,7 +14,7 @@ import (
 	"browseforge/internal/profile"
 	"browseforge/internal/workflow"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 // MCP Server — Model Context Protocol (2025-11-25 spec, Streamable HTTP transport)

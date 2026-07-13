@@ -56,6 +56,7 @@ Usage:
   BrowseForge [global flags] open [--base-url URL]
   BrowseForge [global flags] mcp-config stdio|http [--url URL] [--token TOKEN] [--json]
   BrowseForge [global flags] browsers status|install [--json]
+  BrowseForge [global flags] playwright install-driver
   BrowseForge [global flags] backup create|restore [--full|--metadata] [--output PATH] [--base-url URL] [--token TOKEN] [--json]
   BrowseForge [global flags] smoke rest|mcp [--base-url URL] [--token TOKEN] [--wait] [--timeout DURATION] [--json]
   BrowseForge [global flags] workflow run FILE [--base-url URL] [--token TOKEN] [--json]
@@ -126,6 +127,8 @@ func runCLI(args []string, stdout, stderr io.Writer) int {
 		return runMCPConfigCommand(rest[1:], global, stdout, stderr)
 	case "browsers":
 		return runBrowsersCommand(rest[1:], global, stdout, stderr)
+	case "playwright":
+		return runPlaywrightCommand(rest[1:], stdout, stderr)
 	case "backup":
 		return runBackupCommand(rest[1:], global, stdout, stderr)
 	case "smoke":
@@ -373,6 +376,18 @@ func runDoctorCommand(args []string, global cliGlobal, stdout, stderr io.Writer)
 	if !report.OK {
 		return 1
 	}
+	return 0
+}
+func runPlaywrightCommand(args []string, stdout, stderr io.Writer) int {
+	if len(args) != 1 || args[0] != "install-driver" {
+		fmt.Fprintln(stderr, "Usage: BrowseForge playwright install-driver")
+		return 2
+	}
+	if err := browser.InstallPlaywrightDriver(); err != nil {
+		fmt.Fprintf(stderr, "playwright install-driver: %v\n", err)
+		return 1
+	}
+	fmt.Fprintln(stdout, "Playwright driver installed")
 	return 0
 }
 

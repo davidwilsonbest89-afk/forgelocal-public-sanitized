@@ -12,7 +12,7 @@ import (
 	"browseforge/internal/browser"
 	"browseforge/internal/profile"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 const (

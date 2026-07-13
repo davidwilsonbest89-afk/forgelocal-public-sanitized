@@ -20,7 +20,7 @@ import (
 	"browseforge/internal/profile"
 	bfruntime "browseforge/internal/runtime"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 const chromiumAutomationControlledArg = "--disable-blink-features=AutomationControlled"

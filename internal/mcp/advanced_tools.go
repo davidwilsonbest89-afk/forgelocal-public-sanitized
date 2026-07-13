@@ -15,7 +15,7 @@ import (
 	"browseforge/internal/profile"
 	"browseforge/internal/workflow"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 	"gopkg.in/yaml.v3"
 )
 

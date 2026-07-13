@@ -50,6 +50,19 @@ func TestCLIUnknownCommandFails(t *testing.T) {
 	}
 }
 
+func TestCLIPlaywrightInstallDriverUsage(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"playwright"}, &stdout, &stderr); code != 2 {
+		t.Fatalf("playwright usage exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+	}
+	if stdout.Len() != 0 {
+		t.Fatalf("stdout = %s, want empty", stdout.String())
+	}
+	if !strings.Contains(stderr.String(), "Usage: BrowseForge playwright install-driver") {
+		t.Fatalf("stderr = %s", stderr.String())
+	}
+}
+
 func TestCLIInitConfigTokenAndDoctorJSON(t *testing.T) {
 	baseDir := t.TempDir()
 	var stdout, stderr bytes.Buffer

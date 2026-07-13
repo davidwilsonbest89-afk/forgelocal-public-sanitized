@@ -12,7 +12,7 @@ import (
 	"browseforge/internal/profile"
 	bfruntime "browseforge/internal/runtime"
 
-	"github.com/playwright-community/playwright-go"
+	"github.com/mxschmitt/playwright-go"
 )
 
 func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
