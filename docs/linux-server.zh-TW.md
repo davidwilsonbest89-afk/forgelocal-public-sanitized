@@ -17,16 +17,16 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
-正式部署建議 pin 版本 tag，例如 `v2.1.0`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
+正式部署建議 pin 版本 tag，例如 `v2.1.1`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
 
-> 目前 GHCR Docker image 發佈 `linux/amd64`。Apple Silicon 或 ARM server 會透過 emulation 執行；原生 `linux/arm64` image 會在 KasmVNC、Camoufox、CloakBrowser runtime 都驗證完成後再開啟。
+> GHCR Docker image 發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構；只有相容性 debug 才需要指定 `--platform linux/amd64`。
 
 ## 首次啟動與 Browser Engines
 
-BrowseForge 需要 Camoufox 與 CloakBrowser engines 準備完成後，Dashboard 才會真正 ready。目前 Docker image 會在 image build 階段預先安裝 engines，並在啟動時如果 host-mounted `/app/browsers` 缺少該 engine，或 `.version` 與 image 內建版本不同，就用 image 版本更新 `/app/browsers`。這讓 browser engines 跟著 BrowseForge image 版本對齊。若 image 是用舊版 binary 建置、關閉 browser preinstall，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，啟動時仍可能花數分鐘下載 engines，這段期間 `19280` 還不會回應。
+BrowseForge 需要 Camoufox 與 BrowseForge Chromium engines 準備完成後，Dashboard 才會真正 ready。目前 Docker image 會在 image build 階段預先安裝 engines，並在啟動時如果 host-mounted `/app/browsers` 缺少該 engine，或 `.version` 與 image 內建版本不同，就用 image 版本更新 `/app/browsers`。這讓 browser engines 跟著 BrowseForge image 版本對齊。若 image 是用舊版 binary 建置、關閉 browser preinstall，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，啟動時仍可能花數分鐘下載 engines，這段期間 `19280` 還不會回應。
 
 請用 logs 與 wait-aware smoke checks 判斷，不要直接認定 container 壞掉：
 
@@ -70,7 +70,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 持久化路徑：
@@ -79,7 +79,7 @@ docker run -d --name browseforge \
 |-----------|----------------|------|
 | `./browseforge/profiles` | `/app/profiles` | Profile metadata 與 browser user data。 |
 | `./browseforge/data` | `/app/data` | `.api-token` API token 與 fingerprint data。 |
-| `./browseforge/browsers` | `/app/browsers` | 已下載的 Camoufox/CloakBrowser engines。 |
+| `./browseforge/browsers` | `/app/browsers` | 已下載或 seed 的 Camoufox、BrowseForge Chromium 與可選 CloakBrowser engines。 |
 | `./browseforge/logs` | `/app/logs` | Server logs。 |
 | `./browseforge/backups` | `/app/backups` | Filesystem 與 API backup 輸出。 |
 
@@ -90,8 +90,7 @@ Docker named volumes 也能持久化，但 host bind mounts 比較容易檢查�
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v2.1.0
-    platform: linux/amd64
+    image: ghcr.io/nczz/browseforge:v2.1.1
     ports:
       - "19280:19280"
       - "6901:6901"
@@ -135,7 +134,7 @@ ssh -L 19280:localhost:19280 -L 6901:localhost:6901 user@server
 ## 升級
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.0
+docker pull ghcr.io/nczz/browseforge:v2.1.1
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -148,7 +147,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 Profiles、Token、下載的 browser engines、logs 都保留在 host 的 `./browseforge/` 目錄。Pull 新 image 並重建容器時，必須沿用同一組 bind mounts。

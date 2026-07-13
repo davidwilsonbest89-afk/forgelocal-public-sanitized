@@ -11,7 +11,7 @@ Environment:
   REQUIRE_CLOAKBROWSER=1                  Fail if the CloakBrowser runtime spike cannot run.
   SKIP_CAMOUFOX=1                         Skip the Camoufox runtime spike.
   SKIP_CLOAKBROWSER=1                     Skip the CloakBrowser runtime spike.
-  SKIP_DOCKER=1                           Skip the linux/amd64 Docker build.
+  SKIP_DOCKER=1                           Skip the multi-arch Docker build.
 USAGE
 }
 
@@ -71,8 +71,32 @@ if ! rg -q "BROWSEFORGE_VERSION:-${version}" docker/docker-compose.yml; then
   die "docker/docker-compose.yml default BROWSEFORGE_VERSION is not ${version}"
 fi
 
-if ! rg -q "ghcr.io/nczz/browseforge:${version}" docker/README.md docs/linux-server.md; then
-  die "Docker docs must reference ghcr.io/nczz/browseforge:${version}"
+ghcr_doc_files=(
+  README.md
+  README.zh-TW.md
+  docker/README.md
+  docker/README.zh-TW.md
+  docs/cloud-deployment.md
+  docs/linux-server.md
+  docs/linux-server.zh-TW.md
+)
+for doc in "${ghcr_doc_files[@]}"; do
+  if ! rg -q "ghcr.io/nczz/browseforge:${version}" "$doc"; then
+    die "$doc must reference ghcr.io/nczz/browseforge:${version}"
+  fi
+done
+
+for doc in docs/platform-support.md docs/platform-support.zh-TW.md; do
+  if ! rg -q "\\| BrowseForge \\| ${version} \\|" "$doc"; then
+    die "$doc must list BrowseForge ${version}"
+  fi
+done
+
+if ! rg -q "scripts/release-preflight.sh ${version}" docs/release.md; then
+  die "docs/release.md must show preflight for ${version}"
+fi
+if ! rg -q "scripts/release-push.sh ${version}" docs/release.md; then
+  die "docs/release.md must show publish for ${version}"
 fi
 
 run go build -ldflags "-s -w -X main.Version=${version#v}" -o "$tmpdir/BrowseForge" ./cmd/server
@@ -122,24 +146,35 @@ if [[ "${SKIP_DOCKER:-}" != "1" ]]; then
 
   asset_root="$tmpdir/release-assets"
   asset_version_dir="$asset_root/$version"
-  package_dir="$tmpdir/package/BrowseForge-lite"
-  mkdir -p "$asset_version_dir" "$package_dir/data" "$package_dir/profiles" "$package_dir/logs" "$package_dir/examples"
+  mkdir -p "$asset_version_dir"
 
-  run env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-    -ldflags "-s -w -X main.Version=${version#v}" \
-    -o "$package_dir/BrowseForge" \
-    ./cmd/server
-  run cp -R extension "$package_dir/extension"
-  run cp data/fingerprints-chrome-macos.json data/fingerprints-chrome-windows.json data/fingerprints-firefox-macos.json data/fingerprints-firefox-windows.json "$package_dir/data/"
-  if [[ -d examples ]]; then
-    cp -R examples/. "$package_dir/examples/"
-  fi
-  run cp config.default.json "$package_dir/config.json"
-  run cp README.md README.zh-TW.md API.md API.zh-TW.md "$package_dir/"
-  (
-    cd "$tmpdir/package"
-    run zip -qr "$asset_version_dir/BrowseForge-${version}-lite-linux-x64.zip" BrowseForge-lite
-  )
+  make_linux_package() {
+    local goarch="$1"
+    local suffix="$2"
+    local package_root="$tmpdir/package-${suffix}"
+    local package_dir="$package_root/BrowseForge-lite"
+    rm -rf "$package_root"
+    mkdir -p "$package_dir/data" "$package_dir/profiles" "$package_dir/logs" "$package_dir/examples"
+
+    run env CGO_ENABLED=0 GOOS=linux GOARCH="$goarch" go build \
+      -ldflags "-s -w -X main.Version=${version#v}" \
+      -o "$package_dir/BrowseForge" \
+      ./cmd/server
+    run cp -R extension "$package_dir/extension"
+    run cp data/fingerprints-chrome-macos.json data/fingerprints-chrome-windows.json data/fingerprints-firefox-macos.json data/fingerprints-firefox-windows.json "$package_dir/data/"
+    if [[ -d examples ]]; then
+      cp -R examples/. "$package_dir/examples/"
+    fi
+    run cp config.default.json "$package_dir/config.json"
+    run cp README.md README.zh-TW.md API.md API.zh-TW.md "$package_dir/"
+    (
+      cd "$package_root"
+      run zip -qr "$asset_version_dir/BrowseForge-${version}-lite-${suffix}.zip" BrowseForge-lite
+    )
+  }
+
+  make_linux_package amd64 linux-x64
+  make_linux_package arm64 linux-arm64
 
   port_file="$tmpdir/asset-server.port"
   python3 - "$asset_root" "$port_file" <<'PY' &
@@ -165,16 +200,21 @@ PY
   asset_server_port="$(cat "$port_file")"
   asset_base_url="http://host.docker.internal:${asset_server_port}"
 
-  run docker build \
-    --add-host=host.docker.internal:host-gateway \
-    --platform linux/amd64 \
-    -f docker/Dockerfile.run \
-    --build-arg "BROWSEFORGE_VERSION=${version}" \
-    --build-arg BROWSEFORGE_ARCH=linux-x64 \
-    --build-arg "BROWSEFORGE_RELEASE_BASE_URL=${asset_base_url}" \
-    -t "browseforge:verify-${version}" \
-    docker
-  run docker run --rm --platform linux/amd64 --entrypoint /bin/bash "browseforge:verify-${version}" -n /entrypoint.sh
+  for docker_platform in linux/amd64 linux/arm64; do
+    docker_arch="${docker_platform#linux/}"
+    docker_tag="browseforge:verify-${version}-${docker_arch}"
+    run docker build \
+      --add-host=host.docker.internal:host-gateway \
+      --platform "$docker_platform" \
+      -f docker/Dockerfile.run \
+      --build-arg "BROWSEFORGE_VERSION=${version}" \
+      --build-arg "BROWSEFORGE_RELEASE_BASE_URL=${asset_base_url}" \
+      -t "$docker_tag" \
+      docker
+    if [[ "$docker_platform" == "linux/amd64" ]]; then
+      run docker run --rm --platform "$docker_platform" --entrypoint /bin/bash "$docker_tag" -n /entrypoint.sh
+    fi
+  done
 else
   echo "warning: skipping Docker build because SKIP_DOCKER=1"
 fi

@@ -20,17 +20,17 @@ BrowseForge releases are tag driven. Do not create or push release tags by hand.
 3. Run preflight from a clean `main` checkout:
 
    ```bash
-   scripts/release-preflight.sh v2.1.0
+   scripts/release-preflight.sh v2.1.1
    ```
 
-The preflight checks the working tree, version references, Go tests, vet, UI i18n syntax, public documentation language, workflow YAML, Docker Compose config, the Camoufox Bind spike, the CloakBrowser Bind spike when a local binary is available, and a real `linux/amd64` Docker build.
+The preflight checks the working tree, version references, Go tests, vet, UI i18n syntax, public documentation language, workflow YAML, Docker Compose config, the Camoufox Bind spike, the CloakBrowser Bind spike when a local binary is available, and real `linux/amd64` plus `linux/arm64` Docker builds.
 
 For release machines that must prove both browser engines before publishing, enforce the CloakBrowser spike:
 
 ```bash
 REQUIRE_CLOAKBROWSER=1 \
 CLOAKBROWSER_PATH=/path/to/Chromium \
-scripts/release-preflight.sh v2.1.0
+scripts/release-preflight.sh v2.1.1
 ```
 
 ## Publish
@@ -38,7 +38,7 @@ scripts/release-preflight.sh v2.1.0
 After preflight passes:
 
 ```bash
-scripts/release-push.sh v2.1.0
+scripts/release-push.sh v2.1.1
 gh run watch
 ```
 
@@ -60,4 +60,4 @@ The release workflow publishes binary zip assets for:
 - `macos-arm64`
 - `windows-x64`
 
-The Docker image is currently published as `linux/amd64` only. Apple Silicon runs it through Docker emulation. Native `linux/arm64` Docker images should only be enabled after KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
+The Docker image is published as a multi-arch manifest for `linux/amd64` and `linux/arm64`. Docker pulls the host-native image automatically on x64 servers, Apple Silicon, and ARM servers; use `--platform linux/amd64` only for compatibility debugging.

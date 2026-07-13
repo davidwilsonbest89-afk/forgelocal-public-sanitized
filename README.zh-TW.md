@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 `./browseforge/` host 目錄就是持久化 runtime。之後 pull 新 image 或重建 container 時沿用這組 mounts，profiles、token、browser data、logs、backups 都會保留。
@@ -110,7 +110,7 @@ cd docker
 docker compose up -d --build
 ```
 
-目前 GHCR Docker image 是 `linux/amd64`。Apple Silicon 可以透過 Docker emulation 執行；原生 `linux/arm64` Docker image 會等 KasmVNC、Camoufox、CloakBrowser 都在 ARM container 驗證後再開啟。
+GHCR Docker image 會發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構；只有相容性 debug 才需要指定 `--platform linux/amd64`。
 
 Linux server 部署細節見 [docs/linux-server.md](docs/linux-server.md)。
 

@@ -21,7 +21,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 Build from the local source tree:
@@ -32,10 +32,10 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-The Compose file builds the `v2.1.0` release image by default. To test another version:
+The Compose file builds the `v2.1.1` release image by default. To test another version:
 
 ```bash
-BROWSEFORGE_VERSION=v2.1.0 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.1 docker compose up -d --build
 ```
 
 ## First Startup
@@ -96,7 +96,7 @@ When you pull a new image or recreate the container, reuse the same `-v "$PWD/br
 Upgrade example:
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.0
+docker pull ghcr.io/nczz/browseforge:v2.1.1
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -109,7 +109,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 Full filesystem backup:
@@ -138,13 +138,11 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 
 ## Notes
 
-- The GHCR Docker image currently publishes `linux/amd64`. Apple Silicon and ARM servers run it through emulation.
+- The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker automatically pulls the host-native image on x64 servers, Apple Silicon, and ARM servers.
 - Default GHCR browser preinstall is Camoufox plus BrowseForge Chromium. Use `BROWSEFORGE_PREINSTALL_RUNTIMES` at image build time if you need a different set.
 - VNC is intended for watching browser state and basic remote operation.
 - Browser engines, profiles, token data, logs, and backups are host-mounted under `./browseforge/` by default, so recreating the container does not delete them.
 
 ## Apple Silicon (M1/M2/M3)
 
-`docker-compose.yml` sets `platform: linux/amd64` and runs through Rosetta/QEMU emulation.
-
-Native `linux/arm64` images should only be enabled after KasmVNC, Camoufox, and BrowseForge Chromium have all passed runtime validation inside an ARM container.
+Docker pulls the native `linux/arm64` image on Apple Silicon and ARM servers by default. Use `docker run --platform linux/amd64 ...` or `DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose up -d --build` only when you intentionally need x64 compatibility debugging.

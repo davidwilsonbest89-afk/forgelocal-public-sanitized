@@ -2,6 +2,18 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.1 - 2026-07-13
+
+### Changed
+
+- Prepared GHCR Docker publishing for native `linux/amd64` and `linux/arm64` manifests.
+- Updated Docker runtime builds to select BrowseForge release ZIPs and KasmVNC packages from the BuildKit target architecture.
+- Bumped Docker, Linux server, release, and platform documentation references to the `v2.1.1` release tag.
+
+### Fixed
+
+- Added BrowseForge Chromium downloader support for `linux/arm64` so ARM64 containers install the native `linux-arm64` runtime asset instead of failing during browser preinstall.
+
 ## v2.1.0 - 2026-07-12
 
 ### Changed

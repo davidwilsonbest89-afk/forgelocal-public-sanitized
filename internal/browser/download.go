@@ -137,28 +137,39 @@ func ExpectedBrowseForgeChromiumVersion() string {
 }
 
 func browseForgeChromiumPlatform() (string, error) {
-	switch runtime.GOOS {
+	return browseForgeChromiumPlatformFor(runtime.GOOS, runtime.GOARCH)
+}
+
+func browseForgeChromiumPlatformFor(goos, goarch string) (string, error) {
+	switch goos {
 	case "darwin":
-		if runtime.GOARCH == "arm64" {
+		switch goarch {
+		case "arm64":
 			return "macos-arm64", nil
-		}
-		if runtime.GOARCH == "amd64" {
+		case "amd64":
 			return "macos-x64", nil
 		}
 	case "linux":
-		if runtime.GOARCH == "amd64" {
+		switch goarch {
+		case "amd64":
 			return "linux-x64", nil
+		case "arm64":
+			return "linux-arm64", nil
 		}
 	case "windows":
-		if runtime.GOARCH == "amd64" {
+		if goarch == "amd64" {
 			return "windows-x64", nil
 		}
 	}
-	return "", fmt.Errorf("unsupported BrowseForge Chromium platform: %s/%s", runtime.GOOS, runtime.GOARCH)
+	return "", fmt.Errorf("unsupported BrowseForge Chromium platform: %s/%s", goos, goarch)
 }
 
 func BrowseForgeChromiumDownloadURL(version string) (string, string, error) {
-	platform, err := browseForgeChromiumPlatform()
+	return browseForgeChromiumDownloadURLFor(version, runtime.GOOS, runtime.GOARCH)
+}
+
+func browseForgeChromiumDownloadURLFor(version, goos, goarch string) (string, string, error) {
+	platform, err := browseForgeChromiumPlatformFor(goos, goarch)
 	if err != nil {
 		return "", "", err
 	}
@@ -194,6 +205,13 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 		return "", err
 	}
 	os.Remove(tmpFile)
+
+	// Flatten: if the archive extracted into a single subdirectory, hoist its
+	// contents up so the binary lives directly under destDir (e.g. chrome is at
+	// browsers/browseforge-chromium/chrome instead of .../subdir/chrome).
+	if err := flattenSingleSubdir(destDir); err != nil {
+		slog.Warn("flatten after extract failed", "err", err)
+	}
 
 	if runtime.GOOS == "darwin" {
 		exec.Command("xattr", "-cr", destDir).Run()
@@ -326,6 +344,48 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	fmt.Println("✅ CloakBrowser installed")
 	writeVersionMarker(destDir, version)
 	return binPath, nil
+}
+
+// flattenSingleSubdir hoists the contents of a lone subdirectory up into dir.
+// This handles archives that wrap everything in a version-named folder, e.g.
+// browseforge-runtime-chromium-v0.1.0-alpha.0-linux-x64/chrome → chrome.
+// Files already at the top level (like .version) are preserved.
+func flattenSingleSubdir(dir string) error {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	// Count subdirectories and top-level files (ignoring .version marker).
+	var dirs []os.DirEntry
+	for _, e := range entries {
+		if e.IsDir() {
+			dirs = append(dirs, e)
+		}
+	}
+
+	// Only flatten when there is exactly one subdirectory.
+	if len(dirs) != 1 {
+		return nil
+	}
+
+	subdir := filepath.Join(dir, dirs[0].Name())
+	subEntries, err := os.ReadDir(subdir)
+	if err != nil {
+		return err
+	}
+
+	// Move each entry from the subdirectory up to dir.
+	for _, e := range subEntries {
+		src := filepath.Join(subdir, e.Name())
+		dst := filepath.Join(dir, e.Name())
+		if err := os.Rename(src, dst); err != nil {
+			return fmt.Errorf("flatten: rename %s → %s: %w", src, dst, err)
+		}
+	}
+
+	// Remove the now-empty subdirectory.
+	return os.Remove(subdir)
 }
 
 func download(dlURL, dest string) error {

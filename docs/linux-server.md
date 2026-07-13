@@ -17,16 +17,16 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
-Pin a version tag such as `v2.1.0` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
+Pin a version tag such as `v2.1.1` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
 
-> The current GHCR Docker image is `linux/amd64`. Apple Silicon and ARM servers run it through emulation. Native `linux/arm64` Docker images should only be enabled after KasmVNC, Camoufox, and CloakBrowser runtime checks pass inside an ARM container.
+> The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker pulls the host-native image automatically on x64 servers, Apple Silicon, and ARM servers. Use `--platform linux/amd64` only for compatibility debugging.
 
 ## First Startup and Browser Engines
 
-BrowseForge needs Camoufox and CloakBrowser engines before the dashboard can become ready. Current Docker images preinstall these engines during image build and seed `/app/browsers` on startup when the host-mounted engine is missing or its `.version` differs from the image. This keeps browser engines aligned with the BrowseForge image version. If the image was built from an older binary, browser preinstall was disabled, or `BROWSEFORGE_SEED_BROWSERS=0` is set, startup may spend several minutes downloading engines before `19280` responds.
+BrowseForge needs Camoufox and BrowseForge Chromium engines before the dashboard can become ready. Current Docker images preinstall these engines during image build and seed `/app/browsers` on startup when the host-mounted engine is missing or its `.version` differs from the image. This keeps browser engines aligned with the BrowseForge image version. If the image was built from an older binary, browser preinstall was disabled, or `BROWSEFORGE_SEED_BROWSERS=0` is set, startup may spend several minutes downloading engines before `19280` responds.
 
 Use logs and wait-aware smoke checks instead of assuming the container is broken:
 
@@ -69,7 +69,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 Persisted paths:
@@ -78,7 +78,7 @@ Persisted paths:
 |-----------|----------------|---------|
 | `./browseforge/profiles` | `/app/profiles` | Profile metadata and browser user data. |
 | `./browseforge/data` | `/app/data` | API token at `.api-token` and fingerprint data. |
-| `./browseforge/browsers` | `/app/browsers` | Downloaded Camoufox/CloakBrowser engines. |
+| `./browseforge/browsers` | `/app/browsers` | Downloaded or seeded Camoufox, BrowseForge Chromium, and optional CloakBrowser engines. |
 | `./browseforge/logs` | `/app/logs` | Server logs. |
 | `./browseforge/backups` | `/app/backups` | Filesystem and API backup output. |
 
@@ -89,8 +89,7 @@ Named Docker volumes also work, but host bind mounts are easier to inspect, copy
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v2.1.0
-    platform: linux/amd64
+    image: ghcr.io/nczz/browseforge:v2.1.1
     ports:
       - "19280:19280"
       - "6901:6901"
@@ -141,7 +140,7 @@ Then open:
 ## Upgrade
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.0
+docker pull ghcr.io/nczz/browseforge:v2.1.1
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -154,7 +153,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 Profiles, tokens, downloaded browser engines, and logs remain in the host `./browseforge/` directory. Pulling a new image and recreating the container must reuse the same bind mounts.

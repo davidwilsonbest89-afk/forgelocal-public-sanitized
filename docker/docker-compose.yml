@@ -1,12 +1,10 @@
 services:
   browseforge:
-    platform: linux/amd64
     build:
       context: .
       dockerfile: Dockerfile.run
       args:
-        BROWSEFORGE_VERSION: ${BROWSEFORGE_VERSION:-v2.1.0}
-        BROWSEFORGE_ARCH: linux-x64
+        BROWSEFORGE_VERSION: ${BROWSEFORGE_VERSION:-v2.1.1}
         BROWSEFORGE_PREINSTALL_BROWSERS: ${BROWSEFORGE_PREINSTALL_BROWSERS:-1}
         BROWSEFORGE_PREINSTALL_RUNTIMES: ${BROWSEFORGE_PREINSTALL_RUNTIMES:-camoufox,browseforge-chromium}
     ports:

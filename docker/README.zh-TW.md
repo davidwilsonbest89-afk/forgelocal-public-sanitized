@@ -21,7 +21,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 本地從原始碼 build：
@@ -32,15 +32,15 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-compose 預設會建置 `v2.1.0` release image。要測其他版本：
+compose 預設會建置 `v2.1.1` release image。要測其他版本：
 
 ```bash
-BROWSEFORGE_VERSION=v2.1.0 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.1 docker compose up -d --build
 ```
 
-若 image 沒有預載 browser engines，首次啟動需要 3-5 分鐘下載瀏覽器引擎（~440MB）。
+## 首次啟動
 
-新版 image 會在 build 階段預先安裝 browser engines，並在啟動時如果 `/app/browsers/{engine}/.version` 缺失或不同，就用 image 內建版本更新 host mount。若使用舊版 image、關閉 `BROWSEFORGE_PREINSTALL_BROWSERS`，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，第一次啟動仍可能需要下載；這段期間 dashboard 還不會 ready。可用以下方式確認：
+目前 release image 會在 Docker build 階段預先安裝 Camoufox 與 BrowseForge Chromium。啟動時如果 `/app/browsers/{engine}/.version` 缺失或不同，就用 image 內建版本更新 host mount。若使用舊版 image、關閉 `BROWSEFORGE_PREINSTALL_BROWSERS`、將 `BROWSEFORGE_PREINSTALL_RUNTIMES` 設為 image 未預載的 runtime，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，第一次啟動仍可能需要下載；這段期間 dashboard 還不會 ready。可用以下方式確認：
 
 ```bash
 docker logs -f browseforge
@@ -73,18 +73,18 @@ docker compose exec browseforge /app/BrowseForge token
 |-----------|----------------|------|
 | `./browseforge/profiles` | `/app/profiles` | Profile metadata 與 browser user data。 |
 | `./browseforge/data` | `/app/data` | `.api-token` API token 與 fingerprint data。 |
-| `./browseforge/browsers` | `/app/browsers` | 已下載的 Camoufox/CloakBrowser engines。 |
+| `./browseforge/browsers` | `/app/browsers` | 已下載或 seed 的 Camoufox、BrowseForge Chromium 與可選 CloakBrowser engines。 |
 | `./browseforge/logs` | `/app/logs` | Server logs。 |
 | `./browseforge/backups` | `/app/backups` | Filesystem 與 API backup 輸出。 |
 
 Pull 新 image 或重建容器時，必須沿用同一組 `-v "$PWD/browseforge/...:/app/..."` mounts。這樣 token 與使用者產生的 profile/browser data 不會因 container 被刪除而消失。
 
-`/app/browsers` 是 BF-managed browser cache。預設 `BROWSEFORGE_SEED_BROWSERS=1` 會讓它跟著 image 內建 browser version 更新；若特殊 debug 需要保留手動放置的 browser，可設為 `0`。
+`/app/browsers` 是 BF-managed browser cache。預設 `BROWSEFORGE_SEED_BROWSERS=1` 會讓它跟著 image 內建 browser version 更新；`BROWSEFORGE_PREINSTALL_RUNTIMES` 控制 build-time 預載清單，預設為 `camoufox,browseforge-chromium`。若特殊 debug 需要保留手動放置的 browser，可設為 `0`。
 
 升級範例：
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.0
+docker pull ghcr.io/nczz/browseforge:v2.1.1
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -97,7 +97,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 完整 filesystem 備份：
@@ -126,12 +126,11 @@ REST API 的 `/api/backup` 是較輕量的 profile metadata backup；若要保�
 
 ## 注意事項
 
-- GHCR Docker image 目前發佈 `linux/amd64`。Apple Silicon 或 ARM server 會透過 emulation 執行。
+- GHCR Docker image 發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構。
 - VNC 用於觀看瀏覽器畫面和基本操作
 - 中文輸入和剪貼簿在 Chrome 瀏覽器上 seamless 支援
 - 瀏覽器引擎、Profile 資料、Token、logs 預設 mount 到 host `./browseforge/` 目錄，重建容器不會遺失
 
 ## Apple Silicon (M1/M2/M3)
 
-docker-compose.yml 已設定 `platform: linux/amd64`，透過 Rosetta/QEMU 模擬執行。
-原生 `linux/arm64` image 會在 KasmVNC、Camoufox、CloakBrowser runtime 都驗證完成後再開啟。
+Apple Silicon 與 ARM server 預設會拉取原生 `linux/arm64` image。只有相容性 debug 需要 x64 時，才使用 `docker run --platform linux/amd64 ...` 或 `DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose up -d --build`。

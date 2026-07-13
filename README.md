@@ -90,7 +90,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.0
+  ghcr.io/nczz/browseforge:v2.1.1
 ```
 
 The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.
@@ -110,7 +110,7 @@ cd docker
 docker compose up -d --build
 ```
 
-The current GHCR Docker image is `linux/amd64`. Apple Silicon can run it through Docker emulation. Native `linux/arm64` Docker images are deferred until KasmVNC, Camoufox, and BrowseForge Chromium runtime checks pass inside an ARM container.
+The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker pulls the matching image automatically on x64 servers, Apple Silicon, and ARM servers; use `--platform linux/amd64` only for compatibility debugging.
 
 See [docs/linux-server.md](docs/linux-server.md) for server deployment details.
 
@@ -433,7 +433,7 @@ Treat profiles, backup ZIPs, exported profiles, cookies, and `data/.api-token` a
 | macOS x64 | Supported | Supported | Supported | Artifact pending |
 | macOS arm64 | Supported | Supported | Supported | Alpha artifact |
 | Linux x64 | Supported | Supported | Supported | Alpha artifact |
-| Linux arm64 | Binary supported | Supported | Supported | Not packaged |
+| Linux arm64 | Binary supported | Supported | Supported | Alpha artifact |
 | Windows x64 | Supported | Supported | Supported | Alpha artifact |
 
 See [docs/platform-support.md](docs/platform-support.md) for detailed support notes.
