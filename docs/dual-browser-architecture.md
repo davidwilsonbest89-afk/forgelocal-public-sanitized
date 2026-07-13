@@ -30,7 +30,7 @@ New Chromium profiles automatically receive a seed when one is not provided. Thi
 
 ## Playwright Control
 
-Both engines expose a Playwright-compatible Bind endpoint through the project Playwright 1.60 integration. External clients should use Playwright 1.60.x when connecting to running profiles.
+Both engines expose a Playwright-compatible Bind endpoint through the project Playwright 1.61.1 integration. External clients should use Playwright 1.61.x when connecting to running profiles.
 
 The current release gate includes a Camoufox Bind runtime spike. BrowseForge also keeps an opt-in CloakBrowser Bind spike (`CLOAKBROWSER_SPIKE=1`) for machines that provide a verified CloakBrowser binary. Both tests launch a persistent profile, bind a Playwright endpoint, connect a second Playwright client, and open a page through that endpoint.
 

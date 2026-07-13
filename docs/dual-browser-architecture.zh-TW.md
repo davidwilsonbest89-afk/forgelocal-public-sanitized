@@ -30,7 +30,7 @@ CloakBrowser 主要以 `fingerprint_seed` 作為身份來源。seed 會驅動 Ch
 
 ## Playwright 控制
 
-兩個 engine 都透過專案整合的 Playwright 1.60 Bind endpoint 暴露 Playwright-compatible 控制。外部 client 連線到執行中的 profile 時，應使用 Playwright 1.60.x。
+兩個 engine 都透過專案整合的 Playwright 1.61.1 Bind endpoint 暴露 Playwright-compatible 控制。外部 client 連線到執行中的 profile 時，應使用 Playwright 1.61.x。
 
 目前 release gate 已包含 Camoufox Bind runtime spike。BrowseForge 也保留 opt-in CloakBrowser Bind spike（`CLOAKBROWSER_SPIKE=1`），可在提供已驗證 CloakBrowser binary 的機器上執行。兩個測試都會啟動 persistent profile、建立 Playwright Bind endpoint、用第二個 Playwright client 連回去，並透過該 endpoint 開頁。
 

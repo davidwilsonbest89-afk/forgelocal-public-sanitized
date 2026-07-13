@@ -2,6 +2,14 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.2 - 2026-07-13
+
+### Changed
+
+- Updated BrowseForge to the maintained `github.com/mxschmitt/playwright-go` driver package.
+- Preinstalled the Playwright control driver in GHCR Docker images so container startup does not depend on runtime downloads from npm or nodejs.org.
+- Bumped Docker, Linux server, release, and platform documentation references to the `v2.1.2` release tag.
+
 ## v2.1.1 - 2026-07-13
 
 ### Changed

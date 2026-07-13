@@ -17,10 +17,10 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.1
+  ghcr.io/nczz/browseforge:v2.1.2
 ```
 
-Pin a version tag such as `v2.1.1` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
+Pin a version tag such as `v2.1.2` for production deployments. Use `latest` only for short trials, because pulling or restarting later may upgrade unexpectedly.
 
 > The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker pulls the host-native image automatically on x64 servers, Apple Silicon, and ARM servers. Use `--platform linux/amd64` only for compatibility debugging.
 
@@ -69,7 +69,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.1
+  ghcr.io/nczz/browseforge:v2.1.2
 ```
 
 Persisted paths:
@@ -89,7 +89,7 @@ Named Docker volumes also work, but host bind mounts are easier to inspect, copy
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v2.1.1
+    image: ghcr.io/nczz/browseforge:v2.1.2
     ports:
       - "19280:19280"
       - "6901:6901"
@@ -140,7 +140,7 @@ Then open:
 ## Upgrade
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.1
+docker pull ghcr.io/nczz/browseforge:v2.1.2
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -153,7 +153,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.1
+  ghcr.io/nczz/browseforge:v2.1.2
 ```
 
 Profiles, tokens, downloaded browser engines, and logs remain in the host `./browseforge/` directory. Pulling a new image and recreating the container must reuse the same bind mounts.

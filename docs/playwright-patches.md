@@ -4,11 +4,11 @@
 
 ## Current Status
 
-BrowseForge now uses the upstream `github.com/playwright-community/playwright-go` `v0.6000.0` Playwright 1.60 integration and no longer keeps the local hotfix that was previously required for the Playwright 1.59.1 driver.
+BrowseForge now uses `github.com/mxschmitt/playwright-go` `v0.6100.0`, which installs the Playwright 1.61.1 control driver. The runtime no longer keeps the local hotfix that was previously required for the Playwright 1.59.1 driver.
 
 | Patch | Old Location | Status | Reason Removed |
 |-------|--------------|--------|----------------|
-| Missing `/` in the WebSocket Bind path | `internal/browser/manager.go` via `patchDriverWSBind()` / `fixWSEndpoint()` | Removed | Playwright driver 1.60 produces the correct `/guid` WebSocket path from `browser.bind()` |
+| Missing `/` in the WebSocket Bind path | `internal/browser/manager.go` via `patchDriverWSBind()` / `fixWSEndpoint()` | Removed | Playwright driver 1.60+ produces the correct `/guid` WebSocket path from `browser.bind()` |
 
 ## Background
 
@@ -45,7 +45,7 @@ Both were specific to Playwright 1.59.1. Keeping them after the 1.60 migration w
    grep "wsServer.listen" $(find ~/.cache ~/Library/Caches -path "*/ms-playwright-go/*/package/lib/server/browser.js" 2>/dev/null)
    ```
 
-3. Playwright 1.60 should include `"/" +` or equivalent slash-prefixed path generation.
+3. Playwright 1.61.1 should include `"/" +` or equivalent slash-prefixed path generation.
 4. BrowseForge should not contain `patchDriverWSBind()` or `fixWSEndpoint()`.
 5. Run the Camoufox Bind spike before release:
 
@@ -56,11 +56,11 @@ Both were specific to Playwright 1.59.1. Keeping them after the 1.60 migration w
 ## Related Files
 
 - `internal/browser/manager.go` uses the endpoint returned by `browser.Bind()`.
-- `go.mod` points to the upstream `github.com/playwright-community/playwright-go` `v0.6000.0` release.
+- `go.mod` points to `github.com/mxschmitt/playwright-go` `v0.6100.0`, which installs the Playwright 1.61.1 driver.
 - `internal/spike/bind_test.go` covers the Bind endpoint runtime path.
 
 ## Upstream Tracking
 
 - Playwright upstream: https://github.com/microsoft/playwright
 - Playwright Go upstream: https://github.com/mxschmitt/playwright-go
-- Playwright 1.60 includes the WebSocket Bind path fix.
+- Playwright 1.60+ includes the WebSocket Bind path fix.
