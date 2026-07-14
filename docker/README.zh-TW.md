@@ -38,6 +38,13 @@ compose 預設會建置 `v2.1.2` release image。要測其他版本：
 BROWSEFORGE_VERSION=v2.1.2 docker compose up -d --build
 ```
 
+驗證尚未發布的 BrowseForge Chromium runtime 時，請把 image build 指向暫存的 runtime asset root。該 root 必須包含 `checksums.txt`、`runtime.manifest.json`，以及 `<runtime-version>/browseforge-runtime-chromium-<runtime-version>-linux-{x64,arm64}.zip`：
+
+```bash
+BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=https://host/runtime/releases \
+BROWSEFORGE_VERSION=v2.1.2 docker compose up -d --build
+```
+
 ## 首次啟動
 
 目前 release image 會在 Docker build 階段預先安裝 Camoufox 與 BrowseForge Chromium。啟動時如果 `/app/browsers/{engine}/.version` 缺失或不同，就用 image 內建版本更新 host mount。若使用舊版 image、關閉 `BROWSEFORGE_PREINSTALL_BROWSERS`、將 `BROWSEFORGE_PREINSTALL_RUNTIMES` 設為 image 未預載的 runtime，或設定 `BROWSEFORGE_SEED_BROWSERS=0`，第一次啟動仍可能需要下載；這段期間 dashboard 還不會 ready。可用以下方式確認：

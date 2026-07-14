@@ -86,40 +86,45 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		args = append(args, fmt.Sprintf("--fingerprint=%d", p.FingerprintSeed))
 	}
 
+	policy := m.cfg.ChromiumRuntimeSettings(string(desc.ID))
+	if quota := cloakStorageQuotaMB(policy); quota < 0 {
+		return nil, fmt.Errorf("%s storage_quota_mb must be >= 0", desc.ID)
+	}
+
 	var tz, locale, proxyRegion string
 	effectiveProxy := m.effectiveProxy(p)
 	if effectiveProxy.Proxy != nil {
 		proxy := effectiveProxy.Proxy
+		if desc.ID == bfruntime.BrowseForgeChromium {
+			proxyRegion, err = sanitizeBrowseForgeProxyRegion(proxy.Region)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			proxyRegion = strings.TrimSpace(proxy.Region)
+		}
 		tz, locale = fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
-		proxyRegion = strings.TrimSpace(proxy.Region)
 		args = append(args, "--fingerprint-webrtc-ip=auto")
 	} else {
 		tz, locale = fingerprint.DetectLocalGeoResult()
 	}
-	policy := m.cfg.ChromiumRuntimeSettings(string(desc.ID))
 	platform, err := resolveCloakFingerprintPlatform(policy, runtime.GOOS)
 	if err != nil {
 		return nil, err
 	}
-	if profilePlatform, ok := fingerprintString(p.Fingerprint, "navigator.platform"); ok {
-		platform = profilePlatform
-	}
-	args = append(args,
-		"--fingerprint-timezone="+tz,
-		"--fingerprint-locale="+locale,
-		"--fingerprint-platform="+platform,
-	)
-	if quota := cloakStorageQuotaMB(policy); quota > 0 {
-		args = append(args, fmt.Sprintf("--fingerprint-storage-quota=%d", quota))
-	} else if quota < 0 {
-		return nil, fmt.Errorf("%s storage_quota_mb must be >= 0", desc.ID)
-	}
-	if pluginsPDF := cloakPluginsPDF(policy); pluginsPDF != "" {
-		args = append(args, "--fingerprint-plugins-pdf="+pluginsPDF)
-	}
-
 	if desc.ID == bfruntime.BrowseForgeChromium {
-		nativeConfigPath, err := writeBrowseForgeNativeConfig(p, userDataDir, tz, locale, platform, proxyRegion, policy)
+		platform, err = resolveChromiumFingerprintPlatform(policy, runtime.GOOS, runtime.GOARCH)
+		if err != nil {
+			return nil, err
+		}
+	}
+	persona, err := buildChromiumLaunchPersona(p, desc.ID, platform, tz, locale, proxyRegion, runtime.GOARCH, policy)
+	if err != nil {
+		return nil, err
+	}
+	if desc.ID == bfruntime.BrowseForgeChromium {
+		args = appendChromiumLaunchPersonaArgs(args, persona)
+		nativeConfigPath, err := writeBrowseForgeNativeConfig(userDataDir, persona)
 		if err != nil {
 			return nil, err
 		}
@@ -127,8 +132,20 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			"--browseforge-stealth-config="+nativeConfigPath,
 			"--browseforge-stealth-mode="+browseForgeChromiumNativeMode(policy),
 		)
+	} else {
+		args = append(args,
+			"--fingerprint-timezone="+persona.Native.Locale.Timezone,
+			"--fingerprint-locale="+persona.Native.Locale.Locale,
+			"--fingerprint-platform="+persona.NavigatorPlatform,
+		)
+		if quota := cloakStorageQuotaMB(policy); quota > 0 {
+			args = append(args, fmt.Sprintf("--fingerprint-storage-quota=%d", quota))
+		}
+		if persona.PluginsPDF != "" {
+			args = append(args, "--fingerprint-plugins-pdf="+persona.PluginsPDF)
+		}
+		args = appendProfileFingerprintArgs(args, p.Fingerprint, persona.Native.Browser.UserAgent, persona.NavigatorPlatform, persona.Native.Locale.AcceptLanguage)
 	}
-	args = appendProfileFingerprintArgs(args, p.Fingerprint)
 
 	if m.cfg.NoSandbox {
 		args = append(args, "--no-sandbox")
@@ -408,87 +425,192 @@ type browseForgeNativeStorage struct {
 	Persistent bool `json:"persistent"`
 }
 
-func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, locale, platform, proxyRegion string, policy *config.CloakBrowserConfig) (string, error) {
+type chromiumLaunchPersona struct {
+	Native            browseForgeNativePersonaConfig
+	NavigatorPlatform string
+	CanvasNoise       int64
+	HasCanvasNoise    bool
+	AudioNoise        int64
+	HasAudioNoise     bool
+	FontsList         string
+	HasFontsList      bool
+	HasWebGLVendor    bool
+	HasWebGLRenderer  bool
+	PluginsPDF        string
+}
+
+func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, platform, timezone, locale, proxyRegion, goarch string, policy *config.CloakBrowserConfig) (chromiumLaunchPersona, error) {
 	if p == nil {
-		return "", fmt.Errorf("profile is nil")
+		return chromiumLaunchPersona{}, fmt.Errorf("profile is nil")
+	}
+	nativePlatform, err := nativePersonaPlatform(platform, goarch)
+	if err != nil {
+		return chromiumLaunchPersona{}, err
+	}
+	if runtimeID == bfruntime.BrowseForgeChromium {
+		proxyRegion, err = sanitizeBrowseForgeProxyRegion(proxyRegion)
+		if err != nil {
+			return chromiumLaunchPersona{}, err
+		}
+	} else {
+		proxyRegion = strings.TrimSpace(proxyRegion)
 	}
 	fp := p.Fingerprint
-	userAgent, ok := fingerprintString(fp, "navigator.userAgent")
-	if !ok {
-		userAgent = defaultChromiumUserAgent(platform)
-	}
+	userAgent := effectiveChromiumUserAgent(fp, platform)
+	acceptLanguage := effectiveChromiumAcceptLanguage(fp, locale)
 	fullVersion := chromiumVersionFromUserAgent(userAgent)
-	platformOS, platformCH, arch, bitness := nativePersonaPlatform(platform)
-	acceptLanguage, ok := fingerprintAcceptLanguage(fp)
-	if !ok {
-		acceptLanguage = locale
-	}
-	vendor, ok := fingerprintString(fp, "webGl:vendor")
-	if !ok {
+	vendor, hasWebGLVendor := fingerprintString(fp, "webGl:vendor")
+	if !hasWebGLVendor {
 		vendor = "Intel Inc."
 	}
-	renderer, ok := fingerprintString(fp, "webGl:renderer")
-	if !ok {
+	renderer, hasWebGLRenderer := fingerprintString(fp, "webGl:renderer")
+	if !hasWebGLRenderer {
 		renderer = "Intel Iris OpenGL Engine"
 	}
-	storageQuota := int64(8192)
+	storageQuota := int64(0)
+	if runtimeID == bfruntime.BrowseForgeChromium {
+		storageQuota = 8192
+	}
 	if quota := cloakStorageQuotaMB(policy); quota > 0 {
 		storageQuota = quota
+	} else if quota < 0 {
+		return chromiumLaunchPersona{}, fmt.Errorf("%s storage_quota_mb must be >= 0", runtimeID)
 	}
-	persona := browseForgeNativePersonaConfig{
-		SchemaVersion: "1.0",
-		RuntimeID:     "browseforge-chromium",
-		Seed:          browseForgePersonaSeed(p),
-		Browser: browseForgeNativeBrowserIdentity{
-			Family:      "chromium",
-			Major:       chromiumMajorVersion(fullVersion),
-			FullVersion: fullVersion,
-			Brands:      []string{"Chromium", "Google Chrome"},
-			UserAgent:   userAgent,
+	screenWidth := fingerprintIntDefault(fp, "screen.width", 1920)
+	screenHeight := fingerprintIntDefault(fp, "screen.height", 1080)
+	availWidth := clampScreenAvail(fingerprintIntDefault(fp, "screen.availWidth", 1920), screenWidth)
+	availHeight := clampScreenAvail(fingerprintIntDefault(fp, "screen.availHeight", 1040), screenHeight)
+	persona := chromiumLaunchPersona{
+		Native: browseForgeNativePersonaConfig{
+			SchemaVersion: "1.0",
+			RuntimeID:     string(runtimeID),
+			Seed:          browseForgePersonaSeed(p),
+			Browser: browseForgeNativeBrowserIdentity{
+				Family:      "chromium",
+				Major:       chromiumMajorVersion(fullVersion),
+				FullVersion: fullVersion,
+				Brands:      []string{"Chromium", "Google Chrome"},
+				UserAgent:   userAgent,
+			},
+			Platform: nativePlatform,
+			Locale: browseForgeNativeLocale{
+				Timezone:       timezone,
+				Locale:         locale,
+				AcceptLanguage: acceptLanguage,
+			},
+			Hardware: browseForgeNativeHardware{
+				HardwareConcurrency: fingerprintIntDefault(fp, "navigator.hardwareConcurrency", 8),
+				DeviceMemoryGB:      fingerprintIntDefault(fp, "navigator.deviceMemory", 8),
+			},
+			Screen: browseForgeNativeScreen{
+				Width:       screenWidth,
+				Height:      screenHeight,
+				AvailWidth:  availWidth,
+				AvailHeight: availHeight,
+				DPR:         fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1),
+				ColorDepth:  fingerprintIntDefault(fp, "screen.colorDepth", 24),
+			},
+			GPU: browseForgeNativeGPU{
+				Vendor:       vendor,
+				Renderer:     renderer,
+				ANGLEBackend: "",
+				WebGLParams:  map[string]string{},
+			},
+			WebRTC: browseForgeNativeWebRTC{
+				Mode:              "disable_non_proxied_udp",
+				ProxyRegion:       proxyRegion,
+				DirectIPRedaction: true,
+			},
+			Storage: browseForgeNativeStorage{
+				QuotaMB:    int(storageQuota),
+				Persistent: true,
+			},
 		},
-		Platform: browseForgeNativePlatform{
-			OS:         platformOS,
-			Arch:       arch,
-			Platform:   platform,
-			PlatformCH: platformCH,
-			Mobile:     false,
-			Bitness:    bitness,
-			Model:      "",
-		},
-		Locale: browseForgeNativeLocale{
-			Timezone:       timezone,
-			Locale:         locale,
-			AcceptLanguage: acceptLanguage,
-		},
-		Hardware: browseForgeNativeHardware{
-			HardwareConcurrency: fingerprintIntDefault(fp, "navigator.hardwareConcurrency", 8),
-			DeviceMemoryGB:      fingerprintIntDefault(fp, "navigator.deviceMemory", 8),
-		},
-		Screen: browseForgeNativeScreen{
-			Width:       fingerprintIntDefault(fp, "screen.width", 1920),
-			Height:      fingerprintIntDefault(fp, "screen.height", 1080),
-			AvailWidth:  fingerprintIntDefault(fp, "screen.availWidth", 1920),
-			AvailHeight: fingerprintIntDefault(fp, "screen.availHeight", 1040),
-			DPR:         fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1),
-			ColorDepth:  fingerprintIntDefault(fp, "screen.colorDepth", 24),
-		},
-		GPU: browseForgeNativeGPU{
-			Vendor:       vendor,
-			Renderer:     renderer,
-			ANGLEBackend: "",
-			WebGLParams:  map[string]string{},
-		},
-		WebRTC: browseForgeNativeWebRTC{
-			Mode:              "disable_non_proxied_udp",
-			ProxyRegion:       proxyRegion,
-			DirectIPRedaction: true,
-		},
-		Storage: browseForgeNativeStorage{
-			QuotaMB:    int(storageQuota),
-			Persistent: true,
-		},
+		NavigatorPlatform: platform,
+		HasWebGLVendor:    hasWebGLVendor,
+		HasWebGLRenderer:  hasWebGLRenderer,
+		PluginsPDF:        cloakPluginsPDF(policy),
 	}
-	snapshot, err := resolveBrowseForgeNativePersona(persona)
+	if v, ok := fingerprintInt(fp, "canvas:seed"); ok {
+		persona.CanvasNoise = v
+		persona.HasCanvasNoise = true
+	}
+	if v, ok := fingerprintInt(fp, "audio:seed"); ok {
+		persona.AudioNoise = v
+		persona.HasAudioNoise = true
+	}
+	if v, ok := fingerprintStringList(fp, "fonts", "|"); ok {
+		persona.FontsList = v
+		persona.HasFontsList = true
+	}
+	return persona, nil
+}
+
+func appendChromiumLaunchPersonaArgs(args []string, persona chromiumLaunchPersona) []string {
+	native := persona.Native
+	args = append(args,
+		"--fingerprint-timezone="+native.Locale.Timezone,
+		"--fingerprint-locale="+native.Locale.Locale,
+		"--fingerprint-platform="+persona.NavigatorPlatform,
+	)
+	if native.Storage.QuotaMB > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-storage-quota=%d", native.Storage.QuotaMB))
+	}
+	if persona.PluginsPDF != "" {
+		args = append(args, "--fingerprint-plugins-pdf="+persona.PluginsPDF)
+	}
+	if native.Browser.UserAgent != "" {
+		args = append(args, "--user-agent="+native.Browser.UserAgent, "--fingerprint-user-agent="+native.Browser.UserAgent)
+		if native.Browser.FullVersion != "" {
+			args = append(args, "--fingerprint-ua-full-version="+native.Browser.FullVersion)
+		}
+	}
+	args = append(args,
+		"--fingerprint-ua-platform="+native.Platform.PlatformCH,
+		"--fingerprint-ua-architecture="+native.Platform.Arch,
+		"--fingerprint-ua-bitness="+native.Platform.Bitness,
+	)
+	if acceptLanguage := chromiumAcceptLanguageSwitchValue(native.Locale.AcceptLanguage); acceptLanguage != "" {
+		args = append(args, "--fingerprint-accept-language="+acceptLanguage)
+	}
+	if native.Hardware.HardwareConcurrency > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-hardware-concurrency=%d", native.Hardware.HardwareConcurrency))
+	}
+	if native.Hardware.DeviceMemoryGB > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-device-memory=%d", native.Hardware.DeviceMemoryGB))
+	}
+	if native.Screen.Width > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-width=%d", native.Screen.Width))
+	}
+	if native.Screen.Height > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-height=%d", native.Screen.Height))
+	}
+	if native.Screen.AvailWidth > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-avail-width=%d", native.Screen.AvailWidth))
+	}
+	if native.Screen.AvailHeight > 0 {
+		args = append(args, fmt.Sprintf("--fingerprint-screen-avail-height=%d", native.Screen.AvailHeight))
+	}
+	if persona.HasCanvasNoise {
+		args = append(args, fmt.Sprintf("--fingerprint-canvas-noise=%d", persona.CanvasNoise))
+	}
+	if persona.HasAudioNoise {
+		args = append(args, fmt.Sprintf("--fingerprint-audio-noise=%d", persona.AudioNoise))
+	}
+	if persona.HasFontsList {
+		args = append(args, "--fingerprint-fonts-list="+persona.FontsList)
+	}
+	if persona.HasWebGLVendor {
+		args = append(args, "--fingerprint-webgl-vendor="+native.GPU.Vendor)
+	}
+	if persona.HasWebGLRenderer {
+		args = append(args, "--fingerprint-webgl-renderer="+native.GPU.Renderer)
+	}
+	return args
+}
+
+func writeBrowseForgeNativeConfig(userDataDir string, persona chromiumLaunchPersona) (string, error) {
+	snapshot, err := resolveBrowseForgeNativePersona(persona.Native)
 	if err != nil {
 		return "", err
 	}
@@ -508,6 +630,9 @@ func writeBrowseForgeNativeConfig(p *profile.Profile, userDataDir, timezone, loc
 }
 
 func resolveBrowseForgeNativePersona(cfg browseForgeNativePersonaConfig) (browseForgeNativePersonaSnapshot, error) {
+	if err := validateBrowseForgeNativePersonaPlatform(cfg.Platform); err != nil {
+		return browseForgeNativePersonaSnapshot{}, err
+	}
 	canonical, err := json.Marshal(cfg)
 	if err != nil {
 		return browseForgeNativePersonaSnapshot{}, fmt.Errorf("encode BrowseForge native canonical config: %w", err)
@@ -556,13 +681,16 @@ func browseForgePersonaSeed(p *profile.Profile) uint64 {
 }
 
 func defaultChromiumUserAgent(platform string) string {
-	if platform == "MacIntel" {
+	switch platform {
+	case "MacIntel":
 		return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
-	}
-	if platform == "Linux x86_64" {
+	case "Linux aarch64":
+		return "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+	case "Linux x86_64":
 		return "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+	default:
+		return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
 	}
-	return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
 }
 
 func chromiumVersionFromUserAgent(userAgent string) string {
@@ -593,15 +721,74 @@ func chromiumMajorVersion(fullVersion string) int {
 	return parsed
 }
 
-func nativePersonaPlatform(platform string) (osName, platformCH, arch, bitness string) {
+func nativePersonaPlatform(platform, goarch string) (browseForgeNativePlatform, error) {
 	switch platform {
+	case "Win32":
+		return browseForgeNativePlatform{OS: "windows", Arch: "x86", Platform: "Win32", PlatformCH: "Windows", Mobile: false, Bitness: "64", Model: ""}, nil
 	case "MacIntel":
-		return "macos", "macOS", "x86", "64"
+		arch := "x86"
+		if goarch == "arm64" {
+			arch = "arm"
+		}
+		return browseForgeNativePlatform{OS: "macos", Arch: arch, Platform: "MacIntel", PlatformCH: "macOS", Mobile: false, Bitness: "64", Model: ""}, nil
 	case "Linux x86_64":
-		return "linux", "Linux", "x86", "64"
+		return browseForgeNativePlatform{OS: "linux", Arch: "x86", Platform: "Linux x86_64", PlatformCH: "Linux", Mobile: false, Bitness: "64", Model: ""}, nil
+	case "Linux aarch64":
+		return browseForgeNativePlatform{OS: "linux", Arch: "arm", Platform: "Linux aarch64", PlatformCH: "Linux", Mobile: false, Bitness: "64", Model: ""}, nil
 	default:
-		return "windows", "Windows", "x86", "64"
+		return browseForgeNativePlatform{}, fmt.Errorf("chromium native persona platform %q is not supported", platform)
 	}
+}
+
+func validateBrowseForgeNativePersonaPlatform(platform browseForgeNativePlatform) error {
+	if platform.Bitness != "64" {
+		return fmt.Errorf("chromium native persona platform mismatch: platform=%s os=%s arch=%s bitness=%s platform_ch=%s", platform.Platform, platform.OS, platform.Arch, platform.Bitness, platform.PlatformCH)
+	}
+	switch platform.OS {
+	case "windows":
+		if platform.Platform == "Win32" && platform.Arch == "x86" && platform.PlatformCH == "Windows" && !platform.Mobile && platform.Model == "" {
+			return nil
+		}
+	case "macos":
+		if platform.Platform == "MacIntel" && (platform.Arch == "x86" || platform.Arch == "arm") && platform.PlatformCH == "macOS" && !platform.Mobile && platform.Model == "" {
+			return nil
+		}
+	case "linux":
+		if ((platform.Platform == "Linux x86_64" && platform.Arch == "x86") || (platform.Platform == "Linux aarch64" && platform.Arch == "arm")) && platform.PlatformCH == "Linux" && !platform.Mobile && platform.Model == "" {
+			return nil
+		}
+	}
+	return fmt.Errorf("chromium native persona platform mismatch: platform=%s os=%s arch=%s bitness=%s platform_ch=%s", platform.Platform, platform.OS, platform.Arch, platform.Bitness, platform.PlatformCH)
+}
+
+func clampScreenAvail(avail, size int) int {
+	if size <= 0 {
+		return avail
+	}
+	if avail <= 0 || avail > size {
+		return size
+	}
+	return avail
+}
+
+func sanitizeBrowseForgeProxyRegion(region string) (string, error) {
+	region = strings.ToLower(strings.TrimSpace(region))
+	if region == "" {
+		return "", nil
+	}
+	if len(region) > 64 {
+		return "", fmt.Errorf("browseforge-chromium proxy_region must be a redacted region label of at most 64 characters")
+	}
+	for _, r := range region {
+		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') || r == '-' || r == '_' {
+			continue
+		}
+		return "", fmt.Errorf("browseforge-chromium proxy_region must contain only letters, digits, hyphen, or underscore")
+	}
+	if region[0] == '-' || region[0] == '_' || region[len(region)-1] == '-' || region[len(region)-1] == '_' {
+		return "", fmt.Errorf("browseforge-chromium proxy_region must start and end with a letter or digit")
+	}
+	return region, nil
 }
 
 func fingerprintIntDefault(fp map[string]any, key string, fallback int) int {
@@ -682,26 +869,115 @@ func resolveCloakFingerprintPlatform(policy *config.CloakBrowserConfig, goos str
 	}
 }
 
-func appendProfileFingerprintArgs(args []string, fp map[string]any) []string {
-	if len(fp) == 0 {
-		return args
+func resolveChromiumFingerprintPlatform(policy *config.CloakBrowserConfig, goos, goarch string) (string, error) {
+	if policy == nil || policy.FingerprintPlatform == "" || policy.FingerprintPlatform == "auto" {
+		switch goos {
+		case "darwin":
+			return "MacIntel", nil
+		case "linux":
+			if goarch == "arm64" {
+				return "Linux aarch64", nil
+			}
+			return "Linux x86_64", nil
+		default:
+			return "Win32", nil
+		}
 	}
-	if v, ok := fingerprintString(fp, "navigator.userAgent"); ok {
-		args = append(args, "--user-agent="+v, "--fingerprint-user-agent="+v)
-		if fullVersion := chromiumVersionFromUserAgent(v); fullVersion != "" {
+	switch policy.FingerprintPlatform {
+	case "windows":
+		return "Win32", nil
+	case "macos":
+		return "MacIntel", nil
+	case "linux":
+		if goarch == "arm64" {
+			return "Linux aarch64", nil
+		}
+		return "Linux x86_64", nil
+	default:
+		return "", fmt.Errorf("chromium fingerprint_platform must be auto, macos, windows, or linux")
+	}
+}
+
+func effectiveChromiumUserAgent(fp map[string]any, platform string) string {
+	if ua, ok := fingerprintString(fp, "navigator.userAgent"); ok && userAgentMatchesPlatform(ua, platform) {
+		return ua
+	}
+	return defaultChromiumUserAgent(platform)
+}
+
+func userAgentMatchesPlatform(userAgent, platform string) bool {
+	switch platform {
+	case "MacIntel":
+		return strings.Contains(userAgent, "Macintosh")
+	case "Linux aarch64":
+		return strings.Contains(userAgent, "Linux aarch64")
+	case "Linux x86_64":
+		return strings.Contains(userAgent, "Linux x86_64")
+	default:
+		return strings.Contains(userAgent, "Windows NT")
+	}
+}
+
+func effectiveChromiumAcceptLanguage(fp map[string]any, locale string) string {
+	profileAcceptLanguage, ok := fingerprintAcceptLanguage(fp)
+	if ok && acceptLanguageMatchesLocale(profileAcceptLanguage, locale) {
+		return profileAcceptLanguage
+	}
+	return acceptLanguageForLocale(locale)
+}
+
+func acceptLanguageMatchesLocale(acceptLanguage, locale string) bool {
+	locale = strings.TrimSpace(locale)
+	if locale == "" {
+		return strings.TrimSpace(acceptLanguage) != ""
+	}
+	first := strings.TrimSpace(strings.Split(acceptLanguage, ",")[0])
+	return strings.EqualFold(first, locale)
+}
+
+func acceptLanguageForLocale(locale string) string {
+	locale = strings.TrimSpace(locale)
+	if locale == "" {
+		return "en-US,en;q=0.9"
+	}
+	if dash := strings.IndexByte(locale, '-'); dash > 0 {
+		primary := locale[:dash]
+		return locale + "," + primary + ";q=0.9"
+	}
+	return locale
+}
+
+func chromiumAcceptLanguageSwitchValue(acceptLanguage string) string {
+	parts := strings.Split(acceptLanguage, ",")
+	cleaned := make([]string, 0, len(parts))
+	for _, part := range parts {
+		lang := strings.TrimSpace(strings.SplitN(part, ";", 2)[0])
+		if lang != "" {
+			cleaned = append(cleaned, lang)
+		}
+	}
+	return strings.Join(cleaned, ",")
+}
+
+func appendProfileFingerprintArgs(args []string, fp map[string]any, userAgent, platform, acceptLanguage string) []string {
+	if userAgent != "" {
+		args = append(args, "--user-agent="+userAgent, "--fingerprint-user-agent="+userAgent)
+		if fullVersion := chromiumVersionFromUserAgent(userAgent); fullVersion != "" {
 			args = append(args, "--fingerprint-ua-full-version="+fullVersion)
 		}
 	}
-	if platform, ok := fingerprintString(fp, "navigator.platform"); ok {
-		_, platformCH, arch, bitness := nativePersonaPlatform(platform)
-		args = append(args,
-			"--fingerprint-ua-platform="+platformCH,
-			"--fingerprint-ua-architecture="+arch,
-			"--fingerprint-ua-bitness="+bitness,
-		)
+	if platform != "" {
+		nativePlatform, err := nativePersonaPlatform(platform, runtime.GOARCH)
+		if err == nil {
+			args = append(args,
+				"--fingerprint-ua-platform="+nativePlatform.PlatformCH,
+				"--fingerprint-ua-architecture="+nativePlatform.Arch,
+				"--fingerprint-ua-bitness="+nativePlatform.Bitness,
+			)
+		}
 	}
-	if v, ok := fingerprintAcceptLanguage(fp); ok {
-		args = append(args, "--fingerprint-accept-language="+v)
+	if acceptLanguage := chromiumAcceptLanguageSwitchValue(acceptLanguage); acceptLanguage != "" {
+		args = append(args, "--fingerprint-accept-language="+acceptLanguage)
 	}
 	if v, ok := fingerprintInt(fp, "navigator.hardwareConcurrency"); ok {
 		args = append(args, fmt.Sprintf("--fingerprint-hardware-concurrency=%d", v))

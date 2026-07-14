@@ -38,6 +38,13 @@ The Compose file builds the `v2.1.2` release image by default. To test another v
 BROWSEFORGE_VERSION=v2.1.2 docker compose up -d --build
 ```
 
+When validating an unreleased BrowseForge Chromium runtime, point the image build at a staged runtime asset root. The root must contain `checksums.txt`, `runtime.manifest.json`, and `<runtime-version>/browseforge-runtime-chromium-<runtime-version>-linux-{x64,arm64}.zip`:
+
+```bash
+BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=https://host/runtime/releases \
+BROWSEFORGE_VERSION=v2.1.2 docker compose up -d --build
+```
+
 ## First Startup
 
 Current release images install Camoufox and BrowseForge Chromium during the Docker build. On startup, BrowseForge seeds the host-mounted `/app/browsers` cache from the image when `/app/browsers/{engine}/.version` is missing or differs from the packaged version. CloakBrowser remains available for manual/custom installs but is no longer part of the default GHCR preinstall set.

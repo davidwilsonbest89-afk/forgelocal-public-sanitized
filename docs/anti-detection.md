@@ -19,12 +19,12 @@ BrowseForge 整合多套反偵測瀏覽器 runtime，各有不同的指紋偽裝
 | `runtime_id` | `browseforge-chromium` |
 | `family` | `chromium` |
 | BrowseForge 最低版本 | `v2.0.0` |
-| Runtime 狀態 | `v0.1.1-alpha.0` |
+| Runtime 狀態 | `v0.1.2-alpha.0` |
 | 發佈狀態 | alpha validation artifact；尚未 release-grade 簽章 |
 
 ### 使用端整合方式
 
-1. 下載或放置對應平台的 `browseforge-runtime-chromium-v0.1.1-alpha.0-<platform>.zip`。
+1. 下載或放置對應平台的 `browseforge-runtime-chromium-v0.1.2-alpha.0-<platform>.zip`。
 2. 解壓到 BrowseForge runtime 目錄，例如 `browsers/browseforge-chromium/`。
 3. 在 `config.json` 啟用 runtime：
 
@@ -87,17 +87,19 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
 | Switch | 來源 | 說明 |
 |--------|------|------|
 | `--fingerprint=SEED` | `profile.FingerprintSeed` | 穩定身份主種子 |
-| `--fingerprint-user-agent` / UA-CH switches | 指紋池 + Chromium version | UA、full version、platform、architecture、bitness 一致性 |
+| `--fingerprint-user-agent` / UA-CH switches | resolved runtime platform + compatible 指紋池值 | UA、full version、platform、architecture、bitness 一致性；native Linux arm64 會輸出 Linux/arm/64，而不是 x86 pool 值 |
 | `--fingerprint-timezone` | proxy/GeoIP profile | JS timezone 與出口地區一致性 |
-| `--fingerprint-locale` / `--fingerprint-accept-language` | proxy/GeoIP profile | navigator language 與 HTTP header 一致性 |
-| `--fingerprint-hardware-concurrency` / `--fingerprint-device-memory` | 指紋池 | CPU / memory plausible range |
-| `--fingerprint-screen-*` | 指紋池 | screen / avail / viewport coherence |
+| `--fingerprint-locale` / `--fingerprint-accept-language` | proxy/GeoIP profile + compatible 指紋池值 | navigator language 與 HTTP header 一致性；profile 語言和 GeoIP locale 不一致時以 GeoIP locale 為準 |
+| `--fingerprint-hardware-concurrency` / `--fingerprint-device-memory` | 指紋池 | CPU / memory plausible range；同一組值也寫入 native persona JSON |
+| `--fingerprint-screen-*` | 指紋池 | screen / avail / viewport coherence；avail 大於 screen 時會修正為不超過 screen |
 | `--fingerprint-canvas-noise` | 指紋池 / seed | Canvas 穩定 noise |
 | `--fingerprint-audio-noise` | 指紋池 / seed | AudioContext 穩定 noise |
 | `--fingerprint-fonts-list` | 指紋池 / font pack | 字型清單與目標 OS 一致性 |
-| `--fingerprint-webgl-vendor` / `--fingerprint-webgl-renderer` | 指紋池 / GPU profile | WebGL vendor/renderer |
-| `--browseforge-stealth-config` | BrowseForge native persona JSON | persona hash、origin salt、proxy/WebRTC metadata |
+| `--fingerprint-webgl-vendor` / `--fingerprint-webgl-renderer` | 指紋池 / GPU profile | WebGL vendor/renderer；同一組值也寫入 native persona JSON |
+| `--browseforge-stealth-config` | BrowseForge native persona JSON | persona hash、origin salt、browser/platform/locale/hardware/screen/GPU/WebRTC/storage metadata |
 | `--browseforge-stealth-mode=enabled` | `runtimes.browseforge-chromium.settings.native_mode` | 啟用 native stealth substrate |
+
+BrowseForge Chromium 只接受 coherent native persona platform 組合：Windows=`Win32`/x86/64、macOS=`MacIntel`/x86/64、Linux x64=`Linux x86_64`/x86/64、Linux arm64=`Linux arm64`/arm/64。若指紋池值和 resolved runtime platform/locale 衝突，BrowseForge 會捨棄不相容值並由 canonical persona 重新產生 switch 與 native JSON。
 
 ### 啟用前驗證
 

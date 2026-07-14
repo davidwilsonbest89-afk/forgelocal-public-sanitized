@@ -10,7 +10,14 @@ All notable changes should be documented here. This project follows semantic ver
 - Preinstalled the Playwright control driver in GHCR Docker images so container startup does not depend on runtime downloads from npm or nodejs.org.
 - Bumped Docker, Linux server, release, and platform documentation references to the `v2.1.2` release tag.
 - Decoupled BrowseForge release support from browser runtime release support so unsupported runtime/platform pairs are skipped and disabled at runtime instead of blocking BF startup.
-- Kept Camoufox runtime selection on `v135.0.1-beta.24` because it publishes complete browser binaries for the supported native platforms, and updated BrowseForge Chromium runtime selection to `v0.1.1-alpha.0`.
+- Kept Camoufox runtime selection on `v135.0.1-beta.24` because it publishes complete browser binaries for the supported native platforms, and updated BrowseForge Chromium runtime selection to `v0.1.2-alpha.0`.
+- Added a shared BrowseForge Chromium release-asset checker plus release-preflight, workflow, and Docker build override support for staged runtime asset roots, and fail release gates before Docker build when the selected runtime version lacks `linux-x64` or `linux-arm64` release assets.
+
+### Fixed
+
+- Kept BrowseForge Chromium launch identity coherent on native Linux ARM64 by deriving UA, UA-CH architecture, `navigator.platform`, and `Accept-Language` from the resolved runtime platform/locale instead of blindly reusing incompatible pool values.
+- Populated BrowseForge Chromium native persona JSON from the same canonical launch persona used for command-line fingerprint switches, including browser, platform, locale, hardware, screen, GPU, WebRTC, and storage fields.
+- Rejected invalid BrowseForge Chromium proxy region labels before launch and clamped screen available dimensions so emitted switches and native JSON stay coherent.
 
 ## v2.1.1 - 2026-07-13
 

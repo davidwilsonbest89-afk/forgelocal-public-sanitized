@@ -355,6 +355,7 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 				BinaryPath: filepath.Join(t.TempDir(), "browseforge-chromium"),
 				Enabled:    &enabled,
 				Settings: &config.CloakBrowserConfig{
+					FingerprintPlatform:  "windows",
 					FontsDir:             fontsDir,
 					StorageQuotaMB:       2048,
 					TargetPlatformPolicy: "allow",
@@ -484,6 +485,16 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	if got := nativeWebRTC["proxy_region"]; got != "us-ny" {
 		t.Fatalf("native webrtc proxy_region = %#v, want us-ny", got)
 	}
+	nativeStorage, ok := nativeConfig["storage"].(map[string]any)
+	if !ok {
+		t.Fatalf("native storage missing: %#v", nativeConfig)
+	}
+	if got := nativeStorage["quota_mb"]; got != float64(2048) {
+		t.Fatalf("native storage quota_mb = %#v, want 2048", got)
+	}
+	if got := nativeStorage["persistent"]; got != true {
+		t.Fatalf("native storage persistent = %#v, want true", got)
+	}
 	if browserType.options.Proxy == nil {
 		t.Fatalf("launch proxy was not configured")
 	}
@@ -597,6 +608,329 @@ func TestResolveCloakFingerprintPlatform(t *testing.T) {
 				t.Fatalf("platform = %q, want %q", got, tc.want)
 			}
 		})
+	}
+}
+
+func TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch(t *testing.T) {
+	cases := []struct {
+		name   string
+		policy *config.CloakBrowserConfig
+		goos   string
+		goarch string
+		want   string
+	}{
+		{name: "auto linux amd64", policy: &config.CloakBrowserConfig{FingerprintPlatform: "auto"}, goos: "linux", goarch: "amd64", want: "Linux x86_64"},
+		{name: "auto linux arm64", policy: &config.CloakBrowserConfig{FingerprintPlatform: "auto"}, goos: "linux", goarch: "arm64", want: "Linux aarch64"},
+		{name: "explicit linux arm64", policy: &config.CloakBrowserConfig{FingerprintPlatform: "linux"}, goos: "linux", goarch: "arm64", want: "Linux aarch64"},
+		{name: "explicit windows on arm64", policy: &config.CloakBrowserConfig{FingerprintPlatform: "windows"}, goos: "linux", goarch: "arm64", want: "Win32"},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got, err := resolveChromiumFingerprintPlatform(tc.policy, tc.goos, tc.goarch)
+			if err != nil {
+				t.Fatalf("resolve platform: %v", err)
+			}
+			if got != tc.want {
+				t.Fatalf("platform = %q, want %q", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestChromiumLaunchPersonaPlatformMappings(t *testing.T) {
+	cases := []struct {
+		name     string
+		platform string
+		goarch   string
+		want     browseForgeNativePlatform
+	}{
+		{
+			name:     "windows",
+			platform: "Win32",
+			want:     browseForgeNativePlatform{OS: "windows", Arch: "x86", Platform: "Win32", PlatformCH: "Windows", Bitness: "64"},
+		},
+		{
+			name:     "macos x64",
+			platform: "MacIntel",
+			goarch:   "amd64",
+			want:     browseForgeNativePlatform{OS: "macos", Arch: "x86", Platform: "MacIntel", PlatformCH: "macOS", Bitness: "64"},
+		},
+		{
+			name:     "macos arm64",
+			platform: "MacIntel",
+			goarch:   "arm64",
+			want:     browseForgeNativePlatform{OS: "macos", Arch: "arm", Platform: "MacIntel", PlatformCH: "macOS", Bitness: "64"},
+		},
+		{
+			name:     "linux x64",
+			platform: "Linux x86_64",
+			want:     browseForgeNativePlatform{OS: "linux", Arch: "x86", Platform: "Linux x86_64", PlatformCH: "Linux", Bitness: "64"},
+		},
+		{
+			name:     "linux arm64",
+			platform: "Linux aarch64",
+			want:     browseForgeNativePlatform{OS: "linux", Arch: "arm", Platform: "Linux aarch64", PlatformCH: "Linux", Bitness: "64"},
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			persona, err := buildChromiumLaunchPersona(
+				&profile.Profile{ID: "platform-" + tc.name, RuntimeID: "browseforge-chromium"},
+				bfruntime.BrowseForgeChromium,
+				tc.platform,
+				"UTC",
+				"en-US",
+				"",
+				tc.goarch,
+				nil,
+			)
+			if err != nil {
+				t.Fatalf("build persona: %v", err)
+			}
+			if persona.Native.Platform != tc.want {
+				t.Fatalf("platform = %#v, want %#v", persona.Native.Platform, tc.want)
+			}
+			args := appendChromiumLaunchPersonaArgs(nil, persona)
+			for _, wantArg := range []string{
+				"--fingerprint-platform=" + tc.want.Platform,
+				"--fingerprint-ua-platform=" + tc.want.PlatformCH,
+				"--fingerprint-ua-architecture=" + tc.want.Arch,
+				"--fingerprint-ua-bitness=" + tc.want.Bitness,
+			} {
+				if !containsArg(args, wantArg) {
+					t.Fatalf("args missing %q: %#v", wantArg, args)
+				}
+			}
+		})
+	}
+}
+
+func TestChromiumLaunchPersonaRepairsIncompatiblePoolValues(t *testing.T) {
+	cases := []struct {
+		name      string
+		userAgent string
+	}{
+		{
+			name:      "windows pool on linux arm64",
+			userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150.0.0.0 Safari/537.36",
+		},
+		{
+			name:      "linux x86 pool on linux arm64",
+			userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/150.0.0.0 Safari/537.36",
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			persona, err := buildChromiumLaunchPersona(
+				&profile.Profile{
+					ID:        "repair-" + tc.name,
+					RuntimeID: "browseforge-chromium",
+					Fingerprint: map[string]any{
+						"navigator.userAgent": tc.userAgent,
+						"navigator.platform":  "Win32",
+						"navigator.languages": []any{"en-US", "en"},
+					},
+				},
+				bfruntime.BrowseForgeChromium,
+				"Linux aarch64",
+				"Asia/Taipei",
+				"zh-TW",
+				"",
+				"arm64",
+				nil,
+			)
+			if err != nil {
+				t.Fatalf("build persona: %v", err)
+			}
+			if !strings.Contains(persona.Native.Browser.UserAgent, "Linux aarch64") {
+				t.Fatalf("user agent = %q, want Linux arm64 repair", persona.Native.Browser.UserAgent)
+			}
+			if persona.Native.Platform.Platform != "Linux aarch64" || persona.Native.Platform.Arch != "arm" {
+				t.Fatalf("platform = %#v, want Linux aarch64/arm", persona.Native.Platform)
+			}
+			if got := persona.Native.Locale.AcceptLanguage; got != "zh-TW,zh;q=0.9" {
+				t.Fatalf("accept language = %q, want zh-TW repair", got)
+			}
+			args := appendChromiumLaunchPersonaArgs(nil, persona)
+			for _, forbidden := range []string{"--fingerprint-accept-language=en-US,en", "--fingerprint-platform=Win32"} {
+				if containsArg(args, forbidden) {
+					t.Fatalf("args preserved incompatible value %q: %#v", forbidden, args)
+				}
+			}
+			if !containsArg(args, "--fingerprint-accept-language=zh-TW,zh") {
+				t.Fatalf("args missing q-stripped Chromium accept-language switch: %#v", args)
+			}
+		})
+	}
+}
+
+func TestChromiumLaunchPersonaPreservesCompatiblePoolValues(t *testing.T) {
+	const linuxArmUA = "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+	persona, err := buildChromiumLaunchPersona(
+		&profile.Profile{
+			ID:        "compatible-pool",
+			RuntimeID: "browseforge-chromium",
+			Fingerprint: map[string]any{
+				"navigator.userAgent":           linuxArmUA,
+				"navigator.platform":            "Linux aarch64",
+				"navigator.languages":           []any{"zh-TW", "zh"},
+				"navigator.hardwareConcurrency": float64(12),
+				"navigator.deviceMemory":        float64(16),
+				"screen.width":                  float64(1440),
+				"screen.height":                 float64(900),
+				"screen.availWidth":             float64(1440),
+				"screen.availHeight":            float64(860),
+				"canvas:seed":                   float64(111),
+				"audio:seed":                    float64(222),
+				"fonts":                         []any{"Noto Sans", "Arial"},
+				"webGl:vendor":                  "Google Inc. (AMD)",
+				"webGl:renderer":                "ANGLE (AMD, Radeon, Vulkan)",
+			},
+		},
+		bfruntime.BrowseForgeChromium,
+		"Linux aarch64",
+		"Asia/Taipei",
+		"zh-TW",
+		"tw-taipei",
+		"arm64",
+		&config.CloakBrowserConfig{StorageQuotaMB: 4096},
+	)
+	if err != nil {
+		t.Fatalf("build persona: %v", err)
+	}
+	if got := persona.Native.Browser.UserAgent; got != linuxArmUA {
+		t.Fatalf("user agent = %q, want profile UA", got)
+	}
+	if got := persona.Native.Locale.AcceptLanguage; got != "zh-TW,zh" {
+		t.Fatalf("accept language = %q, want profile language chain", got)
+	}
+	if got := persona.Native.Storage.QuotaMB; got != 4096 {
+		t.Fatalf("storage quota = %d, want 4096", got)
+	}
+	args := appendChromiumLaunchPersonaArgs(nil, persona)
+	for _, want := range []string{
+		"--fingerprint-hardware-concurrency=12",
+		"--fingerprint-device-memory=16",
+		"--fingerprint-screen-width=1440",
+		"--fingerprint-screen-height=900",
+		"--fingerprint-screen-avail-width=1440",
+		"--fingerprint-screen-avail-height=860",
+		"--fingerprint-canvas-noise=111",
+		"--fingerprint-audio-noise=222",
+		"--fingerprint-fonts-list=Noto Sans|Arial",
+		"--fingerprint-webgl-vendor=Google Inc. (AMD)",
+		"--fingerprint-webgl-renderer=ANGLE (AMD, Radeon, Vulkan)",
+		"--fingerprint-storage-quota=4096",
+	} {
+		if !containsArg(args, want) {
+			t.Fatalf("args missing %q: %#v", want, args)
+		}
+	}
+}
+
+func TestChromiumLaunchPersonaClampsScreenAvailToScreenSize(t *testing.T) {
+	persona, err := buildChromiumLaunchPersona(
+		&profile.Profile{
+			ID:        "screen-clamp",
+			RuntimeID: "browseforge-chromium",
+			Fingerprint: map[string]any{
+				"screen.width":       float64(1366),
+				"screen.height":      float64(768),
+				"screen.availWidth":  float64(1920),
+				"screen.availHeight": float64(900),
+			},
+		},
+		bfruntime.BrowseForgeChromium,
+		"Linux x86_64",
+		"UTC",
+		"en-US",
+		"",
+		"amd64",
+		nil,
+	)
+	if err != nil {
+		t.Fatalf("build persona: %v", err)
+	}
+	if got := persona.Native.Screen.AvailWidth; got != 1366 {
+		t.Fatalf("avail width = %d, want clamped 1366", got)
+	}
+	if got := persona.Native.Screen.AvailHeight; got != 768 {
+		t.Fatalf("avail height = %d, want clamped 768", got)
+	}
+	args := appendChromiumLaunchPersonaArgs(nil, persona)
+	for _, want := range []string{"--fingerprint-screen-avail-width=1366", "--fingerprint-screen-avail-height=768"} {
+		if !containsArg(args, want) {
+			t.Fatalf("args missing clamped value %q: %#v", want, args)
+		}
+	}
+}
+
+func TestLaunchChromiumRejectsInvalidBrowseForgeProxyRegionBeforeLaunch(t *testing.T) {
+	enabled := true
+	browserType := &capturingBrowserType{t: t, launchErr: errors.New("should not launch")}
+	cfg := &config.Config{
+		Runtimes: map[string]config.RuntimeConfig{
+			"browseforge-chromium": {
+				BinaryPath: filepath.Join(t.TempDir(), "browseforge-chromium"),
+				Enabled:    &enabled,
+				Settings: &config.CloakBrowserConfig{
+					TargetPlatformPolicy: "allow",
+				},
+			},
+		},
+	}
+	manager := &Manager{
+		cfg:      cfg,
+		runtimes: bfruntime.NewRegistry(cfg),
+		pw:       &playwright.Playwright{Chromium: browserType},
+		sessions: make(map[string]*Session),
+	}
+
+	_, err := manager.launchChromium(&profile.Profile{
+		ID:        "invalid-proxy-region",
+		RuntimeID: "browseforge-chromium",
+		Proxy: &profile.ProxyConfig{
+			Type:   "http",
+			Host:   "127.0.0.1",
+			Port:   1,
+			Region: "192.0.2.1",
+		},
+		ProfileDir: t.TempDir(),
+	})
+	if err == nil {
+		t.Fatal("expected invalid proxy region to fail")
+	}
+	if !strings.Contains(err.Error(), "proxy_region") {
+		t.Fatalf("error = %q, want proxy_region validation", err.Error())
+	}
+	if browserType.calls != 0 {
+		t.Fatalf("launch calls = %d, want 0", browserType.calls)
+	}
+}
+
+func TestEffectiveChromiumIdentityKeepsPlatformAndLocaleConsistent(t *testing.T) {
+	fp := map[string]any{
+		"navigator.userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36",
+		"navigator.languages": []any{"en-US", "en"},
+	}
+	userAgent := effectiveChromiumUserAgent(fp, "Linux aarch64")
+	if !strings.Contains(userAgent, "Linux aarch64") {
+		t.Fatalf("user agent = %q, want Linux arm64 default", userAgent)
+	}
+	if got := effectiveChromiumAcceptLanguage(fp, "zh-TW"); got != "zh-TW,zh;q=0.9" {
+		t.Fatalf("accept language = %q, want zh-TW,zh;q=0.9", got)
+	}
+	linux64 := "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
+	fp["navigator.userAgent"] = linux64
+	fp["navigator.languages"] = []any{"zh-TW", "zh"}
+	if got := effectiveChromiumUserAgent(fp, "Linux aarch64"); got != linux64 {
+		t.Fatalf("user agent = %q, want profile arm64 UA", got)
+	}
+	if got := effectiveChromiumAcceptLanguage(fp, "zh-TW"); got != "zh-TW,zh" {
+		t.Fatalf("accept language = %q, want profile zh-TW chain", got)
 	}
 }
 

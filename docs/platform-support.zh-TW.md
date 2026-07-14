@@ -13,7 +13,7 @@
 | Camoufox | v135.0.1-beta.24 | 2025-03-15 |
 | CloakBrowser macOS | chromium-v145.0.7632.109.2 | 2026-03-04 |
 | CloakBrowser Linux/Windows | chromium-v146.0.7680.177.4 | 2026-04-28 |
-| BrowseForge Chromium | v0.1.1-alpha.0 | 2026-07-13 |
+| BrowseForge Chromium | v0.1.2-alpha.0 | 2026-07-14 |
 
 ## 平台支援矩陣
 
@@ -22,7 +22,7 @@
 | macOS x64 (Intel) | 支援 | v135 | v145 | Alpha artifact | 原生 binary |
 | macOS arm64 (Apple Silicon) | 支援 | v135 | v145 | Alpha artifact | 原生 binary |
 | Linux x64 | 支援 | v135 | v146 | Alpha artifact | 需要 display server 或 Docker runtime |
-| Linux arm64 | Binary supported | v135 | v146 | Alpha artifact | 原生 binary；GHCR 發佈 `linux/arm64` image |
+| Linux arm64 | 支援 | v135 | v146 | Alpha artifact | 原生 binary；GHCR 發佈 `linux/arm64` image |
 | Windows x64 | 支援 | v135 | v146 | Alpha artifact | 原生 binary |
 | Windows i686 (32-bit) | 不支援 | 不支援 | 不支援 | Not packaged | BrowseForge 不提供 32-bit build |
 | Linux i686 (32-bit) | 不支援 | 不支援 | 不支援 | Not packaged | 同上 |
@@ -33,7 +33,7 @@ BrowseForge 版本與瀏覽器 runtime 版本分開。啟動與 `browsers instal
 
 - Camoufox 維持使用 `v135.0.1-beta.24`，因為該上游 release 有完整瀏覽器 binary：macOS x64/arm64、Linux x64/arm64、Windows x64。較新的 `v152.0.2-alpha` 公開 ZIP 目前包含 fingerprint/font payload，但沒有可執行瀏覽器 binary，因此 BrowseForge 不選它做 runtime 下載。
 - CloakBrowser `chromium-v146.0.7680.177.5` 比 `.4` 新，但上游只提供 Linux x64 與 Windows x64；Linux arm64 與 macOS 仍停在不同版本。因此 BrowseForge 維持 Linux/Windows 使用 `chromium-v146.0.7680.177.4`、macOS 使用 `chromium-v145.0.7632.109.2`，直到上游恢復更乾淨的跨平台組合。
-- BrowseForge Chromium `v0.1.1-alpha.0` 是 `browseforge-runtime-chromium` release channel 的 source-level Chromium alpha runtime，也是 Camoufox 不支援平台上的 fallback runtime。GHCR 預設會在原生 `linux/amd64` 與 `linux/arm64` image 內預載 Camoufox 與 BrowseForge Chromium。
+- BrowseForge Chromium `v0.1.2-alpha.0` 是 `browseforge-runtime-chromium` release channel 的 source-level Chromium alpha runtime，也是 Camoufox 不支援平台上的 fallback runtime。GHCR 預設會在原生 `linux/amd64` 與 `linux/arm64` image 內預載 Camoufox 與 BrowseForge Chromium；BrowseForge Chromium launch persona 會分別解析 `Linux x86_64` 與 `Linux arm64`，確保 UA、UA-CH、`navigator.platform` 與 native persona JSON 的架構一致。
 
 ## Docker 平台政策
 
@@ -68,14 +68,14 @@ Linux arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium
 Windows x64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.4/cloakbrowser-windows-x64.zip
 ```
 
-### BrowseForge Chromium v0.1.1-alpha.0
+### BrowseForge Chromium v0.1.2-alpha.0
 
 ```
-Linux x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-linux-x64.zip
-Linux arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-linux-arm64.zip
-macOS arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-macos-arm64.zip
-macOS x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-macos-x64.zip
-Windows x64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.1-alpha.0/browseforge-runtime-chromium-v0.1.1-alpha.0-windows-x64.zip
+Linux x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.2-alpha.0/browseforge-runtime-chromium-v0.1.2-alpha.0-linux-x64.zip
+Linux arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.2-alpha.0/browseforge-runtime-chromium-v0.1.2-alpha.0-linux-arm64.zip
+macOS arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.2-alpha.0/browseforge-runtime-chromium-v0.1.2-alpha.0-macos-arm64.zip
+macOS x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.2-alpha.0/browseforge-runtime-chromium-v0.1.2-alpha.0-macos-x64.zip
+Windows x64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.2-alpha.0/browseforge-runtime-chromium-v0.1.2-alpha.0-windows-x64.zip
 ```
 
 ## 升級檢查清單

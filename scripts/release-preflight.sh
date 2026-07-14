@@ -12,6 +12,8 @@ Environment:
   SKIP_CAMOUFOX=1                         Skip the Camoufox runtime spike.
   SKIP_CLOAKBROWSER=1                     Skip the CloakBrowser runtime spike.
   SKIP_DOCKER=1                           Skip the multi-arch Docker build.
+  BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=https://host/runtime/releases
+                                               Override BrowseForge Chromium runtime asset base URL for Docker preinstall checks.
 USAGE
 }
 
@@ -36,6 +38,9 @@ fi
 repo_root="$(git rev-parse --show-toplevel)"
 cd "$repo_root"
 tmpdir="$(mktemp -d)"
+runtime_release_base="${BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL:-https://github.com/nczz/browseforge-runtime-chromium/releases/download}"
+runtime_release_base="${runtime_release_base%/}"
+
 asset_server_pid=""
 
 cleanup() {
@@ -65,6 +70,7 @@ fi
 command -v go >/dev/null || die "go is required"
 command -v node >/dev/null || die "node is required"
 command -v docker >/dev/null || die "docker is required"
+command -v curl >/dev/null || die "curl is required"
 command -v rg >/dev/null || die "ripgrep (rg) is required"
 
 if ! rg -q "BROWSEFORGE_VERSION:-${version}" docker/docker-compose.yml; then
@@ -144,6 +150,7 @@ if [[ "${SKIP_DOCKER:-}" != "1" ]]; then
   command -v zip >/dev/null || die "zip is required"
   command -v python3 >/dev/null || die "python3 is required"
 
+  run scripts/check-browseforge-chromium-assets.sh
   asset_root="$tmpdir/release-assets"
   asset_version_dir="$asset_root/$version"
   mkdir -p "$asset_version_dir"
@@ -209,6 +216,7 @@ PY
       -f docker/Dockerfile.run \
       --build-arg "BROWSEFORGE_VERSION=${version}" \
       --build-arg "BROWSEFORGE_RELEASE_BASE_URL=${asset_base_url}" \
+      --build-arg "BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=${runtime_release_base}" \
       -t "$docker_tag" \
       docker
     if [[ "$docker_platform" == "linux/amd64" ]]; then
