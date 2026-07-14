@@ -28,9 +28,16 @@ fi
 
 manifest_url="${base_url}/${version}/runtime.manifest.json"
 echo "Checking ${manifest_url}"
-if ! curl -fsI "$manifest_url" >/dev/null; then
+manifest_json="$(curl -fsSL "${manifest_url}" 2>/dev/null)" || {
   echo "BrowseForge Chromium runtime metadata unavailable: ${manifest_url}" >&2
   missing=1
+}
+if [[ -n "${manifest_json}" ]]; then
+  manifest_version="$(python3 -c 'import json,sys; print(json.load(sys.stdin).get("version", ""))' <<<"${manifest_json}")"
+  if [[ "${manifest_version}" != "${version}" ]]; then
+    echo "BrowseForge Chromium runtime manifest version mismatch: got ${manifest_version:-<empty>}, want ${version}" >&2
+    missing=1
+  fi
 fi
 
 for suffix in linux-x64 linux-arm64 macos-arm64 macos-x64 windows-x64; do

@@ -1,11 +1,11 @@
 {
     "schema_version": 1,
-    "commit": "2cda7b530726a5c6bb4aa0e1019f661946742d62",
-    "indexed_at": "2026-07-14T01:30:29Z",
+    "commit": "e83696bc2f88a4a4132cb767ac6add3d8e771c56",
+    "indexed_at": "2026-07-14T02:09:10Z",
     "project": "Users-chun-Projects-BrowseForge",
     "nodes": 2257,
-    "edges": 5804,
+    "edges": 5802,
     "original_size": 7667712,
-    "compressed_size": 1337403,
+    "compressed_size": 1337602,
     "compression_level": 3
 }
