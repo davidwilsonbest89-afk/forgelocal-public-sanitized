@@ -957,6 +957,9 @@ func TestEffectiveChromiumIdentityKeepsPlatformAndLocaleConsistent(t *testing.T)
 }
 
 func TestBrowseForgeLaunchOptionsExposeNativeLocaleAndRealViewport(t *testing.T) {
+	t.Setenv("DISPLAY", ":1")
+	t.Setenv("HOME", "/tmp/browseforge-home")
+	t.Setenv("LIBGL_ALWAYS_SOFTWARE", "1")
 	persona := chromiumLaunchPersona{
 		Native: browseForgeNativePersonaConfig{
 			Locale: browseForgeNativeLocale{
@@ -982,6 +985,9 @@ func TestBrowseForgeLaunchOptionsExposeNativeLocaleAndRealViewport(t *testing.T)
 	}
 	if env["BROWSEFORGE_INTL_LOCALE"] != "zh-TW" {
 		t.Fatalf("BROWSEFORGE_INTL_LOCALE = %q, want zh-TW", env["BROWSEFORGE_INTL_LOCALE"])
+	}
+	if env["DISPLAY"] != ":1" || env["HOME"] != "/tmp/browseforge-home" || env["LIBGL_ALWAYS_SOFTWARE"] != "1" {
+		t.Fatalf("display env = DISPLAY %q HOME %q LIBGL_ALWAYS_SOFTWARE %q", env["DISPLAY"], env["HOME"], env["LIBGL_ALWAYS_SOFTWARE"])
 	}
 	if got := browseForgeChromiumWindowArgs(persona); !containsArg(got, "--window-size=1920,1040") {
 		t.Fatalf("window args = %#v, want --window-size=1920,1040", got)

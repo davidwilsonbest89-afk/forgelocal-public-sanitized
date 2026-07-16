@@ -2,6 +2,13 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.5 - 2026-07-16
+
+### Fixed
+
+- Preserved `DISPLAY`, `HOME`, and `LIBGL_ALWAYS_SOFTWARE` when launching BrowseForge Chromium so GHCR Docker sessions can use the KasmVNC X display instead of failing with a missing-X-server error.
+- Bumped Docker and Linux server references for the `v2.1.5` release tag.
+
 ## v2.1.4 - 2026-07-16
 
 ### Changed

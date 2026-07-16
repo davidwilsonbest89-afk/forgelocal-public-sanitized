@@ -648,7 +648,11 @@ func browseForgeChromiumWindowArgs(persona chromiumLaunchPersona) []string {
 
 func browseForgeChromiumEnv(persona chromiumLaunchPersona) map[string]string {
 	native := persona.Native
-	env := map[string]string{}
+	env := map[string]string{
+		"DISPLAY":               os.Getenv("DISPLAY"),
+		"HOME":                  os.Getenv("HOME"),
+		"LIBGL_ALWAYS_SOFTWARE": os.Getenv("LIBGL_ALWAYS_SOFTWARE"),
+	}
 	if native.Locale.Timezone != "" {
 		env["TZ"] = native.Locale.Timezone
 	}
