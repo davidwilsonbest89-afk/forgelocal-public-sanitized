@@ -2,6 +2,13 @@
 
 : "${VNC_PASSWORD:=browseforge}"
 : "${BROWSEFORGE_SEED_BROWSERS:=1}"
+: "${BROWSEFORGE_DOCKER_GPU_MODE:=software}"
+export BROWSEFORGE_DOCKER_GPU_MODE
+if [ "$BROWSEFORGE_DOCKER_GPU_MODE" = "software" ]; then
+  export LIBGL_ALWAYS_SOFTWARE=1
+else
+  unset LIBGL_ALWAYS_SOFTWARE
+fi
 
 mkdir -p /app/profiles /app/data /app/browsers /app/logs /app/backups
 
@@ -60,8 +67,8 @@ sleep 2
 export DISPLAY=:1
 openbox &
 
-# Start BrowseForge (force software GL so WebGL works in Camoufox)
-export LIBGL_ALWAYS_SOFTWARE=1
+# Start BrowseForge. Docker defaults to software GL; set
+# BROWSEFORGE_DOCKER_GPU_MODE=native when passing a host GPU through.
 /app/BrowseForge &
 BF_PID=$!
 

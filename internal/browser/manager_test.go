@@ -444,6 +444,18 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 			t.Fatalf("launch args missing %q: %#v", want, browserType.options.Args)
 		}
 	}
+	if browserType.options.NoViewport == nil || !*browserType.options.NoViewport {
+		t.Fatalf("NoViewport = %#v, want true", browserType.options.NoViewport)
+	}
+	if browserType.options.Locale == nil || *browserType.options.Locale != "en-US" {
+		t.Fatalf("Locale = %#v, want en-US", browserType.options.Locale)
+	}
+	if browserType.options.TimezoneId == nil || *browserType.options.TimezoneId != "America/New_York" {
+		t.Fatalf("TimezoneId = %#v, want America/New_York", browserType.options.TimezoneId)
+	}
+	if browserType.options.Env["TZ"] != "America/New_York" || browserType.options.Env["BROWSEFORGE_INTL_LOCALE"] != "en-US" {
+		t.Fatalf("launch env = %#v, want TZ and BROWSEFORGE_INTL_LOCALE", browserType.options.Env)
+	}
 	nativeConfigPath := filepath.Join(profileDir, "browser-data", "BrowseForgeNative", "persona.json")
 	nativeConfigData, err := os.ReadFile(nativeConfigPath)
 	if err != nil {
@@ -458,6 +470,16 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	}
 	if got := nativeConfig["seed"]; got != float64(12345) {
 		t.Fatalf("native seed = %#v, want 12345", got)
+	}
+	nativeLocale, ok := nativeConfig["locale"].(map[string]any)
+	if !ok {
+		t.Fatalf("native locale missing: %#v", nativeConfig)
+	}
+	if got := nativeLocale["geo_source"]; got != "proxy_region_fallback" {
+		t.Fatalf("native locale geo_source = %#v, want proxy_region_fallback", got)
+	}
+	if got := nativeLocale["geo_status"]; got != "geo_provider_unavailable" {
+		t.Fatalf("native locale geo_status = %#v, want geo_provider_unavailable", got)
 	}
 	for _, key := range []string{"persona_id_hash", "origin_salt_key"} {
 		value, ok := nativeConfig[key].(string)
@@ -931,6 +953,59 @@ func TestEffectiveChromiumIdentityKeepsPlatformAndLocaleConsistent(t *testing.T)
 	}
 	if got := effectiveChromiumAcceptLanguage(fp, "zh-TW"); got != "zh-TW,zh" {
 		t.Fatalf("accept language = %q, want profile zh-TW chain", got)
+	}
+}
+
+func TestBrowseForgeLaunchOptionsExposeNativeLocaleAndRealViewport(t *testing.T) {
+	persona := chromiumLaunchPersona{
+		Native: browseForgeNativePersonaConfig{
+			Locale: browseForgeNativeLocale{
+				Timezone:       "Asia/Taipei",
+				Locale:         "zh-TW",
+				AcceptLanguage: "zh-TW,zh;q=0.9",
+			},
+			Screen: browseForgeNativeScreen{
+				Width:       1920,
+				Height:      1080,
+				AvailWidth:  1920,
+				AvailHeight: 1040,
+			},
+		},
+	}
+
+	env := browseForgeChromiumEnv(persona)
+	if env["TZ"] != "Asia/Taipei" {
+		t.Fatalf("TZ env = %q, want Asia/Taipei", env["TZ"])
+	}
+	if env["LANG"] != "zh_TW.UTF-8" || env["LC_ALL"] != "zh_TW.UTF-8" {
+		t.Fatalf("locale env = LANG %q LC_ALL %q, want zh_TW.UTF-8", env["LANG"], env["LC_ALL"])
+	}
+	if env["BROWSEFORGE_INTL_LOCALE"] != "zh-TW" {
+		t.Fatalf("BROWSEFORGE_INTL_LOCALE = %q, want zh-TW", env["BROWSEFORGE_INTL_LOCALE"])
+	}
+	if got := browseForgeChromiumWindowArgs(persona); !containsArg(got, "--window-size=1920,1040") {
+		t.Fatalf("window args = %#v, want --window-size=1920,1040", got)
+	}
+}
+
+func TestBrowseForgeDockerSoftwareModeUsesSwiftShaderPersona(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "software")
+	p := &profile.Profile{Fingerprint: map[string]any{
+		"navigator.userAgent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36",
+	}}
+
+	persona, err := buildChromiumLaunchPersona(p, bfruntime.BrowseForgeChromium, "Linux aarch64", "Asia/Taipei", "zh-TW", "", "arm64", nil)
+	if err != nil {
+		t.Fatalf("build persona: %v", err)
+	}
+	if !persona.HasWebGLVendor || !persona.HasWebGLRenderer {
+		t.Fatalf("software Docker persona must explicitly own WebGL strings: %#v", persona)
+	}
+	if persona.Native.GPU.Vendor != "Google Inc. (Google)" {
+		t.Fatalf("GPU vendor = %q, want SwiftShader vendor", persona.Native.GPU.Vendor)
+	}
+	if !strings.Contains(persona.Native.GPU.Renderer, "SwiftShader") {
+		t.Fatalf("GPU renderer = %q, want SwiftShader renderer", persona.Native.GPU.Renderer)
 	}
 }
 

@@ -92,6 +92,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 
 	var tz, locale, proxyRegion string
+	geoResult := fingerprint.GeoDetectionResult{}
 	effectiveProxy := m.effectiveProxy(p)
 	if effectiveProxy.Proxy != nil {
 		proxy := effectiveProxy.Proxy
@@ -103,10 +104,16 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		} else {
 			proxyRegion = strings.TrimSpace(proxy.Region)
 		}
-		tz, locale = fingerprint.DetectProxyGeoResult(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
+		geoResult = fingerprint.DetectProxyGeo(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
+		tz, locale = geoResult.Values()
+		if tz == "" {
+			tz, locale = fallbackGeoForProxyRegion(proxyRegion)
+			geoResult = fingerprint.GeoDetectionResult{Timezone: tz, Locale: locale, Source: "proxy_region_fallback", Status: "geo_provider_unavailable"}
+		}
 		args = append(args, "--fingerprint-webrtc-ip=auto")
 	} else {
-		tz, locale = fingerprint.DetectLocalGeoResult()
+		geoResult = fingerprint.DetectLocalGeo()
+		tz, locale = geoResult.Values()
 	}
 	platform, err := resolveCloakFingerprintPlatform(policy, runtime.GOOS)
 	if err != nil {
@@ -122,8 +129,11 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
+	persona.Native.Locale.GeoSource = geoResult.Source
+	persona.Native.Locale.GeoStatus = geoResult.Status
 	if desc.ID == bfruntime.BrowseForgeChromium {
 		args = appendChromiumLaunchPersonaArgs(args, persona)
+		args = append(args, browseForgeChromiumWindowArgs(persona)...)
 		nativeConfigPath, err := writeBrowseForgeNativeConfig(userDataDir, persona)
 		if err != nil {
 			return nil, err
@@ -216,7 +226,10 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			Headless:          playwright.Bool(false),
 			AcceptDownloads:   playwright.Bool(true),
 			Args:              launchArgs,
-			Viewport:          &playwright.Size{Width: 1280, Height: 800},
+			NoViewport:        playwright.Bool(true),
+			Locale:            playwright.String(persona.Native.Locale.Locale),
+			TimezoneId:        playwright.String(persona.Native.Locale.Timezone),
+			Env:               browseForgeChromiumEnv(persona),
 			IgnoreDefaultArgs: ignoreArgs,
 		}
 
@@ -391,6 +404,8 @@ type browseForgeNativeLocale struct {
 	Timezone       string `json:"timezone"`
 	Locale         string `json:"locale"`
 	AcceptLanguage string `json:"accept_language"`
+	GeoSource      string `json:"geo_source,omitempty"`
+	GeoStatus      string `json:"geo_status,omitempty"`
 }
 
 type browseForgeNativeHardware struct {
@@ -466,6 +481,12 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 	renderer, hasWebGLRenderer := fingerprintString(fp, "webGl:renderer")
 	if !hasWebGLRenderer {
 		renderer = "Intel Iris OpenGL Engine"
+	}
+	if runtimeID == bfruntime.BrowseForgeChromium && browseForgeDockerGPUMode() == "software" && (!hasWebGLVendor || !hasWebGLRenderer) {
+		vendor = "Google Inc. (Google)"
+		renderer = "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+		hasWebGLVendor = true
+		hasWebGLRenderer = true
 	}
 	storageQuota := int64(0)
 	if runtimeID == bfruntime.BrowseForgeChromium {
@@ -607,6 +628,52 @@ func appendChromiumLaunchPersonaArgs(args []string, persona chromiumLaunchPerson
 		args = append(args, "--fingerprint-webgl-renderer="+native.GPU.Renderer)
 	}
 	return args
+}
+
+func browseForgeChromiumWindowArgs(persona chromiumLaunchPersona) []string {
+	native := persona.Native
+	width := native.Screen.AvailWidth
+	height := native.Screen.AvailHeight
+	if width <= 0 {
+		width = native.Screen.Width
+	}
+	if height <= 0 {
+		height = native.Screen.Height
+	}
+	if width <= 0 || height <= 0 {
+		return nil
+	}
+	return []string{fmt.Sprintf("--window-size=%d,%d", width, height)}
+}
+
+func browseForgeChromiumEnv(persona chromiumLaunchPersona) map[string]string {
+	native := persona.Native
+	env := map[string]string{}
+	if native.Locale.Timezone != "" {
+		env["TZ"] = native.Locale.Timezone
+	}
+	if native.Locale.Locale != "" {
+		localeEnv := strings.ReplaceAll(native.Locale.Locale, "-", "_") + ".UTF-8"
+		env["LANG"] = localeEnv
+		env["LC_ALL"] = localeEnv
+		env["BROWSEFORGE_INTL_LOCALE"] = native.Locale.Locale
+	}
+	if acceptLanguage := native.Locale.AcceptLanguage; acceptLanguage != "" {
+		env["BROWSEFORGE_ACCEPT_LANGUAGE"] = acceptLanguage
+	}
+	return env
+}
+
+func browseForgeDockerGPUMode() string {
+	mode := strings.ToLower(strings.TrimSpace(os.Getenv("BROWSEFORGE_DOCKER_GPU_MODE")))
+	switch mode {
+	case "software":
+		return "software"
+	case "native":
+		return "native"
+	default:
+		return ""
+	}
 }
 
 func writeBrowseForgeNativeConfig(userDataDir string, persona chromiumLaunchPersona) (string, error) {
@@ -769,6 +836,31 @@ func clampScreenAvail(avail, size int) int {
 		return size
 	}
 	return avail
+}
+func fallbackGeoForProxyRegion(region string) (timezone, locale string) {
+	region = strings.ToLower(strings.TrimSpace(region))
+	switch {
+	case strings.HasPrefix(region, "us"):
+		return "America/New_York", "en-US"
+	case strings.HasPrefix(region, "tw"):
+		return "Asia/Taipei", "zh-TW"
+	case strings.HasPrefix(region, "jp"):
+		return "Asia/Tokyo", "ja-JP"
+	case strings.HasPrefix(region, "kr"):
+		return "Asia/Seoul", "ko-KR"
+	case strings.HasPrefix(region, "sg"):
+		return "Asia/Singapore", "en-SG"
+	case strings.HasPrefix(region, "hk"):
+		return "Asia/Hong_Kong", "zh-HK"
+	case strings.HasPrefix(region, "de"):
+		return "Europe/Berlin", "de-DE"
+	case strings.HasPrefix(region, "fr"):
+		return "Europe/Paris", "fr-FR"
+	case strings.HasPrefix(region, "gb"), strings.HasPrefix(region, "uk"):
+		return "Europe/London", "en-GB"
+	default:
+		return "", ""
+	}
 }
 
 func sanitizeBrowseForgeProxyRegion(region string) (string, error) {

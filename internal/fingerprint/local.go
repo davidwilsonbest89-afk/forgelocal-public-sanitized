@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
@@ -17,6 +18,17 @@ var (
 	primaryIPGeoURL = "https://undo.im/json"
 	legacyIPGeoURL  = "http://ip-api.com/json/?fields=countryCode,timezone"
 )
+
+type GeoDetectionResult struct {
+	Timezone string
+	Locale   string
+	Source   string
+	Status   string
+}
+
+func (r GeoDetectionResult) Values() (timezone, locale string) {
+	return r.Timezone, r.Locale
+}
 
 // AdjustToLocal adjusts fingerprint geo fields to match the actual public IP
 func AdjustToLocal(fp map[string]any) {
@@ -55,33 +67,52 @@ func detectPublicIPGeo() (country, timezone string) {
 	return queryIPGeo(client)
 }
 
-// DetectProxyGeoResult returns timezone and locale detected through the proxy.
-func DetectProxyGeoResult(proxyType, host string, port int, username, password string) (timezone, locale string) {
+// DetectProxyGeo returns timezone, locale, and provenance detected through the proxy.
+func DetectProxyGeo(proxyType, host string, port int, username, password string) GeoDetectionResult {
 	client := buildProxyClient(proxyType, host, port, username, password)
 	country, tz := queryIPGeo(client)
 	if country == "" {
-		return "America/New_York", "en-US"
+		timezone, locale := configuredGeoFallback()
+		return GeoDetectionResult{Timezone: timezone, Locale: locale, Source: "configured_fallback", Status: "geo_provider_unavailable"}
 	}
 	geo, ok := countryToGeo[country]
 	if !ok {
-		return tz, "en-US"
+		return GeoDetectionResult{Timezone: fallbackTimezone(tz), Locale: fallbackLocale(), Source: "provider_unknown_country", Status: "fallback_locale"}
 	}
-	return tz, geo.Language
+	return GeoDetectionResult{Timezone: fallbackTimezone(tz), Locale: geo.Language, Source: "provider", Status: "detected"}
+}
+
+// DetectProxyGeoResult returns timezone and locale detected through the proxy.
+func DetectProxyGeoResult(proxyType, host string, port int, username, password string) (timezone, locale string) {
+	return DetectProxyGeo(proxyType, host, port, username, password).Values()
+}
+
+// DetectLocalGeo returns timezone, locale, and provenance from the machine's public IP.
+func DetectLocalGeo() GeoDetectionResult {
+	client := &http.Client{Timeout: 5 * time.Second}
+	country, tz := queryIPGeo(client)
+	if country == "" {
+		if configuredTZ, configuredLocale := configuredGeoFallback(); configuredTZ != "" {
+			return GeoDetectionResult{Timezone: configuredTZ, Locale: configuredLocale, Source: "configured_fallback", Status: "geo_provider_unavailable"}
+		}
+		tz = detectLocalTimezone()
+		country = timezoneToCountry(tz)
+		geo, ok := countryToGeo[country]
+		if !ok {
+			return GeoDetectionResult{Timezone: fallbackTimezone(tz), Locale: fallbackLocale(), Source: "system_timezone", Status: "fallback_locale"}
+		}
+		return GeoDetectionResult{Timezone: fallbackTimezone(tz), Locale: geo.Language, Source: "system_timezone", Status: "geo_provider_unavailable"}
+	}
+	geo, ok := countryToGeo[country]
+	if !ok {
+		return GeoDetectionResult{Timezone: fallbackTimezone(tz), Locale: fallbackLocale(), Source: "provider_unknown_country", Status: "fallback_locale"}
+	}
+	return GeoDetectionResult{Timezone: fallbackTimezone(tz), Locale: geo.Language, Source: "provider", Status: "detected"}
 }
 
 // DetectLocalGeoResult returns timezone and locale from the machine's public IP.
 func DetectLocalGeoResult() (timezone, locale string) {
-	client := &http.Client{Timeout: 5 * time.Second}
-	country, tz := queryIPGeo(client)
-	if country == "" {
-		tz = detectLocalTimezone()
-		country = timezoneToCountry(tz)
-	}
-	geo, ok := countryToGeo[country]
-	if !ok {
-		return tz, "en-US"
-	}
-	return tz, geo.Language
+	return DetectLocalGeo().Values()
 }
 
 func queryIPGeo(client *http.Client) (country, timezone string) {
@@ -161,6 +192,41 @@ func buildProxyClient(proxyType, host string, port int, username, password strin
 		Timeout:   10 * time.Second,
 		Transport: &http.Transport{Proxy: http.ProxyURL(proxyURL)},
 	}
+}
+
+func configuredGeoFallback() (timezone, locale string) {
+	timezone = strings.TrimSpace(os.Getenv("BROWSEFORGE_DEFAULT_TIMEZONE"))
+	if timezone == "" {
+		timezone = strings.TrimSpace(os.Getenv("TZ"))
+	}
+	locale = strings.TrimSpace(os.Getenv("BROWSEFORGE_DEFAULT_LOCALE"))
+	if locale == "" {
+		country := timezoneToCountry(timezone)
+		if geo, ok := countryToGeo[country]; ok {
+			locale = geo.Language
+		}
+	}
+	if locale == "" {
+		locale = "en-US"
+	}
+	return timezone, locale
+}
+
+func fallbackTimezone(detected string) string {
+	detected = strings.TrimSpace(detected)
+	if detected != "" {
+		return detected
+	}
+	timezone, _ := configuredGeoFallback()
+	if timezone != "" {
+		return timezone
+	}
+	return detectLocalTimezone()
+}
+
+func fallbackLocale() string {
+	_, locale := configuredGeoFallback()
+	return locale
 }
 
 func detectLocalTimezone() string {

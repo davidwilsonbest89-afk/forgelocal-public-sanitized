@@ -40,6 +40,13 @@ if [[ -n "${manifest_json}" ]]; then
   fi
 fi
 
+for metadata in runtime.manifest.json detector-summary.json; do
+  if [[ -n "$checksums" && "$checksums" != *"$metadata"* ]]; then
+    echo "BrowseForge Chromium runtime checksum entry missing: ${metadata}" >&2
+    missing=1
+  fi
+done
+
 for suffix in linux-x64 linux-arm64 macos-arm64 macos-x64 windows-x64; do
   filename="browseforge-runtime-chromium-${version}-${suffix}.zip"
   url="${base_url}/${version}/${filename}"

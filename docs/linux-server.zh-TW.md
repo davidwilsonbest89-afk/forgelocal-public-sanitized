@@ -17,12 +17,14 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.2
+  ghcr.io/nczz/browseforge:v2.1.3
 ```
 
-正式部署建議 pin 版本 tag，例如 `v2.1.2`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
+正式部署建議 pin 版本 tag，例如 `v2.1.3`。`latest` 可用於快速試用，但重啟或重新拉取時可能非預期升級。
 
 > GHCR Docker image 發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構；只有相容性 debug 才需要指定 `--platform linux/amd64`。
+
+Docker 預設使用軟體 GL，以維持容器可攜性與 WebGL 一致性。除非 host 已明確把真實 GPU passthrough 進容器，否則保留 `BROWSEFORGE_DOCKER_GPU_MODE=software`；使用 passthrough 時再設定 `BROWSEFORGE_DOCKER_GPU_MODE=native`。
 
 ## 首次啟動與 Browser Engines
 
@@ -70,7 +72,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.2
+  ghcr.io/nczz/browseforge:v2.1.3
 ```
 
 持久化路徑：
@@ -90,7 +92,7 @@ Docker named volumes 也能持久化，但 host bind mounts 比較容易檢查�
 ```yaml
 services:
   browseforge:
-    image: ghcr.io/nczz/browseforge:v2.1.2
+    image: ghcr.io/nczz/browseforge:v2.1.3
     ports:
       - "19280:19280"
       - "6901:6901"
@@ -134,7 +136,7 @@ ssh -L 19280:localhost:19280 -L 6901:localhost:6901 user@server
 ## 升級
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.2
+docker pull ghcr.io/nczz/browseforge:v2.1.3
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -147,7 +149,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.2
+  ghcr.io/nczz/browseforge:v2.1.3
 ```
 
 Profiles、Token、下載的 browser engines、logs 都保留在 host 的 `./browseforge/` 目錄。Pull 新 image 並重建容器時，必須沿用同一組 bind mounts。

@@ -164,6 +164,48 @@ func TestQueryLegacyIPGeoParsesCountryCodeAndTimezone(t *testing.T) {
 	}
 }
 
+func TestConfiguredGeoFallbackUsesEnvironmentTimezoneAndLocale(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DEFAULT_TIMEZONE", "Asia/Taipei")
+	t.Setenv("BROWSEFORGE_DEFAULT_LOCALE", "zh-TW")
+	t.Setenv("TZ", "UTC")
+
+	timezone, locale := configuredGeoFallback()
+
+	if timezone != "Asia/Taipei" || locale != "zh-TW" {
+		t.Fatalf("configured fallback = (%q, %q), want (%q, %q)", timezone, locale, "Asia/Taipei", "zh-TW")
+	}
+}
+
+func TestConfiguredGeoFallbackDerivesLocaleFromTZ(t *testing.T) {
+	t.Setenv("TZ", "Asia/Taipei")
+
+	timezone, locale := configuredGeoFallback()
+
+	if timezone != "Asia/Taipei" || locale != "zh-TW" {
+		t.Fatalf("configured fallback = (%q, %q), want (%q, %q)", timezone, locale, "Asia/Taipei", "zh-TW")
+	}
+}
+
+func TestDetectLocalGeoExposesConfiguredFallbackStatus(t *testing.T) {
+	oldPrimary, oldLegacy := primaryIPGeoURL, legacyIPGeoURL
+	primaryIPGeoURL = "http://127.0.0.1:1/geo"
+	legacyIPGeoURL = "http://127.0.0.1:1/legacy"
+	t.Cleanup(func() {
+		primaryIPGeoURL, legacyIPGeoURL = oldPrimary, oldLegacy
+	})
+	t.Setenv("BROWSEFORGE_DEFAULT_TIMEZONE", "Asia/Taipei")
+	t.Setenv("BROWSEFORGE_DEFAULT_LOCALE", "zh-TW")
+
+	got := DetectLocalGeo()
+
+	if got.Timezone != "Asia/Taipei" || got.Locale != "zh-TW" {
+		t.Fatalf("geo fallback values = (%q, %q), want (%q, %q)", got.Timezone, got.Locale, "Asia/Taipei", "zh-TW")
+	}
+	if got.Source != "configured_fallback" || got.Status != "geo_provider_unavailable" {
+		t.Fatalf("geo fallback provenance = (%q, %q), want configured_fallback/geo_provider_unavailable", got.Source, got.Status)
+	}
+}
+
 func geoJSONResponse(req *http.Request, body string) *http.Response {
 	return &http.Response{
 		StatusCode: http.StatusOK,
