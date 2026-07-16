@@ -2,6 +2,19 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.4 - 2026-07-16
+
+### Changed
+
+- Published GHCR release images as native `linux/amd64` and `linux/arm64` manifests backed by BrowseForge Chromium runtime `v0.1.3-alpha.0`.
+- Updated Docker and Linux server references for the `v2.1.4` release tag.
+- Kept the runtime release gate strict: Docker preinstall verifies the matching linux runtime asset before image build.
+
+### Fixed
+
+- Added native BrowseForge Chromium `linux/arm64` download mapping and runtime asset checks so ARM containers no longer fall back to x64/emulation assets.
+- Preserved coherent native persona metadata for BrowseForge Chromium launch on Linux, macOS, and Windows runtime packages.
+
 ## v2.1.2 - 2026-07-13
 
 ### Changed
