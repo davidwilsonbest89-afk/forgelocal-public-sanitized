@@ -21,7 +21,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.5
+  ghcr.io/nczz/browseforge:v2.1.6
 ```
 
 本地從原始碼 build：
@@ -32,17 +32,17 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-compose 預設會建置 `v2.1.5` release image。要測其他版本：
+compose 預設會建置 `v2.1.6` release image。要測其他版本：
 
 ```bash
-BROWSEFORGE_VERSION=v2.1.5 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.6 docker compose up -d --build
 ```
 
 驗證尚未發布的 BrowseForge Chromium runtime 時，請把 image build 指向暫存的 runtime asset root。該 root 必須包含 `checksums.txt`、`runtime.manifest.json`，以及 `<runtime-version>/browseforge-runtime-chromium-<runtime-version>-linux-{x64,arm64}.zip`：
 
 ```bash
 BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=https://host/runtime/releases \
-BROWSEFORGE_VERSION=v2.1.5 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.6 docker compose up -d --build
 ```
 
 ## 首次啟動
@@ -91,7 +91,7 @@ Pull 新 image 或重建容器時，必須沿用同一組 `-v "$PWD/browseforge/
 升級範例：
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.5
+docker pull ghcr.io/nczz/browseforge:v2.1.6
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -104,7 +104,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.5
+  ghcr.io/nczz/browseforge:v2.1.6
 ```
 
 完整 filesystem 備份：
@@ -135,6 +135,7 @@ REST API 的 `/api/backup` 是較輕量的 profile metadata backup；若要保�
 
 - GHCR Docker image 發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構。
 - Docker 預設使用一致的軟體 GL（`BROWSEFORGE_DOCKER_GPU_MODE=software`）：BrowseForge Chromium 會回報與 SwiftShader 對齊的 WebGL 字串，不假裝有 host GPU。只有在容器已做真實 GPU passthrough 時，才設定 `BROWSEFORGE_DOCKER_GPU_MODE=native`。
+- KasmVNC 預設為 `1920x1080`，與 BrowseForge Chromium native screen persona 對齊。只有在你希望 headed browser 視窗與 Screen API evidence 同步採用自訂桌面大小時，才同時覆寫 `BROWSEFORGE_DOCKER_DISPLAY_WIDTH` 與 `BROWSEFORGE_DOCKER_DISPLAY_HEIGHT`。
 - VNC 用於觀看瀏覽器畫面和基本操作
 - 中文輸入和剪貼簿在 Chrome 瀏覽器上 seamless 支援
 - 瀏覽器引擎、Profile 資料、Token、logs 預設 mount 到 host `./browseforge/` 目錄，重建容器不會遺失

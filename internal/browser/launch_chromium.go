@@ -23,18 +23,12 @@ import (
 	"github.com/mxschmitt/playwright-go"
 )
 
-const chromiumAutomationControlledArg = "--disable-blink-features=AutomationControlled"
-
 const chromiumWebRTCIPHandlingArg = "--force-webrtc-ip-handling-policy=disable_non_proxied_udp"
 
 const chromiumAutomationMitigationInitScript = `(() => {
-	const defineGetter = (target, prop, getter) => {
-		try {
-			Object.defineProperty(target, prop, { get: getter, configurable: true });
-		} catch (_) {}
-	};
-	defineGetter(Navigator.prototype, "webdriver", () => undefined);
-	try { delete window.navigator.webdriver; } catch (_) {}
+	// Keep Playwright's injected globals out of detector-visible namespaces. The
+	// native BrowseForge Chromium patch owns navigator.webdriver so the property
+	// remains a native getter returning false instead of a JS monkey patch.
 	for (const key of Object.keys(window)) {
 		if (/^(cdc_|__webdriver|__driver_evaluate|__webdriver_script_fn|__selenium)/.test(key)) {
 			try { delete window[key]; } catch (_) {}
@@ -79,7 +73,6 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	args := []string{
 		"--no-first-run",
 		"--test-type",
-		chromiumAutomationControlledArg,
 		chromiumWebRTCIPHandlingArg,
 	}
 	if p.FingerprintSeed > 0 {
@@ -214,6 +207,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 
 	ignoreArgs := []string{
 		"--enable-automation",
+		"--enable-unsafe-swiftshader",
 		"--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1",
 	}
 	if !m.cfg.NoSandbox {
@@ -227,8 +221,6 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			AcceptDownloads:   playwright.Bool(true),
 			Args:              launchArgs,
 			NoViewport:        playwright.Bool(true),
-			Locale:            playwright.String(persona.Native.Locale.Locale),
-			TimezoneId:        playwright.String(persona.Native.Locale.Timezone),
 			Env:               browseForgeChromiumEnv(persona),
 			IgnoreDefaultArgs: ignoreArgs,
 		}
@@ -612,6 +604,10 @@ func appendChromiumLaunchPersonaArgs(args []string, persona chromiumLaunchPerson
 	if native.Screen.AvailHeight > 0 {
 		args = append(args, fmt.Sprintf("--fingerprint-screen-avail-height=%d", native.Screen.AvailHeight))
 	}
+	if native.Screen.DPR > 0 {
+		dpr := fmt.Sprintf("%g", native.Screen.DPR)
+		args = append(args, "--force-device-scale-factor="+dpr, "--fingerprint-screen-device-scale-factor="+dpr)
+	}
 	if persona.HasCanvasNoise {
 		args = append(args, fmt.Sprintf("--fingerprint-canvas-noise=%d", persona.CanvasNoise))
 	}
@@ -643,7 +639,10 @@ func browseForgeChromiumWindowArgs(persona chromiumLaunchPersona) []string {
 	if width <= 0 || height <= 0 {
 		return nil
 	}
-	return []string{fmt.Sprintf("--window-size=%d,%d", width, height)}
+	return []string{
+		"--window-position=0,0",
+		fmt.Sprintf("--window-size=%d,%d", width, height),
+	}
 }
 
 func browseForgeChromiumEnv(persona chromiumLaunchPersona) map[string]string {

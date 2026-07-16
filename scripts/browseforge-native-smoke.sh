@@ -65,6 +65,10 @@ read -r -d '' smoke_js <<'JS' || true
       outerHeight: outerHeight,
       visualViewportWidth: visualViewport && visualViewport.width,
       visualViewportHeight: visualViewport && visualViewport.height,
+      screenX: screenX,
+      screenY: screenY,
+      mediaMinInnerWidth: matchMedia("(min-width: " + (innerWidth - 1) + "px)").matches,
+      widthGetter: Object.getOwnPropertyDescriptor(Object.getPrototypeOf(screen), "width").get.toString(),
     },
     webgl: gl ? {
       vendor: dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : null,
@@ -92,16 +96,51 @@ if [ -n "$BASE_DIR" ] && [ -n "$profile_dir" ]; then
 fi
 
 python3 - <<PY
-import json
+import json, sys
+observed = json.loads('''$eval_response''').get("data") or {}
 payload = {
     "ok": True,
     "runtime_id": "$RUNTIME_ID",
     "profile_id": "$profile_id",
     "session_id": "$session_id",
     "profile_dir": "$profile_dir",
-    "observed": json.loads('''$eval_response''').get("data"),
+    "observed": observed,
 }
 if '''${native_config:+1}''':
-    payload["native_config"] = json.loads('''${native_config:-{}}''')
+    native = json.loads('''${native_config:-{}}''')
+    payload["native_config"] = native
+    errors = []
+    locale = native.get("locale", {})
+    screen = native.get("screen", {})
+    observed_screen = (observed or {}).get("screen", {})
+    expected_language = locale.get("locale")
+    expected_timezone = locale.get("timezone")
+    if expected_timezone and observed.get("timezone") != expected_timezone:
+        errors.append(f"timezone {observed.get('timezone')!r} != native {expected_timezone!r}")
+    if expected_language:
+        observed_languages = observed.get("languages") or []
+        if observed.get("language") != expected_language:
+            errors.append(f"language {observed.get('language')!r} != native {expected_language!r}")
+        if not observed_languages or observed_languages[0] != expected_language:
+            errors.append(f"languages {observed_languages!r} does not start with native {expected_language!r}")
+        for key in ("intlDateLocale", "intlNumberLocale", "intlCollatorLocale"):
+            if observed.get(key) != expected_language:
+                errors.append(f"{key} {observed.get(key)!r} != native {expected_language!r}")
+    for key in ("width", "height", "availWidth", "availHeight"):
+        if screen.get(key) and observed_screen.get(key) != screen.get(key):
+            errors.append(f"screen.{key} {observed_screen.get(key)!r} != native {screen.get(key)!r}")
+    if observed_screen.get("mediaMinInnerWidth") is not True:
+        errors.append("screen media query for innerWidth-1 did not match")
+    if screen.get("availWidth") and observed_screen.get("outerWidth"):
+        if observed_screen["outerWidth"] < screen["availWidth"] - 64 or observed_screen["outerWidth"] > screen["width"] + 16:
+            errors.append(f"outerWidth {observed_screen['outerWidth']} is not coherent with native avail/screen width {screen.get('availWidth')}/{screen.get('width')}")
+    if screen.get("availHeight") and observed_screen.get("outerHeight"):
+        if observed_screen["outerHeight"] < screen["availHeight"] - 160 or observed_screen["outerHeight"] > screen["height"] + 16:
+            errors.append(f"outerHeight {observed_screen['outerHeight']} is not coherent with native avail/screen height {screen.get('availHeight')}/{screen.get('height')}")
+    if errors:
+        payload["ok"] = False
+        payload["errors"] = errors
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        raise SystemExit(1)
 print(json.dumps(payload, indent=2, sort_keys=True))
 PY

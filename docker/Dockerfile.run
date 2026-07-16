@@ -10,7 +10,9 @@ ARG KASMVNC_SHA256_ARM64=120d9462cb5e917cad91a23f6cb0b780c06f701def40e900b29f996
 
 ENV DEBIAN_FRONTEND=noninteractive \
     DISPLAY=:1 \
-    BROWSEFORGE_DOCKER_GPU_MODE=software
+    BROWSEFORGE_DOCKER_GPU_MODE=software \
+    BROWSEFORGE_DOCKER_DISPLAY_WIDTH=1920 \
+    BROWSEFORGE_DOCKER_DISPLAY_HEIGHT=1080
 
 # System deps + browser runtime libs
 RUN apt-get update && apt-get install -y --no-install-recommends \

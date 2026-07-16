@@ -2,6 +2,14 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.6 - 2026-07-16
+
+### Fixed
+
+- Bumped Docker, Linux server, release, and platform documentation references for the `v2.1.6` release tag.
+- Aligned BrowseForge Chromium Docker/native headed sessions with the native persona screen contract, including DPR switches, coherent KasmVNC geometry defaults, and smoke-test assertions for screen/window, locale, timezone, WebDriver, and WebGL surfaces.
+- Captured sanitized Pixelscan screen/window evidence so detector reports can distinguish true fingerprint mismatches from missing viewport evidence.
+
 ## v2.1.5 - 2026-07-16
 
 ### Fixed

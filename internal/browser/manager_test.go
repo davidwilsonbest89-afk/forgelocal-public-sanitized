@@ -410,7 +410,6 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		t.Fatalf("abs fonts dir: %v", err)
 	}
 	for _, want := range []string{
-		chromiumAutomationControlledArg,
 		chromiumWebRTCIPHandlingArg,
 		"--fingerprint-webrtc-ip=auto",
 		"--fingerprint-timezone=America/New_York",
@@ -429,6 +428,10 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		"--fingerprint-screen-height=1080",
 		"--fingerprint-screen-avail-width=1920",
 		"--fingerprint-screen-avail-height=1032",
+		"--force-device-scale-factor=1",
+		"--fingerprint-screen-device-scale-factor=1",
+		"--window-position=0,0",
+		"--window-size=1920,1032",
 		"--fingerprint-canvas-noise=12345",
 		"--fingerprint-audio-noise=67890",
 		"--fingerprint-fonts-list=Segoe UI|Calibri|Consolas",
@@ -447,11 +450,11 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	if browserType.options.NoViewport == nil || !*browserType.options.NoViewport {
 		t.Fatalf("NoViewport = %#v, want true", browserType.options.NoViewport)
 	}
-	if browserType.options.Locale == nil || *browserType.options.Locale != "en-US" {
-		t.Fatalf("Locale = %#v, want en-US", browserType.options.Locale)
+	if browserType.options.Locale != nil {
+		t.Fatalf("Locale = %#v, want nil so native/env locale owns Intl behavior", browserType.options.Locale)
 	}
-	if browserType.options.TimezoneId == nil || *browserType.options.TimezoneId != "America/New_York" {
-		t.Fatalf("TimezoneId = %#v, want America/New_York", browserType.options.TimezoneId)
+	if browserType.options.TimezoneId != nil {
+		t.Fatalf("TimezoneId = %#v, want nil so native/env timezone owns Intl behavior", browserType.options.TimezoneId)
 	}
 	if browserType.options.Env["TZ"] != "America/New_York" || browserType.options.Env["BROWSEFORGE_INTL_LOCALE"] != "en-US" {
 		t.Fatalf("launch env = %#v, want TZ and BROWSEFORGE_INTL_LOCALE", browserType.options.Env)
@@ -989,8 +992,11 @@ func TestBrowseForgeLaunchOptionsExposeNativeLocaleAndRealViewport(t *testing.T)
 	if env["DISPLAY"] != ":1" || env["HOME"] != "/tmp/browseforge-home" || env["LIBGL_ALWAYS_SOFTWARE"] != "1" {
 		t.Fatalf("display env = DISPLAY %q HOME %q LIBGL_ALWAYS_SOFTWARE %q", env["DISPLAY"], env["HOME"], env["LIBGL_ALWAYS_SOFTWARE"])
 	}
-	if got := browseForgeChromiumWindowArgs(persona); !containsArg(got, "--window-size=1920,1040") {
-		t.Fatalf("window args = %#v, want --window-size=1920,1040", got)
+	windowArgs := browseForgeChromiumWindowArgs(persona)
+	for _, want := range []string{"--window-position=0,0", "--window-size=1920,1040"} {
+		if !containsArg(windowArgs, want) {
+			t.Fatalf("window args = %#v, want %q", windowArgs, want)
+		}
 	}
 }
 

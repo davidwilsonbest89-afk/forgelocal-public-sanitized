@@ -21,7 +21,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.5
+  ghcr.io/nczz/browseforge:v2.1.6
 ```
 
 Build from the local source tree:
@@ -32,17 +32,17 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-The Compose file builds the `v2.1.5` release image by default. To test another version:
+The Compose file builds the `v2.1.6` release image by default. To test another version:
 
 ```bash
-BROWSEFORGE_VERSION=v2.1.5 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.6 docker compose up -d --build
 ```
 
 When validating an unreleased BrowseForge Chromium runtime, point the image build at a staged runtime asset root. The root must contain `checksums.txt`, `runtime.manifest.json`, and `<runtime-version>/browseforge-runtime-chromium-<runtime-version>-linux-{x64,arm64}.zip`:
 
 ```bash
 BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=https://host/runtime/releases \
-BROWSEFORGE_VERSION=v2.1.5 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.6 docker compose up -d --build
 ```
 
 ## First Startup
@@ -103,7 +103,7 @@ When you pull a new image or recreate the container, reuse the same `-v "$PWD/br
 Upgrade example:
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.5
+docker pull ghcr.io/nczz/browseforge:v2.1.6
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
@@ -116,7 +116,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.5
+  ghcr.io/nczz/browseforge:v2.1.6
 ```
 
 Full filesystem backup:
@@ -148,6 +148,7 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 - The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker automatically pulls the host-native image on x64 servers, Apple Silicon, and ARM servers.
 - Default GHCR browser preinstall is Camoufox plus BrowseForge Chromium. Use `BROWSEFORGE_PREINSTALL_RUNTIMES` at image build time if you need a different set.
 - Docker defaults to coherent software GL (`BROWSEFORGE_DOCKER_GPU_MODE=software`): BrowseForge Chromium reports SwiftShader-aligned WebGL strings instead of pretending a host GPU exists. Set `BROWSEFORGE_DOCKER_GPU_MODE=native` only when the container has real GPU passthrough.
+- KasmVNC defaults to `1920x1080`, matching the BrowseForge Chromium native screen persona. Override both `BROWSEFORGE_DOCKER_DISPLAY_WIDTH` and `BROWSEFORGE_DOCKER_DISPLAY_HEIGHT` only when you also want headed browser window/screen evidence to follow that custom desktop size.
 - VNC is intended for watching browser state and basic remote operation.
 - Browser engines, profiles, token data, logs, and backups are host-mounted under `./browseforge/` by default, so recreating the container does not delete them.
 

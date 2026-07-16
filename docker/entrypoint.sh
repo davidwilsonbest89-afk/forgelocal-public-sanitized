@@ -3,6 +3,15 @@
 : "${VNC_PASSWORD:=browseforge}"
 : "${BROWSEFORGE_SEED_BROWSERS:=1}"
 : "${BROWSEFORGE_DOCKER_GPU_MODE:=software}"
+: "${BROWSEFORGE_DOCKER_DISPLAY_WIDTH:=1920}"
+: "${BROWSEFORGE_DOCKER_DISPLAY_HEIGHT:=1080}"
+if ! [[ "$BROWSEFORGE_DOCKER_DISPLAY_WIDTH" =~ ^[1-9][0-9]*$ && "$BROWSEFORGE_DOCKER_DISPLAY_HEIGHT" =~ ^[1-9][0-9]*$ ]]; then
+  echo "BROWSEFORGE_DOCKER_DISPLAY_WIDTH and BROWSEFORGE_DOCKER_DISPLAY_HEIGHT must be positive integers" >&2
+  exit 2
+fi
+export BROWSEFORGE_DOCKER_DISPLAY_WIDTH
+export BROWSEFORGE_DOCKER_DISPLAY_HEIGHT
+export BROWSEFORGE_DOCKER_DISPLAY_GEOMETRY="${BROWSEFORGE_DOCKER_DISPLAY_WIDTH}x${BROWSEFORGE_DOCKER_DISPLAY_HEIGHT}"
 export BROWSEFORGE_DOCKER_GPU_MODE
 if [ "$BROWSEFORGE_DOCKER_GPU_MODE" = "software" ]; then
   export LIBGL_ALWAYS_SOFTWARE=1
@@ -45,10 +54,11 @@ find /app/profiles -name "SingletonSocket" -delete 2>/dev/null
 mkdir -p ~/.vnc
 echo -e "${VNC_PASSWORD}\n${VNC_PASSWORD}\n" | vncpasswd -u user -wr
 
-# Start KasmVNC X server (Basic Auth protects HTTP, VNC protocol uses None)
-# +extension GLX +render enables WebGL support for Camoufox
+# Start KasmVNC X server (Basic Auth protects HTTP, VNC protocol uses None).
+# The display geometry defaults to the BrowseForge Chromium native persona
+# screen contract so headed window bounds and Screen API values stay coherent.
 /usr/bin/Xvnc :1 \
-  -geometry 2560x1440 \
+  -geometry "$BROWSEFORGE_DOCKER_DISPLAY_GEOMETRY" \
   -depth 24 \
   -sslOnly 0 \
   -SecurityTypes None \
