@@ -12,7 +12,7 @@ This matrix defines the currently supported platforms and browser-runtime availa
 | Camoufox | v135.0.1-beta.24 | 2025-03-15 |
 | CloakBrowser macOS | chromium-v145.0.7632.109.2 | 2026-03-04 |
 | CloakBrowser Linux/Windows | chromium-v146.0.7680.177.4 | 2026-04-28 |
-| BrowseForge Chromium | v0.1.3-alpha.0 | 2026-07-16 |
+| BrowseForge Chromium | v0.1.4-alpha.0 | 2026-07-16 |
 
 ## Support Matrix
 
@@ -32,7 +32,7 @@ BrowseForge releases are independent from browser runtime releases. At startup a
 
 - Camoufox stays on `v135.0.1-beta.24` because that upstream release publishes complete browser binaries for macOS x64/arm64, Linux x64/arm64, and Windows x64. The newer `v152.0.2-alpha` public ZIPs currently contain the fingerprint/font payload but not a runnable browser binary, so BrowseForge does not select them for runtime downloads.
 - CloakBrowser `chromium-v146.0.7680.177.5` is newer than `.4`, but upstream publishes it for Linux x64 and Windows x64 only; Linux arm64 remains on an earlier v146 build and macOS remains on v145. Keep BrowseForge on `chromium-v146.0.7680.177.4` for Linux/Windows and `chromium-v145.0.7632.109.2` for macOS unless a future release restores a cleaner cross-platform set.
-- BrowseForge Chromium `v0.1.3-alpha.0` is the source-level Chromium alpha runtime from the `browseforge-runtime-chromium` release channel and is the fallback runtime on platforms where Camoufox is unsupported. GHCR defaults preinstall Camoufox plus BrowseForge Chromium for native `linux/amd64` and `linux/arm64` images; BrowseForge Chromium launch persona values are resolved separately for `Linux x86_64` and `Linux arm64` so UA, UA-CH, `navigator.platform`, and the native persona JSON remain architecture-coherent.
+- BrowseForge Chromium `v0.1.4-alpha.0` is the source-level Chromium alpha runtime from the `browseforge-runtime-chromium` release channel and is the fallback runtime on platforms where Camoufox is unsupported. GHCR defaults preinstall Camoufox plus BrowseForge Chromium for native `linux/amd64` and `linux/arm64` images; BrowseForge Chromium launch persona values are resolved separately for `Linux x86_64` and `Linux arm64` so UA, UA-CH, `navigator.platform`, and the native persona JSON remain architecture-coherent.
 
 ## Docker Platform Policy
 
@@ -67,14 +67,14 @@ Linux arm64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium
 Windows x64:  https://github.com/CloakHQ/CloakBrowser/releases/download/chromium-v146.0.7680.177.4/cloakbrowser-windows-x64.zip
 ```
 
-### BrowseForge Chromium v0.1.3-alpha.0
+### BrowseForge Chromium v0.1.4-alpha.0
 
 ```text
-Linux x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.3-alpha.0/browseforge-runtime-chromium-v0.1.3-alpha.0-linux-x64.zip
-Linux arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.3-alpha.0/browseforge-runtime-chromium-v0.1.3-alpha.0-linux-arm64.zip
-macOS arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.3-alpha.0/browseforge-runtime-chromium-v0.1.3-alpha.0-macos-arm64.zip
-macOS x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.3-alpha.0/browseforge-runtime-chromium-v0.1.3-alpha.0-macos-x64.zip
-Windows x64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.3-alpha.0/browseforge-runtime-chromium-v0.1.3-alpha.0-windows-x64.zip
+Linux x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.4-alpha.0/browseforge-runtime-chromium-v0.1.4-alpha.0-linux-x64.zip
+Linux arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.4-alpha.0/browseforge-runtime-chromium-v0.1.4-alpha.0-linux-arm64.zip
+macOS arm64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.4-alpha.0/browseforge-runtime-chromium-v0.1.4-alpha.0-macos-arm64.zip
+macOS x64:      https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.4-alpha.0/browseforge-runtime-chromium-v0.1.4-alpha.0-macos-x64.zip
+Windows x64:    https://github.com/nczz/browseforge-runtime-chromium/releases/download/v0.1.4-alpha.0/browseforge-runtime-chromium-v0.1.4-alpha.0-windows-x64.zip
 ```
 
 ## Upgrade Checklist

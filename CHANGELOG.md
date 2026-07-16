@@ -21,7 +21,7 @@ All notable changes should be documented here. This project follows semantic ver
 
 ### Changed
 
-- Published GHCR release images as native `linux/amd64` and `linux/arm64` manifests backed by BrowseForge Chromium runtime `v0.1.3-alpha.0`.
+- Published GHCR release images as native `linux/amd64` and `linux/arm64` manifests backed by BrowseForge Chromium runtime `v0.1.4-alpha.0`.
 - Updated Docker and Linux server references for the `v2.1.4` release tag.
 - Kept the runtime release gate strict: Docker preinstall verifies the matching linux runtime asset before image build.
 

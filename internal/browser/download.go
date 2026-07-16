@@ -22,7 +22,7 @@ import (
 const (
 	CamoufoxVersion              = "v135.0.1-beta.24"
 	CloakBrowserVersion          = "chromium-v146.0.7680.177.4"
-	BrowseForgeChromiumVersion   = "v0.1.3-alpha.0"
+	BrowseForgeChromiumVersion   = "v0.1.4-alpha.0"
 	BrowseForgeChromiumRelease   = "https://github.com/nczz/browseforge-runtime-chromium/releases/download"
 	BrowseForgeChromiumRuntimeID = "browseforge-chromium"
 )
@@ -461,7 +461,7 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 
 // flattenSingleSubdir hoists the contents of a lone subdirectory up into dir.
 // This handles archives that wrap everything in a version-named folder, e.g.
-// browseforge-runtime-chromium-v0.1.3-alpha.0-linux-x64/chrome → chrome.
+// browseforge-runtime-chromium-v0.1.4-alpha.0-linux-x64/chrome → chrome.
 // Files already at the top level (like .version) are preserved.
 func flattenSingleSubdir(dir string) error {
 	entries, err := os.ReadDir(dir)
