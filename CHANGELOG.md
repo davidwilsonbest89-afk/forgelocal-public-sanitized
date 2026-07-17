@@ -2,6 +2,13 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.7 - 2026-07-16
+
+### Fixed
+
+- Pointed BrowseForge to BrowseForge Chromium runtime `v0.1.5-alpha.0` after the detector evidence hardening release.
+- Bumped Docker, Linux server, release, and platform documentation references for the `v2.1.7` release tag.
+
 ## v2.1.6 - 2026-07-16
 
 ### Fixed

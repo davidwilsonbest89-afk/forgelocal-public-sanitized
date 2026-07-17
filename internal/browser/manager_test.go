@@ -1021,6 +1021,37 @@ func TestBrowseForgeDockerSoftwareModeUsesSwiftShaderPersona(t *testing.T) {
 	}
 }
 
+func TestBrowseForgeDockerSoftwareModeEnablesSwiftShaderWebGLFallback(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "software")
+	args := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+
+	for _, want := range []string{
+		"--no-first-run",
+		"--use-gl=angle",
+		"--use-angle=swiftshader-webgl",
+		"--enable-unsafe-swiftshader",
+	} {
+		if !containsArg(args, want) {
+			t.Fatalf("software GPU args missing %q: %#v", want, args)
+		}
+	}
+}
+
+func TestBrowseForgeDockerNativeModeDoesNotForceSwiftShaderWebGLFallback(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "native")
+	args := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+
+	for _, forbidden := range []string{
+		"--use-gl=angle",
+		"--use-angle=swiftshader-webgl",
+		"--enable-unsafe-swiftshader",
+	} {
+		if containsArg(args, forbidden) {
+			t.Fatalf("native GPU args unexpectedly contain %q: %#v", forbidden, args)
+		}
+	}
+}
+
 func TestResolveCloakFingerprintPlatformRejectsInvalidValues(t *testing.T) {
 	_, err := resolveCloakFingerprintPlatform(&config.CloakBrowserConfig{FingerprintPlatform: "ios"}, "darwin")
 	if err == nil {

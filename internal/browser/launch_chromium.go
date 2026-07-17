@@ -126,6 +126,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	persona.Native.Locale.GeoStatus = geoResult.Status
 	if desc.ID == bfruntime.BrowseForgeChromium {
 		args = appendChromiumLaunchPersonaArgs(args, persona)
+		args = appendBrowseForgeDockerSoftwareGPUArgs(args)
 		args = append(args, browseForgeChromiumWindowArgs(persona)...)
 		nativeConfigPath, err := writeBrowseForgeNativeConfig(userDataDir, persona)
 		if err != nil {
@@ -643,6 +644,17 @@ func browseForgeChromiumWindowArgs(persona chromiumLaunchPersona) []string {
 		"--window-position=0,0",
 		fmt.Sprintf("--window-size=%d,%d", width, height),
 	}
+}
+
+func appendBrowseForgeDockerSoftwareGPUArgs(args []string) []string {
+	if browseForgeDockerGPUMode() != "software" {
+		return args
+	}
+	return appendUniqueChromiumArgs(args,
+		"--use-gl=angle",
+		"--use-angle=swiftshader-webgl",
+		"--enable-unsafe-swiftshader",
+	)
 }
 
 func browseForgeChromiumEnv(persona chromiumLaunchPersona) map[string]string {
