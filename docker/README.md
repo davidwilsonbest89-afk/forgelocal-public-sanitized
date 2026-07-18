@@ -146,8 +146,10 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 ## Notes
 
 - The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker automatically pulls the host-native image on x64 servers, Apple Silicon, and ARM servers.
+- Native architecture support removes amd64 emulation from the Docker path. Public fingerprint detector outcomes still depend on GPU/rendering, fonts, locale, proxy, and runtime profile coherence.
+- Native `linux/arm64` Docker support requires the matching BrowseForge Chromium `linux-arm64` runtime artifact. Release and Docker preinstall checks fail when the native artifact is missing instead of falling back to an x64/emulated runtime.
 - Default GHCR browser preinstall is Camoufox plus BrowseForge Chromium. Use `BROWSEFORGE_PREINSTALL_RUNTIMES` at image build time if you need a different set.
-- Docker defaults to coherent software GL (`BROWSEFORGE_DOCKER_GPU_MODE=software`): BrowseForge Chromium reports SwiftShader-aligned WebGL strings instead of pretending a host GPU exists. Set `BROWSEFORGE_DOCKER_GPU_MODE=native` only when the container has real GPU passthrough.
+- Docker defaults to coherent software GL (`BROWSEFORGE_DOCKER_GPU_MODE=software`): BrowseForge Chromium reports SwiftShader-aligned WebGL strings instead of pretending a host GPU exists. `native` keeps browser-default GPU evidence for environments with a real configured GPU path, and `passthrough` is reserved for deliberate host GPU passthrough. Any other value fails closed instead of silently drifting.
 - KasmVNC defaults to `1920x1080`, matching the BrowseForge Chromium native screen persona. Override both `BROWSEFORGE_DOCKER_DISPLAY_WIDTH` and `BROWSEFORGE_DOCKER_DISPLAY_HEIGHT` only when you also want headed browser window/screen evidence to follow that custom desktop size.
 - VNC is intended for watching browser state and basic remote operation.
 - Browser engines, profiles, token data, logs, and backups are host-mounted under `./browseforge/` by default, so recreating the container does not delete them.

@@ -24,7 +24,7 @@ Pin a version tag such as `v2.1.7` for production deployments. Use `latest` only
 
 > The GHCR Docker image publishes native `linux/amd64` and `linux/arm64` manifests. Docker pulls the host-native image automatically on x64 servers, Apple Silicon, and ARM servers. Use `--platform linux/amd64` only for compatibility debugging.
 
-Docker defaults to software GL for container portability and WebGL coherence. Leave `BROWSEFORGE_DOCKER_GPU_MODE=software` unless the host deliberately passes a real GPU into the container; with passthrough, set `BROWSEFORGE_DOCKER_GPU_MODE=native`.
+Docker defaults to software GL for container portability and WebGL coherence. Leave `BROWSEFORGE_DOCKER_GPU_MODE=software` unless the host deliberately exposes a real GPU path. Use `native` for browser-default GPU evidence with an explicitly configured GPU environment, or `passthrough` for deliberate host GPU passthrough; unsupported values fail closed.
 
 ## First Startup and Browser Engines
 

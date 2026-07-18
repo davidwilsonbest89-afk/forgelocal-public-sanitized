@@ -41,6 +41,10 @@ GHCR Docker image 發佈 `linux/amd64` 與 `linux/arm64` multi-arch manifests。
 
 Docker 會在 x64 server、Apple Silicon 與 ARM server 自動拉取 host-native image。只有相容性 debug 才需要指定 `--platform linux/amd64`。
 
+原生架構支援會從 Docker 路徑移除 amd64 emulation。Public fingerprint detector 的結果仍取決於 GPU/rendering、fonts、locale、proxy 與 runtime profile coherence。
+
+原生 `linux/arm64` Docker 支援需要對應的 BrowseForge Chromium `linux-arm64` runtime artifact。Release 與 Docker preinstall 檢查在缺少原生 artifact 時會失敗，不會 fallback 到 x64/emulated runtime。
+
 ## 下載 URL 對照表
 
 ### Camoufox (v135.0.1-beta.24)

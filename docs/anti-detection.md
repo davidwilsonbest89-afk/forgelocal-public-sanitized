@@ -96,10 +96,41 @@ curl -X POST http://127.0.0.1:19280/api/profiles \
 | `--fingerprint-audio-noise` | 指紋池 / seed | AudioContext 穩定 noise |
 | `--fingerprint-fonts-list` | 指紋池 / font pack | 字型清單與目標 OS 一致性 |
 | `--fingerprint-webgl-vendor` / `--fingerprint-webgl-renderer` | 指紋池 / GPU profile | WebGL vendor/renderer；同一組值也寫入 native persona JSON |
-| `--browseforge-stealth-config` | BrowseForge native persona JSON | persona hash、origin salt、browser/platform/locale/hardware/screen/GPU/WebRTC/storage metadata |
+| `--browseforge-stealth-config` | BrowseForge PersonaContract JSON | persona hash、origin salt，以及 browser/platform/locale/network/DNS/geolocation/hardware/screen/GPU/fonts/canvas/math/geometry/audio/plugins/media/permissions/WebRTC/storage/realm metadata |
 | `--browseforge-stealth-mode=enabled` | `runtimes.browseforge-chromium.settings.native_mode` | 啟用 native stealth substrate |
 
-BrowseForge Chromium 只接受 coherent native persona platform 組合：Windows=`Win32`/x86/64、macOS=`MacIntel`/x86/64、Linux x64=`Linux x86_64`/x86/64、Linux arm64=`Linux arm64`/arm/64。若指紋池值和 resolved runtime platform/locale 衝突，BrowseForge 會捨棄不相容值並由 canonical persona 重新產生 switch 與 native JSON。
+BrowseForge Chromium 只接受 coherent native persona platform 組合：Windows=`Win32`/x86/64、macOS=`MacIntel`/x86 或 arm/64、Linux x64=`Linux x86_64`/x86/64、Linux arm64=`Linux aarch64`/arm/64。若指紋池值和 resolved runtime platform/locale 衝突，BrowseForge 會捨棄不相容值並由 canonical persona 重新產生 switch 與 native JSON。
+
+### PersonaContract 與 detector regression
+
+`browseforge-chromium` launch path 會先產生 PersonaContract，再寫入 `BrowseForgeNative/persona.json`。PersonaContract 是 BrowserLeaks / BrowserScan / CreepJS / SannySoft smoke 的單一比對基準，至少涵蓋：
+
+- Browser identity：UA、Chrome/Chromium brands、full version list、UA-CH / Sec-CH-* platform、arch、bitness、mobile、model、form factors。
+- Locality：timezone、timezone offset、locale、Accept-Language、navigator language/languages、Sec-CH-Lang。
+- Network：proxy region、country/region metadata、DNS resolver policy、WebRTC redaction policy、geolocation policy。
+- Device/rendering：hardwareConcurrency、deviceMemory、screen/avail/outer/inner/viewport/DPR/touch/orientation、GPU mode、WebGL/WebGL2/WebGPU profile、fonts/font metrics/emoji、canvas/text/emoji、math intrinsic sample、client rect geometry、audio、plugins/MIME/PDF、codecs/media devices、permissions、storage quota。
+- Realm policy：top window、same-origin iframe、sandbox/nested iframe、workers、service worker、OffscreenCanvas worker 都必須使用同一份 contract。
+
+Launch 前會 fail closed 下列不一致 tuple：UA 與 platform 不符、UA-CH platform/arch/bitness 與 JS platform 不符、locale / Accept-Language / navigator.languages / Sec-CH-Lang 不一致、screen/avail/inner/outer/viewport/DPR/touch tuple 不一致、desktop persona 宣告 mobile form factor、proxy persona 缺 region/country metadata、proxy persona 未使用 proxy-aligned DNS/geolocation/WebRTC direct-IP redaction、non-proxy persona 夾帶 proxy metadata、IP country 與 timezone 不一致、zh/ja/ko locale 缺 CJK font profile、啟用 PDF profile 時缺 Chromium plugin/MIME entries、macOS persona 宣告 SwiftShader renderer、缺 service-worker realm target、停用 stable math 或 client-rect policy。
+
+Docker GPU mode 是 PersonaContract 的明確輸入，不允許自動猜測：`software` 產生 SwiftShader-aligned WebGL profile 並加上 SwiftShader launch flags；`native` 保留 browser-default GPU evidence；`passthrough` 僅表示 operator 已明確提供 host GPU passthrough。其他 `BROWSEFORGE_DOCKER_GPU_MODE` 值會在 entrypoint / launch 前 fail closed，避免 linux/arm64 detector evidence 在 software/native/passthrough 間靜默漂移。
+
+半自動 detector harness：
+
+```bash
+node scripts/detector-harness.js collector > /tmp/browseforge-detector-collector.js
+node scripts/detector-harness.js compare profiles/<profile>/browser-data/BrowseForgeNative/persona.json /tmp/detector-sample.json
+node scripts/detector-harness.js selftest
+node scripts/detector-harness.js matrix > /tmp/browseforge-detector-matrix.json
+```
+
+`collector` 產生可透過 BrowseForge REST eval / Playwright console 執行的 browser-side collector，收集：
+
+- Realm：top window、same-origin iframe、sandbox iframe、fragment iframe、nested iframe、detached iframe（若 runtime 允許）、dedicated worker、shared worker、service worker controller、OffscreenCanvas/WebGL。
+- Identity/locality：navigator、UAData high entropy（brands、fullVersionList、platformVersion、architecture、bitness、model、formFactors）、Intl/Date timezone、screen/viewport/DPR/orientation。
+- Rendering/capability：canvas、math intrinsic hash、client-rect geometry hash、WebGL/WebGL2/WebGPU limits/extensions/shader precision、plugins/MIME、storage、geolocation API/permission state、media device API、codec support、Notification permission/query state、webdriver attributes、Selenium/WebDriver/CDP globals 與 `window.chrome` shape。
+
+`compare` 只比對實際收集到且 PersonaContract 有宣告的欄位，並檢查 BrowserLeaks/BrowserScan 可抄錄的 optional HTTP headers（User-Agent、Accept-Language、Sec-CH-UA、Sec-CH-UA-Full-Version-List、Sec-CH-UA-Platform、Sec-CH-UA-Platform-Version、Sec-CH-UA-Arch、Sec-CH-UA-Bitness、Sec-CH-UA-Mobile、Sec-CH-UA-Model、Sec-CH-UA-Form-Factors、Sec-CH-Lang）與 realm parity：UA、platform、language/languages、hardwareConcurrency、deviceMemory、Intl timezone/locale、Date offset、DPR、WebGL vendor/renderer、canvas sample；optional realm 若 runtime 不允許存取會標成 unsupported 並略過。`matrix` 輸出每個 public detector target 的必收 artifact checklist，並附上 `document.readyState=complete`、DOM/resource stable window >= 3000ms、最小 text/node count 的穩定結果條件；沒有跑過 public detector 時不可宣稱 pass。
 
 ### 啟用前驗證
 
@@ -119,6 +150,8 @@ BrowseForge Chromium 只接受 coherent native persona platform 組合：Windows
 - release-grade 仍需要 Linux release asset signing policy、macOS Developer ID + notarization、Windows Authenticode。
 - `download_url` 正式化前，自動 installer 應使用本地路徑、Docker seed 或明確的 alpha asset URL。
 - 不建議把 `browseforge-chromium` 設成 `default_runtime_id`，除非 operator 明確接受 alpha runtime 風險。
+- BrowseForge Chromium 預設 font contract 是 `persona-default` deterministic font metadata：不設定 `runtimes.browseforge-chromium.settings.fonts_dir` 時，即使 fingerprint pool 內有 `fonts` 陣列，也不會輸出 `--fingerprint-fonts-list`，避免宣稱 runtime 尚未提供的 font metrics/raster coherence。只有 operator 明確提供 font corpus 目錄時才允許 ASCII、單一 family <=128 bytes、整體 <=8192 bytes 的 explicit font allowlist。
+- BrowseForge Chromium proxy profile 必須提供 redacted `proxy.region`（例如 `us-ny`、`tw-taipei`），且 region 必須可映射到 country metadata；沒有 region 的 proxy 會在 browser launch 前 fail closed，避免 Playwright 實際走 proxy 但 PersonaContract/DNS/geolocation 仍宣告 local。
 
 ---
 
@@ -268,14 +301,26 @@ node scripts/generate-fingerprints.js --browser chrome --os windows --count 500
 
 ## 偵測測試網站
 
-| 網站 | 測試重點 |
-|------|---------|
-| https://bot.sannysoft.com | 自動化偵測（Playwright 特徵） |
-| https://browserleaks.com | 全面指紋（Canvas、WebGL、字型、WebRTC） |
-| https://abrahamjuliot.github.io/creepjs/ | 指紋一致性分析 |
-| https://pixelscan.net | 指紋一致性 + 異常偵測 |
-| https://iphey.com | 綜合反偵測評分 |
-| https://www.browserscan.net | 指紋洩漏 + Proxy 偵測 |
+| 網站 / source | 測試重點 | 必收 artifact |
+|------|---------|-------------|
+| https://bot.sannysoft.com/ | HeadlessChrome、webdriver、Selenium/WebDriver/CDP globals、webdriver DOM attributes、plugins/MIME/PDF、permissions/Notification、language、WebGL、h264 | result table / screenshot |
+| https://browserleaks.com/client-hints | UA-CH / Sec-CH 與 navigator UAData | visible fields / JSON |
+| https://browserleaks.com/webgl | WebGL vendor/renderer、extensions、limits、shader precision | WebGL report |
+| https://browserleaks.com/canvas | Canvas / text / emoji rendering stability | canvas hash/report |
+| https://browserleaks.com/fonts | font set、font metrics、emoji font | font report |
+| https://browserleaks.com/webrtc | WebRTC host/container/public IP leak | WebRTC report |
+| https://browserleaks.com/javascript | JavaScript feature shape、screen、navigator、storage、geolocation API/permission、client rects | JavaScript report |
+| https://www.browserscan.net/ | Browser、Location、IP、Hardware、Software trust coherence | report sections |
+| https://www.browserscan.net/client-hints | UA-CH / JS UAData parity | Client Hints report |
+| https://www.browserscan.net/dns-leak | DNS resolver geolocation/ASN leak | DNS leak report |
+| https://www.browserscan.net/webrtc | WebRTC host/container/public IP leak | WebRTC report |
+| https://www.browserscan.net/bot-detection | automation/headless signals | bot detection report |
+| https://iphey.com/ | Browser、Location、IP、Hardware、Software trust score | main score sections |
+| https://abrahamjuliot.github.io/creepjs/ | prototype lies、realm parity、fonts/canvas/audio/math/screen/client-rects | main result |
+| https://abrahamjuliot.github.io/creepjs/tests/workers.html | worker parity | worker test result |
+| https://abrahamjuliot.github.io/creepjs/tests/iframes.html | iframe parity | iframe test result |
+| https://abrahamjuliot.github.io/creepjs/tests/prototype.html | prototype/native descriptor parity | prototype test result |
+| https://pixelscan.net | 指紋一致性、IP / timezone / WebRTC / OS mismatch | fingerprint / bot checker result |
 
 ---
 

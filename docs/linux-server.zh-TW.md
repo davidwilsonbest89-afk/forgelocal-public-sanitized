@@ -24,7 +24,7 @@ docker run -d --name browseforge \
 
 > GHCR Docker image 發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構；只有相容性 debug 才需要指定 `--platform linux/amd64`。
 
-Docker 預設使用軟體 GL，以維持容器可攜性與 WebGL 一致性。除非 host 已明確把真實 GPU passthrough 進容器，否則保留 `BROWSEFORGE_DOCKER_GPU_MODE=software`；使用 passthrough 時再設定 `BROWSEFORGE_DOCKER_GPU_MODE=native`。
+Docker 預設使用軟體 GL，以維持容器可攜性與 WebGL 一致性。除非 host 已明確提供真實 GPU path，否則保留 `BROWSEFORGE_DOCKER_GPU_MODE=software`。已配置 GPU 環境且要保留 browser-default GPU evidence 時使用 `native`，明確 host GPU passthrough 時使用 `passthrough`；不支援的值會 fail closed。
 
 ## 首次啟動與 Browser Engines
 

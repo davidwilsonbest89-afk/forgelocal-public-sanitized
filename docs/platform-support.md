@@ -40,6 +40,10 @@ The published GHCR Docker image is multi-arch for `linux/amd64` and `linux/arm64
 
 Docker pulls the host-native image automatically on x64 servers, Apple Silicon, and ARM servers. Use `--platform linux/amd64` only for compatibility debugging.
 
+Native architecture support removes amd64 emulation from the Docker path. Public fingerprint detector outcomes still depend on GPU/rendering, fonts, locale, proxy, and runtime profile coherence.
+
+Native `linux/arm64` Docker support requires the matching BrowseForge Chromium `linux-arm64` runtime artifact. Release and Docker preinstall checks fail when the native artifact is missing instead of falling back to an x64/emulated runtime.
+
 ## Download URL Reference
 
 ### Camoufox v135.0.1-beta.24

@@ -134,7 +134,9 @@ REST API 的 `/api/backup` 是較輕量的 profile metadata backup；若要保�
 ## 注意事項
 
 - GHCR Docker image 發佈原生 `linux/amd64` 與 `linux/arm64` manifests。x64 server、Apple Silicon 與 ARM server 會自動拉取對應架構。
-- Docker 預設使用一致的軟體 GL（`BROWSEFORGE_DOCKER_GPU_MODE=software`）：BrowseForge Chromium 會回報與 SwiftShader 對齊的 WebGL 字串，不假裝有 host GPU。只有在容器已做真實 GPU passthrough 時，才設定 `BROWSEFORGE_DOCKER_GPU_MODE=native`。
+- 原生架構支援會從 Docker 路徑移除 amd64 emulation。Public fingerprint detector 的結果仍取決於 GPU/rendering、fonts、locale、proxy 與 runtime profile coherence。
+- 原生 `linux/arm64` Docker 支援需要對應的 BrowseForge Chromium `linux-arm64` runtime artifact。Release 與 Docker preinstall 檢查在缺少原生 artifact 時會失敗，不會 fallback 到 x64/emulated runtime。
+- Docker 預設使用一致的軟體 GL（`BROWSEFORGE_DOCKER_GPU_MODE=software`）：BrowseForge Chromium 會回報與 SwiftShader 對齊的 WebGL 字串，不假裝有 host GPU。`native` 保留 browser-default GPU evidence 給已配置真實 GPU path 的環境，`passthrough` 只用於明確 host GPU passthrough；其他值會 fail closed，不會靜默漂移。
 - KasmVNC 預設為 `1920x1080`，與 BrowseForge Chromium native screen persona 對齊。只有在你希望 headed browser 視窗與 Screen API evidence 同步採用自訂桌面大小時，才同時覆寫 `BROWSEFORGE_DOCKER_DISPLAY_WIDTH` 與 `BROWSEFORGE_DOCKER_DISPLAY_HEIGHT`。
 - VNC 用於觀看瀏覽器畫面和基本操作
 - 中文輸入和剪貼簿在 Chrome 瀏覽器上 seamless 支援
