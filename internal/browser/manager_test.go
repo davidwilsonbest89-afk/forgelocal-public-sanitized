@@ -5,6 +5,8 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"reflect"
+	"slices"
 	"strings"
 	"testing"
 	"unicode/utf8"
@@ -101,6 +103,19 @@ func TestSanitizeExtraChromiumArgsRejectsManagedFingerprintFlags(t *testing.T) {
 		"--fingerprint-screen-width=1280",
 		"--fingerprint-screen-height=720",
 		"--fingerprint-hardware-concurrency=8",
+		"--fingerprint-ua-full-version=150.0.7871.101",
+		"--fingerprint-ua-platform=Linux",
+		"--fingerprint-ua-platform-version=",
+		"--fingerprint-ua-architecture=arm",
+		"--fingerprint-ua-bitness=64",
+		"--fingerprint-ua-mobile=?0",
+		"--fingerprint-ua-model=",
+		"--fingerprint-ua-form-factors=Desktop",
+		"--fingerprint-sec-ch-ua=\"Chromium\";v=\"150\"",
+		"--fingerprint-sec-ch-ua-full-version-list=\"Chromium\";v=\"150.0.7871.101\"",
+		"--force-device-scale-factor=2",
+		"--window-position=1,1",
+		"--window-size=800,600",
 		"--disable-features=Translate",
 	})
 
@@ -421,6 +436,12 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 		"--fingerprint-ua-platform=Windows",
 		"--fingerprint-ua-architecture=x86",
 		"--fingerprint-ua-bitness=64",
+		"--fingerprint-ua-platform-version=10.0.0",
+		"--fingerprint-ua-mobile=?0",
+		"--fingerprint-ua-model=",
+		"--fingerprint-ua-form-factors=",
+		"--fingerprint-sec-ch-ua=\"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"150\"",
+		"--fingerprint-sec-ch-ua-full-version-list=\"Not;A=Brand\";v=\"8.0.0.0\", \"Chromium\";v=\"150.0.0.0\"",
 		"--fingerprint-accept-language=en-US,en",
 		"--fingerprint-hardware-concurrency=8",
 		"--fingerprint-device-memory=8",
@@ -458,6 +479,22 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	}
 	if browserType.options.Env["TZ"] != "America/New_York" || browserType.options.Env["BROWSEFORGE_INTL_LOCALE"] != "en-US" {
 		t.Fatalf("launch env = %#v, want TZ and BROWSEFORGE_INTL_LOCALE", browserType.options.Env)
+	}
+	for key, want := range map[string]string{
+		"User-Agent":                  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150.0.0.0 Safari/537.36",
+		"Accept-Language":             "en-US,en",
+		"Sec-CH-UA":                   "\"Not;A=Brand\";v=\"8\", \"Chromium\";v=\"150\"",
+		"Sec-CH-UA-Full-Version-List": "\"Not;A=Brand\";v=\"8.0.0.0\", \"Chromium\";v=\"150.0.0.0\"",
+		"Sec-CH-UA-Platform":          "\"Windows\"",
+		"Sec-CH-UA-Platform-Version":  "\"10.0.0\"",
+		"Sec-CH-UA-Arch":              "\"x86\"",
+		"Sec-CH-UA-Bitness":           "\"64\"",
+		"Sec-CH-UA-Mobile":            "?0",
+		"Sec-CH-Lang":                 "en-US,en",
+	} {
+		if got := browserType.options.ExtraHttpHeaders[key]; got != want {
+			t.Fatalf("extra HTTP header %s = %q, want %q", key, got, want)
+		}
 	}
 	nativeConfigPath := filepath.Join(profileDir, "browser-data", "BrowseForgeNative", "persona.json")
 	nativeConfigData, err := os.ReadFile(nativeConfigPath)
@@ -519,6 +556,17 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	}
 	if got := nativeStorage["persistent"]; got != true {
 		t.Fatalf("native storage persistent = %#v, want true", got)
+	}
+	for key, want := range map[string]any{
+		"cookies":         "profile-persistent",
+		"local_storage":   "profile-persistent",
+		"session_storage": "session-scoped",
+		"indexed_db":      "profile-persistent",
+		"quota_behavior":  "chromium-profile-quota",
+	} {
+		if got := nativeStorage[key]; got != want {
+			t.Fatalf("native storage %s = %#v, want %#v", key, got, want)
+		}
 	}
 	if browserType.options.Proxy == nil {
 		t.Fatalf("launch proxy was not configured")
@@ -664,6 +712,7 @@ func TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch(t *testing.T) {
 }
 
 func TestChromiumLaunchPersonaPlatformMappings(t *testing.T) {
+	desktop := []string{}
 	cases := []struct {
 		name     string
 		platform string
@@ -673,29 +722,29 @@ func TestChromiumLaunchPersonaPlatformMappings(t *testing.T) {
 		{
 			name:     "windows",
 			platform: "Win32",
-			want:     browseForgeNativePlatform{OS: "windows", Arch: "x86", Platform: "Win32", PlatformCH: "Windows", Bitness: "64"},
+			want:     browseForgeNativePlatform{OS: "windows", Arch: "x86", Platform: "Win32", PlatformCH: "Windows", PlatformVersion: "10.0.0", Bitness: "64", FormFactors: desktop},
 		},
 		{
 			name:     "macos x64",
 			platform: "MacIntel",
 			goarch:   "amd64",
-			want:     browseForgeNativePlatform{OS: "macos", Arch: "x86", Platform: "MacIntel", PlatformCH: "macOS", Bitness: "64"},
+			want:     browseForgeNativePlatform{OS: "macos", Arch: "x86", Platform: "MacIntel", PlatformCH: "macOS", PlatformVersion: "10.15.7", Bitness: "64", FormFactors: desktop},
 		},
 		{
 			name:     "macos arm64",
 			platform: "MacIntel",
 			goarch:   "arm64",
-			want:     browseForgeNativePlatform{OS: "macos", Arch: "arm", Platform: "MacIntel", PlatformCH: "macOS", Bitness: "64"},
+			want:     browseForgeNativePlatform{OS: "macos", Arch: "arm", Platform: "MacIntel", PlatformCH: "macOS", PlatformVersion: "10.15.7", Bitness: "64", FormFactors: desktop},
 		},
 		{
 			name:     "linux x64",
 			platform: "Linux x86_64",
-			want:     browseForgeNativePlatform{OS: "linux", Arch: "x86", Platform: "Linux x86_64", PlatformCH: "Linux", Bitness: "64"},
+			want:     browseForgeNativePlatform{OS: "linux", Arch: "x86", Platform: "Linux x86_64", PlatformCH: "Linux", Bitness: "64", FormFactors: desktop},
 		},
 		{
 			name:     "linux arm64",
 			platform: "Linux aarch64",
-			want:     browseForgeNativePlatform{OS: "linux", Arch: "arm", Platform: "Linux aarch64", PlatformCH: "Linux", Bitness: "64"},
+			want:     browseForgeNativePlatform{OS: "linux", Arch: "arm", Platform: "Linux aarch64", PlatformCH: "Linux", Bitness: "64", FormFactors: desktop},
 		},
 	}
 
@@ -714,7 +763,7 @@ func TestChromiumLaunchPersonaPlatformMappings(t *testing.T) {
 			if err != nil {
 				t.Fatalf("build persona: %v", err)
 			}
-			if persona.Native.Platform != tc.want {
+			if !reflect.DeepEqual(persona.Native.Platform, tc.want) {
 				t.Fatalf("platform = %#v, want %#v", persona.Native.Platform, tc.want)
 			}
 			args := appendChromiumLaunchPersonaArgs(nil, persona)
@@ -727,6 +776,443 @@ func TestChromiumLaunchPersonaPlatformMappings(t *testing.T) {
 				if !containsArg(args, wantArg) {
 					t.Fatalf("args missing %q: %#v", wantArg, args)
 				}
+			}
+			if !persona.Native.Math.Stable {
+				t.Fatal("math stable policy is disabled")
+			}
+			if !persona.Native.Geometry.ClientRectsStable {
+				t.Fatal("client rect stable policy is disabled")
+			}
+		})
+	}
+}
+
+func TestBrowseForgePersonaContractRejectsIncoherentTuples(t *testing.T) {
+	basePersona, err := buildChromiumLaunchPersona(
+		&profile.Profile{ID: "contract-valid", RuntimeID: "browseforge-chromium"},
+		bfruntime.BrowseForgeChromium,
+		"Linux aarch64",
+		"UTC",
+		"en-US",
+		"",
+		"arm64",
+		&config.CloakBrowserConfig{PluginsPDF: "enabled"},
+	)
+	if err != nil {
+		t.Fatalf("build base persona: %v", err)
+	}
+	base := basePersona.Native
+	if err := validateBrowseForgePersonaContract(base); err != nil {
+		t.Fatalf("base persona should be valid: %v", err)
+	}
+
+	macPlatform, err := nativePersonaPlatform("MacIntel", "amd64")
+	if err != nil {
+		t.Fatalf("mac platform: %v", err)
+	}
+	macUA := defaultChromiumUserAgent("MacIntel")
+	macBrands := chromiumBrandVersions(chromiumVersionFromUserAgent(macUA))
+	x86Platform, err := nativePersonaPlatform("Linux x86_64", "amd64")
+	if err != nil {
+		t.Fatalf("linux x86 platform: %v", err)
+	}
+	makeProxyPersona := func(cfg *browseForgeNativePersonaConfig) {
+		cfg.Network.ProxyEnabled = true
+		cfg.Network.ProxyType = "configured"
+		cfg.Network.ProxyRegion = "us-ny"
+		cfg.Network.CountryCode = "US"
+		cfg.Network.RegionCode = "NY"
+		cfg.DNS.Mode = "proxy-aligned"
+		cfg.DNS.ResolverPolicy = "no-host-or-container-resolver-leak"
+		cfg.Geolocation.Mode = "proxy-aligned"
+		cfg.Geolocation.CountryCode = "US"
+		cfg.Geolocation.RegionCode = "NY"
+		cfg.WebRTC.Mode = "disable_non_proxied_udp"
+		cfg.WebRTC.DirectIPRedaction = true
+	}
+
+	cases := []struct {
+		name    string
+		mutate  func(*browseForgeNativePersonaConfig)
+		wantErr string
+	}{
+		{
+			name: "windows UA with linux platform",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.UserAgent = defaultChromiumUserAgent("Win32")
+				cfg.Browser.ClientHints.ExpectedNavigatorUA = cfg.Browser.UserAgent
+			},
+			wantErr: "user_agent",
+		},
+		{
+			name: "macOS persona with SwiftShader renderer",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Platform = macPlatform
+				cfg.Browser.UserAgent = macUA
+				cfg.Browser.ClientHints = chromiumClientHints(macUA, macPlatform, macBrands)
+				cfg.GPU.Renderer = "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+			},
+			wantErr: "SwiftShader",
+		},
+		{
+			name: "x64 UA with ARM UA-CH",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Platform = x86Platform
+				cfg.Browser.UserAgent = defaultChromiumUserAgent("Linux x86_64")
+				cfg.Browser.ClientHints = chromiumClientHints(cfg.Browser.UserAgent, x86Platform, chromiumBrandVersions(chromiumVersionFromUserAgent(cfg.Browser.UserAgent)))
+				cfg.Browser.ClientHints.Architecture = "arm"
+			},
+			wantErr: "x64 user-agent",
+		},
+		{
+			name: "zh-TW locale without CJK font profile",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Locale.Locale = "zh-TW"
+				cfg.Locale.AcceptLanguage = "zh-TW,zh"
+				cfg.Locale.NavigatorLanguage = "zh-TW"
+				cfg.Locale.NavigatorLanguages = []string{"zh-TW", "zh"}
+				cfg.Locale.SecCHLang = "zh-TW,zh"
+				cfg.Fonts.CJK = false
+			},
+			wantErr: "CJK font",
+		},
+		{
+			name: "ja-JP locale without CJK font profile",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Locale.Locale = "ja-JP"
+				cfg.Locale.AcceptLanguage = "ja-JP,ja"
+				cfg.Locale.NavigatorLanguage = "ja-JP"
+				cfg.Locale.NavigatorLanguages = []string{"ja-JP", "ja"}
+				cfg.Locale.SecCHLang = "ja-JP,ja"
+				cfg.Fonts.CJK = false
+			},
+			wantErr: "CJK font",
+		},
+		{
+			name: "US IP metadata with Asia timezone",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Network.CountryCode = "US"
+				cfg.Locale.Timezone = "Asia/Taipei"
+			},
+			wantErr: "timezone",
+		},
+		{
+			name: "Accept-Language mismatches locale",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Locale.Locale = "en-US"
+				cfg.Locale.AcceptLanguage = "zh-TW,zh"
+				cfg.Locale.NavigatorLanguage = "zh-TW"
+				cfg.Locale.NavigatorLanguages = []string{"zh-TW", "zh"}
+				cfg.Locale.SecCHLang = "zh-TW,zh"
+			},
+			wantErr: "Accept-Language",
+		},
+		{
+			name: "navigator language mismatches Accept-Language",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Locale.NavigatorLanguage = "zh-TW"
+			},
+			wantErr: "navigator.language",
+		},
+		{
+			name: "Sec-CH-Lang mismatches navigator languages",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Locale.SecCHLang = "en-US"
+			},
+			wantErr: "Sec-CH-Lang",
+		},
+		{
+			name: "desktop UA with mobile form factor",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.ClientHints.FormFactors = []string{"Mobile"}
+			},
+			wantErr: "Sec-CH-UA-Form-Factors",
+		},
+		{
+			name: "screen avail exceeds screen size",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Screen.AvailWidth = cfg.Screen.Width + 1
+			},
+			wantErr: "screen avail",
+		},
+		{
+			name: "window inner exceeds outer size",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Screen.InnerHeight = cfg.Screen.OuterHeight + 1
+			},
+			wantErr: "window inner",
+		},
+		{
+			name: "desktop persona advertises touch points",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Screen.TouchPoints = 5
+			},
+			wantErr: "touch points",
+		},
+		{
+			name: "chrome persona missing PDF plugin entry",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Plugins.Plugins = nil
+			},
+			wantErr: "PDF plugin entry",
+		},
+		{
+			name: "chrome persona missing PDF MIME",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Plugins.MIMETypes = nil
+			},
+			wantErr: "application/pdf",
+		},
+		{
+			name: "proxy persona missing country metadata",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				makeProxyPersona(cfg)
+				cfg.Network.CountryCode = ""
+			},
+			wantErr: "known request country",
+		},
+		{
+			name: "proxy persona uses local DNS policy",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				makeProxyPersona(cfg)
+				cfg.DNS.Mode = "local"
+				cfg.DNS.ResolverPolicy = "local-network-consistent"
+			},
+			wantErr: "proxy-aligned DNS",
+		},
+		{
+			name: "proxy persona geolocation mismatches proxy region",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				makeProxyPersona(cfg)
+				cfg.Geolocation.CountryCode = "TW"
+			},
+			wantErr: "geolocation metadata",
+		},
+		{
+			name: "non-proxy persona includes proxy metadata",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Network.ProxyRegion = "us-ny"
+			},
+			wantErr: "non-proxy persona",
+		},
+		{
+			name: "proxy persona leaks direct WebRTC IP",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				makeProxyPersona(cfg)
+				cfg.WebRTC.DirectIPRedaction = false
+			},
+			wantErr: "WebRTC",
+		},
+		{
+			name: "proxy persona permits public WebRTC routes",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				makeProxyPersona(cfg)
+				cfg.WebRTC.Mode = "default_public_interface_only"
+				cfg.WebRTC.DirectIPRedaction = true
+			},
+			wantErr: "WebRTC",
+		},
+		{
+			name: "UAData platform mismatches JS platform",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.ClientHints.Platform = "Windows"
+			},
+			wantErr: "Sec-CH-UA-Platform",
+		},
+		{
+			name: "math policy disabled",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Math.Stable = false
+			},
+			wantErr: "math",
+		},
+		{
+			name: "client rect policy disabled",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Geometry.ClientRectsStable = false
+			},
+			wantErr: "client rect",
+		},
+		{
+			name: "missing service worker realm target",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Realms.Targets = []string{"window", "same-origin-iframe", "sandbox-iframe", "nested-iframe", "dedicated-worker", "shared-worker", "offscreen-canvas-worker"}
+			},
+			wantErr: "service-worker",
+		},
+		{
+			name: "missing required realm target",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Realms.Targets = []string{"window", "same-origin-iframe", "sandbox-iframe", "nested-iframe", "dedicated-worker", "shared-worker", "service-worker"}
+			},
+			wantErr: "offscreen-canvas-worker",
+		},
+		{
+			name: "missing schema version",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.SchemaVersion = ""
+			},
+			wantErr: "schema_version",
+		},
+		{
+			name: "missing runtime id",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.RuntimeID = ""
+			},
+			wantErr: "runtime_id",
+		},
+		{
+			name: "missing seed",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Seed = 0
+			},
+			wantErr: "seed",
+		},
+		{
+			name: "browser family mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.Family = "firefox"
+			},
+			wantErr: "browser family",
+		},
+		{
+			name: "browser version metadata mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.FullVersion = "149.0.0.0"
+			},
+			wantErr: "full_version",
+		},
+		{
+			name: "sec ch brand string mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.ClientHints.SecCHUA = `"Not Chromium";v="150"`
+			},
+			wantErr: "Sec-CH-UA",
+		},
+		{
+			name: "sec ch full version string mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.ClientHints.SecCHUAFullVersion = `"Not Chromium";v="150.0.0.0"`
+			},
+			wantErr: "Sec-CH-UA-Full-Version-List",
+		},
+		{
+			name: "platform version mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.ClientHints.PlatformVersion = "10.0.0"
+			},
+			wantErr: "Sec-CH-UA-Platform-Version",
+		},
+		{
+			name: "form factors mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Browser.ClientHints.FormFactors = []string{"Desktop"}
+			},
+			wantErr: "Sec-CH-UA-Form-Factors",
+		},
+		{
+			name: "timezone offset mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Locale.TimezoneOffsetMins++
+			},
+			wantErr: "timezone offset",
+		},
+		{
+			name: "hardware missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Hardware.HardwareConcurrency = 0
+			},
+			wantErr: "hardware",
+		},
+		{
+			name: "screen color depth missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Screen.ColorDepth = 0
+			},
+			wantErr: "color depth",
+		},
+		{
+			name: "screen orientation invalid",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Screen.Orientation = "sideways"
+			},
+			wantErr: "orientation",
+		},
+		{
+			name: "webrtc proxy region mismatch",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				makeProxyPersona(cfg)
+				cfg.WebRTC.ProxyRegion = "tw-taipei"
+			},
+			wantErr: "WebRTC proxy region",
+		},
+		{
+			name: "gpu renderer missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.GPU.Renderer = ""
+			},
+			wantErr: "GPU vendor/renderer",
+		},
+		{
+			name: "webgl baseline missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.GPU.Limits = nil
+			},
+			wantErr: "WebGL baseline",
+		},
+		{
+			name: "font profile missing families",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Fonts.Families = nil
+			},
+			wantErr: "font profile",
+		},
+		{
+			name: "canvas stable baseline missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Canvas.RenderHashBaseline = ""
+			},
+			wantErr: "stable canvas",
+		},
+		{
+			name: "audio stable baseline missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Audio.SampleRate = 0
+			},
+			wantErr: "stable audio",
+		},
+		{
+			name: "media codec baseline missing",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Media.H264 = false
+				cfg.Media.VP9 = false
+				cfg.Media.AV1 = false
+			},
+			wantErr: "media codec",
+		},
+		{
+			name: "notification policy invalid",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Permissions.Notification = "silent"
+			},
+			wantErr: "notification",
+		},
+		{
+			name: "storage persistent policy incomplete",
+			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.Storage.Cookies = "disabled"
+			},
+			wantErr: "storage policy",
+		},
+	}
+
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			cfg := base
+			tc.mutate(&cfg)
+			err := validateBrowseForgePersonaContract(cfg)
+			if err == nil || !strings.Contains(err.Error(), tc.wantErr) {
+				t.Fatalf("error = %v, want containing %q", err, tc.wantErr)
 			}
 		})
 	}
@@ -792,7 +1278,7 @@ func TestChromiumLaunchPersonaRepairsIncompatiblePoolValues(t *testing.T) {
 	}
 }
 
-func TestChromiumLaunchPersonaPreservesCompatiblePoolValues(t *testing.T) {
+func TestChromiumLaunchPersonaUsesDeterministicFontsWithoutExplicitCorpus(t *testing.T) {
 	const linuxArmUA = "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.101 Safari/537.36"
 	persona, err := buildChromiumLaunchPersona(
 		&profile.Profile{
@@ -845,14 +1331,98 @@ func TestChromiumLaunchPersonaPreservesCompatiblePoolValues(t *testing.T) {
 		"--fingerprint-screen-avail-height=860",
 		"--fingerprint-canvas-noise=111",
 		"--fingerprint-audio-noise=222",
-		"--fingerprint-fonts-list=Noto Sans|Arial",
+		"--fingerprint-storage-quota=4096",
 		"--fingerprint-webgl-vendor=Google Inc. (AMD)",
 		"--fingerprint-webgl-renderer=ANGLE (AMD, Radeon, Vulkan)",
-		"--fingerprint-storage-quota=4096",
 	} {
 		if !containsArg(args, want) {
 			t.Fatalf("args missing %q: %#v", want, args)
 		}
+	}
+	if persona.HasFontsList || persona.FontsList != "" || persona.Native.Fonts.Source != "persona-default" || len(persona.Native.Fonts.Families) == 0 {
+		t.Fatalf("fonts contract = %#v with HasFontsList=%v and FontsList=%q, want deterministic persona-default metadata without launch allowlist", persona.Native.Fonts, persona.HasFontsList, persona.FontsList)
+	}
+	if !slices.Contains(persona.Native.Fonts.Families, "Noto Sans CJK TC") {
+		t.Fatalf("font families = %#v, want locale-aware CJK family", persona.Native.Fonts.Families)
+	}
+	for _, arg := range args {
+		if strings.HasPrefix(arg, "--fingerprint-fonts-list=") {
+			t.Fatalf("args unexpectedly include default font allowlist without explicit corpus: %#v", args)
+		}
+	}
+}
+
+func TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList(t *testing.T) {
+	fontsDir := t.TempDir()
+	encodedLong := strings.Repeat("A", 129)
+	cases := []struct {
+		name  string
+		fonts []any
+	}{
+		{name: "pipe", fonts: []any{"Arial|Calibri"}},
+		{name: "control", fonts: []any{"Arial\n"}},
+		{name: "unicode", fonts: []any{"蘋方-繁"}},
+		{name: "too long", fonts: []any{encodedLong}},
+		{name: "non string", fonts: []any{"Arial", 3}},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			_, err := buildChromiumLaunchPersona(
+				&profile.Profile{
+					ID:        "invalid-fonts",
+					RuntimeID: "browseforge-chromium",
+					Fingerprint: map[string]any{
+						"fonts": tc.fonts,
+					},
+				},
+				bfruntime.BrowseForgeChromium,
+				"Linux x86_64",
+				"UTC",
+				"en-US",
+				"",
+				"amd64",
+				&config.CloakBrowserConfig{FontsDir: fontsDir},
+			)
+			if err == nil {
+				t.Fatalf("build persona unexpectedly succeeded for fonts %#v", tc.fonts)
+			}
+			if !strings.Contains(err.Error(), "BrowseForge Chromium fingerprint fonts") {
+				t.Fatalf("error = %q, want BrowseForge Chromium fingerprint fonts context", err.Error())
+			}
+		})
+	}
+}
+
+func TestChromiumLaunchPersonaUsesExplicitFontCorpusList(t *testing.T) {
+	fontsDir := t.TempDir()
+	persona, err := buildChromiumLaunchPersona(
+		&profile.Profile{
+			ID:        "explicit-fonts",
+			RuntimeID: "browseforge-chromium",
+			Fingerprint: map[string]any{
+				"fonts": []any{"Noto Sans", "Arial"},
+			},
+		},
+		bfruntime.BrowseForgeChromium,
+		"Linux x86_64",
+		"UTC",
+		"en-US",
+		"",
+		"amd64",
+		&config.CloakBrowserConfig{FontsDir: fontsDir},
+	)
+	if err != nil {
+		t.Fatalf("build persona: %v", err)
+	}
+	if !persona.HasFontsList || persona.FontsList != "Noto Sans|Arial" {
+		t.Fatalf("fonts list = %q with HasFontsList=%v, want explicit list", persona.FontsList, persona.HasFontsList)
+	}
+	if persona.Native.Fonts.Source != "explicit-corpus" || !slices.Contains(persona.Native.Fonts.Families, "Noto Sans") || !slices.Contains(persona.Native.Fonts.Families, "Arial") {
+		t.Fatalf("native fonts = %#v, want explicit corpus families", persona.Native.Fonts)
+	}
+	args := appendChromiumLaunchPersonaArgs(nil, persona)
+	if !containsArg(args, "--fingerprint-fonts-list=Noto Sans|Arial") {
+		t.Fatalf("args missing explicit font list: %#v", args)
 	}
 }
 
@@ -930,6 +1500,48 @@ func TestLaunchChromiumRejectsInvalidBrowseForgeProxyRegionBeforeLaunch(t *testi
 	}
 	if !strings.Contains(err.Error(), "proxy_region") {
 		t.Fatalf("error = %q, want proxy_region validation", err.Error())
+	}
+	if browserType.calls != 0 {
+		t.Fatalf("launch calls = %d, want 0", browserType.calls)
+	}
+}
+
+func TestLaunchChromiumRequiresBrowseForgeProxyRegionBeforeLaunch(t *testing.T) {
+	enabled := true
+	browserType := &capturingBrowserType{t: t, launchErr: errors.New("should not launch")}
+	cfg := &config.Config{
+		Runtimes: map[string]config.RuntimeConfig{
+			"browseforge-chromium": {
+				BinaryPath: filepath.Join(t.TempDir(), "browseforge-chromium"),
+				Enabled:    &enabled,
+				Settings: &config.CloakBrowserConfig{
+					TargetPlatformPolicy: "allow",
+				},
+			},
+		},
+	}
+	manager := &Manager{
+		cfg:      cfg,
+		runtimes: bfruntime.NewRegistry(cfg),
+		pw:       &playwright.Playwright{Chromium: browserType},
+		sessions: make(map[string]*Session),
+	}
+
+	_, err := manager.launchChromium(&profile.Profile{
+		ID:        "missing-proxy-region",
+		RuntimeID: "browseforge-chromium",
+		Proxy: &profile.ProxyConfig{
+			Type: "http",
+			Host: "127.0.0.1",
+			Port: 1,
+		},
+		ProfileDir: t.TempDir(),
+	})
+	if err == nil {
+		t.Fatal("expected missing proxy region to fail")
+	}
+	if !strings.Contains(err.Error(), "proxy_region is required") {
+		t.Fatalf("error = %q, want proxy_region required validation", err.Error())
 	}
 	if browserType.calls != 0 {
 		t.Fatalf("launch calls = %d, want 0", browserType.calls)
@@ -1019,17 +1631,85 @@ func TestBrowseForgeDockerSoftwareModeUsesSwiftShaderPersona(t *testing.T) {
 	if !strings.Contains(persona.Native.GPU.Renderer, "SwiftShader") {
 		t.Fatalf("GPU renderer = %q, want SwiftShader renderer", persona.Native.GPU.Renderer)
 	}
+	if persona.Native.GPU.Mode != "software" || persona.Native.GPU.ANGLEBackend != "swiftshader-webgl" {
+		t.Fatalf("GPU mode/backend = %q/%q, want software/swiftshader-webgl", persona.Native.GPU.Mode, persona.Native.GPU.ANGLEBackend)
+	}
+	if persona.Native.GPU.GLVersion == "" || persona.Native.GPU.ShadingLanguageVersion == "" {
+		t.Fatalf("GPU GL versions missing: %#v", persona.Native.GPU)
+	}
+	if len(persona.Native.GPU.Extensions) == 0 || len(persona.Native.GPU.Limits) == 0 || len(persona.Native.GPU.ShaderPrecision) == 0 {
+		t.Fatalf("GPU detector baseline incomplete: %#v", persona.Native.GPU)
+	}
+	if !persona.Native.GPU.WorkerOffscreenCanvas {
+		t.Fatalf("GPU worker offscreen canvas expectation = false, want true")
+	}
+	if persona.Native.Canvas.TextMetricsMode == "" || persona.Native.Canvas.EmojiBaseline == "" || persona.Native.Canvas.RenderHashBaseline == "" {
+		t.Fatalf("canvas/text/emoji baseline incomplete: %#v", persona.Native.Canvas)
+	}
+	if persona.Native.Storage.Cookies != "profile-persistent" ||
+		persona.Native.Storage.LocalStorage != "profile-persistent" ||
+		persona.Native.Storage.SessionStorage != "session-scoped" ||
+		persona.Native.Storage.IndexedDB != "profile-persistent" ||
+		persona.Native.Storage.QuotaBehavior != "chromium-profile-quota" {
+		t.Fatalf("storage contract incomplete: %#v", persona.Native.Storage)
+	}
+	if !persona.Native.Realms.DocumentStartInjection || !containsStringFold(persona.Native.Realms.Targets, "offscreen-canvas-worker") {
+		t.Fatalf("realm contract incomplete: %#v", persona.Native.Realms)
+	}
+}
+
+func TestBrowseForgeNativeModeDoesNotInventWebGLButPinsFontPersona(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "native")
+	persona, err := buildChromiumLaunchPersona(
+		&profile.Profile{RuntimeID: "browseforge-chromium"},
+		bfruntime.BrowseForgeChromium,
+		"MacIntel",
+		"UTC",
+		"en-US",
+		"",
+		"arm64",
+		nil,
+	)
+	if err != nil {
+		t.Fatalf("build persona: %v", err)
+	}
+	if persona.HasWebGLVendor || persona.HasWebGLRenderer {
+		t.Fatalf("native mode without fingerprint pool must not force WebGL launch args: %#v", persona)
+	}
+	if persona.Native.GPU.Vendor != "browser-default" || persona.Native.GPU.Renderer != "browser-default" {
+		t.Fatalf("native WebGL contract = %q/%q, want browser-default/browser-default", persona.Native.GPU.Vendor, persona.Native.GPU.Renderer)
+	}
+	if persona.Native.Fonts.Source != "persona-default" || len(persona.Native.Fonts.Families) == 0 || persona.Native.Fonts.Emoji != "Apple Color Emoji" {
+		t.Fatalf("native font contract = %#v, want deterministic persona-default font metadata", persona.Native.Fonts)
+	}
+	args := appendChromiumLaunchPersonaArgs(nil, persona)
+	for _, arg := range args {
+		if strings.HasPrefix(arg, "--fingerprint-fonts-list=") {
+			t.Fatalf("native args unexpectedly include default font allowlist without explicit corpus: %#v", args)
+		}
+	}
+	for _, forbidden := range []string{"--fingerprint-webgl-vendor=", "--fingerprint-webgl-renderer="} {
+		for _, arg := range args {
+			if strings.HasPrefix(arg, forbidden) {
+				t.Fatalf("native args unexpectedly spoof WebGL with %q: %#v", forbidden, args)
+			}
+		}
+	}
 }
 
 func TestBrowseForgeDockerSoftwareModeEnablesSwiftShaderWebGLFallback(t *testing.T) {
 	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "software")
-	args := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+	args, err := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+	if err != nil {
+		t.Fatalf("software GPU args: %v", err)
+	}
 
 	for _, want := range []string{
 		"--no-first-run",
 		"--use-gl=angle",
 		"--use-angle=swiftshader-webgl",
 		"--enable-unsafe-swiftshader",
+		"--disable-remote-fonts",
 	} {
 		if !containsArg(args, want) {
 			t.Fatalf("software GPU args missing %q: %#v", want, args)
@@ -1039,16 +1719,78 @@ func TestBrowseForgeDockerSoftwareModeEnablesSwiftShaderWebGLFallback(t *testing
 
 func TestBrowseForgeDockerNativeModeDoesNotForceSwiftShaderWebGLFallback(t *testing.T) {
 	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "native")
-	args := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+	args, err := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+	if err != nil {
+		t.Fatalf("native GPU args: %v", err)
+	}
 
 	for _, forbidden := range []string{
 		"--use-gl=angle",
 		"--use-angle=swiftshader-webgl",
 		"--enable-unsafe-swiftshader",
+		"--disable-remote-fonts",
 	} {
 		if containsArg(args, forbidden) {
 			t.Fatalf("native GPU args unexpectedly contain %q: %#v", forbidden, args)
 		}
+	}
+}
+
+func TestBrowseForgeDockerPassthroughModeDoesNotForceSwiftShaderWebGLFallback(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "passthrough")
+	args, err := appendBrowseForgeDockerSoftwareGPUArgs([]string{"--no-first-run"})
+	if err != nil {
+		t.Fatalf("passthrough GPU args: %v", err)
+	}
+
+	for _, forbidden := range []string{
+		"--use-gl=angle",
+		"--use-angle=swiftshader-webgl",
+		"--enable-unsafe-swiftshader",
+		"--disable-remote-fonts",
+	} {
+		if containsArg(args, forbidden) {
+			t.Fatalf("passthrough GPU args unexpectedly contain %q: %#v", forbidden, args)
+		}
+	}
+}
+
+func TestBrowseForgeDockerGPUInvalidModeFailsClosed(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "auto")
+	if _, err := buildChromiumLaunchPersona(&profile.Profile{RuntimeID: "browseforge-chromium"}, bfruntime.BrowseForgeChromium, "Linux aarch64", "UTC", "en-US", "", "arm64", nil); err == nil || !strings.Contains(err.Error(), "BROWSEFORGE_DOCKER_GPU_MODE") {
+		t.Fatalf("build persona error = %v, want GPU mode validation", err)
+	}
+	if _, err := appendBrowseForgeDockerSoftwareGPUArgs(nil); err == nil || !strings.Contains(err.Error(), "BROWSEFORGE_DOCKER_GPU_MODE") {
+		t.Fatalf("software GPU args error = %v, want GPU mode validation", err)
+	}
+}
+
+func TestDockerGPUInvalidModeDoesNotAffectCloakBrowserPersona(t *testing.T) {
+	t.Setenv("BROWSEFORGE_DOCKER_GPU_MODE", "auto")
+	if _, err := buildChromiumLaunchPersona(&profile.Profile{RuntimeID: "cloakbrowser"}, bfruntime.CloakBrowser, "Win32", "UTC", "en-US", "", "amd64", nil); err != nil {
+		t.Fatalf("non-BrowseForge Chromium persona should ignore Docker GPU mode: %v", err)
+	}
+}
+
+func TestBrowseForgePersonaContractAllowsDisabledPDFPlugin(t *testing.T) {
+	persona, err := buildChromiumLaunchPersona(
+		&profile.Profile{ID: "pdf-disabled", RuntimeID: "browseforge-chromium"},
+		bfruntime.BrowseForgeChromium,
+		"Linux x86_64",
+		"UTC",
+		"en-US",
+		"",
+		"amd64",
+		&config.CloakBrowserConfig{PluginsPDF: "disabled"},
+	)
+	if err != nil {
+		t.Fatalf("build persona: %v", err)
+	}
+	if persona.Native.Plugins.PDFViewer {
+		t.Fatalf("PDF viewer = true, want disabled policy to remain disabled")
+	}
+	if err := validateBrowseForgePersonaContract(persona.Native); err != nil {
+		t.Fatalf("disabled PDF plugin policy should remain valid: %v", err)
 	}
 }
 

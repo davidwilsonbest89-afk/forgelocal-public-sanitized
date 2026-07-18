@@ -94,6 +94,9 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			if err != nil {
 				return nil, err
 			}
+			if proxyRegion == "" {
+				return nil, fmt.Errorf("browseforge-chromium proxy_region is required when a proxy is configured")
+			}
 		} else {
 			proxyRegion = strings.TrimSpace(proxy.Region)
 		}
@@ -126,7 +129,10 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	persona.Native.Locale.GeoStatus = geoResult.Status
 	if desc.ID == bfruntime.BrowseForgeChromium {
 		args = appendChromiumLaunchPersonaArgs(args, persona)
-		args = appendBrowseForgeDockerSoftwareGPUArgs(args)
+		args, err = appendBrowseForgeDockerSoftwareGPUArgs(args)
+		if err != nil {
+			return nil, err
+		}
 		args = append(args, browseForgeChromiumWindowArgs(persona)...)
 		nativeConfigPath, err := writeBrowseForgeNativeConfig(userDataDir, persona)
 		if err != nil {
@@ -223,6 +229,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			Args:              launchArgs,
 			NoViewport:        playwright.Bool(true),
 			Env:               browseForgeChromiumEnv(persona),
+			ExtraHttpHeaders:  browseForgeChromiumHTTPHeaders(persona),
 			IgnoreDefaultArgs: ignoreArgs,
 		}
 
@@ -352,11 +359,23 @@ type browseForgeNativePersonaConfig struct {
 	Browser       browseForgeNativeBrowserIdentity `json:"browser"`
 	Platform      browseForgeNativePlatform        `json:"platform"`
 	Locale        browseForgeNativeLocale          `json:"locale"`
+	Network       browseForgeNativeNetwork         `json:"network"`
+	DNS           browseForgeNativeDNS             `json:"dns"`
+	Geolocation   browseForgeNativeGeolocation     `json:"geolocation"`
 	Hardware      browseForgeNativeHardware        `json:"hardware"`
 	Screen        browseForgeNativeScreen          `json:"screen"`
 	GPU           browseForgeNativeGPU             `json:"gpu"`
+	Fonts         browseForgeNativeFontProfile     `json:"fonts"`
+	Canvas        browseForgeNativeCanvasProfile   `json:"canvas"`
+	Audio         browseForgeNativeAudioProfile    `json:"audio"`
+	Math          browseForgeNativeMathProfile     `json:"math"`
+	Geometry      browseForgeNativeGeometryProfile `json:"geometry"`
+	Plugins       browseForgeNativePluginProfile   `json:"plugins"`
+	Media         browseForgeNativeMediaProfile    `json:"media"`
+	Permissions   browseForgeNativePermissions     `json:"permissions"`
 	WebRTC        browseForgeNativeWebRTC          `json:"webrtc"`
 	Storage       browseForgeNativeStorage         `json:"storage"`
+	Realms        browseForgeNativeRealmPolicy     `json:"realms"`
 }
 
 type browseForgeNativePersonaSnapshot struct {
@@ -368,37 +387,100 @@ type browseForgeNativePersonaSnapshot struct {
 	Browser       browseForgeNativeBrowserIdentity `json:"browser"`
 	Platform      browseForgeNativePlatform        `json:"platform"`
 	Locale        browseForgeNativeLocale          `json:"locale"`
+	Network       browseForgeNativeNetwork         `json:"network"`
+	DNS           browseForgeNativeDNS             `json:"dns"`
+	Geolocation   browseForgeNativeGeolocation     `json:"geolocation"`
 	Hardware      browseForgeNativeHardware        `json:"hardware"`
 	Screen        browseForgeNativeScreen          `json:"screen"`
 	GPU           browseForgeNativeGPU             `json:"gpu"`
+	Fonts         browseForgeNativeFontProfile     `json:"fonts"`
+	Canvas        browseForgeNativeCanvasProfile   `json:"canvas"`
+	Audio         browseForgeNativeAudioProfile    `json:"audio"`
+	Math          browseForgeNativeMathProfile     `json:"math"`
+	Geometry      browseForgeNativeGeometryProfile `json:"geometry"`
+	Plugins       browseForgeNativePluginProfile   `json:"plugins"`
+	Media         browseForgeNativeMediaProfile    `json:"media"`
+	Permissions   browseForgeNativePermissions     `json:"permissions"`
 	WebRTC        browseForgeNativeWebRTC          `json:"webrtc"`
 	Storage       browseForgeNativeStorage         `json:"storage"`
+	Realms        browseForgeNativeRealmPolicy     `json:"realms"`
 }
 
 type browseForgeNativeBrowserIdentity struct {
-	Family      string   `json:"family"`
-	Major       int      `json:"major"`
-	FullVersion string   `json:"full_version"`
-	Brands      []string `json:"brands"`
-	UserAgent   string   `json:"user_agent"`
+	Family          string                          `json:"family"`
+	Major           int                             `json:"major"`
+	FullVersion     string                          `json:"full_version"`
+	Brands          []string                        `json:"brands"`
+	BrandVersions   []browseForgeNativeBrandVersion `json:"brand_versions"`
+	FullVersionList []browseForgeNativeBrandVersion `json:"full_version_list"`
+	UserAgent       string                          `json:"user_agent"`
+	ClientHints     browseForgeNativeClientHints    `json:"client_hints"`
+}
+
+type browseForgeNativeBrandVersion struct {
+	Brand   string `json:"brand"`
+	Version string `json:"version"`
+}
+
+type browseForgeNativeClientHints struct {
+	SecCHUA             string   `json:"sec_ch_ua"`
+	SecCHUAFullVersion  string   `json:"sec_ch_ua_full_version_list"`
+	Platform            string   `json:"platform"`
+	PlatformVersion     string   `json:"platform_version"`
+	Architecture        string   `json:"architecture"`
+	Bitness             string   `json:"bitness"`
+	Mobile              bool     `json:"mobile"`
+	Model               string   `json:"model"`
+	FormFactors         []string `json:"form_factors"`
+	ExpectedNavigatorUA string   `json:"expected_navigator_user_agent"`
 }
 
 type browseForgeNativePlatform struct {
-	OS         string `json:"os"`
-	Arch       string `json:"arch"`
-	Platform   string `json:"platform"`
-	PlatformCH string `json:"platform_ch"`
-	Mobile     bool   `json:"mobile"`
-	Bitness    string `json:"bitness"`
-	Model      string `json:"model"`
+	OS              string   `json:"os"`
+	Arch            string   `json:"arch"`
+	Platform        string   `json:"platform"`
+	PlatformCH      string   `json:"platform_ch"`
+	PlatformVersion string   `json:"platform_version"`
+	Mobile          bool     `json:"mobile"`
+	Bitness         string   `json:"bitness"`
+	Model           string   `json:"model"`
+	FormFactors     []string `json:"form_factors"`
 }
 
 type browseForgeNativeLocale struct {
-	Timezone       string `json:"timezone"`
-	Locale         string `json:"locale"`
-	AcceptLanguage string `json:"accept_language"`
-	GeoSource      string `json:"geo_source,omitempty"`
-	GeoStatus      string `json:"geo_status,omitempty"`
+	Timezone             string   `json:"timezone"`
+	TimezoneOffsetMins   int      `json:"timezone_offset_mins"`
+	DSTPolicy            string   `json:"dst_policy"`
+	SystemTimezoneSource string   `json:"system_timezone_source"`
+	Locale               string   `json:"locale"`
+	AcceptLanguage       string   `json:"accept_language"`
+	NavigatorLanguage    string   `json:"navigator_language"`
+	NavigatorLanguages   []string `json:"navigator_languages"`
+	SecCHLang            string   `json:"sec_ch_lang,omitempty"`
+	GeoSource            string   `json:"geo_source,omitempty"`
+	GeoStatus            string   `json:"geo_status,omitempty"`
+}
+
+type browseForgeNativeNetwork struct {
+	ProxyEnabled bool   `json:"proxy_enabled"`
+	ProxyType    string `json:"proxy_type,omitempty"`
+	ProxyRegion  string `json:"proxy_region,omitempty"`
+	CountryCode  string `json:"country_code,omitempty"`
+	RegionCode   string `json:"region_code,omitempty"`
+	City         string `json:"city,omitempty"`
+	ASNType      string `json:"asn_type,omitempty"`
+}
+
+type browseForgeNativeDNS struct {
+	Mode           string `json:"mode"`
+	ResolverPolicy string `json:"resolver_policy"`
+}
+
+type browseForgeNativeGeolocation struct {
+	Mode        string `json:"mode"`
+	CountryCode string `json:"country_code,omitempty"`
+	RegionCode  string `json:"region_code,omitempty"`
+	City        string `json:"city,omitempty"`
 }
 
 type browseForgeNativeHardware struct {
@@ -407,19 +489,89 @@ type browseForgeNativeHardware struct {
 }
 
 type browseForgeNativeScreen struct {
-	Width       int     `json:"width"`
-	Height      int     `json:"height"`
-	AvailWidth  int     `json:"avail_width"`
-	AvailHeight int     `json:"avail_height"`
-	DPR         float64 `json:"dpr"`
-	ColorDepth  int     `json:"color_depth"`
+	Width          int     `json:"width"`
+	Height         int     `json:"height"`
+	AvailWidth     int     `json:"avail_width"`
+	AvailHeight    int     `json:"avail_height"`
+	OuterWidth     int     `json:"outer_width"`
+	OuterHeight    int     `json:"outer_height"`
+	InnerWidth     int     `json:"inner_width"`
+	InnerHeight    int     `json:"inner_height"`
+	ViewportWidth  int     `json:"viewport_width"`
+	ViewportHeight int     `json:"viewport_height"`
+	DPR            float64 `json:"dpr"`
+	ColorDepth     int     `json:"color_depth"`
+	TouchPoints    int     `json:"touch_points"`
+	Orientation    string  `json:"orientation"`
 }
 
 type browseForgeNativeGPU struct {
-	Vendor       string            `json:"vendor"`
-	Renderer     string            `json:"renderer"`
-	ANGLEBackend string            `json:"angle_backend"`
-	WebGLParams  map[string]string `json:"webgl_params,omitempty"`
+	Mode                   string            `json:"mode"`
+	Vendor                 string            `json:"vendor"`
+	Renderer               string            `json:"renderer"`
+	ANGLEBackend           string            `json:"angle_backend"`
+	WebGL                  bool              `json:"webgl"`
+	WebGL2                 bool              `json:"webgl2"`
+	WebGPU                 string            `json:"webgpu"`
+	GLVersion              string            `json:"gl_version,omitempty"`
+	ShadingLanguageVersion string            `json:"shading_language_version,omitempty"`
+	ContextAttributes      map[string]string `json:"context_attributes,omitempty"`
+	Extensions             []string          `json:"extensions,omitempty"`
+	ShaderPrecision        map[string]string `json:"shader_precision,omitempty"`
+	Limits                 map[string]int    `json:"limits,omitempty"`
+	RenderHashBaseline     string            `json:"render_hash_baseline,omitempty"`
+	WorkerOffscreenCanvas  bool              `json:"worker_offscreen_canvas"`
+	WebGLParams            map[string]string `json:"webgl_params,omitempty"`
+}
+
+type browseForgeNativeFontProfile struct {
+	ProfileID string   `json:"profile_id"`
+	Families  []string `json:"families"`
+	Emoji     string   `json:"emoji"`
+	CJK       bool     `json:"cjk"`
+	Source    string   `json:"source"`
+}
+
+type browseForgeNativeCanvasProfile struct {
+	Mode               string `json:"mode"`
+	Seed               int64  `json:"seed,omitempty"`
+	Stable             bool   `json:"stable"`
+	TextMetricsMode    string `json:"text_metrics_mode"`
+	TextMetricsSeed    int64  `json:"text_metrics_seed,omitempty"`
+	EmojiBaseline      string `json:"emoji_baseline"`
+	RenderHashBaseline string `json:"render_hash_baseline,omitempty"`
+}
+
+type browseForgeNativeMathProfile struct {
+	Stable bool `json:"stable"`
+}
+
+type browseForgeNativeGeometryProfile struct {
+	ClientRectsStable bool `json:"client_rects_stable"`
+}
+
+type browseForgeNativeAudioProfile struct {
+	Mode       string `json:"mode"`
+	Seed       int64  `json:"seed,omitempty"`
+	SampleRate int    `json:"sample_rate"`
+	Stable     bool   `json:"stable"`
+}
+
+type browseForgeNativePluginProfile struct {
+	PDFViewer bool     `json:"pdf_viewer"`
+	Plugins   []string `json:"plugins"`
+	MIMETypes []string `json:"mime_types"`
+}
+
+type browseForgeNativeMediaProfile struct {
+	H264    bool     `json:"h264"`
+	VP9     bool     `json:"vp9"`
+	AV1     bool     `json:"av1"`
+	Devices []string `json:"devices"`
+}
+
+type browseForgeNativePermissions struct {
+	Notification string `json:"notification"`
 }
 
 type browseForgeNativeWebRTC struct {
@@ -429,8 +581,18 @@ type browseForgeNativeWebRTC struct {
 }
 
 type browseForgeNativeStorage struct {
-	QuotaMB    int  `json:"quota_mb"`
-	Persistent bool `json:"persistent"`
+	QuotaMB        int    `json:"quota_mb"`
+	Persistent     bool   `json:"persistent"`
+	Cookies        string `json:"cookies"`
+	LocalStorage   string `json:"local_storage"`
+	SessionStorage string `json:"session_storage"`
+	IndexedDB      string `json:"indexed_db"`
+	QuotaBehavior  string `json:"quota_behavior"`
+}
+
+type browseForgeNativeRealmPolicy struct {
+	DocumentStartInjection bool     `json:"document_start_injection"`
+	Targets                []string `json:"targets"`
 }
 
 type chromiumLaunchPersona struct {
@@ -466,20 +628,38 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 	fp := p.Fingerprint
 	userAgent := effectiveChromiumUserAgent(fp, platform)
 	acceptLanguage := effectiveChromiumAcceptLanguage(fp, locale)
+	navigatorLanguages := navigatorLanguagesFromAcceptLanguage(acceptLanguage)
 	fullVersion := chromiumVersionFromUserAgent(userAgent)
+	brandVersions := chromiumBrandVersions(fullVersion)
+	clientHints := chromiumClientHints(userAgent, nativePlatform, brandVersions)
 	vendor, hasWebGLVendor := fingerprintString(fp, "webGl:vendor")
-	if !hasWebGLVendor {
-		vendor = "Intel Inc."
-	}
 	renderer, hasWebGLRenderer := fingerprintString(fp, "webGl:renderer")
-	if !hasWebGLRenderer {
-		renderer = "Intel Iris OpenGL Engine"
-	}
-	if runtimeID == bfruntime.BrowseForgeChromium && browseForgeDockerGPUMode() == "software" && (!hasWebGLVendor || !hasWebGLRenderer) {
-		vendor = "Google Inc. (Google)"
-		renderer = "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
-		hasWebGLVendor = true
-		hasWebGLRenderer = true
+	gpuMode := "native"
+	if runtimeID == bfruntime.BrowseForgeChromium {
+		gpuMode, err = browseForgeDockerGPUMode()
+		if err != nil {
+			return chromiumLaunchPersona{}, err
+		}
+		if gpuMode == "software" && (!hasWebGLVendor || !hasWebGLRenderer) {
+			vendor = "Google Inc. (Google)"
+			renderer = "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+			hasWebGLVendor = true
+			hasWebGLRenderer = true
+		} else {
+			if !hasWebGLVendor {
+				vendor = "browser-default"
+			}
+			if !hasWebGLRenderer {
+				renderer = "browser-default"
+			}
+		}
+	} else {
+		if !hasWebGLVendor {
+			vendor = "Intel Inc."
+		}
+		if !hasWebGLRenderer {
+			renderer = "Intel Iris OpenGL Engine"
+		}
 	}
 	storageQuota := int64(0)
 	if runtimeID == bfruntime.BrowseForgeChromium {
@@ -494,50 +674,95 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 	screenHeight := fingerprintIntDefault(fp, "screen.height", 1080)
 	availWidth := clampScreenAvail(fingerprintIntDefault(fp, "screen.availWidth", 1920), screenWidth)
 	availHeight := clampScreenAvail(fingerprintIntDefault(fp, "screen.availHeight", 1040), screenHeight)
+	dpr := fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1)
+	outerWidth := fingerprintIntDefault(fp, "window.outerWidth", availWidth)
+	outerHeight := fingerprintIntDefault(fp, "window.outerHeight", availHeight)
+	innerWidth := fingerprintIntDefault(fp, "window.innerWidth", availWidth)
+	innerHeight := fingerprintIntDefault(fp, "window.innerHeight", maxInt(availHeight-92, 1))
+	fonts, fontsList, hasFontsList, err := browseForgeFontContract(fp, nativePlatform, locale, policy)
+	if err != nil {
+		return chromiumLaunchPersona{}, err
+	}
+	canvas := browseForgeCanvasProfile(fp, browseForgePersonaSeed(p))
+	audio := browseForgeAudioProfile(fp, browseForgePersonaSeed(p))
+	plugins := browseForgePluginProfile(policy)
+	network := browseForgeNetworkProfile(proxyRegion)
 	persona := chromiumLaunchPersona{
 		Native: browseForgeNativePersonaConfig{
 			SchemaVersion: "1.0",
 			RuntimeID:     string(runtimeID),
 			Seed:          browseForgePersonaSeed(p),
 			Browser: browseForgeNativeBrowserIdentity{
-				Family:      "chromium",
-				Major:       chromiumMajorVersion(fullVersion),
-				FullVersion: fullVersion,
-				Brands:      []string{"Chromium", "Google Chrome"},
-				UserAgent:   userAgent,
+				Family:          "chromium",
+				Major:           chromiumMajorVersion(fullVersion),
+				FullVersion:     fullVersion,
+				Brands:          []string{"Chromium"},
+				BrandVersions:   brandVersions,
+				FullVersionList: chromiumFullVersionList(brandVersions, fullVersion),
+				UserAgent:       userAgent,
+				ClientHints:     clientHints,
 			},
 			Platform: nativePlatform,
 			Locale: browseForgeNativeLocale{
-				Timezone:       timezone,
-				Locale:         locale,
-				AcceptLanguage: acceptLanguage,
+				Timezone:             timezone,
+				TimezoneOffsetMins:   timezoneOffsetMinutes(timezone),
+				DSTPolicy:            "iana-timezone",
+				SystemTimezoneSource: "persona-contract",
+				Locale:               locale,
+				AcceptLanguage:       acceptLanguage,
+				NavigatorLanguage:    firstLanguage(acceptLanguage),
+				NavigatorLanguages:   navigatorLanguages,
+				SecCHLang:            strings.Join(navigatorLanguages, ","),
 			},
+			Network:     network,
+			DNS:         browseForgeDNSProfile(network),
+			Geolocation: browseForgeGeolocationProfile(network),
 			Hardware: browseForgeNativeHardware{
 				HardwareConcurrency: fingerprintIntDefault(fp, "navigator.hardwareConcurrency", 8),
 				DeviceMemoryGB:      fingerprintIntDefault(fp, "navigator.deviceMemory", 8),
 			},
 			Screen: browseForgeNativeScreen{
-				Width:       screenWidth,
-				Height:      screenHeight,
-				AvailWidth:  availWidth,
-				AvailHeight: availHeight,
-				DPR:         fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1),
-				ColorDepth:  fingerprintIntDefault(fp, "screen.colorDepth", 24),
+				Width:          screenWidth,
+				Height:         screenHeight,
+				AvailWidth:     availWidth,
+				AvailHeight:    availHeight,
+				OuterWidth:     outerWidth,
+				OuterHeight:    outerHeight,
+				InnerWidth:     innerWidth,
+				InnerHeight:    innerHeight,
+				ViewportWidth:  innerWidth,
+				ViewportHeight: innerHeight,
+				DPR:            dpr,
+				ColorDepth:     fingerprintIntDefault(fp, "screen.colorDepth", 24),
+				TouchPoints:    0,
+				Orientation:    "landscape-primary",
 			},
-			GPU: browseForgeNativeGPU{
-				Vendor:       vendor,
-				Renderer:     renderer,
-				ANGLEBackend: "",
-				WebGLParams:  map[string]string{},
-			},
+			GPU:         browseForgeGPUProfile(gpuMode, vendor, renderer),
+			Fonts:       fonts,
+			Canvas:      canvas,
+			Math:        browseForgeNativeMathProfile{Stable: true},
+			Geometry:    browseForgeNativeGeometryProfile{ClientRectsStable: true},
+			Audio:       audio,
+			Plugins:     plugins,
+			Media:       browseForgeMediaProfile(),
+			Permissions: browseForgeNativePermissions{Notification: "prompt"},
 			WebRTC: browseForgeNativeWebRTC{
 				Mode:              "disable_non_proxied_udp",
 				ProxyRegion:       proxyRegion,
 				DirectIPRedaction: true,
 			},
 			Storage: browseForgeNativeStorage{
-				QuotaMB:    int(storageQuota),
-				Persistent: true,
+				QuotaMB:        int(storageQuota),
+				Persistent:     true,
+				Cookies:        "profile-persistent",
+				LocalStorage:   "profile-persistent",
+				SessionStorage: "session-scoped",
+				IndexedDB:      "profile-persistent",
+				QuotaBehavior:  "chromium-profile-quota",
+			},
+			Realms: browseForgeNativeRealmPolicy{
+				DocumentStartInjection: true,
+				Targets:                []string{"window", "same-origin-iframe", "sandbox-iframe", "nested-iframe", "dedicated-worker", "shared-worker", "service-worker", "offscreen-canvas-worker"},
 			},
 		},
 		NavigatorPlatform: platform,
@@ -553,8 +778,8 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 		persona.AudioNoise = v
 		persona.HasAudioNoise = true
 	}
-	if v, ok := fingerprintStringList(fp, "fonts", "|"); ok {
-		persona.FontsList = v
+	if hasFontsList {
+		persona.FontsList = fontsList
 		persona.HasFontsList = true
 	}
 	return persona, nil
@@ -581,8 +806,14 @@ func appendChromiumLaunchPersonaArgs(args []string, persona chromiumLaunchPerson
 	}
 	args = append(args,
 		"--fingerprint-ua-platform="+native.Platform.PlatformCH,
+		"--fingerprint-ua-platform-version="+native.Platform.PlatformVersion,
 		"--fingerprint-ua-architecture="+native.Platform.Arch,
 		"--fingerprint-ua-bitness="+native.Platform.Bitness,
+		"--fingerprint-ua-mobile="+secCHBool(native.Platform.Mobile),
+		"--fingerprint-ua-model="+native.Platform.Model,
+		"--fingerprint-ua-form-factors="+strings.Join(native.Platform.FormFactors, ","),
+		"--fingerprint-sec-ch-ua="+native.Browser.ClientHints.SecCHUA,
+		"--fingerprint-sec-ch-ua-full-version-list="+native.Browser.ClientHints.SecCHUAFullVersion,
 	)
 	if acceptLanguage := chromiumAcceptLanguageSwitchValue(native.Locale.AcceptLanguage); acceptLanguage != "" {
 		args = append(args, "--fingerprint-accept-language="+acceptLanguage)
@@ -646,15 +877,20 @@ func browseForgeChromiumWindowArgs(persona chromiumLaunchPersona) []string {
 	}
 }
 
-func appendBrowseForgeDockerSoftwareGPUArgs(args []string) []string {
-	if browseForgeDockerGPUMode() != "software" {
-		return args
+func appendBrowseForgeDockerSoftwareGPUArgs(args []string) ([]string, error) {
+	mode, err := browseForgeDockerGPUMode()
+	if err != nil {
+		return nil, err
+	}
+	if mode != "software" {
+		return args, nil
 	}
 	return appendUniqueChromiumArgs(args,
 		"--use-gl=angle",
 		"--use-angle=swiftshader-webgl",
 		"--enable-unsafe-swiftshader",
-	)
+		"--disable-remote-fonts",
+	), nil
 }
 
 func browseForgeChromiumEnv(persona chromiumLaunchPersona) map[string]string {
@@ -679,15 +915,17 @@ func browseForgeChromiumEnv(persona chromiumLaunchPersona) map[string]string {
 	return env
 }
 
-func browseForgeDockerGPUMode() string {
+func browseForgeDockerGPUMode() (string, error) {
 	mode := strings.ToLower(strings.TrimSpace(os.Getenv("BROWSEFORGE_DOCKER_GPU_MODE")))
 	switch mode {
+	case "", "native":
+		return "native", nil
 	case "software":
-		return "software"
-	case "native":
-		return "native"
+		return "software", nil
+	case "passthrough":
+		return "passthrough", nil
 	default:
-		return ""
+		return "", fmt.Errorf("BROWSEFORGE_DOCKER_GPU_MODE must be one of software, native, or passthrough; got %q", os.Getenv("BROWSEFORGE_DOCKER_GPU_MODE"))
 	}
 }
 
@@ -712,7 +950,7 @@ func writeBrowseForgeNativeConfig(userDataDir string, persona chromiumLaunchPers
 }
 
 func resolveBrowseForgeNativePersona(cfg browseForgeNativePersonaConfig) (browseForgeNativePersonaSnapshot, error) {
-	if err := validateBrowseForgeNativePersonaPlatform(cfg.Platform); err != nil {
+	if err := validateBrowseForgePersonaContract(cfg); err != nil {
 		return browseForgeNativePersonaSnapshot{}, err
 	}
 	canonical, err := json.Marshal(cfg)
@@ -731,11 +969,23 @@ func resolveBrowseForgeNativePersona(cfg browseForgeNativePersonaConfig) (browse
 		Browser:       cfg.Browser,
 		Platform:      cfg.Platform,
 		Locale:        cfg.Locale,
+		Network:       cfg.Network,
+		DNS:           cfg.DNS,
+		Geolocation:   cfg.Geolocation,
 		Hardware:      cfg.Hardware,
 		Screen:        cfg.Screen,
 		GPU:           cfg.GPU,
+		Fonts:         cfg.Fonts,
+		Canvas:        cfg.Canvas,
+		Math:          cfg.Math,
+		Geometry:      cfg.Geometry,
+		Audio:         cfg.Audio,
+		Plugins:       cfg.Plugins,
+		Media:         cfg.Media,
+		Permissions:   cfg.Permissions,
 		WebRTC:        cfg.WebRTC,
 		Storage:       cfg.Storage,
+		Realms:        cfg.Realms,
 	}, nil
 }
 
@@ -803,20 +1053,133 @@ func chromiumMajorVersion(fullVersion string) int {
 	return parsed
 }
 
+func chromiumBrandVersions(fullVersion string) []browseForgeNativeBrandVersion {
+	major := strconv.Itoa(chromiumMajorVersion(fullVersion))
+	return []browseForgeNativeBrandVersion{
+		{Brand: "Not;A=Brand", Version: "8"},
+		{Brand: "Chromium", Version: major},
+	}
+}
+
+func chromiumFullVersionList(brandVersions []browseForgeNativeBrandVersion, fullVersion string) []browseForgeNativeBrandVersion {
+	out := make([]browseForgeNativeBrandVersion, 0, len(brandVersions))
+	for _, brand := range brandVersions {
+		version := fullVersion
+		if brand.Brand == "Not;A=Brand" {
+			version = "8.0.0.0"
+		}
+		out = append(out, browseForgeNativeBrandVersion{Brand: brand.Brand, Version: version})
+	}
+	return out
+}
+
+func chromiumClientHints(userAgent string, platform browseForgeNativePlatform, brandVersions []browseForgeNativeBrandVersion) browseForgeNativeClientHints {
+	fullVersion := chromiumVersionFromUserAgent(userAgent)
+	fullVersionList := chromiumFullVersionList(brandVersions, fullVersion)
+	return browseForgeNativeClientHints{
+		SecCHUA:             secCHBrandList(brandVersions),
+		SecCHUAFullVersion:  secCHBrandList(fullVersionList),
+		Platform:            platform.PlatformCH,
+		PlatformVersion:     platform.PlatformVersion,
+		Architecture:        platform.Arch,
+		Bitness:             platform.Bitness,
+		Mobile:              platform.Mobile,
+		Model:               platform.Model,
+		FormFactors:         append([]string(nil), platform.FormFactors...),
+		ExpectedNavigatorUA: userAgent,
+	}
+}
+
+func browseForgeChromiumHTTPHeaders(persona chromiumLaunchPersona) map[string]string {
+	native := persona.Native
+	headers := make(map[string]string, 12)
+	if native.Browser.UserAgent != "" {
+		headers["User-Agent"] = native.Browser.UserAgent
+	}
+	if native.Locale.AcceptLanguage != "" {
+		headers["Accept-Language"] = native.Locale.AcceptLanguage
+	}
+	hints := native.Browser.ClientHints
+	if hints.SecCHUA != "" {
+		headers["Sec-CH-UA"] = hints.SecCHUA
+	}
+	if hints.SecCHUAFullVersion != "" {
+		headers["Sec-CH-UA-Full-Version-List"] = hints.SecCHUAFullVersion
+	}
+	if hints.Platform != "" {
+		headers["Sec-CH-UA-Platform"] = strconv.Quote(hints.Platform)
+	}
+	if hints.PlatformVersion != "" {
+		headers["Sec-CH-UA-Platform-Version"] = strconv.Quote(hints.PlatformVersion)
+	}
+	if hints.Architecture != "" {
+		headers["Sec-CH-UA-Arch"] = strconv.Quote(hints.Architecture)
+	}
+	if hints.Bitness != "" {
+		headers["Sec-CH-UA-Bitness"] = strconv.Quote(hints.Bitness)
+	}
+	headers["Sec-CH-UA-Mobile"] = secCHBool(hints.Mobile)
+	if hints.Model != "" {
+		headers["Sec-CH-UA-Model"] = strconv.Quote(hints.Model)
+	}
+	if len(hints.FormFactors) > 0 {
+		quoted := make([]string, 0, len(hints.FormFactors))
+		for _, formFactor := range hints.FormFactors {
+			if formFactor != "" {
+				quoted = append(quoted, strconv.Quote(formFactor))
+			}
+		}
+		if len(quoted) > 0 {
+			headers["Sec-CH-UA-Form-Factors"] = strings.Join(quoted, ", ")
+		}
+	}
+	if native.Locale.SecCHLang != "" {
+		headers["Sec-CH-Lang"] = native.Locale.SecCHLang
+	}
+	return headers
+}
+
+func secCHBrandList(versions []browseForgeNativeBrandVersion) string {
+	parts := make([]string, 0, len(versions))
+	for _, item := range versions {
+		parts = append(parts, fmt.Sprintf("%q;v=%q", item.Brand, item.Version))
+	}
+	return strings.Join(parts, ", ")
+}
+
+func secCHBool(v bool) string {
+	if v {
+		return "?1"
+	}
+	return "?0"
+}
+
+func platformVersion(osName string) string {
+	switch osName {
+	case "windows":
+		return "10.0.0"
+	case "macos":
+		return "10.15.7"
+	default:
+		return ""
+	}
+}
+
 func nativePersonaPlatform(platform, goarch string) (browseForgeNativePlatform, error) {
+	desktop := []string{}
 	switch platform {
 	case "Win32":
-		return browseForgeNativePlatform{OS: "windows", Arch: "x86", Platform: "Win32", PlatformCH: "Windows", Mobile: false, Bitness: "64", Model: ""}, nil
+		return browseForgeNativePlatform{OS: "windows", Arch: "x86", Platform: "Win32", PlatformCH: "Windows", PlatformVersion: platformVersion("windows"), Mobile: false, Bitness: "64", Model: "", FormFactors: desktop}, nil
 	case "MacIntel":
 		arch := "x86"
 		if goarch == "arm64" {
 			arch = "arm"
 		}
-		return browseForgeNativePlatform{OS: "macos", Arch: arch, Platform: "MacIntel", PlatformCH: "macOS", Mobile: false, Bitness: "64", Model: ""}, nil
+		return browseForgeNativePlatform{OS: "macos", Arch: arch, Platform: "MacIntel", PlatformCH: "macOS", PlatformVersion: platformVersion("macos"), Mobile: false, Bitness: "64", Model: "", FormFactors: desktop}, nil
 	case "Linux x86_64":
-		return browseForgeNativePlatform{OS: "linux", Arch: "x86", Platform: "Linux x86_64", PlatformCH: "Linux", Mobile: false, Bitness: "64", Model: ""}, nil
+		return browseForgeNativePlatform{OS: "linux", Arch: "x86", Platform: "Linux x86_64", PlatformCH: "Linux", PlatformVersion: platformVersion("linux"), Mobile: false, Bitness: "64", Model: "", FormFactors: desktop}, nil
 	case "Linux aarch64":
-		return browseForgeNativePlatform{OS: "linux", Arch: "arm", Platform: "Linux aarch64", PlatformCH: "Linux", Mobile: false, Bitness: "64", Model: ""}, nil
+		return browseForgeNativePlatform{OS: "linux", Arch: "arm", Platform: "Linux aarch64", PlatformCH: "Linux", PlatformVersion: platformVersion("linux"), Mobile: false, Bitness: "64", Model: "", FormFactors: desktop}, nil
 	default:
 		return browseForgeNativePlatform{}, fmt.Errorf("chromium native persona platform %q is not supported", platform)
 	}
@@ -841,6 +1204,581 @@ func validateBrowseForgeNativePersonaPlatform(platform browseForgeNativePlatform
 		}
 	}
 	return fmt.Errorf("chromium native persona platform mismatch: platform=%s os=%s arch=%s bitness=%s platform_ch=%s", platform.Platform, platform.OS, platform.Arch, platform.Bitness, platform.PlatformCH)
+}
+
+func validateBrowseForgePersonaContract(cfg browseForgeNativePersonaConfig) error {
+	if cfg.SchemaVersion != "1.0" {
+		return fmt.Errorf("persona contract mismatch: schema_version %q is not supported", cfg.SchemaVersion)
+	}
+	if strings.TrimSpace(cfg.RuntimeID) == "" {
+		return fmt.Errorf("persona contract mismatch: runtime_id must be set")
+	}
+	if cfg.Seed == 0 {
+		return fmt.Errorf("persona contract mismatch: seed must be non-zero")
+	}
+	if cfg.Browser.Family != "chromium" {
+		return fmt.Errorf("persona contract mismatch: browser family %q is not supported", cfg.Browser.Family)
+	}
+	if strings.TrimSpace(cfg.Browser.UserAgent) == "" {
+		return fmt.Errorf("persona contract mismatch: browser user_agent must be set")
+	}
+	fullVersion := chromiumVersionFromUserAgent(cfg.Browser.UserAgent)
+	if cfg.Browser.FullVersion != fullVersion {
+		return fmt.Errorf("persona contract mismatch: browser full_version %q does not match user_agent version %q", cfg.Browser.FullVersion, fullVersion)
+	}
+	if cfg.Browser.Major != chromiumMajorVersion(fullVersion) {
+		return fmt.Errorf("persona contract mismatch: browser major %d does not match full_version %q", cfg.Browser.Major, fullVersion)
+	}
+	expectedBrandVersions := chromiumBrandVersions(fullVersion)
+	if secCHBrandList(cfg.Browser.BrandVersions) != secCHBrandList(expectedBrandVersions) {
+		return fmt.Errorf("persona contract mismatch: browser brand_versions do not match full_version %q", fullVersion)
+	}
+	expectedFullVersionList := chromiumFullVersionList(expectedBrandVersions, fullVersion)
+	if secCHBrandList(cfg.Browser.FullVersionList) != secCHBrandList(expectedFullVersionList) {
+		return fmt.Errorf("persona contract mismatch: browser full_version_list does not match full_version %q", fullVersion)
+	}
+	if cfg.Browser.ClientHints.SecCHUA != secCHBrandList(cfg.Browser.BrandVersions) {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA %q does not match browser brand_versions", cfg.Browser.ClientHints.SecCHUA)
+	}
+	if cfg.Browser.ClientHints.SecCHUAFullVersion != secCHBrandList(cfg.Browser.FullVersionList) {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Full-Version-List %q does not match browser full_version_list", cfg.Browser.ClientHints.SecCHUAFullVersion)
+	}
+	if err := validateBrowseForgeNativePersonaPlatform(cfg.Platform); err != nil {
+		return err
+	}
+	if !userAgentMatchesPlatform(cfg.Browser.UserAgent, cfg.Platform.Platform) {
+		return fmt.Errorf("persona contract mismatch: user_agent %q does not match platform %q", cfg.Browser.UserAgent, cfg.Platform.Platform)
+	}
+	if cfg.Browser.ClientHints.ExpectedNavigatorUA != "" && cfg.Browser.ClientHints.ExpectedNavigatorUA != cfg.Browser.UserAgent {
+		return fmt.Errorf("persona contract mismatch: client hints navigator userAgent does not match browser user_agent")
+	}
+	if cfg.Browser.ClientHints.Platform != "" && cfg.Browser.ClientHints.Platform != cfg.Platform.PlatformCH {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Platform %q does not match platform_ch %q", cfg.Browser.ClientHints.Platform, cfg.Platform.PlatformCH)
+	}
+	if cfg.Browser.ClientHints.PlatformVersion != cfg.Platform.PlatformVersion {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Platform-Version %q does not match platform_version %q", cfg.Browser.ClientHints.PlatformVersion, cfg.Platform.PlatformVersion)
+	}
+	if x64UserAgent(cfg.Browser.UserAgent) && cfg.Browser.ClientHints.Architecture == "arm" {
+		return fmt.Errorf("persona contract mismatch: x64 user-agent cannot use ARM UA-CH architecture")
+	}
+	if cfg.Browser.ClientHints.Architecture != "" && cfg.Browser.ClientHints.Architecture != cfg.Platform.Arch {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Arch %q does not match platform arch %q", cfg.Browser.ClientHints.Architecture, cfg.Platform.Arch)
+	}
+	if cfg.Browser.ClientHints.Bitness != "" && cfg.Browser.ClientHints.Bitness != cfg.Platform.Bitness {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Bitness %q does not match platform bitness %q", cfg.Browser.ClientHints.Bitness, cfg.Platform.Bitness)
+	}
+	if cfg.Browser.ClientHints.Model != cfg.Platform.Model {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Model %q does not match platform model %q", cfg.Browser.ClientHints.Model, cfg.Platform.Model)
+	}
+	if strings.Join(cfg.Browser.ClientHints.FormFactors, "\x00") != strings.Join(cfg.Platform.FormFactors, "\x00") {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-UA-Form-Factors do not match platform formFactors")
+	}
+	if cfg.Platform.Mobile != cfg.Browser.ClientHints.Mobile {
+		return fmt.Errorf("persona contract mismatch: UA-CH mobile flag does not match platform mobile flag")
+	}
+	if !cfg.Platform.Mobile && containsStringFold(cfg.Platform.FormFactors, "mobile") {
+		return fmt.Errorf("persona contract mismatch: desktop platform cannot advertise mobile formFactors")
+	}
+	if !cfg.Platform.Mobile && containsStringFold(cfg.Browser.ClientHints.FormFactors, "mobile") {
+		return fmt.Errorf("persona contract mismatch: desktop UA cannot advertise mobile Sec-CH-UA-Form-Factors")
+	}
+	if cfg.Locale.Timezone == "" || cfg.Locale.DSTPolicy != "iana-timezone" || cfg.Locale.SystemTimezoneSource != "persona-contract" {
+		return fmt.Errorf("persona contract mismatch: timezone policy must use persona-contract IANA timezone metadata")
+	}
+	if cfg.Locale.TimezoneOffsetMins != timezoneOffsetMinutes(cfg.Locale.Timezone) {
+		return fmt.Errorf("persona contract mismatch: timezone offset %d does not match timezone %q", cfg.Locale.TimezoneOffsetMins, cfg.Locale.Timezone)
+	}
+	if strings.TrimSpace(cfg.Locale.Locale) == "" {
+		return fmt.Errorf("persona contract mismatch: locale must be set")
+	}
+	if cfg.Locale.AcceptLanguage != "" && !acceptLanguageMatchesLocale(cfg.Locale.AcceptLanguage, cfg.Locale.Locale) {
+		return fmt.Errorf("persona contract mismatch: Accept-Language %q does not match locale %q", cfg.Locale.AcceptLanguage, cfg.Locale.Locale)
+	}
+	if cfg.Locale.AcceptLanguage != "" && cfg.Locale.NavigatorLanguage != "" && !strings.EqualFold(cfg.Locale.NavigatorLanguage, firstLanguage(cfg.Locale.AcceptLanguage)) {
+		return fmt.Errorf("persona contract mismatch: navigator.language %q does not match Accept-Language %q", cfg.Locale.NavigatorLanguage, cfg.Locale.AcceptLanguage)
+	}
+	if cfg.Locale.AcceptLanguage != "" && len(cfg.Locale.NavigatorLanguages) == 0 {
+		return fmt.Errorf("persona contract mismatch: navigator.languages must not be empty when Accept-Language is set")
+	}
+	if len(cfg.Locale.NavigatorLanguages) > 0 && cfg.Locale.AcceptLanguage != "" && !strings.EqualFold(cfg.Locale.NavigatorLanguages[0], firstLanguage(cfg.Locale.AcceptLanguage)) {
+		return fmt.Errorf("persona contract mismatch: navigator.languages first entry %q does not match Accept-Language %q", cfg.Locale.NavigatorLanguages[0], cfg.Locale.AcceptLanguage)
+	}
+	if cfg.Locale.SecCHLang != "" && cfg.Locale.SecCHLang != strings.Join(cfg.Locale.NavigatorLanguages, ",") {
+		return fmt.Errorf("persona contract mismatch: Sec-CH-Lang %q does not match navigator.languages", cfg.Locale.SecCHLang)
+	}
+	if cfg.Browser.ClientHints.Mobile && !strings.Contains(cfg.Browser.UserAgent, "Mobile") {
+		return fmt.Errorf("persona contract mismatch: mobile UA-CH persona requires a mobile user-agent token")
+	}
+	if cfg.Browser.Family == "chromium" && cfg.Plugins.PDFViewer {
+		if !containsString(cfg.Plugins.Plugins, "PDF Viewer") && !containsString(cfg.Plugins.Plugins, "Chrome PDF Viewer") && !containsString(cfg.Plugins.Plugins, "Chromium PDF Viewer") {
+			return fmt.Errorf("persona contract mismatch: chromium persona requires PDF plugin entry")
+		}
+		if !containsString(cfg.Plugins.MIMETypes, "application/pdf") {
+			return fmt.Errorf("persona contract mismatch: chromium persona requires application/pdf MIME entry")
+		}
+	}
+	if cfg.Hardware.HardwareConcurrency <= 0 || cfg.Hardware.DeviceMemoryGB <= 0 {
+		return fmt.Errorf("persona contract mismatch: hardware concurrency and deviceMemory must be positive")
+	}
+	if cfg.Screen.Width <= 0 || cfg.Screen.Height <= 0 || cfg.Screen.DPR <= 0 {
+		return fmt.Errorf("persona contract mismatch: screen width/height/DPR must be positive")
+	}
+	if cfg.Screen.AvailWidth <= 0 || cfg.Screen.AvailHeight <= 0 || cfg.Screen.AvailWidth > cfg.Screen.Width || cfg.Screen.AvailHeight > cfg.Screen.Height {
+		return fmt.Errorf("persona contract mismatch: screen avail size must be positive and not exceed screen size")
+	}
+	if cfg.Screen.OuterWidth <= 0 || cfg.Screen.OuterHeight <= 0 || cfg.Screen.InnerWidth <= 0 || cfg.Screen.InnerHeight <= 0 {
+		return fmt.Errorf("persona contract mismatch: window inner/outer size must be positive")
+	}
+	if cfg.Screen.InnerWidth > cfg.Screen.OuterWidth || cfg.Screen.InnerHeight > cfg.Screen.OuterHeight {
+		return fmt.Errorf("persona contract mismatch: window inner size cannot exceed outer size")
+	}
+	if cfg.Screen.ViewportWidth != cfg.Screen.InnerWidth || cfg.Screen.ViewportHeight != cfg.Screen.InnerHeight {
+		return fmt.Errorf("persona contract mismatch: viewport size must match window inner size")
+	}
+	if cfg.Screen.ColorDepth <= 0 {
+		return fmt.Errorf("persona contract mismatch: screen color depth must be positive")
+	}
+	if cfg.Screen.Orientation == "" || (!strings.HasPrefix(cfg.Screen.Orientation, "landscape") && !strings.HasPrefix(cfg.Screen.Orientation, "portrait")) {
+		return fmt.Errorf("persona contract mismatch: screen orientation must be landscape-* or portrait-*")
+	}
+	if !cfg.Platform.Mobile && cfg.Screen.TouchPoints != 0 {
+		return fmt.Errorf("persona contract mismatch: desktop persona cannot advertise touch points")
+	}
+	if cfg.Network.ProxyEnabled {
+		if cfg.Network.ProxyType == "" || cfg.Network.ProxyRegion == "" {
+			return fmt.Errorf("persona contract mismatch: proxy persona requires proxy type and region metadata")
+		}
+		if cfg.Network.CountryCode == "" {
+			return fmt.Errorf("persona contract mismatch: proxy persona requires known request country metadata")
+		}
+		if cfg.DNS.Mode != "proxy-aligned" || cfg.DNS.ResolverPolicy != "no-host-or-container-resolver-leak" {
+			return fmt.Errorf("persona contract mismatch: proxy persona requires proxy-aligned DNS resolver policy")
+		}
+		if cfg.Geolocation.Mode != "proxy-aligned" || cfg.Geolocation.CountryCode != cfg.Network.CountryCode || cfg.Geolocation.RegionCode != cfg.Network.RegionCode {
+			return fmt.Errorf("persona contract mismatch: proxy persona requires geolocation metadata aligned to proxy region")
+		}
+	} else {
+		if cfg.Network.ProxyType != "" || cfg.Network.ProxyRegion != "" {
+			return fmt.Errorf("persona contract mismatch: non-proxy persona cannot include proxy metadata")
+		}
+		if cfg.DNS.Mode != "local" || cfg.DNS.ResolverPolicy != "local-network-consistent" {
+			return fmt.Errorf("persona contract mismatch: non-proxy persona requires local DNS resolver policy")
+		}
+		if cfg.Geolocation.Mode != "local" {
+			return fmt.Errorf("persona contract mismatch: non-proxy persona requires local geolocation policy")
+		}
+	}
+	if cfg.WebRTC.Mode == "" {
+		return fmt.Errorf("persona contract mismatch: WebRTC policy mode must be set")
+	}
+	if cfg.WebRTC.ProxyRegion != cfg.Network.ProxyRegion {
+		return fmt.Errorf("persona contract mismatch: WebRTC proxy region must match network proxy region")
+	}
+	if cfg.Network.ProxyEnabled && (cfg.WebRTC.Mode != "disable_non_proxied_udp" || !cfg.WebRTC.DirectIPRedaction) {
+		return fmt.Errorf("persona contract mismatch: proxy persona requires WebRTC direct IP redaction")
+	}
+	if cfg.Network.CountryCode != "" && cfg.Locale.Timezone != "" && !timezoneMatchesCountry(cfg.Locale.Timezone, cfg.Network.CountryCode) {
+		return fmt.Errorf("persona contract mismatch: timezone %q does not match request country %q", cfg.Locale.Timezone, cfg.Network.CountryCode)
+	}
+	if browseForgeLocaleNeedsCJK(cfg.Locale.Locale) && !cfg.Fonts.CJK {
+		return fmt.Errorf("persona contract mismatch: CJK locale requires CJK font profile")
+	}
+	if cfg.GPU.Mode != "software" && cfg.GPU.Mode != "native" && cfg.GPU.Mode != "passthrough" {
+		return fmt.Errorf("persona contract mismatch: GPU mode %q must be software, native, or passthrough", cfg.GPU.Mode)
+	}
+	if cfg.GPU.Vendor == "" || cfg.GPU.Renderer == "" {
+		return fmt.Errorf("persona contract mismatch: GPU vendor/renderer must be declared")
+	}
+	if cfg.Platform.OS == "macos" && strings.Contains(strings.ToLower(cfg.GPU.Renderer), "swiftshader") {
+		return fmt.Errorf("persona contract mismatch: macOS persona cannot advertise Linux SwiftShader renderer")
+	}
+	if cfg.GPU.WebGL && (cfg.GPU.GLVersion == "" || cfg.GPU.ShadingLanguageVersion == "" || len(cfg.GPU.ContextAttributes) == 0 || len(cfg.GPU.Extensions) == 0 || len(cfg.GPU.ShaderPrecision) == 0 || len(cfg.GPU.Limits) == 0) {
+		return fmt.Errorf("persona contract mismatch: WebGL baseline must include version, context attributes, extensions, shader precision, and limits")
+	}
+	if cfg.GPU.Mode == "software" && (!strings.Contains(strings.ToLower(cfg.GPU.Renderer), "swiftshader") || cfg.GPU.ANGLEBackend != "swiftshader-webgl" || cfg.GPU.RenderHashBaseline == "") {
+		return fmt.Errorf("persona contract mismatch: software GPU mode requires SwiftShader baseline metadata")
+	}
+	if cfg.Fonts.ProfileID == "" || len(cfg.Fonts.Families) == 0 || cfg.Fonts.Emoji == "" || cfg.Fonts.Source == "" {
+		return fmt.Errorf("persona contract mismatch: font profile must declare profile_id, families, emoji, and source")
+	}
+	if cfg.Canvas.Stable && (cfg.Canvas.Mode == "" || cfg.Canvas.TextMetricsMode == "" || cfg.Canvas.EmojiBaseline == "" || cfg.Canvas.RenderHashBaseline == "") {
+		return fmt.Errorf("persona contract mismatch: stable canvas profile must declare mode, text metrics, emoji, and render baseline")
+	}
+	if cfg.Audio.Stable && (cfg.Audio.Mode == "" || cfg.Audio.SampleRate <= 0) {
+		return fmt.Errorf("persona contract mismatch: stable audio profile must declare mode and sample rate")
+	}
+	if !cfg.Math.Stable {
+		return fmt.Errorf("persona contract mismatch: stable math fingerprint policy must be enabled")
+	}
+	if !cfg.Geometry.ClientRectsStable {
+		return fmt.Errorf("persona contract mismatch: stable client rect policy must be enabled")
+	}
+	if !cfg.Media.H264 && !cfg.Media.VP9 && !cfg.Media.AV1 {
+		return fmt.Errorf("persona contract mismatch: media codec baseline must declare expected codec support")
+	}
+	switch cfg.Permissions.Notification {
+	case "prompt", "default", "granted", "denied":
+	default:
+		return fmt.Errorf("persona contract mismatch: notification permission policy %q is invalid", cfg.Permissions.Notification)
+	}
+	if cfg.Storage.QuotaMB < 0 {
+		return fmt.Errorf("persona contract mismatch: storage quota must be non-negative")
+	}
+	if cfg.Storage.Persistent && (cfg.Storage.Cookies != "profile-persistent" || cfg.Storage.LocalStorage != "profile-persistent" || cfg.Storage.SessionStorage != "session-scoped" || cfg.Storage.IndexedDB != "profile-persistent" || cfg.Storage.QuotaBehavior == "") {
+		return fmt.Errorf("persona contract mismatch: storage policy must declare persistent cookies/localStorage/indexedDB and session-scoped sessionStorage")
+	}
+	if !cfg.Realms.DocumentStartInjection {
+		return fmt.Errorf("persona contract mismatch: document-start injection must be enabled for cross-realm parity")
+	}
+	for _, target := range []string{"window", "same-origin-iframe", "sandbox-iframe", "nested-iframe", "dedicated-worker", "shared-worker", "service-worker", "offscreen-canvas-worker"} {
+		if !containsString(cfg.Realms.Targets, target) {
+			return fmt.Errorf("persona contract mismatch: required realm target %q is missing", target)
+		}
+	}
+	return nil
+}
+
+func x64UserAgent(userAgent string) bool {
+	return strings.Contains(userAgent, "x86_64") || strings.Contains(userAgent, "Win64") || strings.Contains(userAgent, "x64")
+}
+
+func containsStringFold(values []string, want string) bool {
+	for _, value := range values {
+		if strings.EqualFold(value, want) {
+			return true
+		}
+	}
+	return false
+}
+
+func containsString(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
+}
+
+func timezoneMatchesCountry(timezone, countryCode string) bool {
+	countryCode = strings.ToUpper(strings.TrimSpace(countryCode))
+	switch countryCode {
+	case "", "ZZ":
+		return true
+	case "US":
+		return strings.HasPrefix(timezone, "America/")
+	case "TW":
+		return timezone == "Asia/Taipei"
+	case "JP":
+		return timezone == "Asia/Tokyo"
+	case "KR":
+		return timezone == "Asia/Seoul"
+	case "SG":
+		return timezone == "Asia/Singapore"
+	case "HK":
+		return timezone == "Asia/Hong_Kong"
+	case "DE":
+		return timezone == "Europe/Berlin"
+	case "FR":
+		return timezone == "Europe/Paris"
+	case "GB", "UK":
+		return timezone == "Europe/London"
+	default:
+		return true
+	}
+}
+
+func maxInt(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func firstLanguage(acceptLanguage string) string {
+	first := strings.TrimSpace(strings.Split(acceptLanguage, ",")[0])
+	if semi := strings.IndexByte(first, ';'); semi >= 0 {
+		first = first[:semi]
+	}
+	return first
+}
+
+func navigatorLanguagesFromAcceptLanguage(acceptLanguage string) []string {
+	parts := strings.Split(acceptLanguage, ",")
+	out := make([]string, 0, len(parts))
+	for _, part := range parts {
+		lang := strings.TrimSpace(strings.SplitN(part, ";", 2)[0])
+		if lang != "" {
+			out = append(out, lang)
+		}
+	}
+	if len(out) == 0 {
+		return []string{"en-US", "en"}
+	}
+	return out
+}
+
+func timezoneOffsetMinutes(timezone string) int {
+	if timezone == "" {
+		return 0
+	}
+	loc, err := time.LoadLocation(timezone)
+	if err != nil {
+		return 0
+	}
+	_, offset := time.Now().In(loc).Zone()
+	return -offset / 60
+}
+
+func browseForgeNetworkProfile(proxyRegion string) browseForgeNativeNetwork {
+	network := browseForgeNativeNetwork{
+		ProxyEnabled: proxyRegion != "",
+		ProxyRegion:  proxyRegion,
+		ASNType:      "residential-or-mobile",
+	}
+	if proxyRegion == "" {
+		network.ASNType = "local"
+		return network
+	}
+	network.ProxyType = "configured"
+	network.CountryCode = countryCodeForProxyRegion(proxyRegion)
+	network.RegionCode = regionCodeForProxyRegion(proxyRegion)
+	return network
+}
+
+func countryCodeForProxyRegion(region string) string {
+	region = strings.ToLower(strings.TrimSpace(region))
+	switch {
+	case strings.HasPrefix(region, "us"):
+		return "US"
+	case strings.HasPrefix(region, "tw"):
+		return "TW"
+	case strings.HasPrefix(region, "jp"):
+		return "JP"
+	case strings.HasPrefix(region, "kr"):
+		return "KR"
+	case strings.HasPrefix(region, "sg"):
+		return "SG"
+	case strings.HasPrefix(region, "hk"):
+		return "HK"
+	case strings.HasPrefix(region, "de"):
+		return "DE"
+	case strings.HasPrefix(region, "fr"):
+		return "FR"
+	case strings.HasPrefix(region, "gb"), strings.HasPrefix(region, "uk"):
+		return "GB"
+	default:
+		return ""
+	}
+}
+
+func regionCodeForProxyRegion(region string) string {
+	if dash := strings.IndexAny(region, "-_"); dash >= 0 && dash+1 < len(region) {
+		return strings.ToUpper(region[dash+1:])
+	}
+	return ""
+}
+
+func browseForgeDNSProfile(network browseForgeNativeNetwork) browseForgeNativeDNS {
+	if network.ProxyEnabled {
+		return browseForgeNativeDNS{Mode: "proxy-aligned", ResolverPolicy: "no-host-or-container-resolver-leak"}
+	}
+	return browseForgeNativeDNS{Mode: "local", ResolverPolicy: "local-network-consistent"}
+}
+
+func browseForgeGeolocationProfile(network browseForgeNativeNetwork) browseForgeNativeGeolocation {
+	if network.ProxyEnabled {
+		return browseForgeNativeGeolocation{Mode: "proxy-aligned", CountryCode: network.CountryCode, RegionCode: network.RegionCode, City: network.City}
+	}
+	return browseForgeNativeGeolocation{Mode: "local"}
+}
+
+func browseForgeGPUProfile(mode, vendor, renderer string) browseForgeNativeGPU {
+	if mode == "" {
+		mode = "native"
+	}
+	gpu := browseForgeNativeGPU{
+		Mode:                   mode,
+		Vendor:                 vendor,
+		Renderer:               renderer,
+		WebGL:                  true,
+		WebGL2:                 true,
+		WebGPU:                 "browser-default",
+		GLVersion:              "browser-default",
+		ShadingLanguageVersion: "browser-default",
+		ContextAttributes: map[string]string{
+			"alpha":                        "true",
+			"antialias":                    "true",
+			"depth":                        "true",
+			"failIfMajorPerformanceCaveat": "false",
+			"powerPreference":              "default",
+			"premultipliedAlpha":           "true",
+			"preserveDrawingBuffer":        "false",
+			"stencil":                      "false",
+		},
+		Extensions:            []string{"ANGLE_instanced_arrays", "EXT_blend_minmax", "EXT_color_buffer_half_float", "EXT_float_blend", "EXT_texture_filter_anisotropic", "OES_element_index_uint", "OES_standard_derivatives", "OES_texture_float", "OES_texture_half_float", "WEBGL_debug_renderer_info"},
+		ShaderPrecision:       map[string]string{"fragmentHighFloat": "23/127/127", "fragmentMediumFloat": "10/15/15", "vertexHighFloat": "23/127/127"},
+		Limits:                map[string]int{"maxCombinedTextureImageUnits": 32, "maxCubeMapTextureSize": 16384, "maxFragmentUniformVectors": 1024, "maxRenderbufferSize": 16384, "maxTextureImageUnits": 16, "maxTextureSize": 16384, "maxVaryingVectors": 30, "maxVertexAttribs": 16, "maxVertexTextureImageUnits": 16, "maxVertexUniformVectors": 4096},
+		WorkerOffscreenCanvas: true,
+		WebGLParams:           map[string]string{},
+	}
+	if mode == "software" {
+		gpu.ANGLEBackend = "swiftshader-webgl"
+		gpu.WebGPU = "disabled-or-software"
+		gpu.GLVersion = "OpenGL ES 2.0 Chromium"
+		gpu.ShadingLanguageVersion = "OpenGL ES GLSL ES 1.0 Chromium"
+		gpu.RenderHashBaseline = "swiftshader-stable"
+	}
+	return gpu
+}
+
+func browseForgeFontContract(fp map[string]any, platform browseForgeNativePlatform, locale string, policy *config.CloakBrowserConfig) (browseForgeNativeFontProfile, string, bool, error) {
+	corpusConfigured := policy != nil && strings.TrimSpace(policy.FontsDir) != ""
+	if corpusConfigured {
+		families, fontsList, ok, err := browseForgeFingerprintFontFamilies(fp)
+		if err != nil {
+			return browseForgeNativeFontProfile{}, "", false, err
+		}
+		if ok {
+			return browseForgeFontProfile(platform, locale, families, "explicit-corpus"), fontsList, true, nil
+		}
+	}
+	families := browseForgeDefaultFontFamilies(platform.OS, locale)
+	return browseForgeFontProfile(platform, locale, families, "persona-default"), "", false, nil
+}
+
+func browseForgeDefaultFontFamilies(osName, locale string) []string {
+	cjk := browseForgeLocaleNeedsCJK(locale)
+	var families []string
+	switch strings.ToLower(strings.TrimSpace(osName)) {
+	case "linux":
+		families = []string{"Noto Sans", "Noto Serif", "Noto Sans Mono", "Liberation Sans", "Liberation Serif", "Liberation Mono", "DejaVu Sans", "DejaVu Serif", "DejaVu Sans Mono", "Arial", "Times New Roman", "Courier New", "Noto Color Emoji"}
+		if cjk {
+			families = append(families, "Noto Sans CJK TC", "Noto Serif CJK TC", "Noto Sans CJK SC", "Noto Serif CJK SC")
+		}
+	case "macos":
+		families = []string{"Helvetica", "Arial", "Times", "Times New Roman", "Courier", "Courier New", "Menlo", "Geneva", "Apple Color Emoji"}
+		if cjk {
+			families = append(families, "PingFang TC", "PingFang SC", "Hiragino Sans", "Songti TC")
+		}
+	case "windows":
+		families = []string{"Segoe UI", "Arial", "Times New Roman", "Courier New", "Consolas", "Calibri", "Cambria", "Microsoft Sans Serif", "Segoe UI Emoji"}
+		if cjk {
+			families = append(families, "Microsoft JhengHei", "Microsoft YaHei", "MingLiU", "SimSun")
+		}
+	default:
+		families = []string{"Arial", "Times New Roman", "Courier New", "Noto Sans", "Noto Serif", "Noto Sans Mono", "Noto Color Emoji"}
+		if cjk {
+			families = append(families, "Noto Sans CJK TC", "Noto Serif CJK TC")
+		}
+	}
+	return families
+}
+
+func browseForgeLocaleNeedsCJK(locale string) bool {
+	locale = strings.ToLower(strings.TrimSpace(locale))
+	return strings.HasPrefix(locale, "zh") || strings.HasPrefix(locale, "ja") || strings.HasPrefix(locale, "ko")
+}
+
+func browseForgeFontProfile(platform browseForgeNativePlatform, locale string, families []string, source string) browseForgeNativeFontProfile {
+	cjk := browseForgeLocaleNeedsCJK(locale)
+	emoji := "Noto Color Emoji"
+	if platform.OS == "macos" {
+		emoji = "Apple Color Emoji"
+	} else if platform.OS == "windows" {
+		emoji = "Segoe UI Emoji"
+	}
+	return browseForgeNativeFontProfile{ProfileID: platform.OS + "-" + source, Families: append([]string(nil), families...), Emoji: emoji, CJK: cjk, Source: source}
+}
+
+func browseForgeFingerprintFontFamilies(fp map[string]any) ([]string, string, bool, error) {
+	if fp == nil {
+		return nil, "", false, nil
+	}
+	value, ok := fp["fonts"]
+	if !ok {
+		return nil, "", false, nil
+	}
+	var items []string
+	switch typed := value.(type) {
+	case []string:
+		items = typed
+	case []any:
+		items = make([]string, 0, len(typed))
+		for _, item := range typed {
+			s, ok := item.(string)
+			if !ok {
+				return nil, "", false, fmt.Errorf("BrowseForge Chromium fingerprint fonts must contain only strings")
+			}
+			items = append(items, s)
+		}
+	default:
+		return nil, "", false, fmt.Errorf("BrowseForge Chromium fingerprint fonts must be a string list")
+	}
+	families := make([]string, 0, len(items))
+	for _, item := range items {
+		if strings.TrimSpace(item) == "" {
+			continue
+		}
+		if err := validateBrowseForgeFontFamily(item); err != nil {
+			return nil, "", false, err
+		}
+		family := strings.TrimSpace(item)
+		families = append(families, family)
+	}
+	if len(families) == 0 {
+		return nil, "", false, nil
+	}
+	fontsList := strings.Join(families, "|")
+	if len(fontsList) > 8192 {
+		return nil, "", false, fmt.Errorf("BrowseForge Chromium fingerprint fonts list exceeds 8192 bytes")
+	}
+	return families, fontsList, true, nil
+}
+
+func validateBrowseForgeFontFamily(family string) error {
+	if len(family) > 128 {
+		return fmt.Errorf("BrowseForge Chromium fingerprint fonts family %q exceeds 128 bytes", family)
+	}
+	for i := range family {
+		c := family[i]
+		if c < 0x20 || c > 0x7e || c == '|' {
+			return fmt.Errorf("BrowseForge Chromium fingerprint fonts family %q contains unsupported character", family)
+		}
+	}
+	return nil
+}
+
+func browseForgeCanvasProfile(fp map[string]any, seed uint64) browseForgeNativeCanvasProfile {
+	textSeed := int64((seed >> 16) & 0x7fffffff)
+	if v, ok := fingerprintInt(fp, "canvas:seed"); ok {
+		return browseForgeNativeCanvasProfile{Mode: "stable-seeded", Seed: v, Stable: true, TextMetricsMode: "stable-profile", TextMetricsSeed: textSeed, EmojiBaseline: "noto-color-emoji", RenderHashBaseline: "seeded"}
+	}
+	return browseForgeNativeCanvasProfile{Mode: "stable-persona", Seed: int64(seed & 0x7fffffff), Stable: true, TextMetricsMode: "stable-profile", TextMetricsSeed: textSeed, EmojiBaseline: "noto-color-emoji", RenderHashBaseline: "persona"}
+}
+
+func browseForgeAudioProfile(fp map[string]any, seed uint64) browseForgeNativeAudioProfile {
+	if v, ok := fingerprintInt(fp, "audio:seed"); ok {
+		return browseForgeNativeAudioProfile{Mode: "stable-seeded", Seed: v, SampleRate: 48000, Stable: true}
+	}
+	return browseForgeNativeAudioProfile{Mode: "stable-persona", Seed: int64((seed >> 8) & 0x7fffffff), SampleRate: 48000, Stable: true}
+}
+
+func browseForgePluginProfile(policy *config.CloakBrowserConfig) browseForgeNativePluginProfile {
+	pdf := cloakPluginsPDF(policy)
+	enabled := pdf == "" || pdf == "enabled" || pdf == "true" || pdf == "1"
+	if !enabled {
+		return browseForgeNativePluginProfile{PDFViewer: false}
+	}
+	return browseForgeNativePluginProfile{
+		PDFViewer: true,
+		Plugins:   []string{"PDF Viewer", "Chrome PDF Viewer", "Chromium PDF Viewer"},
+		MIMETypes: []string{"application/pdf", "text/pdf"},
+	}
+}
+
+func browseForgeMediaProfile() browseForgeNativeMediaProfile {
+	return browseForgeNativeMediaProfile{H264: true, VP9: true, AV1: true, Devices: []string{}}
 }
 
 func clampScreenAvail(avail, size int) int {
