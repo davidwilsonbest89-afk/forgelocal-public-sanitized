@@ -12,6 +12,13 @@ fi
 export BROWSEFORGE_DOCKER_DISPLAY_WIDTH
 export BROWSEFORGE_DOCKER_DISPLAY_HEIGHT
 export BROWSEFORGE_DOCKER_DISPLAY_GEOMETRY="${BROWSEFORGE_DOCKER_DISPLAY_WIDTH}x${BROWSEFORGE_DOCKER_DISPLAY_HEIGHT}"
+case "$BROWSEFORGE_DOCKER_GPU_MODE" in
+  software|native|passthrough) ;;
+  *)
+    echo "BROWSEFORGE_DOCKER_GPU_MODE must be one of software, native, or passthrough" >&2
+    exit 2
+    ;;
+esac
 export BROWSEFORGE_DOCKER_GPU_MODE
 if [ "$BROWSEFORGE_DOCKER_GPU_MODE" = "software" ]; then
   export LIBGL_ALWAYS_SOFTWARE=1
@@ -77,8 +84,8 @@ sleep 2
 export DISPLAY=:1
 openbox &
 
-# Start BrowseForge. Docker defaults to software GL; set
-# BROWSEFORGE_DOCKER_GPU_MODE=native when passing a host GPU through.
+# Start BrowseForge. Docker defaults to software GL; set native or passthrough
+# only when the container has a deliberate host GPU path.
 /app/BrowseForge &
 BF_PID=$!
 
