@@ -41,11 +41,12 @@ type CloakBrowserConfig struct {
 
 // RuntimeConfig is the generic provider config used by runtime-agnostic code.
 type RuntimeConfig struct {
-	Enabled     *bool               `json:"enabled,omitempty"`
-	BinaryPath  string              `json:"binary_path,omitempty"`
-	Family      string              `json:"family,omitempty"`
-	DisplayName string              `json:"display_name,omitempty"`
-	Settings    *CloakBrowserConfig `json:"settings,omitempty"`
+	Enabled        *bool               `json:"enabled,omitempty"`
+	BinaryPath     string              `json:"binary_path,omitempty"`
+	SkipAutoUpdate bool                `json:"skip_auto_update,omitempty"`
+	Family         string              `json:"family,omitempty"`
+	DisplayName    string              `json:"display_name,omitempty"`
+	Settings       *CloakBrowserConfig `json:"settings,omitempty"`
 }
 
 // HumanizeConfig controls human-like behavior simulation.

@@ -670,15 +670,17 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 	} else if quota < 0 {
 		return chromiumLaunchPersona{}, fmt.Errorf("%s storage_quota_mb must be >= 0", runtimeID)
 	}
-	screenWidth := fingerprintIntDefault(fp, "screen.width", 1920)
-	screenHeight := fingerprintIntDefault(fp, "screen.height", 1080)
-	availWidth := clampScreenAvail(fingerprintIntDefault(fp, "screen.availWidth", 1920), screenWidth)
-	availHeight := clampScreenAvail(fingerprintIntDefault(fp, "screen.availHeight", 1040), screenHeight)
-	dpr := fingerprintFloatDefault(fp, "screen.devicePixelRatio", 1)
+	screenDefaults := browseForgeDefaultScreen(nativePlatform.OS)
+	screenWidth := fingerprintIntDefault(fp, "screen.width", screenDefaults.Width)
+	screenHeight := fingerprintIntDefault(fp, "screen.height", screenDefaults.Height)
+	availWidth := clampScreenAvail(fingerprintIntDefault(fp, "screen.availWidth", screenDefaults.AvailWidth), screenWidth)
+	availHeight := clampScreenAvail(fingerprintIntDefault(fp, "screen.availHeight", screenDefaults.AvailHeight), screenHeight)
+	dpr := fingerprintFloatDefault(fp, "screen.devicePixelRatio", screenDefaults.DPR)
+	screenChromeInset := maxInt(screenDefaults.OuterHeight-screenDefaults.InnerHeight, 0)
 	outerWidth := fingerprintIntDefault(fp, "window.outerWidth", availWidth)
 	outerHeight := fingerprintIntDefault(fp, "window.outerHeight", availHeight)
 	innerWidth := fingerprintIntDefault(fp, "window.innerWidth", availWidth)
-	innerHeight := fingerprintIntDefault(fp, "window.innerHeight", maxInt(availHeight-92, 1))
+	innerHeight := fingerprintIntDefault(fp, "window.innerHeight", maxInt(availHeight-screenChromeInset, 1))
 	fonts, fontsList, hasFontsList, err := browseForgeFontContract(fp, nativePlatform, locale, policy)
 	if err != nil {
 		return chromiumLaunchPersona{}, err
@@ -733,7 +735,7 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 				ViewportWidth:  innerWidth,
 				ViewportHeight: innerHeight,
 				DPR:            dpr,
-				ColorDepth:     fingerprintIntDefault(fp, "screen.colorDepth", 24),
+				ColorDepth:     fingerprintIntDefault(fp, "screen.colorDepth", screenDefaults.ColorDepth),
 				TouchPoints:    0,
 				Orientation:    "landscape-primary",
 			},
@@ -753,7 +755,7 @@ func buildChromiumLaunchPersona(p *profile.Profile, runtimeID bfruntime.ID, plat
 			},
 			Storage: browseForgeNativeStorage{
 				QuotaMB:        int(storageQuota),
-				Persistent:     true,
+				Persistent:     false,
 				Cookies:        "profile-persistent",
 				LocalStorage:   "profile-persistent",
 				SessionStorage: "session-scoped",
@@ -1392,8 +1394,8 @@ func validateBrowseForgePersonaContract(cfg browseForgeNativePersonaConfig) erro
 	if cfg.Platform.OS == "macos" && strings.Contains(strings.ToLower(cfg.GPU.Renderer), "swiftshader") {
 		return fmt.Errorf("persona contract mismatch: macOS persona cannot advertise Linux SwiftShader renderer")
 	}
-	if cfg.GPU.WebGL && (cfg.GPU.GLVersion == "" || cfg.GPU.ShadingLanguageVersion == "" || len(cfg.GPU.ContextAttributes) == 0 || len(cfg.GPU.Extensions) == 0 || len(cfg.GPU.ShaderPrecision) == 0 || len(cfg.GPU.Limits) == 0) {
-		return fmt.Errorf("persona contract mismatch: WebGL baseline must include version, context attributes, extensions, shader precision, and limits")
+	if cfg.GPU.Mode == "software" && cfg.GPU.WebGL && (cfg.GPU.GLVersion == "" || cfg.GPU.ShadingLanguageVersion == "" || len(cfg.GPU.ContextAttributes) == 0 || len(cfg.GPU.Extensions) == 0 || len(cfg.GPU.ShaderPrecision) == 0 || len(cfg.GPU.Limits) == 0) {
+		return fmt.Errorf("persona contract mismatch: software WebGL baseline must include version, context attributes, extensions, shader precision, and limits")
 	}
 	if cfg.GPU.Mode == "software" && (!strings.Contains(strings.ToLower(cfg.GPU.Renderer), "swiftshader") || cfg.GPU.ANGLEBackend != "swiftshader-webgl" || cfg.GPU.RenderHashBaseline == "") {
 		return fmt.Errorf("persona contract mismatch: software GPU mode requires SwiftShader baseline metadata")
@@ -1424,8 +1426,8 @@ func validateBrowseForgePersonaContract(cfg browseForgeNativePersonaConfig) erro
 	if cfg.Storage.QuotaMB < 0 {
 		return fmt.Errorf("persona contract mismatch: storage quota must be non-negative")
 	}
-	if cfg.Storage.Persistent && (cfg.Storage.Cookies != "profile-persistent" || cfg.Storage.LocalStorage != "profile-persistent" || cfg.Storage.SessionStorage != "session-scoped" || cfg.Storage.IndexedDB != "profile-persistent" || cfg.Storage.QuotaBehavior == "") {
-		return fmt.Errorf("persona contract mismatch: storage policy must declare persistent cookies/localStorage/indexedDB and session-scoped sessionStorage")
+	if cfg.Storage.Cookies != "profile-persistent" || cfg.Storage.LocalStorage != "profile-persistent" || cfg.Storage.SessionStorage != "session-scoped" || cfg.Storage.IndexedDB != "profile-persistent" || cfg.Storage.QuotaBehavior == "" {
+		return fmt.Errorf("persona contract mismatch: storage policy must declare profile-backed cookies/localStorage/indexedDB and session-scoped sessionStorage")
 	}
 	if !cfg.Realms.DocumentStartInjection {
 		return fmt.Errorf("persona contract mismatch: document-start injection must be enabled for cross-realm parity")
@@ -1602,31 +1604,27 @@ func browseForgeGPUProfile(mode, vendor, renderer string) browseForgeNativeGPU {
 		Vendor:                 vendor,
 		Renderer:               renderer,
 		WebGL:                  true,
-		WebGL2:                 true,
+		WebGL2:                 false,
 		WebGPU:                 "browser-default",
 		GLVersion:              "browser-default",
 		ShadingLanguageVersion: "browser-default",
-		ContextAttributes: map[string]string{
-			"alpha":                        "true",
-			"antialias":                    "true",
-			"depth":                        "true",
-			"failIfMajorPerformanceCaveat": "false",
-			"powerPreference":              "default",
-			"premultipliedAlpha":           "true",
-			"preserveDrawingBuffer":        "false",
-			"stencil":                      "false",
-		},
-		Extensions:            []string{"ANGLE_instanced_arrays", "EXT_blend_minmax", "EXT_color_buffer_half_float", "EXT_float_blend", "EXT_texture_filter_anisotropic", "OES_element_index_uint", "OES_standard_derivatives", "OES_texture_float", "OES_texture_half_float", "WEBGL_debug_renderer_info"},
-		ShaderPrecision:       map[string]string{"fragmentHighFloat": "23/127/127", "fragmentMediumFloat": "10/15/15", "vertexHighFloat": "23/127/127"},
-		Limits:                map[string]int{"maxCombinedTextureImageUnits": 32, "maxCubeMapTextureSize": 16384, "maxFragmentUniformVectors": 1024, "maxRenderbufferSize": 16384, "maxTextureImageUnits": 16, "maxTextureSize": 16384, "maxVaryingVectors": 30, "maxVertexAttribs": 16, "maxVertexTextureImageUnits": 16, "maxVertexUniformVectors": 4096},
-		WorkerOffscreenCanvas: true,
-		WebGLParams:           map[string]string{},
+		ContextAttributes:      map[string]string{},
+		Extensions:             []string{},
+		ShaderPrecision:        map[string]string{},
+		Limits:                 map[string]int{},
+		WorkerOffscreenCanvas:  true,
+		WebGLParams:            map[string]string{},
 	}
 	if mode == "software" {
+		gpu.WebGL2 = true
 		gpu.ANGLEBackend = "swiftshader-webgl"
 		gpu.WebGPU = "disabled-or-software"
 		gpu.GLVersion = "OpenGL ES 2.0 Chromium"
 		gpu.ShadingLanguageVersion = "OpenGL ES GLSL ES 1.0 Chromium"
+		gpu.ContextAttributes = map[string]string{"alpha": "true", "antialias": "true", "depth": "true", "failIfMajorPerformanceCaveat": "false", "powerPreference": "default", "premultipliedAlpha": "true", "preserveDrawingBuffer": "false", "stencil": "false"}
+		gpu.Extensions = []string{"ANGLE_instanced_arrays", "EXT_blend_minmax", "EXT_color_buffer_half_float", "EXT_float_blend", "EXT_texture_filter_anisotropic", "OES_element_index_uint", "OES_standard_derivatives", "OES_texture_float", "OES_texture_half_float", "WEBGL_debug_renderer_info"}
+		gpu.ShaderPrecision = map[string]string{"fragmentHighFloat": "23/127/127", "fragmentMediumFloat": "10/15/15", "vertexHighFloat": "23/127/127"}
+		gpu.Limits = map[string]int{"maxCombinedTextureImageUnits": 32, "maxCubeMapTextureSize": 16384, "maxFragmentUniformVectors": 1024, "maxRenderbufferSize": 16384, "maxTextureImageUnits": 16, "maxTextureSize": 16384, "maxVaryingVectors": 30, "maxVertexAttribs": 16, "maxVertexTextureImageUnits": 16, "maxVertexUniformVectors": 4096}
 		gpu.RenderHashBaseline = "swiftshader-stable"
 	}
 	return gpu
@@ -1779,6 +1777,15 @@ func browseForgePluginProfile(policy *config.CloakBrowserConfig) browseForgeNati
 
 func browseForgeMediaProfile() browseForgeNativeMediaProfile {
 	return browseForgeNativeMediaProfile{H264: true, VP9: true, AV1: true, Devices: []string{}}
+}
+
+func browseForgeDefaultScreen(osName string) browseForgeNativeScreen {
+	switch strings.ToLower(strings.TrimSpace(osName)) {
+	case "macos":
+		return browseForgeNativeScreen{Width: 1512, Height: 982, AvailWidth: 1512, AvailHeight: 949, OuterWidth: 1512, OuterHeight: 949, InnerWidth: 1512, InnerHeight: 862, DPR: 1, ColorDepth: 30}
+	default:
+		return browseForgeNativeScreen{Width: 1920, Height: 1080, AvailWidth: 1920, AvailHeight: 1040, OuterWidth: 1920, OuterHeight: 1040, InnerWidth: 1920, InnerHeight: 948, DPR: 1, ColorDepth: 24}
+	}
 }
 
 func clampScreenAvail(avail, size int) int {

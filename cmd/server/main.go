@@ -192,6 +192,17 @@ func runServer(flags *serveFlags) {
 		}
 		return fallback || raw.BinaryPath != ""
 	}
+	runtimeSkipAutoUpdate := func(id string) bool {
+		raw := cfg.Runtimes[id]
+		if raw.SkipAutoUpdate {
+			return true
+		}
+		if envBool("BROWSEFORGE_SKIP_BROWSER_AUTO_UPDATE") {
+			return true
+		}
+		envName := "BROWSEFORGE_SKIP_" + strings.ToUpper(strings.NewReplacer("-", "_").Replace(id)) + "_AUTO_UPDATE"
+		return envBool(envName)
+	}
 	ensureRuntime := func(id, label string, fallbackEnabled bool, download func(string) (string, error)) (string, bool) {
 		support := browser.CurrentRuntimeSupport(id)
 		enabled := runtimeEnabled(id, fallbackEnabled)
@@ -205,13 +216,37 @@ func runServer(flags *serveFlags) {
 			return cfg.Runtimes[id].BinaryPath, false
 		}
 		path := ""
-		if browser.InstalledVersion(baseDir, id) == support.Version {
-			path = browser.FindBinary(baseDir, id)
+		installed := browser.InstalledVersion(baseDir, id)
+		skipUpdate := runtimeSkipAutoUpdate(id)
+		if installed == support.Version {
+			path = existingRuntimeBinaryPath(cfg.Runtimes[id].BinaryPath)
+			if path == "" {
+				path = browser.FindBinary(baseDir, id)
+			}
+			if path != "" {
+				return path, true
+			}
+			if skipUpdate {
+				exitServerError(flags, "%s auto-update is disabled but no installed binary was found", label)
+			}
+		} else if skipUpdate {
+			path = existingRuntimeBinaryPath(cfg.Runtimes[id].BinaryPath)
+			if path == "" {
+				path = browser.FindBinary(baseDir, id)
+			}
+			if path == "" {
+				exitServerError(flags, "%s auto-update is disabled but no installed binary was found", label)
+			}
+			if installed == "" {
+				fmt.Printf("%s version marker missing, but auto-update is disabled; using configured or discovered binary.\n", label)
+			} else {
+				fmt.Printf("%s update available (%s → %s), but auto-update is disabled; using installed binary.\n", label, installed, support.Version)
+			}
+			return path, true
 		}
 		if path != "" {
 			return path, true
 		}
-		installed := browser.InstalledVersion(baseDir, id)
 		if installed == "" {
 			fmt.Printf("%s not found. Downloading...\n", label)
 		} else {
@@ -394,6 +429,29 @@ func formatListenError(err error, host, port string) string {
 		return fmt.Sprintf("%s\nPort %s is already in use. Close the other BrowseForge instance or start BrowseForge with a different port, for example: BrowseForge serve --port %s", message, port, nextPortSuggestion(port))
 	}
 	return message
+}
+
+func existingRuntimeBinaryPath(path string) string {
+	if path == "" {
+		return ""
+	}
+	info, err := os.Stat(path)
+	if err != nil || info.IsDir() {
+		return ""
+	}
+	return path
+}
+
+func envBool(name string) bool {
+	value := strings.TrimSpace(os.Getenv(name))
+	if value == "" {
+		return false
+	}
+	parsed, err := strconv.ParseBool(value)
+	if err != nil {
+		return false
+	}
+	return parsed
 }
 
 func nextPortSuggestion(port string) string {

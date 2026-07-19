@@ -138,7 +138,7 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 ## Features
 
 - **KasmVNC**: better clipboard support than noVNC in Chrome, plus IME input support.
-- **Complete WebGL spoofing**: GLX, software rendering, and full WebGL fingerprint control.
+- **Auditable GPU policy**: software mode uses SwiftShader-aligned WebGL metadata; native/passthrough keep browser-default GPU evidence only when the profile does not explicitly provide WebGL vendor/renderer, and they do not claim fixed WebGL2/extensions/limits.
 - **Docker auto-detection**: automatically enables `0.0.0.0` binding and `--no-sandbox`.
 - **Playwright proxy**: dashboard, API, and Playwright WebSocket proxy all use port `19280`.
 - **MCP HTTP**: Streamable HTTP MCP uses `19280/mcp` with the same Bearer token as the REST API.
@@ -149,7 +149,7 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 - Native architecture support removes amd64 emulation from the Docker path. Public fingerprint detector outcomes still depend on GPU/rendering, fonts, locale, proxy, and runtime profile coherence.
 - Native `linux/arm64` Docker support requires the matching BrowseForge Chromium `linux-arm64` runtime artifact. Release and Docker preinstall checks fail when the native artifact is missing instead of falling back to an x64/emulated runtime.
 - Default GHCR browser preinstall is Camoufox plus BrowseForge Chromium. Use `BROWSEFORGE_PREINSTALL_RUNTIMES` at image build time if you need a different set.
-- Docker defaults to coherent software GL (`BROWSEFORGE_DOCKER_GPU_MODE=software`): BrowseForge Chromium reports SwiftShader-aligned WebGL strings instead of pretending a host GPU exists. `native` keeps browser-default GPU evidence for environments with a real configured GPU path, and `passthrough` is reserved for deliberate host GPU passthrough. Any other value fails closed instead of silently drifting.
+- Docker defaults to coherent software GL (`BROWSEFORGE_DOCKER_GPU_MODE=software`): BrowseForge Chromium reports SwiftShader-aligned WebGL strings instead of pretending a host GPU exists. `native` keeps browser-default GPU evidence when no profile WebGL vendor/renderer is provided, `passthrough` is reserved for deliberate host GPU passthrough, and both modes omit fixed WebGL2/extensions/limits. Any other value fails closed instead of silently drifting.
 - KasmVNC defaults to `1920x1080`, matching the BrowseForge Chromium native screen persona. Override both `BROWSEFORGE_DOCKER_DISPLAY_WIDTH` and `BROWSEFORGE_DOCKER_DISPLAY_HEIGHT` only when you also want headed browser window/screen evidence to follow that custom desktop size.
 - VNC is intended for watching browser state and basic remote operation.
 - Browser engines, profiles, token data, logs, and backups are host-mounted under `./browseforge/` by default, so recreating the container does not delete them.

@@ -209,6 +209,7 @@ BrowseForge creates `config.json` on first launch:
     "browseforge-chromium": {
       "enabled": true,
       "binary_path": "browsers/browseforge-chromium/chrome",
+      "skip_auto_update": false,
       "family": "chromium",
       "display_name": "BrowseForge Chromium",
       "settings": {
@@ -241,6 +242,7 @@ BrowseForge creates `config.json` on first launch:
 | `default_runtime_id` | Default runtime selected by generated config and UI flows | `camoufox` |
 | `runtimes.<id>.enabled` | Whether a runtime provider is available for profile creation/launch | Runtime-specific |
 | `runtimes.<id>.binary_path` | Runtime provider binary path. Built-in/provider ids include `camoufox`, `cloakbrowser`, and alpha `browseforge-chromium`. For BrowseForge Chromium, point to the unpacked browser binary (`chrome`, `Chromium.app/Contents/MacOS/Chromium`, or `chrome.exe`), not the standalone wrapper. | Auto-detected or operator-provided |
+| `runtimes.<id>.skip_auto_update` | Keep an already-installed runtime even when the bundled expected version changes. Startup fails if this is true and no binary can be found. `BROWSEFORGE_SKIP_BROWSER_AUTO_UPDATE=true` applies globally; `BROWSEFORGE_SKIP_<RUNTIME_ID>_AUTO_UPDATE=true` applies to one runtime with `-` replaced by `_`. | `false` |
 | `runtimes.<id>.family` | Runtime browser family metadata: `firefox` or `chromium` | Provider default |
 | `runtimes.<id>.display_name` | Runtime name shown by `/api/runtimes`, MCP `list_runtimes`, and the Dashboard create form | Provider default |
 | `runtimes.cloakbrowser.settings.safe_gpu` | Add Chromium GPU-safe launch flags for Windows VM/headful compatibility | `false` |

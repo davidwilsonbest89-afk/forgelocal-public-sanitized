@@ -31,6 +31,7 @@
     "browseforge-chromium": {
       "enabled": true,
       "binary_path": "browsers/browseforge-chromium/chrome",
+      "skip_auto_update": false,
       "family": "chromium",
       "display_name": "BrowseForge Chromium",
       "settings": {

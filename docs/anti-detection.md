@@ -108,12 +108,12 @@ BrowseForge Chromium 只接受 coherent native persona platform 組合：Windows
 - Browser identity：UA、Chrome/Chromium brands、full version list、UA-CH / Sec-CH-* platform、arch、bitness、mobile、model、form factors。
 - Locality：timezone、timezone offset、locale、Accept-Language、navigator language/languages、Sec-CH-Lang。
 - Network：proxy region、country/region metadata、DNS resolver policy、WebRTC redaction policy、geolocation policy。
-- Device/rendering：hardwareConcurrency、deviceMemory、screen/avail/outer/inner/viewport/DPR/touch/orientation、GPU mode、WebGL/WebGL2/WebGPU profile、fonts/font metrics/emoji、canvas/text/emoji、math intrinsic sample、client rect geometry、audio、plugins/MIME/PDF、codecs/media devices、permissions、storage quota。
+- Device/rendering：hardwareConcurrency、deviceMemory、screen/avail/outer/inner/viewport/DPR/touch/orientation、GPU mode、WebGL/WebGL2/WebGPU policy、fonts/font metrics/emoji、canvas/text/emoji、math intrinsic sample、client rect geometry、audio、plugins/MIME/PDF、codecs/media devices、permissions、storage quota/profile-backed storage。
 - Realm policy：top window、same-origin iframe、sandbox/nested iframe、workers、service worker、OffscreenCanvas worker 都必須使用同一份 contract。
 
 Launch 前會 fail closed 下列不一致 tuple：UA 與 platform 不符、UA-CH platform/arch/bitness 與 JS platform 不符、locale / Accept-Language / navigator.languages / Sec-CH-Lang 不一致、screen/avail/inner/outer/viewport/DPR/touch tuple 不一致、desktop persona 宣告 mobile form factor、proxy persona 缺 region/country metadata、proxy persona 未使用 proxy-aligned DNS/geolocation/WebRTC direct-IP redaction、non-proxy persona 夾帶 proxy metadata、IP country 與 timezone 不一致、zh/ja/ko locale 缺 CJK font profile、啟用 PDF profile 時缺 Chromium plugin/MIME entries、macOS persona 宣告 SwiftShader renderer、缺 service-worker realm target、停用 stable math 或 client-rect policy。
 
-Docker GPU mode 是 PersonaContract 的明確輸入，不允許自動猜測：`software` 產生 SwiftShader-aligned WebGL profile 並加上 SwiftShader launch flags；`native` 保留 browser-default GPU evidence；`passthrough` 僅表示 operator 已明確提供 host GPU passthrough。其他 `BROWSEFORGE_DOCKER_GPU_MODE` 值會在 entrypoint / launch 前 fail closed，避免 linux/arm64 detector evidence 在 software/native/passthrough 間靜默漂移。
+Docker GPU mode 是 PersonaContract 的明確輸入，不允許自動猜測：`software` 產生 SwiftShader-aligned WebGL profile 並加上 SwiftShader launch flags；`native` 在 profile 未提供 WebGL vendor/renderer 時保留 browser-default GPU evidence，且不宣告固定 WebGL2 / extension / GL limit；`passthrough` 僅表示 operator 已明確提供 host GPU passthrough，同樣不宣告固定 WebGL2 / extension / GL limit。其他 `BROWSEFORGE_DOCKER_GPU_MODE` 值會在 entrypoint / launch 前 fail closed，避免 linux/arm64 detector evidence 在 software/native/passthrough 間靜默漂移。
 
 半自動 detector harness：
 
@@ -151,6 +151,7 @@ node scripts/detector-harness.js matrix > /tmp/browseforge-detector-matrix.json
 - `download_url` 正式化前，自動 installer 應使用本地路徑、Docker seed 或明確的 alpha asset URL。
 - 不建議把 `browseforge-chromium` 設成 `default_runtime_id`，除非 operator 明確接受 alpha runtime 風險。
 - BrowseForge Chromium 預設 font contract 是 `persona-default` deterministic font metadata：不設定 `runtimes.browseforge-chromium.settings.fonts_dir` 時，即使 fingerprint pool 內有 `fonts` 陣列，也不會輸出 `--fingerprint-fonts-list`，避免宣稱 runtime 尚未提供的 font metrics/raster coherence。只有 operator 明確提供 font corpus 目錄時才允許 ASCII、單一 family <=128 bytes、整體 <=8192 bytes 的 explicit font allowlist。
+- PersonaContract 的 `storage.persistent=false` 代表 BrowseForge 不硬宣告 Web API `navigator.storage.persisted()` 已獲准；cookies、localStorage、IndexedDB 仍由 profile-backed user data dir 持久化。只有 runtime 實際完成並驗證 StorageManager persisted grant 時才能宣告 true。
 - BrowseForge Chromium proxy profile 必須提供 redacted `proxy.region`（例如 `us-ny`、`tw-taipei`），且 region 必須可映射到 country metadata；沒有 region 的 proxy 會在 browser launch 前 fail closed，避免 Playwright 實際走 proxy 但 PersonaContract/DNS/geolocation 仍宣告 local。
 
 ---

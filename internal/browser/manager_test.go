@@ -554,8 +554,8 @@ func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *t
 	if got := nativeStorage["quota_mb"]; got != float64(2048) {
 		t.Fatalf("native storage quota_mb = %#v, want 2048", got)
 	}
-	if got := nativeStorage["persistent"]; got != true {
-		t.Fatalf("native storage persistent = %#v, want true", got)
+	if got := nativeStorage["persistent"]; got != false {
+		t.Fatalf("native storage persistent = %#v, want false until navigator.storage.persisted() is proven", got)
 	}
 	for key, want := range map[string]any{
 		"cookies":         "profile-persistent",
@@ -1156,6 +1156,7 @@ func TestBrowseForgePersonaContractRejectsIncoherentTuples(t *testing.T) {
 		{
 			name: "webgl baseline missing",
 			mutate: func(cfg *browseForgeNativePersonaConfig) {
+				cfg.GPU.Mode = "software"
 				cfg.GPU.Limits = nil
 			},
 			wantErr: "WebGL baseline",
@@ -1455,6 +1456,15 @@ func TestChromiumLaunchPersonaClampsScreenAvailToScreenSize(t *testing.T) {
 	if got := persona.Native.Screen.AvailHeight; got != 768 {
 		t.Fatalf("avail height = %d, want clamped 768", got)
 	}
+	if got := persona.Native.Screen.OuterWidth; got != 1366 {
+		t.Fatalf("outer width = %d, want clamped 1366", got)
+	}
+	if got := persona.Native.Screen.InnerWidth; got != 1366 {
+		t.Fatalf("inner width = %d, want clamped 1366", got)
+	}
+	if got := persona.Native.Screen.OuterHeight; got != 768 {
+		t.Fatalf("outer height = %d, want clamped 768", got)
+	}
 	args := appendChromiumLaunchPersonaArgs(nil, persona)
 	for _, want := range []string{"--fingerprint-screen-avail-width=1366", "--fingerprint-screen-avail-height=768"} {
 		if !containsArg(args, want) {
@@ -1653,6 +1663,9 @@ func TestBrowseForgeDockerSoftwareModeUsesSwiftShaderPersona(t *testing.T) {
 		persona.Native.Storage.QuotaBehavior != "chromium-profile-quota" {
 		t.Fatalf("storage contract incomplete: %#v", persona.Native.Storage)
 	}
+	if persona.Native.Storage.Persistent {
+		t.Fatalf("storage Web API persisted claim = true, want false unless navigator.storage.persisted() is proven")
+	}
 	if !persona.Native.Realms.DocumentStartInjection || !containsStringFold(persona.Native.Realms.Targets, "offscreen-canvas-worker") {
 		t.Fatalf("realm contract incomplete: %#v", persona.Native.Realms)
 	}
@@ -1678,6 +1691,12 @@ func TestBrowseForgeNativeModeDoesNotInventWebGLButPinsFontPersona(t *testing.T)
 	}
 	if persona.Native.GPU.Vendor != "browser-default" || persona.Native.GPU.Renderer != "browser-default" {
 		t.Fatalf("native WebGL contract = %q/%q, want browser-default/browser-default", persona.Native.GPU.Vendor, persona.Native.GPU.Renderer)
+	}
+	if persona.Native.GPU.WebGL2 || len(persona.Native.GPU.Limits) != 0 || len(persona.Native.GPU.Extensions) != 0 {
+		t.Fatalf("native WebGL contract overclaims exact GPU capabilities: %#v", persona.Native.GPU)
+	}
+	if persona.Native.Screen.Width != 1512 || persona.Native.Screen.OuterWidth != 1512 || persona.Native.Screen.InnerHeight != 862 || persona.Native.Screen.ColorDepth != 30 {
+		t.Fatalf("macOS native screen contract = %#v, want calibrated macOS local defaults", persona.Native.Screen)
 	}
 	if persona.Native.Fonts.Source != "persona-default" || len(persona.Native.Fonts.Families) == 0 || persona.Native.Fonts.Emoji != "Apple Color Emoji" {
 		t.Fatalf("native font contract = %#v, want deterministic persona-default font metadata", persona.Native.Fonts)

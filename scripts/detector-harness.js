@@ -205,13 +205,14 @@ function compareContract(contract, sample) {
   const fontPolicy = get(contract, 'fonts') || {};
   const availableFonts = get(sample, 'fonts.available') || {};
   const expectedFamilies = Array.isArray(fontPolicy.families) ? fontPolicy.families : [];
-  if (expectedFamilies.length > 0) {
+  const exactFontAvailability = fontPolicy.source === 'explicit-corpus';
+  if (exactFontAvailability && expectedFamilies.length > 0) {
     const missingFamilies = expectedFamilies.filter((family) => availableFonts[family] !== true);
     if (missingFamilies.length > 0) {
       mismatches.push({ field: 'fonts.families', expected: `available ${missingFamilies.join(',')}`, actual: normalize(get(sample, 'fonts.error')) || 'missing/unavailable' });
     }
   }
-  if (fontPolicy.emoji && availableFonts[fontPolicy.emoji] !== true) {
+  if (exactFontAvailability && fontPolicy.emoji && availableFonts[fontPolicy.emoji] !== true) {
     mismatches.push({ field: 'fonts.emoji', expected: `available ${fontPolicy.emoji}`, actual: normalize(get(sample, 'fonts.error')) || 'missing/unavailable' });
   }
   if (fontPolicy.cjk === true && get(sample, 'fonts.cjkAvailable') !== true) {
@@ -1003,7 +1004,7 @@ function runSelfTest() {
     plugins: { pdf_viewer: true },
     media: { h264: true, vp9: true, av1: true, devices: ['default-camera'] },
     audio: { sample_rate: 48000, stable: true },
-    fonts: { families: ['Noto Sans', 'Noto Color Emoji', 'Noto Sans CJK TC'], emoji: 'Noto Color Emoji', cjk: true },
+    fonts: { families: ['Noto Sans', 'Noto Color Emoji', 'Noto Sans CJK TC'], emoji: 'Noto Color Emoji', cjk: true, source: 'explicit-corpus' },
     canvas: { stable: true, text_metrics_mode: 'stable-profile' },
     math: { stable: true },
     geometry: { client_rects_stable: true },

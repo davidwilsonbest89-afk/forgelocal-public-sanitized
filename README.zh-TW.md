@@ -209,6 +209,7 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
     "browseforge-chromium": {
       "enabled": false,
       "binary_path": "/path/to/browsers/browseforge-chromium/chrome",
+      "skip_auto_update": false,
       "family": "chromium",
       "display_name": "BrowseForge Chromium",
       "settings": {
@@ -241,6 +242,7 @@ Agent 與 CI 整合建議對 `token`、`doctor`、`capabilities`、`smoke` 使�
 | `default_runtime_id` | 產生 config 與 UI flow 預設選取的 runtime | `camoufox` |
 | `runtimes.<id>.enabled` | runtime provider 是否可供建立 profile 與啟動 | 依 runtime 而定 |
 | `runtimes.<id>.binary_path` | runtime provider 執行檔路徑；provider 包含 `camoufox`、`cloakbrowser`，以及 opt-in alpha `browseforge-chromium`。BrowseForge Chromium 必須指向解壓後的瀏覽器 binary（`chrome`、`Chromium.app/Contents/MacOS/Chromium` 或 `chrome.exe`），不是 standalone wrapper。 | 自動偵測或 operator 提供 |
+| `runtimes.<id>.skip_auto_update` | 既有 runtime 已安裝時，即使內建 expected version 改變也繼續使用；若設為 true 且找不到 binary，startup 會 fail closed。`BROWSEFORGE_SKIP_BROWSER_AUTO_UPDATE=true` 可全域套用；`BROWSEFORGE_SKIP_<RUNTIME_ID>_AUTO_UPDATE=true` 可套用到單一 runtime，runtime id 的 `-` 需替換成 `_`。 | `false` |
 | `runtimes.<id>.family` | runtime 的 browser family metadata：`firefox` 或 `chromium` | provider 預設值 |
 | `runtimes.<id>.display_name` | `/api/runtimes`、MCP `list_runtimes` 與 Dashboard 建立表單顯示的 runtime 名稱 | provider 預設值 |
 | `runtimes.cloakbrowser.settings.safe_gpu` | 為 Windows VM/headful 相容性加入 Chromium GPU-safe 啟動參數 | `false` |
