@@ -2,6 +2,13 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.8 - 2026-07-19
+
+### Fixed
+
+- Pointed BrowseForge to BrowseForge Chromium runtime `v0.1.6-alpha.0` for the BrowserLeaks Fonts crash-fix runtime release.
+- Bumped Docker, Linux server, release, and platform documentation references for the `v2.1.8` release tag.
+
 ## v2.1.7 - 2026-07-16
 
 ### Fixed

@@ -106,12 +106,12 @@ func TestBrowseForgeChromiumDownloadURLForLinuxArm64(t *testing.T) {
 		t.Fatalf("browseForgeChromiumDownloadURLFor() error = %v", err)
 	}
 
-	wantFilename := "browseforge-runtime-chromium-v0.1.5-alpha.0-linux-arm64.zip"
+	wantFilename := "browseforge-runtime-chromium-" + BrowseForgeChromiumVersion + "-linux-arm64.zip"
 	if gotFilename != wantFilename {
 		t.Fatalf("filename = %q, want %q", gotFilename, wantFilename)
 	}
 
-	wantURL := "https://runtime.example/releases/v0.1.5-alpha.0/" + wantFilename
+	wantURL := "https://runtime.example/releases/" + BrowseForgeChromiumVersion + "/" + wantFilename
 	if gotURL != wantURL {
 		t.Fatalf("url = %q, want %q", gotURL, wantURL)
 	}
