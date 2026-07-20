@@ -72,13 +72,13 @@ var tools = []map[string]any{
 	toolWithRequired("web_search", "Search the web in a runtime-backed agent session. Save returned session_id and reuse it for web_explore, wait_for, web_extract, screenshots, or cleanup.", map[string]any{
 		"query":       prop("string", "Search query."),
 		"engine":      prop("string", "Search engine: google, bing, duckduckgo, or ddg. Default google."),
-		"profile_id":  prop("string", "Profile ID whose runtime supports agent web sessions. Required when session_id is omitted."),
+		"profile_id":  prop("string", "Profile ID whose runtime supports agent web sessions. Optional; uses the browseforge_default system profile when both profile_id and session_id are omitted."),
 		"session_id":  prop("string", "Existing agent session ID to reuse the same page."),
 		"max_results": prop("number", "Maximum result count. Default 10; clamped to 30."),
 	}, []string{"query"}),
 	toolWithRequired("web_explore", "Navigate an agent session page to a URL and extract readable text/links. Reuse session_id from web_search to inspect a result without losing session continuity.", map[string]any{
 		"url":             prop("string", "URL to explore. https:// is prepended when no scheme is provided."),
-		"profile_id":      prop("string", "Profile ID whose runtime supports agent web sessions. Required when session_id is omitted."),
+		"profile_id":      prop("string", "Profile ID whose runtime supports agent web sessions. Optional; uses the browseforge_default system profile when both profile_id and session_id are omitted."),
 		"session_id":      prop("string", "Existing agent session ID to reuse the same page."),
 		"max_text_length": prop("number", "Maximum text length. Default 3000; clamped to 10000."),
 		"max_links":       prop("number", "Maximum links. Default 50; clamped to 200."),

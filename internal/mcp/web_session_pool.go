@@ -11,6 +11,7 @@ import (
 
 	"browseforge/internal/browser"
 	"browseforge/internal/profile"
+	bfruntime "browseforge/internal/runtime"
 
 	"github.com/mxschmitt/playwright-go"
 )
@@ -19,6 +20,7 @@ const (
 	defaultSessionIdleTTL        = 5 * time.Minute
 	defaultSessionSweepEvery     = 1 * time.Minute
 	defaultMaxSessionsPerProfile = 10
+	defaultProfileName           = "browseforge_default"
 )
 
 // SessionPool manages agent web_search/web_explore sessions.
@@ -467,6 +469,87 @@ func (s *WebSession) ensurePageOpenLocked() error {
 		return fmt.Errorf("session is closed: %s", s.ID)
 	}
 	return nil
+}
+
+// GetOrCreateDefaultProfile returns the profile ID of the system default profile.
+// The default is named "browseforge_default" and must use an enabled Chromium
+// runtime with agent web session and Playwright bind support.
+func (sp *SessionPool) GetOrCreateDefaultProfile() (string, error) {
+	if sp == nil || sp.store == nil || sp.mgr == nil {
+		return "", fmt.Errorf("session pool is not initialized")
+	}
+
+	sp.mu.Lock()
+	defer sp.mu.Unlock()
+
+	for _, p := range sp.store.List("", "") {
+		if p.Name != defaultProfileName {
+			continue
+		}
+		if err := sp.validateDefaultProfileRuntime(p); err != nil {
+			return "", err
+		}
+		return p.ID, nil
+	}
+
+	runtimeID := sp.findAgentCapableRuntime()
+	if runtimeID == "" {
+		return "", fmt.Errorf("no enabled Chromium runtime with agent web session and Playwright bind support is available; cannot create default profile")
+	}
+
+	p := &profile.Profile{
+		Name:      defaultProfileName,
+		RuntimeID: runtimeID,
+	}
+	if _, err := sp.mgr.RuntimeRegistry().ApplyProfileDefaults(p); err != nil {
+		return "", fmt.Errorf("apply defaults for default profile: %w", err)
+	}
+	if err := sp.store.Create(p); err != nil {
+		return "", fmt.Errorf("create default profile: %w", err)
+	}
+	slog.Info("created system default profile", "id", p.ID, "name", defaultProfileName, "runtime", runtimeID)
+	return p.ID, nil
+}
+
+func (sp *SessionPool) validateDefaultProfileRuntime(p *profile.Profile) error {
+	if p == nil {
+		return fmt.Errorf("default profile %q is invalid: profile is nil", defaultProfileName)
+	}
+	reg := sp.mgr.RuntimeRegistry()
+	if reg == nil {
+		return fmt.Errorf("default profile %q (%s) cannot be validated: runtime registry is not configured", defaultProfileName, p.ID)
+	}
+	desc, err := reg.ResolveProfile(p)
+	if err != nil {
+		return fmt.Errorf("default profile %q (%s) has invalid runtime %q: %w", defaultProfileName, p.ID, p.RuntimeID, err)
+	}
+	if !runtimeSupportsDefaultAgentSessions(desc) {
+		return fmt.Errorf("default profile %q (%s) runtime %s is not an enabled Chromium runtime with agent web session and Playwright bind support", defaultProfileName, p.ID, desc.ID)
+	}
+	return nil
+}
+
+// findAgentCapableRuntime returns the first enabled Chromium runtime ID that
+// supports agent web sessions. Priority: browseforge-chromium > cloakbrowser.
+func (sp *SessionPool) findAgentCapableRuntime() string {
+	reg := sp.mgr.RuntimeRegistry()
+	if reg == nil {
+		return ""
+	}
+	for _, id := range []bfruntime.ID{bfruntime.BrowseForgeChromium, bfruntime.CloakBrowser} {
+		desc, ok := reg.Get(id)
+		if ok && runtimeSupportsDefaultAgentSessions(desc) {
+			return string(desc.ID)
+		}
+	}
+	return ""
+}
+
+func runtimeSupportsDefaultAgentSessions(desc bfruntime.Descriptor) bool {
+	return desc.Enabled &&
+		desc.Family == bfruntime.FamilyChromium &&
+		desc.Capabilities.SupportsAgentWebSessions &&
+		desc.Capabilities.SupportsPlaywrightBind
 }
 
 func newWebSessionID() string {

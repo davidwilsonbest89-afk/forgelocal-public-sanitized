@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"slices"
 	"strings"
+	"sync"
 	"testing"
 	"unsafe"
 
@@ -476,6 +477,130 @@ func TestSessionPoolRejectsUnsupportedRuntimeByCapability(t *testing.T) {
 	}
 	if strings.Contains(err.Error(), "Chromium profile") {
 		t.Fatalf("error = %q, want runtime capability rejection rather than legacy engine rejection", err.Error())
+	}
+}
+
+func TestDefaultProfileUsesBrowseForgeChromiumPriority(t *testing.T) {
+	enabled := true
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	sp := &SessionPool{
+		mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+			"browseforge-chromium": {Enabled: &enabled},
+			"cloakbrowser":         {Enabled: &enabled},
+		}}),
+		store: store,
+		pools: map[string]*ProfileSessionPool{},
+	}
+
+	id, err := sp.GetOrCreateDefaultProfile()
+	if err != nil {
+		t.Fatalf("GetOrCreateDefaultProfile: %v", err)
+	}
+	again, err := sp.GetOrCreateDefaultProfile()
+	if err != nil {
+		t.Fatalf("GetOrCreateDefaultProfile again: %v", err)
+	}
+	if again != id {
+		t.Fatalf("second default profile ID = %q, want %q", again, id)
+	}
+	profiles := store.List("", "")
+	if len(profiles) != 1 {
+		t.Fatalf("stored profiles = %d, want 1", len(profiles))
+	}
+	if profiles[0].ID != id || profiles[0].Name != defaultProfileName || profiles[0].RuntimeID != string(bfruntime.BrowseForgeChromium) {
+		t.Fatalf("default profile = %+v, want id %q name %q runtime %s", profiles[0], id, defaultProfileName, bfruntime.BrowseForgeChromium)
+	}
+}
+
+func TestDefaultProfileRejectsUnsupportedExistingDefault(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	p := &profile.Profile{Name: defaultProfileName, RuntimeID: string(bfruntime.Camoufox)}
+	if err := store.Create(p); err != nil {
+		t.Fatalf("Create: %v", err)
+	}
+	enabled := true
+	sp := &SessionPool{
+		mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+			"browseforge-chromium": {Enabled: &enabled},
+		}}),
+		store: store,
+		pools: map[string]*ProfileSessionPool{},
+	}
+
+	id, err := sp.GetOrCreateDefaultProfile()
+	if err == nil {
+		t.Fatalf("GetOrCreateDefaultProfile returned id %q, want unsupported existing default error", id)
+	}
+	if !strings.Contains(err.Error(), "default profile") || !strings.Contains(err.Error(), "camoufox") || !strings.Contains(err.Error(), "agent web session") {
+		t.Fatalf("error = %q, want explicit unsupported default profile runtime", err.Error())
+	}
+	if profiles := store.List("", ""); len(profiles) != 1 || profiles[0].ID != p.ID {
+		t.Fatalf("stored profiles = %+v, want original invalid default preserved", profiles)
+	}
+}
+
+func TestDefaultProfileCreationIsIdempotentUnderConcurrency(t *testing.T) {
+	enabled := true
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	sp := &SessionPool{
+		mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
+			"cloakbrowser": {Enabled: &enabled},
+		}}),
+		store: store,
+		pools: map[string]*ProfileSessionPool{},
+	}
+
+	const workers = 16
+	start := make(chan struct{})
+	ids := make(chan string, workers)
+	errs := make(chan error, workers)
+	var wg sync.WaitGroup
+	for range workers {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			<-start
+			id, err := sp.GetOrCreateDefaultProfile()
+			if err != nil {
+				errs <- err
+				return
+			}
+			ids <- id
+		}()
+	}
+	close(start)
+	wg.Wait()
+	close(ids)
+	close(errs)
+
+	for err := range errs {
+		t.Fatalf("GetOrCreateDefaultProfile concurrent error: %v", err)
+	}
+	var first string
+	for id := range ids {
+		if first == "" {
+			first = id
+			continue
+		}
+		if id != first {
+			t.Fatalf("concurrent default profile ID = %q, want %q", id, first)
+		}
+	}
+	profiles := store.List("", "")
+	if len(profiles) != 1 {
+		t.Fatalf("stored profiles = %d, want 1", len(profiles))
+	}
+	if profiles[0].Name != defaultProfileName || profiles[0].RuntimeID != string(bfruntime.CloakBrowser) {
+		t.Fatalf("default profile = %+v, want singleton %q runtime %s", profiles[0], defaultProfileName, bfruntime.CloakBrowser)
 	}
 }
 

@@ -11,7 +11,14 @@ func (s *Server) toolWebSearch(args map[string]any) (any, *mcpError) {
 	sessionID, _ := args["session_id"].(string)
 	engine, _ := args["engine"].(string)
 	if profileID == "" && sessionID == "" {
-		return nil, newError(-32602, "profile_id is required when session_id is not provided")
+		if s.sessionPool == nil {
+			return nil, newError(-32000, "web search is not available (session pool not initialized)")
+		}
+		defaultID, err := s.sessionPool.GetOrCreateDefaultProfile()
+		if err != nil {
+			return nil, newError(-32000, "auto-create default profile: "+err.Error())
+		}
+		profileID = defaultID
 	}
 
 	maxResults := 10
@@ -82,7 +89,14 @@ func (s *Server) toolWebExplore(args map[string]any) (any, *mcpError) {
 	profileID, _ := args["profile_id"].(string)
 	sessionID, _ := args["session_id"].(string)
 	if profileID == "" && sessionID == "" {
-		return nil, newError(-32602, "profile_id is required when session_id is not provided")
+		if s.sessionPool == nil {
+			return nil, newError(-32000, "web explore is not available (session pool not initialized)")
+		}
+		defaultID, err := s.sessionPool.GetOrCreateDefaultProfile()
+		if err != nil {
+			return nil, newError(-32000, "auto-create default profile: "+err.Error())
+		}
+		profileID = defaultID
 	}
 
 	maxTextLength := 3000
