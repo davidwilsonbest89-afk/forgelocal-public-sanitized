@@ -2,6 +2,13 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.9 - 2026-07-20
+
+### Fixed
+
+- Added a validated MCP default web profile so `web_search` and `web_explore` can start without an explicit profile ID while preserving agent-capable Chromium runtime checks.
+- Bumped Docker, Linux server, release, and platform documentation references for the `v2.1.9` release tag.
+
 ## v2.1.8 - 2026-07-19
 
 ### Fixed
