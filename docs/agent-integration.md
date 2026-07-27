@@ -16,11 +16,19 @@ Give the generated config to the agent client.
 
 Start BrowseForge and keep the token persisted in `data/.api-token`.
 
+For GHCR/container deployments, set `BROWSEFORGE_PUBLIC_BASE_URL` before starting BrowseForge so MCP `screenshot` returns agent-fetchable `screenshot_url` links:
+
+```bash
+export BROWSEFORGE_PUBLIC_BASE_URL=${BROWSEFORGE_PUBLIC_BASE_URL:-http://localhost:19280}
+```
+
 ```bash
 TOKEN=$(BrowseForge token)
 BrowseForge smoke mcp --token "$TOKEN" --wait --json
 BrowseForge mcp-config http --url http://YOUR_SERVER:19280/mcp --token "$TOKEN" --json
 ```
+
+MCP `screenshot_url` links are temporary, unauthenticated, random URLs. Fetch them before `expires_at`; no Bearer header is required for the screenshot download URL itself.
 
 Do not expose `19280` publicly without a trusted network boundary, SSH tunnel, VPN, or hardened HTTPS reverse proxy.
 

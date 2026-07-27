@@ -50,12 +50,15 @@ var tools = []map[string]any{
 		"text":       prop("string", "Text to type."),
 		"clear":      prop("boolean", "Optional. Clear the field before typing; default false."),
 	}, []string{"profile_id", "selector", "text"}),
-	toolWithRequired("screenshot", "Capture the active profile page for visual inspection. Use save_path when the result should be referenced later as an artifact.", map[string]any{
-		"profile_id": prop("string", "Profile ID with an active browser session."),
-		"quality":    prop("number", "Optional JPEG quality 1-100; default 40."),
-		"full_page":  prop("boolean", "Optional full-page capture; default false."),
-		"format":     prop("string", "Optional jpeg or png; default jpeg."),
-		"save_path":  prop("string", "Optional relative path under the profile artifacts directory. Absolute paths and traversal are rejected."),
+	toolWithRequired("screenshot", "Capture the active profile page. HTTP MCP returns a temporary unauthenticated screenshot_url by default for remote agents; stdio returns an MCP image block by default. For GHCR/remote agents, use delivery=url and fetch screenshot_url before expires_at.", map[string]any{
+		"profile_id":      prop("string", "Profile ID with an active browser session."),
+		"quality":         prop("number", "Optional JPEG quality 1-100; default 40."),
+		"full_page":       prop("boolean", "Optional full-page capture; default false."),
+		"format":          prop("string", "Optional jpeg or png; default jpeg."),
+		"delivery":        prop("string", "Optional url, image, or both. HTTP MCP defaults to url; stdio defaults to image. Use url for GHCR/remote agents."),
+		"include_image":   prop("boolean", "Optional compatibility override. false omits the MCP image base64 block; true includes it."),
+		"url_ttl_seconds": prop("number", "Optional screenshot_url lifetime in seconds. Default 600; clamped to 30-3600."),
+		"save_path":       prop("string", "Optional relative profile artifact path for an additional persistent copy. Absolute paths and traversal are rejected."),
 	}, []string{"profile_id"}),
 	toolWithRequired("get_content", "Get HTML or selector text from the active profile page. Prefer get_page_state for quick observation and web_extract for structured fields.", map[string]any{
 		"profile_id": prop("string", "Profile ID with an active browser session."),

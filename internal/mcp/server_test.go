@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"time"
 	"unsafe"
 
 	"browseforge/internal/browser"
@@ -732,6 +733,117 @@ func TestResolveArtifactPathStaysInProfileArtifacts(t *testing.T) {
 	}
 	if _, err := resolveArtifactPath("/tmp/profile", "/tmp/escape.jpg", ".jpg"); err == nil {
 		t.Fatal("expected absolute path error")
+	}
+}
+
+func TestFinishScreenshotWithoutBaseURLDefaultsToImageBlock(t *testing.T) {
+	s := &Server{}
+	res, mcpErr := s.finishScreenshotResult(map[string]any{}, "prof_stdio", []byte("png bytes"), "image/png", ".png", "")
+	if mcpErr != nil {
+		t.Fatalf("finishScreenshotResult error = %+v", mcpErr)
+	}
+	content := res["content"].([]map[string]any)
+	if content[0]["type"] != "image" {
+		t.Fatalf("content type = %v, want image", content[0]["type"])
+	}
+	if content[0]["data"] == "" {
+		t.Fatal("image delivery should include base64 image data")
+	}
+	if _, ok := res["screenshot_url"]; ok {
+		t.Fatal("image delivery should not include screenshot_url")
+	}
+}
+
+func TestFinishScreenshotURLDeliveryReturnsTTLLinkWithoutImageData(t *testing.T) {
+	s := &Server{}
+
+	res, mcpErr := s.finishScreenshotResult(map[string]any{"delivery": "url", "url_ttl_seconds": float64(120)}, "prof_url", []byte("png bytes"), "image/png", ".png", "https://bf.example.com/root")
+	if mcpErr != nil {
+		t.Fatalf("finishScreenshotResult error = %+v", mcpErr)
+	}
+	if got := res["screenshot_url"]; got == nil || !strings.HasPrefix(got.(string), "https://bf.example.com/root/api/screenshots/") {
+		t.Fatalf("screenshot_url = %v", got)
+	}
+	if got := res["ttl_seconds"]; got != 120 {
+		t.Fatalf("ttl_seconds = %v, want 120", got)
+	}
+	if res["expires_at"] == "" {
+		t.Fatal("expires_at is empty")
+	}
+	content := res["content"].([]map[string]any)
+	if content[0]["type"] != "text" {
+		t.Fatalf("content type = %v, want text", content[0]["type"])
+	}
+	if _, ok := content[0]["data"]; ok {
+		t.Fatal("URL delivery should not include base64 image data")
+	}
+	id, _ := res["artifact_id"].(string)
+	req := httptest.NewRequest(http.MethodGet, "/api/screenshots/"+id, nil)
+	rec := httptest.NewRecorder()
+	s.ServeScreenshotArtifact(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("artifact status = %d body = %s", rec.Code, rec.Body.String())
+	}
+	if rec.Body.String() != "png bytes" {
+		t.Fatalf("artifact body = %q", rec.Body.String())
+	}
+}
+
+func TestScreenshotArtifactExpires(t *testing.T) {
+	s := &Server{}
+	id, _, err := s.screenshotArtifactStore().save([]byte("expired"), "image/png", ".png", -time.Second)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req := httptest.NewRequest(http.MethodGet, "/api/screenshots/"+id, nil)
+	rec := httptest.NewRecorder()
+	s.ServeScreenshotArtifact(rec, req)
+	if rec.Code != http.StatusNotFound {
+		t.Fatalf("status = %d, want 404", rec.Code)
+	}
+}
+
+func TestScreenshotDownloadURLEscapesArtifactID(t *testing.T) {
+	got := screenshotDownloadURL("https://bf.example.com/root/", "id with space")
+	want := "https://bf.example.com/root/api/screenshots/id%20with%20space"
+	if got != want {
+		t.Fatalf("screenshotDownloadURL = %q, want %q", got, want)
+	}
+}
+
+func TestPublicBaseURLFromRequestUsesForwardedHeaders(t *testing.T) {
+	s := &Server{}
+	req := httptest.NewRequest(http.MethodPost, "http://internal:19280/mcp", nil)
+	req.Header.Set("X-Forwarded-Proto", "https")
+	req.Header.Set("X-Forwarded-Host", "bf.example.com")
+	if got := s.publicBaseURLFromRequest(req); got != "https://bf.example.com" {
+		t.Fatalf("publicBaseURLFromRequest = %q", got)
+	}
+}
+
+func TestPublicBaseURLFromRequestNormalizesUnspecifiedHost(t *testing.T) {
+	s := &Server{}
+	req := httptest.NewRequest(http.MethodPost, "http://0.0.0.0:19280/mcp", nil)
+	if got := s.publicBaseURLFromRequest(req); got != "http://localhost:19280" {
+		t.Fatalf("publicBaseURLFromRequest = %q", got)
+	}
+}
+
+func TestConfiguredPublicBaseURLOverridesRequest(t *testing.T) {
+	s := &Server{}
+	s.SetPublicBaseURL("https://configured.example.com/root/")
+	req := httptest.NewRequest(http.MethodPost, "http://internal:19280/mcp", nil)
+	if got := s.publicBaseURLFromRequest(req); got != "https://configured.example.com/root" {
+		t.Fatalf("publicBaseURLFromRequest = %q", got)
+	}
+}
+
+func TestConfiguredPublicBaseURLNormalizesUnspecifiedHost(t *testing.T) {
+	s := &Server{}
+	s.SetPublicBaseURL("http://0.0.0.0:19280/root/")
+	req := httptest.NewRequest(http.MethodPost, "http://internal:19280/mcp", nil)
+	if got := s.publicBaseURLFromRequest(req); got != "http://localhost:19280/root" {
+		t.Fatalf("publicBaseURLFromRequest = %q", got)
 	}
 }
 

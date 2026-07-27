@@ -83,6 +83,7 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -e BROWSEFORGE_PUBLIC_BASE_URL=${BROWSEFORGE_PUBLIC_BASE_URL:-http://localhost:19280} \
   -v "$PWD/browseforge/profiles:/app/profiles" \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
@@ -90,10 +91,12 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.9
+  ghcr.io/nczz/browseforge:v2.1.10
 ```
 
 The `./browseforge/` host directory is the durable runtime. Reusing these mounts when pulling a new image or recreating the container preserves profiles, tokens, browser data, logs, and backups.
+
+The quick Docker command binds BrowseForge inside the container while defaulting `BROWSEFORGE_PUBLIC_BASE_URL` to `http://localhost:19280`, a fetchable origin for same-host agents. For remote servers or reverse proxies, export `BROWSEFORGE_PUBLIC_BASE_URL` with the externally reachable origin, including any path prefix.
 
 | Service | URL |
 |------|-----|
@@ -290,7 +293,7 @@ HTTP MCP uses the same Bearer token as the REST API:
 Authorization: Bearer <token>
 ```
 
-The `web_search` MCP tool supports provider-backed search with `google` as the default engine and optional `bing` or `duckduckgo` engines. MCP also includes agent-ready page utilities for waiting on selectors, reading page state, filling forms, selecting/checking controls, pressing keys, managing cookies/downloads, saving screenshots as profile artifacts, running workflows, and diagnosing profile readiness. For agent prompting guidance, see [docs/agent-prompt-guide.md](docs/agent-prompt-guide.md).
+The `web_search` MCP tool supports provider-backed search with `google` as the default engine and optional `bing` or `duckduckgo` engines. MCP also includes agent-ready page utilities for waiting on selectors, reading page state, filling forms, selecting/checking controls, pressing keys, managing cookies/downloads, returning temporary screenshot URLs for remote agents, running workflows, and diagnosing profile readiness. For agent prompting guidance, see [docs/agent-prompt-guide.md](docs/agent-prompt-guide.md).
 
 Example remote MCP configuration:
 

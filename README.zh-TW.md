@@ -83,6 +83,7 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -e BROWSEFORGE_PUBLIC_BASE_URL=${BROWSEFORGE_PUBLIC_BASE_URL:-http://localhost:19280} \
   -v "$PWD/browseforge/profiles:/app/profiles" \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
@@ -90,10 +91,12 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.9
+  ghcr.io/nczz/browseforge:v2.1.10
 ```
 
 `./browseforge/` host 目錄就是持久化 runtime。之後 pull 新 image 或重建 container 時沿用這組 mounts，profiles、token、browser data、logs、backups 都會保留。
+
+快速 Docker 指令會讓容器內的 BrowseForge 對外 bind，同時預設 `BROWSEFORGE_PUBLIC_BASE_URL` 為同主機 agent 可抓取的 `http://localhost:19280`。正式遠端 server 或 reverse proxy 請先 export `BROWSEFORGE_PUBLIC_BASE_URL` 為外部 agent 實際可連到的 origin，若有 path prefix 也要包含。
 
 | 服務 | URL |
 |------|-----|
@@ -289,7 +292,7 @@ HTTP MCP 使用與 REST API 相同的 Bearer Token：
 Authorization: Bearer <token>
 ```
 
-`web_search` MCP tool 支援 provider-backed search；預設 engine 是 `google`，也可指定 `bing` 或 `duckduckgo`。
+`web_search` MCP tool 支援 provider-backed search；預設 engine 是 `google`，也可指定 `bing` 或 `duckduckgo`。MCP 也提供遠端 agent 可用的頁面工具：等待 selector、讀取頁面狀態、填表、選擇/勾選控制項、按鍵、管理 cookies/downloads、回傳臨時 screenshot URL、執行 workflow，以及診斷 profile 狀態。
 
 遠端 MCP 設定範例：
 

@@ -1,10 +1,12 @@
 package mcp
 
 import (
+	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"slices"
@@ -717,31 +719,89 @@ func resolveDownloadPath(profileDir string, args map[string]any) (string, string
 	return filepath.Join(profileDir, "downloads", name), name, nil
 }
 
-func (s *Server) finishScreenshotResult(args map[string]any, profileID string, data []byte, mimeType, ext string) (map[string]any, *mcpError) {
-	res := imageResultWithMime(data, mimeType)
-	res["profile_id"] = profileID
-	res["bytes"] = len(data)
+func (s *Server) finishScreenshotResult(args map[string]any, profileID string, data []byte, mimeType, ext, baseURL string) (map[string]any, *mcpError) {
+	delivery := "image"
+	if baseURL != "" {
+		delivery = "url"
+	}
+	if raw, _ := args["delivery"].(string); raw != "" {
+		delivery = strings.ToLower(strings.TrimSpace(raw))
+	}
+	if delivery != "url" && delivery != "image" && delivery != "both" {
+		return nil, newError(-32602, "delivery must be url, image, or both")
+	}
+	includeURL := delivery == "url" || delivery == "both"
+	includeImage := delivery == "image" || delivery == "both"
+	if raw, ok := args["include_image"].(bool); ok {
+		includeImage = raw
+		if raw && delivery == "url" {
+			includeURL = true
+		}
+	}
+	if !includeURL && !includeImage {
+		return nil, newError(-32602, "delivery must include url or image")
+	}
+	if includeURL && baseURL == "" {
+		return nil, newError(-32000, "public_base_url is required for URL screenshot delivery")
+	}
+
+	payload := map[string]any{
+		"profile_id": profileID,
+		"bytes":      len(data),
+		"mime_type":  mimeType,
+		"sha256":     fmt.Sprintf("%x", sha256.Sum256(data)),
+	}
+
+	if includeURL {
+		ttl := parseScreenshotTTL(args)
+		artifactID, expiresAt, err := s.screenshotArtifactStore().save(data, mimeType, ext, ttl)
+		if err != nil {
+			return nil, newError(-32000, "generate screenshot artifact id: "+err.Error())
+		}
+		payload["artifact_id"] = artifactID
+		payload["screenshot_url"] = screenshotDownloadURL(baseURL, artifactID)
+		payload["expires_at"] = expiresAt.Format(time.RFC3339)
+		payload["ttl_seconds"] = int(ttl / time.Second)
+	}
 
 	savePath, _ := args["save_path"].(string)
-	if savePath == "" {
-		return res, nil
+	if savePath != "" {
+		p, err := s.store.Get(profileID)
+		if err != nil {
+			return nil, newError(-32000, err.Error())
+		}
+		path, err := resolveArtifactPath(p.ProfileDir, savePath, ext)
+		if err != nil {
+			return nil, newError(-32602, err.Error())
+		}
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			return nil, newError(-32000, err.Error())
+		}
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			return nil, newError(-32000, err.Error())
+		}
+		artifactPath, err := filepath.Rel(filepath.Join(p.ProfileDir, "artifacts"), path)
+		if err != nil {
+			return nil, newError(-32000, err.Error())
+		}
+		payload["artifact_path"] = filepath.ToSlash(artifactPath)
+		payload["saved_path"] = path
 	}
-	p, err := s.store.Get(profileID)
-	if err != nil {
-		return nil, newError(-32000, err.Error())
+
+	var res map[string]any
+	if includeImage {
+		res = imageResultWithMime(data, mimeType)
+	} else {
+		res = textResult(mustJSON(payload))
 	}
-	path, err := resolveArtifactPath(p.ProfileDir, savePath, ext)
-	if err != nil {
-		return nil, newError(-32602, err.Error())
+	for k, v := range payload {
+		res[k] = v
 	}
-	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-		return nil, newError(-32000, err.Error())
-	}
-	if err := os.WriteFile(path, data, 0644); err != nil {
-		return nil, newError(-32000, err.Error())
-	}
-	res["saved_path"] = path
 	return res, nil
+}
+
+func screenshotDownloadURL(baseURL, artifactID string) string {
+	return strings.TrimRight(baseURL, "/") + "/api/screenshots/" + url.PathEscape(artifactID)
 }
 
 func resolveArtifactPath(profileDir, requested, ext string) (string, error) {

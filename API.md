@@ -12,7 +12,7 @@
 
 ## Authentication
 
-All REST API endpoints except `/api/status` require a Bearer token:
+All REST API endpoints except `/api/status` and temporary `/api/screenshots/{id}` links require a Bearer token:
 
 ```http
 Authorization: Bearer <token>
@@ -338,6 +338,24 @@ Returns a PNG screenshot.
 ```bash
 curl -H "Authorization: Bearer $TOKEN" \
   "http://127.0.0.1:19280/api/sessions/$SID/screenshot?full_page=true" \
+  -o screenshot.png
+```
+
+### GET `/api/screenshots/{id}`
+
+Returns a temporary screenshot artifact created by MCP `screenshot` URL delivery. This URL is intentionally unauthenticated so external agents can download the image bytes directly, but the ID is random and expires after `ttl_seconds`.
+
+```bash
+curl "http://127.0.0.1:19280/api/screenshots/$ARTIFACT_ID" -o screenshot.png
+```
+
+### GET `/api/profiles/{id}/artifacts/{path}`
+
+Returns a saved profile artifact created with explicit `save_path`. The endpoint requires the same Bearer token as the rest of the API and rejects absolute paths or traversal.
+
+```bash
+curl -H "Authorization: Bearer $TOKEN" \
+  "http://127.0.0.1:19280/api/profiles/$PROFILE_ID/artifacts/manual-evidence.png" \
   -o screenshot.png
 ```
 
@@ -744,14 +762,19 @@ Read or add Playwright browser-context cookies for a profile. `set_cookies` acce
 
 #### `screenshot` artifact saving
 
-`screenshot` still returns an MCP image block. It also accepts:
+`screenshot` returns a temporary unauthenticated HTTP `screenshot_url` by default for Streamable HTTP MCP so remote agents can fetch image bytes without parsing base64. Stdio MCP keeps image-block delivery by default because it does not serve the HTTP screenshot endpoint.
+
+It accepts:
 
 | Parameter | Type | Description |
 |------|------|-------------|
 | `format` | string | `jpeg` or `png`; default `jpeg` |
-| `save_path` | string | Optional path under the profile `artifacts` directory |
+| `delivery` | string | `url`, `image`, or `both`; HTTP MCP defaults to `url`, stdio defaults to `image` |
+| `include_image` | boolean | Compatibility override; `false` omits the MCP image base64 block |
+| `url_ttl_seconds` | number | Optional `screenshot_url` lifetime; default `600`, clamped to `30-3600` |
+| `save_path` | string | Optional path under the profile `artifacts` directory for an additional persistent copy |
 
-Absolute paths and path traversal are rejected; saved files stay under the profile artifacts directory.
+`screenshot_url` links are intentionally unauthenticated, random, and temporary. Fetch them before `expires_at`; expired links return `404`. Absolute paths and path traversal are rejected for `save_path`; saved files stay under the profile artifacts directory. Configure `public_base_url` or `BROWSEFORGE_PUBLIC_BASE_URL` to control the externally visible `screenshot_url`, including reverse-proxy path prefixes. Docker quick-start commands default `BROWSEFORGE_PUBLIC_BASE_URL` to `http://localhost:19280`; override it with the real external origin for remote agents.
 
 #### `list_downloads`, `read_download`, `delete_download`
 

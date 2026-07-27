@@ -2,6 +2,13 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.10 - 2026-07-27
+
+### Fixed
+
+- Added temporary unauthenticated MCP screenshot URLs so remote HTTP agents can fetch image bytes directly instead of parsing base64 image blocks.
+- Documented `BROWSEFORGE_PUBLIC_BASE_URL` Docker configuration and the screenshot URL delivery contract for remote agents.
+
 ## v2.1.9 - 2026-07-20
 
 ### Fixed

@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"log/slog"
 	"os"
+	"strings"
 )
 
 type Config struct {
 	Host             string                   `json:"host,omitempty"`
 	Port             string                   `json:"port"`
+	PublicBaseURL    string                   `json:"public_base_url,omitempty"`
 	NoSandbox        bool                     `json:"no_sandbox,omitempty"`
 	ProfilesDir      string                   `json:"profiles_dir"`
 	DataDir          string                   `json:"data_dir"`
@@ -88,6 +90,7 @@ func Load(path string) (*Config, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		if os.IsNotExist(err) {
+			applyPublicBaseURL(cfg)
 			return cfg, nil
 		}
 		return nil, err
@@ -106,7 +109,16 @@ func Load(path string) (*Config, error) {
 	}
 	cfg = &raw.Config
 	applyLegacyRuntimeConfig(cfg, raw.CamoufoxPath, raw.CloakBrowserPath, raw.CloakBrowser)
+	applyPublicBaseURL(cfg)
 	return cfg, nil
+}
+
+func applyPublicBaseURL(cfg *Config) {
+	if env := strings.TrimSpace(os.Getenv("BROWSEFORGE_PUBLIC_BASE_URL")); env != "" {
+		cfg.PublicBaseURL = strings.TrimRight(env, "/")
+	} else {
+		cfg.PublicBaseURL = strings.TrimRight(strings.TrimSpace(cfg.PublicBaseURL), "/")
+	}
 }
 
 func applyLegacyRuntimeConfig(cfg *Config, camoufoxPath, cloakBrowserPath string, cloakBrowser *CloakBrowserConfig) {

@@ -62,6 +62,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
 		r.Post("/api/profiles/{id}/export", h.exportProfile)
 		r.Post("/api/profiles/import", h.importProfile)
+		r.Get("/api/profiles/{id}/artifacts/*", h.artifact)
 		r.Get("/api/groups", h.listGroups)
 		r.Get("/api/groups/{name}", h.getGroup)
 		r.Put("/api/groups/{name}", h.upsertGroup)

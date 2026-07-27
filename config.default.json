@@ -1,5 +1,6 @@
 {
   "port": "19280",
+  "public_base_url": "",
   "profiles_dir": "profiles",
   "data_dir": "data",
   "log_file": "logs/server.log",

@@ -33,7 +33,7 @@ func (s *Server) RunStdio() {
 		case "tools/list":
 			result = s.handleToolsList()
 		case "tools/call":
-			result, mcpErr = s.handleToolsCall(req.Params)
+			result, mcpErr = s.handleToolsCall(req.Params, nil)
 		case "notifications/initialized":
 			continue // client ack, ignore
 		default:

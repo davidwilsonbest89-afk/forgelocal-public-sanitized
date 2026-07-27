@@ -4,7 +4,9 @@ import (
 	"crypto/subtle"
 	"encoding/json"
 	"fmt"
+	"net"
 	"net/http"
+	"net/url"
 	"strings"
 	"sync/atomic"
 
@@ -20,15 +22,17 @@ import (
 // MCP Server — Model Context Protocol (2025-11-25 spec, Streamable HTTP transport)
 
 type Server struct {
-	store       *profile.Store
-	groupStore  *groups.Store
-	mgr         *browser.Manager
-	hcfg        humanize.Config
-	sessionPool *SessionPool
-	workflow    *workflow.Engine
-	token       string
-	version     string
-	reqID       atomic.Int64
+	store               *profile.Store
+	groupStore          *groups.Store
+	mgr                 *browser.Manager
+	hcfg                humanize.Config
+	sessionPool         *SessionPool
+	workflow            *workflow.Engine
+	token               string
+	version             string
+	publicBaseURL       string
+	screenshotArtifacts *screenshotArtifactStore
+	reqID               atomic.Int64
 }
 
 func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config, sessionPool *SessionPool, token, version string, groupStores ...*groups.Store) *Server {
@@ -39,11 +43,78 @@ func NewServer(store *profile.Store, mgr *browser.Manager, hcfg humanize.Config,
 	if len(groupStores) > 0 {
 		groupStore = groupStores[0]
 	}
-	return &Server{store: store, groupStore: groupStore, mgr: mgr, hcfg: hcfg, sessionPool: sessionPool, token: token, version: version}
+	return &Server{store: store, groupStore: groupStore, mgr: mgr, hcfg: hcfg, sessionPool: sessionPool, token: token, version: version, screenshotArtifacts: newScreenshotArtifactStore()}
 }
 
 func (s *Server) SetWorkflowEngine(engine *workflow.Engine) {
 	s.workflow = engine
+}
+
+func (s *Server) SetPublicBaseURL(raw string) {
+	raw = strings.TrimRight(strings.TrimSpace(raw), "/")
+	if raw == "" {
+		s.publicBaseURL = ""
+		return
+	}
+	parsed, err := url.Parse(raw)
+	if err == nil && parsed.Host != "" {
+		parsed.Host = publicURLHost(parsed.Host)
+		raw = strings.TrimRight(parsed.String(), "/")
+	}
+	s.publicBaseURL = raw
+}
+
+func (s *Server) publicBaseURLFromRequest(r *http.Request) string {
+	if s.publicBaseURL != "" {
+		return s.publicBaseURL
+	}
+	if r == nil || r.Host == "" {
+		return ""
+	}
+	proto := firstHeaderValue(r.Header.Get("X-Forwarded-Proto"))
+	if proto == "" {
+		if r.TLS != nil {
+			proto = "https"
+		} else {
+			proto = "http"
+		}
+	}
+	host := firstHeaderValue(r.Header.Get("X-Forwarded-Host"))
+	if host == "" {
+		host = r.Host
+	}
+	host = publicURLHost(host)
+	if host == "" {
+		return ""
+	}
+	return strings.TrimRight(proto+"://"+host, "/")
+}
+
+func firstHeaderValue(raw string) string {
+	if i := strings.IndexByte(raw, ','); i >= 0 {
+		raw = raw[:i]
+	}
+	return strings.TrimSpace(raw)
+}
+
+func publicURLHost(raw string) string {
+	raw = strings.TrimSpace(raw)
+	if raw == "" {
+		return ""
+	}
+	host, port, err := net.SplitHostPort(raw)
+	if err != nil {
+		host = strings.Trim(raw, "[]")
+		port = ""
+	}
+	switch host {
+	case "0.0.0.0", "::", "":
+		host = "localhost"
+	}
+	if port != "" {
+		return net.JoinHostPort(host, port)
+	}
+	return host
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +145,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	case "tools/list":
 		result = s.handleToolsList()
 	case "tools/call":
-		result, mcpErr = s.handleToolsCall(req.Params)
+		result, mcpErr = s.handleToolsCall(req.Params, r)
 	default:
 		mcpErr = newError(-32601, "Method not found: "+req.Method)
 	}
@@ -102,7 +173,7 @@ func (s *Server) handleToolsList() any {
 	return map[string]any{"tools": tools}
 }
 
-func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
+func (s *Server) handleToolsCall(params json.RawMessage, r *http.Request) (any, *mcpError) {
 	var call struct {
 		Name      string         `json:"name"`
 		Arguments map[string]any `json:"arguments"`
@@ -147,7 +218,7 @@ func (s *Server) handleToolsCall(params json.RawMessage) (any, *mcpError) {
 	case "type_text":
 		return s.toolTypeText(call.Arguments)
 	case "screenshot":
-		return s.toolScreenshot(call.Arguments)
+		return s.toolScreenshot(call.Arguments, r)
 	case "get_content":
 		return s.toolGetContent(call.Arguments)
 	case "evaluate":
@@ -587,7 +658,7 @@ func (s *Server) toolTypeText(args map[string]any) (any, *mcpError) {
 	return textResult("Typed text into " + selector), nil
 }
 
-func (s *Server) toolScreenshot(args map[string]any) (any, *mcpError) {
+func (s *Server) toolScreenshot(args map[string]any, r *http.Request) (any, *mcpError) {
 	id, _ := args["profile_id"].(string)
 	sess, ok := s.mgr.GetSession("sess_" + id)
 	if !ok {
@@ -629,7 +700,7 @@ func (s *Server) toolScreenshot(args map[string]any) (any, *mcpError) {
 	if err != nil {
 		return nil, newError(-32000, err.Error())
 	}
-	return s.finishScreenshotResult(args, id, data, mimeType, ext)
+	return s.finishScreenshotResult(args, id, data, mimeType, ext, s.publicBaseURLFromRequest(r))
 }
 
 func (s *Server) toolGetContent(args map[string]any) (any, *mcpError) {

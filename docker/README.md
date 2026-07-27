@@ -14,6 +14,7 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -e BROWSEFORGE_PUBLIC_BASE_URL=${BROWSEFORGE_PUBLIC_BASE_URL:-http://localhost:19280} \
   -v "$PWD/browseforge/profiles:/app/profiles" \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
@@ -21,7 +22,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.9
+  ghcr.io/nczz/browseforge:v2.1.10
 ```
 
 Build from the local source tree:
@@ -32,17 +33,17 @@ mkdir -p ./browseforge/{profiles,data,browsers,logs,backups}
 docker compose up -d --build
 ```
 
-The Compose file builds the `v2.1.9` release image by default. To test another version:
+The Compose file builds the `v2.1.10` release image by default. To test another version:
 
 ```bash
-BROWSEFORGE_VERSION=v2.1.9 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.10 docker compose up -d --build
 ```
 
 When validating an unreleased BrowseForge Chromium runtime, point the image build at a staged runtime asset root. The root must contain `checksums.txt`, `runtime.manifest.json`, and `<runtime-version>/browseforge-runtime-chromium-<runtime-version>-linux-{x64,arm64}.zip`:
 
 ```bash
 BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL=https://host/runtime/releases \
-BROWSEFORGE_VERSION=v2.1.9 docker compose up -d --build
+BROWSEFORGE_VERSION=v2.1.10 docker compose up -d --build
 ```
 
 ## First Startup
@@ -67,6 +68,8 @@ docker exec browseforge /app/BrowseForge smoke rest --wait --timeout 5m --json
 | MCP Streamable HTTP | http://localhost:19280/mcp |
 | Remote desktop (KasmVNC) | http://localhost:6901 |
 | VNC login | `user` / `VNC_PASSWORD` environment variable, default `browseforge` |
+
+The quick Docker command binds BrowseForge inside the container while defaulting `BROWSEFORGE_PUBLIC_BASE_URL` to `http://localhost:19280`, a fetchable origin for same-host agents. For remote servers or reverse proxies, export `BROWSEFORGE_PUBLIC_BASE_URL` with the externally reachable origin, including any path prefix.
 
 ## API Token
 
@@ -103,12 +106,13 @@ When you pull a new image or recreate the container, reuse the same `-v "$PWD/br
 Upgrade example:
 
 ```bash
-docker pull ghcr.io/nczz/browseforge:v2.1.9
+docker pull ghcr.io/nczz/browseforge:v2.1.10
 docker stop browseforge
 docker rm browseforge
 docker run -d --name browseforge \
   -p 19280:19280 -p 6901:6901 \
   -e VNC_PASSWORD=browseforge \
+  -e BROWSEFORGE_PUBLIC_BASE_URL=${BROWSEFORGE_PUBLIC_BASE_URL:-http://localhost:19280} \
   -v "$PWD/browseforge/profiles:/app/profiles" \
   -v "$PWD/browseforge/data:/app/data" \
   -v "$PWD/browseforge/browsers:/app/browsers" \
@@ -116,7 +120,7 @@ docker run -d --name browseforge \
   -v "$PWD/browseforge/backups:/app/backups" \
   -e BROWSEFORGE_SEED_BROWSERS=1 \
   --restart unless-stopped \
-  ghcr.io/nczz/browseforge:v2.1.9
+  ghcr.io/nczz/browseforge:v2.1.10
 ```
 
 Full filesystem backup:
@@ -142,6 +146,7 @@ The REST `/api/backup` endpoint creates a lighter profile metadata backup. Back 
 - **Docker auto-detection**: automatically enables `0.0.0.0` binding and `--no-sandbox`.
 - **Playwright proxy**: dashboard, API, and Playwright WebSocket proxy all use port `19280`.
 - **MCP HTTP**: Streamable HTTP MCP uses `19280/mcp` with the same Bearer token as the REST API.
+- **Agent-ready screenshot URLs**: set `BROWSEFORGE_PUBLIC_BASE_URL` so MCP `screenshot` can return temporary, unauthenticated, externally reachable URLs instead of base64 image blocks.
 
 ## Notes
 

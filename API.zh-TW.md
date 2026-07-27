@@ -12,7 +12,7 @@
 
 ## 認證
 
-所有 REST API（除 `/api/status`）需要 Bearer Token：
+所有 REST API（除 `/api/status` 與臨時 `/api/screenshots/:id` 連結）需要 Bearer Token：
 
 ```
 Authorization: Bearer {token}
@@ -246,6 +246,24 @@ curl -H "Authorization: Bearer $TOKEN" \
   -o full.png
 ```
 
+#### GET /api/screenshots/:id
+```bash
+# 回傳 MCP screenshot URL delivery 建立的臨時截圖；不需要 Bearer token
+curl "http://127.0.0.1:19280/api/screenshots/$ARTIFACT_ID" -o screenshot.png
+```
+
+此 URL 供外部 agent 直接下載圖片 bytes。ID 為隨機值，會在 `expires_at` 後失效，過期回 `404`。
+
+#### GET /api/profiles/:id/artifacts/:path
+```bash
+# 回傳明確用 save_path 儲存的 profile artifact
+curl -H "Authorization: Bearer $TOKEN" \
+  "http://127.0.0.1:19280/api/profiles/$PROFILE_ID/artifacts/manual-evidence.png" \
+  -o screenshot.png
+```
+
+此 endpoint 使用與 REST/MCP 相同的 Bearer token，並拒絕絕對路徑與 path traversal。
+
 #### GET /api/sessions/:id/content
 ```bash
 # 整頁 HTML
@@ -394,6 +412,8 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
 | `destroy_session` | 銷毀 agent web session | `session_id` |
 | `list_sessions` | 列出 agent web sessions | `profile_id`（選填） |
 | `gc_sessions` | 立即執行 agent web session GC | — |
+
+HTTP MCP 的 `screenshot` 預設回傳臨時、免驗證的 `screenshot_url`，讓遠端 agent 用 HTTP 抓取圖片 bytes，不必解析 base64。URL ID 是隨機值，會在 `expires_at` 後失效；可用 `url_ttl_seconds` 設定存活秒數（預設 `600`，限制 `30-3600`）。可用 `delivery` 控制回傳：`url`、`image` 或 `both`；`include_image=false` 會省略 MCP image base64 block。請設定 `public_base_url` 或 `BROWSEFORGE_PUBLIC_BASE_URL` 來決定外部可見 URL，包含 reverse proxy path prefix。Docker 快速指令預設為 `http://localhost:19280`；遠端 agent 正式使用時請覆寫成實際外部 origin。
 
 ### 範例：用 Claude 操作
 
