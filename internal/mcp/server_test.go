@@ -789,6 +789,32 @@ func TestFinishScreenshotURLDeliveryReturnsTTLLinkWithoutImageData(t *testing.T)
 	}
 }
 
+func TestScreenshotURLArtifactPersistsAcrossServerProcesses(t *testing.T) {
+	dir := t.TempDir()
+	writer := &Server{}
+	writer.SetScreenshotArtifactDir(dir)
+	res, mcpErr := writer.finishScreenshotResult(map[string]any{"delivery": "url"}, "prof_stdio", []byte("shared png bytes"), "image/png", ".png", "http://localhost:19280")
+	if mcpErr != nil {
+		t.Fatalf("finishScreenshotResult error = %+v", mcpErr)
+	}
+	id, _ := res["artifact_id"].(string)
+	if id == "" {
+		t.Fatalf("artifact_id = %q", id)
+	}
+
+	reader := &Server{}
+	reader.SetScreenshotArtifactDir(dir)
+	req := httptest.NewRequest(http.MethodGet, "/api/screenshots/"+id, nil)
+	rec := httptest.NewRecorder()
+	reader.ServeScreenshotArtifact(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("artifact status = %d body = %s", rec.Code, rec.Body.String())
+	}
+	if rec.Body.String() != "shared png bytes" {
+		t.Fatalf("artifact body = %q", rec.Body.String())
+	}
+}
+
 func TestScreenshotArtifactExpires(t *testing.T) {
 	s := &Server{}
 	id, _, err := s.screenshotArtifactStore().save([]byte("expired"), "image/png", ".png", -time.Second)

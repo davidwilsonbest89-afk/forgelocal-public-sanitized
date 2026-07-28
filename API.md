@@ -762,19 +762,19 @@ Read or add Playwright browser-context cookies for a profile. `set_cookies` acce
 
 #### `screenshot` artifact saving
 
-`screenshot` returns a temporary unauthenticated HTTP `screenshot_url` by default for Streamable HTTP MCP so remote agents can fetch image bytes without parsing base64. Stdio MCP keeps image-block delivery by default because it does not serve the HTTP screenshot endpoint.
+`screenshot` returns a temporary unauthenticated HTTP `screenshot_url` by default whenever BrowseForge can determine a fetchable base URL. HTTP MCP derives this from the request or `public_base_url`; stdio MCP can use `public_base_url` / `BROWSEFORGE_PUBLIC_BASE_URL`.
 
 It accepts:
 
 | Parameter | Type | Description |
 |------|------|-------------|
 | `format` | string | `jpeg` or `png`; default `jpeg` |
-| `delivery` | string | `url`, `image`, or `both`; HTTP MCP defaults to `url`, stdio defaults to `image` |
+| `delivery` | string | `url`, `image`, or `both`; defaults to `url` when a base URL is available, otherwise `image` |
 | `include_image` | boolean | Compatibility override; `false` omits the MCP image base64 block |
 | `url_ttl_seconds` | number | Optional `screenshot_url` lifetime; default `600`, clamped to `30-3600` |
 | `save_path` | string | Optional path under the profile `artifacts` directory for an additional persistent copy |
 
-`screenshot_url` links are intentionally unauthenticated, random, and temporary. Fetch them before `expires_at`; expired links return `404`. Absolute paths and path traversal are rejected for `save_path`; saved files stay under the profile artifacts directory. Configure `public_base_url` or `BROWSEFORGE_PUBLIC_BASE_URL` to control the externally visible `screenshot_url`, including reverse-proxy path prefixes. Docker quick-start commands default `BROWSEFORGE_PUBLIC_BASE_URL` to `http://localhost:19280`; override it with the real external origin for remote agents.
+`screenshot_url` links are intentionally unauthenticated, random, and temporary. Fetch them before `expires_at`; expired links return `404`. Absolute paths and path traversal are rejected for `save_path`; saved files stay under the profile artifacts directory. URL screenshot artifacts are stored under the configured data directory so stdio-created URLs can be served by the main HTTP service. Configure `public_base_url` or `BROWSEFORGE_PUBLIC_BASE_URL` to control the externally visible `screenshot_url`, including reverse-proxy path prefixes. Docker quick-start commands default `BROWSEFORGE_PUBLIC_BASE_URL` to `http://localhost:19280`; override it with the real external origin for remote agents.
 
 #### `list_downloads`, `read_download`, `delete_download`
 

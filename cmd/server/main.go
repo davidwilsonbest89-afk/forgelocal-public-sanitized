@@ -108,6 +108,8 @@ func runMCPStdio(opts mcpStdioOptions) {
 	}
 
 	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, "", cfg.Version, groupStore)
+	mcpServer.SetPublicBaseURL(cfg.PublicBaseURL)
+	mcpServer.SetScreenshotArtifactDir(filepath.Join(cfg.DataDir, "screenshots"))
 	mcpServer.RunStdio()
 }
 
@@ -357,6 +359,7 @@ func runServer(flags *serveFlags) {
 	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, cfg.APIToken, cfg.Version, groupStore)
 	mcpServer.SetWorkflowEngine(wfEngine)
 	mcpServer.SetPublicBaseURL(cfg.PublicBaseURL)
+	mcpServer.SetScreenshotArtifactDir(filepath.Join(cfg.DataDir, "screenshots"))
 	router.Post("/mcp", mcpServer.ServeHTTP)
 	router.Get("/api/screenshots/{id}", mcpServer.ServeScreenshotArtifact)
 

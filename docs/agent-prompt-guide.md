@@ -14,7 +14,7 @@ BrowseForge controls persistent browser profiles and isolated agent pages. Prefe
 6. Reuse agent sessions. For `web_search` and `web_explore`, keep the returned `session_id` and pass it to follow-up tools such as `web_extract`, `wait_for`, `get_page_state`, and `screenshot`.
 7. Clean up isolated agent sessions. Use `destroy_session` after a search/explore workflow when the page is no longer needed. Do not close the whole profile browser unless the task is complete or explicitly requested.
 8. Use downloads tools for exported files. After an export action, call `list_downloads`, then `read_download` for small files or report the file path for large files.
-9. Save visual evidence when useful. For HTTP MCP, use `screenshot` with URL delivery and fetch the temporary unauthenticated `screenshot_url` before `expires_at`; for stdio/default clients, keep `delivery=image` unless the client cannot handle image blocks.
+9. Save visual evidence when useful. Use `screenshot` URL delivery when the result includes a temporary unauthenticated `screenshot_url`; fetch it before `expires_at`. Use `delivery=image` only when the client needs MCP image blocks.
 10. Keep profile state safe. Do not directly modify profile directories or browser-data. Use profile, cookie, download, and session tools.
 
 ## Common Sequences

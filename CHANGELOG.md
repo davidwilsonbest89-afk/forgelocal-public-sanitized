@@ -2,6 +2,12 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.11 - 2026-07-27
+
+### Fixed
+
+- Made MCP `screenshot` URL delivery work from stdio when `public_base_url` is configured by sharing temporary screenshot artifacts through the main HTTP service.
+
 ## v2.1.10 - 2026-07-27
 
 ### Fixed

@@ -413,7 +413,7 @@ async with ClientSession("http://127.0.0.1:19280/mcp") as session:
 | `list_sessions` | 列出 agent web sessions | `profile_id`（選填） |
 | `gc_sessions` | 立即執行 agent web session GC | — |
 
-HTTP MCP 的 `screenshot` 預設回傳臨時、免驗證的 `screenshot_url`，讓遠端 agent 用 HTTP 抓取圖片 bytes，不必解析 base64。URL ID 是隨機值，會在 `expires_at` 後失效；可用 `url_ttl_seconds` 設定存活秒數（預設 `600`，限制 `30-3600`）。可用 `delivery` 控制回傳：`url`、`image` 或 `both`；`include_image=false` 會省略 MCP image base64 block。請設定 `public_base_url` 或 `BROWSEFORGE_PUBLIC_BASE_URL` 來決定外部可見 URL，包含 reverse proxy path prefix。Docker 快速指令預設為 `http://localhost:19280`；遠端 agent 正式使用時請覆寫成實際外部 origin。
+只要 BrowseForge 能判斷可抓取的 base URL，`screenshot` 就會預設回傳臨時、免驗證的 `screenshot_url`；HTTP MCP 會從 request 或 `public_base_url` 推導，stdio MCP 可使用 `public_base_url` / `BROWSEFORGE_PUBLIC_BASE_URL`。URL ID 是隨機值，會在 `expires_at` 後失效；可用 `url_ttl_seconds` 設定存活秒數（預設 `600`，限制 `30-3600`）。可用 `delivery` 控制回傳：`url`、`image` 或 `both`；`include_image=false` 會省略 MCP image base64 block。URL screenshot artifacts 會存放在設定的 data 目錄，所以 stdio 建立的 URL 也能由主要 HTTP service 提供。請設定 `public_base_url` 或 `BROWSEFORGE_PUBLIC_BASE_URL` 來決定外部可見 URL，包含 reverse proxy path prefix。
 
 ### 範例：用 Claude 操作
 
