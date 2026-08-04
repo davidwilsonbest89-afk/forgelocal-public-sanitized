@@ -2,6 +2,13 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## v2.1.12 - 2026-08-04
+
+### Fixed
+
+- Validated Playwright Bind endpoints before registering browser sessions so external clients no longer receive unusable WebSocket endpoints after a launch, crash, or handshake failure.
+- Added structured endpoint health failure codes and diagnostic logs with session, profile, runtime, endpoint, profile directory, user-data directory, executable path, timeout, and retry context.
+
 ## v2.1.11 - 2026-07-27
 
 ### Fixed
