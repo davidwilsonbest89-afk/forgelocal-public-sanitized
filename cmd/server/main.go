@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"forgelocal/internal/api"
+	"forgelocal/internal/backup"
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
 	"forgelocal/internal/fingerprint"
@@ -26,6 +27,7 @@ import (
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/mcp"
 	"forgelocal/internal/profile"
+	"forgelocal/internal/secrets"
 	"forgelocal/internal/workflow"
 )
 
@@ -85,7 +87,7 @@ func runMCPStdio(opts mcpStdioOptions) {
 		fmt.Fprintf(os.Stderr, "Group store error: %v\n", err)
 		os.Exit(1)
 	}
-	profileStore, err := profile.NewStore(cfg.ProfilesDir)
+	profileStore, err := profile.NewStore(cfg.ProfilesDir, secrets.NewSystemVault("ForgeLocal"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Profile store error: %v\n", err)
 		os.Exit(1)
@@ -320,7 +322,7 @@ func runServer(flags *serveFlags) {
 		}
 	}
 
-	profileStore, err := profile.NewStore(cfg.ProfilesDir)
+	profileStore, err := profile.NewStore(cfg.ProfilesDir, secrets.NewSystemVault("ForgeLocal"))
 	if err != nil {
 		slog.Error("profile store", "error", err)
 		exitServerError(flags, "Profile store error: %v", err)
@@ -335,7 +337,14 @@ func runServer(flags *serveFlags) {
 	}
 	defer browserMgr.Close()
 
-	router, err := api.NewRouter(cfg, profileStore, browserMgr, fpPool, groupStore)
+	backupSvc, backupDB, err := backup.OpenCoreService(cfg.DataDir)
+	if err != nil {
+		slog.Error("backup service", "error", err)
+		exitServerError(flags, "Backup service error: %v", err)
+	}
+	defer backupDB.Close()
+
+	router, err := api.NewRouter(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore)
 	if err != nil {
 		slog.Error("api router", "error", err)
 		exitServerError(flags, "API router error: %v", err)

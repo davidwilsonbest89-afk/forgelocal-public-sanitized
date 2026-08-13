@@ -8,6 +8,8 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
+
+	"forgelocal/internal/secrets"
 	"time"
 )
 
@@ -37,25 +39,35 @@ type IdentityConfig struct {
 }
 
 type ProxyConfig struct {
-	Type     string `json:"type"` // "socks5" | "http"
-	Host     string `json:"host"`
-	Port     int    `json:"port"`
-	Username string `json:"username,omitempty"`
-	Password string `json:"password,omitempty"`
-	Region   string `json:"region,omitempty"`
+	Type      string `json:"type"` // "socks5" | "http"
+	Host      string `json:"host"`
+	Port      int    `json:"port"`
+	Username  string `json:"-"`
+	Password  string `json:"-"`
+	SecretRef string `json:"secret_ref,omitempty"`
+	Region    string `json:"region,omitempty"`
 }
 
 type Store struct {
 	dir      string
 	mu       sync.RWMutex
 	profiles map[string]*Profile
+	vault    secrets.SecretVault
 }
 
-func NewStore(dir string) (*Store, error) {
-	if err := os.MkdirAll(dir, 0755); err != nil {
+func NewStore(dir string, vaults ...secrets.SecretVault) (*Store, error) {
+	var vault secrets.SecretVault
+	if len(vaults) > 0 {
+		vault = vaults[0]
+	}
+	if err := os.MkdirAll(dir, 0700); err != nil {
 		return nil, err
 	}
-	s := &Store{dir: dir, profiles: make(map[string]*Profile)}
+	// #nosec G302 -- directories require owner execute permission; 0700 denies all group/other access.
+	if err := os.Chmod(dir, 0700); err != nil {
+		return nil, err
+	}
+	s := &Store{dir: dir, profiles: make(map[string]*Profile), vault: vault}
 	return s, s.loadAll()
 }
 
@@ -69,6 +81,7 @@ func (s *Store) loadAll() error {
 			continue
 		}
 		path := filepath.Join(s.dir, e.Name(), "profile.json")
+		// #nosec G304 -- path is built from a non-symlink directory entry enumerated under Store.dir.
 		data, err := os.ReadFile(path)
 		if err != nil {
 			continue
@@ -78,6 +91,9 @@ func (s *Store) loadAll() error {
 			continue
 		}
 		if err := validateV2Profile(&p, path); err != nil {
+			return err
+		}
+		if err := s.restoreProxySecret(&p); err != nil {
 			return err
 		}
 		s.profiles[p.ID] = &p
@@ -101,11 +117,32 @@ func (s *Store) Create(p *Profile) error {
 	p.CreatedAt = time.Now()
 	p.LastUsed = p.CreatedAt
 	p.ProfileDir = filepath.Join(s.dir, p.ID)
-
-	if err := os.MkdirAll(p.ProfileDir, 0755); err != nil {
+	// A profile may only ever refer to its own vault entry. Imported metadata
+	// must not be able to select an arbitrary secret reference.
+	if p.Proxy != nil {
+		if p.Proxy.Username != "" || p.Proxy.Password != "" {
+			p.Proxy.SecretRef = proxySecretRef(p.ID)
+		} else {
+			p.Proxy.SecretRef = ""
+		}
+	}
+	if err := s.persistProxySecret(p); err != nil {
 		return err
 	}
-	if err := os.MkdirAll(filepath.Join(p.ProfileDir, "browser-data"), 0755); err != nil {
+
+	if err := os.MkdirAll(p.ProfileDir, 0700); err != nil {
+		return err
+	}
+	// #nosec G302 -- directories require owner execute permission; 0700 denies all group/other access.
+	if err := os.Chmod(p.ProfileDir, 0700); err != nil {
+		return err
+	}
+	browserDataDir := filepath.Join(p.ProfileDir, "browser-data")
+	if err := os.MkdirAll(browserDataDir, 0700); err != nil {
+		return err
+	}
+	// #nosec G302 -- directories require owner execute permission; 0700 denies all group/other access.
+	if err := os.Chmod(browserDataDir, 0700); err != nil {
 		return err
 	}
 
@@ -159,6 +196,9 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 	if !ok {
 		return nil, fmt.Errorf("profile not found: %s", id)
 	}
+	// Only the currently loaded profile may retain its own vault reference;
+	// client-provided update payloads must not select another profile's secret.
+	hadProxySecret := p.Proxy != nil && p.Proxy.SecretRef == proxySecretRef(p.ID)
 
 	data, err := json.Marshal(p)
 	if err != nil {
@@ -181,8 +221,22 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 	if err := validateV2Profile(p, "updated profile"); err != nil {
 		return nil, err
 	}
+	if p.Proxy != nil {
+		if p.Proxy.Username != "" || p.Proxy.Password != "" || hadProxySecret {
+			p.Proxy.SecretRef = proxySecretRef(p.ID)
+		} else {
+			p.Proxy.SecretRef = ""
+		}
+	}
+	if err := s.restoreProxySecret(p); err != nil {
+		return nil, err
+	}
+	if err := s.persistProxySecret(p); err != nil {
+		return nil, err
+	}
 
 	return p, s.save(p)
+
 }
 
 func (s *Store) Delete(id string) error {
@@ -192,7 +246,12 @@ func (s *Store) Delete(id string) error {
 	if !ok {
 		return fmt.Errorf("profile not found: %s", id)
 	}
-	os.RemoveAll(p.ProfileDir)
+	if err := os.RemoveAll(p.ProfileDir); err != nil {
+		return fmt.Errorf("remove profile data: %w", err)
+	}
+	if p.Proxy != nil && p.Proxy.SecretRef != "" && s.vault != nil {
+		_ = s.vault.DeleteSecret(p.Proxy.SecretRef)
+	}
 	delete(s.profiles, id)
 	return nil
 }
@@ -226,7 +285,7 @@ func (s *Store) save(p *Profile) error {
 	if err != nil {
 		return err
 	}
-	if err := os.WriteFile(tmp, data, 0644); err != nil {
+	if err := os.WriteFile(tmp, data, 0600); err != nil {
 		return err
 	}
 	return os.Rename(tmp, path)
@@ -247,4 +306,87 @@ func contains(ss []string, s string) bool {
 		}
 	}
 	return false
+}
+
+// ProfilePath returns the canonical on-disk path for a validated profile ID.
+// Callers cannot supply an arbitrary filesystem path to the profile store.
+func (s *Store) ProfilePath(id string) (string, error) {
+	if !snapshotIDPattern.MatchString(id) {
+		return "", fmt.Errorf("invalid profile id")
+	}
+	base, err := filepath.Abs(s.dir)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(base, id), nil
+}
+
+// UnmarshalJSON accepts credentials only at the Core boundary. MarshalJSON uses
+// the json:"-" tags above, so credentials can never return to disk or API JSON.
+func (p *Profile) UnmarshalJSON(data []byte) error {
+	type plain Profile
+	var decoded plain
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*p = Profile(decoded)
+	var wire struct {
+		Proxy *struct {
+			Username string `json:"username"`
+			Password string `json:"password"`
+		} `json:"proxy"`
+	}
+	if err := json.Unmarshal(data, &wire); err != nil {
+		return err
+	}
+	if wire.Proxy != nil {
+		if p.Proxy == nil {
+			p.Proxy = &ProxyConfig{}
+		}
+		p.Proxy.Username = wire.Proxy.Username
+		p.Proxy.Password = wire.Proxy.Password
+	}
+	return nil
+}
+
+func proxySecretRef(profileID string) string { return "proxy." + profileID }
+
+func (s *Store) persistProxySecret(p *Profile) error {
+	if p == nil || p.Proxy == nil || (p.Proxy.Username == "" && p.Proxy.Password == "") {
+		return nil
+	}
+	if s.vault == nil {
+		return fmt.Errorf("proxy credentials require an OS secret vault")
+	}
+	// Never accept a caller-provided reference: each profile owns exactly one
+	// deterministic vault slot.
+	p.Proxy.SecretRef = proxySecretRef(p.ID)
+	payload, err := json.Marshal(map[string]string{"username": p.Proxy.Username, "password": p.Proxy.Password})
+	if err != nil {
+		return err
+	}
+	return s.vault.PutSecret(p.Proxy.SecretRef, payload)
+}
+
+func (s *Store) restoreProxySecret(p *Profile) error {
+	if p == nil || p.Proxy == nil || p.Proxy.SecretRef == "" || s.vault == nil {
+		return nil
+	}
+	if p.Proxy.SecretRef != proxySecretRef(p.ID) {
+		return fmt.Errorf("invalid proxy secret reference for profile %s", p.ID)
+	}
+	payload, err := s.vault.GetSecret(p.Proxy.SecretRef)
+	if err != nil {
+		return err
+	}
+	var values struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	if err := json.Unmarshal(payload, &values); err != nil {
+		return fmt.Errorf("decode proxy secret: %w", err)
+	}
+	p.Proxy.Username = values.Username
+	p.Proxy.Password = values.Password
+	return nil
 }

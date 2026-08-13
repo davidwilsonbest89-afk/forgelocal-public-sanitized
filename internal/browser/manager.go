@@ -36,6 +36,7 @@ type Manager struct {
 	pw                      *playwright.Playwright
 	mu                      sync.RWMutex
 	sessions                map[string]*Session // sessionID → Session
+	snapshotProfiles        map[string]struct{} // profile IDs exclusively reserved for a backup snapshot
 	endpointHealthTimeoutMS float64
 	bindSessionEndpoint     func(*Session) (string, error)
 	endpointHealthCheck     func(string, float64) error
@@ -69,6 +70,7 @@ func NewManager(cfg *config.Config, groupStores ...*groups.Store) (*Manager, err
 		runtimes:                bfruntime.NewRegistry(cfg),
 		pw:                      pw,
 		sessions:                make(map[string]*Session),
+		snapshotProfiles:        make(map[string]struct{}),
 		endpointHealthTimeoutMS: defaultEndpointHealthTimeoutMS,
 	}
 	m.recoverOrphanSessions()
@@ -85,6 +87,38 @@ func (m *Manager) RuntimeRegistry() *bfruntime.Registry {
 	return m.runtimes
 }
 
+// AcquireSnapshot reserves one inactive profile against concurrent launches.
+// The caller must release the returned function exactly once after snapshot
+// publication or rollback. This is process-local by design: the Core is the
+// sole owner of profile mutations and browser sessions.
+func (m *Manager) AcquireSnapshot(profileID string) (func(), error) {
+	if profileID == "" {
+		return nil, fmt.Errorf("profile id is required")
+	}
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if m.snapshotProfiles == nil {
+		m.snapshotProfiles = make(map[string]struct{})
+	}
+	if _, held := m.snapshotProfiles[profileID]; held {
+		return nil, fmt.Errorf("profile %s already has an active snapshot", profileID)
+	}
+	for _, session := range m.sessions {
+		if session != nil && session.ProfileID == profileID {
+			return nil, fmt.Errorf("profile %s has an active browser session", profileID)
+		}
+	}
+	m.snapshotProfiles[profileID] = struct{}{}
+	var once sync.Once
+	return func() {
+		once.Do(func() {
+			m.mu.Lock()
+			delete(m.snapshotProfiles, profileID)
+			m.mu.Unlock()
+		})
+	}, nil
+}
+
 // recoverOrphanSessions cleans up stale session state on startup
 func (m *Manager) recoverOrphanSessions() {
 	// On startup, all previous sessions are dead (processes gone)
@@ -95,6 +129,12 @@ func (m *Manager) recoverOrphanSessions() {
 func (m *Manager) LaunchSession(p *profile.Profile) (*Session, error) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+	if p == nil || p.ID == "" {
+		return nil, fmt.Errorf("profile id is required")
+	}
+	if _, snapshotting := m.snapshotProfiles[p.ID]; snapshotting {
+		return nil, fmt.Errorf("profile %s is reserved for backup snapshot", p.ID)
+	}
 
 	for id, s := range m.sessions {
 		if s.ProfileID != p.ID {

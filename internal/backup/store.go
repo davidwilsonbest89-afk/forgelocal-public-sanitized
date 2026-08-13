@@ -17,6 +17,10 @@ func OpenSQLite(path string) (*SQLiteStore, error) {
 	if err != nil {
 		return nil, err
 	}
+	// The Core is the sole SQLite writer. A single connection avoids lock
+	// amplification while WAL permits safe readers from the local dashboard.
+	db.SetMaxOpenConns(1)
+	db.SetMaxIdleConns(1)
 	if err := Migrate(db); err != nil {
 		_ = db.Close()
 		return nil, err

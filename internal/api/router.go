@@ -14,6 +14,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
+	"forgelocal/internal/backup"
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
 	"forgelocal/internal/fingerprint"
@@ -23,7 +24,7 @@ import (
 	bfruntime "forgelocal/internal/runtime"
 )
 
-func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, groupStores ...*groups.Store) (*chi.Mux, error) {
+func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStores ...*groups.Store) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
@@ -44,7 +45,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if len(groupStores) > 0 {
 		groupStore = groupStores[0]
 	}
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -85,8 +86,11 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 
 		r.Get("/api/playwright/endpoint", h.playwrightEndpoint)
 		r.Get("/api/playwright/ws/{id}", h.playwrightWSProxy)
-		r.Post("/api/backup", h.backup)
-		r.Post("/api/restore", h.restore)
+		if h.backupSvc != nil {
+			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
+			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
+		}
+
 		r.Post("/api/shutdown", h.shutdown)
 	})
 
@@ -101,6 +105,7 @@ type handler struct {
 	fpPool     *fingerprint.Pool
 	hcfg       humanize.Config
 	token      string
+	backupSvc  *backup.Service
 }
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {

@@ -110,14 +110,8 @@ type Service struct {
 }
 
 func (s *Service) Create(profileID, keyID string, payload []byte) (Backup, error) {
-	if !validID(profileID) || !validID(keyID) {
-		return Backup{}, fmt.Errorf("invalid profile or key id")
-	}
-	if len(payload) == 0 {
-		return Backup{}, fmt.Errorf("empty backup payload")
-	}
-	if s.Now == nil {
-		s.Now = time.Now
+	if !validID(profileID) || !validID(keyID) || len(payload) == 0 {
+		return Backup{}, fmt.Errorf("invalid profile, key id, or empty payload")
 	}
 	if s.Locks == nil {
 		s.Locks = NewProfileLocks()
@@ -127,6 +121,37 @@ func (s *Service) Create(profileID, keyID string, payload []byte) (Backup, error
 		return Backup{}, err
 	}
 	defer release()
+	return s.createLocked(profileID, keyID, payload)
+}
+
+// CreateSnapshot serializes the real profile tree while holding the same lock used
+// by publication, preventing a mutation between snapshot and artifact creation.
+func (s *Service) CreateSnapshot(profileID, keyID string, snapshot func() ([]byte, error)) (Backup, error) {
+	if !validID(profileID) || !validID(keyID) || snapshot == nil {
+		return Backup{}, fmt.Errorf("invalid profile, key id, or snapshot function")
+	}
+	if s.Locks == nil {
+		s.Locks = NewProfileLocks()
+	}
+	release, err := s.Locks.Acquire(profileID)
+	if err != nil {
+		return Backup{}, err
+	}
+	defer release()
+	payload, err := snapshot()
+	if err != nil {
+		return Backup{}, err
+	}
+	return s.createLocked(profileID, keyID, payload)
+}
+
+func (s *Service) createLocked(profileID, keyID string, payload []byte) (Backup, error) {
+	if len(payload) == 0 {
+		return Backup{}, fmt.Errorf("empty backup payload")
+	}
+	if s.Now == nil {
+		s.Now = time.Now
+	}
 	if err := os.MkdirAll(s.Root, 0700); err != nil {
 		return Backup{}, fmt.Errorf("create backup directory: %w", err)
 	}
@@ -462,3 +487,83 @@ func BackupIDs(root string) ([]string, error) {
 }
 
 var _ = io.EOF
+
+// RestoreWith verifies the authenticated artifact, records the restore operation,
+// lets the Core materialize the payload, and commits the operation only afterwards.
+// The materializer must create the target under its own controlled store.
+func (s *Service) RestoreWith(backupID, targetProfileID, targetPath string, materialize func([]byte) error) (Restore, error) {
+	if !validID(backupID) || !validID(targetProfileID) || materialize == nil {
+		return Restore{}, fmt.Errorf("invalid restore request")
+	}
+	backup, err := s.Store.GetBackup(backupID)
+	if err != nil {
+		return Restore{}, err
+	}
+	if backup.ProfileID == targetProfileID {
+		return Restore{}, fmt.Errorf("restore target must use a new profile id")
+	}
+	rootAbs, err := filepath.Abs(s.Root)
+	if err != nil {
+		return Restore{}, err
+	}
+	targetAbs, err := filepath.Abs(targetPath)
+	if err != nil {
+		return Restore{}, err
+	}
+	if targetAbs == rootAbs || strings.HasPrefix(targetAbs+string(os.PathSeparator), rootAbs+string(os.PathSeparator)) {
+		return Restore{}, fmt.Errorf("restore target cannot be inside backup directory")
+	}
+	if _, err := os.Lstat(targetAbs); err == nil {
+		return Restore{}, fmt.Errorf("restore target already exists")
+	} else if !errors.Is(err, os.ErrNotExist) {
+		return Restore{}, err
+	}
+	if s.Now == nil {
+		s.Now = time.Now
+	}
+	key, err := s.Vault.Get(backup.KeyID)
+	if err != nil {
+		return Restore{}, fmt.Errorf("read restore key: %w", err)
+	}
+	body, err := os.ReadFile(backup.ArtifactPath)
+	if err != nil {
+		return Restore{}, err
+	}
+	sum := sha256.Sum256(body)
+	if hex.EncodeToString(sum[:]) != backup.SHA256 {
+		return Restore{}, ErrIntegrity
+	}
+	manifest, payload, err := decode(body, key)
+	if err != nil {
+		return Restore{}, err
+	}
+	if manifest.BackupID != backup.ID || manifest.ProfileID != backup.ProfileID || manifest.KeyID != backup.KeyID {
+		return Restore{}, ErrIntegrity
+	}
+	restore := Restore{ID: newID("rst", s.Now()), BackupID: backup.ID, SourceProfileID: backup.ProfileID, TargetProfileID: targetProfileID, TargetPath: targetAbs, CorrelationID: "restore:" + backup.ID, CreatedAt: s.Now()}
+	if err := s.Store.BeginRestore(restore); err != nil {
+		return Restore{}, err
+	}
+	if err := materialize(payload); err != nil {
+		_ = s.Store.FailRestore(restore.ID, "MATERIALIZE_FAILED")
+		return Restore{}, err
+	}
+	if err := s.Store.CommitRestore(restore.ID); err != nil {
+		_ = s.Store.FailRestore(restore.ID, "SQLITE_COMMIT_FAILED")
+		return Restore{}, err
+	}
+	return restore, nil
+}
+
+// AcquireProfileLock coordinates Core operations that touch one profile tree.
+func (s *Service) AcquireProfileLock(profileID string) (func(), error) {
+	if s.Locks == nil {
+		s.Locks = NewProfileLocks()
+	}
+	return s.Locks.Acquire(profileID)
+}
+
+func (s *Service) ReconcileOnce() error {
+	_, _, err := s.Reconcile()
+	return err
+}

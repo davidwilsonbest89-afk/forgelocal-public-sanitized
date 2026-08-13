@@ -217,40 +217,12 @@ func TestImportProfileRejectsDisabledRuntimeID(t *testing.T) {
 	}
 }
 
-func TestRestoreRejectsDisabledRuntimeIDWithoutCreatingProfiles(t *testing.T) {
-	store, err := profile.NewStore(t.TempDir())
-	if err != nil {
-		t.Fatalf("NewStore: %v", err)
-	}
-	existing := &profile.Profile{Name: "Existing", RuntimeID: "cloakbrowser"}
-	if err := store.Create(existing); err != nil {
-		t.Fatalf("Create existing profile: %v", err)
-	}
-	enabled := true
-	disabled := false
-	h := &handler{store: store, mgr: testManagerWithRuntimeConfig(t, &config.Config{Runtimes: map[string]config.RuntimeConfig{
-		"camoufox":     {Enabled: &disabled},
-		"cloakbrowser": {Enabled: &enabled},
-	}})}
-	body, contentType := multipartZipUpload(t, map[string][]byte{
-		"disabled/profile.json": []byte(`{"id":"disabled","name":"Disabled Restore","runtime_id":"camoufox"}`),
-	})
-
-	req := httptest.NewRequest(http.MethodPost, "/api/restore", bytes.NewReader(body))
-	req.Header.Set("Content-Type", contentType)
+func TestLegacyRestoreEndpointRetired(t *testing.T) {
+	h := &handler{}
 	rec := httptest.NewRecorder()
-	h.restore(rec, req)
-	if rec.Code != http.StatusBadRequest {
-		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
-	}
-	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
-		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
-	}
-	if profiles := store.List("", ""); len(profiles) != 1 {
-		t.Fatalf("stored profiles = %d, want original only after disabled runtime restore rejection", len(profiles))
-	}
-	if _, err := store.Get(existing.ID); err != nil {
-		t.Fatalf("existing profile missing after rejected restore: %v", err)
+	h.restore(rec, httptest.NewRequest(http.MethodPost, "/api/restore", nil))
+	if rec.Code != http.StatusGone || !strings.Contains(rec.Body.String(), `"code":"RESTORE_ENDPOINT_RETIRED"`) {
+		t.Fatalf("legacy restore must be gone: status=%d body=%s", rec.Code, rec.Body.String())
 	}
 }
 
@@ -419,49 +391,13 @@ func TestDeleteGroupUngroupsProfilesAndClearsProxy(t *testing.T) {
 	}
 }
 
-func TestBackupIncludesGroupPolicies(t *testing.T) {
-	profileStore, err := profile.NewStore(t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	groupStore, err := groups.NewStore(t.TempDir())
-	if err != nil {
-		t.Fatal(err)
-	}
-	if _, err := groupStore.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "proxy.example.com", Port: 1080}, groups.ProxyModeEnforced); err != nil {
-		t.Fatal(err)
-	}
-	h := &handler{store: profileStore, groupStore: groupStore}
-
+func TestLegacyBackupEndpointRetired(t *testing.T) {
+	h := &handler{}
 	rec := httptest.NewRecorder()
 	h.backup(rec, httptest.NewRequest(http.MethodPost, "/api/backup", nil))
-	if rec.Code != http.StatusOK {
-		t.Fatalf("backup status = %d body=%s", rec.Code, rec.Body.String())
+	if rec.Code != http.StatusGone || !strings.Contains(rec.Body.String(), `"code":"BACKUP_ENDPOINT_RETIRED"`) {
+		t.Fatalf("legacy backup must be gone: status=%d body=%s", rec.Code, rec.Body.String())
 	}
-
-	zr, err := zip.NewReader(bytes.NewReader(rec.Body.Bytes()), int64(rec.Body.Len()))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, f := range zr.File {
-		if f.Name != "groups.json" {
-			continue
-		}
-		rc, err := f.Open()
-		if err != nil {
-			t.Fatal(err)
-		}
-		data, err := io.ReadAll(rc)
-		rc.Close()
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !strings.Contains(string(data), "proxy.example.com") {
-			t.Fatalf("groups.json missing policy: %s", data)
-		}
-		return
-	}
-	t.Fatal("groups.json not found in backup")
 }
 
 func multipartZipUpload(t *testing.T, files map[string][]byte) ([]byte, string) {
