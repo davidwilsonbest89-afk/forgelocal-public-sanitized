@@ -33,7 +33,11 @@ var (
 	idPattern    = regexp.MustCompile(`^[A-Za-z0-9._-]{1,128}$`)
 )
 
-const formatVersion byte = 1
+const (
+	formatVersion  byte   = 1
+	maxHeaderSize         = 64 * 1024
+	maxPayloadSize uint64 = 512 * 1024 * 1024
+)
 
 type Manifest struct {
 	Version   int    `json:"version"`
@@ -235,6 +239,7 @@ func (s *Service) Reconcile() (recovered, quarantined int, err error) {
 			continue
 		}
 		path := filepath.Join(s.Root, entry.Name())
+		// #nosec G304 -- entry.Name() originates from os.ReadDir(s.Root), has no caller-controlled directory component, and is never accepted from HTTP input.
 		body, e := os.ReadFile(path)
 		if e != nil {
 			return recovered, quarantined, e
@@ -312,13 +317,26 @@ func encode(m Manifest, key, payload []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	if len(headerBytes) == 0 || len(headerBytes) > maxHeaderSize {
+		return nil, fmt.Errorf("backup header exceeds %d bytes", maxHeaderSize)
+	}
+	// #nosec G407 -- nonce is freshly generated with crypto/rand immediately above and is unique per artifact.
 	ciphertext := gcm.Seal(nil, nonce, payload, headerBytes)
+	if uint64(len(ciphertext)) > maxPayloadSize {
+		return nil, fmt.Errorf("backup payload exceeds %d bytes", maxPayloadSize)
+	}
 	var out bytes.Buffer
 	out.Write(magic)
 	out.WriteByte(formatVersion)
-	_ = binary.Write(&out, binary.BigEndian, uint32(len(headerBytes)))
+	// #nosec G115 -- header length was bounded by maxHeaderSize before this conversion.
+	headerLen := uint32(len(headerBytes))
+	if err := binary.Write(&out, binary.BigEndian, headerLen); err != nil {
+		return nil, err
+	}
 	out.Write(headerBytes)
-	_ = binary.Write(&out, binary.BigEndian, uint64(len(ciphertext)))
+	if err := binary.Write(&out, binary.BigEndian, uint64(len(ciphertext))); err != nil {
+		return nil, err
+	}
 	out.Write(ciphertext)
 	out.Write(trailer)
 	return out.Bytes(), nil
@@ -356,14 +374,20 @@ func split(body []byte) (Header, []byte, error) {
 	off := 5
 	headerLen := int(binary.BigEndian.Uint32(body[off : off+4]))
 	off += 4
-	if headerLen <= 0 || headerLen > 64*1024 || off+headerLen+8+len(trailer) > len(body) {
+	if headerLen <= 0 || headerLen > maxHeaderSize || off+headerLen+8+len(trailer) > len(body) {
 		return Header{}, nil, ErrFormat
 	}
 	headerBytes := body[off : off+headerLen]
 	off += headerLen
-	cipherLen := int(binary.BigEndian.Uint64(body[off : off+8]))
+	rawCipherLen := binary.BigEndian.Uint64(body[off : off+8])
 	off += 8
-	if cipherLen <= 0 || off+cipherLen+len(trailer) != len(body) {
+	remaining := len(body) - off - len(trailer)
+	if remaining <= 0 || rawCipherLen == 0 || rawCipherLen > maxPayloadSize || rawCipherLen > uint64(remaining) {
+		return Header{}, nil, ErrFormat
+	}
+	// #nosec G115 -- rawCipherLen was bounded by maxPayloadSize and remaining bytes above.
+	cipherLen := int(rawCipherLen)
+	if off+cipherLen+len(trailer) != len(body) {
 		return Header{}, nil, ErrFormat
 	}
 	var h Header
@@ -409,7 +433,9 @@ func atomicWrite(path string, body []byte) error {
 	if err := os.Rename(tmpName, path); err != nil {
 		return err
 	}
+	// #nosec G304 -- dir is filepath.Dir of the internally generated staging path and is not user-controlled.
 	d, err := os.Open(dir)
+
 	if err == nil {
 		defer d.Close()
 		if err := d.Sync(); err != nil {
