@@ -15,10 +15,10 @@ import (
 	"strings"
 	"time"
 
-	"browseforge/internal/config"
-	"browseforge/internal/fingerprint"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/config"
+	"forgelocal/internal/fingerprint"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 
 	"github.com/mxschmitt/playwright-go"
 )

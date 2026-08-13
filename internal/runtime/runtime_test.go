@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"browseforge/internal/config"
-	"browseforge/internal/profile"
+	"forgelocal/internal/config"
+	"forgelocal/internal/profile"
 )
 
 func TestNewRegistryLoadsBrowseForgeChromiumFromDefaultConfig(t *testing.T) {

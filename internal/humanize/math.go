@@ -8,11 +8,11 @@ import (
 // vec2 is a 2D point/vector.
 type vec2 struct{ X, Y float64 }
 
-func (a vec2) add(b vec2) vec2    { return vec2{a.X + b.X, a.Y + b.Y} }
-func (a vec2) sub(b vec2) vec2    { return vec2{a.X - b.X, a.Y - b.Y} }
+func (a vec2) add(b vec2) vec2      { return vec2{a.X + b.X, a.Y + b.Y} }
+func (a vec2) sub(b vec2) vec2      { return vec2{a.X - b.X, a.Y - b.Y} }
 func (a vec2) scale(s float64) vec2 { return vec2{a.X * s, a.Y * s} }
-func (a vec2) length() float64    { return math.Sqrt(a.X*a.X + a.Y*a.Y) }
-func (a vec2) perp() vec2         { return vec2{a.Y, -a.X} }
+func (a vec2) length() float64      { return math.Sqrt(a.X*a.X + a.Y*a.Y) }
+func (a vec2) perp() vec2           { return vec2{a.Y, -a.X} }
 
 func (a vec2) normalize() vec2 {
 	l := a.length()

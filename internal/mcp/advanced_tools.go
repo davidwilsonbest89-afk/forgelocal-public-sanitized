@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"browseforge/internal/humanize"
-	"browseforge/internal/profile"
-	"browseforge/internal/workflow"
+	"forgelocal/internal/humanize"
+	"forgelocal/internal/profile"
+	"forgelocal/internal/workflow"
 
 	"github.com/mxschmitt/playwright-go"
 	"gopkg.in/yaml.v3"

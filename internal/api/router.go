@@ -14,13 +14,13 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/config"
-	"browseforge/internal/fingerprint"
-	"browseforge/internal/groups"
-	"browseforge/internal/humanize"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/config"
+	"forgelocal/internal/fingerprint"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/humanize"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 )
 
 func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, groupStores ...*groups.Store) (*chi.Mux, error) {

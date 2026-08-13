@@ -5,7 +5,7 @@ type Config struct {
 	Enabled     bool    `json:"enabled"`
 	MouseSpeed  string  `json:"mouse_speed"`  // "fast", "normal", "slow"
 	TypingCPM   int     `json:"typing_cpm"`   // characters per minute
-	TypoRate    float64 `json:"typo_rate"`     // 0.0–1.0
+	TypoRate    float64 `json:"typo_rate"`    // 0.0–1.0
 	ScrollStyle string  `json:"scroll_style"` // "smooth", "instant"
 }
 

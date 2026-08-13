@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/config"
-	"browseforge/internal/workflow"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/config"
+	"forgelocal/internal/workflow"
 )
 
 type cliGlobal struct {

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"browseforge/internal/browser"
+	"forgelocal/internal/browser"
 )
 
 func TestCLIHelpAndVersion(t *testing.T) {

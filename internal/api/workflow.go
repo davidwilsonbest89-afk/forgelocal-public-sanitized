@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"browseforge/internal/workflow"
+	"forgelocal/internal/workflow"
 )
 
 func WorkflowHandler(engine *workflow.Engine) http.HandlerFunc {

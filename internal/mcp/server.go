@@ -10,11 +10,11 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/groups"
-	"browseforge/internal/humanize"
-	"browseforge/internal/profile"
-	"browseforge/internal/workflow"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/humanize"
+	"forgelocal/internal/profile"
+	"forgelocal/internal/workflow"
 
 	"github.com/mxschmitt/playwright-go"
 )

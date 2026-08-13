@@ -14,11 +14,11 @@ import (
 	"testing"
 	"unsafe"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/config"
-	"browseforge/internal/groups"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/config"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 
 	"github.com/go-chi/chi/v5"
 )

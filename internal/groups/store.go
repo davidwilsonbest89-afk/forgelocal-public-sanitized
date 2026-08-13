@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"browseforge/internal/profile"
+	"forgelocal/internal/profile"
 )
 
 const (

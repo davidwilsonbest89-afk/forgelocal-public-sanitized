@@ -8,9 +8,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"browseforge/internal/fingerprint"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/fingerprint"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 
 	"github.com/mxschmitt/playwright-go"
 )

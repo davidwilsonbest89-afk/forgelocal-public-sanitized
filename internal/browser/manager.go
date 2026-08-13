@@ -5,10 +5,10 @@ import (
 	"log/slog"
 	"sync"
 
-	"browseforge/internal/config"
-	"browseforge/internal/groups"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/config"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 
 	"github.com/mxschmitt/playwright-go"
 )

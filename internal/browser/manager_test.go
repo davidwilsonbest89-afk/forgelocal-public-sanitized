@@ -11,9 +11,9 @@ import (
 	"testing"
 	"unicode/utf8"
 
-	"browseforge/internal/config"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/config"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 
 	"github.com/mxschmitt/playwright-go"
 )

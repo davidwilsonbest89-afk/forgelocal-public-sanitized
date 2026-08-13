@@ -12,12 +12,12 @@ import (
 	"time"
 	"unsafe"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/config"
-	"browseforge/internal/groups"
-	"browseforge/internal/humanize"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/config"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/humanize"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 )
 
 func TestBuildWebSearchMCPResultRawFallback(t *testing.T) {

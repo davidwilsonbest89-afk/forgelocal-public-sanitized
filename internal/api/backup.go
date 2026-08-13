@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"browseforge/internal/profile"
+	"forgelocal/internal/profile"
 
 	"github.com/go-chi/chi/v5"
 )

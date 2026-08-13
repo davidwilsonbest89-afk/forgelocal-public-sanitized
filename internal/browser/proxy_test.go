@@ -3,8 +3,8 @@ package browser
 import (
 	"testing"
 
-	"browseforge/internal/groups"
-	"browseforge/internal/profile"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/profile"
 )
 
 func TestManagerEffectiveProxyUsesGroupStore(t *testing.T) {

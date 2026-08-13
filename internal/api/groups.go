@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"browseforge/internal/groups"
-	"browseforge/internal/profile"
+	"forgelocal/internal/groups"
+	"forgelocal/internal/profile"
 
 	"github.com/go-chi/chi/v5"
 )

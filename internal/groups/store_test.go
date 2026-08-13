@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"browseforge/internal/profile"
+	"forgelocal/internal/profile"
 )
 
 func TestEffectiveProxyDefaultModeUsesProfileOverride(t *testing.T) {

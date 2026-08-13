@@ -1,4 +1,6 @@
-.PHONY: dev build test package clean spike download-browsers download-camoufox download-cloakbrowser
+.PHONY: dev build test test-back01 test-back01-race package clean spike download-browsers download-camoufox download-cloakbrowser
+
+GO_TOOLCHAIN ?= go1.25.13
 
 # --- Development (in Docker) ---
 
@@ -28,6 +30,14 @@ build: build-server build-fingerprints
 
 test:
 	docker build --target test -t browseforge-test .
+
+# --- ForgeLocal BACK-01 verification ---
+
+test-back01:
+	GOTOOLCHAIN=$(GO_TOOLCHAIN) go test ./internal/backup -count=1 -v
+
+test-back01-race:
+	GOTOOLCHAIN=$(GO_TOOLCHAIN) go test -race ./internal/backup -count=1
 
 # --- Package (final ZIP) ---
 

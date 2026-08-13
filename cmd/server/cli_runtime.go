@@ -14,8 +14,8 @@ import (
 	"strings"
 	"time"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/config"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/config"
 )
 
 type browserState struct {

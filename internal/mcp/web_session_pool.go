@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"browseforge/internal/browser"
-	"browseforge/internal/profile"
-	bfruntime "browseforge/internal/runtime"
+	"forgelocal/internal/browser"
+	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 
 	"github.com/mxschmitt/playwright-go"
 )

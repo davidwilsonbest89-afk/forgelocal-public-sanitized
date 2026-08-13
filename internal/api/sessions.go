@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"strings"
 
-	"browseforge/internal/humanize"
+	"forgelocal/internal/humanize"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/mxschmitt/playwright-go"

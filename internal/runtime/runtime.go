@@ -5,8 +5,8 @@ import (
 	goruntime "runtime"
 	"sort"
 
-	"browseforge/internal/config"
-	"browseforge/internal/profile"
+	"forgelocal/internal/config"
+	"forgelocal/internal/profile"
 )
 
 // ID identifies a concrete browser runtime provider.
