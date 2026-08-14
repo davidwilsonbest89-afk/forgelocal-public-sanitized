@@ -5,9 +5,9 @@
     "title": "Cahier des charges — ForgeLocal",
     "version": "1.0",
     "path": "docs/CAHIER_DES_CHARGES_FORGELOCAL.md",
-    "sha256": "bae8194c3064f7aa38921cd7aa5ccdd7aef7da03b7b75e99b8a059e99632322d",
-    "content_commit": "023ea3bd751a395ff5425eb9048337a7daec06e5",
-    "content_commit_subject": "feat(schema): index canonical proxy references"
+    "sha256": "198d7db30d58b1a69713c5a7274a4413b104bd65209c623a2f9f96790e9abafd",
+    "content_commit": "4b4dad0d1a6b0ba1ee179fd02af370e326532028",
+    "content_commit_subject": "fix(migration): durable operation journal and dynamic counters"
   },
   "verification": {
     "algorithm": "SHA-256",
