@@ -29,6 +29,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(corsLocal)
+	r.Use(requestIDMiddleware)
 
 	token, err := loadOrCreateToken(cfg.DataDir)
 	if err != nil {
@@ -86,6 +87,11 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 
 		r.Get("/api/playwright/endpoint", h.playwrightEndpoint)
 		r.Get("/api/playwright/ws/{id}", h.playwrightWSProxy)
+		r.Get("/api/v1/readonly/health", h.readonlyHealth)
+		r.Get("/api/v1/readonly/summary", h.readonlySummary)
+		r.Get("/api/v1/readonly/profiles", h.readonlyProfiles)
+		r.Get("/api/v1/readonly/groups", h.readonlyGroups)
+		r.Get("/api/v1/readonly/runtimes", h.readonlyRuntimes)
 		if h.backupSvc != nil {
 			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
 			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
@@ -325,11 +331,43 @@ func validBearerToken(auth, token string) bool {
 	return subtle.ConstantTimeCompare([]byte(got), []byte(token)) == 1
 }
 
+func requestIDMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		requestID := r.Header.Get("X-Request-ID")
+		if !validRequestID(requestID) {
+			requestID = newRequestID()
+		}
+		w.Header().Set("X-Request-ID", requestID)
+		next.ServeHTTP(w, r)
+	})
+}
+
+func validRequestID(value string) bool {
+	if len(value) < 8 || len(value) > 96 {
+		return false
+	}
+	for _, r := range value {
+		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') || r == '-' || r == '_' || r == '.' {
+			continue
+		}
+		return false
+	}
+	return true
+}
+
+func newRequestID() string {
+	b := make([]byte, 12)
+	if _, err := rand.Read(b); err != nil {
+		return "req-unavailable"
+	}
+	return "req-" + hex.EncodeToString(b)
+}
+
 func corsLocal(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "moz-extension://*")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type")
+		w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Request-ID")
 		if r.Method == "OPTIONS" {
 			w.WriteHeader(204)
 			return
