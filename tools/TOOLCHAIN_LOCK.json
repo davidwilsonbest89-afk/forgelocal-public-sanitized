@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "target": {
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "policy": {
+    "go_version_exact": "1.25.13",
+    "go_toolchain_mode": "local",
+    "forbidden_version_selector": "@latest",
+    "checksum_algorithm": "sha256",
+    "verification": "Refuser l’installation ou l’exécution si le SHA-256 de l’archive ou du module ne correspond pas à cette entrée."
+  },
+  "tools": [
+    {
+      "id": "go",
+      "version": "1.25.13",
+      "kind": "binary_archive",
+      "artifact": "go1.25.13.linux-amd64.tar.gz",
+      "source_url": "https://go.dev/dl/go1.25.13.linux-amd64.tar.gz",
+      "checksum_source_url": "https://go.dev/dl/?mode=json&include=all",
+      "sha256": "39042a078ea9ceebe3ecda4a7188f0f5b96e14a071d27923ba7f40b456e85ae3"
+    },
+    {
+      "id": "gosec",
+      "version": "2.21.4",
+      "kind": "binary_archive",
+      "artifact": "gosec_2.21.4_linux_amd64.tar.gz",
+      "source_url": "https://github.com/securego/gosec/releases/download/v2.21.4/gosec_2.21.4_linux_amd64.tar.gz",
+      "checksum_source_url": "https://github.com/securego/gosec/releases/download/v2.21.4/gosec_2.21.4_checksums.txt",
+      "sha256": "9229dbfdc092b176e628b9ea6e4210757373b819f47365cedd9f9e12d3b2c173"
+    },
+    {
+      "id": "govulncheck",
+      "version": "1.7.0",
+      "kind": "go_module_source_archive",
+      "module": "golang.org/x/vuln",
+      "command": "golang.org/x/vuln/cmd/govulncheck",
+      "artifact": "v1.7.0.zip",
+      "source_url": "https://proxy.golang.org/golang.org/x/vuln/@v/v1.7.0.zip",
+      "checksum_source_url": "https://proxy.golang.org/golang.org/x/vuln/@v/v1.7.0.zip",
+      "sha256": "a14bf913551ac09f00ae0e903c1b358713f71af911d7ddacc3fab8ce5c149a26"
+    },
+    {
+      "id": "golangci-lint",
+      "version": "1.61.0",
+      "kind": "binary_archive",
+      "artifact": "golangci-lint-1.61.0-linux-amd64.tar.gz",
+      "source_url": "https://github.com/golangci/golangci-lint/releases/download/v1.61.0/golangci-lint-1.61.0-linux-amd64.tar.gz",
+      "checksum_source_url": "https://github.com/golangci/golangci-lint/releases/download/v1.61.0/golangci-lint-1.61.0-checksums.txt",
+      "sha256": "77cb0af99379d9a21d5dc8c38364d060e864a01bd2f3e30b5e8cc550c3a54111"
+    },
+    {
+      "id": "gitleaks",
+      "version": "8.18.4",
+      "kind": "binary_archive",
+      "artifact": "gitleaks_8.18.4_linux_x64.tar.gz",
+      "source_url": "https://github.com/gitleaks/gitleaks/releases/download/v8.18.4/gitleaks_8.18.4_linux_x64.tar.gz",
+      "checksum_source_url": "https://github.com/gitleaks/gitleaks/releases/download/v8.18.4/gitleaks_8.18.4_checksums.txt",
+      "sha256": "ba6dbb656933921c775ee5a2d1c13a91046e7952e9d919f9bac4cec61d628e7d"
+    },
+    {
+      "id": "sqlite3",
+      "version": "3.45.1",
+      "kind": "source_archive",
+      "artifact": "sqlite-autoconf-3450100.tar.gz",
+      "source_url": "https://www.sqlite.org/2024/sqlite-autoconf-3450100.tar.gz",
+      "checksum_source_url": "https://www.sqlite.org/2024/sqlite-autoconf-3450100.tar.gz",
+      "sha256": "cd9c27841b7a5932c9897651e20b86c701dd740556989b01ca596fcfa3d49a0a"
+    }
+  ]
+}

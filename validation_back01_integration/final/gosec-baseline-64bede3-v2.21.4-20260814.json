@@ -1,0 +1,2668 @@
+{
+	"Golang errors": {},
+	"Issues": [
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion uint64 -\u003e int64",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "1764: \t}\n1765: \treturn browseForgeNativeAudioProfile{Mode: \"stable-persona\", Seed: int64((seed \u003e\u003e 8) \u0026 0x7fffffff), SampleRate: 48000, Stable: true}\n1766: }\n",
+			"line": "1765",
+			"column": "74",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion uint64 -\u003e int64",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "1757: \t}\n1758: \treturn browseForgeNativeCanvasProfile{Mode: \"stable-persona\", Seed: int64(seed \u0026 0x7fffffff), Stable: true, TextMetricsMode: \"stable-profile\", TextMetricsSeed: textSeed, EmojiBaseline: \"noto-color-emoji\", RenderHashBaseline: \"persona\"}\n1759: }\n",
+			"line": "1758",
+			"column": "75",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion uint64 -\u003e int64",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "1753: func browseForgeCanvasProfile(fp map[string]any, seed uint64) browseForgeNativeCanvasProfile {\n1754: \ttextSeed := int64((seed \u003e\u003e 16) \u0026 0x7fffffff)\n1755: \tif v, ok := fingerprintInt(fp, \"canvas:seed\"); ok {\n",
+			"line": "1754",
+			"column": "19",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint64",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "1008: \tif seed, ok := fingerprintInt(p.Fingerprint, \"canvas:seed\"); ok {\n1009: \t\treturn uint64(seed)\n1010: \t}\n",
+			"line": "1009",
+			"column": "16",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint32",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "622: \t\t\tos.MkdirAll(filepath.Dir(target), 0755)\n623: \t\t\tmode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows\n624: \t\t\tout, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)\n",
+			"line": "623",
+			"column": "23",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint32",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "645: \t\t\t}\n646: \t\t\tout, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))\n647: \t\t\tif err != nil {\n",
+			"line": "646",
+			"column": "83",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint32",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "638: \t\tcase tar.TypeDir:\n639: \t\t\tif err := os.MkdirAll(target, os.FileMode(header.Mode)); err != nil {\n640: \t\t\t\treturn err\n",
+			"line": "639",
+			"column": "45",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/mouse.go",
+			"code": "88: \n89: \t\tif rand.Float64() \u003c microPauseProb {\n90: \t\t\ttime.Sleep(time.Duration(randRangeInt(pauseMs[0], pauseMs[1])) * time.Millisecond)\n",
+			"line": "89",
+			"column": "6",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/mouse.go",
+			"code": "36: \t\tX: box.X + rand.Float64()*box.Width,\n37: \t\tY: box.Y + rand.Float64()*box.Height,\n38: \t}\n",
+			"line": "37",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/mouse.go",
+			"code": "35: \ttarget := vec2{\n36: \t\tX: box.X + rand.Float64()*box.Width,\n37: \t\tY: box.Y + rand.Float64()*box.Height,\n",
+			"line": "36",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "127: \t}\n128: \treturn lo + rand.IntN(hi-lo+1)\n129: }\n",
+			"line": "128",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "119: func randRange(lo, hi float64) float64 {\n120: \treturn lo + rand.Float64()*(hi-lo)\n121: }\n",
+			"line": "120",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "114: func logNormalDelay(mu, sigma float64) float64 {\n115: \treturn math.Exp(mu + sigma*rand.NormFloat64())\n116: }\n",
+			"line": "115",
+			"column": "29",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "107: \tid := math.Log2(dist/targetWidth + 1)\n108: \tbase := rand.Float64() * float64(minSteps)\n109: \tsteps := int(math.Ceil((math.Log2(2*id+1) + base) * 3))\n",
+			"line": "108",
+			"column": "10",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "97: \tangle := rand.Float64() * 2 * math.Pi\n98: \tr := radius * math.Sqrt(rand.Float64())\n99: \treturn target.add(vec2{r * math.Cos(angle), r * math.Sin(angle)})\n",
+			"line": "98",
+			"column": "26",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "96: func overshootPoint(target vec2, radius float64) vec2 {\n97: \tangle := rand.Float64() * 2 * math.Pi\n98: \tr := radius * math.Sqrt(rand.Float64())\n",
+			"line": "97",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "76: \t\tpt.X += rand.NormFloat64()\n77: \t\tpt.Y += rand.NormFloat64()\n78: \t\tpts[i] = pt\n",
+			"line": "77",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "75: \t\t// Add micro-jitter (Gaussian, σ=1px)\n76: \t\tpt.X += rand.NormFloat64()\n77: \t\tpt.Y += rand.NormFloat64()\n",
+			"line": "76",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "58: \t\tperpDir := dir.normalize().perp().scale(spread * side)\n59: \t\treturn mid.add(perpDir.scale(rand.Float64()))\n60: \t}\n",
+			"line": "59",
+			"column": "32",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "54: \t\t// Random point along the line segment\n55: \t\tt := rand.Float64()\n56: \t\tmid := start.add(dir.scale(t))\n",
+			"line": "55",
+			"column": "8",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/math.go",
+			"code": "48: \tside := 1.0\n49: \tif rand.Float64() \u003c 0.5 {\n50: \t\tside = -1\n",
+			"line": "49",
+			"column": "5",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/keyboard.go",
+			"code": "83: \t}\n84: \treturn adj[rand.IntN(len(adj))]\n85: }\n",
+			"line": "84",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/keyboard.go",
+			"code": "55: \t\t// Typo simulation\n56: \t\tif cfg.TypoRate \u003e 0 \u0026\u0026 rand.Float64() \u003c cfg.TypoRate {\n57: \t\t\tif typo := pickTypo(ch); typo != 0 {\n",
+			"line": "56",
+			"column": "26",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/fingerprint/pool.go",
+			"code": "63: \tfor i := 0; i \u003c len(fps); i++ {\n64: \t\tidx := rand.Intn(len(fps))\n65: \t\tfp := fps[idx]\n",
+			"line": "64",
+			"column": "10",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "447: \tif osName == \"darwin\" {\n448: \t\texec.Command(\"xattr\", \"-cr\", destDir).Run()\n449: \t}\n",
+			"line": "448",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "368: \tif runtime.GOOS == \"darwin\" {\n369: \t\texec.Command(\"xattr\", \"-cr\", destDir).Run()\n370: \t}\n",
+			"line": "369",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "331: \tif runtime.GOOS == \"darwin\" {\n332: \t\texec.Command(\"xattr\", \"-cr\", destDir).Run()\n333: \t}\n",
+			"line": "332",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/workflow/engine.go",
+			"code": "51: func (e *Engine) LoadFile(path string) (*Workflow, error) {\n52: \tdata, err := os.ReadFile(path)\n53: \tif err != nil {\n",
+			"line": "52",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/advanced_tools.go",
+			"code": "533: \t}\n534: \tdata, err := os.ReadFile(path)\n535: \tif err != nil {\n",
+			"line": "534",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/fingerprint/pool.go",
+			"code": "24: \tfor _, f := range files {\n25: \t\traw, err := os.ReadFile(f)\n26: \t\tif err != nil {\n",
+			"line": "25",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/config/config.go",
+			"code": "168: \tos.MkdirAll(\"logs\", 0755)\n169: \tf, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)\n170: \tif err != nil {\n",
+			"line": "169",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/config/config.go",
+			"code": "89: \n90: \tf, err := os.Open(path)\n91: \tif err != nil {\n",
+			"line": "90",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "194: \tprefs := map[string]any{}\n195: \tif data, err := os.ReadFile(prefsPath); err == nil {\n196: \t\tif err := json.Unmarshal(data, \u0026prefs); err != nil {\n",
+			"line": "195",
+			"column": "18",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "638: \t\t\t\tsrc := filepath.Join(filepath.Dir(target), hdr.Linkname)\n639: \t\t\t\tif data, readErr := os.ReadFile(src); readErr == nil {\n640: \t\t\t\t\tos.WriteFile(target, data, 0755)\n",
+			"line": "639",
+			"column": "25",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "623: \t\t\tmode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows\n624: \t\t\tout, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)\n625: \t\t\tif err != nil {\n",
+			"line": "624",
+			"column": "16",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "592: func extractTarGz(tarFile, destDir string) error {\n593: \tf, err := os.Open(tarFile)\n594: \tif err != nil {\n",
+			"line": "593",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "572: \t\tmode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)\n573: \t\tout, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)\n574: \t\tif err != nil {\n",
+			"line": "573",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "513: \n514: \tout, err := os.Create(dest)\n515: \tif err != nil {\n",
+			"line": "514",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "134: func InstalledVersion(baseDir, browserName string) string {\n135: \tdata, err := os.ReadFile(filepath.Join(baseDir, \"browsers\", browserName, \".version\"))\n136: \tif err != nil {\n",
+			"line": "135",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/router.go",
+			"code": "349: \tpath := dataDir + \"/.api-token\"\n350: \tif data, err := os.ReadFile(path); err == nil {\n351: \t\ttoken := strings.TrimSpace(string(data))\n",
+			"line": "350",
+			"column": "18",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/artifacts.go",
+			"code": "30: \t}\n31: \tfile, err := os.Open(path)\n32: \tif err != nil {\n",
+			"line": "31",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "735: \t}\n736: \tdata, err := os.ReadFile(path)\n737: \tif err != nil {\n",
+			"line": "736",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "707: \t}\n708: \tout, err := os.Create(output)\n709: \tif err != nil {\n",
+			"line": "708",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "645: \t\t\t}\n646: \t\t\tout, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))\n647: \t\t\tif err != nil {\n",
+			"line": "646",
+			"column": "16",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "607: func restoreFullBackup(baseDir, path string) error {\n608: \tin, err := os.Open(path)\n609: \tif err != nil {\n",
+			"line": "608",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "596: \t\t}\n597: \t\tin, err := os.Open(path)\n598: \t\tif err != nil {\n",
+			"line": "597",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "541: \t}\n542: \tout, err := os.Create(output)\n543: \tif err != nil {\n",
+			"line": "542",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "837: \ttokenPath := filepath.Join(resolvePath(baseDir, cfg.DataDir), \".api-token\")\n838: \tdata, err := os.ReadFile(tokenPath)\n839: \tif err != nil {\n",
+			"line": "838",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "565: \t\tpath := filepath.Join(profilesDir, entry.Name(), \"profile.json\")\n566: \t\tdata, err := os.ReadFile(path)\n567: \t\tif err != nil {\n",
+			"line": "566",
+			"column": "16",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "LOW",
+			"cwe": {
+				"id": "400",
+				"url": "https://cwe.mitre.org/data/definitions/400.html"
+			},
+			"rule_id": "G112",
+			"details": "Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "375: \t// HTTP Server with error channel (no os.Exit in goroutine)\n376: \tsrv := \u0026http.Server{Addr: cfg.Host + \":\" + cfg.Port, Handler: router}\n377: \tserverErr := make(chan error, 1)\n",
+			"line": "376",
+			"column": "10",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "88",
+				"url": "https://cwe.mitre.org/data/definitions/88.html"
+			},
+			"rule_id": "G107",
+			"details": "Potential HTTP request made with variable url",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "504: func download(dlURL, dest string) error {\n505: \tresp, err := http.Get(dlURL)\n506: \tif err != nil {\n",
+			"line": "505",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "409",
+				"url": "https://cwe.mitre.org/data/definitions/409.html"
+			},
+			"rule_id": "G110",
+			"details": "Potential DoS vulnerability via decompression bomb",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "627: \t\t\t}\n628: \t\t\t_, err = io.Copy(out, tr)\n629: \t\t\tout.Close()\n",
+			"line": "628",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "409",
+				"url": "https://cwe.mitre.org/data/definitions/409.html"
+			},
+			"rule_id": "G110",
+			"details": "Potential DoS vulnerability via decompression bomb",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "581: \t\t}\n582: \t\t_, err = io.Copy(out, rc)\n583: \t\trc.Close()\n",
+			"line": "582",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "409",
+				"url": "https://cwe.mitre.org/data/definitions/409.html"
+			},
+			"rule_id": "G110",
+			"details": "Potential DoS vulnerability via decompression bomb",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "649: \t\t\t}\n650: \t\t\tif _, err := io.Copy(out, tr); err != nil {\n651: \t\t\t\tout.Close()\n",
+			"line": "650",
+			"column": "17",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G305",
+			"details": "File traversal when extracting zip/tar archive",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "637: \t\t\t\t// Windows: symlink needs admin/dev-mode — copy the target instead\n638: \t\t\t\tsrc := filepath.Join(filepath.Dir(target), hdr.Linkname)\n639: \t\t\t\tif data, readErr := os.ReadFile(src); readErr == nil {\n",
+			"line": "638",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G305",
+			"details": "File traversal when extracting zip/tar archive",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "613: \t\t}\n614: \t\ttarget := filepath.Join(destDir, hdr.Name)\n615: \t\tif !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {\n",
+			"line": "614",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G305",
+			"details": "File traversal when extracting zip/tar archive",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "562: \tfor _, f := range r.File {\n563: \t\ttarget := filepath.Join(destDir, f.Name)\n564: \t\tif !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {\n",
+			"line": "563",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/config/config.go",
+			"code": "168: \tos.MkdirAll(\"logs\", 0755)\n169: \tf, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)\n170: \tif err != nil {\n",
+			"line": "169",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "454: \t}\n455: \tos.Chmod(binPath, 0755)\n456: \n",
+			"line": "455",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "375: \t}\n376: \tos.Chmod(binPath, 0755)\n377: \n",
+			"line": "376",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "338: \t}\n339: \tos.Chmod(binPath, 0755)\n340: \n",
+			"line": "339",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/workflow/engine.go",
+			"code": "250: \t}\n251: \tif err := os.MkdirAll(filepath.Dir(clean), 0755); err != nil {\n252: \t\treturn err\n",
+			"line": "251",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/advanced_tools.go",
+			"code": "776: \t\t}\n777: \t\tif err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {\n778: \t\t\treturn nil, newError(-32000, err.Error())\n",
+			"line": "777",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/groups/store.go",
+			"code": "44: \t}\n45: \tif err := os.MkdirAll(dataDir, 0755); err != nil {\n46: \t\treturn nil, err\n",
+			"line": "45",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/config/config.go",
+			"code": "167: func SetupLogger(logFile string) *slog.Logger {\n168: \tos.MkdirAll(\"logs\", 0755)\n169: \tf, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)\n",
+			"line": "168",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_firefox.go",
+			"code": "76: \t}\n77: \tif err := os.MkdirAll(downloadsDir, 0755); err != nil {\n78: \t\treturn nil, fmt.Errorf(\"create downloads dir: %w\", err)\n",
+			"line": "77",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_firefox.go",
+			"code": "62: \t}\n63: \tif err := os.MkdirAll(userDataDir, 0755); err != nil {\n64: \t\treturn nil, fmt.Errorf(\"create browser data dir: %w\", err)\n",
+			"line": "63",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "1897: \t\tcacheDir := filepath.Join(userDataDir, \"BrowseForgeRuntimeCache\", fmt.Sprintf(\"cache-%d-%d\", os.Getpid(), time.Now().UnixNano()))\n1898: \t\tif err := os.MkdirAll(cacheDir, 0755); err != nil {\n1899: \t\t\treturn nil, fmt.Errorf(\"create chromium runtime cache dir: %w\", err)\n",
+			"line": "1898",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "942: \tconfigDir := filepath.Join(userDataDir, \"BrowseForgeNative\")\n943: \tif err := os.MkdirAll(configDir, 0755); err != nil {\n944: \t\treturn \"\", fmt.Errorf(\"create BrowseForge native config dir: %w\", err)\n",
+			"line": "943",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "189: \tprefsDir := filepath.Join(userDataDir, \"Default\")\n190: \tif err := os.MkdirAll(prefsDir, 0755); err != nil {\n191: \t\treturn nil, fmt.Errorf(\"create chromium prefs dir: %w\", err)\n",
+			"line": "190",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "184: \t}\n185: \tif err := os.MkdirAll(downloadsDir, 0755); err != nil {\n186: \t\treturn nil, fmt.Errorf(\"create downloads dir: %w\", err)\n",
+			"line": "185",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "62: \t}\n63: \tif err := os.MkdirAll(userDataDir, 0755); err != nil {\n64: \t\treturn nil, fmt.Errorf(\"create browser data dir: %w\", err)\n",
+			"line": "63",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "633: \t\tcase tar.TypeSymlink:\n634: \t\t\tos.MkdirAll(filepath.Dir(target), 0755)\n635: \t\t\tos.Remove(target)\n",
+			"line": "634",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "621: \t\tcase tar.TypeReg:\n622: \t\t\tos.MkdirAll(filepath.Dir(target), 0755)\n623: \t\t\tmode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows\n",
+			"line": "622",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "619: \t\tcase tar.TypeDir:\n620: \t\t\tos.MkdirAll(target, 0755)\n621: \t\tcase tar.TypeReg:\n",
+			"line": "620",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "570: \t\t}\n571: \t\tos.MkdirAll(filepath.Dir(target), 0755)\n572: \t\tmode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)\n",
+			"line": "571",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "567: \t\tif f.FileInfo().IsDir() {\n568: \t\t\tos.MkdirAll(target, 0755)\n569: \t\t\tcontinue\n",
+			"line": "568",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "430: \tdestDir := filepath.Join(baseDir, \"browsers\", \"cloakbrowser\")\n431: \tos.MkdirAll(destDir, 0755)\n432: \n",
+			"line": "431",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "351: \tdestDir := filepath.Join(baseDir, \"browsers\", \"camoufox\")\n352: \tos.MkdirAll(destDir, 0755)\n353: \n",
+			"line": "352",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "305: \tdestDir := filepath.Join(baseDir, \"browsers\", BrowseForgeChromiumRuntimeID)\n306: \tif err := os.MkdirAll(destDir, 0755); err != nil {\n307: \t\treturn \"\", err\n",
+			"line": "306",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/router.go",
+			"code": "345: \t}\n346: \tif err := os.MkdirAll(dataDir, 0755); err != nil {\n347: \t\treturn \"\", fmt.Errorf(\"create token directory: %w\", err)\n",
+			"line": "346",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "138: \t}\n139: \tif err := os.MkdirAll(\"logs\", 0755); err != nil {\n140: \t\texitServerError(flags, \"Create logs dir error: %v\", err)\n",
+			"line": "139",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "135: \t}\n136: \tif err := os.MkdirAll(\"data\", 0755); err != nil {\n137: \t\texitServerError(flags, \"Create data dir error: %v\", err)\n",
+			"line": "136",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "132: \t// Auto-create directories\n133: \tif err := os.MkdirAll(\"profiles\", 0755); err != nil {\n134: \t\texitServerError(flags, \"Create profiles dir error: %v\", err)\n",
+			"line": "133",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "65: \t}\n66: \tif err := os.MkdirAll(\"data\", 0755); err != nil {\n67: \t\tfmt.Fprintf(os.Stderr, \"Create data dir error: %v\\n\", err)\n",
+			"line": "66",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "61: \t}\n62: \tif err := os.MkdirAll(\"profiles\", 0755); err != nil {\n63: \t\tfmt.Fprintf(os.Stderr, \"Create profiles dir error: %v\\n\", err)\n",
+			"line": "62",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "704: \t}\n705: \tif err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {\n706: \t\treturn err\n",
+			"line": "705",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "658: \t\t\t}\n659: \t\t\tif err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {\n660: \t\t\t\treturn err\n",
+			"line": "659",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "642: \t\tcase tar.TypeReg:\n643: \t\t\tif err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {\n644: \t\t\t\treturn err\n",
+			"line": "643",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "538: func createFullBackup(baseDir, output string) error {\n539: \tif err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {\n540: \t\treturn err\n",
+			"line": "539",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "404: func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {\n405: \tif err := os.MkdirAll(filepath.Join(baseDir, \"browsers\"), 0755); err != nil {\n406: \t\treturn selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err\n",
+			"line": "405",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "765: \t}\n766: \tif err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {\n767: \t\treturn err\n",
+			"line": "766",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "750: \tfor _, name := range []string{\"profiles\", \"data\", \"logs\", \"browsers\"} {\n751: \t\tif err := os.MkdirAll(filepath.Join(baseDir, name), 0755); err != nil {\n752: \t\t\treturn err\n",
+			"line": "751",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/advanced_tools.go",
+			"code": "779: \t\t}\n780: \t\tif err := os.WriteFile(path, data, 0644); err != nil {\n781: \t\t\treturn nil, newError(-32000, err.Error())\n",
+			"line": "780",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "950: \t}\n951: \tif err := os.WriteFile(configPath, append(data, '\\n'), 0644); err != nil {\n952: \t\treturn \"\", fmt.Errorf(\"write BrowseForge native config: %w\", err)\n",
+			"line": "951",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "210: \t}\n211: \tif err := os.WriteFile(prefsPath, out, 0644); err != nil {\n212: \t\treturn nil, fmt.Errorf(\"write chromium preferences: %w\", err)\n",
+			"line": "211",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "639: \t\t\t\tif data, readErr := os.ReadFile(src); readErr == nil {\n640: \t\t\t\t\tos.WriteFile(target, data, 0755)\n641: \t\t\t\t}\n",
+			"line": "640",
+			"column": "6",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "142: func writeVersionMarker(dir, version string) {\n143: \tos.WriteFile(filepath.Join(dir, \".version\"), []byte(version), 0644)\n144: }\n",
+			"line": "143",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "318: \t\t}\n319: \t\tif err := os.WriteFile(flags.configPath, cfgJSON, 0644); err != nil {\n320: \t\t\tslog.Error(\"config write\", \"error\", err)\n",
+			"line": "319",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "774: \tdata = append(data, '\\n')\n775: \treturn os.WriteFile(path, data, 0644)\n776: }\n",
+			"line": "775",
+			"column": "9",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "618: \t\t\t}\n619: \t\t\tif err := os.WriteFile(plan.path, plan.out, 0644); err != nil {\n620: \t\t\t\tfmt.Fprintf(stderr, \"migrate write %s failed: %v\\n\", plan.path, err)\n",
+			"line": "619",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G306",
+			"details": "Expect WriteFile permissions to be 0600 or less",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli.go",
+			"code": "613: \t\t\tif _, err := os.Stat(backup); os.IsNotExist(err) {\n614: \t\t\t\tif err := os.WriteFile(backup, plan.data, 0644); err != nil {\n615: \t\t\t\t\tfmt.Fprintf(stderr, \"migrate backup %s failed: %v\\n\", plan.path, err)\n",
+			"line": "614",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/workflow/engine.go",
+			"code": "280: \tvar result map[string]any\n281: \tjson.NewDecoder(resp.Body).Decode(\u0026result)\n282: \n",
+			"line": "281",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/stdio.go",
+			"code": "55: \tfmt.Fprintf(os.Stdout, \"%s\\n\", data)\n56: \tos.Stdout.Sync()\n57: }\n",
+			"line": "56",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/server.go",
+			"code": "803: \t}\n804: \tpages[index].Close()\n805: \tif pages[index] == sess.Page {\n",
+			"line": "804",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/server.go",
+			"code": "652: \tif clear, _ := args[\"clear\"].(bool); clear {\n653: \t\tsess.Page.Locator(selector).Clear()\n654: \t}\n",
+			"line": "653",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/mcp/protocol.go",
+			"code": "39: \t}\n40: \tjson.NewEncoder(w).Encode(resp)\n41: }\n",
+			"line": "40",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/keyboard.go",
+			"code": "72: \tdelay := randRange(80, 140)\n73: \tkb.Press(string(ch), playwright.KeyboardPressOptions{\n74: \t\tDelay: playwright.Float(delay),\n75: \t})\n76: }\n",
+			"line": "73-75",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/keyboard.go",
+			"code": "59: \t\t\t\ttime.Sleep(time.Duration(randRangeInt(100, 300)) * time.Millisecond)\n60: \t\t\t\tkb.Press(\"Backspace\")\n61: \t\t\t\ttime.Sleep(time.Duration(randRangeInt(50, 120)) * time.Millisecond)\n",
+			"line": "60",
+			"column": "5",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/humanize/keyboard.go",
+			"code": "32: \t\t// Fallback: use Playwright's click to focus, then still type humanly\n33: \t\tpage.Click(selector)\n34: \t}\n",
+			"line": "33",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/fingerprint/pool.go",
+			"code": "71: \t\t\tvar copy map[string]any\n72: \t\t\tjson.Unmarshal(data, \u0026copy)\n73: \t\t\tdelete(copy, \"_meta\")\n",
+			"line": "72",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/config/config.go",
+			"code": "167: func SetupLogger(logFile string) *slog.Logger {\n168: \tos.MkdirAll(\"logs\", 0755)\n169: \tf, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)\n",
+			"line": "168",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "143: \t\tif tc, ok := dst.(*net.TCPConn); ok {\n144: \t\t\ttc.CloseWrite()\n145: \t\t}\n",
+			"line": "144",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "141: \t\tdefer wg.Done()\n142: \t\tio.Copy(dst, src)\n143: \t\tif tc, ok := dst.(*net.TCPConn); ok {\n",
+			"line": "142",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "134: \t// Success reply\n135: \tconn.Write([]byte{0x05, 0x00, 0x00, 0x01, 127, 0, 0, 1, 0, 0})\n136: \n",
+			"line": "135",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "128: \tif err != nil {\n129: \t\tconn.Write([]byte{0x05, 0x05, 0x00, 0x01, 0, 0, 0, 0, 0, 0})\n130: \t\treturn\n",
+			"line": "129",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "121: \tdefault:\n122: \t\tconn.Write([]byte{0x05, 0x08, 0x00, 0x01, 0, 0, 0, 0, 0, 0})\n123: \t\treturn\n",
+			"line": "122",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "94: \tif buf[1] != 0x01 { // only CONNECT\n95: \t\tconn.Write([]byte{0x05, 0x07, 0x00, 0x01, 0, 0, 0, 0, 0, 0})\n96: \t\treturn\n",
+			"line": "95",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "86: \t// reply: no auth required\n87: \tconn.Write([]byte{0x05, 0x00})\n88: \n",
+			"line": "87",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/socks5relay.go",
+			"code": "48: \tclose(r.done)\n49: \tr.ln.Close()\n50: \tr.wg.Wait()\n",
+			"line": "49",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/manager.go",
+			"code": "395: \tif m.pw != nil {\n396: \t\tm.pw.Stop()\n397: \t}\n",
+			"line": "396",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/manager.go",
+			"code": "387: \t\tif s.Context != nil {\n388: \t\t\ts.Context.Close()\n389: \t\t}\n",
+			"line": "388",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/manager.go",
+			"code": "372: \tif s.Browser != nil {\n373: \t\ts.Browser.Close()\n374: \t}\n",
+			"line": "373",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/manager.go",
+			"code": "369: \tif s.Context != nil {\n370: \t\ts.Context.Close()\n371: \t}\n",
+			"line": "370",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_firefox.go",
+			"code": "149: \t\t\t}\n150: \t\t\tctx.Close()\n151: \t\t\treturn nil, fmt.Errorf(\"new page: %w\", err)\n",
+			"line": "150",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "326: \t\t\t}\n327: \t\t\tctx.Close()\n328: \t\t\treturn nil, fmt.Errorf(\"new page: %w\", err)\n",
+			"line": "327",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/launch_chromium.go",
+			"code": "305: \t\t}\n306: \t\tctx.Close()\n307: \t\treturn nil, fmt.Errorf(\"install chromium automation mitigations: %w\", err)\n",
+			"line": "306",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "639: \t\t\t\tif data, readErr := os.ReadFile(src); readErr == nil {\n640: \t\t\t\t\tos.WriteFile(target, data, 0755)\n641: \t\t\t\t}\n",
+			"line": "640",
+			"column": "6",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "634: \t\t\tos.MkdirAll(filepath.Dir(target), 0755)\n635: \t\t\tos.Remove(target)\n636: \t\t\tif err := os.Symlink(hdr.Linkname, target); err != nil {\n",
+			"line": "635",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "633: \t\tcase tar.TypeSymlink:\n634: \t\t\tos.MkdirAll(filepath.Dir(target), 0755)\n635: \t\t\tos.Remove(target)\n",
+			"line": "634",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "628: \t\t\t_, err = io.Copy(out, tr)\n629: \t\t\tout.Close()\n630: \t\t\tif err != nil {\n",
+			"line": "629",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "621: \t\tcase tar.TypeReg:\n622: \t\t\tos.MkdirAll(filepath.Dir(target), 0755)\n623: \t\t\tmode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows\n",
+			"line": "622",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "619: \t\tcase tar.TypeDir:\n620: \t\t\tos.MkdirAll(target, 0755)\n621: \t\tcase tar.TypeReg:\n",
+			"line": "620",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "583: \t\trc.Close()\n584: \t\tout.Close()\n585: \t\tif err != nil {\n",
+			"line": "584",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "582: \t\t_, err = io.Copy(out, rc)\n583: \t\trc.Close()\n584: \t\tout.Close()\n",
+			"line": "583",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "578: \t\tif err != nil {\n579: \t\t\tout.Close()\n580: \t\t\treturn err\n",
+			"line": "579",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "570: \t\t}\n571: \t\tos.MkdirAll(filepath.Dir(target), 0755)\n572: \t\tmode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)\n",
+			"line": "571",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "567: \t\tif f.FileInfo().IsDir() {\n568: \t\t\tos.MkdirAll(target, 0755)\n569: \t\t\tcontinue\n",
+			"line": "568",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "454: \t}\n455: \tos.Chmod(binPath, 0755)\n456: \n",
+			"line": "455",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "447: \tif osName == \"darwin\" {\n448: \t\texec.Command(\"xattr\", \"-cr\", destDir).Run()\n449: \t}\n",
+			"line": "448",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "444: \t}\n445: \tos.Remove(tmpFile)\n446: \n",
+			"line": "445",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "430: \tdestDir := filepath.Join(baseDir, \"browsers\", \"cloakbrowser\")\n431: \tos.MkdirAll(destDir, 0755)\n432: \n",
+			"line": "431",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "375: \t}\n376: \tos.Chmod(binPath, 0755)\n377: \n",
+			"line": "376",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "368: \tif runtime.GOOS == \"darwin\" {\n369: \t\texec.Command(\"xattr\", \"-cr\", destDir).Run()\n370: \t}\n",
+			"line": "369",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "365: \t}\n366: \tos.Remove(tmpFile)\n367: \n",
+			"line": "366",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "351: \tdestDir := filepath.Join(baseDir, \"browsers\", \"camoufox\")\n352: \tos.MkdirAll(destDir, 0755)\n353: \n",
+			"line": "352",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "338: \t}\n339: \tos.Chmod(binPath, 0755)\n340: \n",
+			"line": "339",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "331: \tif runtime.GOOS == \"darwin\" {\n332: \t\texec.Command(\"xattr\", \"-cr\", destDir).Run()\n333: \t}\n",
+			"line": "332",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "321: \t}\n322: \tos.Remove(tmpFile)\n323: \n",
+			"line": "322",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/browser/download.go",
+			"code": "142: func writeVersionMarker(dir, version string) {\n143: \tos.WriteFile(filepath.Join(dir, \".version\"), []byte(version), 0644)\n144: }\n",
+			"line": "143",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "427: \tgo func() { io.Copy(backendConn, clientBuf); done \u003c- struct{}{} }()\n428: \tgo func() { io.Copy(clientConn, backendBuf); done \u003c- struct{}{} }()\n429: \t\u003c-done\n",
+			"line": "428",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "426: \tdone := make(chan struct{}, 2)\n427: \tgo func() { io.Copy(backendConn, clientBuf); done \u003c- struct{}{} }()\n428: \tgo func() { io.Copy(clientConn, backendBuf); done \u003c- struct{}{} }()\n",
+			"line": "427",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "422: \t}\n423: \tclientConn.Write([]byte(\"\\r\\n\"))\n424: \n",
+			"line": "423",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "419: \t\tfor _, val := range vals {\n420: \t\t\tclientConn.Write([]byte(key + \": \" + val + \"\\r\\n\"))\n421: \t\t}\n",
+			"line": "420",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "416: \t// Forward ALL response headers to client (critical: includes Sec-WebSocket-Extensions)\n417: \tclientConn.Write([]byte(\"HTTP/1.1 101 Switching Protocols\\r\\n\"))\n418: \tfor key, vals := range resp.Header {\n",
+			"line": "417",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "411: \tif err != nil || resp.StatusCode != 101 {\n412: \t\tclientConn.Write([]byte(\"HTTP/1.1 502 Bad Gateway\\r\\n\\r\\n\"))\n413: \t\treturn\n",
+			"line": "412",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "405: \tupgradeReq += \"\\r\\n\"\n406: \tbackendConn.Write([]byte(upgradeReq))\n407: \n",
+			"line": "406",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "391: \tif err != nil {\n392: \t\tclientConn.Write([]byte(\"HTTP/1.1 502 Bad Gateway\\r\\n\\r\\n\"))\n393: \t\treturn\n",
+			"line": "392",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/sessions.go",
+			"code": "232: \tw.Header().Set(\"Content-Type\", \"image/png\")\n233: \tw.Write(data)\n234: }\n",
+			"line": "233",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/router.go",
+			"code": "312: \tw.WriteHeader(status)\n313: \tjson.NewEncoder(w).Encode(v)\n314: }\n",
+			"line": "313",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/internal/api/dashboard.go",
+			"code": "12: \tw.Header().Set(\"Content-Type\", \"text/html; charset=utf-8\")\n13: \tw.Write(dashboardHTML)\n14: }\n",
+			"line": "13",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "510: \tif cmd != nil {\n511: \t\tcmd.Start()\n512: \t}\n",
+			"line": "511",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "421: \tdefer cancel()\n422: \tsrv.Shutdown(ctx)\n423: }\n",
+			"line": "422",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/main.go",
+			"code": "390: \t\t\tif err == nil \u0026\u0026 resp.StatusCode == 200 {\n391: \t\t\t\tresp.Body.Close()\n392: \t\t\t\ttoken := cfg.APIToken\n",
+			"line": "391",
+			"column": "5",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "653: \t\t\t}\n654: \t\t\tout.Close()\n655: \t\tcase tar.TypeSymlink:\n",
+			"line": "654",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled.",
+			"file": "/tmp/forgelocal-gosec-baseline/cmd/server/cli_runtime.go",
+			"code": "650: \t\t\tif _, err := io.Copy(out, tr); err != nil {\n651: \t\t\t\tout.Close()\n652: \t\t\t\treturn err\n",
+			"line": "651",
+			"column": "5",
+			"nosec": false,
+			"suppressions": null
+		}
+	],
+	"Stats": {
+		"files": 49,
+		"lines": 15297,
+		"nosec": 10,
+		"found": 166
+	},
+	"GosecVersion": "2.21.4"
+}

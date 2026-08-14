@@ -1,13 +1,13 @@
 # Cahier des charges — ForgeLocal
 
-**Version :** 0.3 — baseline reproductible, produit et release suspendue
+**Version :** 1.0 — spécification produit versionnée ; release BACK-01 suspendue
 **Date :** 14 août 2026  
 **Auteur :** Manus AI  
 **Statut :** document de référence interne ; aucune autorisation de publication publique
 
 ## 1. Objet et principes de produit
 
-ForgeLocal vise à devenir un outil **local-first** de gestion de profils navigateur : profils conservés sous le contrôle de l’utilisateur, nombre de profils non limité par un abonnement cloud, API locale authentifiée, intégrations proxy sous contrôle de l’utilisateur et sauvegardes chiffrées. Le produit ne doit jamais promettre une « non-détection » ni contourner illégalement les protections d’un service tiers.
+ForgeLocal vise à devenir un outil **local-first** de gestion de profils navigateur : profils conservés sous le contrôle de l’utilisateur, API locale authentifiée, intégrations proxy sous contrôle de l’utilisateur et sauvegardes chiffrées. ForgeLocal n’impose **aucun quota commercial ou artificiel de profils**. La capacité effective dépend toutefois du stockage, de la mémoire, du CPU, des limites du système d’exploitation et de la charge du runtime ; elle doit être mesurée par tests de charge, sans promesse absolue d’« illimité ». Le produit ne doit jamais promettre une « non-détection » ni contourner illégalement les protections d’un service tiers.
 
 > **Principe directeur :** BrowseForge Core en Go est l’unique source de vérité des mutations métier. Une interface React, Tauri ou une intégration fournisseur ne peut pas devenir un second backend.
 
@@ -17,6 +17,7 @@ La présente version sépare explicitement le **lot BACK-01 minimal**, qui est u
 |---|---|
 | Modèle de déploiement | Local par défaut ; aucune dépendance cloud obligatoire pour les données, profils, secrets ou backups. |
 | Contrôle des données | Les données métier, les profils et les preuves restent sur la machine de l’utilisateur, sauf export explicite. |
+| Capacité de profils | Aucun quota commercial ou artificiel ; la limite mesurée est celle des ressources de l’hôte et du runtime. |
 | Sécurité | Secrets uniquement dans le coffre système ; jamais dans SQLite, JSON, logs, profils, archives non chiffrées ou interface web. |
 | Architecture | Un seul Core Go propriétaire des écritures ; API locale liée par défaut à `127.0.0.1`. |
 | Licence cible | Le code propriétaire ForgeLocal est sous licence permissive MIT ou Apache-2.0 ; un inventaire complet des licences, notices et obligations de toutes les dépendances est obligatoire avant toute redistribution. |
@@ -78,6 +79,8 @@ La validation SystemVault doit se faire dans une session graphique utilisateur r
 
 > **Exigence de persistance :** une VM Ubuntu 24.04 persistante ou une installation dédiée est requise pour la qualification complète, notamment les cas de redémarrage, révocation et coffre verrouillé. Une session éphémère « Try Ubuntu » peut servir au préflight, mais ne constitue pas seule une preuve native complète.
 
+Le dossier de preuve emploie **exclusivement** les noms contractuels du runbook `release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md` : `systemvault-host-context.env`, `systemvault-matrix.json`, `SYSTEMVAULT_NATIVE_GATE_STATUS` et `systemvault-anti-leak.json`. Le répertoire optionnel `runtime-release-evidence/` et `PUBLIC_RELEASE_DECISION.md` complètent ce dossier lorsque la provenance runtime est disponible. Aucun nom alternatif ne constitue une preuve de gate.
+
 ### 4.2 Backups et restauration
 
 Le flux `profil → backup chiffré → modification → restauration isolée` est le flux de référence. La restauration doit échouer de manière atomique ou être entièrement récupérée ; elle ne doit jamais écraser un profil existant sans une action explicite et enregistrée. Les archives exportées doivent être traitées comme non fiables jusqu’à vérification complète du format, de l’authenticité et des chemins.
@@ -108,7 +111,18 @@ Les gates de développement internes `G0` à `G6` du lot produit servent uniquem
 
 ### 6.1 Toolchain et outillage reproductibles
 
-La CI doit s’exécuter avec une distribution Go **exactement** égale à `1.25.13`, consignée dans l’environnement de build, avec `GOTOOLCHAIN=local`, et vérifiée au début du job par `go version` et `go env GOVERSION GOOS GOARCH`. Tout écart doit faire **échouer explicitement** le job ; aucun téléchargement implicite de toolchain différent n’est autorisé. Les versions de Gosec, Govulncheck, GolangCI-Lint et Gitleaks doivent être figées dans un manifeste versionné avec source et checksum. L’usage de `@latest` est interdit dans la CI et les preuves de release.
+La CI doit s’exécuter avec une distribution Go **exactement** égale à `1.25.13`, consignée dans l’environnement de build, avec `GOTOOLCHAIN=local`, et vérifiée au début du job par `go version` et `go env GOVERSION GOOS GOARCH`. Tout écart doit faire **échouer explicitement** le job ; aucun téléchargement implicite de toolchain différent n’est autorisé. Le manifeste machine-readable [`tools/TOOLCHAIN_LOCK.json`](../tools/TOOLCHAIN_LOCK.json) fige les sources et empreintes SHA-256. L’usage de `@latest` est interdit dans la CI et les preuves de release.
+
+| Outil | Version verrouillée | Artefact Linux amd64 ou source | SHA-256 | Source de checksum |
+|---|---:|---|---|---|
+| Go | `1.25.13` | `go1.25.13.linux-amd64.tar.gz` | `39042a078ea9ceebe3ecda4a7188f0f5b96e14a071d27923ba7f40b456e85ae3` | Catalogue JSON [go.dev](https://go.dev/dl/?mode=json&include=all) |
+| Gosec | `2.21.4` | `gosec_2.21.4_linux_amd64.tar.gz` | `9229dbfdc092b176e628b9ea6e4210757373b819f47365cedd9f9e12d3b2c173` | `gosec_2.21.4_checksums.txt` officiel |
+| Govulncheck | `1.7.0` | Module `golang.org/x/vuln` v`1.7.0` | `a14bf913551ac09f00ae0e903c1b358713f71af911d7ddacc3fab8ce5c149a26` | Archive du proxy de modules Go |
+| GolangCI-Lint | `1.61.0` | `golangci-lint-1.61.0-linux-amd64.tar.gz` | `77cb0af99379d9a21d5dc8c38364d060e864a01bd2f3e30b5e8cc550c3a54111` | `golangci-lint-1.61.0-checksums.txt` officiel |
+| Gitleaks | `8.18.4` | `gitleaks_8.18.4_linux_x64.tar.gz` | `ba6dbb656933921c775ee5a2d1c13a91046e7952e9d919f9bac4cec61d628e7d` | `gitleaks_8.18.4_checksums.txt` officiel |
+| SQLite CLI/source | `3.45.1` | `sqlite-autoconf-3450100.tar.gz` | `cd9c27841b7a5932c9897651e20b86c701dd740556989b01ca596fcfa3d49a0a` | Archive source SQLite officielle |
+
+Avant installation, la CI calcule le SHA-256 local et le compare au manifeste ; elle refuse toute divergence. Pour `govulncheck`, l’archive de module est vérifiée avant la construction avec le Go verrouillé ; le sélecteur `@latest` n’est jamais admis.
 
 Avant tout filtre de tests, le job doit enregistrer `go list ./...` et vérifier que chaque package ciblé existe dans le commit testé. Chaque commande doit ensuite prouver qu’au moins un test attendu est sélectionné ; un code de sortie `0` avec zéro test sélectionné est un échec de validation.
 
@@ -126,7 +140,7 @@ Les contrôles suivants sont reproductibles dans le sandbox et doivent être ex�
 | Décision publique | `scripts/check-public-release-gate.py` | Doit retourner le statut attendu, actuellement bloqué. |
 | Scan de secrets | Scan redigé du dépôt, de l’historique Git pertinent, de l’arborescence staged, de l’archive extraite, du SBOM, des manifestes et des journaux de build. | `SCAN_CLEAN` uniquement si aucune occurrence non classifiée ne subsiste ; toute exception doit être minimale, versionnée et revue. |
 
-La suite actuelle passe dans le sandbox pour les tests Go, le détecteur de courses sur les modules BACK-01 ciblés, `go vet`, la fermeture de dépendances minimale et le Gosec limité au graphe de distribution. Le scan Gosec sur l’ensemble du dépôt retourne 189 résultats : ils sont de la dette héritée et ne doivent pas être ignorés. La plupart se concentrent dans `internal/browser` et `cmd/server`, qui sont hors du binaire BACK-01 minimal ; les 17 alertes G404 de génération pseudo-aléatoire sont concentrées dans les fonctionnalités historiques de humanization/fingerprint, elles aussi exclues du lot.
+La suite actuelle passe dans le sandbox pour les tests Go, le détecteur de courses sur les modules BACK-01 ciblés, `go vet`, la fermeture de dépendances minimale et le Gosec limité au graphe de distribution. La dette Gosec possède deux références qui ne doivent pas être confondues : le rapport historique du **14 août 2026** contient 189 résultats (`validation_back01_integration/final/sandbox-gosec-20260814.json`, SHA-256 `332ae84056ec9ad5d15a965674540f0d5f21215bbeb998dd6bf614516c65b978`), mais il déclare `GosecVersion: dev` et n’associe pas un commit propre ; il est donc une **preuve historique non conforme** à la présente exigence de verrouillage. La baseline reproductible de contrôle, exécutée le 14 août 2026 avec Gosec `2.21.4` sur le commit `64bede39dc3355e0db2c4871cf4de7eb46410265`, contient 166 résultats (rapport SHA-256 `ba42d3e2af1fe8d9a61407ed87d54c57b7d81cccfaddc9fa382b07f35e06ec9d`). Aucun résultat n’est ignoré : le rapport historique à 189 résultats doit être régénéré sous l’outillage verrouillé avant toute décision fondée sur son nombre. Les conclusions de réduction doivent référencer à la fois le commit, la version Gosec, la date et le hash du rapport. Les concentrations historiques dans `internal/browser`, `cmd/server` et les fonctions humanization/fingerprint restent hors du binaire BACK-01 minimal, sans être dispensées de classification.
 
 > **État de scan actuel : `SCAN_BLOCKED_UNKNOWN`.** Une occurrence `generic-api-key` non classifiée est présente dans une preuve incluse dans l’archive RC. Tant que le dossier mainteneur et sa revue indépendante ne concluent pas `REAL_SECRET` ou `FALSE_POSITIVE`, aucun scan ne peut être qualifié `SCAN_CLEAN`, le pilote reste suspendu et aucune qualification SystemVault ne reprend pour ce candidat.
 
@@ -138,7 +152,7 @@ La suite actuelle passe dans le sandbox pour les tests Go, le détecteur de cour
 
 Le noyau doit migrer l’état métier actuellement hérité vers SQLite de manière réversible. La migration doit inclure un mode `dry-run`, un rapport de parité JSON/SQLite, une sauvegarde pré-migration et un rollback documenté. Le Core Go reste l’unique écrivain ; un processus frontend ne modifie jamais directement la base.
 
-Les tables cibles comprennent au minimum `profiles`, `profile_groups`, `proxy_connections`, `profile_proxy_assignments`, `audit_events`, `runtime_candidates`, `backup_operations`, `backups` et `restore_operations`. Les données secrètes doivent rester hors de ces tables : `proxy_connections` contient uniquement une référence de coffre et des champs non secrets.
+Le schéma canonique est la migration `internal/backup/migrations/0002_product.sql`, documentée dans [`SQLITE_SCHEMA_REFERENCE.md`](SQLITE_SCHEMA_REFERENCE.md). Il comprend `profiles`, `groups`, `profile_tags`, `profile_tag_assignments`, `proxy_providers`, `proxy_test_runs`, `runtime_candidates`, `profile_import_operations`, `profile_json_parity_checks`, `product_audit_events` ainsi que les tables BACK-01 `backup_operations`, `backups`, `restore_operations` et `audit_events`. Le schéma ne crée pas `profile_groups`, `proxy_connections` ni `profile_proxy_assignments` : les relations réellement versionnées sont `profiles.group_id`, les tables d’étiquettes et les références `proxy_provider_id`/`proxy_secret_ref`. Les données secrètes restent hors de toutes ces tables ; seuls des identifiants opaques de coffre sont persistés.
 
 ### 7.2 Lot P2 — dashboard React local
 
@@ -176,13 +190,13 @@ Tauri devient envisageable seulement après stabilisation de l’API et du dashb
 | Priorité | Action | Condition de clôture |
 |---|---|---|
 | P0 | Triage mainteneur de l’alerte de scan de l’archive RC | Faux positif borné et scan redigé vert, ou secret révoqué avec nouveau candidat complet. |
-| P0 | Exécuter le runbook SystemVault sur une VM Ubuntu 24.04.4 LTS `amd64` persistante ou une installation dédiée, hors conteneur | Quatre sorties assainies versionnées et revue indépendante. |
+| P0 | Exécuter le runbook SystemVault sur une VM Ubuntu 24.04.4 LTS `amd64` persistante ou une installation dédiée, hors conteneur | `systemvault-host-context.env`, `systemvault-matrix.json`, `SYSTEMVAULT_NATIVE_GATE_STATUS` et `systemvault-anti-leak.json` assainis, versionnés et revus indépendamment. |
 | P0 | Produire l’anti-fuite du flux intégré | `systemvault-anti-leak.json` vert, même chaîne artefact/runtime/commit. |
 | P0 | Revue de licence et redistribution Chromium | Décision écrite sur les paquets exacts et leur distribution. |
 | P0 | Signature mainteneur | Manifeste signé avec clé publique séparée et vérification indépendante. |
 | P1 | Réduire et classer la dette Gosec du dépôt historique | Registre de décisions par règle, fichier, risque, propriétaire, échéance et test de non-régression. |
 | P1 | Produire l’inventaire de licences de distribution | Licences, notices et obligations de chaque dépendance et runtime évalués avant redistribution. |
-| P1 | Implémenter la migration SQLite métier | Dry-run, parité, rollback, tests de migration. |
+| P1 | Intégrer la commande contrôlée de migration SQLite métier au Core | Importeur versionné disponible : dry-run par défaut, préimage BACK-01 chiffré et vérifié, parité lue depuis SQLite, rollback transactionnel, interruption et reprise testés. Aucun frontend ne modifie directement SQLite. |
 | P1 | Construire le dashboard React local | Écrans de gestion de profils, backups, audit et diagnostic avec API unique. |
 | P2 | Intégrer les fournisseurs proxy | Adaptateurs, coffre système, tests de connectivité et consentement explicite. |
 | P2 | Qualifier Camoufox puis Tauri | Chaînes de preuve et revues de licence distinctes. |
@@ -198,5 +212,9 @@ Tauri devient envisageable seulement après stabilisation de l’API et du dashb
 | R5 | `release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md` |
 | R6 | `release/back01-minimal/RELEASE_TRACEABILITY_INDEX.json` |
 | R7 | `validation_back01_integration/final/CURRENT_PRODUCT_SCOPE_INVENTORY_2026-08-14.md` |
+| R8 | `tools/TOOLCHAIN_LOCK.json` |
+| R9 | `docs/SQLITE_SCHEMA_REFERENCE.md` |
+| R10 | `validation_back01_integration/final/GOSEC_BASELINE_RECONCILIATION_2026-08-14.md` |
+| R11 | `validation_back01_integration/final/gosec-baseline-64bede3-v2.21.4-20260814.json` |
 
 > Ce cahier des charges est un document de pilotage. Il ne remplace pas les validateurs machine-readable de release et ne peut pas à lui seul lever un gate de publication.
