@@ -5,9 +5,9 @@
     "title": "Cahier des charges — ForgeLocal",
     "version": "1.0",
     "path": "docs/CAHIER_DES_CHARGES_FORGELOCAL.md",
-    "sha256": "53c79aed90e46caa10273b6ab8308effc3742d915d5a46163aaed9b018406f9e",
-    "content_commit": "d8cc034a29658e1cd372b18d08db1dd20c43b6f4",
-    "content_commit_subject": "docs: finalize ForgeLocal v1.0 specification controls"
+    "sha256": "6831425262b31f9b52f8c7e55fba287ddcaf464eb27d597f3b521aea1fa83ab8",
+    "content_commit": "f3035e754f62e6310efd02e4a899be986829e098",
+    "content_commit_subject": "docs: clarify original secret scan inputs"
   },
   "verification": {
     "algorithm": "SHA-256",
