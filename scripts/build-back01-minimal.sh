@@ -43,6 +43,18 @@ if [[ "$actual_go" != "go1.25.13" ]]; then
   exit 2
 fi
 
+GOSEC_BIN="${GOSEC_BIN:-}"
+if [[ -z "$GOSEC_BIN" ]]; then
+  GOSEC_BIN="$(command -v gosec || true)"
+fi
+if [[ -z "$GOSEC_BIN" && -x "$HOME/go/bin/gosec" ]]; then
+  GOSEC_BIN="$HOME/go/bin/gosec"
+fi
+if [[ -z "$GOSEC_BIN" || ! -x "$GOSEC_BIN" ]]; then
+  echo "refusing build: gosec not found; set GOSEC_BIN or install gosec" >&2
+  exit 7
+fi
+
 mapfile -t internal_deps < <(go list -deps ./cmd/back01-core | grep '^forgelocal/' | sort -u)
 if printf '%s\n' "${internal_deps[@]}" | grep -E "$FORBIDDEN" >/dev/null; then
   echo "refusing build: minimal Core imports forbidden package(s)" >&2
@@ -58,7 +70,7 @@ if [[ "$actual" != "$expected" ]]; then
 fi
 
 go test -race ./internal/backup ./internal/profile ./internal/secrets ./cmd/back01-core
-gosec ./internal/backup/... ./internal/profile/... ./internal/secrets/... ./cmd/back01-core/...
+"$GOSEC_BIN" ./internal/backup/... ./internal/profile/... ./internal/secrets/... ./cmd/back01-core/...
 
 go build -trimpath -buildvcs=true -ldflags='-s -w' -o "$STAGE/forgelocal-back01-core" ./cmd/back01-core
 install -m 0644 internal/backup/migrations/0001_back01.sql "$STAGE/migrations/0001_back01.sql"
