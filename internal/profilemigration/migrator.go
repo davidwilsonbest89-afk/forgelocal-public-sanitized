@@ -28,6 +28,8 @@ var (
 	ErrValidation            = errors.New("profile migration validation failed")
 	ErrBackupRequired        = errors.New("encrypted pre-migration backup is required for apply mode")
 	ErrExistingProductRecord = errors.New("product record already exists")
+	// ErrInterruptedOperation identifies journal rows recovered after a crash or process interruption.
+	ErrInterruptedOperation = errors.New("INTERRUPTED_BEFORE_COMPLETION")
 )
 
 var identifierPattern = regexp.MustCompile(`^[A-Za-z0-9._-]{1,128}$`)
@@ -106,6 +108,7 @@ type Report struct {
 	Groups        int               `json:"groups"`
 	Tags          int               `json:"tags"`
 	Runtimes      int               `json:"runtimes"`
+	Sources       int               `json:"sources"`
 	SourceHashes  map[string]string `json:"source_hashes"`
 	Backups       []BackupReceipt   `json:"backups,omitempty"`
 	Parity        []Parity          `json:"parity"`
@@ -139,17 +142,20 @@ func New(db *sql.DB, source Source) (*Migrator, error) {
 // Run defaults to ModeDryRun. Apply mode requires a verified encrypted backup
 // callback and performs all schema writes in a single SQLite transaction.
 func buildEncryptedPreimagePayload(request BackupRequest) ([]byte, error) {
-	expectedGroupsHash, ok := request.SourceHashes["groups_json"]
-	if !ok || !isSHA256(expectedGroupsHash) {
-		return nil, fmt.Errorf("%w: missing groups source hash", ErrValidation)
-	}
 	expectedProfilesHash, ok := request.SourceHashes["profile_json"]
 	if !ok || !isSHA256(expectedProfilesHash) {
 		return nil, fmt.Errorf("%w: missing profiles source hash", ErrValidation)
 	}
-	groups, err := readPreimageGroups(request.GroupsPath, expectedGroupsHash)
-	if err != nil {
-		return nil, err
+	groups := preimageFile{ID: "groups_json", Present: false}
+	if expectedGroupsHash, present := request.SourceHashes["groups_json"]; present {
+		if !isSHA256(expectedGroupsHash) {
+			return nil, fmt.Errorf("%w: invalid groups source hash", ErrValidation)
+		}
+		var err error
+		groups, err = readPreimageGroups(request.GroupsPath, expectedGroupsHash)
+		if err != nil {
+			return nil, err
+		}
 	}
 	profiles, err := readPreimageProfiles(request.ProfilesDir, expectedProfilesHash)
 	if err != nil {
@@ -285,6 +291,15 @@ func (m *Migrator) Run(ctx context.Context, options Options) (Report, error) {
 	if err := m.ensureNoExistingProductRecords(ctx, plan); err != nil {
 		return Report{}, err
 	}
+	if err := m.startOperations(ctx, plan, report, now); err != nil {
+		return Report{}, err
+	}
+	fail := func(cause error) (Report, error) {
+		if err := m.finalizeOperations(context.Background(), report.OperationID, "failed", failureCode(cause), now); err != nil {
+			return Report{}, fmt.Errorf("%w: finalize durable failure state: %v", cause, err)
+		}
+		return Report{}, cause
+	}
 
 	backups, err := options.Backup(ctx, BackupRequest{
 		ProfilesDir:   plan.profilesDir,
@@ -293,14 +308,17 @@ func (m *Migrator) Run(ctx context.Context, options Options) (Report, error) {
 		CorrelationID: correlationID,
 	})
 	if err != nil {
-		return Report{}, fmt.Errorf("create encrypted pre-migration backup: %w", err)
+		return fail(fmt.Errorf("create encrypted pre-migration backup: %w", err))
 	}
 	if err := validateReceipts(backups); err != nil {
-		return Report{}, err
+		return fail(err)
 	}
 	report.Backups = append([]BackupReceipt(nil), backups...)
 
 	if err := m.apply(ctx, plan, report, now); err != nil {
+		return fail(err)
+	}
+	if err := m.finalizeOperations(context.Background(), report.OperationID, "committed", "", now); err != nil {
 		return Report{}, err
 	}
 	return report, nil
@@ -376,12 +394,14 @@ func (m *Migrator) buildPlan(now time.Time) (migrationPlan, error) {
 		groupsPath:   groupsPath,
 		sourceHashes: map[string]string{},
 	}
-	groups, groupHash, err := readGroups(groupsPath, now)
+	groups, groupHash, groupsPresent, err := readGroups(groupsPath, now)
 	if err != nil {
 		return migrationPlan{}, err
 	}
 	plan.groups = groups
-	plan.sourceHashes["groups_json"] = groupHash
+	if groupsPresent {
+		plan.sourceHashes["groups_json"] = groupHash
+	}
 	groupIDs := make(map[string]string, len(groups))
 	for _, group := range groups {
 		groupIDs[strings.ToLower(group.name)] = group.id
@@ -398,21 +418,21 @@ func (m *Migrator) buildPlan(now time.Time) (migrationPlan, error) {
 	return plan, nil
 }
 
-func readGroups(path string, now time.Time) ([]preparedGroup, string, error) {
+func readGroups(path string, now time.Time) ([]preparedGroup, string, bool, error) {
 	// #nosec G304 -- path is a local Core migration source and is parsed only in the read-only validation stage.
 	data, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil, sha256Hex(nil), nil
+			return nil, "", false, nil
 		}
-		return nil, "", fmt.Errorf("%w: read groups source", ErrValidation)
+		return nil, "", false, fmt.Errorf("%w: read groups source", ErrValidation)
 	}
 	if hasCleartextProxyCredentials(data) {
-		return nil, "", fmt.Errorf("%w: cleartext proxy credential found in groups source", ErrValidation)
+		return nil, "", false, fmt.Errorf("%w: cleartext proxy credential found in groups source", ErrValidation)
 	}
 	var source legacyGroupsFile
 	if err := json.Unmarshal(data, &source); err != nil {
-		return nil, "", fmt.Errorf("%w: decode groups source", ErrValidation)
+		return nil, "", false, fmt.Errorf("%w: decode groups source", ErrValidation)
 	}
 	byName := make(map[string]struct{}, len(source.Groups))
 	out := make([]preparedGroup, 0, len(source.Groups))
@@ -420,10 +440,10 @@ func readGroups(path string, now time.Time) ([]preparedGroup, string, error) {
 		name := strings.TrimSpace(raw.Name)
 		key := strings.ToLower(name)
 		if name == "" || key == "" {
-			return nil, "", fmt.Errorf("%w: group with empty name", ErrValidation)
+			return nil, "", false, fmt.Errorf("%w: group with empty name", ErrValidation)
 		}
 		if _, exists := byName[key]; exists {
-			return nil, "", fmt.Errorf("%w: duplicate group name", ErrValidation)
+			return nil, "", false, fmt.Errorf("%w: duplicate group name", ErrValidation)
 		}
 		byName[key] = struct{}{}
 		id := deterministicID("grp", key)
@@ -432,19 +452,19 @@ func readGroups(path string, now time.Time) ([]preparedGroup, string, error) {
 			mode = groupstore.ProxyModeDefault
 		}
 		if mode != groupstore.ProxyModeDefault && mode != groupstore.ProxyModeEnforced {
-			return nil, "", fmt.Errorf("%w: invalid group proxy mode", ErrValidation)
+			return nil, "", false, fmt.Errorf("%w: invalid group proxy mode", ErrValidation)
 		}
 		proxy, err := normalizeProxy(raw.Proxy, "proxy.group."+id)
 		if err != nil {
-			return nil, "", err
+			return nil, "", false, err
 		}
 		if mode == groupstore.ProxyModeEnforced && proxy.kind == "" {
-			return nil, "", fmt.Errorf("%w: enforced group requires a proxy", ErrValidation)
+			return nil, "", false, fmt.Errorf("%w: enforced group requires a proxy", ErrValidation)
 		}
 		created := raw.CreatedAt.UTC()
 		updated := raw.UpdatedAt.UTC()
 		if created.IsZero() || updated.IsZero() {
-			return nil, "", fmt.Errorf("%w: group timestamps are required", ErrValidation)
+			return nil, "", false, fmt.Errorf("%w: group timestamps are required", ErrValidation)
 		}
 		out = append(out, preparedGroup{
 			id: id, name: name, proxyMode: mode, proxy: proxy,
@@ -452,7 +472,7 @@ func readGroups(path string, now time.Time) ([]preparedGroup, string, error) {
 		})
 	}
 	sort.Slice(out, func(i, j int) bool { return out[i].id < out[j].id })
-	return out, sha256Hex(data), nil
+	return out, sha256Hex(data), true, nil
 }
 
 func readProfiles(root string, groupIDs map[string]string) ([]preparedProfile, string, []string, []preparedTag, error) {
@@ -625,18 +645,93 @@ func normalizeProxy(source *profile.ProxyConfig, expectedSecretRef string) (prep
 }
 
 func (m *Migrator) recordDryRun(ctx context.Context, plan migrationPlan, report Report, now time.Time) error {
+	if err := m.startOperations(ctx, plan, report, now); err != nil {
+		return err
+	}
+	if err := m.finalizeOperations(context.Background(), report.OperationID, "validated", "", now); err != nil {
+		return err
+	}
+	return nil
+}
+
+// RecoverInterruptedOperations fail-closes journal rows left started by a process
+// interruption. It never retries or mutates product records, so a later explicit
+// migration can safely start a fresh operation after the source is revalidated.
+func (m *Migrator) RecoverInterruptedOperations(ctx context.Context) (int, error) {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	result, err := m.db.ExecContext(ctx, `UPDATE profile_import_operations
+		SET state = 'failed', error_code = ?, updated_at = ?
+		WHERE state = 'started'`, ErrInterruptedOperation.Error(), timestamp(time.Now().UTC()))
+	if err != nil {
+		return 0, fmt.Errorf("recover interrupted import operations: %w", err)
+	}
+	count, err := result.RowsAffected()
+	if err != nil {
+		return 0, fmt.Errorf("count recovered import operations: %w", err)
+	}
+	return int(count), nil
+}
+
+func (m *Migrator) startOperations(ctx context.Context, plan migrationPlan, report Report, now time.Time) error {
 	tx, err := m.db.BeginTx(ctx, nil)
 	if err != nil {
-		return fmt.Errorf("begin dry-run journal: %w", err)
+		return fmt.Errorf("begin durable import journal: %w", err)
 	}
 	defer func() { _ = tx.Rollback() }()
-	if err := insertOperations(ctx, tx, plan, report, "validated", now); err != nil {
+	if err := insertOperations(ctx, tx, plan, report, "started", now); err != nil {
 		return err
 	}
 	if err := tx.Commit(); err != nil {
-		return fmt.Errorf("commit dry-run journal: %w", err)
+		return fmt.Errorf("commit durable import journal: %w", err)
 	}
 	return nil
+}
+
+func (m *Migrator) finalizeOperations(ctx context.Context, operationID, state, errorCode string, now time.Time) error {
+	if state != "validated" && state != "committed" && state != "failed" {
+		return fmt.Errorf("%w: unsupported import operation terminal state %q", ErrValidation, state)
+	}
+	tx, err := m.db.BeginTx(ctx, nil)
+	if err != nil {
+		return fmt.Errorf("begin import operation finalization: %w", err)
+	}
+	defer func() { _ = tx.Rollback() }()
+	result, err := tx.ExecContext(ctx, `UPDATE profile_import_operations
+		SET state = ?, error_code = ?, updated_at = ?
+		WHERE substr(id, 1, ?) = ? AND state = 'started'`,
+		state, errorCode, timestamp(now), len(operationID)+1, operationID+".")
+	if err != nil {
+		return fmt.Errorf("finalize import operations: %w", err)
+	}
+	changed, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("count finalized import operations: %w", err)
+	}
+	if changed == 0 {
+		return fmt.Errorf("%w: no started import operations for %s", ErrValidation, operationID)
+	}
+	if err := tx.Commit(); err != nil {
+		return fmt.Errorf("commit import operation finalization: %w", err)
+	}
+	return nil
+}
+
+func failureCode(err error) string {
+	if errors.Is(err, context.Canceled) {
+		return "CONTEXT_CANCELED"
+	}
+	if errors.Is(err, context.DeadlineExceeded) {
+		return "CONTEXT_DEADLINE_EXCEEDED"
+	}
+	if errors.Is(err, ErrValidation) {
+		return "VALIDATION_FAILED"
+	}
+	if errors.Is(err, ErrExistingProductRecord) {
+		return "PRODUCT_RECORD_CONFLICT"
+	}
+	return "IMPORT_FAILED"
 }
 
 func (m *Migrator) ensureNoExistingProductRecords(ctx context.Context, plan migrationPlan) error {
@@ -681,9 +776,6 @@ func (m *Migrator) apply(ctx context.Context, plan migrationPlan, report Report,
 		} else if exists {
 			return fmt.Errorf("%w: profile", ErrExistingProductRecord)
 		}
-	}
-	if err := insertOperations(ctx, tx, plan, report, "committed", now); err != nil {
-		return err
 	}
 	for _, runtimeID := range plan.runtimes {
 		if _, err := tx.ExecContext(ctx, `INSERT OR IGNORE INTO runtime_candidates
@@ -746,15 +838,42 @@ func (m *Migrator) apply(ctx context.Context, plan migrationPlan, report Report,
 	return nil
 }
 
+type operationSource struct {
+	kind string
+	hash string
+	id   string
+}
+
+func operationSources(plan migrationPlan, operationID string) ([]operationSource, error) {
+	kinds := make([]string, 0, len(plan.sourceHashes))
+	for kind := range plan.sourceHashes {
+		kinds = append(kinds, kind)
+	}
+	sort.Strings(kinds)
+	if len(kinds) == 0 {
+		return nil, fmt.Errorf("%w: import plan has no sources", ErrValidation)
+	}
+	sources := make([]operationSource, 0, len(kinds))
+	for _, kind := range kinds {
+		hash := plan.sourceHashes[kind]
+		if (kind != "groups_json" && kind != "profile_json") || !isSHA256(hash) {
+			return nil, fmt.Errorf("%w: invalid import source %q", ErrValidation, kind)
+		}
+		sources = append(sources, operationSource{kind: kind, hash: hash, id: operationID + "." + kind})
+	}
+	return sources, nil
+}
+
 func insertOperations(ctx context.Context, tx *sql.Tx, plan migrationPlan, report Report, state string, now time.Time) error {
 	summary, err := summaryJSON(report)
 	if err != nil {
 		return err
 	}
-	for _, source := range []struct{ kind, hash, id string }{
-		{kind: "groups_json", hash: plan.sourceHashes["groups_json"], id: report.OperationID + ".groups"},
-		{kind: "profile_json", hash: plan.sourceHashes["profile_json"], id: report.OperationID + ".profiles"},
-	} {
+	sources, err := operationSources(plan, report.OperationID)
+	if err != nil {
+		return err
+	}
+	for _, source := range sources {
 		if _, err := tx.ExecContext(ctx, `INSERT INTO profile_import_operations
 			(id, source_kind, source_sha256, dry_run, state, summary_json, correlation_id, created_at, updated_at)
 			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, source.id, source.kind, source.hash, boolInt(report.Mode == ModeDryRun), state, summary, report.CorrelationID, timestamp(now), timestamp(now)); err != nil {
@@ -783,7 +902,7 @@ func (p migrationPlan) report(operationID, correlationID string, mode Mode) Repo
 	return Report{
 		OperationID: operationID, CorrelationID: correlationID, Mode: mode,
 		State:    map[Mode]string{ModeDryRun: "validated", ModeApply: "committed"}[mode],
-		Profiles: len(p.profiles), Groups: len(p.groups), Tags: len(p.tags), Runtimes: len(p.runtimes),
+		Profiles: len(p.profiles), Groups: len(p.groups), Tags: len(p.tags), Runtimes: len(p.runtimes), Sources: len(p.sourceHashes),
 		SourceHashes: cloneStringMap(p.sourceHashes), Parity: parity,
 	}
 }
@@ -854,11 +973,11 @@ func canonicalSQLiteProfileHash(ctx context.Context, tx *sql.Tx, profileID strin
 
 func summaryJSON(report Report) (string, error) {
 	value := struct {
-		Profiles, Groups, Tags, Runtimes int
-		Mode                             Mode
-		SourceHashes                     map[string]string
-		Backups                          []BackupReceipt
-	}{report.Profiles, report.Groups, report.Tags, report.Runtimes, report.Mode, report.SourceHashes, report.Backups}
+		Profiles, Groups, Tags, Runtimes, Sources int
+		Mode                                      Mode
+		SourceHashes                              map[string]string
+		Backups                                   []BackupReceipt
+	}{report.Profiles, report.Groups, report.Tags, report.Runtimes, report.Sources, report.Mode, report.SourceHashes, report.Backups}
 	data, err := json.Marshal(value)
 	if err != nil {
 		return "", fmt.Errorf("encode redacted import summary: %w", err)

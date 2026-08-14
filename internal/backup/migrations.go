@@ -7,9 +7,10 @@ import (
 )
 
 const (
-	backupSchemaVersion       = 1
-	productSchemaVersion      = 2
-	proxyIndexesSchemaVersion = 3
+	backupSchemaVersion           = 1
+	productSchemaVersion          = 2
+	proxyIndexesSchemaVersion     = 3
+	operationJournalSchemaVersion = 4
 )
 
 //go:embed migrations/0001_back01.sql
@@ -21,6 +22,9 @@ var productSchemaSQL string
 //go:embed migrations/0003_proxy_reference_indexes.sql
 var proxyIndexesSchemaSQL string
 
+//go:embed migrations/0004_profile_import_operations_started.sql
+var operationJournalSchemaSQL string
+
 type schemaMigration struct {
 	version int
 	sql     string
@@ -30,6 +34,7 @@ var schemaMigrations = []schemaMigration{
 	{version: backupSchemaVersion, sql: backupSchemaSQL},
 	{version: productSchemaVersion, sql: productSchemaSQL},
 	{version: proxyIndexesSchemaVersion, sql: proxyIndexesSchemaSQL},
+	{version: operationJournalSchemaVersion, sql: operationJournalSchemaSQL},
 }
 
 // Migrate applies the Core SQLite schema in order. Each migration and its ledger

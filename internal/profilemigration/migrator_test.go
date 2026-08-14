@@ -29,7 +29,7 @@ func TestDryRunJournalsPlanWithoutWritingProductRecords(t *testing.T) {
 	if err != nil {
 		t.Fatalf("dry-run migration: %v", err)
 	}
-	if report.State != "validated" || report.Profiles != 1 || report.Groups != 1 || report.Tags != 2 || report.Runtimes != 1 {
+	if report.State != "validated" || report.Profiles != 1 || report.Groups != 1 || report.Tags != 2 || report.Runtimes != 1 || report.Sources != 2 {
 		t.Fatalf("unexpected dry-run report: %#v", report)
 	}
 	assertCount(t, db, "profiles", 0)
@@ -181,7 +181,8 @@ func TestApplyCanRetryAfterContextInterruptedAfterPreimage(t *testing.T) {
 	}
 	assertCount(t, store.DB(), "backups", 1)
 	assertCount(t, store.DB(), "profiles", 0)
-	assertCount(t, store.DB(), "profile_import_operations", 0)
+	assertCount(t, store.DB(), "profile_import_operations", 2)
+	assertOperationState(t, store.DB(), "failed", "CONTEXT_CANCELED", 2)
 
 	report, err := migrator.Run(context.Background(), Options{
 		Mode: ModeApply, CorrelationID: "corr-retry-after-interruption", Backup: preimage,
@@ -196,6 +197,90 @@ func TestApplyCanRetryAfterContextInterruptedAfterPreimage(t *testing.T) {
 	assertCount(t, store.DB(), "backups", 2)
 	assertCount(t, store.DB(), "profiles", 1)
 	assertCount(t, store.DB(), "profile_json_parity_checks", 1)
+}
+
+func TestDurableJournalSurvivesMetadataRollback(t *testing.T) {
+	db := openMigrationDB(t)
+	source := writeFixture(t, fixture{withGroup: true})
+	if _, err := db.Exec(`CREATE TRIGGER fail_profile_import BEFORE INSERT ON profiles
+		BEGIN
+			SELECT RAISE(ABORT, 'injected metadata rollback');
+		END`); err != nil {
+		t.Fatalf("create rollback trigger: %v", err)
+	}
+	migrator, err := New(db, source)
+	if err != nil {
+		t.Fatalf("new migrator: %v", err)
+	}
+	backupFn := func(_ context.Context, _ BackupRequest) ([]BackupReceipt, error) {
+		return []BackupReceipt{{ID: "bkp_durable_rollback", SHA256: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}}, nil
+	}
+	if _, err := migrator.Run(context.Background(), Options{Mode: ModeApply, Backup: backupFn, Now: func() time.Time { return fixtureTime }}); err == nil {
+		t.Fatal("apply with injected metadata rollback must fail")
+	}
+	assertCount(t, db, "profiles", 0)
+	assertCount(t, db, "groups", 0)
+	assertCount(t, db, "runtime_candidates", 0)
+	assertCount(t, db, "product_audit_events", 0)
+	assertCount(t, db, "profile_import_operations", 2)
+	assertOperationState(t, db, "failed", "IMPORT_FAILED", 2)
+}
+
+func TestRecoverInterruptedOperationsMarksFailed(t *testing.T) {
+	db := openMigrationDB(t)
+	source := writeFixture(t, fixture{withGroup: true})
+	migrator, err := New(db, source)
+	if err != nil {
+		t.Fatalf("new migrator: %v", err)
+	}
+	plan, err := migrator.buildPlan(fixtureTime)
+	if err != nil {
+		t.Fatalf("build plan: %v", err)
+	}
+	report := plan.report("imp_crash_recovery", "corr-crash-recovery", ModeApply)
+	if err := migrator.startOperations(context.Background(), plan, report, fixtureTime); err != nil {
+		t.Fatalf("persist started operations: %v", err)
+	}
+	assertOperationState(t, db, "started", "", report.Sources)
+
+	recovered, err := migrator.RecoverInterruptedOperations(context.Background())
+	if err != nil {
+		t.Fatalf("recover interrupted operations: %v", err)
+	}
+	if recovered != report.Sources {
+		t.Fatalf("recovered operations = %d, want %d", recovered, report.Sources)
+	}
+	assertOperationState(t, db, "failed", ErrInterruptedOperation.Error(), report.Sources)
+	assertCount(t, db, "profiles", 0)
+	assertCount(t, db, "groups", 0)
+}
+
+func TestDryRunJournalsOnlySourcesPresentWithDynamicCounter(t *testing.T) {
+	db := openMigrationDB(t)
+	source := writeFixture(t, fixture{})
+	if err := os.Remove(source.GroupsPath); err != nil {
+		t.Fatalf("remove optional groups source: %v", err)
+	}
+	migrator, err := New(db, source)
+	if err != nil {
+		t.Fatalf("new migrator: %v", err)
+	}
+	report, err := migrator.Run(context.Background(), Options{Mode: ModeDryRun, Now: func() time.Time { return fixtureTime }})
+	if err != nil {
+		t.Fatalf("dry-run with groups source absent: %v", err)
+	}
+	if report.Sources != 1 || len(report.SourceHashes) != 1 {
+		t.Fatalf("dynamic source report = %#v", report)
+	}
+	assertCount(t, db, "profile_import_operations", 1)
+	var state string
+	var sources int
+	if err := db.QueryRow(`SELECT state, json_extract(summary_json, '$.Sources') FROM profile_import_operations`).Scan(&state, &sources); err != nil {
+		t.Fatalf("read dynamic journal summary: %v", err)
+	}
+	if state != "validated" || sources != 1 {
+		t.Fatalf("dynamic journal summary = state:%q sources:%d", state, sources)
+	}
 }
 
 func TestApplyRollsBackAndCanResumeAfterSourceCorrection(t *testing.T) {
@@ -341,6 +426,17 @@ func openMigrationStore(t *testing.T) *backup.SQLiteStore {
 	}
 	t.Cleanup(func() { _ = store.Close() })
 	return store
+}
+
+func assertOperationState(t *testing.T, db *sql.DB, state, errorCode string, want int) {
+	t.Helper()
+	var count int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_import_operations WHERE state = ? AND error_code = ?`, state, errorCode).Scan(&count); err != nil {
+		t.Fatalf("count operation state %q/%q: %v", state, errorCode, err)
+	}
+	if count != want {
+		t.Fatalf("operation state %q/%q count = %d, want %d", state, errorCode, count, want)
+	}
 }
 
 func assertCount(t *testing.T, db *sql.DB, table string, want int) {

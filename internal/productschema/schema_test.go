@@ -204,6 +204,26 @@ func TestProxyReferenceLookupPlansUsePartialIndexes(t *testing.T) {
 	}
 }
 
+func TestProfileTagsEnforcesCaseInsensitiveUniqueness(t *testing.T) {
+	db := openProductSchema(t)
+	if _, err := db.Exec(`INSERT INTO profile_tags(id, name, created_at) VALUES ('tag.initial', 'QA', '2026-08-14T00:00:00Z')`); err != nil {
+		t.Fatalf("insert QA: %v", err)
+	}
+	for index, variant := range []string{"qa", "Qa", "qA", "QA"} {
+		id := "tag.variant." + string(rune('a'+index))
+		if _, err := db.Exec(`INSERT INTO profile_tags(id, name, created_at) VALUES (?, ?, '2026-08-14T00:00:00Z')`, id, variant); err == nil {
+			t.Fatalf("duplicate tag %q must be rejected", variant)
+		}
+	}
+	var count int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_tags WHERE name = 'qa'`).Scan(&count); err != nil {
+		t.Fatalf("count case-insensitive QA tags: %v", err)
+	}
+	if count != 1 {
+		t.Fatalf("case-insensitive QA tags = %d, want 1", count)
+	}
+}
+
 func TestProductSchemaDoesNotStoreSecretsInCleartextColumns(t *testing.T) {
 	db := openProductSchema(t)
 	tables := []string{"proxy_providers", "runtime_candidates", "profiles", "groups", "product_audit_events"}

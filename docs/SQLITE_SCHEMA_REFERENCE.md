@@ -1,12 +1,12 @@
 # Référence du schéma SQLite ForgeLocal
 
-**Statut :** baseline versionnée du Lot Produit v0.3. Cette référence décrit le schéma réellement porté par la migration `internal/backup/migrations/0002_product.sql` et sa migration additive `0003_proxy_reference_indexes.sql`, appliquées après `0001_back01.sql` par `internal/backup/migrations.go`. Elles ne modifient ni le candidat RC BACK-01 figé, ni son runtime, ni son SBOM, ni ses gates de release. La migration des données JSON elle-même reste à implémenter et doit respecter le plan de migration défini dans ce document.
+**Statut :** baseline versionnée du Lot Produit v0.3. Cette référence décrit le schéma réellement porté par les migrations `internal/backup/migrations/0002_product.sql`, `0003_proxy_reference_indexes.sql` et `0004_profile_import_operations_started.sql`, appliquées après `0001_back01.sql` par `internal/backup/migrations.go`. Elles ne modifient ni le candidat RC BACK-01 figé, ni son runtime, ni son SBOM, ni ses gates de release. La migration des données JSON est implémentée dans `internal/profilemigration` et doit respecter le plan de migration défini dans ce document.
 
 > **Principe d’architecture.** SQLite conserve l’état métier local de ForgeLocal. Le Core Go est son seul écrivain. Les données de navigation restent dans les répertoires `browser-data` privés ; les mots de passe, jetons, clés API et identifiants proxy restent exclusivement dans le coffre système.
 
 ## Portée, versionnement et garanties
 
-La table historique `schema_migrations` créée par BACK-01 reste l’unique registre de versions. La migration BACK-01 est la version **1** ; le schéma métier est la version **2** ; les index de références proxy sont la version additive **3**. Le chargeur applique les migrations manquantes dans l’ordre et dans une transaction : le DDL et l’inscription de la version sont validés ensemble. Une base déjà au niveau 1 est donc mise à niveau vers 3 une seule fois ; une nouvelle exécution est idempotente.
+La table historique `schema_migrations` créée par BACK-01 reste l’unique registre de versions. La migration BACK-01 est la version **1** ; le schéma métier est la version **2** ; les index de références proxy sont la version additive **3** ; le journal d’import durable est la version additive **4**. Le chargeur applique les migrations manquantes dans l’ordre et dans une transaction : le DDL et l’inscription de la version sont validés ensemble. Une base déjà au niveau 1 est donc mise à niveau vers 4 une seule fois ; une nouvelle exécution est idempotente.
 
 | Élément | Décision versionnée | Motivation |
 |---|---|---|
@@ -14,6 +14,7 @@ La table historique `schema_migrations` créée par BACK-01 reste l’unique reg
 | Migration BACK-01 | `0001_back01.sql` | Backups, restauration et audit déjà qualifiés. |
 | Migration Produit | `0002_product.sql` | Métadonnées de profils, groupes, runtime et proxy générique ; types, FK et contrôles de format des références proxy. |
 | Migration Produit additive | `0003_proxy_reference_indexes.sql` | Index partiels sur `proxy_provider_id` et `proxy_secret_ref` de `profiles` et `groups`, sans ajouter de secret ni modifier les tables v2. |
+| Migration Journal additive | `0004_profile_import_operations_started.sql` | Recrée atomiquement le journal pour autoriser l’état durable `started`, sans perdre les opérations déjà enregistrées. |
 | Ordonnancement | `backup.Migrate` | Le Core Go demeure le seul responsable des mutations SQLite. |
 | Modes SQLite | WAL, `foreign_keys=ON`, `busy_timeout=5000` | Cohérence locale, contraintes référentielles et comportement concurrent prévisible. |
 | Compatibilité de release | Aucun impact sur le RC BACK-01 gelé | Le travail produit reste isolé sur `forgelocal-product-v0.3`. |
@@ -42,7 +43,7 @@ La table s’appelle volontairement **`groups`**, et non `profile_groups`. Le co
 | `runtime_candidates` | `id`; référencée par `profiles.runtime_id` | Runtime disponible localement et sa provenance binaire. | Unicité du tuple nom/version/architecture/chemin et du SHA-256 ; états `candidate`, `validated`, `quarantined`, `retired`. |
 | `groups` | `id`; références facultatives au fournisseur | Politique proxy par groupe, avec héritage possible par profil. | Type `http`/`socks5`, hôte et port cohérents ; mode `enforced` impossible sans proxy complet. |
 | `profiles` | `id`; FK runtime, groupe et fournisseur | Métadonnées de profil, répertoire local, identité, empreinte et proxy direct facultatif. | `profile_dir` unique ; runtime requis ; proxy complet ou absent ; cycle `active`/`archived`/`quarantined`. |
-| `profile_tags` | `id`; `name` unique | Dictionnaire de tags. | Nom sans doublon indépendant de la casse. |
+| `profile_tags` | `id`; `name` unique | Dictionnaire de tags. | Nom sans doublon ASCII indépendant de la casse. |
 | `profile_tag_assignments` | PK composée profile/tag | Relation N–N des tags de profil. | Suppression d’un profil en cascade ; suppression d’un tag référencé refusée. |
 | `proxy_test_runs` | `id`; référence exactement un profil ou un groupe | Résultat redacted d’un test de proxy. | Une seule cible, résultat borné, latence non négative et code d’erreur sans secret. |
 | `profile_import_operations` | `id` | Journal de dry-run, validation, import, rollback et erreur de migration JSON. | Source hachée, état borné, rapport JSON assaini et `correlation_id`. |
@@ -74,6 +75,8 @@ Le modèle JSON actuel est défini par `internal/profile/store.go`. La table `pr
 
 Les groupes JSON existants suivent la même règle. Leur `name`, `proxy_mode` et les paramètres publics de proxy vont dans `groups`; une éventuelle référence de coffre est normalisée vers `proxy.group.<group_id>`. Si les identifiants de coffre existants ne peuvent pas être prouvés comme appartenant au groupe migré, le dry-run doit échouer de façon sûre et demander une réparation explicite, sans copier de secret.
 
+> **Portée de l’unicité des tags.** `profile_tags.name` utilise `COLLATE NOCASE` de SQLite. Le contrat est donc explicitement testé pour les variantes ASCII `QA`, `qa`, `Qa` et `qA`. Cette collation ne fournit pas une égalité Unicode complète ; une normalisation Unicode distincte devra être décidée et versionnée avant de promettre une déduplication multilingue.
+
 ## Règles de proxy et de runtime
 
 Le cœur ne connaît pas de fournisseur commercial obligatoire. `proxy_providers.adapter_id` identifie un adaptateur générique, et `public_config_json` ne peut contenir que sa configuration non sensible. Ainsi, un adaptateur manuel, Decodo ou tout autre fournisseur peut être ajouté sans coupler le schéma ou le Core à une marque particulière.
@@ -96,20 +99,22 @@ La fabrique `NewEncryptedPreMigrationBackup` construit une enveloppe JSON versio
 
 | Étape | Mode et transaction | Preuve attendue | Échec ou interruption |
 |---|---|---|---|
-| 1. Préflight | Lecture seule | Chemins, permissions, version SQLite et inventaire JSON assaini. | Arrêt sans écrire SQLite. |
-| 2. Dry-run | Lecture source et journal minimal | Nombre de profils/groupes/tags, conflits, hash de chaque source et plan de mutations. | Deux entrées `validated` redacted, aucune table métier modifiée ni backup créé. |
-| 3. Backup préimage (apply uniquement) | Chiffrement BACK-01 + vérification | ID et SHA-256 de l’artefact contrôlé couvrant `groups.json` et tous les `profile.json`. | Arrêt avant transaction SQLite si la source évolue, si le coffre échoue ou si la vérification échoue. |
-| 4. Import | Transaction SQLite unique et journal `profile_import_operations` | Deux entrées `committed`, compteurs, audit redacted et hash de l’enregistrement canonique. | Rollback de toutes les écritures métier, y compris le journal et l’audit ; fichiers JSON intacts. |
-| 5. Parité | Lecture des lignes SQLite dans la transaction | Ligne `profile_json_parity_checks` par profil, uniquement après égalité des hash canoniques. | Divergence = rollback total ; aucun `match` ne peut être écrit sur confiance. |
-| 6. Reprise contrôlée | Nouveau dry-run après correction de la cause | Nouvelle corrélation, nouveaux hashes source et nouveau backup préimage. | Aucun « reprendre » implicite à partir d’un état partiel. |
-| 7. Bascule contrôlée | Feature flag local explicite, à livrer ultérieurement | Chargement SQLite + fallback de lecture JSON documenté, sans double écriture non contrôlée. | Retour au lecteur JSON, données SQLite conservées pour diagnostic. |
-| 8. Nettoyage ultérieur | Décision mainteneur séparée | Backup vérifié, parité durable et audit. | Aucun nettoyage automatique. |
+| 1. Préflight | Lecture seule et validation des sources | Chemins, permissions, version SQLite, inventaire JSON assaini et hash de chaque source présente. | Erreur de validation avant tout journal, backup ou écritures métier. |
+| 2. Journal durable | Transaction SQLite indépendante | Une ligne `started` par source réellement traitée ; le résumé contient le nombre effectif de sources. | Une interruption laisse des lignes `started`, sans mutation métier implicite. |
+| 3. Dry-run | Finalisation indépendante du journal | Nombre de profils/groupes/tags, conflits, hashes et plan de mutations. | Les lignes `started` passent à `validated`; aucune table métier n’est modifiée ni backup créé. |
+| 4. Backup préimage (apply uniquement) | Chiffrement BACK-01 + vérification | ID et SHA-256 de l’artefact couvrant `groups.json` lorsqu’il existe et tous les `profile.json`. | Les lignes `started` passent à `failed` si la source évolue, si le coffre échoue ou si la vérification échoue. |
+| 5. Import | Transaction SQLite métier unique, distincte du journal | Compteurs, audit redacted et hash de l’enregistrement canonique. | Rollback de toutes les écritures métier et de l’audit ; le journal durable demeure hors transaction. |
+| 6. Parité | Lecture des lignes SQLite dans la transaction métier | Ligne `profile_json_parity_checks` par profil, uniquement après égalité des hash canoniques. | Divergence = rollback métier total ; aucun `match` ne peut être écrit sur confiance. |
+| 7. Finalisation | Transaction SQLite indépendante | Les lignes `started` passent à `committed` après commit métier, ou à `failed` avec un code assaini après erreur. | Un échec de finalisation conserve `started` afin de déclencher la reprise fail-closed. |
+| 8. Reprise contrôlée | `RecoverInterruptedOperations`, puis nouveau dry-run explicite | Toute ligne `started` restante devient `failed` avec `INTERRUPTED_BEFORE_COMPLETION`; nouvelle corrélation, nouveaux hashes et nouveau backup. | Aucun « reprendre » implicite ni réutilisation d’un état partiel. |
+| 9. Bascule contrôlée | Feature flag local explicite, à livrer ultérieurement | Chargement SQLite + fallback de lecture JSON documenté, sans double écriture non contrôlée. | Retour au lecteur JSON, données SQLite conservées pour diagnostic. |
+| 10. Nettoyage ultérieur | Décision mainteneur séparée | Backup vérifié, parité durable et audit. | Aucun nettoyage automatique. |
 
-La reprise après interruption ne réutilise jamais un état partiellement importé. Un `dry-run` journalise deux sources dans l’état `validated`; un `apply` réussi inscrit ces deux sources dans l’état `committed`. Une erreur de préflight n’écrit rien, tandis qu’une erreur dans l’import déclenche le rollback SQL de l’ensemble des lignes produit et du journal de l’opération. L’opérateur corrige la cause, exécute un nouveau `dry-run`, produit un nouveau backup préimage chiffré, puis relance l’`apply` avec une nouvelle corrélation.
+La reprise après interruption ne réutilise jamais un état partiellement importé. Le nombre de lignes de journal est le nombre de sources réellement présentes dans le plan, et non une constante : un `dry-run` finalise ces lignes à `validated`; un `apply` réussi les finalise à `committed`. Une erreur de préflight n’écrit rien. Une erreur de backup ou d’import laisse les écritures métier inexistantes ou rollbackées puis finalise le journal à `failed`. Au démarrage contrôlé, `RecoverInterruptedOperations` transforme toute ligne `started` laissée par un arrêt brutal en `failed` avec le code `INTERRUPTED_BEFORE_COMPLETION`. L’opérateur corrige la cause, exécute un nouveau `dry-run`, produit un nouveau backup préimage chiffré, puis relance l’`apply` avec une nouvelle corrélation.
 
 ## Couverture automatisée actuelle
 
-Les tests exécutés sur la branche produit valident l’application conjointe BACK-01 + Produit, la migration d’une base déjà au niveau 1 vers le niveau 3, l’idempotence du chargeur, les contraintes runtime/groupe/proxy, les références étrangères, les quatre index de références proxy et l’absence de colonnes de secrets en clair. Ils couvrent aussi désormais l’import JSON : `dry-run` sans écriture métier, refus d’un `apply` sans backup vérifié, backup préimage BACK-01 chiffré, parité relue depuis SQLite, rollback lors d’un conflit d’intégrité, interruption après publication du préimage sans écritures produit partielles, reprise après correction, et refus de toute donnée proxy en clair avant journalisation ou sauvegarde.
+Les tests exécutés sur la branche produit valident l’application conjointe BACK-01 + Produit, la migration d’une base déjà au niveau 1 vers le niveau 4, l’idempotence du chargeur, les contraintes runtime/groupe/proxy, les références étrangères, les quatre index de références proxy et l’absence de colonnes de secrets en clair. Ils couvrent aussi l’import JSON : `dry-run` sans écriture métier, compteur de sources dynamique, refus d’un `apply` sans backup vérifié, backup préimage BACK-01 chiffré, parité relue depuis SQLite, survie du journal lorsqu’une transaction métier rollback, interruption après publication du préimage, reprise fail-closed des lignes `started`, reprise après correction, et refus de toute donnée proxy en clair avant journalisation ou sauvegarde. Le schéma est également testé pour refuser les tags ASCII qui ne diffèrent que par la casse.
 
 ```bash
 go test ./internal/backup ./internal/productschema ./internal/profilemigration -count=1 -v

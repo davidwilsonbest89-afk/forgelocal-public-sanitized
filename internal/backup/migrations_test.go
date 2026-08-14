@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestMigrateUpgradesExistingBack01DatabaseToProductV3(t *testing.T) {
+func TestMigrateUpgradesExistingBack01DatabaseToProductV4(t *testing.T) {
 	dbPath := filepath.Join(t.TempDir(), "forgelocal.sqlite")
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
@@ -32,6 +32,12 @@ func TestMigrateUpgradesExistingBack01DatabaseToProductV3(t *testing.T) {
 	}
 	assertMigrationRecordedOnce(t, db, productSchemaVersion)
 	assertMigrationRecordedOnce(t, db, proxyIndexesSchemaVersion)
+	assertMigrationRecordedOnce(t, db, operationJournalSchemaVersion)
+	if _, err := db.Exec(`INSERT INTO profile_import_operations
+		(id, source_kind, source_sha256, dry_run, state, summary_json, correlation_id, created_at, updated_at)
+		VALUES ('operation.started', 'profile_json', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 1, 'started', '{"Sources":1}', 'corr-v4', '2026-08-14T00:00:00Z', '2026-08-14T00:00:00Z')`); err != nil {
+		t.Fatalf("v4 must accept started durable operation: %v", err)
+	}
 	for _, index := range []string{
 		"idx_profiles_proxy_provider_id_not_null",
 		"idx_profiles_proxy_secret_ref_not_empty",
@@ -49,6 +55,7 @@ func TestMigrateUpgradesExistingBack01DatabaseToProductV3(t *testing.T) {
 	}
 	assertMigrationRecordedOnce(t, db, productSchemaVersion)
 	assertMigrationRecordedOnce(t, db, proxyIndexesSchemaVersion)
+	assertMigrationRecordedOnce(t, db, operationJournalSchemaVersion)
 }
 
 func assertMigrationRecordedOnce(t *testing.T, db *sql.DB, version int) {
