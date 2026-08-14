@@ -1,0 +1,2 @@
+exit_code=100
+expected_result=nonzero because historical QA package is unavailable from current APT index; no candidate substitution is permitted

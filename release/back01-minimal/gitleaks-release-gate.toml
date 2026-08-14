@@ -1,0 +1,7 @@
+title = "ForgeLocal public-release gate scan policy"
+
+[allowlist]
+description = "The exact 40-hex PPA OpenPGP fingerprint is public key identity, not credential material."
+regexes = [
+  '''5301FA4FD93244FBC6F6149982BB6851C64F6880'''
+]

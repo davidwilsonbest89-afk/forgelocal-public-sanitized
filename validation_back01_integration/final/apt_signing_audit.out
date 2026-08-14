@@ -1,0 +1,54 @@
+=== apt trusted keyrings ===
+--- /etc/apt/trusted.gpg.d/ubuntu-keyring-2012-cdimage.gpg
+fingerprint=843938DF228D22F7B3742BC0D94AA3F0EFE21092
+--- /etc/apt/trusted.gpg.d/ubuntu-keyring-2018-archive.gpg
+fingerprint=F6ECB3762474EDA9D21B7022871920D1991BC93C
+--- /etc/apt/trusted.gpg.d/xtradeb-apps.gpg
+fingerprint=5301FA4FD93244FBC6F6149982BB6851C64F6880
+--- /etc/apt/keyrings/githubcli-archive-keyring.gpg
+fingerprint=2C6106201985B60E6C7AC87323F3D4EA75716059
+fingerprint=5700BAB26C8DE75F3EE323FEE5FAF19590714157
+fingerprint=7F38BBB59D064DBCB3D84D725612B36462313325
+fingerprint=B84252FAAA164D9EBEA2E2C1F4CAB2C46C97E579
+=== legacy trusted keyring ===
+=== xtradeb InRelease header ===
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: LP-PPA-xtradeb-apps
+Label: xtradeb applications
+Suite: noble
+Version: 24.04
+Codename: noble
+Date: Thu, 13 Aug 2026 21:01:36 UTC
+Architectures: amd64 arm64 armhf i386 ppc64el riscv64 s390x
+Components: main
+Description: Ubuntu Noble 24.04
+MD5Sum:
+ bbcf1fe1ed53d3d56ff24920c9c639be           208691 main/binary-amd64/Packages
+ 845cc833cc99804c2279e57a205a57b8            56875 main/binary-amd64/Packages.gz
+ a76fc41acf02c660983cfdc3350b4cc3            47700 main/binary-amd64/Packages.xz
+ ae363318a3a3027b7687006b232ead89              122 main/binary-amd64/Release
+ 97f34b2ea032daaf3fd85034616b4432           202651 main/binary-arm64/Packages
+ 4ccd0f7e045a7168864c513cb5fa3c46            55121 main/binary-arm64/Packages.gz
+ 3afed487d55bccce0744b60b3e0e8fa9            46164 main/binary-arm64/Packages.xz
+ 897164fb44999e337fd50a2be5715bfa              122 main/binary-arm64/Release
+ de7582fbd94f9799f7e3a425cb68ce53           184849 main/binary-armhf/Packages
+ 62a6690ae1a2d94fb398eda91971bd83            50914 main/binary-armhf/Packages.gz
+ 48fcb8ec7ab25009a07a7a4a616c071d            42728 main/binary-armhf/Packages.xz
+ 8b3cfacba517126fec3f5765704ba3f3              122 main/binary-armhf/Release
+ a36a416f78dcd85343130a067ebcb06d            35648 main/binary-i386/Packages
+ 55a219e7959322017ef000e3fc6663ea            10792 main/binary-i386/Packages.gz
+ 26777e2b1b2856f954fa354f0665be57             9928 main/binary-i386/Packages.xz
+ b993c4d38d1c01f64ea1b4e33823de90              121 main/binary-i386/Release
+ 727b79bb2aab6c789dcc3aabe1a384a2           149327 main/binary-ppc64el/Packages
+ da74c225ec462d8dcf11cf51322a3fea            42236 main/binary-ppc64el/Packages.gz
+ a1b1855d12d0dbd98ab33db7230fbde9            35380 main/binary-ppc64el/Packages.xz
+ 649d452eb4b2df21734b3b8934b8e2a7              124 main/binary-ppc64el/Release
+ 6ecf1679ff53fac42e19b2426314d09a           130929 main/binary-riscv64/Packages
+ 4e51dc2d98691accc279171d9855e098            37790 main/binary-riscv64/Packages.gz
+ cbee13ad2af07c20ed0d581c33c50842            32240 main/binary-riscv64/Packages.xz
+ 934843346df751683ac616277849ee5d              124 main/binary-riscv64/Release
+ 616a339a5bcfd54cf663489eb4edb5fe            37340 main/binary-s390x/Packages
+ 6882915650113a452a4e2923200e73ca            11450 main/binary-s390x/Packages.gz
+ df04eb2bf108e971f810d74d22f67cfc            10504 main/binary-s390x/Packages.xz

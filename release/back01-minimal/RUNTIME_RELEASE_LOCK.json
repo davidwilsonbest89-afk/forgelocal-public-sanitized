@@ -1,0 +1,43 @@
+{
+  "format": "forgelocal-runtime-release-lock/v1",
+  "decision": "PUBLIC_RELEASE_BLOCKED",
+  "pilot_artifact": {
+    "file": "forgelocal-back01-core-0.1.0-back01-07f603d-linux-amd64.tar.gz",
+    "sha256": "66f785eb82dd1bef90a142e618974f1e895cf5389deb0040475877dbc596c045",
+    "content_commit": "07f603d8d8314988b8b3279c78eceae645610c19"
+  },
+  "runtime_qa": {
+    "name": "chromium",
+    "package_version": "151.0.7922.71-1xtradeb1.2404.1",
+    "architecture": "amd64",
+    "package_repository": "https://ppa.launchpadcontent.net/xtradeb/apps/ubuntu",
+    "suite": "noble",
+    "component": "main",
+    "signing_key_fingerprint": "5301FA4FD93244FBC6F6149982BB6851C64F6880",
+    "wrapper_path": "/usr/bin/chromium",
+    "wrapper_sha256": "36cbbb620daeb933ae7861de07fcff05b5e1f7527303b5992459b8aa6707b845",
+    "binary_path": "/usr/lib/chromium/chromium",
+    "binary_sha256": "ad69c6632131d3a8b0e7395c3bb36d05cad6a2c650ecfa7ebe2e8dcba955c2de",
+    "runtime_included_in_artifact": false
+  },
+  "required_release_evidence": {
+    "exact_deb": "required",
+    "exact_deb_sha256": "required",
+    "signed_inrelease": "required",
+    "verified_signing_key_fingerprint": "required",
+    "package_index_entry_matching_deb_sha256": "required",
+    "reproducible_install_or_validation_procedure": "required"
+  },
+  "observed_availability": {
+    "checked_at_utc": "2026-08-14T01:21:00Z",
+    "historical_package_available_in_current_apt_index": false,
+    "current_apt_candidate": "151.0.7922.108-1xtradeb1.2404.1",
+    "historical_deb_cached_locally": false,
+    "direct_historical_deb_probe": "not_found",
+    "substitution_permitted": false
+  },
+  "next_approved_paths": [
+    "Recover and archive the exact QA .deb from a trusted release archive, verify it against its signed index, then re-run the capture procedure.",
+    "Or nominate a new Chromium candidate, archive its .deb and signed metadata, and re-run the full AC-BACK-01 runtime E2E before changing this lock."
+  ]
+}

@@ -1,0 +1,2 @@
+anti-leak scan passed; sanitized result: /tmp/tmp.V85vJGzqYk/anti-leak.json
+{"anti_leak":true,"checked_paths":4,"secret_material_emitted":false}

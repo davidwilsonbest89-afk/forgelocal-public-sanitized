@@ -80,6 +80,8 @@ go test ./... -count=1
 
 La publication reste **bloquée** par deux gates cumulatifs : la validation native du `SystemVault` sur chaque OS réellement pris en charge, dans une session utilisateur déverrouillée, ainsi que la provenance complète du runtime de release (dépôt, empreinte de clé/signature, paquet source `.deb`, pin de version et empreinte). Le sandbox headless ne fournit pas une collection Secret Service utilisable ; il ne permet donc pas de conclure les scénarios création, lecture après redémarrage, absence/révocation, permissions insuffisantes et absence de fuite dans SQLite, `profile.json`, logs ou backups.
 
+Le dossier de gate désormais prêt comprend `SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md`, `RUNTIME_RELEASE_LOCK.json`, `PUBLIC_RELEASE_DECISION.md` et les scripts de capture. Le paquet Chromium QA `151.0.7922.71-1xtradeb1.2404.1` n’est plus disponible dans l’index APT courant ; il doit être récupéré depuis une archive de confiance et vérifié, ou remplacé explicitement par un nouveau candidat qui repasse l’E2E complet.
+
 La migration des métadonnées de profils JSON vers SQLite métier et le branchement du dashboard React vers les routes BACK-01 demeurent également des travaux produit séparés. Ils ne bloquent pas la preuve cryptographique et de restauration BACK-01, mais empêchent de présenter ForgeLocal comme un panneau desktop complet finalisé.
 
 ## Fichiers de preuve
@@ -93,4 +95,7 @@ La migration des métadonnées de profils JSON vers SQLite métier et le branche
 | `validation_back01_integration/final/go_test_all_after_runtime_gate.out` | Suite `go test ./...` entièrement verte |
 | `release/back01-minimal/RUNTIME_QA_APPROVAL.md` | Périmètre exact de l’approbation runtime QA |
 | `release/back01-minimal/SYSTEMVAULT_RUNTIME_RELEASE_GATE.md` | Décision pilote/public, conditions SystemVault et provenance runtime |
+| `release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md` | Procédure native sans `sudo`, hors conteneur, incluant révocation, coffre verrouillé et anti-fuite |
+| `release/back01-minimal/RUNTIME_RELEASE_LOCK.json` | Verrou machine-readable de version, source et preuves runtime exigées |
+| `release/back01-minimal/PUBLIC_RELEASE_DECISION.md` | Décision actuelle `PUBLIC_RELEASE_BLOCKED` et conditions de levée |
 | `docs/security/SYSTEM_VAULT_NATIVE_MATRIX.md` | Matrice de validation native à exécuter sur hôte cible |

@@ -59,15 +59,19 @@ Le test lance directement Chromium avec `--dump-dom about:blank`; il n’ouvre d
 | SHA-256 binaire réel | `ad69c6632131d3a8b0e7395c3bb36d05cad6a2c650ecfa7ebe2e8dcba955c2de` |
 | Runtime incorporé dans l’artefact minimal | Non |
 
-Le candidat APT observé était `151.0.7922.108-1xtradeb1.2404.1`, différent de la version installée et testée. Il ne doit donc pas être substitué implicitement à la version QA : toute mise à niveau crée un nouveau candidat de validation avec nouvelle empreinte et réexécution de l’E2E.
+Le candidat APT observé était `151.0.7922.108-1xtradeb1.2404.1`, différent de la version installée et testée. La version QA historique `151.0.7922.71-1xtradeb1.2404.1` n’est plus présente dans l’index APT courant, n’est pas dans le cache local et l’URL directe historique a répondu `404`. Elle ne doit donc jamais être remplacée implicitement : récupérer l’artefact exact depuis une archive de confiance, ou nommer le candidat plus récent et refaire l’E2E complet.
+
+Le verrou `RUNTIME_RELEASE_LOCK.json` fixe ce constat, l’empreinte de l’artefact pilote, les empreintes runtime observées et les preuves encore obligatoires. Une release publique reste refusée tant que ce fichier indique `PUBLIC_RELEASE_BLOCKED`.
 
 ### Conditions supplémentaires de provenance avant publication publique
 
-1. Enregistrer l’URL de dépôt, l’empreinte de clé de signature et l’état de vérification APT dans le dossier de release.
-2. Archiver le nom, la version, l’architecture et le SHA-256 du paquet `.deb` source, pas seulement ceux du wrapper et du binaire décompressé.
-3. Installer explicitement la version validée, ou valider la nouvelle version candidate, avec un pin de version reproductible.
-4. Réviser licence, notices, conditions de redistribution et mise à jour de sécurité du runtime choisi.
-5. Si Camoufox est proposé, appliquer la même procédure à ses artefacts, sa licence MPL-2.0, son dépôt officiel, ses signatures et son E2E ; aucune équivalence avec Chromium n’est présumée.
+1. Exécuter `scripts/capture-runtime-release-evidence.sh` avec le paquet/version exacts. Le script n’exige pas `sudo`, n’installe pas et n’exécute pas le paquet ; il refuse une version historique indisponible plutôt que de la remplacer par le candidat courant.
+2. Enregistrer l’URL de dépôt, l’empreinte de clé de signature et l’état de vérification APT dans le dossier de release.
+3. Archiver le nom, la version, l’architecture et le SHA-256 du paquet `.deb` source, pas seulement ceux du wrapper et du binaire décompressé.
+4. Vérifier que le SHA-256 du `.deb` est celui de l’entrée de l’index APT authentifié par `InRelease`, puis conserver `InRelease`, le keyring et l’empreinte de clé.
+5. Installer explicitement la version validée, ou valider la nouvelle version candidate, avec un pin de version reproductible.
+6. Réviser licence, notices, conditions de redistribution et mise à jour de sécurité du runtime choisi.
+7. Si Camoufox est proposé, appliquer la même procédure à ses artefacts, sa licence MPL-2.0, son dépôt officiel, ses signatures et son E2E ; aucune équivalence avec Chromium n’est présumée.
 
 ## Matrice SystemVault native obligatoire
 

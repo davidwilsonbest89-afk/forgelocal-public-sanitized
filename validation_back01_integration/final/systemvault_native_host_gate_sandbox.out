@@ -1,0 +1,3 @@
+refusing SystemVault release gate in a container; run on the target OS host
+exit_code=3
+expected_result=nonzero because this environment is a container, not an OS target desktop session

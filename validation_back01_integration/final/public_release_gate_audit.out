@@ -1,0 +1,18 @@
+=== pilot artifact ===
+66f785eb82dd1bef90a142e618974f1e895cf5389deb0040475877dbc596c045  dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-07f603d-linux-amd64.tar.gz
+/home/ubuntu/ForgeLocal/dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-07f603d-linux-amd64.tar.gz: OK
+=== installed chromium ===
+package=chromium
+version=151.0.7922.71-1xtradeb1.2404.1
+architecture=amd64
+status=installed
+=== cached exact deb ===
+=== apt source ===
+/etc/apt/sources.list.d/xtradeb-apps.list:1:deb http://ppa.launchpad.net/xtradeb/apps/ubuntu noble main
+=== configured signed-by ===
+/etc/apt/sources.list.d/github-cli.list:1:deb [arch=amd64 signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main
+=== APT list files ===
+ppa.launchpad.net_xtradeb_apps_ubuntu_dists_noble_InRelease
+ppa.launchpad.net_xtradeb_apps_ubuntu_dists_noble_main_binary-amd64_Packages.lz4
+=== gpg utility ===
+/usr/bin/gpg

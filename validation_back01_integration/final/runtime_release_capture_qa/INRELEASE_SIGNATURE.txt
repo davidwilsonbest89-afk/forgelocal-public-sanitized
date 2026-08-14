@@ -1,0 +1,3 @@
+gpgv: Signature made Thu Aug 13 21:01:37 2026 UTC
+gpgv:                using RSA key 5301FA4FD93244FBC6F6149982BB6851C64F6880
+gpgv: Good signature from "Launchpad PPA for xtradeb Ubuntu team"
