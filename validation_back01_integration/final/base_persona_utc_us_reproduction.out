@@ -1,0 +1,6 @@
+=== RUN   TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser
+    manager_test.go:504: launch error = persona contract mismatch: timezone "UTC" does not match request country "US", want captured launch error
+--- FAIL: TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser (0.00s)
+FAIL
+FAIL	forgelocal/internal/browser	0.003s
+FAIL
