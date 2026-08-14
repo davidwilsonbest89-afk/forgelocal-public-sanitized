@@ -83,9 +83,12 @@ if [[ "$runtime_relaunch_proven" == true ]]; then
 fi
 
 # Only modules reached by the compiled minimal command belong in this artifact.
-# The JSON package graph contains each package's resolved module directory.
-go list -deps -json ./cmd/back01-core > "$STAGE/DEPENDENCY_GRAPH.json"
-python3 - "$STAGE/DEPENDENCY_GRAPH.json" "$STAGE/THIRD_PARTY_MODULES.txt" "$STAGE/licenses" <<'PY'
+# The raw package graph is build-only metadata: the distributed inventory is
+# THIRD_PARTY_MODULES.txt plus the copied licence notices.
+dependency_graph="$(mktemp)"
+trap 'rm -f "$dependency_graph"' EXIT
+go list -deps -json ./cmd/back01-core > "$dependency_graph"
+python3 - "$dependency_graph" "$STAGE/THIRD_PARTY_MODULES.txt" "$STAGE/licenses" <<'PY'
 import json, os, shutil, sys
 source, inventory, license_dir = sys.argv[1:]
 raw = open(source, encoding="utf-8").read()
