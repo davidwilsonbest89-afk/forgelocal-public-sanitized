@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "document": {
+    "id": "FL-ADD-2.1-20260814",
+    "title": "Addendum v2.1 — Camoflox audité et dashboard connecté en lecture seule",
+    "version": "2.1",
+    "path": "docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md",
+    "sha256": "0a0e6608f374b9f301172997053820dc48c1c65a5cfea2e1160bc08436d5734c",
+    "content_commit": "13cc8bb4269f720fbed276d9b1ae38aa4d8533ad",
+    "content_commit_subject": "docs(spec): add Camoflox and read-only dashboard addendum"
+  },
+  "base_document": {
+    "id": "FL-CDC-1.0-20260814",
+    "path": "docs/CAHIER_DES_CHARGES_FORGELOCAL.md",
+    "manifest_path": "docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json"
+  },
+  "verification": {
+    "algorithm": "SHA-256",
+    "command": "git show 13cc8bb4269f720fbed276d9b1ae38aa4d8533ad:docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md | sha256sum",
+    "rule": "La somme calculée sur le document au commit content_commit doit être exactement égale à document.sha256."
+  },
+  "release_status": {
+    "public_release": "PUBLIC_RELEASE_BLOCKED",
+    "pilot": "PILOT_LOCAL_SUSPENDED_PENDING_SECRET_SCAN_TRIAGE",
+    "scan": "SCAN_BLOCKED_UNKNOWN"
+  }
+}
