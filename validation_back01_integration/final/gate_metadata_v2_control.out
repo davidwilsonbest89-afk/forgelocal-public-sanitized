@@ -1,0 +1,5 @@
+gate_metadata_schema=v2
+base_state=pass
+incomplete_passed_gate=rejected
+gitleaks_staged=pass
+public_release_decision=PUBLIC_RELEASE_BLOCKED

@@ -1,37 +1,239 @@
 {
-  "format": "forgelocal-public-release-gate-state/v1",
+  "format": "forgelocal-public-release-gate-state/v2",
   "decision": "PUBLIC_RELEASE_BLOCKED",
-  "artifact_chain_id": "candidate-chromium-151.0.7922.108-67a8dfd",
+  "recorded_at": "2026-08-14",
+  "artifact_chain": {
+    "id": "candidate-chromium-151.0.7922.108-67a8dfd",
+    "artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+    "source_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+    "runtime": {
+      "name": "Chromium",
+      "version": "151.0.7922.108-1xtradeb1.2404.1",
+      "architecture": "amd64"
+    }
+  },
   "traceability_index": {
     "file": "release/back01-minimal/RELEASE_TRACEABILITY_INDEX.json",
     "policy_required": "PUBLIC_RELEASE_BLOCKED"
   },
+  "gate_schema": {
+    "allowed_decisions": [
+      "PASSED",
+      "FAILED",
+      "PENDING",
+      "NOT_APPLICABLE"
+    ],
+    "passed_requirements": [
+      "owner.role",
+      "recorded_at",
+      "executed_at",
+      "target.os",
+      "target.architecture",
+      "tested_commit",
+      "evidence.file",
+      "evidence.sha256",
+      "independent_review.decision=PASSED",
+      "independent_review.reviewer_role",
+      "independent_review.reviewed_at"
+    ],
+    "freshness_rule": "A PASSED gate is invalid if its tested commit, artifact SHA-256, runtime version, target OS/version/architecture, or evidence SHA-256 differs from the release candidate it is used to promote.",
+    "evidence_reuse_rule": "Evidence from a different runtime, artifact chain, source commit or target configuration must not be reused."
+  },
   "gates": [
     {
       "id": "SYSTEMVAULT_NATIVE_PER_TARGET",
-      "status": "PENDING_NATIVE_HOST",
+      "owner": {
+        "role": "Platform Security Owner",
+        "assignment_status": "UNASSIGNED"
+      },
+      "decision": "PENDING",
+      "recorded_at": "2026-08-14",
+      "executed_at": null,
+      "target": {
+        "os": null,
+        "os_version": null,
+        "architecture": null
+      },
+      "tested_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+      "runtime_version": "151.0.7922.108-1xtradeb1.2404.1",
+      "evidence": {
+        "file": null,
+        "sha256": null,
+        "status": "MISSING"
+      },
+      "independent_review": {
+        "decision": "PENDING",
+        "reviewer_role": null,
+        "reviewed_at": null,
+        "review_ref": null
+      },
+      "freshness": {
+        "valid_for_artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+        "invalidated_by": [
+          "source_commit_change",
+          "artifact_hash_change",
+          "runtime_change",
+          "target_configuration_change",
+          "evidence_hash_change"
+        ]
+      },
       "required_evidence": "One successful native matrix per announced OS, version and architecture, executed without sudo, container or cleartext fallback."
     },
     {
       "id": "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW",
-      "status": "PENDING_INTEGRATED_E2E",
+      "owner": {
+        "role": "Security QA Owner",
+        "assignment_status": "UNASSIGNED"
+      },
+      "decision": "PENDING",
+      "recorded_at": "2026-08-14",
+      "executed_at": null,
+      "target": {
+        "os": null,
+        "os_version": null,
+        "architecture": null
+      },
+      "tested_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+      "runtime_version": "151.0.7922.108-1xtradeb1.2404.1",
+      "evidence": {
+        "file": null,
+        "sha256": null,
+        "status": "MISSING"
+      },
+      "independent_review": {
+        "decision": "PENDING",
+        "reviewer_role": null,
+        "reviewed_at": null,
+        "review_ref": null
+      },
+      "freshness": {
+        "valid_for_artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+        "invalidated_by": [
+          "source_commit_change",
+          "artifact_hash_change",
+          "runtime_change",
+          "target_configuration_change",
+          "evidence_hash_change"
+        ]
+      },
       "required_evidence": "systemvault-anti-leak.json from an actual profile to encrypted backup to isolated restore flow, without exposing the sentinel."
     },
     {
       "id": "MAINTAINER_MANIFEST_SIGNATURE",
-      "status": "PENDING_MAINTAINER_SIGNATURE",
+      "owner": {
+        "role": "Release Maintainer",
+        "assignment_status": "UNASSIGNED"
+      },
+      "decision": "PENDING",
+      "recorded_at": "2026-08-14",
+      "executed_at": null,
+      "target": {
+        "os": "independent verification environment",
+        "os_version": null,
+        "architecture": null
+      },
+      "tested_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+      "runtime_version": "151.0.7922.108-1xtradeb1.2404.1",
+      "evidence": {
+        "file": null,
+        "sha256": null,
+        "status": "MISSING"
+      },
+      "independent_review": {
+        "decision": "PENDING",
+        "reviewer_role": null,
+        "reviewed_at": null,
+        "review_ref": null
+      },
+      "freshness": {
+        "valid_for_artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+        "invalidated_by": [
+          "source_commit_change",
+          "artifact_hash_change",
+          "signature_change",
+          "public_key_change",
+          "evidence_hash_change"
+        ]
+      },
       "required_evidence": "Detached signature, separately published public key, approved fingerprint and independent verification attestation."
     },
     {
       "id": "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW",
-      "status": "PENDING_REVIEW",
+      "owner": {
+        "role": "Release Compliance Owner",
+        "assignment_status": "UNASSIGNED"
+      },
+      "decision": "PENDING",
+      "recorded_at": "2026-08-14",
+      "executed_at": null,
+      "target": {
+        "os": "Ubuntu 24.04 LTS candidate QA environment",
+        "os_version": "24.04",
+        "architecture": "amd64"
+      },
+      "tested_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+      "runtime_version": "151.0.7922.108-1xtradeb1.2404.1",
+      "evidence": {
+        "file": null,
+        "sha256": null,
+        "status": "MISSING"
+      },
+      "independent_review": {
+        "decision": "PENDING",
+        "reviewer_role": null,
+        "reviewed_at": null,
+        "review_ref": null
+      },
+      "freshness": {
+        "valid_for_artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+        "invalidated_by": [
+          "runtime_package_change",
+          "runtime_license_change",
+          "distribution_channel_change",
+          "evidence_hash_change"
+        ]
+      },
       "required_evidence": "Recorded legal and distribution review of the exact runtime packages and their licenses."
     },
     {
       "id": "OS_COMPATIBILITY_EVIDENCE",
-      "status": "PENDING_PER_TARGET_EVIDENCE",
+      "owner": {
+        "role": "Release QA Owner",
+        "assignment_status": "UNASSIGNED"
+      },
+      "decision": "PENDING",
+      "recorded_at": "2026-08-14",
+      "executed_at": null,
+      "target": {
+        "os": null,
+        "os_version": null,
+        "architecture": null
+      },
+      "tested_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+      "runtime_version": "151.0.7922.108-1xtradeb1.2404.1",
+      "evidence": {
+        "file": null,
+        "sha256": null,
+        "status": "MISSING"
+      },
+      "independent_review": {
+        "decision": "PENDING",
+        "reviewer_role": null,
+        "reviewed_at": null,
+        "review_ref": null
+      },
+      "freshness": {
+        "valid_for_artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+        "invalidated_by": [
+          "source_commit_change",
+          "artifact_hash_change",
+          "runtime_change",
+          "target_configuration_change",
+          "evidence_hash_change"
+        ]
+      },
       "required_evidence": "Compatibility matrix limited to configurations with complete runtime and native SystemVault evidence."
     }
   ],
-  "promotion_rule": "All gates must be explicitly changed to PASSED with versioned evidence and independently reviewed before PUBLIC_RELEASE_APPROVED may be considered."
+  "promotion_rule": "All five gates must be explicitly PASSED with versioned, fresh evidence and independently reviewed before PUBLIC_RELEASE_APPROVED may be considered."
 }
