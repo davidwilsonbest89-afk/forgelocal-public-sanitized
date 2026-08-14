@@ -1,6 +1,6 @@
 # Cahier des charges — ForgeLocal
 
-**Version :** 0.2 — consolidation BACK-01 et feuille de route produit  
+**Version :** 0.3 — baseline reproductible, produit et release suspendue
 **Date :** 14 août 2026  
 **Auteur :** Manus AI  
 **Statut :** document de référence interne ; aucune autorisation de publication publique
@@ -19,7 +19,7 @@ La présente version sépare explicitement le **lot BACK-01 minimal**, qui est u
 | Contrôle des données | Les données métier, les profils et les preuves restent sur la machine de l’utilisateur, sauf export explicite. |
 | Sécurité | Secrets uniquement dans le coffre système ; jamais dans SQLite, JSON, logs, profils, archives non chiffrées ou interface web. |
 | Architecture | Un seul Core Go propriétaire des écritures ; API locale liée par défaut à `127.0.0.1`. |
-| Licence cible | Composants propres sous licence permissive MIT ou Apache-2.0 ; toute dépendance à obligations particulières doit être revue avant redistribution. |
+| Licence cible | Le code propriétaire ForgeLocal est sous licence permissive MIT ou Apache-2.0 ; un inventaire complet des licences, notices et obligations de toutes les dépendances est obligatoire avant toute redistribution. |
 | Communication produit | Aucune promesse de « zéro détection », aucune annonce d’OS ou runtime non validé. |
 
 ## 2. État de référence au 14 août 2026
@@ -76,6 +76,8 @@ Les secrets proxy, tokens de fournisseur et clés de chiffrement doivent être r
 
 La validation SystemVault doit se faire dans une session graphique utilisateur réelle, non-root, hors conteneur, avec D-Bus de session, `XDG_RUNTIME_DIR` et Secret Service déverrouillé. Les cas obligatoires sont création/lecture, lecture après redémarrage du Core, clé absente, révocation, coffre verrouillé et permissions insuffisantes. Un refus contrôlé est attendu quand le coffre n’est pas utilisable.
 
+> **Exigence de persistance :** une VM Ubuntu 24.04 persistante ou une installation dédiée est requise pour la qualification complète, notamment les cas de redémarrage, révocation et coffre verrouillé. Une session éphémère « Try Ubuntu » peut servir au préflight, mais ne constitue pas seule une preuve native complète.
+
 ### 4.2 Backups et restauration
 
 Le flux `profil → backup chiffré → modification → restauration isolée` est le flux de référence. La restauration doit échouer de manière atomique ou être entièrement récupérée ; elle ne doit jamais écraser un profil existant sans une action explicite et enregistrée. Les archives exportées doivent être traitées comme non fiables jusqu’à vérification complète du format, de l’authenticité et des chemins.
@@ -98,13 +100,23 @@ Les cinq gates ci-dessous sont tous requis. Une seule décision `PENDING` ou `FA
 
 Toute preuve `PASSED` devient invalide si le commit testé, le SHA-256 de l’archive, la version du runtime, l’OS, l’architecture, la configuration cible ou le hash de preuve change. Les preuves d’un runtime ou d’un artefact ne peuvent jamais être réutilisées pour un autre candidat.
 
+### 5.1 Distinction impérative entre gates internes et gates publics
+
+Les gates de développement internes `G0` à `G6` du lot produit servent uniquement à organiser les jalons techniques. Ils ne remplacent jamais les cinq gates publics machine-readable ci-dessus et ne peuvent ni les passer automatiquement, ni transformer `PUBLIC_RELEASE_BLOCKED` en approbation. Seul `PUBLIC_RELEASE_GATE_STATE.json`, avec des preuves cohérentes et une revue indépendante, décide du statut public.
+
 ## 6. Qualité, tests et sécurité de la chaîne de livraison
+
+### 6.1 Toolchain et outillage reproductibles
+
+La CI doit s’exécuter avec une distribution Go **exactement** égale à `1.25.13`, consignée dans l’environnement de build, avec `GOTOOLCHAIN=local`, et vérifiée au début du job par `go version` et `go env GOVERSION GOOS GOARCH`. Tout écart doit faire **échouer explicitement** le job ; aucun téléchargement implicite de toolchain différent n’est autorisé. Les versions de Gosec, Govulncheck, GolangCI-Lint et Gitleaks doivent être figées dans un manifeste versionné avec source et checksum. L’usage de `@latest` est interdit dans la CI et les preuves de release.
+
+Avant tout filtre de tests, le job doit enregistrer `go list ./...` et vérifier que chaque package ciblé existe dans le commit testé. Chaque commande doit ensuite prouver qu’au moins un test attendu est sélectionné ; un code de sortie `0` avec zéro test sélectionné est un échec de validation.
 
 Les contrôles suivants sont reproductibles dans le sandbox et doivent être exécutés à chaque changement de code BACK-01 ou de documentation de release pertinente.
 
 | Contrôle | Commande de référence | Exigence |
 |---|---|---|
-| Tests ciblés API | `go test ./internal/api -list 'Backup|Restore'` puis `go test ./internal/api -run 'TestBackupV1CreateModifyRestoreIsolation' -count=1 -v` | Le test AC-BACK-01 doit être effectivement sélectionné et vert. |
+| Inventaire et tests ciblés API | `go list ./...`, puis `go test ./internal/api -list 'Backup|Restore'` et `go test ./internal/api -run 'TestBackupV1CreateModifyRestoreIsolation' -count=1 -v` | Les packages doivent exister ; le test AC-BACK-01 doit être effectivement sélectionné et vert. |
 | Suite complète | `go test ./... -count=1` | Vert. |
 | Courses BACK-01 | `go test -race ./internal/backup ./internal/profile ./internal/secrets ./cmd/back01-core -count=1` | Vert. |
 | Analyse statique Go | `go vet ./...` | Vert. |
@@ -112,9 +124,11 @@ Les contrôles suivants sont reproductibles dans le sandbox et doivent être ex�
 | Dépendances minimales | `go list -deps ./cmd/back01-core` | Aucun package interne interdit. |
 | Traçabilité | `scripts/validate-release-traceability.py` | Vert, avec chaînes indépendantes. |
 | Décision publique | `scripts/check-public-release-gate.py` | Doit retourner le statut attendu, actuellement bloqué. |
-| Scan de secrets | Scan redigé du dépôt, de l’arborescence staged et de l’archive extraite. | Zéro fuite réelle ; toute exception est versionnée et bornée. |
+| Scan de secrets | Scan redigé du dépôt, de l’historique Git pertinent, de l’arborescence staged, de l’archive extraite, du SBOM, des manifestes et des journaux de build. | `SCAN_CLEAN` uniquement si aucune occurrence non classifiée ne subsiste ; toute exception doit être minimale, versionnée et revue. |
 
 La suite actuelle passe dans le sandbox pour les tests Go, le détecteur de courses sur les modules BACK-01 ciblés, `go vet`, la fermeture de dépendances minimale et le Gosec limité au graphe de distribution. Le scan Gosec sur l’ensemble du dépôt retourne 189 résultats : ils sont de la dette héritée et ne doivent pas être ignorés. La plupart se concentrent dans `internal/browser` et `cmd/server`, qui sont hors du binaire BACK-01 minimal ; les 17 alertes G404 de génération pseudo-aléatoire sont concentrées dans les fonctionnalités historiques de humanization/fingerprint, elles aussi exclues du lot.
+
+> **État de scan actuel : `SCAN_BLOCKED_UNKNOWN`.** Une occurrence `generic-api-key` non classifiée est présente dans une preuve incluse dans l’archive RC. Tant que le dossier mainteneur et sa revue indépendante ne concluent pas `REAL_SECRET` ou `FALSE_POSITIVE`, aucun scan ne peut être qualifié `SCAN_CLEAN`, le pilote reste suspendu et aucune qualification SystemVault ne reprend pour ce candidat.
 
 > **Règle de qualité :** toute fonctionnalité BACK-01 modifiée doit avoir des tests unitaires et d’intégration qui couvrent les chemins de succès, erreur et récupération. Les commandes `cmd/back01-core` et `cmd/systemvault-doctor`, ainsi que `internal/secrets`, doivent recevoir des tests dédiés avant toute extension du périmètre de release.
 
@@ -134,9 +148,9 @@ Chaque écran mutateur doit gérer la concurrence, afficher les erreurs de faço
 
 ### 7.3 Lot P3 — connecteurs proxy sous contrôle utilisateur
 
-Les fournisseurs tels que Decodo doivent être intégrés derrière un adaptateur versionné. Les identifiants API et mots de passe de proxy restent dans le coffre système ; le Core ne conserve que des références. Les fonctions attendues sont découverte des offres, validation de connectivité, import contrôlé d’endpoint, association explicite à un profil et diagnostic sans révélation de secret.
+Les fournisseurs tels que Decodo doivent être intégrés derrière une interface générique et versionnée `ProxyProvider`, jamais directement dans le cœur métier. L’interface doit permettre à un adaptateur optionnel de découvrir des offres, valider la connectivité, importer un endpoint sous contrôle, signaler son état et associer explicitement un proxy à un profil. Les identifiants API et mots de passe de proxy restent dans le coffre système ; le Core ne conserve que des références non sensibles.
 
-Aucune interface ne doit importer automatiquement des proxies, créer une facturation fournisseur ou activer une rotation de proxy sans consentement explicite de l’utilisateur. La documentation doit préciser que les règles et contrats de chaque fournisseur s’appliquent.
+Aucune interface ne doit importer automatiquement des proxies, créer une facturation fournisseur ou activer une rotation de proxy sans consentement explicite de l’utilisateur. La documentation doit préciser que les règles et contrats de chaque fournisseur s’appliquent. ForgeLocal ne doit dépendre fonctionnellement d’aucun fournisseur unique.
 
 ### 7.4 Lot P4 — runtime et wrapper desktop
 
@@ -162,11 +176,12 @@ Tauri devient envisageable seulement après stabilisation de l’API et du dashb
 | Priorité | Action | Condition de clôture |
 |---|---|---|
 | P0 | Triage mainteneur de l’alerte de scan de l’archive RC | Faux positif borné et scan redigé vert, ou secret révoqué avec nouveau candidat complet. |
-| P0 | Exécuter le runbook SystemVault sur Ubuntu 24.04.4 LTS `amd64` hors conteneur | Quatre sorties assainies versionnées et revue indépendante. |
+| P0 | Exécuter le runbook SystemVault sur une VM Ubuntu 24.04.4 LTS `amd64` persistante ou une installation dédiée, hors conteneur | Quatre sorties assainies versionnées et revue indépendante. |
 | P0 | Produire l’anti-fuite du flux intégré | `systemvault-anti-leak.json` vert, même chaîne artefact/runtime/commit. |
 | P0 | Revue de licence et redistribution Chromium | Décision écrite sur les paquets exacts et leur distribution. |
 | P0 | Signature mainteneur | Manifeste signé avec clé publique séparée et vérification indépendante. |
 | P1 | Réduire et classer la dette Gosec du dépôt historique | Registre de décisions par règle, fichier, risque, propriétaire, échéance et test de non-régression. |
+| P1 | Produire l’inventaire de licences de distribution | Licences, notices et obligations de chaque dépendance et runtime évalués avant redistribution. |
 | P1 | Implémenter la migration SQLite métier | Dry-run, parité, rollback, tests de migration. |
 | P1 | Construire le dashboard React local | Écrans de gestion de profils, backups, audit et diagnostic avec API unique. |
 | P2 | Intégrer les fournisseurs proxy | Adaptateurs, coffre système, tests de connectivité et consentement explicite. |
