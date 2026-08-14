@@ -130,7 +130,7 @@ Les contrôles suivants sont reproductibles dans le sandbox et doivent être ex�
 
 | Contrôle | Commande de référence | Exigence |
 |---|---|---|
-| Inventaire et tests ciblés API | `go list ./...`, puis `go test ./internal/api -list 'Backup|Restore'` et `go test ./internal/api -run 'TestBackupV1CreateModifyRestoreIsolation' -count=1 -v` | Les packages doivent exister ; le test AC-BACK-01 doit être effectivement sélectionné et vert. |
+| Inventaire et tests ciblés API | Voir la procédure `T-API-AC-BACK-01` ci-dessous. | Les packages doivent exister ; le test AC-BACK-01 doit être effectivement sélectionné et vert. |
 | Suite complète | `go test ./... -count=1` | Vert. |
 | Courses BACK-01 | `go test -race ./internal/backup ./internal/profile ./internal/secrets ./cmd/back01-core -count=1` | Vert. |
 | Analyse statique Go | `go vet ./...` | Vert. |
@@ -139,6 +139,18 @@ Les contrôles suivants sont reproductibles dans le sandbox et doivent être ex�
 | Traçabilité | `scripts/validate-release-traceability.py` | Vert, avec chaînes indépendantes. |
 | Décision publique | `scripts/check-public-release-gate.py` | Doit retourner le statut attendu, actuellement bloqué. |
 | Scan de secrets | Scan redigé du dépôt, de l’historique Git pertinent, de l’arborescence staged, de l’archive extraite, du SBOM, des manifestes et des journaux de build. | `SCAN_CLEAN` uniquement si aucune occurrence non classifiée ne subsiste ; toute exception doit être minimale, versionnée et revue. |
+
+#### T-API-AC-BACK-01 — inventaire et restauration isolée
+
+Les trois commandes suivantes sont distinctes, doivent être exécutées avec Go `1.25.13` et `GOTOOLCHAIN=local`, puis leurs sorties assainies doivent être archivées avec le commit testé :
+
+```bash
+go list ./...
+go test ./internal/api -list 'Backup|Restore' -count=1
+go test ./internal/api -run '^TestBackupV1CreateModifyRestoreIsolation$' -count=1 -v
+```
+
+La première commande doit contenir exactement le package cible `forgelocal/internal/api`. La deuxième constitue l’inventaire ciblé : elle doit afficher les noms exacts des tests correspondants et le rapport doit consigner leur nombre. La troisième exécute exclusivement `TestBackupV1CreateModifyRestoreIsolation` : le rapport doit compter une ligne `=== RUN` pour ce nom, une ligne `--- PASS` correspondante, zéro autre ligne `=== RUN`, et un résultat final `PASS`. Toute absence de package, sélection nulle, test supplémentaire ou échec rend le contrôle non conforme, même si le processus retourne le code `0`.
 
 La suite actuelle passe dans le sandbox pour les tests Go, le détecteur de courses sur les modules BACK-01 ciblés, `go vet`, la fermeture de dépendances minimale et le Gosec limité au graphe de distribution. La dette Gosec possède deux références qui ne doivent pas être confondues : le rapport historique du **14 août 2026** contient 189 résultats (`validation_back01_integration/final/sandbox-gosec-20260814.json`, SHA-256 `332ae84056ec9ad5d15a965674540f0d5f21215bbeb998dd6bf614516c65b978`), mais il déclare `GosecVersion: dev` et n’associe pas un commit propre ; il est donc une **preuve historique non conforme** à la présente exigence de verrouillage. La baseline reproductible de contrôle, exécutée le 14 août 2026 avec Gosec `2.21.4` sur le commit `64bede39dc3355e0db2c4871cf4de7eb46410265`, contient 166 résultats (rapport SHA-256 `ba42d3e2af1fe8d9a61407ed87d54c57b7d81cccfaddc9fa382b07f35e06ec9d`). Aucun résultat n’est ignoré : le rapport historique à 189 résultats doit être régénéré sous l’outillage verrouillé avant toute décision fondée sur son nombre. Les conclusions de réduction doivent référencer à la fois le commit, la version Gosec, la date et le hash du rapport. Les concentrations historiques dans `internal/browser`, `cmd/server` et les fonctions humanization/fingerprint restent hors du binaire BACK-01 minimal, sans être dispensées de classification.
 
