@@ -155,7 +155,7 @@ PY
 
 (
   cd "$STAGE"
-  find . -type f -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+  find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
 )
 rm -f "$ARCHIVE"
 tar --sort=name --mtime="@$SOURCE_DATE_EPOCH" --owner=0 --group=0 --numeric-owner -C "$OUT_ROOT" -czf "$ARCHIVE" "$(basename "$STAGE")"
