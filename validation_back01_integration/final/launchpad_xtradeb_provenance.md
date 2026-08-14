@@ -13,3 +13,13 @@ La page consultée affichait une version Chromium plus récente (`151.0.7922.137
 ## Référence
 
 1. [Launchpad — PPA XtraDeb Apps pour Ubuntu Noble](https://launchpad.net/~xtradeb/+archive/ubuntu/apps?field.series_filter=noble)
+
+## Disponibilité observée lors de la qualification
+
+La liste publique des publications Chromium pour Ubuntu Noble ne présentait plus que la publication courante `151.0.7922.137-1xtradeb1.2404.1`. La version QA historique `151.0.7922.71-1xtradeb1.2404.1` n’y figurait plus. Côté index APT local, le candidat résolu au moment de la qualification était `151.0.7922.108-1xtradeb1.2404.1`.
+
+Le paquet candidat `151.0.7922.108-1xtradeb1.2404.1` a donc été traité comme un **nouveau candidat de runtime**, sans modifier le statut du pilote BACK-01 ni autoriser une publication publique. Sa capture locale a conservé le `.deb`, `InRelease`, `Packages.gz`, le keyring public et les contrôles de checksum correspondants.
+
+> Une divergence ultérieure entre la publication Launchpad et le candidat observé dans l’index APT n’autorise aucune mise à niveau implicite. La version exacte réellement testée doit rester verrouillée dans les preuves.
+
+2. [Launchpad — publications Chromium de la PPA XtraDeb](https://launchpad.net/~xtradeb/+archive/ubuntu/apps/+packages?field.name_filter=chromium&field.status_filter=published&field.series_filter=noble)

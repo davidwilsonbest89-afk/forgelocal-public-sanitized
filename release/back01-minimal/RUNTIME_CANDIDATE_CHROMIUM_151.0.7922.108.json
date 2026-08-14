@@ -1,0 +1,66 @@
+{
+  "format": "forgelocal-runtime-candidate/v1",
+  "candidate_id": "chromium-151.0.7922.108-xtradeb-noble-amd64",
+  "status": "TECHNICAL_RUNTIME_E2E_PASSED_PUBLIC_RELEASE_BLOCKED",
+  "qualification_scope": "Chromium is an external QA runtime only. It is not embedded in the minimal BACK-01 Core/API artifact.",
+  "platform": {
+    "os": "Ubuntu 24.04.4 LTS",
+    "architecture": "amd64"
+  },
+  "source": {
+    "repository": "https://ppa.launchpadcontent.net/xtradeb/apps/ubuntu",
+    "suite": "noble",
+    "component": "main",
+    "inrelease_signing_key_fingerprint": "5301FA4FD93244FBC6F6149982BB6851C64F6880",
+    "inrelease_verification": "gpgv good signature captured",
+    "package_index_verification": "Packages.gz checksum matched SHA256 entry authenticated by InRelease"
+  },
+  "packages": [
+    {
+      "name": "chromium",
+      "version": "151.0.7922.108-1xtradeb1.2404.1",
+      "architecture": "amd64",
+      "deb_sha256": "8bb8686eec56afddd29fb40371808b6117a60b9b1a4cdece791d2056f3f93948",
+      "evidence_directory": "validation_back01_integration/candidates/chromium_151.0.7922.108-1xtradeb1.2404.1_amd64"
+    },
+    {
+      "name": "chromium-common",
+      "version": "151.0.7922.108-1xtradeb1.2404.1",
+      "architecture": "amd64",
+      "deb_sha256": "2c1037d840475767d6d06a8c4da6359ec180038efe40ec88ebc27d33fe337150",
+      "evidence_directory": "validation_back01_integration/candidates/chromium-common_151.0.7922.108-1xtradeb1.2404.1_amd64"
+    }
+  ],
+  "installed_runtime": {
+    "wrapper_path": "/usr/bin/chromium",
+    "wrapper_sha256": "36cbbb620daeb933ae7861de07fcff05b5e1f7527303b5992459b8aa6707b845",
+    "binary_path": "/usr/lib/chromium/chromium",
+    "binary_sha256": "0ded189a4ee6845ad133e03eb343797f6272591cdc9fc2257aa5a0ce2a5e4a3f",
+    "version_output": "Chromium 151.0.7922.108 built on Ubuntu 24.04.4 LTS"
+  },
+  "ac_back_01": {
+    "command": "go test ./internal/api -run '^TestBackupV1CreateModifyRestoreIsolation$' -count=1 -v -timeout 90s",
+    "result": "passed",
+    "evidence": "validation_back01_integration/final/ac_back_01_chromium_candidate_108.out",
+    "assertions": [
+      "encrypted backup creation",
+      "source modification after backup",
+      "isolated restore under a new profile ID",
+      "direct Chromium --dump-dom about:blank relaunch",
+      "clean process stop",
+      "restored profile lock cleanup"
+    ]
+  },
+  "pilot_immutability": {
+    "pilot_artifact_modified": false,
+    "pilot_decision": "PILOT_LOCAL_APPROVED",
+    "public_release_decision": "PUBLIC_RELEASE_BLOCKED"
+  },
+  "remaining_public_gates": [
+    "SystemVault native matrix on every announced target OS, outside container and without sudo",
+    "integrated systemvault-anti-leak.json after profile to backup to restore flow",
+    "release signer-controlled manifest signature and published verification key",
+    "license and redistribution review for the external runtime candidate",
+    "OS support matrix limited to actually tested configurations"
+  ]
+}

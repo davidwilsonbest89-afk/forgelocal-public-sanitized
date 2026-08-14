@@ -1,0 +1,2 @@
+scripts/sign-release-manifest.sh: line 7: FORGELOCAL_RELEASE_SIGNING_FINGERPRINT: set FORGELOCAL_RELEASE_SIGNING_FINGERPRINT to the approved public-key fingerprint
+exit_code=1

@@ -1,0 +1,17 @@
+candidate=151.0.7922.108-1xtradeb1.2404.1
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  chromium-l10n chromium-shell chromium-driver
+Recommended packages:
+  chromium-sandbox upower notification-daemon system-config-printer
+The following held packages will be changed:
+  chromium
+The following packages will be upgraded:
+  chromium chromium-common
+2 upgraded, 0 newly installed, 0 to remove and 11 not upgraded.
+Inst chromium [151.0.7922.71-1xtradeb1.2404.1] (151.0.7922.108-1xtradeb1.2404.1 xtradeb applications:24.04/noble [amd64]) []
+Inst chromium-common [151.0.7922.71-1xtradeb1.2404.1] (151.0.7922.108-1xtradeb1.2404.1 xtradeb applications:24.04/noble [amd64])
+Conf chromium (151.0.7922.108-1xtradeb1.2404.1 xtradeb applications:24.04/noble [amd64])
+Conf chromium-common (151.0.7922.108-1xtradeb1.2404.1 xtradeb applications:24.04/noble [amd64])
