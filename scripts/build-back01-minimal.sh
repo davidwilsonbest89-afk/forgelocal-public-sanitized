@@ -172,7 +172,7 @@ document = {
     "packages": packages,
     "relationships": relationships,
 }
-open(output, "w", encoding="utf-8").write(json.dumps(document, indent=2, sort_keys=True) + "\\n")
+open(output, "w", encoding="utf-8").write(json.dumps(document, indent=2, sort_keys=True) + "\n")
 PY
 python3 - "$STAGE/MANIFEST.json" "$STAGE/SBOM.spdx.json" "$VERSION" "$commit" "$actual_go" "$built_at" "$runtime_relaunch_proven" <<'PY'
 import hashlib, json, os, sys
@@ -244,7 +244,7 @@ release = {
     "detached_signature_file": os.path.basename(output) + ".asc"
   }
 }
-open(output, "w", encoding="utf-8").write(json.dumps(release, indent=2, sort_keys=True) + "\\n")
+open(output, "w", encoding="utf-8").write(json.dumps(release, indent=2, sort_keys=True) + "\n")
 PY
 
 echo "created $ARCHIVE"
