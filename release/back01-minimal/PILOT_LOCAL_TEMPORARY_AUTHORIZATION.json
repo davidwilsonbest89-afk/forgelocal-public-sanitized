@@ -1,8 +1,22 @@
 {
   "format": "forgelocal-pilot-local-authorization/v1",
-  "status": "PILOT_LOCAL_APPROVED_TEMPORARY_SYSTEMVAULT_PENDING",
+  "status": "PILOT_LOCAL_SUSPENDED_PENDING_SECRET_SCAN_TRIAGE",
   "recorded_at": "2026-08-14",
   "authorization_class": "temporary_controlled_local_pilot_only",
+  "suspension": {
+    "decision": "SUSPENDED_PENDING_SECRET_SCAN_TRIAGE",
+    "suspended_at": "2026-08-14T14:04:33Z",
+    "authority": "ForgeLocal Release Maintainer — Repository Owner",
+    "reason": "A redacted archive scan reported one unclassified generic-api-key match in evidence/RUNTIME_PROVENANCE.out. The candidate is frozen; the pilot is suspended fail-closed pending maintainer classification and independent review.",
+    "redacted_evidence": {
+      "scanner": "gitleaks v8.18.4",
+      "rule_id": "generic-api-key",
+      "file": "evidence/RUNTIME_PROVENANCE.out",
+      "line": 8,
+      "report": "validation_back01_integration/final/sandbox-gitleaks-rc-archive-20260814.json"
+    },
+    "resume_requires": "A versioned maintainer classification, a bounded scan policy if the finding is a documented false positive, a clean redacted archive scan, and independent review. A confirmed secret requires revocation, a rebuilt candidate and requalification."
+  },
   "qualification_session": {
     "id": "PL-20260814-UBU2404AMD64-SYSTEMVAULT-001",
     "authorized_at": "2026-08-14T03:00:00Z",
