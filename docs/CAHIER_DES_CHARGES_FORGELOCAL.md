@@ -56,7 +56,7 @@ Le lot BACK-01 couvre seulement le noyau de sauvegarde chiffrée et restauration
 | Audit local | Événements utiles, sans secret ni token en clair. | Inclus |
 | Runtime navigateur | Runtime externe au binaire ; aucun runtime n’est distribué par BACK-01. | Hors artefact |
 | Dashboard React / Tauri | Interface produit à construire séparément. | Hors périmètre |
-| Proxy fournisseur | Connecteurs et modèle `proxy_connections` à construire séparément. | Hors périmètre |
+| Proxy fournisseur | Connecteurs et modèle canonique `proxy_providers`, `proxy_test_runs`, `proxy_provider_id` et `proxy_secret_ref` à construire séparément ; aucun secret en clair dans SQLite. | Hors périmètre |
 | Fingerprinting, humanization, MCP, extensions | Exclus du build minimal et des revendications de release. | Exclus |
 | Camoufox | Candidat produit ultérieur, à qualifier séparément. | Interdit pendant la qualification RC |
 
