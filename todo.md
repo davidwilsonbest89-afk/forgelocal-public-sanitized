@@ -35,3 +35,11 @@
 - [x] Ajouter les garde-fous versionnables qui empêchent un workflow release de sauter la provenance.
 - [x] Vérifier la protection de branche et les required checks externes ; configuration impossible sans droits administrateur sur le dépôt ForgeLocal maintenu.
 - [x] Tester les workflows, scans et la configuration sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.
+
+# Revue des fichiers sensibles et approbation de release
+
+- [x] Confirmer les responsables GitHub réels : sécurité `@boucheriechefimane-cmd`, release `@davidwilsonbest89-afk`.
+- [x] Ajouter le fichier `.github/CODEOWNERS` couvrant les workflows, validateurs, registre, dépendances et répertoires de release sensibles.
+- [x] Rattacher l’environnement GitHub protégé `production-release` au seul job de publication après `provenance → verify → build`.
+- [x] Documenter les réglages ruleset obligatoires : revue Code Owners, auteur distinct du dernier push, approbations obsolètes, absence de bypass et tags `v*` restreints.
+- [x] Vérifier le delta, scanner les changements et les versionner sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.
