@@ -3,6 +3,19 @@
   "status": "PILOT_LOCAL_APPROVED_TEMPORARY_SYSTEMVAULT_PENDING",
   "recorded_at": "2026-08-14",
   "authorization_class": "temporary_controlled_local_pilot_only",
+  "qualification_session": {
+    "id": "PL-20260814-UBU2404AMD64-SYSTEMVAULT-001",
+    "authorized_at": "2026-08-14T03:00:00Z",
+    "expires_at": "2026-08-21T23:59:59Z",
+    "renewal_requires": "A new versioned authorization after a documented integrity review; expiry is not extended implicitly."
+  },
+  "suspension_authority": {
+    "identity": "ForgeLocal Release Maintainer — Repository Owner",
+    "role": "Release Maintainer",
+    "authority_scope": "May suspend this pilot unilaterally on any automatic suspension trigger or any credible security concern.",
+    "delegation": "No delegation is valid unless recorded in a replacement version of this authorization.",
+    "fail_closed_rule": "If this authority is no longer controlled or cannot be identified, the pilot is suspended."
+  },
   "candidate_chain": {
     "id": "candidate-chromium-151.0.7922.108-67a8dfd",
     "artifact": "dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz",
@@ -74,5 +87,5 @@
       "systemvault-anti-leak.json"
     ]
   },
-  "expiry_rule": "This authorization is automatically invalid upon any suspension trigger, and it expires when the candidate chain or approved scope changes. It neither modifies nor supersedes PUBLIC_RELEASE_GATE_STATE.json."
+  "expiry_rule": "This authorization automatically expires at qualification_session.expires_at and is automatically invalid upon any suspension trigger, candidate-chain or approved-scope change, or loss of the named suspension authority. It neither modifies nor supersedes PUBLIC_RELEASE_GATE_STATE.json."
 }

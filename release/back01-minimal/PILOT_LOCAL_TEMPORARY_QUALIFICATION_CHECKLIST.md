@@ -5,6 +5,8 @@
 > **Autorisation applicable :** `PILOT_LOCAL_APPROVED — TEMPORARY / SYSTEMVAULT_PENDING`.
 >
 > Le statut public demeure sans exception **`PUBLIC_RELEASE_BLOCKED`**.
+>
+> **Session autorisée :** `PL-20260814-UBU2404AMD64-SYSTEMVAULT-001`, expirant le **2026-08-21 à 23:59:59 UTC**. L’autorité de suspension est le **ForgeLocal Release Maintainer — Repository Owner**. L’expiration, la perte de cette autorité ou tout déclencheur de suspension rendent le pilote immédiatement indisponible ; aucun renouvellement implicite n’est permis.
 
 ## 1. Limites du pilote autorisé
 
@@ -27,7 +29,7 @@ runtime=Chromium 151.0.7922.108-1xtradeb1.2404.1 amd64
 
 ## 2. Contrôle pré-pilote obligatoire
 
-Avant chaque session, le responsable compare l’archive, le commit, le runtime et les métadonnées au fichier `PILOT_LOCAL_TEMPORARY_AUTHORIZATION.json`. Toute différence signifie **suspension immédiate** ; il ne faut pas essayer de modifier les preuves pour les adapter.
+Avant chaque session, le responsable vérifie que la session `PL-20260814-UBU2404AMD64-SYSTEMVAULT-001` n’a pas expiré, confirme que le **ForgeLocal Release Maintainer — Repository Owner** demeure identifié et contrôle l’archive, le commit, le runtime et les métadonnées au fichier `PILOT_LOCAL_TEMPORARY_AUTHORIZATION.json`. Toute différence signifie **suspension immédiate** ; il ne faut pas essayer de modifier les preuves pour les adapter.
 
 | Contrôle | Résultat à exiger | Si échec |
 |---|---|---|
