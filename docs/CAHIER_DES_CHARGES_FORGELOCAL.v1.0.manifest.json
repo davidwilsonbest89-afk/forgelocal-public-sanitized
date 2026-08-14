@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "document": {
+    "id": "FL-CDC-1.0-20260814",
+    "title": "Cahier des charges — ForgeLocal",
+    "version": "1.0",
+    "path": "docs/CAHIER_DES_CHARGES_FORGELOCAL.md",
+    "sha256": "53c79aed90e46caa10273b6ab8308effc3742d915d5a46163aaed9b018406f9e",
+    "content_commit": "d8cc034a29658e1cd372b18d08db1dd20c43b6f4",
+    "content_commit_subject": "docs: finalize ForgeLocal v1.0 specification controls"
+  },
+  "verification": {
+    "algorithm": "SHA-256",
+    "command": "sha256sum docs/CAHIER_DES_CHARGES_FORGELOCAL.md",
+    "rule": "La somme calculée sur le document au commit content_commit doit être exactement égale à document.sha256."
+  },
+  "release_status": {
+    "public_release": "PUBLIC_RELEASE_BLOCKED",
+    "pilot": "PILOT_LOCAL_SUSPENDED_PENDING_SECRET_SCAN_TRIAGE",
+    "scan": "SCAN_BLOCKED_UNKNOWN"
+  }
+}
