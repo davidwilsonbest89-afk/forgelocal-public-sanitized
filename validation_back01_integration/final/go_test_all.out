@@ -1,0 +1,80 @@
+ok  	forgelocal/cmd/server	0.010s
+ok  	forgelocal/internal/api	0.575s
+ok  	forgelocal/internal/backup	(cached)
+2026/08/13 23:57:53 INFO downloading BrowseForge Chromium url=http://127.0.0.1:35003/v0.1.6-alpha.0/browseforge-runtime-chromium-v0.1.6-alpha.0-linux-x64.zip
+📥 Downloading BrowseForge Chromium (browseforge-runtime-chromium-v0.1.6-alpha.0-linux-x64.zip)...
+  0 / 0 MB (100%)
+📦 Extracting...
+✅ BrowseForge Chromium installed
+2026/08/13 23:57:53 INFO session endpoint bound session=sess_prof_health profile=prof_health runtime_id=cloakbrowser attempt=1 connectURL=ws://127.0.0.1:12345/bind profileDir=profiles/prof_health userDataDir=profiles/prof_health/browser-data executablePath=browsers/cloakbrowser/chrome.exe
+2026/08/13 23:57:53 WARN session endpoint health failed session=sess_prof_health profile=prof_health runtime_id=cloakbrowser stage=launch connectURL=ws://127.0.0.1:12345/bind timeoutMS=1234 code=BROWSER_CONNECT_TIMEOUT profileDir=profiles/prof_health userDataDir=profiles/prof_health/browser-data executablePath=browsers/cloakbrowser/chrome.exe error="Playwright endpoint health check failed: browserType.connect: Timeout 30000ms exceeded"
+2026/08/13 23:57:53 INFO session endpoint bound session=sess_prof_ok profile=prof_ok runtime_id=cloakbrowser attempt=1 connectURL=ws://127.0.0.1:12345/healthy profileDir="" userDataDir="" executablePath=""
+2026/08/13 23:57:53 INFO session endpoint healthy session=sess_prof_ok profile=prof_ok runtime_id=cloakbrowser stage=launch connectURL=ws://127.0.0.1:12345/healthy timeoutMS=5000
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--user-data-dir=C:\\temp\\profile"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--remote-debugging-port=9222"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg=--remote-debugging-pipe
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--disk-cache-dir=C:\\temp\\cache"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--proxy-server=http://proxy.example"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg=--enable-automation
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--disable-blink-features=Other"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--force-webrtc-ip-handling-policy=default_public_interface_only"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint=123"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-platform=linux"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-fonts-dir=/tmp/fonts"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-storage-quota=1024"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-timezone=UTC"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-locale=en-US"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-webrtc-ip=auto"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-width=1280"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-height=720"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-hardware-concurrency=8"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-full-version=150.0.7871.101"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-platform=Linux"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-platform-version="
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-architecture=arm"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-bitness=64"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-mobile=?0"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-model="
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-form-factors=Desktop"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-sec-ch-ua=\"Chromium\";v=\"150\""
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--fingerprint-sec-ch-ua-full-version-list=\"Chromium\";v=\"150.0.7871.101\""
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--force-device-scale-factor=2"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--window-position=1,1"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--window-size=800,600"
+2026/08/13 23:57:53 WARN ignored unsafe extra chromium arg arg="--user-data-dir=C:\\temp"
+--- FAIL: TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser (0.00s)
+    manager_test.go:504: launch error = persona contract mismatch: timezone "UTC" does not match request country "US", want captured launch error
+2026/08/13 23:57:56 WARN Windows CloakBrowser fingerprint on non-Windows host should configure runtimes.cloakbrowser.settings.fonts_dir with a Windows-compatible font pack goos=linux platform=Win32
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-platform=linux"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-fonts-dir=/tmp/fonts"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-storage-quota=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-timezone=UTC"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-locale=en-US"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-webrtc-ip=public"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-width=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-height=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-hardware-concurrency=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-device-memory=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-avail-width=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-avail-height=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-accept-language=en-US,en"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-user-agent=evil"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-audio-noise=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-canvas-noise=1"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-webgl-vendor=evil"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-fonts-list=evil"
+2026/08/13 23:57:56 WARN ignored unsafe extra chromium arg arg="--fingerprint-webgl-renderer=evil"
+FAIL
+FAIL	forgelocal/internal/browser	3.044s
+ok  	forgelocal/internal/config	(cached)
+ok  	forgelocal/internal/fingerprint	(cached)
+ok  	forgelocal/internal/groups	(cached)
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/mcp	0.008s
+ok  	forgelocal/internal/profile	0.008s
+ok  	forgelocal/internal/runtime	(cached)
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	(cached)
+ok  	forgelocal/internal/workflow	(cached)
+FAIL

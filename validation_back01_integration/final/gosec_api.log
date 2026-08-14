@@ -1,0 +1,14 @@
+[gosec] 2026/08/13 23:57:51 Including rules: default
+[gosec] 2026/08/13 23:57:51 Excluding rules: default
+[gosec] 2026/08/13 23:57:51 Including analyzers: default
+[gosec] 2026/08/13 23:57:51 Excluding analyzers: default
+[gosec] 2026/08/13 23:57:51 Import directory: /home/ubuntu/ForgeLocal/internal/api
+[gosec] 2026/08/13 23:57:51 Checking package: api
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/artifacts.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/backup.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/backup_v1.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/dashboard.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/groups.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/router.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/sessions.go
+[gosec] 2026/08/13 23:57:51 Checking file: /home/ubuntu/ForgeLocal/internal/api/workflow.go
