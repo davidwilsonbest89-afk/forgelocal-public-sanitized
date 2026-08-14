@@ -13,3 +13,11 @@
 - [x] Ajouter les contrats API Core de lecture seule, redacted et paginés, avec tests.
 - [x] Préparer le client React mémoire seule et ses états lecture seule sans token persistant.
 - [ ] Vérifier les contrats, scans, builds et commits isolés sans modifier le RC ou les gates publics.
+
+# Addendum v2.3 — Provenance des composants
+
+- [x] Auditer les scripts CI et inventaires de dépendances avant d’ajouter le contrôle de provenance.
+- [x] Rédiger l’addendum v2.3 avec la séparation CSP/dashboard et rate limiting/Core.
+- [x] Créer le registre JSON canonique et sa vue Markdown, avec GoLogin déclaré `denied` / `écarter`.
+- [x] Implémenter la vérification CI des statuts `authorized` et `not_required` first-party uniquement.
+- [x] Tester les cas autorisé, refusé, inconnu, absent et first-party, puis attester et versionner le lot.

@@ -24,6 +24,11 @@ jobs:
           test "$(go version | awk '{print $3}')" = "go1.25.13"
           go env GOTOOLCHAIN
 
+      - name: Component provenance
+        run: |
+          node scripts/check-component-rights.mjs
+          node scripts/test-component-rights.mjs
+
       - uses: actions/setup-node@v6
         with:
           node-version: "22"

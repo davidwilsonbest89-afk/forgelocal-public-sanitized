@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "registry_id": "FL-COMP-RIGHTS-20260814",
+  "canonical": true,
+  "human_view": "docs/COMPONENT_RIGHTS_REGISTER.md",
+  "policy": {
+    "integrated_statuses": ["authorized", "not_required"],
+    "not_required_requires_first_party": true,
+    "third_party_requires_exact_revision": true,
+    "denied_or_unknown_blocks_release": true,
+    "evidence_material_must_remain_private": true
+  },
+  "components": [
+    {
+      "id": "browseforge-core",
+      "source": "https://github.com/nczz/BrowseForge.git",
+      "source_revision": "git:cc554320d937aeb6714aaecac3f73a8f4d599a44",
+      "rights_status": "authorized",
+      "decision": "direct",
+      "integration_state": "integrated",
+      "scope": ["internal-use", "modification", "source-distribution", "binary-distribution"],
+      "dependency_inventory_ref": ["go.mod", "go.sum", "package.json"],
+      "excluded_material": ["unqualified runtimes", "unreviewed third-party artifacts"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-BROWSEFORGE-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "forgelocal-first-party",
+      "source": "ForgeLocal product branch",
+      "source_revision": "git:f5deb10ea914ba906f89634914cee88a1148b7c6",
+      "rights_status": "not_required",
+      "first_party": true,
+      "decision": "direct",
+      "integration_state": "integrated",
+      "scope": ["internal-use", "modification", "source-distribution", "binary-distribution"],
+      "dependency_inventory_ref": ["go.mod", "go.sum", "package.json"],
+      "excluded_material": [],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "FIRST-PARTY-DECLARATION-FL-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "camoflox-audit-source",
+      "source": "private archive camoflox-FINAL.zip",
+      "source_revision": "sha256:dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
+      "rights_status": "authorized",
+      "decision": "portage",
+      "integration_state": "not-integrated",
+      "scope": ["internal-use", "modification"],
+      "excluded_material": ["Node/Electron control plane", "browser runtime", "unreviewed dependencies"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-CAMOFLOX-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "gologin",
+      "source": "https://gologin.com",
+      "source_revision": null,
+      "rights_status": "denied",
+      "decision": "écarter",
+      "integration_state": "not-integrated",
+      "scope": [],
+      "excluded_material": ["code", "dependencies", "assets", "runtime", "internal documentation", "non-public behavior"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-GOLOGIN-DENIED-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "persona-studio",
+      "source": "authorization recorded privately; source selection pending",
+      "source_revision": null,
+      "rights_status": "authorized",
+      "decision": "adaptateur",
+      "integration_state": "not-selected",
+      "scope": ["internal-use", "modification"],
+      "excluded_material": ["FastAPI bridge", "profile-state writer"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-PERSONA-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "donutbrowser",
+      "source": "authorization recorded privately; source selection pending",
+      "source_revision": null,
+      "rights_status": "authorized",
+      "decision": "adaptateur",
+      "integration_state": "not-selected",
+      "scope": ["internal-use", "modification"],
+      "excluded_material": ["second control plane", "unreviewed desktop dependencies"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-DONUT-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "shardbrowser-shardx",
+      "source": "authorization recorded privately; source selection pending",
+      "source_revision": null,
+      "rights_status": "authorized",
+      "decision": "portage",
+      "integration_state": "not-selected",
+      "scope": ["internal-use", "modification"],
+      "excluded_material": ["unqualified browser engine", "implicit binary runtime"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-SHARD-001",
+      "review_date": "2026-08-14"
+    },
+    {
+      "id": "cloakbrowser",
+      "source": "authorization recorded privately; source selection pending",
+      "source_revision": null,
+      "rights_status": "authorized",
+      "decision": "adaptateur",
+      "integration_state": "not-selected",
+      "scope": ["internal-use", "modification"],
+      "excluded_material": ["camouflage", "CAPTCHA", "abusive automation"],
+      "owner": "ForgeLocal maintainer",
+      "evidence_ref": "PRIVATE-RIGHTS-CLOAK-001",
+      "review_date": "2026-08-14"
+    }
+  ],
+  "build_inputs": [
+    {
+      "path": "go.mod",
+      "sha256": "29beb0df64ea9d4d35346dbd63524d91fae936679e8bba688645da868783f551",
+      "owners": ["browseforge-core", "forgelocal-first-party"]
+    },
+    {
+      "path": "go.sum",
+      "sha256": "c40627102cc04dec2844fc3aaf7c03e99508ef6822f5e5ccafab761c110b6f92",
+      "owners": ["browseforge-core", "forgelocal-first-party"]
+    },
+    {
+      "path": "package.json",
+      "sha256": "ff039a84b1f78ad52585a65d39f9f31125cd7b4c9af0ff69845d23fb99cf717d",
+      "owners": ["browseforge-core", "forgelocal-first-party"]
+    }
+  ],
+  "controlled_paths": ["internal", "cmd", "scripts", "extension", "assets", "runtime", "third_party", "vendor"],
+  "forbidden_markers": ["gologin"]
+}
