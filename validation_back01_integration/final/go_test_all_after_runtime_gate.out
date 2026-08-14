@@ -1,0 +1,16 @@
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	0.009s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	0.406s
+ok  	forgelocal/internal/backup	0.072s
+ok  	forgelocal/internal/browser	4.118s
+ok  	forgelocal/internal/config	0.002s
+ok  	forgelocal/internal/fingerprint	0.003s
+ok  	forgelocal/internal/groups	0.005s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/mcp	0.008s
+ok  	forgelocal/internal/profile	0.009s
+ok  	forgelocal/internal/runtime	0.003s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	1.241s
+ok  	forgelocal/internal/workflow	0.004s

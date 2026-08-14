@@ -1,0 +1,9 @@
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/14 01:06:09 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation2796668514/001/.api-token
+2026/08/14 01:06:09 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 192.0.2.1:1234 - 201 207B in 1.462028ms
+2026/08/14 01:06:09 "POST http://example.com/api/v1/backups/bkp-1786669569597002875-7bd33d70bc16eb97/restore HTTP/1.1" from 192.0.2.1:1234 - 201 394B in 1.189913ms
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS" pid=67371 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation2796668514/001/profiles/target-api/browser-data" endpoint="none (--dump-dom direct process)" navigation="about:blank"
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch stopped cleanly: pid=67371 profile_lock_cleanup=verified
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (0.35s)
+PASS
+ok  	forgelocal/internal/api	0.349s

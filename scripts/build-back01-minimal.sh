@@ -13,9 +13,10 @@ STAGE="$OUT_ROOT/forgelocal-back01-core-$VERSION"
 ARCHIVE="$OUT_ROOT/forgelocal-back01-core-$VERSION-linux-amd64.tar.gz"
 SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-$(git log -1 --format=%ct)}"
 FORBIDDEN='^forgelocal/internal/(browser|fingerprint|humanize|mcp|runtime|workflow)(/|$)'
-RUNTIME_EVIDENCE="${RUNTIME_EVIDENCE:-$ROOT/validation_back01_integration/final/ac_back_01_with_chromium.out}"
+RUNTIME_EVIDENCE="${RUNTIME_EVIDENCE:-$ROOT/validation_back01_integration/final/ac_back_01_with_explicit_chromium.out}"
 RUNTIME_APPROVAL="${RUNTIME_APPROVAL:-$ROOT/release/back01-minimal/RUNTIME_QA_APPROVAL.md}"
-RUNTIME_PROVENANCE="${RUNTIME_PROVENANCE:-$ROOT/validation_back01_integration/final/chromium_runtime_provenance.out}"
+RUNTIME_PROVENANCE="${RUNTIME_PROVENANCE:-$ROOT/validation_back01_integration/final/chromium_runtime_release_provenance.out}"
+RUNTIME_RELEASE_GATE="${RUNTIME_RELEASE_GATE:-$ROOT/release/back01-minimal/SYSTEMVAULT_RUNTIME_RELEASE_GATE.md}"
 case "${AC_BACK_01_RUNTIME_RELAUNCH_PROVEN:-false}" in
   true) runtime_relaunch_proven=true ;;
   false) runtime_relaunch_proven=false ;;
@@ -23,7 +24,7 @@ case "${AC_BACK_01_RUNTIME_RELAUNCH_PROVEN:-false}" in
 esac
 
 if [[ "$runtime_relaunch_proven" == true ]]; then
-  for evidence in "$RUNTIME_EVIDENCE" "$RUNTIME_APPROVAL" "$RUNTIME_PROVENANCE"; do
+  for evidence in "$RUNTIME_EVIDENCE" "$RUNTIME_APPROVAL" "$RUNTIME_PROVENANCE" "$RUNTIME_RELEASE_GATE"; do
     if [[ ! -s "$evidence" ]]; then
       echo "refusing build: missing runtime relaunch evidence: $evidence" >&2
       exit 6
@@ -80,6 +81,7 @@ if [[ "$runtime_relaunch_proven" == true ]]; then
   install -m 0644 "$RUNTIME_APPROVAL" "$STAGE/RUNTIME_QA_APPROVAL.md"
   install -m 0644 "$RUNTIME_EVIDENCE" "$STAGE/evidence/AC_BACK_01_RUNTIME_RELAUNCH.out"
   install -m 0644 "$RUNTIME_PROVENANCE" "$STAGE/evidence/RUNTIME_PROVENANCE.out"
+  install -m 0644 "$RUNTIME_RELEASE_GATE" "$STAGE/SYSTEMVAULT_RUNTIME_RELEASE_GATE.md"
 fi
 
 # Only modules reached by the compiled minimal command belong in this artifact.
@@ -142,9 +144,10 @@ if runtime_relaunch_proven:
     "qa_approval": "RUNTIME_QA_APPROVAL.md",
     "relaunch_test": "evidence/AC_BACK_01_RUNTIME_RELAUNCH.out",
     "runtime_provenance": "evidence/RUNTIME_PROVENANCE.out",
+    "release_gate": "SYSTEMVAULT_RUNTIME_RELEASE_GATE.md",
   }
   for key, relative_path in list(evidence.items()):
-    if key == "qa_approval":
+    if key in {"qa_approval", "release_gate"}:
       evidence[key] = relative_path
       continue
     full_path = os.path.join(os.path.dirname(path), relative_path)

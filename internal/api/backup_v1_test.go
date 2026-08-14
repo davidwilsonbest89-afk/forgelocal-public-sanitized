@@ -1,6 +1,7 @@
 package api
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -97,15 +98,36 @@ func assertRestoredProfileStartsLocalChromium(t *testing.T, userDataDir string) 
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
+	versionOutput, err := exec.CommandContext(ctx, binary, "--version").CombinedOutput()
+	if err != nil {
+		t.Fatalf("read restored Chromium version: %v; output=%s", err, versionOutput)
+	}
+	runtimeVersion := strings.TrimSpace(string(versionOutput))
 	cmd := exec.CommandContext(ctx, binary,
 		"--headless=new", "--no-first-run", "--no-default-browser-check",
 		"--disable-gpu", "--no-sandbox", "--user-data-dir="+userDataDir,
 		"--dump-dom", "about:blank")
-	output, err := cmd.CombinedOutput()
+	var output bytes.Buffer
+	cmd.Stdout = &output
+	cmd.Stderr = &output
+	if err := cmd.Start(); err != nil {
+		t.Fatalf("start restored Chromium: %v", err)
+	}
+	pid := cmd.Process.Pid
+	t.Logf("AC-BACK-01 runtime relaunch started: binary=%q version=%q pid=%d target_profile_id=%q user_data_dir=%q endpoint=%q navigation=%q", binary, runtimeVersion, pid, filepath.Base(filepath.Dir(userDataDir)), userDataDir, "none (--dump-dom direct process)", "about:blank")
+	err = cmd.Wait()
 	if ctx.Err() != nil {
-		t.Fatalf("restored Chromium launch timed out: %v; output=%s", ctx.Err(), output)
+		t.Fatalf("restored Chromium launch timed out: %v; output=%s", ctx.Err(), output.String())
 	}
 	if err != nil {
-		t.Fatalf("restored Chromium launch failed: %v; output=%s", err, output)
+		t.Fatalf("restored Chromium launch failed: %v; output=%s", err, output.String())
 	}
+	for _, name := range []string{"SingletonLock", "SingletonCookie", "SingletonSocket"} {
+		if _, err := os.Lstat(filepath.Join(userDataDir, name)); err == nil {
+			t.Fatalf("restored Chromium did not clean profile lock %q", name)
+		} else if !os.IsNotExist(err) {
+			t.Fatalf("inspect restored Chromium profile lock %q: %v", name, err)
+		}
+	}
+	t.Logf("AC-BACK-01 runtime relaunch stopped cleanly: pid=%d profile_lock_cleanup=verified", pid)
 }

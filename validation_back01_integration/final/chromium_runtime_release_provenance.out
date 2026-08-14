@@ -1,0 +1,31 @@
+=== platform ===
+os=Ubuntu 24.04.4 LTS 24.04
+kernel=6.1.102
+architecture=amd64
+=== chromium ===
+Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS
+package=chromium
+version=151.0.7922.71-1xtradeb1.2404.1
+maintainer=XtraDeb Team <team@xtradeb.net>
+architecture=amd64
+installed_size_kib=315796
+=== apt-policy ===
+chromium:
+  Installed: 151.0.7922.71-1xtradeb1.2404.1
+  Candidate: 151.0.7922.108-1xtradeb1.2404.1
+  Version table:
+     151.0.7922.108-1xtradeb1.2404.1 500
+        500 http://ppa.launchpad.net/xtradeb/apps/ubuntu noble/main amd64 Packages
+ *** 151.0.7922.71-1xtradeb1.2404.1 100
+        100 /var/lib/dpkg/status
+=== apt source declaration ===
+/etc/apt/sources.list.d/xtradeb-apps.list:1:deb http://ppa.launchpad.net/xtradeb/apps/ubuntu noble main
+=== binary hashes ===
+36cbbb620daeb933ae7861de07fcff05b5e1f7527303b5992459b8aa6707b845  /usr/bin/chromium
+ad69c6632131d3a8b0e7395c3bb36d05cad6a2c650ecfa7ebe2e8dcba955c2de  /usr/lib/chromium/chromium
+=== package status ===
+Status: hold ok installed
+Maintainer: XtraDeb Team <team@xtradeb.net>
+Version: 151.0.7922.71-1xtradeb1.2404.1
+Description: web browser
+Homepage: http://www.chromium.org/Home
