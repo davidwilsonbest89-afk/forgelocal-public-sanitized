@@ -9,7 +9,38 @@ on:
 env:
   BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL: ${{ vars.BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL }}
 jobs:
+  provenance:
+    name: Provenance gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Component provenance
+        run: |
+          node scripts/check-component-rights.mjs
+          node scripts/test-component-rights.mjs
+
+      - name: Create component provenance evidence
+        run: node scripts/create-component-rights-evidence.mjs
+
+      - name: Archive component provenance evidence
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: component-provenance-${{ github.sha }}
+          path: .ci-artifacts/component-provenance/
+          if-no-files-found: error
+          retention-days: 90
+
   verify:
+    needs: provenance
     runs-on: ubuntu-latest
 
     steps:

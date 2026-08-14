@@ -28,3 +28,10 @@
 - [x] Exécuter obligatoirement les contrôles de provenance dans le pipeline de release.
 - [x] Produire et archiver le registre JSON validé avec son SHA-256 comme artefact CI.
 - [x] Vérifier la syntaxe du workflow, les contrôles locaux et le delta hors RC avant versionnage.
+
+# Non-contournement CI — merge et release
+
+- [x] Auditer les workflows de merge/release et les capacités GitHub disponibles dans cette session. Résultat : remote `nczz/BrowseForge`, identité GitHub en lecture seule ; API protection `main` inaccessible (403).
+- [x] Ajouter les garde-fous versionnables qui empêchent un workflow release de sauter la provenance.
+- [x] Vérifier la protection de branche et les required checks externes ; configuration impossible sans droits administrateur sur le dépôt ForgeLocal maintenu.
+- [ ] Tester les workflows, scans et la configuration sans modifier le RC ni les gates publics.
