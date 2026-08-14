@@ -16,6 +16,9 @@
 | Périmètre minimal avec tests et `gosec` | Vert, 0 alerte | `minimal_artifact_runtime_gate_build.out` |
 | Checksum et scan de secrets de l’archive extraite | Verts, 0 fuite | `minimal_artifact_runtime_gate_validation.out` et `gitleaks_runtime_gated_archive.log` |
 | Runtime incorporé dans l’archive | Non | manifeste `runtime_included: false` |
+| Candidat Chromium `151.0.7922.108` | Vert techniquement, non public | `RUNTIME_CANDIDATE_CHROMIUM_151.0.7922.108.json` et E2E candidat |
+| SBOM de l’artefact candidat | Vert | `SBOM.spdx.json` SPDX-2.3, hashé dans les deux manifestes |
+| Manifeste externe de release | Vert mais non signé | hash d’archive vérifié ; signature mainteneur encore requise |
 
 ## Bloquants publics
 
@@ -26,12 +29,15 @@
 | Anti-fuite intégrée | Bloquant | Fournir `systemvault-anti-leak.json` vert après un flux profil → backup → restauration réel |
 | Paquet runtime QA exact | Bloquant | Archiver le `.deb` exact, son SHA-256, `InRelease`, le keyring, l’empreinte de clé et le contrôle d’index signé |
 | Pin runtime reproductible | Bloquant | Conserver le verrou `RUNTIME_RELEASE_LOCK.json` à l’état complet ou revalider entièrement un nouveau candidat |
+| Signature du manifeste externe | Bloquant | Signer le manifeste d’archive avec une clé mainteneur approuvée et publier la clé de vérification |
+| Revue licence/distribution runtime | Bloquant | Vérifier les droits de redistribution du runtime externe avant toute publication |
+| Portée et OS annoncés | Bloquant | Restreindre la communication à `RELEASE_SCOPE_AND_OS_MATRIX.md` et ne revendiquer que les environnements testés |
 
 ## Constat du runtime QA
 
-Le Chromium qui a servi à l’E2E local est `151.0.7922.71-1xtradeb1.2404.1`. À la date de cette décision, cette version n’est plus disponible dans l’index APT courant ; le candidat est `151.0.7922.108-1xtradeb1.2404.1`. Le paquet historique n’était ni présent dans le cache local ni disponible à l’URL directe testée. Cette situation interdit toute substitution implicite.
+Le Chromium qui a servi au pilote local initial est `151.0.7922.71-1xtradeb1.2404.1`. Cette version n’est plus disponible dans l’index APT courant et son paquet n’était ni présent dans le cache local ni disponible à l’URL directe testée. Cette situation interdit toute substitution implicite.
 
-Les seuls chemins autorisés sont les suivants : récupérer le paquet QA exact depuis une archive de confiance et vérifier sa chaîne de signature, ou désigner explicitement un nouveau runtime candidat et refaire la capture de provenance ainsi que l’E2E AC-BACK-01.
+Le candidat distinct `151.0.7922.108-1xtradeb1.2404.1` a été capturé avec ses deux paquets requis, `InRelease`, keyring, `Packages.gz` et contrôles de checksum. Son E2E AC-BACK-01 est vert. Il reste **techniquement qualifié mais non public** jusqu’à la levée de tous les gates SystemVault, signature, licence et portée OS. Voir `RUNTIME_CANDIDATE_CHROMIUM_151.0.7922.108.json` et `RELEASE_SCOPE_AND_OS_MATRIX.md`.
 
 ## Autorité de changement
 

@@ -1,0 +1,16 @@
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/profile	(cached)
+?   	forgelocal/internal/secrets	[no test files]
+?   	forgelocal/cmd/back01-core	[no test files]
+Results:
+
+
+[1;36mSummary:[0m
+  Gosec  : dev
+  Files  : 8
+  Lines  : 1918
+  Nosec  : 10
+  Issues : [1;32m0[0m
+
+created /home/ubuntu/ForgeLocal/dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz
+created /home/ubuntu/ForgeLocal/dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz.release-manifest.json (maintainer signature required)

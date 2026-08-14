@@ -4,7 +4,7 @@
 
 **Branche :** `forgelocal-back01`
 
-**État :** pilote local contrôlé approuvé ; publication publique bloquée par SystemVault natif et la provenance/signature runtime complète.
+**État :** pilote local contrôlé approuvé ; un candidat Chromium requalifié est disponible, mais la publication publique reste bloquée par SystemVault natif, la signature mainteneur, la revue de licence et la portée OS réelle.
 
 ## Décision
 
@@ -52,6 +52,19 @@ Le test démarre Chromium avec les options `--headless=new`, `--no-sandbox`, `--
 
 Le script `scripts/build-back01-minimal.sh` échoue désormais explicitement si l’analyseur de sécurité est introuvable, si la fermeture des dépendances internes sort du périmètre autorisé, si les preuves de relance manquent alors que la revendication est activée, ou si un fichier interdit est importé. Il produit également un fichier `SHA256SUMS` qui exclut son propre contenu afin que sa vérification soit déterministe.
 
+## Candidat Chromium requalifié et chaîne de release
+
+Le candidat distinct Chromium `151.0.7922.108-1xtradeb1.2404.1` a été capturé sans substitution du pilote historique. Ses paquets `chromium` et `chromium-common`, l’index signé, l’empreinte de la clé PGP, les checksums et l’E2E AC-BACK-01 sont archivés. L’artefact candidat construit depuis le commit `67a8dfd` contient désormais un SBOM SPDX-2.3 et un manifeste externe dont le hash est vérifié contre l’archive. Ce manifeste reste volontairement `UNSIGNED_REQUIRES_MAINTAINER_KEY` : aucun secret ou clé de signature mainteneur n’est généré, importé ou conservé dans ce dépôt.
+
+| Élément | État |
+|---|---|
+| Runtime candidat `151.0.7922.108` | Vert techniquement ; pas approuvé publiquement |
+| SBOM SPDX-2.3 | Vert, 11 packages et hash croisé dans les deux manifestes |
+| Archive candidate | `forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz` |
+| SHA-256 de l’archive candidate | `553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6` |
+| Signature du manifeste | Bloquante : clé mainteneur approuvée requise |
+| Runtime incorporé | Non |
+
 ## Correction du défaut historique Persona
 
 Le défaut `BASE-PERSONA-UTC-US` a été corrigé dans un commit séparé de test. La fixture utilisait un proxy loopback volontairement inaccessible mais héritait de `TZ=UTC`, ce qui produisait une Persona incohérente avec la région proxy `us-ny`. La fixture vide désormais les replis de l’hôte afin que le repli de région proxy fournisse `America/New_York` avec la provenance attendue `proxy_region_fallback`.
@@ -78,7 +91,7 @@ go test ./... -count=1
 
 ## Condition restante avant publication publique
 
-La publication reste **bloquée** par deux gates cumulatifs : la validation native du `SystemVault` sur chaque OS réellement pris en charge, dans une session utilisateur déverrouillée, ainsi que la provenance complète du runtime de release (dépôt, empreinte de clé/signature, paquet source `.deb`, pin de version et empreinte). Le sandbox headless ne fournit pas une collection Secret Service utilisable ; il ne permet donc pas de conclure les scénarios création, lecture après redémarrage, absence/révocation, permissions insuffisantes et absence de fuite dans SQLite, `profile.json`, logs ou backups.
+La publication reste **bloquée** par les gates cumulatifs suivants : validation native du `SystemVault` sur chaque OS réellement annoncé, dans une session utilisateur déverrouillée ; preuve anti-fuite intégrée ; runtime de release à provenance complète ; signature détachée du manifeste par une clé mainteneur approuvée ; revue de licence/distribution du runtime ; et matrice de compatibilité limitée aux OS effectivement testés. Le sandbox headless ne fournit pas une collection Secret Service utilisable ; il ne permet donc pas de conclure les scénarios création, lecture après redémarrage, absence/révocation, permissions insuffisantes et absence de fuite dans SQLite, `profile.json`, logs ou backups.
 
 Le dossier de gate désormais prêt comprend `SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md`, `RUNTIME_RELEASE_LOCK.json`, `PUBLIC_RELEASE_DECISION.md` et les scripts de capture. Le paquet Chromium QA `151.0.7922.71-1xtradeb1.2404.1` n’est plus disponible dans l’index APT courant ; il doit être récupéré depuis une archive de confiance et vérifié, ou remplacé explicitement par un nouveau candidat qui repasse l’E2E complet.
 
@@ -98,4 +111,7 @@ La migration des métadonnées de profils JSON vers SQLite métier et le branche
 | `release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md` | Procédure native sans `sudo`, hors conteneur, incluant révocation, coffre verrouillé et anti-fuite |
 | `release/back01-minimal/RUNTIME_RELEASE_LOCK.json` | Verrou machine-readable de version, source et preuves runtime exigées |
 | `release/back01-minimal/PUBLIC_RELEASE_DECISION.md` | Décision actuelle `PUBLIC_RELEASE_BLOCKED` et conditions de levée |
+| `release/back01-minimal/RUNTIME_CANDIDATE_CHROMIUM_151.0.7922.108.json` | Lock complet du nouveau candidat, de ses deux paquets et de son E2E |
+| `release/back01-minimal/RELEASE_SCOPE_AND_OS_MATRIX.md` | Périmètre Core/API seulement et matrice des OS réellement testés |
+| `validation_back01_integration/final/runtime_candidate_artifact_metadata_validation.out` | Contrôle des hashes archive/manifeste/SBOM et statut de signature |
 | `docs/security/SYSTEM_VAULT_NATIVE_MATRIX.md` | Matrice de validation native à exécuter sur hôte cible |

@@ -1,0 +1,4 @@
+archive_sha256=553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6
+sbom_format=SPDX-2.3
+sbom_packages=11
+signature_status=UNSIGNED_REQUIRES_MAINTAINER_KEY

@@ -95,3 +95,9 @@ La conclusion de `PUBLIC_RELEASE_DECISION.md` est obligatoirement l’une des va
 ## Limites connues du candidat pilote
 
 Au 14 août 2026, le runtime QA Chromium local est `151.0.7922.71-1xtradeb1.2404.1`, mais le paquet exact n’est plus exposé par l’index APT courant. Il reste donc verrouillé pour le pilote, sans substitution. Le candidat APT plus récent doit être traité comme une nouvelle validation, jamais comme un remplacement automatique.
+
+## Portée multi-OS obligatoire
+
+Chaque combinaison **OS, version, architecture et backend de coffre** doit recevoir son propre dossier de preuve et sa propre décision. Le dossier doit indiquer l’identifiant de plate-forme, la version du Core, le backend natif observé, les résultats de tous les cas du runbook et le hash du `systemvault-anti-leak.json` intégré. Une réussite sur Ubuntu ne permet aucune affirmation concernant macOS, Windows, une autre distribution Linux, une autre architecture ou un autre backend de coffre.
+
+La communication publique doit reprendre uniquement les entrées vertes de `RELEASE_SCOPE_AND_OS_MATRIX.md`. Toute entrée sans preuve native complète est `non annoncée`, même si le Core compile ou si un test mémoire fonctionne.
