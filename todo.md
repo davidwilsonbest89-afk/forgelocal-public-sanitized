@@ -27,4 +27,4 @@
 - [x] Auditer le workflow de release et les capacités d’archivage déjà disponibles.
 - [x] Exécuter obligatoirement les contrôles de provenance dans le pipeline de release.
 - [x] Produire et archiver le registre JSON validé avec son SHA-256 comme artefact CI.
-- [ ] Vérifier la syntaxe du workflow, les contrôles locaux et le delta hors RC avant versionnage.
+- [x] Vérifier la syntaxe du workflow, les contrôles locaux et le delta hors RC avant versionnage.

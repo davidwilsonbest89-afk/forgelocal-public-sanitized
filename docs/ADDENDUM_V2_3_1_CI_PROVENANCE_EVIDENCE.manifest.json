@@ -1,0 +1,38 @@
+{
+  "manifest_version": "1.0",
+  "document_id": "FL-ADD-2.3.1-20260814",
+  "document_path": "docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md",
+  "content_commit": "e6a29ce4929cb1f14242558f78d14bcec5adb2dc",
+  "files": [
+    {
+      "path": "docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md",
+      "sha256": "d2dbdd3aa8452ed7271ff4bf5cb23b2364fb9c12b744d73172df61f890e70389"
+    },
+    {
+      "path": "docs/component-rights-register.json",
+      "sha256": "8f784ab1b1443502a5e82be9e38286c1b44c4b9d9010ae722917b8b3ccba9f2d"
+    },
+    {
+      "path": "scripts/create-component-rights-evidence.mjs",
+      "sha256": "7d4e5ed497600a324c172786cdd2e892869e67b062d058f47a2ae5a9b17b3cbe"
+    },
+    {
+      "path": "scripts/check-ci-provenance-workflow.mjs",
+      "sha256": "9f444963872685c80ef0ec68a3ab7b44871371c586cbfde94e0a430340710425"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "6008748a76777433c404101cd6256cc61d85c1b8111d18d17e5d99a7cf736caf"
+    }
+  ],
+  "checks": [
+    "node scripts/check-component-rights.mjs",
+    "node scripts/test-component-rights.mjs",
+    "node scripts/create-component-rights-evidence.mjs",
+    "node scripts/check-ci-provenance-workflow.mjs",
+    "go test ./internal/api -count=1",
+    "go vet ./internal/api"
+  ],
+  "release_authorization": "none",
+  "release_status": "PUBLIC_RELEASE_BLOCKED"
+}
