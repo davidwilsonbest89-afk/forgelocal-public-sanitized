@@ -1,9 +1,11 @@
 # Cahier des charges — ForgeLocal
 
 **Version :** 1.0 — spécification produit versionnée ; release BACK-01 suspendue
+**Identifiant du document :** `FL-CDC-1.0-20260814`
 **Date :** 14 août 2026  
 **Auteur :** Manus AI  
 **Statut :** document de référence interne ; aucune autorisation de publication publique
+**Empreinte vérifiable :** consignée dans `docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json`, avec le commit qui la porte.
 
 ## 1. Objet et principes de produit
 
@@ -37,7 +39,7 @@ Le candidat RC BACK-01 est figé. Son archive, son SBOM, son manifeste, son comm
 | Décision publique | `PUBLIC_RELEASE_BLOCKED` | Obligatoire |
 | Pilote local temporaire | Suspendu par précaution, en attente du triage d’une alerte de scan d’archive | Non utilisable avant résolution |
 
-L’autorisation locale temporaire a été suspendue en mode défaillant fermé après la détection redigée d’une occurrence non classifiée dans une preuve de provenance incluse dans l’archive. Il ne faut ni exposer la valeur détectée, ni modifier silencieusement l’archive pour la retirer. Une revue mainteneur doit classifier formellement l’occurrence comme faux positif borné ou comme secret réel avant toute reprise du pilote.
+L’autorisation locale temporaire a été suspendue en mode défaillant fermé après la détection **assainie/redacted** d’une occurrence non classifiée dans une preuve de provenance incluse dans l’archive. Il ne faut ni exposer la valeur détectée, ni modifier silencieusement l’archive pour la retirer. Une revue mainteneur doit classifier formellement l’occurrence comme faux positif borné ou comme secret réel avant toute reprise du pilote.
 
 ## 3. Périmètre BACK-01 minimal
 
@@ -79,7 +81,7 @@ La validation SystemVault doit se faire dans une session graphique utilisateur r
 
 > **Exigence de persistance :** une VM Ubuntu 24.04 persistante ou une installation dédiée est requise pour la qualification complète, notamment les cas de redémarrage, révocation et coffre verrouillé. Une session éphémère « Try Ubuntu » peut servir au préflight, mais ne constitue pas seule une preuve native complète.
 
-Le dossier de preuve emploie **exclusivement** les noms contractuels du runbook `release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md` : `systemvault-host-context.env`, `systemvault-matrix.json`, `SYSTEMVAULT_NATIVE_GATE_STATUS` et `systemvault-anti-leak.json`. Le répertoire optionnel `runtime-release-evidence/` et `PUBLIC_RELEASE_DECISION.md` complètent ce dossier lorsque la provenance runtime est disponible. Aucun nom alternatif ne constitue une preuve de gate.
+Le dossier de preuve emploie **exclusivement** les noms contractuels du runbook `release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md` : `systemvault-host-context.env`, `systemvault-matrix.json`, `SYSTEMVAULT_NATIVE_GATE_STATUS` et `systemvault-anti-leak.json`. Malgré son suffixe `.env`, `systemvault-host-context.env` est un **fichier de preuve généré et assaini/redacted**, jamais un fichier de configuration à sourcer : il ne contient aucun token, secret, mot de passe, clé privée, valeur proxy, variable sensible ni historique de session. Le répertoire optionnel `runtime-release-evidence/` et `PUBLIC_RELEASE_DECISION.md` complètent ce dossier lorsque la provenance runtime est disponible. Aucun nom alternatif ne constitue une preuve de gate.
 
 ### 4.2 Backups et restauration
 
@@ -138,19 +140,22 @@ Les contrôles suivants sont reproductibles dans le sandbox et doivent être ex�
 | Dépendances minimales | `go list -deps ./cmd/back01-core` | Aucun package interne interdit. |
 | Traçabilité | `scripts/validate-release-traceability.py` | Vert, avec chaînes indépendantes. |
 | Décision publique | `scripts/check-public-release-gate.py` | Doit retourner le statut attendu, actuellement bloqué. |
-| Scan de secrets | Scan redigé du dépôt, de l’historique Git pertinent, de l’arborescence staged, de l’archive extraite, du SBOM, des manifestes et des journaux de build. | `SCAN_CLEAN` uniquement si aucune occurrence non classifiée ne subsiste ; toute exception doit être minimale, versionnée et revue. |
+| Scan de secrets | Scan **assaini/redacted** du dépôt, de l’historique Git pertinent, de l’arborescence staged, de l’archive extraite, du SBOM, des manifestes et des journaux de build. | `SCAN_CLEAN` uniquement si aucune occurrence non classifiée ne subsiste ; toute exception doit être minimale, versionnée et revue. |
 
 #### T-API-AC-BACK-01 — inventaire et restauration isolée
 
 Les trois commandes suivantes sont distinctes, doivent être exécutées avec Go `1.25.13` et `GOTOOLCHAIN=local`, puis leurs sorties assainies doivent être archivées avec le commit testé :
 
 ```bash
+export GOTOOLCHAIN=local
+go version
+go env GOVERSION GOOS GOARCH
 go list ./...
 go test ./internal/api -list 'Backup|Restore' -count=1
 go test ./internal/api -run '^TestBackupV1CreateModifyRestoreIsolation$' -count=1 -v
 ```
 
-La première commande doit contenir exactement le package cible `forgelocal/internal/api`. La deuxième constitue l’inventaire ciblé : elle doit afficher les noms exacts des tests correspondants et le rapport doit consigner leur nombre. La troisième exécute exclusivement `TestBackupV1CreateModifyRestoreIsolation` : le rapport doit compter une ligne `=== RUN` pour ce nom, une ligne `--- PASS` correspondante, zéro autre ligne `=== RUN`, et un résultat final `PASS`. Toute absence de package, sélection nulle, test supplémentaire ou échec rend le contrôle non conforme, même si le processus retourne le code `0`.
+Le préflight doit afficher exactement `go version go1.25.13` et ne doit déclencher aucun téléchargement implicite de toolchain. La première des trois commandes de sélection doit contenir exactement le package cible `forgelocal/internal/api`. La deuxième constitue l’inventaire ciblé : elle doit afficher les noms exacts des tests correspondants et le rapport doit consigner leur nombre. La troisième exécute exclusivement `TestBackupV1CreateModifyRestoreIsolation` : le rapport doit compter une ligne `=== RUN` pour ce nom, une ligne `--- PASS` correspondante, zéro autre ligne `=== RUN`, et un résultat final `PASS`. Toute absence de package, sélection nulle, test supplémentaire ou échec rend le contrôle non conforme, même si le processus retourne le code `0`.
 
 La suite actuelle passe dans le sandbox pour les tests Go, le détecteur de courses sur les modules BACK-01 ciblés, `go vet`, la fermeture de dépendances minimale et le Gosec limité au graphe de distribution. La dette Gosec possède deux références qui ne doivent pas être confondues : le rapport historique du **14 août 2026** contient 189 résultats (`validation_back01_integration/final/sandbox-gosec-20260814.json`, SHA-256 `332ae84056ec9ad5d15a965674540f0d5f21215bbeb998dd6bf614516c65b978`), mais il déclare `GosecVersion: dev` et n’associe pas un commit propre ; il est donc une **preuve historique non conforme** à la présente exigence de verrouillage. La baseline reproductible de contrôle, exécutée le 14 août 2026 avec Gosec `2.21.4` sur le commit `64bede39dc3355e0db2c4871cf4de7eb46410265`, contient 166 résultats (rapport SHA-256 `ba42d3e2af1fe8d9a61407ed87d54c57b7d81cccfaddc9fa382b07f35e06ec9d`). Aucun résultat n’est ignoré : le rapport historique à 189 résultats doit être régénéré sous l’outillage verrouillé avant toute décision fondée sur son nombre. Les conclusions de réduction doivent référencer à la fois le commit, la version Gosec, la date et le hash du rapport. Les concentrations historiques dans `internal/browser`, `cmd/server` et les fonctions humanization/fingerprint restent hors du binaire BACK-01 minimal, sans être dispensées de classification.
 
@@ -201,8 +206,9 @@ Tauri devient envisageable seulement après stabilisation de l’API et du dashb
 
 | Priorité | Action | Condition de clôture |
 |---|---|---|
-| P0 | Triage mainteneur de l’alerte de scan de l’archive RC | Faux positif borné et scan redigé vert, ou secret révoqué avec nouveau candidat complet. |
-| P0 | Exécuter le runbook SystemVault sur une VM Ubuntu 24.04.4 LTS `amd64` persistante ou une installation dédiée, hors conteneur | `systemvault-host-context.env`, `systemvault-matrix.json`, `SYSTEMVAULT_NATIVE_GATE_STATUS` et `systemvault-anti-leak.json` assainis, versionnés et revus indépendamment. |
+| P0-1 | Triage mainteneur indépendant de l’alerte de scan de l’archive RC | Conclusion `FALSE_POSITIVE` bornée avec rescan assaini/redacted vert, ou secret révoqué avant émission d’un nouveau candidat complet. |
+| P0-2 | Émettre une nouvelle chaîne de release propre, si le triage impose une correction de preuve, d’artefact ou de provenance | Nouvel artefact, SBOM, manifestes, checksums et preuves cohérentes ; le RC concerné reste gelé et non qualifié. |
+| P0-3 | Exécuter le runbook SystemVault sur une VM Ubuntu 24.04.4 LTS `amd64` persistante ou une installation dédiée, hors conteneur | Autorisé uniquement après clôture indépendante de P0-1 et contre une chaîne propre de P0-2 lorsque requise ; `systemvault-host-context.env`, `systemvault-matrix.json`, `SYSTEMVAULT_NATIVE_GATE_STATUS` et `systemvault-anti-leak.json` assainis, versionnés et revus indépendamment. |
 | P0 | Produire l’anti-fuite du flux intégré | `systemvault-anti-leak.json` vert, même chaîne artefact/runtime/commit. |
 | P0 | Revue de licence et redistribution Chromium | Décision écrite sur les paquets exacts et leur distribution. |
 | P0 | Signature mainteneur | Manifeste signé avec clé publique séparée et vérification indépendante. |
@@ -228,5 +234,6 @@ Tauri devient envisageable seulement après stabilisation de l’API et du dashb
 | R9 | `docs/SQLITE_SCHEMA_REFERENCE.md` |
 | R10 | `validation_back01_integration/final/GOSEC_BASELINE_RECONCILIATION_2026-08-14.md` |
 | R11 | `validation_back01_integration/final/gosec-baseline-64bede3-v2.21.4-20260814.json` |
+| R12 | `docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json` |
 
 > Ce cahier des charges est un document de pilotage. Il ne remplace pas les validateurs machine-readable de release et ne peut pas à lui seul lever un gate de publication.
