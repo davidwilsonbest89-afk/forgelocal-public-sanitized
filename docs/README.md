@@ -2,6 +2,10 @@
 
 This directory contains public product documentation and project planning notes.
 
+## ForgeLocal product reference
+
+The internal French product reference is versioned separately from the public documentation. The current canonical documents are the [ForgeLocal specification v1.0](CAHIER_DES_CHARGES_FORGELOCAL.md) and its [v2.1 addendum on audited Camoflox modules and the read-only dashboard](ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md). Neither document authorizes publication of the frozen BACK-01 RC.
+
 ## Public Documentation
 
 These documents should remain understandable for international users:
