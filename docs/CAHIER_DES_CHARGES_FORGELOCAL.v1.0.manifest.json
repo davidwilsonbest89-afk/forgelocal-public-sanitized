@@ -5,9 +5,9 @@
     "title": "Cahier des charges — ForgeLocal",
     "version": "1.0",
     "path": "docs/CAHIER_DES_CHARGES_FORGELOCAL.md",
-    "sha256": "6831425262b31f9b52f8c7e55fba287ddcaf464eb27d597f3b521aea1fa83ab8",
-    "content_commit": "f3035e754f62e6310efd02e4a899be986829e098",
-    "content_commit_subject": "docs: clarify original secret scan inputs"
+    "sha256": "c5b0621e7549204f1346d7e1b0502d9dd78bffecd6e718ac501a572fb5254fd3",
+    "content_commit": "f776709a5b071a89146c3d534305d7588a027a2e",
+    "content_commit_subject": "docs: align proxy scope with canonical schema"
   },
   "verification": {
     "algorithm": "SHA-256",
