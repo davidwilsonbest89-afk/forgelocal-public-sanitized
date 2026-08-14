@@ -29,3 +29,6 @@ Thumbs.db
 # Temp
 *.tmp
 /tmp/
+
+# Generated CI evidence; archived by the pipeline and never committed.
+.ci-artifacts/

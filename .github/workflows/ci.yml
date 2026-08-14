@@ -13,6 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
       - uses: actions/setup-go@v6
         with:
           go-version: "1.25.13"
@@ -29,9 +33,17 @@ jobs:
           node scripts/check-component-rights.mjs
           node scripts/test-component-rights.mjs
 
-      - uses: actions/setup-node@v6
+      - name: Create component provenance evidence
+        run: node scripts/create-component-rights-evidence.mjs
+
+      - name: Archive component provenance evidence
+        if: success()
+        uses: actions/upload-artifact@v4
         with:
-          node-version: "22"
+          name: component-provenance-${{ github.sha }}
+          path: .ci-artifacts/component-provenance/
+          if-no-files-found: error
+          retention-days: 90
 
       - name: BACK-01 targeted tests
         env:
@@ -60,8 +72,8 @@ jobs:
           node -e "const fs=require('fs'); const html=fs.readFileSync('internal/api/dashboard.html','utf8'); const m=html.match(/<script>([\s\S]*)<\/script>/); if(!m) throw new Error('script not found'); new Function(m[1]); console.log('dashboard js ok')"
           node scripts/check-i18n.js
 
-      - name: Workflow YAML
-        run: ruby -e "require 'yaml'; Dir['.github/workflows/*.yml'].each { |f| YAML.load_file(f); puts \"#{f} ok\" }"
+      - name: CI provenance policy
+        run: node scripts/check-ci-provenance-workflow.mjs
 
       - name: Docker Compose config
         run: docker compose -f docker/docker-compose.yml config

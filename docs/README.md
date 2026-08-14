@@ -4,7 +4,7 @@ This directory contains public product documentation and project planning notes.
 
 ## ForgeLocal product reference
 
-The internal French product reference is versioned separately from the public documentation. The current canonical documents are the [ForgeLocal specification v1.0](CAHIER_DES_CHARGES_FORGELOCAL.md), its [v2.1 addendum on audited Camoflox modules and the read-only dashboard](ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md), and the [v2.3 addendum on component provenance](ADDENDUM_V2_3_COMPONENT_PROVENANCE.md). The [canonical JSON component-rights register](component-rights-register.json) is enforced by CI; its Markdown view is available in [COMPONENT_RIGHTS_REGISTER.md](COMPONENT_RIGHTS_REGISTER.md). None of these documents authorizes publication of the frozen BACK-01 RC.
+The internal French product reference is versioned separately from the public documentation. The current canonical documents are the [ForgeLocal specification v1.0](CAHIER_DES_CHARGES_FORGELOCAL.md), its [v2.1 addendum on audited Camoflox modules and the read-only dashboard](ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md), the [v2.3 addendum on component provenance](ADDENDUM_V2_3_COMPONENT_PROVENANCE.md), and the [v2.3.1 CI evidence addendum](ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md). The [canonical JSON component-rights register](component-rights-register.json) is enforced and archived by CI; its Markdown view is available in [COMPONENT_RIGHTS_REGISTER.md](COMPONENT_RIGHTS_REGISTER.md). None of these documents authorizes publication of the frozen BACK-01 RC.
 
 ## Public Documentation
 

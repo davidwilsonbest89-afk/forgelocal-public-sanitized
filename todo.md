@@ -21,3 +21,10 @@
 - [x] Créer le registre JSON canonique et sa vue Markdown, avec GoLogin déclaré `denied` / `écarter`.
 - [x] Implémenter la vérification CI des statuts `authorized` et `not_required` first-party uniquement.
 - [x] Tester les cas autorisé, refusé, inconnu, absent et first-party, puis attester et versionner le lot.
+
+# Exécution CI release — provenance v2.3
+
+- [x] Auditer le workflow de release et les capacités d’archivage déjà disponibles.
+- [x] Exécuter obligatoirement les contrôles de provenance dans le pipeline de release.
+- [x] Produire et archiver le registre JSON validé avec son SHA-256 comme artefact CI.
+- [ ] Vérifier la syntaxe du workflow, les contrôles locaux et le delta hors RC avant versionnage.
