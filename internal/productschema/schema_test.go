@@ -125,9 +125,9 @@ func TestProxyReferenceColumnsConstraintsAndIndexesAreCanonical(t *testing.T) {
 
 	expectedIndexes := map[string]string{
 		"idx_profiles_proxy_provider_id_not_null": "ON profiles(proxy_provider_id) WHERE proxy_provider_id IS NOT NULL",
-		"idx_profiles_proxy_secret_ref_not_empty":  "ON profiles(proxy_secret_ref) WHERE proxy_secret_ref <> ''",
+		"idx_profiles_proxy_secret_ref_not_empty": "ON profiles(proxy_secret_ref) WHERE proxy_secret_ref <> ''",
 		"idx_groups_proxy_provider_id_not_null":   "ON groups(proxy_provider_id) WHERE proxy_provider_id IS NOT NULL",
-		"idx_groups_proxy_secret_ref_not_empty":    "ON groups(proxy_secret_ref) WHERE proxy_secret_ref <> ''",
+		"idx_groups_proxy_secret_ref_not_empty":   "ON groups(proxy_secret_ref) WHERE proxy_secret_ref <> ''",
 	}
 	for indexName, expectedSQL := range expectedIndexes {
 		var sqlText string
@@ -137,6 +137,70 @@ func TestProxyReferenceColumnsConstraintsAndIndexesAreCanonical(t *testing.T) {
 		if !strings.Contains(sqlText, expectedSQL) {
 			t.Fatalf("index %s DDL = %q, want fragment %q", indexName, sqlText, expectedSQL)
 		}
+	}
+}
+
+func TestProxyReferenceLookupPlansUsePartialIndexes(t *testing.T) {
+	db := openProductSchema(t)
+
+	checks := []struct {
+		name      string
+		query     string
+		argument  string
+		wantIndex string
+	}{
+		{
+			name:      "profiles by provider",
+			query:     `EXPLAIN QUERY PLAN SELECT id FROM profiles WHERE proxy_provider_id = ? AND proxy_provider_id IS NOT NULL`,
+			argument:  "provider.demo",
+			wantIndex: "idx_profiles_proxy_provider_id_not_null",
+		},
+		{
+			name:      "profiles by vault reference",
+			query:     `EXPLAIN QUERY PLAN SELECT id FROM profiles WHERE proxy_secret_ref = ? AND proxy_secret_ref <> ''`,
+			argument:  "proxy.profile-demo",
+			wantIndex: "idx_profiles_proxy_secret_ref_not_empty",
+		},
+		{
+			name:      "groups by provider",
+			query:     `EXPLAIN QUERY PLAN SELECT id FROM groups WHERE proxy_provider_id = ? AND proxy_provider_id IS NOT NULL`,
+			argument:  "provider.demo",
+			wantIndex: "idx_groups_proxy_provider_id_not_null",
+		},
+		{
+			name:      "groups by vault reference",
+			query:     `EXPLAIN QUERY PLAN SELECT id FROM groups WHERE proxy_secret_ref = ? AND proxy_secret_ref <> ''`,
+			argument:  "proxy.group-demo",
+			wantIndex: "idx_groups_proxy_secret_ref_not_empty",
+		},
+	}
+
+	for _, check := range checks {
+		t.Run(check.name, func(t *testing.T) {
+			rows, err := db.Query(check.query, check.argument)
+			if err != nil {
+				t.Fatalf("explain query plan: %v", err)
+			}
+			defer func() { _ = rows.Close() }()
+
+			usedExpectedIndex := false
+			for rows.Next() {
+				var id, parent, unused int
+				var detail string
+				if err := rows.Scan(&id, &parent, &unused, &detail); err != nil {
+					t.Fatalf("scan query plan: %v", err)
+				}
+				if strings.Contains(detail, check.wantIndex) {
+					usedExpectedIndex = true
+				}
+			}
+			if err := rows.Err(); err != nil {
+				t.Fatalf("iterate query plan: %v", err)
+			}
+			if !usedExpectedIndex {
+				t.Fatalf("query plan did not use %s", check.wantIndex)
+			}
+		})
 	}
 }
 
