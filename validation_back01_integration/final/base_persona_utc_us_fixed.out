@@ -1,0 +1,4 @@
+=== RUN   TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser
+--- PASS: TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser (0.00s)
+PASS
+ok  	forgelocal/internal/browser	0.004s

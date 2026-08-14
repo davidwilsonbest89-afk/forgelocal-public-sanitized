@@ -446,6 +446,13 @@ func TestLaunchProfileDispatchesBrowseForgeChromiumToChromiumLauncher(t *testing
 }
 
 func TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser(t *testing.T) {
+	// The fixture deliberately uses an unreachable loopback proxy. Clear host
+	// fallbacks so the declared us-ny proxy region supplies the Persona's US
+	// timezone, independent of the sandbox's inherited UTC environment.
+	t.Setenv("BROWSEFORGE_DEFAULT_TIMEZONE", "")
+	t.Setenv("BROWSEFORGE_DEFAULT_LOCALE", "")
+	t.Setenv("TZ", "")
+
 	enabled := true
 	fontsDir := t.TempDir()
 	launchErr := errors.New("captured launch")
