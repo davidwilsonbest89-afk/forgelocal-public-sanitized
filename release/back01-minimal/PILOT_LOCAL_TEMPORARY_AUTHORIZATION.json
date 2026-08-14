@@ -1,0 +1,78 @@
+{
+  "format": "forgelocal-pilot-local-authorization/v1",
+  "status": "PILOT_LOCAL_APPROVED_TEMPORARY_SYSTEMVAULT_PENDING",
+  "recorded_at": "2026-08-14",
+  "authorization_class": "temporary_controlled_local_pilot_only",
+  "candidate_chain": {
+    "id": "candidate-chromium-151.0.7922.108-67a8dfd",
+    "artifact": "dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz",
+    "artifact_sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+    "source_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b",
+    "runtime": {
+      "name": "Chromium",
+      "version": "151.0.7922.108-1xtradeb1.2404.1",
+      "architecture": "amd64"
+    },
+    "sbom_sha256": "92f20371bdbfac26d2d79daf0e067d350228114deb27ece899625a2a7764a385",
+    "external_manifest_sha256": "1353836cc2f70d6f3ff0ce348932822b2e0f2e43a482c5cc9702f481526b81ff"
+  },
+  "approved_scope": {
+    "target_os": "Ubuntu",
+    "target_os_version": "24.04.4 LTS",
+    "target_architecture": "amd64",
+    "environment": "local, access-restricted, non-production test environment",
+    "authorized_users": "project-maintainer-controlled personnel only",
+    "allowed_purpose": "controlled local pilot while the native SystemVault qualification is prepared"
+  },
+  "prohibitions": [
+    "public_release",
+    "public_distribution",
+    "external_user_access",
+    "compatibility_claim_outside_approved_scope",
+    "cleartext_secret_fallback",
+    "candidate_artifact_runtime_sbom_or_manifest_modification",
+    "Camoufox_introduction",
+    "Windows_or_macOS_support_announcement"
+  ],
+  "automatic_suspension_triggers": [
+    "source_commit_change",
+    "artifact_sha256_change",
+    "runtime_version_or_package_change",
+    "sbom_or_external_manifest_change",
+    "untracked_configuration_change",
+    "secret_leak_or_cleartext_secret_fallback",
+    "backup_restore_failure",
+    "source_target_isolation_failure",
+    "system_vault_error_or_fallback",
+    "evidence_integrity_failure"
+  ],
+  "public_release": {
+    "decision": "PUBLIC_RELEASE_BLOCKED",
+    "promotion_forbidden_until": "All five gates in PUBLIC_RELEASE_GATE_STATE.json are PASSED with fresh versioned evidence and independent review.",
+    "remaining_gate_decisions": {
+      "SYSTEMVAULT_NATIVE_PER_TARGET": "PENDING",
+      "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW": "PENDING",
+      "MAINTAINER_MANIFEST_SIGNATURE": "PENDING",
+      "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW": "PENDING",
+      "OS_COMPATIBILITY_EVIDENCE": "PENDING"
+    }
+  },
+  "required_next_qualification": {
+    "target": "Ubuntu 24.04.4 LTS amd64 native graphical user session, outside a container, without sudo, with unlocked Secret Service",
+    "required_cases": [
+      "key_creation_and_read",
+      "read_after_core_restart",
+      "key_absent",
+      "external_revocation",
+      "vault_locked_or_permission_denied",
+      "integrated_profile_to_encrypted_backup_to_isolated_restore_anti_leak"
+    ],
+    "allowed_evidence_only": [
+      "systemvault-host-context.env",
+      "systemvault-matrix.json",
+      "SYSTEMVAULT_NATIVE_GATE_STATUS",
+      "systemvault-anti-leak.json"
+    ]
+  },
+  "expiry_rule": "This authorization is automatically invalid upon any suspension trigger, and it expires when the candidate chain or approved scope changes. It neither modifies nor supersedes PUBLIC_RELEASE_GATE_STATE.json."
+}
