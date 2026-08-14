@@ -1,0 +1,39 @@
+ForgeLocal API targeted-test selection evidence
+generated_at_utc=2026-08-14
+commit=b4f930bc44e76635eebbbfb6eef813bb54daa98c
+go_version=go version go1.25.13 linux/amd64
+GOTOOLCHAIN=local
+package=forgelocal/internal/api
+package_presence_count=1
+list_pattern=Backup|Restore
+listed_test_count=3
+exact_pattern=^TestBackupV1CreateModifyRestoreIsolation$
+executed_test_count=1
+executed_target_pass_count=1
+unexpected_executed_test_count=0
+targeted_result=PASSED
+public_release_decision=PUBLIC_RELEASE_BLOCKED
+
+[go list ./... selected package]
+forgelocal/internal/api
+
+[go test -list Backup|Restore]
+TestBackupV1CreateModifyRestoreIsolation
+TestLegacyRestoreEndpointRetired
+TestLegacyBackupEndpointRetired
+ok  	forgelocal/internal/api	0.003s
+
+[go test exact target]
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/14 16:25:30 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation1909712414/001/.api-token
+2026/08/14 16:25:30 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 192.0.2.1:1234 - 201 207B in 1.646335ms
+2026/08/14 16:25:30 "POST http://example.com/api/v1/backups/bkp-1786724730420065068-7732435b24a6dbd3/restore HTTP/1.1" from 192.0.2.1:1234 - 201 394B in 1.353137ms
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.108 built on Ubuntu 24.04.4 LTS" pid=114686 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation1909712414/001/profiles/target-api/browser-data" endpoint="none (--dump-dom direct process)" navigation="about:blank"
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch stopped cleanly: pid=114686 profile_lock_cleanup=verified
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (0.39s)
+PASS
+ok  	forgelocal/internal/api	0.389s
+
+[release validators]
+{"chains": 2, "public_release_decision": "PUBLIC_RELEASE_BLOCKED", "valid": true}
+{"decision": "PUBLIC_RELEASE_BLOCKED", "gate_decisions": {"MAINTAINER_MANIFEST_SIGNATURE": "PENDING", "OS_COMPATIBILITY_EVIDENCE": "PENDING", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW": "PENDING", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW": "PENDING", "SYSTEMVAULT_NATIVE_PER_TARGET": "PENDING"}, "pending_gates": ["SYSTEMVAULT_NATIVE_PER_TARGET", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW", "MAINTAINER_MANIFEST_SIGNATURE", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW", "OS_COMPATIBILITY_EVIDENCE"], "valid": true}
