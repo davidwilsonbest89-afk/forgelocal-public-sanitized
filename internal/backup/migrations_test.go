@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestMigrateUpgradesExistingBack01DatabaseToProductV2(t *testing.T) {
+func TestMigrateUpgradesExistingBack01DatabaseToProductV3(t *testing.T) {
 	dbPath := filepath.Join(t.TempDir(), "forgelocal.sqlite")
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
@@ -30,21 +30,34 @@ func TestMigrateUpgradesExistingBack01DatabaseToProductV2(t *testing.T) {
 			t.Fatalf("expected table %q after upgrade, got %q / %v", table, found, err)
 		}
 	}
-	var versionTwoRecords int
-	if err := db.QueryRow(`SELECT COUNT(*) FROM schema_migrations WHERE version = 2`).Scan(&versionTwoRecords); err != nil {
-		t.Fatalf("count migration 2 records: %v", err)
-	}
-	if versionTwoRecords != 1 {
-		t.Fatalf("migration 2 ledger records = %d, want 1", versionTwoRecords)
+	assertMigrationRecordedOnce(t, db, productSchemaVersion)
+	assertMigrationRecordedOnce(t, db, proxyIndexesSchemaVersion)
+	for _, index := range []string{
+		"idx_profiles_proxy_provider_id_not_null",
+		"idx_profiles_proxy_secret_ref_not_empty",
+		"idx_groups_proxy_provider_id_not_null",
+		"idx_groups_proxy_secret_ref_not_empty",
+	} {
+		var found string
+		if err := db.QueryRow(`SELECT name FROM sqlite_master WHERE type = 'index' AND name = ?`, index).Scan(&found); err != nil || found != index {
+			t.Fatalf("expected proxy index %q after upgrade, got %q / %v", index, found, err)
+		}
 	}
 
 	if err := Migrate(db); err != nil {
 		t.Fatalf("repeat upgrade must be idempotent: %v", err)
 	}
-	if err := db.QueryRow(`SELECT COUNT(*) FROM schema_migrations WHERE version = 2`).Scan(&versionTwoRecords); err != nil {
-		t.Fatalf("recount migration 2 records: %v", err)
+	assertMigrationRecordedOnce(t, db, productSchemaVersion)
+	assertMigrationRecordedOnce(t, db, proxyIndexesSchemaVersion)
+}
+
+func assertMigrationRecordedOnce(t *testing.T, db *sql.DB, version int) {
+	t.Helper()
+	var records int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM schema_migrations WHERE version = ?`, version).Scan(&records); err != nil {
+		t.Fatalf("count migration %d records: %v", version, err)
 	}
-	if versionTwoRecords != 1 {
-		t.Fatalf("idempotent migration 2 ledger records = %d, want 1", versionTwoRecords)
+	if records != 1 {
+		t.Fatalf("migration %d ledger records = %d, want 1", version, records)
 	}
 }

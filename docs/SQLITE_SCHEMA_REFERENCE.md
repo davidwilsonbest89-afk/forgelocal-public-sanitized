@@ -1,18 +1,19 @@
 # Référence du schéma SQLite ForgeLocal
 
-**Statut :** baseline versionnée du Lot Produit v0.3. Cette référence décrit le schéma réellement porté par la migration `internal/backup/migrations/0002_product.sql`, appliquée après `0001_back01.sql` par `internal/backup/migrations.go`. Elle ne modifie ni le candidat RC BACK-01 figé, ni son runtime, ni son SBOM, ni ses gates de release. La migration des données JSON elle-même reste à implémenter et doit respecter le plan de migration défini dans ce document.
+**Statut :** baseline versionnée du Lot Produit v0.3. Cette référence décrit le schéma réellement porté par la migration `internal/backup/migrations/0002_product.sql` et sa migration additive `0003_proxy_reference_indexes.sql`, appliquées après `0001_back01.sql` par `internal/backup/migrations.go`. Elles ne modifient ni le candidat RC BACK-01 figé, ni son runtime, ni son SBOM, ni ses gates de release. La migration des données JSON elle-même reste à implémenter et doit respecter le plan de migration défini dans ce document.
 
 > **Principe d’architecture.** SQLite conserve l’état métier local de ForgeLocal. Le Core Go est son seul écrivain. Les données de navigation restent dans les répertoires `browser-data` privés ; les mots de passe, jetons, clés API et identifiants proxy restent exclusivement dans le coffre système.
 
 ## Portée, versionnement et garanties
 
-La table historique `schema_migrations` créée par BACK-01 reste l’unique registre de versions. La migration BACK-01 est la version **1** ; le schéma métier est la version **2**. Le chargeur applique les migrations manquantes dans l’ordre et dans une transaction : le DDL et l’inscription de la version sont validés ensemble. Une base déjà au niveau 1 est donc mise à niveau vers 2 une seule fois ; une nouvelle exécution est idempotente.
+La table historique `schema_migrations` créée par BACK-01 reste l’unique registre de versions. La migration BACK-01 est la version **1** ; le schéma métier est la version **2** ; les index de références proxy sont la version additive **3**. Le chargeur applique les migrations manquantes dans l’ordre et dans une transaction : le DDL et l’inscription de la version sont validés ensemble. Une base déjà au niveau 1 est donc mise à niveau vers 3 une seule fois ; une nouvelle exécution est idempotente.
 
 | Élément | Décision versionnée | Motivation |
 |---|---|---|
 | Registre des migrations | `schema_migrations` existant | Une base locale, un historique ordonné, aucun second moteur de migration. |
 | Migration BACK-01 | `0001_back01.sql` | Backups, restauration et audit déjà qualifiés. |
-| Migration Produit | `0002_product.sql` | Métadonnées de profils, groupes, runtime et proxy générique. |
+| Migration Produit | `0002_product.sql` | Métadonnées de profils, groupes, runtime et proxy générique ; types, FK et contrôles de format des références proxy. |
+| Migration Produit additive | `0003_proxy_reference_indexes.sql` | Index partiels sur `proxy_provider_id` et `proxy_secret_ref` de `profiles` et `groups`, sans ajouter de secret ni modifier les tables v2. |
 | Ordonnancement | `backup.Migrate` | Le Core Go demeure le seul responsable des mutations SQLite. |
 | Modes SQLite | WAL, `foreign_keys=ON`, `busy_timeout=5000` | Cohérence locale, contraintes référentielles et comportement concurrent prévisible. |
 | Compatibilité de release | Aucun impact sur le RC BACK-01 gelé | Le travail produit reste isolé sur `forgelocal-product-v0.3`. |
@@ -83,7 +84,7 @@ Le statut de `runtime_candidates` ne constitue pas une approbation de release et
 
 ## Index, intégrité et suppression
 
-Les index couvrent la liste des profils par groupe/état/date d’usage, la sélection par runtime, la relation tags, l’historique des tests proxy, les opérations d’import et l’audit. L’index partiel unique sur `container_id` ne s’applique qu’aux valeurs non vides : plusieurs profils non conteneurisés restent autorisés, tandis qu’un même conteneur ne peut pas être associé à deux profils.
+Les index couvrent la liste des profils par groupe/état/date d’usage, la sélection par runtime, la relation tags, l’historique des tests proxy, les opérations d’import et l’audit. La version 3 ajoute les index partiels `idx_profiles_proxy_provider_id_not_null`, `idx_profiles_proxy_secret_ref_not_empty`, `idx_groups_proxy_provider_id_not_null` et `idx_groups_proxy_secret_ref_not_empty` : ils accélèrent les recherches par fournisseur ou référence opaque de coffre sans indexer une valeur secrète. L’index partiel unique sur `container_id` ne s’applique qu’aux valeurs non vides : plusieurs profils non conteneurisés restent autorisés, tandis qu’un même conteneur ne peut pas être associé à deux profils.
 
 Une suppression de runtime, fournisseur ou groupe référencé est refusée par SQLite. Le futur GUI doit proposer une transaction métier explicite : réaffecter ou archiver les profils concernés, vérifier les références de coffre, écrire un audit redacted, puis seulement supprimer l’entité devenue libre. Cette règle évite d’introduire des profils orphelins ou des mutations implicites.
 
@@ -108,7 +109,7 @@ La reprise après interruption ne réutilise jamais un état partiellement impor
 
 ## Couverture automatisée actuelle
 
-Les tests exécutés sur la branche produit valident l’application conjointe BACK-01 + Produit, la migration d’une base déjà au niveau 1 vers le niveau 2, l’idempotence du chargeur, les contraintes runtime/groupe/proxy, les références étrangères et l’absence de colonnes de secrets en clair. Ils couvrent aussi désormais l’import JSON : `dry-run` sans écriture métier, refus d’un `apply` sans backup vérifié, backup préimage BACK-01 chiffré, parité relue depuis SQLite, rollback lors d’un conflit d’intégrité, interruption après publication du préimage sans écritures produit partielles, reprise après correction, et refus de toute donnée proxy en clair avant journalisation ou sauvegarde.
+Les tests exécutés sur la branche produit valident l’application conjointe BACK-01 + Produit, la migration d’une base déjà au niveau 1 vers le niveau 3, l’idempotence du chargeur, les contraintes runtime/groupe/proxy, les références étrangères, les quatre index de références proxy et l’absence de colonnes de secrets en clair. Ils couvrent aussi désormais l’import JSON : `dry-run` sans écriture métier, refus d’un `apply` sans backup vérifié, backup préimage BACK-01 chiffré, parité relue depuis SQLite, rollback lors d’un conflit d’intégrité, interruption après publication du préimage sans écritures produit partielles, reprise après correction, et refus de toute donnée proxy en clair avant journalisation ou sauvegarde.
 
 ```bash
 go test ./internal/backup ./internal/productschema ./internal/profilemigration -count=1 -v

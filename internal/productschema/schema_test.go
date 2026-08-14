@@ -18,7 +18,7 @@ func openProductSchema(t *testing.T) *sql.DB {
 	}
 	t.Cleanup(func() { _ = db.Close() })
 	if err := backup.Migrate(db); err != nil {
-		t.Fatalf("apply Core migrations through version 2: %v", err)
+		t.Fatalf("apply Core migrations through version 3: %v", err)
 	}
 	return db
 }
@@ -70,6 +70,73 @@ func TestProductSchemaAppliesAndProtectsIntegrity(t *testing.T) {
 	}
 	if _, err := db.Exec(`DELETE FROM runtime_candidates WHERE id = 'runtime.chromium'`); err == nil {
 		t.Fatal("runtime referenced by a profile must not be deleted")
+	}
+}
+
+func TestProxyReferenceColumnsConstraintsAndIndexesAreCanonical(t *testing.T) {
+	db := openProductSchema(t)
+
+	expectedColumns := map[string]map[string]string{
+		"profiles": {
+			"proxy_provider_id": "TEXT",
+			"proxy_secret_ref":  "TEXT",
+		},
+		"groups": {
+			"proxy_provider_id": "TEXT",
+			"proxy_secret_ref":  "TEXT",
+		},
+	}
+	for table, expected := range expectedColumns {
+		rows, err := db.Query("PRAGMA table_info(" + table + ")")
+		if err != nil {
+			t.Fatalf("inspect %s columns: %v", table, err)
+		}
+		found := map[string]string{}
+		for rows.Next() {
+			var cid, notNull, pk int
+			var name, typ string
+			var defaultValue any
+			if err := rows.Scan(&cid, &name, &typ, &notNull, &defaultValue, &pk); err != nil {
+				_ = rows.Close()
+				t.Fatalf("scan %s columns: %v", table, err)
+			}
+			found[name] = typ
+		}
+		if err := rows.Close(); err != nil {
+			t.Fatalf("close %s columns: %v", table, err)
+		}
+		for column, expectedType := range expected {
+			if found[column] != expectedType {
+				t.Fatalf("%s.%s type = %q, want %q", table, column, found[column], expectedType)
+			}
+		}
+
+		var createSQL string
+		if err := db.QueryRow(`SELECT sql FROM sqlite_master WHERE type = 'table' AND name = ?`, table).Scan(&createSQL); err != nil {
+			t.Fatalf("read %s DDL: %v", table, err)
+		}
+		if !strings.Contains(createSQL, "proxy_provider_id TEXT REFERENCES proxy_providers(id) ON DELETE RESTRICT") {
+			t.Fatalf("%s.proxy_provider_id must retain proxy provider FK: %s", table, createSQL)
+		}
+		if !strings.Contains(createSQL, "proxy_secret_ref GLOB") {
+			t.Fatalf("%s.proxy_secret_ref must retain a bounded vault-reference CHECK: %s", table, createSQL)
+		}
+	}
+
+	expectedIndexes := map[string]string{
+		"idx_profiles_proxy_provider_id_not_null": "ON profiles(proxy_provider_id) WHERE proxy_provider_id IS NOT NULL",
+		"idx_profiles_proxy_secret_ref_not_empty":  "ON profiles(proxy_secret_ref) WHERE proxy_secret_ref <> ''",
+		"idx_groups_proxy_provider_id_not_null":   "ON groups(proxy_provider_id) WHERE proxy_provider_id IS NOT NULL",
+		"idx_groups_proxy_secret_ref_not_empty":    "ON groups(proxy_secret_ref) WHERE proxy_secret_ref <> ''",
+	}
+	for indexName, expectedSQL := range expectedIndexes {
+		var sqlText string
+		if err := db.QueryRow(`SELECT sql FROM sqlite_master WHERE type = 'index' AND name = ?`, indexName).Scan(&sqlText); err != nil {
+			t.Fatalf("read index %s: %v", indexName, err)
+		}
+		if !strings.Contains(sqlText, expectedSQL) {
+			t.Fatalf("index %s DDL = %q, want fragment %q", indexName, sqlText, expectedSQL)
+		}
 	}
 }
 

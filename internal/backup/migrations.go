@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	backupSchemaVersion  = 1
-	productSchemaVersion = 2
+	backupSchemaVersion       = 1
+	productSchemaVersion      = 2
+	proxyIndexesSchemaVersion = 3
 )
 
 //go:embed migrations/0001_back01.sql
@@ -16,6 +17,9 @@ var backupSchemaSQL string
 
 //go:embed migrations/0002_product.sql
 var productSchemaSQL string
+
+//go:embed migrations/0003_proxy_reference_indexes.sql
+var proxyIndexesSchemaSQL string
 
 type schemaMigration struct {
 	version int
@@ -25,10 +29,11 @@ type schemaMigration struct {
 var schemaMigrations = []schemaMigration{
 	{version: backupSchemaVersion, sql: backupSchemaSQL},
 	{version: productSchemaVersion, sql: productSchemaSQL},
+	{version: proxyIndexesSchemaVersion, sql: proxyIndexesSchemaSQL},
 }
 
 // Migrate applies the Core SQLite schema in order. Each migration and its ledger
-// row commit atomically; a failed product migration leaves version 2 unapplied.
+// row commit atomically; a failed migration leaves its own version unapplied.
 func Migrate(db *sql.DB) error {
 	if _, err := db.Exec(`PRAGMA journal_mode = WAL`); err != nil {
 		return fmt.Errorf("enable WAL: %w", err)
