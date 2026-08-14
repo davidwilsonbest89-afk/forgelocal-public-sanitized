@@ -1,0 +1,106 @@
+{
+  "format": "forgelocal-release-traceability-index/v1",
+  "policy": {
+    "independent_chain_required": true,
+    "evidence_reuse_across_runtime_candidates_forbidden": true,
+    "public_release_decision": "PUBLIC_RELEASE_BLOCKED",
+    "rule": "Each artifact must retain its own source, exact runtime, runtime package evidence, checksums, SBOM, manifest, signature state, and matching E2E evidence."
+  },
+  "chains": [
+    {
+      "chain_id": "pilot-chromium-151.0.7922.71-07f603d",
+      "kind": "historical_local_pilot",
+      "status": "PILOT_LOCAL_APPROVED",
+      "artifact": {
+        "file": "dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-07f603d-linux-amd64.tar.gz",
+        "sha256": "66f785eb82dd1bef90a142e618974f1e895cf5389deb0040475877dbc596c045",
+        "source_commit": "07f603d8d8314988b8b3279c78eceae645610c19"
+      },
+      "runtime": {
+        "name": "Chromium",
+        "version": "151.0.7922.71",
+        "external_to_artifact": true,
+        "binary_path": "/usr/lib/chromium/chromium",
+        "binary_sha256": "ad69c6632131d3a8b0e7395c3bb36d05cad6a2c650ecfa7ebe2e8dcba955c2de",
+        "package_status": "historical_package_unavailable_from_current_index"
+      },
+      "e2e": {
+        "acceptance": "AC-BACK-01",
+        "evidence": "validation_back01_integration/final/ac_back_01_with_explicit_chromium.out",
+        "sha256": "c7473119367c995b96c6d7e7a773c2fb7ccbaad0a02788dc2b343015b6aa3f8a",
+        "runtime_version_expected": "151.0.7922.71",
+        "reusable_for_other_runtime": false
+      },
+      "sbom": null,
+      "external_release_manifest": null,
+      "signature": {
+        "status": "NOT_APPLICABLE_TO_HISTORICAL_PILOT"
+      },
+      "public_release_eligible": false
+    },
+    {
+      "chain_id": "candidate-chromium-151.0.7922.108-67a8dfd",
+      "kind": "controlled_release_candidate",
+      "status": "TECHNICAL_RUNTIME_E2E_PASSED_PUBLIC_RELEASE_BLOCKED",
+      "artifact": {
+        "file": "dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz",
+        "sha256": "553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6",
+        "source_commit": "67a8dfd897e540a55fc10749e1f2ef85b8356a8b"
+      },
+      "runtime": {
+        "name": "Chromium",
+        "version": "151.0.7922.108-1xtradeb1.2404.1",
+        "external_to_artifact": true,
+        "wrapper_path": "/usr/bin/chromium",
+        "binary_path": "/usr/lib/chromium/chromium",
+        "binary_sha256": "0ded189a4ee6845ad133e03eb343797f6272591cdc9fc2257aa5a0ce2a5e4a3f",
+        "runtime_lock": {
+          "file": "release/back01-minimal/RUNTIME_CANDIDATE_CHROMIUM_151.0.7922.108.json",
+          "sha256": "29788ebe77284706b366c975a9a9cfa4819dfbc84cac6ad2e8869fc285e6b3ad"
+        },
+        "packages": [
+          {
+            "name": "chromium",
+            "version": "151.0.7922.108-1xtradeb1.2404.1",
+            "architecture": "amd64",
+            "sha256": "8bb8686eec56afddd29fb40371808b6117a60b9b1a4cdece791d2056f3f93948"
+          },
+          {
+            "name": "chromium-common",
+            "version": "151.0.7922.108-1xtradeb1.2404.1",
+            "architecture": "amd64",
+            "sha256": "2c1037d840475767d6d06a8c4da6359ec180038efe40ec88ebc27d33fe337150"
+          }
+        ]
+      },
+      "e2e": {
+        "acceptance": "AC-BACK-01",
+        "evidence": "validation_back01_integration/final/ac_back_01_chromium_candidate_108.out",
+        "sha256": "c0e35fe4077fffe80626da0b8c67a81207d018adba5bfff610152a5ed7e2497f",
+        "runtime_version_expected": "151.0.7922.108",
+        "reusable_for_other_runtime": false
+      },
+      "sbom": {
+        "file_inside_artifact": "SBOM.spdx.json",
+        "format": "SPDX-2.3",
+        "sha256": "92f20371bdbfac26d2d79daf0e067d350228114deb27ece899625a2a7764a385"
+      },
+      "external_release_manifest": {
+        "file": "dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz.release-manifest.json",
+        "sha256": "1353836cc2f70d6f3ff0ce348932822b2e0f2e43a482c5cc9702f481526b81ff"
+      },
+      "signature": {
+        "status": "UNSIGNED_REQUIRES_MAINTAINER_KEY",
+        "procedure": "scripts/sign-release-manifest.sh"
+      },
+      "public_release_eligible": false,
+      "remaining_public_gates": [
+        "SystemVault native matrix on every announced target OS",
+        "integrated systemvault-anti-leak.json after profile to backup to restore",
+        "maintainer-controlled detached signature and published verification key",
+        "runtime license and redistribution review",
+        "OS support matrix limited to configurations with complete native evidence"
+      ]
+    }
+  ]
+}

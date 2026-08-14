@@ -6,6 +6,15 @@
 
 **État :** pilote local contrôlé approuvé ; un candidat Chromium requalifié est disponible, mais la publication publique reste bloquée par SystemVault natif, la signature mainteneur, la revue de licence et la portée OS réelle.
 
+## Règle de traçabilité indépendante
+
+> Chaque artefact de release possède une chaîne indépendante : source référencée, runtime exact, paquet runtime, checksums, SBOM, manifeste, signature et preuve E2E correspondante. **Une preuve d’un runtime ne justifie jamais un autre candidat.**
+
+| Chaîne | Artefact | Runtime prouvé | Preuve E2E exclusive | Statut |
+|---|---|---|---|---|
+| Pilote historique | `forgelocal-back01-core-0.1.0-back01-07f603d-linux-amd64.tar.gz` | Chromium `151.0.7922.71` | `ac_back_01_with_explicit_chromium.out` | `PILOT_LOCAL_APPROVED` |
+| Candidat RC distinct | `forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz` | Chromium `151.0.7922.108` | `ac_back_01_chromium_candidate_108.out` | E2E technique vert ; `PUBLIC_RELEASE_BLOCKED` |
+
 ## Décision
 
 Le flux **AC-BACK-01** est désormais prouvé de bout en bout dans le sandbox local : création d’un profil, sauvegarde chiffrée, modification de la source, restauration sous un nouvel identifiant, contrôle de l’isolation, puis relance effective du répertoire `browser-data` restauré dans Chromium local en mode headless sur `about:blank`.
@@ -24,7 +33,7 @@ L’artefact minimal BACK-01 a été reconstruit avec un manifeste de provenance
 | Matrice SystemVault native | **Non concluante dans ce sandbox** | hôte sans session de coffre utilisateur déverrouillée |
 | Provenance/signature runtime de release | **Incomplète** | canal et empreintes documentés ; signature et paquet source à archiver |
 
-## Preuve de relance runtime
+## Preuve de relance du pilote historique
 
 Le test suivant a été exécuté avec succès :
 
@@ -54,7 +63,7 @@ Le script `scripts/build-back01-minimal.sh` échoue désormais explicitement si 
 
 ## Candidat Chromium requalifié et chaîne de release
 
-Le candidat distinct Chromium `151.0.7922.108-1xtradeb1.2404.1` a été capturé sans substitution du pilote historique. Ses paquets `chromium` et `chromium-common`, l’index signé, l’empreinte de la clé PGP, les checksums et l’E2E AC-BACK-01 sont archivés. L’artefact candidat construit depuis le commit `67a8dfd` contient désormais un SBOM SPDX-2.3 et un manifeste externe dont le hash est vérifié contre l’archive. Ce manifeste reste volontairement `UNSIGNED_REQUIRES_MAINTAINER_KEY` : aucun secret ou clé de signature mainteneur n’est généré, importé ou conservé dans ce dépôt.
+Le candidat distinct Chromium `151.0.7922.108-1xtradeb1.2404.1` a été capturé sans substitution du pilote historique. Ses paquets `chromium` et `chromium-common`, l’index signé, l’empreinte de la clé PGP, les checksums et **sa propre** sortie E2E `ac_back_01_chromium_candidate_108.out` sont archivés. Cette preuve journalise le binaire `/usr/bin/chromium`, Chromium `151.0.7922.108`, le PID, le profil restauré, `about:blank`, l’arrêt propre et le nettoyage des locks. La sortie du pilote `151.0.7922.71` ne sert pas à justifier ce candidat. L’artefact candidat construit depuis le commit `67a8dfd` contient désormais un SBOM SPDX-2.3 et un manifeste externe dont le hash est vérifié contre l’archive. Ce manifeste reste volontairement `UNSIGNED_REQUIRES_MAINTAINER_KEY` : aucun secret ou clé de signature mainteneur n’est généré, importé ou conservé dans ce dépôt.
 
 | Élément | État |
 |---|---|
@@ -93,7 +102,7 @@ go test ./... -count=1
 
 La publication reste **bloquée** par les gates cumulatifs suivants : validation native du `SystemVault` sur chaque OS réellement annoncé, dans une session utilisateur déverrouillée ; preuve anti-fuite intégrée ; runtime de release à provenance complète ; signature détachée du manifeste par une clé mainteneur approuvée ; revue de licence/distribution du runtime ; et matrice de compatibilité limitée aux OS effectivement testés. Le sandbox headless ne fournit pas une collection Secret Service utilisable ; il ne permet donc pas de conclure les scénarios création, lecture après redémarrage, absence/révocation, permissions insuffisantes et absence de fuite dans SQLite, `profile.json`, logs ou backups.
 
-Le dossier de gate désormais prêt comprend `SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md`, `RUNTIME_RELEASE_LOCK.json`, `PUBLIC_RELEASE_DECISION.md` et les scripts de capture. Le paquet Chromium QA `151.0.7922.71-1xtradeb1.2404.1` n’est plus disponible dans l’index APT courant ; il doit être récupéré depuis une archive de confiance et vérifié, ou remplacé explicitement par un nouveau candidat qui repasse l’E2E complet.
+Le dossier de gate comprend `SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md`, `RUNTIME_RELEASE_LOCK.json`, `RUNTIME_CANDIDATE_CHROMIUM_151.0.7922.108.json`, `PUBLIC_RELEASE_DECISION.md` et les scripts de capture. Le paquet pilote Chromium `151.0.7922.71-1xtradeb1.2404.1` n’est plus disponible dans l’index APT courant ; il reste donc figé au statut pilote. Le candidat `151.0.7922.108` a repassé l’E2E complet avec une chaîne distincte ; il doit encore lever les gates publics sans modifier la chaîne historique.
 
 La migration des métadonnées de profils JSON vers SQLite métier et le branchement du dashboard React vers les routes BACK-01 demeurent également des travaux produit séparés. Ils ne bloquent pas la preuve cryptographique et de restauration BACK-01, mais empêchent de présenter ForgeLocal comme un panneau desktop complet finalisé.
 
@@ -101,7 +110,8 @@ La migration des métadonnées de profils JSON vers SQLite métier et le branche
 
 | Fichier | Contenu |
 |---|---|
-| `validation_back01_integration/final/ac_back_01_with_explicit_chromium.out` | E2E API avec binaire, version, PID, profil, `about:blank`, arrêt et locks explicitement journalisés |
+| `validation_back01_integration/final/ac_back_01_with_explicit_chromium.out` | E2E exclusive du pilote Chromium `151.0.7922.71` |
+| `validation_back01_integration/final/ac_back_01_chromium_candidate_108.out` | E2E exclusive du candidat Chromium `151.0.7922.108`, avec binaire, version, PID, profil, `about:blank`, arrêt et locks |
 | `validation_back01_integration/final/chromium_runtime_release_provenance.out` | OS, paquet, canal APT, mainteneur et empreintes runtime QA |
 | `validation_back01_integration/final/minimal_artifact_runtime_gate_build.out` | Tests minimaux et Gosec `Issues : 0` |
 | `validation_back01_integration/final/minimal_artifact_runtime_gate_validation.out` | Checksum de l’archive, checksums internes, manifeste et Gitleaks |
