@@ -12,7 +12,7 @@
 - [x] Publier le registre CAMO-CORE-01 avec hash, commit, dépendances, décision et responsable par module.
 - [x] Ajouter les contrats API Core de lecture seule, redacted et paginés, avec tests.
 - [x] Préparer le client React mémoire seule et ses états lecture seule sans token persistant.
-- [ ] Vérifier les contrats, scans, builds et commits isolés sans modifier le RC ou les gates publics.
+- [x] Vérifier les contrats, scans, builds et commits isolés sans modifier le RC ou les gates publics.
 
 # Addendum v2.3 — Provenance des composants
 

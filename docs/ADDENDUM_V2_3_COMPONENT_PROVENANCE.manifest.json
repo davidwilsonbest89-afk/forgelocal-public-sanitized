@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "document_id": "FL-ADD-2.3-20260814",
+  "content_commit": "22b025769b5b17dbf03dd109a13f681719406afd",
+  "attestation_scope": "component-provenance-and-ci-guardrail",
+  "artifacts": [
+    {
+      "path": "docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.md",
+      "sha256": "ca1be7ddf486de4b94f120e88daa477897ea1bc9bdb6d90097dc8adbd96bafc9"
+    },
+    {
+      "path": "docs/component-rights-register.json",
+      "sha256": "8f784ab1b1443502a5e82be9e38286c1b44c4b9d9010ae722917b8b3ccba9f2d"
+    },
+    {
+      "path": "docs/COMPONENT_RIGHTS_REGISTER.md",
+      "sha256": "19c7e9d536f9ea22428d5c50a979519658975fcea54490aaad5b9cfcd0a9b6d9"
+    },
+    {
+      "path": "scripts/check-component-rights.mjs",
+      "sha256": "40b0f960d1bdaf74558bd03bab4b2bb3b1c1a08f72f8c78fecb10e81f535c8a2"
+    },
+    {
+      "path": "scripts/test-component-rights.mjs",
+      "sha256": "6e1597c9579af469608859a636d44431b805842351e342d03068a22a0dfca78f"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "c500498c2449a11bb664539d8300349d6d96ac7880e769d0e93ce5ca3662fc9a"
+    }
+  ],
+  "checks": {
+    "component_rights": "node scripts/check-component-rights.mjs",
+    "component_rights_fixtures": "node scripts/test-component-rights.mjs",
+    "gitleaks": "v8.18.4 delta scan, clean",
+    "go_toolchain": "go1.25.13 with GOTOOLCHAIN=local",
+    "rc_paths_modified": false
+  },
+  "release_status": {
+    "decision": "PUBLIC_RELEASE_BLOCKED",
+    "pilot": "PILOT_LOCAL_SUSPENDED_PENDING_SECRET_SCAN_TRIAGE",
+    "scan": "SCAN_BLOCKED_UNKNOWN"
+  }
+}
