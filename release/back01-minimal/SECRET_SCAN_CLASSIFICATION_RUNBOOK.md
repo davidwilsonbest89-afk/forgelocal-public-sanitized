@@ -20,12 +20,12 @@ Le mainteneur travaille hors journal public avec le propriétaire autorisé de l
 
 ## Branche A — `REAL_SECRET`
 
-La valeur est un `REAL_SECRET` si une source autoritative ou son propriétaire confirme qu’elle peut authentifier un accès, signer avec une clé privée, autoriser une API, protéger une ressource, ou être échangée contre un accès sensible.
+La valeur est un `REAL_SECRET` si une source autoritative ou son propriétaire confirme qu’elle peut authentifier un accès, signer avec une clé privée, autoriser une API, protéger une ressource, ou être échangée contre un accès sensible. Dès cette conclusion, elle est traitée comme **potentiellement exposée** : une révocation ou rotation confirmée est obligatoire avant toute reconstruction.
 
 | Étape | Exigence de clôture |
 |---|---|
 | 1. Confinement | Conserver le pilote suspendu et empêcher toute nouvelle distribution de l’archive. |
-| 2. Révocation | Le propriétaire révoque, remplace ou désactive la valeur dans son système d’origine ; documenter seulement un identifiant de ticket ou une confirmation redacted. |
+| 2. Révocation | Le propriétaire révoque, remplace ou désactive la valeur dans son système d’origine. Une confirmation redacted ou un identifiant de ticket doit être obtenu **avant toute reconstruction**. |
 | 3. Portée | Examiner le Git et les artefacts dérivés avec des résultats de comptage et des chemins redacted, sans imprimer la valeur. |
 | 4. Invalidation | Déclarer définitivement non publiable le RC actuel et ne jamais tenter de le corriger en place. |
 | 5. Nouvelle chaîne | Construire un nouveau candidat à partir d’une preuve assainie, avec un nouveau SHA-256, SBOM, manifeste, index de traçabilité et contrôle de licences. |
@@ -41,8 +41,8 @@ Une conclusion `FALSE_POSITIVE` exige une preuve mainteneur indépendante que l�
 | 1. Justification | Documenter la nature non secrète sans valeur brute, ainsi que l’autorité qui le confirme. |
 | 2. Forme de preuve | Remplacer dans la source de provenance la ligne non structurée par une forme explicitement non secrète ou redacted. Une valeur qui déclenche à nouveau le scanner ne doit pas être conservée sous forme opaque. |
 | 3. Candidat neuf | Ne jamais modifier l’archive RC gelée. Reconstruire une nouvelle archive avec un nouvel identifiant, manifeste, SBOM, checksums et index de traçabilité. |
-| 4. Rescan | Scanner l’archive reconstruite et la preuve de provenance assainie. Le rapport doit être propre ou expliquer une exception étroite, revue, qui ne contient pas la valeur et ne peut pas masquer un nouveau motif. |
-| 5. Revue | Faire valider la justification, la transformation de preuve et le rescan par un relecteur indépendant. |
+| 4. Rescan | Un relecteur indépendant scanne la preuve redacted et l’archive reconstruite. Aucun motif équivalent ne doit être détecté et aucune exception Gitleaks globale, par chemin, large ou destinée à masquer le motif équivalent ne doit être ajoutée. |
+| 5. Revue | Le relecteur indépendant atteste la justification, la transformation de preuve, le rescan propre et l’absence de nouvelle exception large. |
 | 6. Suite | Reprendre seulement les gates rendus invalides par le nouvel artefact ou la nouvelle preuve. Aucun statut public ne devient approuvé par cette seule classification. |
 
 ## Branche C — `UNKNOWN`
@@ -61,4 +61,4 @@ Si le propriétaire, la source autoritative ou la revue indépendante sont indis
 
 Le mainteneur complète `SECRET_SCAN_CLASSIFICATION_DOSSIER.template.json` dans un nouveau fichier de décision versionné. Il y associe une identité responsable, un horodatage UTC, une classification, une justification redacted, les hashes de l’archive et du rapport, un résultat de contrôle de l’historique, un rescan reproduit et une revue indépendante. Aucun champ ne doit contenir la valeur brute.
 
-La mise à jour de l’autorisation de pilote est interdite avant que le dossier de décision soit complet et que la revue indépendante ait explicitement approuvé la conclusion.
+La mise à jour de l’autorisation de pilote est interdite avant que le dossier de décision soit complet et que la revue indépendante ait explicitement approuvé la conclusion. Une conclusion `REAL_SECRET` exige en plus une preuve redacted de révocation ou de rotation antérieure à la reconstruction ; une conclusion `FALSE_POSITIVE` exige un rescan indépendant propre de la nouvelle preuve et l’absence vérifiée d’exception Gitleaks large.
