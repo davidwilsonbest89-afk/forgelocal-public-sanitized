@@ -89,26 +89,29 @@ Une suppression de runtime, fournisseur ou groupe référencé est refusée par 
 
 ## Plan de migration JSON → SQLite obligatoire
 
-La migration de données est une fonctionnalité distincte de la seule migration DDL. Elle doit être livrée avec un mode `dry-run` par défaut, une sauvegarde pré-migration chiffrée, un rapport de parité et un rollback documenté. Aucune suppression de `profile.json` ou `groups.json` n’est autorisée lors de la première migration.
+La migration de données est une fonctionnalité distincte de la seule migration DDL. L’importeur interne `internal/profilemigration` fonctionne en mode `dry-run` par défaut, exige en mode `apply` une sauvegarde pré-migration chiffrée et vérifiée, relit les lignes SQLite réellement écrites pour établir la parité, et effectue toutes les mutations métier dans une transaction unique. Aucune suppression de `profile.json` ou `groups.json` n’est autorisée lors de la première migration.
+
+La fabrique `NewEncryptedPreMigrationBackup` construit une enveloppe JSON versionnée des sources validées, la chiffre dans un artefact BACK-01 `FLBK … FLEND`, vérifie cryptographiquement cet artefact avant toute écriture SQLite, puis ne transmet à l’importeur que l’identifiant de backup et son SHA-256. Le rapport d’import ne contient ni payload, ni clé, ni valeur de coffre. La fonction est actuellement une dépendance interne : son invocation doit être câblée au futur Core produit, jamais ajoutée à l’artefact RC BACK-01 gelé.
 
 | Étape | Mode et transaction | Preuve attendue | Échec ou interruption |
 |---|---|---|---|
-| 1. Préflight | Lecture seule | Chemins, permissions, version SQLite, coffre disponible et inventaire JSON assaini. | Arrêt sans écrire SQLite. |
-| 2. Sauvegarde | BACK-01 chiffré, vérifié | ID de backup, hash et `correlation_id` ; pas de secret dans le rapport. | Arrêt avant import. |
-| 3. Dry-run | Lecture seule | Nombre de profils/groupes/tags, conflits, hash de chaque source et plan de mutations. | État `validated` ou `failed`, aucune mutation métier. |
-| 4. Import | Transaction SQLite unique et journal `profile_import_operations` | État `committed`, compteurs et hash de l’enregistrement canonique. | Rollback SQLite ou état explicite `failed`; fichiers JSON intacts. |
-| 5. Parité | Lecture JSON + SQLite | Ligne `profile_json_parity_checks` par profil : `match`, `mismatch` ou `not_applicable`. | État non promouvable et diagnostic redacted. |
-| 6. Bascule contrôlée | Feature flag local explicite | Chargement SQLite + fallback de lecture JSON documenté, sans double écriture non contrôlée. | Retour au lecteur JSON, données SQLite conservées pour diagnostic. |
-| 7. Nettoyage ultérieur | Décision mainteneur séparée | Backup vérifié, parité durable et audit. | Aucun nettoyage automatique. |
+| 1. Préflight | Lecture seule | Chemins, permissions, version SQLite et inventaire JSON assaini. | Arrêt sans écrire SQLite. |
+| 2. Dry-run | Lecture source et journal minimal | Nombre de profils/groupes/tags, conflits, hash de chaque source et plan de mutations. | Deux entrées `validated` redacted, aucune table métier modifiée ni backup créé. |
+| 3. Backup préimage (apply uniquement) | Chiffrement BACK-01 + vérification | ID et SHA-256 de l’artefact contrôlé couvrant `groups.json` et tous les `profile.json`. | Arrêt avant transaction SQLite si la source évolue, si le coffre échoue ou si la vérification échoue. |
+| 4. Import | Transaction SQLite unique et journal `profile_import_operations` | Deux entrées `committed`, compteurs, audit redacted et hash de l’enregistrement canonique. | Rollback de toutes les écritures métier, y compris le journal et l’audit ; fichiers JSON intacts. |
+| 5. Parité | Lecture des lignes SQLite dans la transaction | Ligne `profile_json_parity_checks` par profil, uniquement après égalité des hash canoniques. | Divergence = rollback total ; aucun `match` ne peut être écrit sur confiance. |
+| 6. Reprise contrôlée | Nouveau dry-run après correction de la cause | Nouvelle corrélation, nouveaux hashes source et nouveau backup préimage. | Aucun « reprendre » implicite à partir d’un état partiel. |
+| 7. Bascule contrôlée | Feature flag local explicite, à livrer ultérieurement | Chargement SQLite + fallback de lecture JSON documenté, sans double écriture non contrôlée. | Retour au lecteur JSON, données SQLite conservées pour diagnostic. |
+| 8. Nettoyage ultérieur | Décision mainteneur séparée | Backup vérifié, parité durable et audit. | Aucun nettoyage automatique. |
 
-La reprise après interruption utilise `profile_import_operations` et le `correlation_id`. Une opération `planned` ou `validated` ne doit jamais être interprétée comme un import terminé. Une opération `committed` doit avoir son rapport de parité ; une opération `failed` ou `rolled_back` doit conserver un résumé assaini afin de rendre la reprise déterministe.
+La reprise après interruption ne réutilise jamais un état partiellement importé. Un `dry-run` journalise deux sources dans l’état `validated`; un `apply` réussi inscrit ces deux sources dans l’état `committed`. Une erreur de préflight n’écrit rien, tandis qu’une erreur dans l’import déclenche le rollback SQL de l’ensemble des lignes produit et du journal de l’opération. L’opérateur corrige la cause, exécute un nouveau `dry-run`, produit un nouveau backup préimage chiffré, puis relance l’`apply` avec une nouvelle corrélation.
 
 ## Couverture automatisée actuelle
 
-Les tests exécutés sur la branche produit valident actuellement l’application conjointe BACK-01 + Produit, la migration d’une base déjà au niveau 1 vers le niveau 2, l’idempotence du chargeur, les contraintes runtime/groupe/proxy, les références étrangères et l’absence de colonnes de secrets en clair. La commande de vérification est :
+Les tests exécutés sur la branche produit valident l’application conjointe BACK-01 + Produit, la migration d’une base déjà au niveau 1 vers le niveau 2, l’idempotence du chargeur, les contraintes runtime/groupe/proxy, les références étrangères et l’absence de colonnes de secrets en clair. Ils couvrent aussi désormais l’import JSON : `dry-run` sans écriture métier, refus d’un `apply` sans backup vérifié, backup préimage BACK-01 chiffré, parité relue depuis SQLite, rollback lors d’un conflit d’intégrité, interruption après publication du préimage sans écritures produit partielles, reprise après correction, et refus de toute donnée proxy en clair avant journalisation ou sauvegarde.
 
 ```bash
-go test ./internal/backup ./internal/productschema -count=1 -v
+go test ./internal/backup ./internal/productschema ./internal/profilemigration -count=1 -v
 ```
 
-Cette couverture ne remplace pas encore les futurs tests de migration de données JSON : base neuve, base existante avec jeux de données, interruption, reprise, rollback, parité multi-profils et vérification de coffre. Ces cas constituent le prochain lot avant toute bascule du GUI React vers SQLite.
+La bascule du lecteur métier JSON vers SQLite, son feature flag local et la désactivation éventuelle du lecteur JSON restent des travaux ultérieurs. Ils ne doivent être entrepris qu’après revue de ce flux, y compris sur une base existante représentative, et sans toucher au candidat BACK-01 gelé.

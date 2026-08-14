@@ -187,6 +187,38 @@ func (s *Service) createLocked(profileID, keyID string, payload []byte) (Backup,
 	return backup, nil
 }
 
+// Verify validates the exact stored artifact against its database record and
+// decrypts it only in memory to prove the authenticated ciphertext is usable.
+func (s *Service) Verify(backupID string) error {
+	if !validID(backupID) {
+		return fmt.Errorf("invalid backup id")
+	}
+	backup, err := s.Store.GetBackup(backupID)
+	if err != nil {
+		return err
+	}
+	body, err := os.ReadFile(backup.ArtifactPath) // #nosec G304 -- artifact path is created and recorded exclusively by the local backup service.
+	if err != nil {
+		return err
+	}
+	sum := sha256.Sum256(body)
+	if hex.EncodeToString(sum[:]) != backup.SHA256 {
+		return ErrIntegrity
+	}
+	key, err := s.Vault.Get(backup.KeyID)
+	if err != nil {
+		return err
+	}
+	manifest, _, err := decode(body, key)
+	if err != nil {
+		return err
+	}
+	if manifest.BackupID != backup.ID || manifest.ProfileID != backup.ProfileID || manifest.KeyID != backup.KeyID {
+		return ErrIntegrity
+	}
+	return nil
+}
+
 func (s *Service) Restore(backupID, targetProfileID, targetPath string) (Restore, error) {
 	if !validID(backupID) || !validID(targetProfileID) {
 		return Restore{}, fmt.Errorf("invalid backup or target profile id")

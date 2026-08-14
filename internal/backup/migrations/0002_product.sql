@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS runtime_candidates (
   name TEXT NOT NULL,
   version TEXT NOT NULL,
   architecture TEXT NOT NULL,
-  binary_path TEXT NOT NULL,
-  binary_sha256 TEXT NOT NULL,
+  binary_path TEXT NOT NULL DEFAULT '',
+  binary_sha256 TEXT NOT NULL DEFAULT '',
   status TEXT NOT NULL CHECK (status IN ('candidate', 'validated', 'quarantined', 'retired')),
   created_at TEXT NOT NULL,
-  UNIQUE (name, version, architecture, binary_path),
-  UNIQUE (binary_sha256)
+  CHECK ((binary_path = '' AND binary_sha256 = '') OR (binary_path <> '' AND binary_sha256 <> '')),
+  UNIQUE (name, version, architecture, binary_path)
 );
 
 CREATE TABLE IF NOT EXISTS groups (
@@ -152,6 +152,8 @@ CREATE TABLE IF NOT EXISTS product_audit_events (
   created_at TEXT NOT NULL
 );
 
+CREATE UNIQUE INDEX IF NOT EXISTS idx_runtime_candidates_sha256_not_empty
+  ON runtime_candidates(binary_sha256) WHERE binary_sha256 <> '';
 CREATE INDEX IF NOT EXISTS idx_profiles_group_last_used
   ON profiles(group_id, lifecycle_state, last_used_at DESC);
 CREATE INDEX IF NOT EXISTS idx_profiles_runtime_state
