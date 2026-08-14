@@ -1,0 +1,5 @@
+clean_checkout_commit=03c1fb4c875cc30b47bac15104f0d029b8cc9e93
+tracked_worktree_clean=true
+copied_inputs=pilot_archive,candidate_archive,candidate_external_release_manifest
+artifact_binary_executed=false
+validator={"chains": 2, "public_release_decision": "PUBLIC_RELEASE_BLOCKED", "valid": true}

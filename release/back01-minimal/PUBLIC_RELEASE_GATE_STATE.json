@@ -1,0 +1,37 @@
+{
+  "format": "forgelocal-public-release-gate-state/v1",
+  "decision": "PUBLIC_RELEASE_BLOCKED",
+  "artifact_chain_id": "candidate-chromium-151.0.7922.108-67a8dfd",
+  "traceability_index": {
+    "file": "release/back01-minimal/RELEASE_TRACEABILITY_INDEX.json",
+    "policy_required": "PUBLIC_RELEASE_BLOCKED"
+  },
+  "gates": [
+    {
+      "id": "SYSTEMVAULT_NATIVE_PER_TARGET",
+      "status": "PENDING_NATIVE_HOST",
+      "required_evidence": "One successful native matrix per announced OS, version and architecture, executed without sudo, container or cleartext fallback."
+    },
+    {
+      "id": "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW",
+      "status": "PENDING_INTEGRATED_E2E",
+      "required_evidence": "systemvault-anti-leak.json from an actual profile to encrypted backup to isolated restore flow, without exposing the sentinel."
+    },
+    {
+      "id": "MAINTAINER_MANIFEST_SIGNATURE",
+      "status": "PENDING_MAINTAINER_SIGNATURE",
+      "required_evidence": "Detached signature, separately published public key, approved fingerprint and independent verification attestation."
+    },
+    {
+      "id": "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW",
+      "status": "PENDING_REVIEW",
+      "required_evidence": "Recorded legal and distribution review of the exact runtime packages and their licenses."
+    },
+    {
+      "id": "OS_COMPATIBILITY_EVIDENCE",
+      "status": "PENDING_PER_TARGET_EVIDENCE",
+      "required_evidence": "Compatibility matrix limited to configurations with complete runtime and native SystemVault evidence."
+    }
+  ],
+  "promotion_rule": "All gates must be explicitly changed to PASSED with versioned evidence and independently reviewed before PUBLIC_RELEASE_APPROVED may be considered."
+}

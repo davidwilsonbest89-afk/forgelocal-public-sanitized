@@ -1,0 +1,10 @@
+test_key_scope=ephemeral_temp_gnupg
+repository_private_key_files=false
+repository_signature_test_file=false
+signed_manifest=/tmp/tmp.D3JVXJH3x5/manifest.json
+signature=/tmp/tmp.D3JVXJH3x5/manifest.json.asc
+signing_fingerprint=test_ephemeral_redacted
+verified_manifest=/tmp/tmp.D3JVXJH3x5/manifest.json
+signature=/tmp/tmp.D3JVXJH3x5/manifest.json.asc
+verification_fingerprint=test_ephemeral_redacted
+private_keys_present=false
