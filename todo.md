@@ -58,3 +58,9 @@
 - [x] Ajouter un workflow dédié sur les métadonnées de pull request, avec permissions lecture seule et sans checkout de la branche PR.
 - [x] Documenter le check requis, le futur usage GitHub App à permission minimale et la preuve redacted.
 - [x] Tester, scanner le delta et versionner sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.
+
+# Continuité de l’environnement `production-release`
+
+- [x] Formaliser les deux approbatrices requises : Release `@davidwilsonbest89-afk` et indépendante `@hajarbenmlih91-cloud`.
+- [x] Mettre à jour la procédure mainteneur et le contrôle versionné de l’environnement déclaré dans le workflow.
+- [x] Vérifier, scanner et versionner sans modifier le RC ni les gates publics ; conserver la configuration GitHub effective comme preuve distante PENDING. Contrôles locaux, test API Go 1.25.13 et format Git réussis avant scan final.

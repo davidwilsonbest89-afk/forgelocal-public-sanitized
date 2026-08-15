@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "environment": "production-release",
+  "required_reviewers": [
+    {
+      "role": "release",
+      "github_login": "davidwilsonbest89-afk"
+    },
+    {
+      "role": "independent",
+      "github_login": "hajarbenmlih91-cloud"
+    }
+  ],
+  "prevent_self_review": true,
+  "admin_bypass": "prohibited",
+  "allowed_deployment_refs": "v*",
+  "secrets_scope": "environment_only",
+  "remote_configuration_status": "pending"
+}

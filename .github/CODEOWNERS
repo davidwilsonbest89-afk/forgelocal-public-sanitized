@@ -2,6 +2,7 @@
 # Le ruleset distant doit imposer deux approbations, les revues CODEOWNERS et une approbation distincte du dernier contributeur.
 
 /.github/CODEOWNERS @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/.github/production-release-policy.json @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
 /.github/workflows/ @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
 /scripts/check-component-rights.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
 /scripts/test-component-rights.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud

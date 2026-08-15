@@ -7,6 +7,9 @@ const releaseSeparationWorkflow = readFileSync(
   "utf8"
 );
 const codeowners = readFileSync(".github/CODEOWNERS", "utf8");
+const releaseEnvironmentPolicy = JSON.parse(
+  readFileSync(".github/production-release-policy.json", "utf8")
+);
 const provenanceFragments = [
   "actions/setup-node@v6",
   'node-version: "22"',
@@ -40,6 +43,22 @@ const releaseEnvironmentFragments = [
 const releaseEnvironmentMissing = releaseEnvironmentFragments.filter(
   (fragment) => !releaseWorkflow.includes(fragment)
 );
+const releaseEnvironmentPolicyExpected = {
+  schema_version: 1,
+  environment: "production-release",
+  required_reviewers: [
+    { role: "release", github_login: "davidwilsonbest89-afk" },
+    { role: "independent", github_login: "hajarbenmlih91-cloud" }
+  ],
+  prevent_self_review: true,
+  admin_bypass: "prohibited",
+  allowed_deployment_refs: "v*",
+  secrets_scope: "environment_only",
+  remote_configuration_status: "pending"
+};
+const releaseEnvironmentPolicyInvalid =
+  JSON.stringify(releaseEnvironmentPolicy) !==
+  JSON.stringify(releaseEnvironmentPolicyExpected);
 const releaseSeparationFragments = [
   "pull_request_target:",
   "contents: read",
@@ -77,6 +96,7 @@ const primaryReviewOwners = "@boucheriechefimane-cmd @davidwilsonbest89-afk";
 const independentReviewer = "@hajarbenmlih91-cloud";
 const sensitiveCodeownerPaths = [
   "/.github/CODEOWNERS",
+  "/.github/production-release-policy.json",
   "/.github/workflows/",
   "/scripts/check-component-rights.mjs",
   "/scripts/test-component-rights.mjs",
@@ -95,6 +115,7 @@ const codeownersMissing = sensitiveCodeownerPaths.filter(
 );
 const criticalCodeownerPaths = [
   "/.github/CODEOWNERS",
+  "/.github/production-release-policy.json",
   "/.github/workflows/",
   "/scripts/check-component-rights.mjs",
   "/scripts/test-component-rights.mjs",
@@ -114,6 +135,7 @@ if (
   ciReleaseSeparationTestMissing.length > 0 ||
   releaseDependencyMissing.length > 0 ||
   releaseEnvironmentMissing.length > 0 ||
+  releaseEnvironmentPolicyInvalid ||
   releaseSeparationMissing.length > 0 ||
   releaseSeparationForbiddenFound.length > 0 ||
   codeownersMissing.length > 0 ||
@@ -132,6 +154,9 @@ if (
   }
   for (const fragment of releaseEnvironmentMissing) {
     console.error(`- release: environnement protégé absent: ${JSON.stringify(fragment)}`);
+  }
+  if (releaseEnvironmentPolicyInvalid) {
+    console.error("- release: déclaration production-release invalide ou divergente.");
   }
   for (const fragment of releaseSeparationMissing) {
     console.error(`- release-separation: fragment absent: ${JSON.stringify(fragment)}`);
