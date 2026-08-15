@@ -70,3 +70,12 @@
 - [x] Vérifier que l’identité GitHub active est `@boucheriechefimane-cmd` et que le nom privé `IPcache` est disponible.
 - [x] Créer le dépôt privé `IPcache`, préserver `upstream` BrowseForge et rattacher `origin` au dépôt administré.
 - [x] Vérifier les remotes et l’absence de publication de release ; documenter les réglages d’administration GitHub restants. La branche produit est publiée, sans tag ni release.
+
+# Progression produit locale pendant les validations externes
+
+- [x] Auditer les contrats Core et le dashboard pour identifier le premier incrément sûr et livrable.
+- [x] Implémenter le bootstrap local de session mémoire seule, loopback-only et ses tests de sécurité.
+- [x] Raccorder les vues lecture seule du dashboard sans rendre disponible une mutation, un lancement ou un runtime candidat.
+- [x] Définir les contrats préparatoires Groupes, Runtimes, Proxys, Backups et Audit avec états redacted et sans secrets.
+- [x] Poursuivre uniquement le triage documentaire de `generic-api-key` hors RC, sans relancer SystemVault ni reconstruire une release. Les documents existants confirment le statut `SCAN_BLOCKED_UNKNOWN` et ne permettent aucune action sur le candidat.
+- [x] Exécuter les contrôles, scanner le delta et publier les commits produit isolés vers IPcache. Tests Core/CLI, contrôle CI, vérification dashboard, format Git et scans Gitleaks des deux deltas réussis.

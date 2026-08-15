@@ -46,11 +46,12 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if len(groupStores) > 0 {
 		groupStore = groupStores[0]
 	}
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlySessions: newReadOnlySessionBroker()}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
 	r.Get("/", h.dashboard)
+	r.Post("/api/v1/readonly/session/bootstrap", h.bootstrapReadOnlySession)
 
 	r.Group(func(r chi.Router) {
 		r.Use(h.authMiddleware)
@@ -87,11 +88,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 
 		r.Get("/api/playwright/endpoint", h.playwrightEndpoint)
 		r.Get("/api/playwright/ws/{id}", h.playwrightWSProxy)
-		r.Get("/api/v1/readonly/health", h.readonlyHealth)
-		r.Get("/api/v1/readonly/summary", h.readonlySummary)
-		r.Get("/api/v1/readonly/profiles", h.readonlyProfiles)
-		r.Get("/api/v1/readonly/groups", h.readonlyGroups)
-		r.Get("/api/v1/readonly/runtimes", h.readonlyRuntimes)
+		r.Post("/api/v1/readonly/session/codes", h.issueReadOnlySessionCode)
 		if h.backupSvc != nil {
 			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
 			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
@@ -100,18 +97,28 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/shutdown", h.shutdown)
 	})
 
+	r.Group(func(r chi.Router) {
+		r.Use(h.readonlyAuthMiddleware)
+		r.Get("/api/v1/readonly/health", h.readonlyHealth)
+		r.Get("/api/v1/readonly/summary", h.readonlySummary)
+		r.Get("/api/v1/readonly/profiles", h.readonlyProfiles)
+		r.Get("/api/v1/readonly/groups", h.readonlyGroups)
+		r.Get("/api/v1/readonly/runtimes", h.readonlyRuntimes)
+	})
+
 	return r, nil
 }
 
 type handler struct {
-	cfg        *config.Config
-	store      *profile.Store
-	groupStore *groups.Store
-	mgr        *browser.Manager
-	fpPool     *fingerprint.Pool
-	hcfg       humanize.Config
-	token      string
-	backupSvc  *backup.Service
+	cfg              *config.Config
+	store            *profile.Store
+	groupStore       *groups.Store
+	mgr              *browser.Manager
+	fpPool           *fingerprint.Pool
+	hcfg             humanize.Config
+	token            string
+	backupSvc        *backup.Service
+	readonlySessions *readOnlySessionBroker
 }
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {
@@ -121,6 +128,16 @@ func (h *handler) authMiddleware(next http.Handler) http.Handler {
 			return
 		}
 		next.ServeHTTP(w, r)
+	})
+}
+
+func (h *handler) readonlyAuthMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if validBearerToken(r.Header.Get("Authorization"), h.token) || h.readonlySessions.validateToken(bearerToken(r.Header.Get("Authorization"))) {
+			next.ServeHTTP(w, r)
+			return
+		}
+		writeError(w, http.StatusUnauthorized, "UNAUTHORIZED", "invalid, expired, or missing read-only session")
 	})
 }
 
@@ -329,6 +346,13 @@ func validBearerToken(auth, token string) bool {
 	}
 	got := auth[len("Bearer "):]
 	return subtle.ConstantTimeCompare([]byte(got), []byte(token)) == 1
+}
+
+func bearerToken(auth string) string {
+	if !strings.HasPrefix(auth, "Bearer ") {
+		return ""
+	}
+	return strings.TrimSpace(strings.TrimPrefix(auth, "Bearer "))
 }
 
 func requestIDMiddleware(next http.Handler) http.Handler {

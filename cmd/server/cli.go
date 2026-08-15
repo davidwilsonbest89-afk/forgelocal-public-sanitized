@@ -50,6 +50,7 @@ Usage:
   BrowseForge [global flags] init [--force] [--json]
   BrowseForge [global flags] config show|validate [--json]
   BrowseForge [global flags] token [--json]
+  BrowseForge [global flags] readonly-session code [--base-url URL] [--json]
   BrowseForge [global flags] doctor [--strict] [--json]
   BrowseForge [global flags] status [--base-url URL] [--token TOKEN] [--json]
   BrowseForge [global flags] capabilities [--json]
@@ -115,6 +116,8 @@ func runCLI(args []string, stdout, stderr io.Writer) int {
 		return runConfigCommand(rest[1:], global, stdout, stderr)
 	case "token":
 		return runTokenCommand(rest[1:], global, stdout, stderr)
+	case "readonly-session":
+		return runReadOnlySessionCommand(rest[1:], global, stdout, stderr)
 	case "doctor":
 		return runDoctorCommand(rest[1:], global, stdout, stderr)
 	case "status":

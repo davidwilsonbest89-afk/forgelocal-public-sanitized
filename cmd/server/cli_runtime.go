@@ -161,14 +161,59 @@ func runOpenCommand(args []string, global cliGlobal, stdout, stderr io.Writer) i
 		fmt.Fprintf(stderr, "open failed: config error: %v\n", err)
 		return 1
 	}
-	token, _, err := readToken(global.configPath, global.baseDir)
-	if err != nil {
-		fmt.Fprintf(stderr, "open failed: token error: %v\n", err)
+	url := dashboardOpenURL(resolveBaseURL(*baseURL, cfg))
+	openBrowser(url)
+	fmt.Fprintf(stdout, "Opened %s\n", url)
+	return 0
+}
+
+func dashboardOpenURL(baseURL string) string {
+	return strings.TrimRight(baseURL, "/")
+}
+
+func runReadOnlySessionCommand(args []string, global cliGlobal, stdout, stderr io.Writer) int {
+	if len(args) == 0 || args[0] != "code" {
+		fmt.Fprintln(stderr, "readonly-session requires subcommand: code")
+		return 2
+	}
+	fs := newFlagSet("readonly-session code", stderr)
+	baseURL := fs.String("base-url", "", "BrowseForge base URL")
+	jsonOut := fs.Bool("json", false, "Write JSON output")
+	if err := fs.Parse(args[1:]); err != nil {
+		return 2
+	}
+	if fs.NArg() != 0 {
+		fmt.Fprintf(stderr, "readonly-session code does not accept positional arguments: %s\n", strings.Join(fs.Args(), " "))
+		return 2
+	}
+	cfg, err := config.Load(global.configPath)
+	if err != nil && *baseURL == "" {
+		fmt.Fprintf(stderr, "readonly-session failed: config error: %v\n", err)
 		return 1
 	}
-	url := resolveBaseURL(*baseURL, cfg) + "#" + token
-	openBrowser(url)
-	fmt.Fprintf(stdout, "Opened %s\n", resolveBaseURL(*baseURL, cfg))
+	token, _, err := readToken(global.configPath, global.baseDir)
+	if err != nil {
+		fmt.Fprintf(stderr, "readonly-session failed: token error: %v\n", err)
+		return 1
+	}
+	result, err := apiPOST(dashboardOpenURL(resolveBaseURL(*baseURL, cfg))+"/api/v1/readonly/session/codes", token, map[string]any{})
+	if err != nil {
+		fmt.Fprintf(stderr, "readonly-session failed: %v\n", err)
+		return 1
+	}
+	code, _ := result["code"].(string)
+	if code == "" {
+		fmt.Fprintln(stderr, "readonly-session failed: Core returned no bootstrap code")
+		return 1
+	}
+	if *jsonOut {
+		_ = writeJSON(stdout, result)
+		return 0
+	}
+	fmt.Fprintf(stdout, "Read-only bootstrap code (one-time; keep local): %s\n", code)
+	if expiresAt, ok := result["expires_at"].(string); ok && expiresAt != "" {
+		fmt.Fprintf(stdout, "Expires: %s\n", expiresAt)
+	}
 	return 0
 }
 

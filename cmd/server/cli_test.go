@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strings"
@@ -164,6 +166,46 @@ func TestCLICapabilitiesJSON(t *testing.T) {
 	commands, ok := caps["commands"].([]any)
 	if !ok || len(commands) == 0 {
 		t.Fatalf("commands missing: %#v", caps)
+	}
+}
+
+func TestCLIReadOnlySessionCodeDoesNotExposePrincipalToken(t *testing.T) {
+	baseDir := t.TempDir()
+	principalToken := "principal-token-must-not-be-printed"
+	if err := os.MkdirAll(filepath.Join(baseDir, "data"), 0700); err != nil {
+		t.Fatalf("create data dir: %v", err)
+	}
+	if err := os.WriteFile(filepath.Join(baseDir, "data", ".api-token"), []byte(principalToken+"\n"), 0600); err != nil {
+		t.Fatalf("write token: %v", err)
+	}
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost || r.URL.Path != "/api/v1/readonly/session/codes" {
+			t.Fatalf("request=%s %s", r.Method, r.URL.Path)
+		}
+		if got := r.Header.Get("Authorization"); got != "Bearer "+principalToken {
+			t.Fatalf("authorization mismatch")
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"code":"one-time-code","expires_at":"2026-08-15T00:00:00Z"}`))
+	}))
+	defer server.Close()
+
+	var stdout, stderr bytes.Buffer
+	if code := runCLI([]string{"--base-dir", baseDir, "readonly-session", "code", "--base-url", server.URL}, &stdout, &stderr); code != 0 {
+		t.Fatalf("readonly-session exit=%d stdout=%s stderr=%s", code, stdout.String(), stderr.String())
+	}
+	if !strings.Contains(stdout.String(), "one-time-code") || strings.Contains(stdout.String(), principalToken) || strings.Contains(stderr.String(), principalToken) {
+		t.Fatalf("unexpected CLI output stdout=%q stderr=%q", stdout.String(), stderr.String())
+	}
+}
+
+func TestDashboardOpenURLNeverContainsTokenMaterial(t *testing.T) {
+	got := dashboardOpenURL("http://127.0.0.1:4171/")
+	if got != "http://127.0.0.1:4171" {
+		t.Fatalf("dashboard URL=%q", got)
+	}
+	if strings.Contains(got, "#") || strings.Contains(got, "token") {
+		t.Fatalf("dashboard URL must not carry token material: %q", got)
 	}
 }
 
