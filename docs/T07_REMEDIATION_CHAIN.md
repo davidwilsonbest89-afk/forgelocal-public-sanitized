@@ -22,7 +22,7 @@ Une source privée ne doit pas être publiée pour être vérifiable. En revanch
 
 ## Conditions de cohérence
 
-La révision source attestée et le snapshot étudié doivent désigner le même contenu. L’attestation doit également relier explicitement cette révision ou ce snapshot au SHA-256 du candidat étudié : `dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2`. Le détenteur ou le mandataire qui confirme les droits doit être identifié dans la preuve privée. Les deux relecteurs autorisés vérifient indépendamment le hash, la portée des droits — y compris la redistribution, jamais implicite — et le résultat de triage ; leurs identités peuvent être consignées sous leurs identifiants GitHub, sans adresse e-mail ni donnée personnelle additionnelle.
+La révision source attestée et le snapshot étudié doivent désigner le même contenu. L’attestation doit également relier explicitement cette révision ou ce snapshot au SHA-256 du candidat étudié : `dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2`. Le détenteur ou le mandataire qui confirme les droits doit être identifié dans la preuve privée. La revue indépendante doit attester explicitement la révision ou le snapshot, le hash d’archive, la portée des droits — y compris la redistribution, jamais implicite — la licence ou l’accord, les notices et le résultat de triage ; une référence dont ce périmètre est incomplet est refusée. Les identités des relecteurs peuvent être consignées sous leurs identifiants GitHub, sans adresse e-mail ni donnée personnelle additionnelle.
 
 Un changement de commit, de snapshot, de hash, de licence, de module ou de résultat de triage invalide toute décision antérieure. Il exige un nouveau scan du snapshot et une nouvelle archive T07.
 

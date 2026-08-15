@@ -20,7 +20,17 @@ function baseAttestation() {
       revision_identifier: "synthetic-snapshot-r1",
       snapshot_sha256: sha("a"),
       attested_candidate_archive_sha256: expectedArchive,
-      independent_review_reference: "synthetic-review-reference",
+      independent_review: {
+        reference: "synthetic-review-reference",
+        coverage: {
+          revision_or_snapshot: true,
+          candidate_archive_sha256: true,
+          rights_scope: true,
+          license_or_agreement: true,
+          notices: true,
+          security_triage: true,
+        },
+      },
     },
     rights_and_license: {
       rights_holder_or_authorized_grantor: "synthetic-rights-holder",
@@ -66,6 +76,10 @@ try {
   const deniedModification = baseAttestation();
   deniedModification.rights_and_license.rights_scope.modification = "no";
   await runCase(directory, "modification-no", deniedModification, 1, "must_be_yes_for_review_eligibility");
+
+  const incompleteReviewScope = baseAttestation();
+  incompleteReviewScope.source_revision.independent_review.coverage.notices = false;
+  await runCase(directory, "independent-review-incomplete", incompleteReviewScope, 1, "independent_review_coverage_must_be_true");
 
   const divergentTriage = baseAttestation();
   divergentTriage.security_triage.independent_reviewer_decision = "REAL_SECRET";

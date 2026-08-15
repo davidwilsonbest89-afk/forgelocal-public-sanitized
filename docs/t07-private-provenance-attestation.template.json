@@ -14,7 +14,17 @@
     "revision_identifier": "<required-exact-revision>",
     "snapshot_sha256": "<required-sha256-matching-studied-content>",
     "attested_candidate_archive_sha256": "dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
-    "independent_review_reference": "<required-private-review-reference>"
+    "independent_review": {
+      "reference": "<required-private-review-reference>",
+      "coverage": {
+        "revision_or_snapshot": "<required-true>",
+        "candidate_archive_sha256": "<required-true>",
+        "rights_scope": "<required-true>",
+        "license_or_agreement": "<required-true>",
+        "notices": "<required-true>",
+        "security_triage": "<required-true>"
+      }
+    }
   },
   "rights_and_license": {
     "evidence_status": "pending",

@@ -53,8 +53,14 @@ async function main() {
   const warnings = [];
   requireValue(document, errors, "source_revision.private_repository_or_attestation_id");
   requireValue(document, errors, "source_revision.revision_identifier");
-  requireValue(document, errors, "source_revision.independent_review_reference");
+  requireValue(document, errors, "source_revision.independent_review.reference");
   requireSha(document, errors, "source_revision.snapshot_sha256");
+  for (const area of ["revision_or_snapshot", "candidate_archive_sha256", "rights_scope", "license_or_agreement", "notices", "security_triage"]) {
+    const path = `source_revision.independent_review.coverage.${area}`;
+    if (get(document, path) !== true) {
+      report(errors, path, "independent_review_coverage_must_be_true");
+    }
+  }
 
   const revisionKind = get(document, "source_revision.revision_kind");
   if (!["private_commit", "immutable_snapshot"].includes(revisionKind)) {

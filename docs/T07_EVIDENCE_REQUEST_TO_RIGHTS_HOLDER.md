@@ -13,7 +13,7 @@ Le candidat reste non intégré et non exécutable. Cette demande ne sollicite n
 | P0 | Propriété et droits | Identifiant du détenteur ou mandataire, portée d’usage interne, modification, redistribution explicitement `granted` ou `not_granted`, et obligations applicables |
 | P0 | Licence / accord | Licence racine ou accord attesté ; référence privée autorisée si le document brut est confidentiel |
 | P0 | Notices | Notices et obligations tierces des dépendances ou un emplacement privé contrôlé où les relecteurs autorisés peuvent les vérifier |
-| P0 | Relecture autorisée | Référence d’une revue indépendante autorisée vérifiant le commit/snapshot, le hash et la portée des droits |
+| P0 | Relecture autorisée | Référence d’une revue indépendante autorisée vérifiant explicitement le commit/snapshot, le hash de l’archive, la portée des droits, la licence ou l’accord, les notices et le triage |
 
 ## Alerte sécurité distincte
 

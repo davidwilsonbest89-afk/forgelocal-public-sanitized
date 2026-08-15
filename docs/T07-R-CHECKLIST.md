@@ -6,6 +6,7 @@ Cette checklist détermine seulement si une attestation **redacted** peut être 
 |---|---|---|
 | JSON d’attestation | JSON illisible, valeur de modèle non remplacée ou champ obligatoire absent | `valid_json` ou `invalid_json` |
 | Révision privée | Identifiant, type, hash de snapshot ou référence de revue absents | `received` ou `missing` |
+| Périmètre de revue indépendante | La revue ne couvre pas explicitement la révision/snapshot, le hash d’archive, les droits, la licence ou l’accord, les notices et le triage | `complete` ou `incomplete` |
 | Lien candidat | Hash attesté différent de l’archive Camoflox étudiée | `match` ou `mismatch` |
 | Droits de travail | `internal_use` ou `modification` différent de `yes` | `permitted` ou `blocked` |
 | Redistribution | Valeur autre que `granted` ou `not_granted` | `explicit` ou `invalid` |

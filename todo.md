@@ -131,6 +131,7 @@
 
 # T07-R — Remédiation de preuve et de sécurité (T08 interdit)
 
+- [x] T07-RP1a : exiger dans l’attestation et le validateur que la revue indépendante couvre explicitement révision/snapshot, hash d’archive, portée des droits, licence/accord, notices et triage.
 - [x] T07-RH1 : séparer strictement le modèle JSON d’attestation et la checklist Markdown, puis vérifier que le JSON est parseable sans contenu annexe.
 - [x] T07-RH2 : exiger `internal_use=yes` et `modification=yes` pour toute attestation complète susceptible d’être soumise à revue.
 - [x] T07-RH3 : exiger deux décisions de triage identiques et appartenant à l’ensemble autorisé ; toute absence ou divergence doit produire `UNKNOWN` opérationnel.
