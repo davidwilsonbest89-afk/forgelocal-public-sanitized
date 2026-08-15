@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "check-doc-language": "node scripts/check-doc-language.js",
-    "generate-fingerprints": "node scripts/generate-fingerprints.js"
+    "generate-fingerprints": "node scripts/generate-fingerprints.js",
+    "check:component-rights": "node scripts/check-component-rights.mjs && node scripts/test-component-rights.mjs",
+    "test:t07-provenance": "node scripts/test-t07-provenance.mjs"
   },
   "dependencies": {
     "fingerprint-generator": "^2.1.0",

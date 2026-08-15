@@ -45,13 +45,45 @@
       "source": "private archive camoflox-FINAL.zip",
       "source_revision": "sha256:dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
       "rights_status": "authorized",
-      "decision": "portage",
-      "integration_state": "not-integrated",
+      "decision": "qualification-provenance-t07",
+      "integration_state": "provenance-qualification-blocked",
       "scope": ["internal-use", "modification"],
-      "excluded_material": ["Node/Electron control plane", "browser runtime", "unreviewed dependencies"],
+      "dependency_inventory_ref": ["docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json", "docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json"],
+      "excluded_material": ["Node/Electron control plane", "browser runtime", "queue", "locks", "ports", "runtime lifecycle", "unreviewed dependencies"],
       "owner": "ForgeLocal maintainer",
       "evidence_ref": "PRIVATE-RIGHTS-CAMOFLOX-001",
-      "review_date": "2026-08-14"
+      "review_date": "2026-08-15",
+      "t07_provenance": {
+        "archive_root": "camoflox-v28-etape2",
+        "source_commit": null,
+        "source_commit_status": "unknown-blocking",
+        "root_license": null,
+        "root_license_status": "absent-blocking",
+        "scan_status": "unknown-blocking",
+        "scan_rule_id": "generic-api-key",
+        "scan_location_redacted": "tests/smoke.test.js:24",
+        "sbom_ref": "docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json",
+        "dependency_inventory_ref": "docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json",
+        "candidate_modules": [
+          {
+            "source_path": "lib/concurrency.js",
+            "sha256": "b055a3e1c995c3dddca054aa90ce2c0b8ff660237bf96b1f2b168dd5a36085d7",
+            "t07_decision": "conceptual-review-only",
+            "integration_state": "not-integrated"
+          },
+          {
+            "source_path": "lib/global-action-limiter.js",
+            "sha256": "a5f6838be5731ff64836f013b3b27fa280874de43afd817829de92052a487d05",
+            "t07_decision": "conceptual-review-only",
+            "integration_state": "not-integrated"
+          }
+        ],
+        "out_of_scope_modules": [
+          "lib/profile-launch-queue.js",
+          "lib/process-isolation.js",
+          "lib/browser-lifecycle.js"
+        ]
+      }
     },
     {
       "id": "gologin",
@@ -132,7 +164,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "ff039a84b1f78ad52585a65d39f9f31125cd7b4c9af0ff69845d23fb99cf717d",
+      "sha256": "44a89a4dc0a0f523ac02bdc07355d9dc588a95d8390f40331e41a6efaa2f02b8",
       "owners": ["browseforge-core", "forgelocal-first-party"]
     }
   ],

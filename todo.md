@@ -108,9 +108,23 @@
 
 # T06 — Groupes et Runtimes lecture seule
 
+- [x] P0 audit indépendant : identifier les hashes Git source de base et cible du dashboard React T06, puis inventorier un delta dashboard non vide.
+- [x] P0 audit indépendant : scanner avec Gitleaks 8.18.4 le snapshot des fichiers dashboard modifiés, avec journal redacted et JSON `[]` en l’absence de détection.
+- [x] P0 audit indépendant : assembler une archive globale unique couvrant les preuves Core et dashboard, avec manifeste relatif et rescan après extraction ; ne pas démarrer T07 avant validation.
+- [x] P0 audit indépendant : rejouer Gitleaks 8.18.4 sur la plage exacte `ae4622f1d49cfbe4a1872d0c833d21bc7aa25afb..37c34a65889ddc24aade417db75ffe9e600f5bee` avec une preuve de couverture non nulle, redacted et sans modifier le code produit.
+- [x] P0 audit indépendant : constituer une mini-archive du seul correctif avec commande exacte, baseline, cible, inventaire de fichiers/commits, JSON `[]` sans détection, manifeste relatif et vérification après extraction.
+- [x] P0 audit indépendant : soumettre la mini-archive à vérification avant toute décision `T06_APPROVED_VERIFIABLE` ; ne pas démarrer T07.
 - [ ] Préflight : vérifier le commit propre, les chemins RC inchangés, les versions verrouillées et le dossier de preuves T06.
 - [ ] T06-1 : compléter et passer les contrats API v1 Groups/Runtimes redacted, paginés, limités, authentifiés et sans mutation, y compris `-race`.
 - [ ] T06-2 : créer les fixtures SQLite synthétiques via le chemin Core, vérifier l’intégrité et l’absence de sentinelles dans les réponses.
 - [ ] T06-3 : raccorder les vues React Groupes/Runtimes au client mémoire seule et prouver le parcours local Playwright (chargement, vide, erreur, timeout, `401`, réessai).
 - [ ] T06-4 : prouver redaction, absence des sentinelles dans DOM/réponses/logs/preuves et absence ou refus des mutations.
 - [ ] T06-5 : produire l’archive hashée et portable, le rapport Gitleaks redacted du delta et de l’archive extraite, puis vérifier zéro delta RC avant revue indépendante.
+
+# T07 — Provenance des modules Camoflox candidats
+
+- [ ] T07-1 : inventorier les modules Camoflox candidats et leurs sources sans importer, exécuter ni porter de code.
+- [ ] T07-2 : vérifier pour chaque candidat les droits, licence, propriétaire, révision exacte, hash, dépendances et décision de périmètre.
+- [ ] T07-3 : compléter le registre machine-readable et produire une SBOM de provenance sans secret ni donnée de runtime.
+- [ ] T07-4 : exécuter et documenter les contrôles PROV-01 à PROV-07, y compris les refus `unknown` et `denied`.
+- [ ] T07-5 : produire une archive de preuves T07 redacted et portable pour audit indépendant ; ne pas commencer T08.
