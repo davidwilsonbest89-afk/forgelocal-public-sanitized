@@ -74,8 +74,8 @@ async function main() {
   requireValue(document, errors, "rights_and_license.rights_scope.third_party_obligations_reference");
 
   for (const path of ["rights_and_license.rights_scope.internal_use", "rights_and_license.rights_scope.modification"]) {
-    if (!["yes", "no"].includes(get(document, path))) {
-      report(errors, path, "must_be_explicit_yes_or_no");
+    if (get(document, path) !== "yes") {
+      report(errors, path, "must_be_yes_for_review_eligibility");
     }
   }
   if (!["granted", "not_granted"].includes(get(document, "rights_and_license.rights_scope.redistribution"))) {
@@ -93,20 +93,31 @@ async function main() {
   if (!ALLOWED_DECISIONS.has(independentDecision)) {
     report(errors, "security_triage.independent_reviewer_decision", "invalid_or_missing_decision");
   }
-  if (ALLOWED_DECISIONS.has(maintainerDecision) && ALLOWED_DECISIONS.has(independentDecision) && maintainerDecision !== independentDecision) {
-    report(errors, "security_triage", "divergent_decisions_force_unknown");
+  const decisionsConcordant = ALLOWED_DECISIONS.has(maintainerDecision) && ALLOWED_DECISIONS.has(independentDecision) && maintainerDecision === independentDecision;
+  const triageOperationalStatus = decisionsConcordant ? maintainerDecision : "UNKNOWN";
+  if (!decisionsConcordant) {
+    report(errors, "security_triage", "missing_invalid_or_divergent_decisions_force_unknown");
   }
 
-  if (maintainerDecision === "REAL_SECRET" && independentDecision === "REAL_SECRET") {
+  if (triageOperationalStatus === "REAL_SECRET") {
     requireValue(document, errors, "security_triage.revocation_or_rotation_reference");
+    requireValue(document, errors, "security_triage.new_candidate_snapshot_reference");
+    requireSha(document, errors, "security_triage.new_candidate_snapshot_sha256");
+    requireValue(document, errors, "security_triage.new_candidate_snapshot_rescan_reference");
   }
-  if (maintainerDecision === "FALSE_POSITIVE" && independentDecision === "FALSE_POSITIVE") {
+  if (triageOperationalStatus === "FALSE_POSITIVE") {
     requireValue(document, errors, "security_triage.new_redacted_snapshot_reference");
     requireSha(document, errors, "security_triage.new_redacted_snapshot_sha256");
     requireValue(document, errors, "security_triage.new_snapshot_rescan_reference");
   }
-  if (maintainerDecision === "UNKNOWN" || independentDecision === "UNKNOWN") {
+  if (triageOperationalStatus === "UNKNOWN") {
     warnings.push("triage_unknown_keeps_t07_blocked");
+  }
+
+  const redistribution = get(document, "rights_and_license.rights_scope.redistribution");
+  const futureDistribution = redistribution === "not_granted" ? "blocked" : redistribution === "granted" ? "requires_independent_rights_review" : "blocked";
+  if (redistribution === "not_granted") {
+    warnings.push("redistribution_not_granted_keeps_audit_passive_only");
   }
 
   if (get(document, "constraints.no_private_source_in_git") !== true || get(document, "constraints.no_credentials_in_git") !== true || get(document, "constraints.t08_authorized") !== false) {
@@ -116,6 +127,8 @@ async function main() {
   const output = {
     status: errors.length === 0 ? "complete_for_independent_review_only" : "incomplete_or_inconsistent",
     t08_authorized: false,
+    triage_operational_status: triageOperationalStatus,
+    future_distribution: futureDistribution,
     errors,
     warnings,
   };

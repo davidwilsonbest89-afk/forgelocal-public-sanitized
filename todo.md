@@ -131,6 +131,11 @@
 
 # T07-R — Remédiation de preuve et de sécurité (T08 interdit)
 
+- [x] T07-RH1 : séparer strictement le modèle JSON d’attestation et la checklist Markdown, puis vérifier que le JSON est parseable sans contenu annexe.
+- [x] T07-RH2 : exiger `internal_use=yes` et `modification=yes` pour toute attestation complète susceptible d’être soumise à revue.
+- [x] T07-RH3 : exiger deux décisions de triage identiques et appartenant à l’ensemble autorisé ; toute absence ou divergence doit produire `UNKNOWN` opérationnel.
+- [x] T07-RH4 : pour `REAL_SECRET`, exiger une référence de rotation/révocation, un nouveau snapshot candidat hashé et un re-scan avant toute future revue.
+- [x] T07-RH5 : pour `redistribution=not_granted`, émettre `future_distribution=blocked` tout en laissant l’audit passif possible.
 - [x] T07-RP1 : créer un emplacement privé contrôlé pour les attestations, licences, notices et décisions redacted, interdit au dépôt Git et aux archives de preuves.
 - [x] T07-RP2 : préparer une checklist et un validateur qui refusent les attestations incomplètes, hashes divergents, révisions absentes, redistribution implicite, licence/notices absentes ou triages divergents.
 - [x] T07-RP3 : préparer le collecteur de la future archive T07-R afin d’inclure uniquement des métadonnées redacted, jamais les documents bruts privés, sources, clés, tokens ou valeurs d’alerte.

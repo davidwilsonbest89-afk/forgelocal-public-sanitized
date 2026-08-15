@@ -164,7 +164,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "44a89a4dc0a0f523ac02bdc07355d9dc588a95d8390f40331e41a6efaa2f02b8",
+      "sha256": "75e1eba189e14734a3a74f7deae1b152a7646e403eafc25f15e72ed0c3ea5531",
       "owners": ["browseforge-core", "forgelocal-first-party"]
     }
   ],

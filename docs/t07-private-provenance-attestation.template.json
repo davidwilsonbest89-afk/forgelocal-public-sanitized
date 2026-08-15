@@ -10,7 +10,7 @@
   "source_revision": {
     "evidence_status": "pending",
     "private_repository_or_attestation_id": "<required-non-secret-identifier>",
-    "revision_kind": "private_commit|immutable_snapshot",
+    "revision_kind": "<required-private_commit-or-immutable_snapshot>",
     "revision_identifier": "<required-exact-revision>",
     "snapshot_sha256": "<required-sha256-matching-studied-content>",
     "attested_candidate_archive_sha256": "dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
@@ -20,8 +20,8 @@
     "evidence_status": "pending",
     "rights_holder_or_authorized_grantor": "<required-controlled-identifier>",
     "rights_scope": {
-      "internal_use": "<required-yes-or-no>",
-      "modification": "<required-yes-or-no>",
+      "internal_use": "<required-yes>",
+      "modification": "<required-yes>",
       "redistribution": "<required-granted-or-not_granted>",
       "third_party_obligations_reference": "<required-private-or-public-reference>"
     },
@@ -32,11 +32,18 @@
     "ticket_id": "T07-CAMOFLOX-GEN-API-001",
     "location": "tests/smoke.test.js:24",
     "secret_value_recorded_here": false,
-    "maintainer_decision": "pending",
-    "independent_reviewer_decision": "pending",
+    "maintainer_decision": "<required-REAL_SECRET-or-FALSE_POSITIVE-or-UNKNOWN>",
+    "independent_reviewer_decision": "<required-same-allowed-decision>",
     "allowed_decisions": ["REAL_SECRET", "FALSE_POSITIVE", "UNKNOWN"],
-    "required_remediation_for_real_secret": "revocation_or_rotation_confirmation",
-    "required_remediation_for_false_positive": "new_redacted_snapshot_rescan_and_hash"
+    "required_remediation_for_real_secret": "rotation_or_revocation_reference_plus_new_candidate_snapshot_hash_and_rescan",
+    "required_remediation_for_false_positive": "new_redacted_snapshot_rescan_and_hash",
+    "revocation_or_rotation_reference": "<required-only-if-both-decisions-REAL_SECRET>",
+    "new_candidate_snapshot_reference": "<required-only-if-both-decisions-REAL_SECRET>",
+    "new_candidate_snapshot_sha256": "<required-only-if-both-decisions-REAL_SECRET>",
+    "new_candidate_snapshot_rescan_reference": "<required-only-if-both-decisions-REAL_SECRET>",
+    "new_redacted_snapshot_reference": "<required-only-if-both-decisions-FALSE_POSITIVE>",
+    "new_redacted_snapshot_sha256": "<required-only-if-both-decisions-FALSE_POSITIVE>",
+    "new_snapshot_rescan_reference": "<required-only-if-both-decisions-FALSE_POSITIVE>"
   },
   "future_module_decision": {
     "status": "not_authorized",
@@ -50,6 +57,7 @@
     "no_private_source_in_git": true,
     "no_credentials_in_git": true,
     "t08_authorized": false,
-    "requires_prov_01_04_06_pass": true
+    "requires_prov_01_04_06_pass": true,
+    "future_distribution": "pending_explicit_redistribution_review"
   }
 }
