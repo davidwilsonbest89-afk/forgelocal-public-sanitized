@@ -10,7 +10,7 @@ Le candidat reste non intégré et non exécutable. Cette demande ne sollicite n
 |---|---|---|
 | P0 | Révision source vérifiable | Commit exact d’un dépôt privé contrôlé **ou** identifiant d’un snapshot immuable attesté, avec SHA-256 et date |
 | P0 | Lien avec l’archive étudiée | Attestation que la révision ou le snapshot correspond à l’archive SHA-256 `dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2` |
-| P0 | Propriété et droits | Identifiant du détenteur ou mandataire, portée d’usage interne, modification, redistribution éventuelle et obligations applicables |
+| P0 | Propriété et droits | Identifiant du détenteur ou mandataire, portée d’usage interne, modification, redistribution explicitement `granted` ou `not_granted`, et obligations applicables |
 | P0 | Licence / accord | Licence racine ou accord attesté ; référence privée autorisée si le document brut est confidentiel |
 | P0 | Notices | Notices et obligations tierces des dépendances ou un emplacement privé contrôlé où les relecteurs autorisés peuvent les vérifier |
 | P0 | Relecture autorisée | Référence d’une revue indépendante autorisée vérifiant le commit/snapshot, le hash et la portée des droits |

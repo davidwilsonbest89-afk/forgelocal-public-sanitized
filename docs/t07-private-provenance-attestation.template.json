@@ -13,6 +13,7 @@
     "revision_kind": "private_commit|immutable_snapshot",
     "revision_identifier": "<required-exact-revision>",
     "snapshot_sha256": "<required-sha256-matching-studied-content>",
+    "attested_candidate_archive_sha256": "dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
     "independent_review_reference": "<required-private-review-reference>"
   },
   "rights_and_license": {
@@ -21,7 +22,7 @@
     "rights_scope": {
       "internal_use": "<required-yes-or-no>",
       "modification": "<required-yes-or-no>",
-      "redistribution": "<required-yes-or-no>",
+      "redistribution": "<required-granted-or-not_granted>",
       "third_party_obligations_reference": "<required-private-or-public-reference>"
     },
     "license_or_agreement_reference": "<required-non-secret-reference>",

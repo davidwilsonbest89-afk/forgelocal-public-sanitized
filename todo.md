@@ -131,6 +131,7 @@
 
 # T07-R — Remédiation de preuve et de sécurité (T08 interdit)
 
+- [ ] T07-R0 : appliquer les critères de collecte renforcés : lien explicite révision/snapshot → SHA-256 candidat, redistribution déclarée `granted` ou `not_granted`, double triage redacted et revue privée réellement consultable.
 - [ ] T07-R1 : consigner la chaîne de liaison vérifiable `révision privée attestée → hash du snapshot étudié → décision de portage/réimplémentation/écarter → futur commit ForgeLocal → tests`, sans source privée ni clé dans Git.
 - [ ] T07-R2 : obtenir ou référencer sous contrôle d’accès une preuve indépendante de propriété/droits, une licence racine ou un accord attesté et les notices tierces applicables.
 - [ ] T07-R3 : soumettre l’alerte redacted de `tests/smoke.test.js:24` à un mainteneur et une relectrice indépendante ; conserver `UNKNOWN` et le blocage tant qu’aucune décision `REAL_SECRET` ou `FALSE_POSITIVE` n’est prouvée.

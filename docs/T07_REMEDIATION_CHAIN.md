@@ -14,7 +14,7 @@ Une source privée ne doit pas être publiée pour être vérifiable. En revanch
 |---|---|---|---|
 | 1. Révision privée attestée | Identifiant de dépôt ou d’espace privé, commit exact **ou** snapshot immuable attesté | Espace privé contrôlé ; identifiant redacted dans Git | PENDING |
 | 2. Snapshot étudié | SHA-256, date d’acquisition, arborescence ou manifeste d’archive | Hash et manifeste redacted dans Git ; archive hors Git | Archive hashée ; lien source PENDING |
-| 3. Droits | Détenteur, portée : usage interne, modification, redistribution éventuelle, obligations | Document privé ; identifiant, date et revue redacted dans Git | Référence limitée existante ; portée complète PENDING |
+| 3. Droits | Détenteur, portée : usage interne, modification, redistribution explicitement `granted` ou `not_granted`, obligations | Document privé ; identifiant, date et revue redacted dans Git | Référence limitée existante ; portée complète PENDING |
 | 4. Licence et notices | Licence racine ou accord attesté, notices des dépendances sélectionnées | Source/document privé ; références redacted et SBOM dans Git | PENDING |
 | 5. Triage sécurité | Ticket redacted, deux décisions indépendantes et preuve de rotation si nécessaire | Ticket privé ; identifiant et résultat sans valeur dans Git | `UNKNOWN` / BLOCKED |
 | 6. Décision de module | `porter`, `réimplémenter` ou `écarter`, pour **un seul** module hashé | Registre Git après levée des P0 | PENDING |
@@ -22,7 +22,7 @@ Une source privée ne doit pas être publiée pour être vérifiable. En revanch
 
 ## Conditions de cohérence
 
-La révision source attestée et le snapshot étudié doivent désigner le même contenu. Le détenteur ou le mandataire qui confirme les droits doit être identifié dans la preuve privée. Les deux relecteurs autorisés vérifient indépendamment le hash, la portée des droits et le résultat de triage ; leurs identités peuvent être consignées sous leurs identifiants GitHub, sans adresse e-mail ni donnée personnelle additionnelle.
+La révision source attestée et le snapshot étudié doivent désigner le même contenu. L’attestation doit également relier explicitement cette révision ou ce snapshot au SHA-256 du candidat étudié : `dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2`. Le détenteur ou le mandataire qui confirme les droits doit être identifié dans la preuve privée. Les deux relecteurs autorisés vérifient indépendamment le hash, la portée des droits — y compris la redistribution, jamais implicite — et le résultat de triage ; leurs identités peuvent être consignées sous leurs identifiants GitHub, sans adresse e-mail ni donnée personnelle additionnelle.
 
 Un changement de commit, de snapshot, de hash, de licence, de module ou de résultat de triage invalide toute décision antérieure. Il exige un nouveau scan du snapshot et une nouvelle archive T07.
 
