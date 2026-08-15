@@ -102,7 +102,7 @@ curl --fail --silent --noproxy '*' "http://127.0.0.1:${DASHBOARD_PORT}" >/dev/nu
 stop_dashboard
 
 "$GITLEAKS" detect --source "$SOURCE_DIR" --log-opts="${BASELINE_COMMIT}..${TARGET_COMMIT}" --redact --report-format json --report-path "$EVIDENCE_DIR/T06_4_gitleaks_delta_redacted.json" >"$EVIDENCE_DIR/T06_4_gitleaks_delta.log" 2>&1
-if grep -R -Eiq 't06-sentinel|/t06/private|T06-RUNTIME-HASH|authorization:|bearer[[:space:]]+[a-f0-9]{16,}' "$EVIDENCE_DIR"; then
+if grep -Eiq 't06-sentinel|/t06/private|T06-RUNTIME-HASH|authorization:|bearer[[:space:]]+[a-f0-9]{16,}' "$EVIDENCE_DIR"/*; then
   printf 'Une sentinelle ou un motif d’autorisation interdit est présent dans les preuves T06.\n' >&2
   exit 1
 fi
