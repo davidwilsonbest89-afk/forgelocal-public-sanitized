@@ -88,3 +88,12 @@
 - [x] Prouver : aucune persistance navigateur, aucun Bearer dans URL, logs, analytics ou exports, invalidation immédiate après `401`/expiration.
 - [x] Prouver les lectures redacted `health`, `dashboard/summary` et `profiles`, sans aucune écriture ni opération runtime.
 - [x] Exécuter les tests ciblés et `go test -race`, scanner les preuves, versionner la décision `BOOTSTRAP_RO_APPROVED`.
+
+# BOOTSTRAP-RO-01 — preuves d’exécution strictes FL-STRICT-EXEC-1.0
+
+- [ ] Reclasser la décision publiée en `DECLARED_PASS_EVIDENCE_PENDING` jusqu’à revue du dossier d’exécution rejouable.
+- [ ] Créer les commandes reproductibles `core-dev`, `dashboard-dev` et `test-bootstrap-ro`, sans activation de runtime ni inclusion de secret.
+- [ ] Exécuter séquentiellement T00 à T04 avec listes de tests, sorties JSON, race detector et fichiers de preuve assainis.
+- [ ] Exécuter T05 avec deux serveurs locaux loopback, inspection des sockets et E2E navigateur automatisé couvrant les dix contrôles.
+- [ ] Hacher toutes les preuves, scanner le dossier, vérifier le diff des chemins RC gelés et versionner les contrôles sans committer les données d’exécution.
+- [ ] Rendre une décision finale uniquement à partir des sorties T00 à T05 et de leurs hashes.

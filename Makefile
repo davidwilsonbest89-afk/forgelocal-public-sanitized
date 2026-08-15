@@ -1,4 +1,4 @@
-.PHONY: dev build test test-back01 test-back01-race package clean spike download-browsers download-camoufox download-cloakbrowser
+.PHONY: dev build test test-back01 test-back01-race package clean spike download-browsers download-camoufox download-cloakbrowser core-dev dashboard-dev test-bootstrap-ro
 
 GO_TOOLCHAIN ?= go1.25.13
 
@@ -38,6 +38,29 @@ test-back01:
 
 test-back01-race:
 	GOTOOLCHAIN=$(GO_TOOLCHAIN) go test -race ./internal/backup -count=1
+
+# --- BOOTSTRAP-RO-01 local execution evidence ---
+# These targets require a separate dashboard checkout through DASHBOARD_DIR.
+# They are loopback-only, use a temporary directory and disable all runtimes.
+
+core-dev:
+	@FORGELOCAL_E2E_BASE_DIR="$${FORGELOCAL_E2E_BASE_DIR:?FORGELOCAL_E2E_BASE_DIR requis}" \
+	FORGELOCAL_E2E_PORT="$${FORGELOCAL_E2E_PORT:-19280}" \
+	./scripts/core-dev.sh
+
+dashboard-dev:
+	@DASHBOARD_DIR="$${DASHBOARD_DIR:?DASHBOARD_DIR requis}" \
+	FORGELOCAL_E2E_PORT="$${FORGELOCAL_E2E_PORT:-19280}" \
+	FORGELOCAL_DASHBOARD_PORT="$${FORGELOCAL_DASHBOARD_PORT:-3001}" \
+	./scripts/dashboard-dev.sh
+
+test-bootstrap-ro:
+	@DASHBOARD_DIR="$${DASHBOARD_DIR:?DASHBOARD_DIR requis}" \
+	FORGELOCAL_E2E_BASE_DIR="$${FORGELOCAL_E2E_BASE_DIR:?FORGELOCAL_E2E_BASE_DIR requis}" \
+	FORGELOCAL_E2E_PORT="$${FORGELOCAL_E2E_PORT:-19280}" \
+	FORGELOCAL_DASHBOARD_PORT="$${FORGELOCAL_DASHBOARD_PORT:-3001}" \
+	FORGELOCAL_HOSTED_DASHBOARD_URL="$${FORGELOCAL_HOSTED_DASHBOARD_URL:-https://forgelocal-d-c8wqrxmp.manus.space}" \
+	./scripts/test-bootstrap-ro-playwright.sh
 
 # --- Package (final ZIP) ---
 
