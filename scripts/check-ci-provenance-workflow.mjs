@@ -2,6 +2,10 @@ import { readFileSync } from "node:fs";
 
 const ciWorkflow = readFileSync(".github/workflows/ci.yml", "utf8");
 const releaseWorkflow = readFileSync(".github/workflows/release.yml", "utf8");
+const releaseSeparationWorkflow = readFileSync(
+  ".github/workflows/release-separation.yml",
+  "utf8"
+);
 const codeowners = readFileSync(".github/CODEOWNERS", "utf8");
 const provenanceFragments = [
   "actions/setup-node@v6",
@@ -18,6 +22,10 @@ const provenanceFragments = [
 
 const ciMissing = provenanceFragments.filter((fragment) => !ciWorkflow.includes(fragment));
 const releaseMissing = provenanceFragments.filter((fragment) => !releaseWorkflow.includes(fragment));
+const ciReleaseSeparationTestFragments = ["node scripts/test-release-separation.mjs"];
+const ciReleaseSeparationTestMissing = ciReleaseSeparationTestFragments.filter(
+  (fragment) => !ciWorkflow.includes(fragment)
+);
 const releaseDependencyFragments = [
   "  verify:\n    needs: provenance",
   "  build:\n    needs: verify",
@@ -31,6 +39,39 @@ const releaseEnvironmentFragments = [
 ];
 const releaseEnvironmentMissing = releaseEnvironmentFragments.filter(
   (fragment) => !releaseWorkflow.includes(fragment)
+);
+const releaseSeparationFragments = [
+  "pull_request_target:",
+  "contents: read",
+  "pull-requests: read",
+  "release-separation:",
+  "PULL_NUMBER: ${{ github.event.pull_request.number }}",
+  "BASE_SHA: ${{ github.event.pull_request.base.sha }}",
+  'gh api --repo "$GITHUB_REPOSITORY" "/repos/$GITHUB_REPOSITORY/pulls/$PULL_NUMBER"',
+  'gh api --paginate --slurp --repo "$GITHUB_REPOSITORY" "/repos/$GITHUB_REPOSITORY/pulls/$PULL_NUMBER/reviews?per_page=100"',
+  'gh api --paginate --slurp --repo "$GITHUB_REPOSITORY" "/repos/$GITHUB_REPOSITORY/pulls/$PULL_NUMBER/files?per_page=100"',
+  'contents/scripts/check-release-separation.mjs?ref=$BASE_SHA',
+  'node "$input_dir/check-release-separation.mjs"',
+  "actions/upload-artifact@v4",
+  "retention-days: 90"
+];
+const releaseSeparationMissing = releaseSeparationFragments.filter(
+  (fragment) => !releaseSeparationWorkflow.includes(fragment)
+);
+const releaseSeparationForbiddenFragments = [
+  "actions/checkout",
+  "npm install",
+  "pnpm install",
+  "yarn install",
+  "git fetch",
+  "gh pr checkout",
+  "curl ",
+  "wget ",
+  "go test",
+  "go vet"
+];
+const releaseSeparationForbiddenFound = releaseSeparationForbiddenFragments.filter(
+  (fragment) => releaseSeparationWorkflow.includes(fragment)
 );
 const primaryReviewOwners = "@boucheriechefimane-cmd @davidwilsonbest89-afk";
 const independentReviewer = "@hajarbenmlih91-cloud";
@@ -70,13 +111,19 @@ const independentReviewerMissing = criticalCodeownerPaths.filter(
 if (
   ciMissing.length > 0 ||
   releaseMissing.length > 0 ||
+  ciReleaseSeparationTestMissing.length > 0 ||
   releaseDependencyMissing.length > 0 ||
   releaseEnvironmentMissing.length > 0 ||
+  releaseSeparationMissing.length > 0 ||
+  releaseSeparationForbiddenFound.length > 0 ||
   codeownersMissing.length > 0 ||
   independentReviewerMissing.length > 0
 ) {
   console.error("ci provenance workflow: FAILED");
   for (const fragment of ciMissing) console.error(`- CI: fragment absent: ${fragment}`);
+  for (const fragment of ciReleaseSeparationTestMissing) {
+    console.error(`- CI release-separation test: fragment absent: ${fragment}`);
+  }
   for (const fragment of releaseMissing) {
     console.error(`- release: fragment absent: ${fragment}`);
   }
@@ -85,6 +132,12 @@ if (
   }
   for (const fragment of releaseEnvironmentMissing) {
     console.error(`- release: environnement protégé absent: ${JSON.stringify(fragment)}`);
+  }
+  for (const fragment of releaseSeparationMissing) {
+    console.error(`- release-separation: fragment absent: ${JSON.stringify(fragment)}`);
+  }
+  for (const fragment of releaseSeparationForbiddenFound) {
+    console.error(`- release-separation: fragment interdit: ${JSON.stringify(fragment)}`);
   }
   for (const path of codeownersMissing) {
     console.error(`- CODEOWNERS: règle sensible absente ou owners incorrects: ${path}`);
@@ -96,5 +149,5 @@ if (
 }
 
 console.log(
-  `ci provenance workflow: OK (${provenanceFragments.length} invariants CI + release, ${releaseDependencyFragments.length} dépendances de release, ${sensitiveCodeownerPaths.length} règles CODEOWNERS, ${criticalCodeownerPaths.length} chemins critiques à trois relecteurs)`
+  `ci provenance workflow: OK (${provenanceFragments.length} invariants CI + release, ${releaseDependencyFragments.length} dépendances de release, ${releaseSeparationFragments.length} invariants release-separation, ${sensitiveCodeownerPaths.length} règles CODEOWNERS, ${criticalCodeownerPaths.length} chemins critiques à trois relecteurs)`
 );

@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review, review, review_requested]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  release-separation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Collect read-only pull request metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          input_dir="$RUNNER_TEMP/release-separation-input"
+          mkdir -p "$input_dir"
+          gh api --repo "$GITHUB_REPOSITORY" "/repos/$GITHUB_REPOSITORY/pulls/$PULL_NUMBER" > "$input_dir/pr.json"
+          gh api --paginate --slurp --repo "$GITHUB_REPOSITORY" "/repos/$GITHUB_REPOSITORY/pulls/$PULL_NUMBER/reviews?per_page=100" > "$input_dir/reviews.json"
+          gh api --paginate --slurp --repo "$GITHUB_REPOSITORY" "/repos/$GITHUB_REPOSITORY/pulls/$PULL_NUMBER/files?per_page=100" > "$input_dir/files.json"
+          gh api --repo "$GITHUB_REPOSITORY" -H "Accept: application/vnd.github.raw+json" "/repos/$GITHUB_REPOSITORY/contents/scripts/check-release-separation.mjs?ref=$BASE_SHA" > "$input_dir/check-release-separation.mjs"
+
+      - name: Enforce release reviewer separation
+        run: |
+          set -euo pipefail
+          input_dir="$RUNNER_TEMP/release-separation-input"
+          node "$input_dir/check-release-separation.mjs" \
+            --pr "$input_dir/pr.json" \
+            --reviews "$input_dir/reviews.json" \
+            --files "$input_dir/files.json" \
+            --output "$RUNNER_TEMP/release-separation-evidence.json"
+
+      - name: Archive redacted release-separation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-separation-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/release-separation-evidence.json
+          if-no-files-found: warn
+          retention-days: 90

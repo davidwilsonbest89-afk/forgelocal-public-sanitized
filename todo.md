@@ -50,3 +50,11 @@
 - [x] Étendre la politique CODEOWNERS des chemins critiques à la relectrice indépendante, sans remplacer les rôles Sécurité et Release.
 - [x] Documenter la règle distante requise : deux approbations, Code Owners, dernier push approuvé par une autre personne et zéro bypass.
 - [x] Vérifier la cohérence, scanner le delta et versionner le lot sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.
+
+# Contrôle CI de séparation Sécurité / Release
+
+- [x] Définir les quatre scénarios d’approbation et les entrées JSON strictement nécessaires au contrôle.
+- [x] Ajouter un validateur déterministe et ses fixtures, sans appel réseau ni exécution de code de PR.
+- [x] Ajouter un workflow dédié sur les métadonnées de pull request, avec permissions lecture seule et sans checkout de la branche PR.
+- [x] Documenter le check requis, le futur usage GitHub App à permission minimale et la preuve redacted.
+- [x] Tester, scanner le delta et versionner sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.

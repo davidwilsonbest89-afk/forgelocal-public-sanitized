@@ -6,7 +6,7 @@
 
 ## Objet
 
-Le contrôle de provenance est présent dans les deux chemins automatisés : le job `test` du workflow **CI** et le job `Provenance gate` du workflow **Build and Release**. Dans la release, `verify` dépend explicitement de `provenance`, puis `build` dépend de `verify` et `release` dépend de `build`. Un échec de provenance empêche donc la construction, la publication des artefacts et la création automatisée de la release.
+Le contrôle de provenance est présent dans les deux chemins automatisés : le job `test` du workflow **CI** et le job `Provenance gate` du workflow **Build and Release**. Le job distinct `release-separation` du workflow **CI** vérifie en outre les rôles d’approbation des pull requests qui modifient un chemin critique. Dans la release, `verify` dépend explicitement de `provenance`, puis `build` dépend de `verify` et `release` dépend de `build`. Un échec de provenance empêche donc la construction, la publication des artefacts et la création automatisée de la release.
 
 > Cette chaîne contrôle la release automatisée. Elle ne remplace ni la protection distante des branches et des tags, ni la règle d’accès qui doit interdire à un acteur humain de publier une release directement hors du workflow.
 
@@ -18,12 +18,12 @@ Le même ruleset doit activer **Require review from Code Owners** et **Require a
 
 La règle « deux approbations » s’applique à la branche entière, car les protections GitHub standard ne permettent pas de la limiter de façon native à un sous-ensemble de chemins. C’est volontairement plus strict. Les chemins critiques — `.github/CODEOWNERS`, `.github/workflows/`, les trois scripts de provenance, le registre JSON, `release/` et `dist/` — sont en plus assignés aux trois relecteurs dans `CODEOWNERS`.
 
-Le status check GitHub à rendre obligatoire est **`CI / test`**. Ce job porte les contrôles `check-component-rights.mjs`, `test-component-rights.mjs`, la génération de preuve redacted et son archivage pendant 90 jours. Le check doit être configuré en mode strict afin que le commit à merger soit à jour de la branche cible.
+Les status checks GitHub à rendre obligatoires sont **`CI / test`** et **`CI / release-separation`**. Le premier porte les contrôles `check-component-rights.mjs`, `test-component-rights.mjs`, les fixtures du validateur de séparation, la génération de preuve redacted et son archivage pendant 90 jours. Le second évalue uniquement les métadonnées de pull request sur les chemins critiques. Les deux checks doivent être configurés en mode strict afin que le commit à merger soit à jour de la branche cible.
 
 | Cible | Contrôle requis | Paramètres non négociables | Finalité |
 |---|---|---|---|
-| `main` | `CI / test` | Pull request, **deux approbations**, check strict, revues obsolètes invalidées, Code Owners, dernier push approuvé par une autre personne, pas de bypass | Empêcher l’intégration d’un changement qui aurait retiré ou contourné le contrôle de provenance. |
-| `forgelocal-product-v0.3` | `CI / test` | Même politique tant que la branche produit existe | Conserver la même garantie avant la promotion vers la chaîne de release. |
+| `main` | `CI / test` et `CI / release-separation` | Pull request, **deux approbations**, checks stricts, revues obsolètes invalidées, Code Owners, dernier push approuvé par une autre personne, pas de bypass | Empêcher l’intégration d’un changement qui aurait retiré ou contourné le contrôle de provenance ou la séparation Sécurité/Release. |
+| `forgelocal-product-v0.3` | `CI / test` et `CI / release-separation` | Même politique tant que la branche produit existe | Conserver la même garantie avant la promotion vers la chaîne de release. |
 | Tags `v*` | Ruleset de tag et restriction de création/mise à jour/suppression | Créateurs limités aux mainteneurs de release ; aucun bypass permanent | Empêcher un tag de release d’être créé ou modifié hors de la politique de livraison. |
 
 Les noms de job doivent rester uniques à l’échelle des workflows afin que GitHub n’associe pas un check requis au mauvais workflow. GitHub permet d’exiger des status checks avant modification d’une branche protégée et recommande de désigner leur source lorsque cette option est disponible. [1]
@@ -40,7 +40,20 @@ Le fichier [`.github/CODEOWNERS`](../.github/CODEOWNERS) est la politique versio
 | `package*.json`, `pnpm-lock.yaml`, `go.mod`, `go.sum` | Sécurité ou Release | Revoir toute évolution de dépendance ou de chaîne de build. |
 | `release/` et `dist/` | Sécurité, Release et relectrice indépendante | Empêcher une modification d’artefact ou de chaîne de livraison hors revue. |
 
-GitHub accepte une approbation de l’un des owners déclarés pour un chemin donné : une ligne CODEOWNERS est une alternative, non une obligation d’approbation de chaque rôle. Le minimum distant de **deux approbations**, la règle du dernier push approuvé par une autre personne et la procédure de release exigent donc une séparation effective. Pour un changement critique de release, la procédure impose une revue de `@boucheriechefimane-cmd` et de `@davidwilsonbest89-afk`; `@hajarbenmlih91-cloud` apporte une capacité de revue indépendante supplémentaire, notamment si l’un des deux rôles est l’auteur. Cette exigence de catégorie reste une règle opérationnelle à prouver dans la trace de pull request, sauf adoption future d’un contrôle personnalisé. [3]
+GitHub accepte une approbation de l’un des owners déclarés pour un chemin donné : une ligne CODEOWNERS est une alternative, non une obligation d’approbation de chaque rôle. Le minimum distant de **deux approbations** et la règle du dernier push approuvé par une autre personne restent donc nécessaires. Le check obligatoire **`CI / release-separation`** transforme en plus la séparation Sécurité/Release en contrôle technique pour les chemins critiques. [3]
+
+## Check `CI / release-separation`
+
+Le workflow `.github/workflows/release-separation.yml` est déclenché par les événements de pull request, mais il n’exécute ni ne télécharge le code proposé. Il utilise `pull_request_target` exclusivement pour lire les métadonnées de la pull request, la liste des fichiers et les décisions de review avec un `GITHUB_TOKEN` limité à `contents: read` et `pull-requests: read`. Le validateur est récupéré à la révision de la branche de base, et non depuis la branche proposée ; aucun `checkout`, installateur de dépendance, build ni test du code de pull request n’est admis. Cette séparation évite le scénario où un code non fiable serait exécuté avec la confiance de la branche de base. [5]
+
+| Auteur du changement critique | Approbations exigées par `CI / release-separation` |
+|---|---|
+| Ni Sécurité ni Release | Une approbation Sécurité et une approbation Release. |
+| Sécurité | Une approbation Release et une approbation indépendante. |
+| Release | Une approbation Sécurité et une approbation indépendante. |
+| Relectrice indépendante | Une approbation Sécurité et une approbation Release. |
+
+Le script `check-release-separation.mjs` utilise pour chaque reviewer sa décision la plus récente. Une décision plus récente autre que `APPROVED` invalide donc l’approbation antérieure. Sa preuve JSON redacted n’enregistre que la version de schéma, le résultat, le rôle de l’auteur, les rôles requis et satisfaits, les rôles manquants et le nombre de fichiers critiques ; elle n’exporte ni identifiant de pull request, ni login, ni nom de fichier, ni secret.
 
 ## Environnement `production-release`
 
@@ -56,11 +69,11 @@ Si l’offre GitHub du dépôt ne permet pas de distinguer finement l’autorisa
 
 ## Procédure de vérification et preuve
 
-Après activation, l’administrateur doit ouvrir une pull request de test qui modifie un fichier non sensible. Le merge doit être impossible tant que **`CI / test`** n’est pas vert et que deux approbations ne sont pas présentes. Il doit ensuite ouvrir une seconde pull request qui modifie un chemin CODEOWNERS, sans la merger, et confirmer que l’owner est requis, que le dernier auteur ne peut pas auto-approuver, que deux approbations restent nécessaires et qu’une approbation antérieure devient obsolète après un nouveau push. Lorsque ni Sécurité ni Release n’est auteur, cette seconde pull request doit être revue par `@boucheriechefimane-cmd` et `@davidwilsonbest89-afk`. Si l’un de ces deux responsables est auteur, l’autre responsable et `@hajarbenmlih91-cloud` doivent fournir les deux approbations ; la trace doit mentionner cette séparation. Enfin, il doit vérifier que le workflow de release exécute le job **`Provenance gate`**, que l’artefact `component-provenance-<SHA>` est présent avec une rétention de 90 jours et qu’aucune release automatisée n’est créée si ce job échoue.
+Après activation, l’administrateur doit ouvrir une pull request de test qui modifie un fichier non sensible. Le merge doit être impossible tant que **`CI / test`** et **`CI / release-separation`** ne sont pas verts et que deux approbations ne sont pas présentes. Il doit ensuite ouvrir une seconde pull request qui modifie un chemin CODEOWNERS, sans la merger, et confirmer que l’owner est requis, que le dernier auteur ne peut pas auto-approuver, que deux approbations restent nécessaires et qu’une approbation antérieure devient obsolète après un nouveau push. Lorsque ni Sécurité ni Release n’est auteur, cette seconde pull request doit être revue par `@boucheriechefimane-cmd` et `@davidwilsonbest89-afk`. Si l’un de ces deux responsables est auteur, l’autre responsable et `@hajarbenmlih91-cloud` doivent fournir les deux approbations. Le check `CI / release-separation` doit échouer pour chaque combinaison de rôles incomplète du tableau précédent et produire une preuve redacted lorsqu’elle réussit. Enfin, il doit vérifier que le workflow de release exécute le job **`Provenance gate`**, que l’artefact `component-provenance-<SHA>` est présent avec une rétention de 90 jours et qu’aucune release automatisée n’est créée si ce job échoue.
 
 Pour l’environnement, il doit déclencher une release de test non publique ou une exécution contrôlée, vérifier l’arrêt du job `release` dans l’attente du reviewer `@davidwilsonbest89-afk`, confirmer que l’auteur ne peut pas s’auto-approuver puis vérifier que les secrets ne sont disponibles qu’après approbation. Aucun secret ne doit être affiché dans la preuve.
 
-La preuve d’activation à archiver dans le dossier de sécurité doit contenir la date, le dépôt, les branches et le motif de tags couverts, le nom exact du check requis, l’absence de bypass, le seuil de deux approbations, l’identité des trois relecteurs, la présence des droits Write, la configuration de l’environnement, ainsi que des captures ou exports redacted des règles. Elle ne doit contenir aucun token, email personnel, chemin d’hôte, valeur proxy ni secret. Les règles GitHub permettent de cibler des branches ou tags et de rendre des status checks obligatoires avant les modifications couvertes. [1] [2]
+La preuve d’activation à archiver dans le dossier de sécurité doit contenir la date, le dépôt, les branches et le motif de tags couverts, les noms exacts des deux checks requis, l’absence de bypass, le seuil de deux approbations, l’identité des trois relecteurs, la présence des droits Write, la configuration de l’environnement, ainsi que des captures ou exports redacted des règles. Elle doit également inclure l’artefact `release-separation-<head-sha>` d’un test réussi, sans modifier son contenu. Elle ne doit contenir aucun token, email personnel, chemin d’hôte, valeur proxy ni secret. Les règles GitHub permettent de cibler des branches ou tags et de rendre des status checks obligatoires avant les modifications couvertes. [1] [2]
 
 ## État de conformité
 
@@ -68,6 +81,7 @@ La preuve d’activation à archiver dans le dossier de sécurité doit contenir
 |---|---|---|
 | Contrôle de provenance dans le workflow CI | Implémenté dans le dépôt | Exécution `CI / test` réussie. |
 | Contrôle de provenance dans le workflow de release | Implémenté dans le dépôt | Job `Provenance gate` et artefact associé. |
+| Contrôle technique de séparation Sécurité/Release | Implémenté dans le dépôt ; application distante **PENDING** | `CI / release-separation` requis, test des quatre scénarios et artefact redacted associé. |
 | CODEOWNERS des fichiers sensibles | Implémenté dans le dépôt ; application distante **PENDING** | Les trois comptes disposent de Write et une pull request de test exige la revue demandée. |
 | Revue renforcée des chemins critiques | Politique versionnée ; application distante **PENDING** | Ruleset à deux approbations, Code Owners et test de pull request avec preuve des deux revues. |
 | Environnement `production-release` | Déclaré dans le workflow ; configuration distante **PENDING** | Reviewer release, self-review interdite, bypass désactivé et secrets limités à l’environnement. |
@@ -82,3 +96,4 @@ La preuve d’activation à archiver dans le dossier de sécurité doit contenir
 [2] [GitHub Docs — Available rules for rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets)
 [3] [GitHub Docs — About code owners](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
 [4] [GitHub Docs — Deployments and environments](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments)
+[5] [GitHub Docs — Securely using pull_request_target](https://docs.github.com/en/actions/reference/security/securely-using-pull_request_target)

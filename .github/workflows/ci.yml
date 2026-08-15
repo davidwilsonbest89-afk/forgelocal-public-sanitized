@@ -32,6 +32,7 @@ jobs:
         run: |
           node scripts/check-component-rights.mjs
           node scripts/test-component-rights.mjs
+          node scripts/test-release-separation.mjs
 
       - name: Create component provenance evidence
         run: node scripts/create-component-rights-evidence.mjs
