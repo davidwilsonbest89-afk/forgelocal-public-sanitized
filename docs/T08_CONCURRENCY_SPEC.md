@@ -24,7 +24,7 @@ Le module est écrit en Go sans importer, copier ni consulter le code candidat p
 
 ## Périmètre fonctionnel (spécification de contrat)
 
-Le module `internal/concurrency` (chemin contrôlé existant) doit fournir un orchestrateur de concurrence par profil, strictement limité aux opérations internes au Core (aucun lancement, aucun réseau, aucun cycle de vie navigateur).
+Le module `internal/launch` (chemin de livraison réel, `docs/T08-R2-FINAL-REPORT.md`) doit fournir un orchestrateur de concurrence par profil, strictement limité aux opérations internes au Core (aucun lancement, aucun réseau, aucun cycle de vie navigateur).
 
 1. **Queue bornée.** Une file d'exécution par profil, de capacité configurable, rejette immédiatement une demande excédentaire avec une erreur explicite plutôt que de la mettre en attente illimitée.
 2. **Limite globale.** Une limite concurrente globale, configurable, s'applique à l'ensemble des opérations orchestrées, en complément des files par profil.
@@ -44,8 +44,8 @@ Le module `internal/concurrency` (chemin contrôlé existant) doit fournir un or
 | Verrou par profil | test : deux profils A/B, opération A n'attend pas B, double soumission A sérialisée |
 | Timeout | test : opération lente, expiration, erreur `timeout`, verrou libéré |
 | Contexte | test : `context.WithCancel` annule, erreur `canceled`, ressources libérées |
-| Race detector | `go test -count=1 -v -race ./internal/concurrency` sans warning ; test `TestConcurrentStress` avec `t.Parallel` et goroutines multiples |
-| Cleanup | test : fermeture pendant exécution, `go leak` ou `WaitGroup` rejoint dans un délai borné |
+| Race detector | `go test -count=1 -v -race ./internal/launch` sans warning (commande canonique effectivement exécutée et archivée dans `t08-r2.zip/test-out.log`) ; test `TestConcurrentStress` avec `t.Parallel` et goroutines multiples |
+| Cleanup | preuve livrée : chaque attach est enregistré dans le `sync.WaitGroup attach` (`manager.go:137`) ; `Stop` annule tous les attach en vol puis rejoint le WaitGroup sous une deadline dérivée de `StartTimeout` (`launch.go:298-322`) — une sortie hors deadline est enregistrée en audit (`stop_join_deadline`), et `TestStop_Idempotent` + `TestConcurrentStress` prouvent la terminaison bornée sans fuite (exit 0 sous `-race`) |
 | Recovery | test : redémarrage simulé, queue vide, journal d'abandon présent, aucune reprise implicite |
 | Audit redacted | inspection du journal produit : zéro secret, zéro sentinelle, zéro référence Camoflox |
 | Scan | Gitleaks 8.18.4 JSON `[]` sur le delta T08, avant toute intégration |
