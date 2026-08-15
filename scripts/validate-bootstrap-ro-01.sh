@@ -7,6 +7,11 @@ BASE_DIR="${FORGELOCAL_BASE_DIR:?FORGELOCAL_BASE_DIR est requis}"
 BASE_URL="${FORGELOCAL_BASE_URL:?FORGELOCAL_BASE_URL est requis}"
 EVIDENCE_FILE="${BOOTSTRAP_RO_EVIDENCE_FILE:?BOOTSTRAP_RO_EVIDENCE_FILE est requis}"
 VERIFY_EXPIRY="${VERIFY_EXPIRY:-0}"
+NONLOOPBACK_BASE_URL="${FORGELOCAL_NONLOOPBACK_BASE_URL:-}"
+NONLOOPBACK_ISSUANCE_URL="${FORGELOCAL_NONLOOPBACK_ISSUANCE_URL:-}"
+NONLOOPBACK_BINARY="${FORGELOCAL_NONLOOPBACK_BINARY:-}"
+NONLOOPBACK_BASE_DIR="${FORGELOCAL_NONLOOPBACK_BASE_DIR:-}"
+NONLOOPBACK_EVIDENCE_FILE="${BOOTSTRAP_RO_NONLOOPBACK_EVIDENCE_FILE:-}"
 
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
@@ -35,6 +40,10 @@ json_number() {
 
 issue_code() {
   "$BIN" --base-dir "$BASE_DIR" readonly-session code --base-url "$BASE_URL" --json
+}
+
+issue_nonloopback_code() {
+  "$NONLOOPBACK_BINARY" --base-dir "$NONLOOPBACK_BASE_DIR" readonly-session code --base-url "$NONLOOPBACK_ISSUANCE_URL" --json
 }
 
 exchange_code() {
@@ -146,17 +155,23 @@ require_status 401 "$response_status" 'rejeu du code'
 printf '%s' "$response_body" | grep -q 'INVALID_BOOTSTRAP_CODE' || fail 'code erreur rejet replay absent'
 printf 'control_03_rejeu_code_refuse=PASS\n' >> "$EVIDENCE_FILE"
 
-if [[ -n "${FORGELOCAL_NONLOOPBACK_BASE_URL:-}" ]]; then
-	nonloop_issuance="$(issue_code)" || fail 'émission contrôle hors loopback impossible'
-	nonloop_code="$(printf '%s' "$nonloop_issuance" | json_string code)"
-	[[ "$nonloop_code" =~ ^[a-f0-9]{64}$ ]] || fail 'code hors loopback non conforme'
-	nonloop_exchange="$(exchange_code_at "$FORGELOCAL_NONLOOPBACK_BASE_URL" "$nonloop_code")" || fail 'contrôle hors loopback impossible'
-	split_response "$nonloop_exchange"
-	require_status 403 "$response_status" 'échange hors loopback'
-	printf '%s' "$response_body" | grep -q 'LOOPBACK_REQUIRED' || fail 'code erreur hors loopback absent'
-	printf 'control_05_hors_loopback_refuse=PASS\n' >> "$EVIDENCE_FILE"
+if [[ -n "$NONLOOPBACK_BASE_URL" ]]; then
+		[[ -x "$NONLOOPBACK_BINARY" && -n "$NONLOOPBACK_BASE_DIR" && -n "$NONLOOPBACK_ISSUANCE_URL" ]] || fail 'configuration contrôle hors loopback incomplète'
+		nonloop_issuance="$(issue_nonloopback_code)" || fail 'émission contrôle hors loopback impossible'
+		nonloop_code="$(printf '%s' "$nonloop_issuance" | json_string code)"
+		[[ "$nonloop_code" =~ ^[a-f0-9]{64}$ ]] || fail 'code hors loopback non conforme'
+		nonloop_exchange="$(exchange_code_at "$NONLOOPBACK_BASE_URL" "$nonloop_code")" || fail 'contrôle hors loopback impossible'
+		split_response "$nonloop_exchange"
+		require_status 403 "$response_status" 'échange hors loopback'
+		printf '%s' "$response_body" | grep -q 'LOOPBACK_REQUIRED' || fail 'code erreur hors loopback absent'
+		printf 'control_05_hors_loopback_refuse=PASS\n' >> "$EVIDENCE_FILE"
+		if [[ -n "$NONLOOPBACK_EVIDENCE_FILE" ]]; then
+			mkdir -p "$(dirname "$NONLOOPBACK_EVIDENCE_FILE")"
+			printf 'control_05_hors_loopback_refuse=PASS\nhttp_status=403\nerror_code=LOOPBACK_REQUIRED\n' > "$NONLOOPBACK_EVIDENCE_FILE"
+		fi
 else
-	printf 'control_05_hors_loopback_refuse=NOT_RUN\n' >> "$EVIDENCE_FILE"
+		printf 'control_05_hors_loopback_refuse=NOT_RUN\n' >> "$EVIDENCE_FILE"
+		[[ -z "$NONLOOPBACK_EVIDENCE_FILE" ]] || printf 'control_05_hors_loopback_refuse=NOT_RUN\n' > "$NONLOOPBACK_EVIDENCE_FILE"
 fi
 
 if [[ "$VERIFY_EXPIRY" == '1' ]]; then

@@ -97,3 +97,11 @@
 - [x] Exécuter T05 avec deux serveurs locaux loopback, inspection des sockets et E2E navigateur automatisé couvrant les dix contrôles.
 - [x] Hacher toutes les preuves, scanner le dossier, vérifier le diff des chemins RC gelés et versionner les contrôles sans committer les données d’exécution.
 - [x] Rendre une décision finale uniquement à partir des sorties T00 à T05 et de leurs hashes : `BOOTSTRAP_RO_APPROVED_VERIFIABLE`.
+
+# BOOTSTRAP-RO-01 — clôture de traçabilité
+
+- [x] Générer un manifeste `SHA256SUMS` portable, strictement relatif, vérifiable directement après extraction de l’archive.
+- [x] Intégrer le refus hors loopback au résultat global T05 avec un statut `PASS` et une référence explicite à ses deux preuves autoritatives.
+- [x] Archiver et hacher les sorties T00 : `git status --short`, `git diff --check` et diff des chemins RC gelés.
+- [x] Exécuter le run corrigé, vérifier `19/19` hashes après extraction et scanner le delta ainsi que l’archive extraite.
+- [ ] Versionner exclusivement les scripts et documents de preuve, sans démarrer T06, modifier le RC, créer un tag ou une release.

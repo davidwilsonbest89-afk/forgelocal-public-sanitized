@@ -37,22 +37,43 @@ fi
 core_pid=""
 nonloop_pid=""
 dashboard_pid=""
-cleanup() {
+stop_services() {
   for pid in "$dashboard_pid" "$nonloop_pid" "$core_pid"; do
     [[ -n "$pid" ]] && kill "$pid" 2>/dev/null || true
   done
+  for pid in "$dashboard_pid" "$nonloop_pid" "$core_pid"; do
+    [[ -n "$pid" ]] && wait "$pid" 2>/dev/null || true
+  done
+  dashboard_pid=""
+  nonloop_pid=""
+  core_pid=""
+}
+cleanup() {
+  stop_services
   [[ -d "$SOURCE_DIR" ]] && git -C "$ROOT" worktree remove --force "$SOURCE_DIR" 2>/dev/null || true
 }
 trap cleanup EXIT
 
-git -C "$ROOT" worktree add --detach "$SOURCE_DIR" "$TARGET_COMMIT" >"$EVIDENCE_DIR/T00_worktree.log" 2>&1
+git -C "$ROOT" worktree add --detach "$SOURCE_DIR" "$TARGET_COMMIT"
+git -C "$SOURCE_DIR" status --short >"$EVIDENCE_DIR/T00_git_status_short.log"
+git -C "$SOURCE_DIR" diff --check >"$EVIDENCE_DIR/T00_git_diff_check.log"
+target_parent="$(git -C "$SOURCE_DIR" rev-parse "${TARGET_COMMIT}^")"
+git -C "$SOURCE_DIR" diff --name-only "$target_parent" "$TARGET_COMMIT" -- release/back01-minimal dist/back01-minimal >"$EVIDENCE_DIR/T00_rc_paths.log"
+test ! -s "$EVIDENCE_DIR/T00_git_status_short.log"
+test ! -s "$EVIDENCE_DIR/T00_git_diff_check.log"
+test ! -s "$EVIDENCE_DIR/T00_rc_paths.log"
 {
   printf 'target_commit=%s\n' "$TARGET_COMMIT"
+  printf 'target_parent=%s\n' "$target_parent"
   printf 'source_commit=%s\n' "$(git -C "$SOURCE_DIR" rev-parse HEAD)"
+  printf 'proof_protocol_commit=%s\n' "$(git -C "$ROOT" rev-parse HEAD)"
   printf 'dashboard_commit=%s\n' "$(git -C "$DASHBOARD_DIR" rev-parse HEAD 2>/dev/null || printf non_git)"
   printf 'go_version=%s\n' "$(GOTOOLCHAIN=local "$GO" version)"
   printf 'node_version=%s\n' "$(node --version)"
   printf 'playwright_version=%s\n' "$(cd "$DASHBOARD_DIR" && pnpm exec playwright --version)"
+  printf 'git_status_short=PASS bytes=%s\n' "$(wc -c < "$EVIDENCE_DIR/T00_git_status_short.log")"
+  printf 'git_diff_check=PASS bytes=%s\n' "$(wc -c < "$EVIDENCE_DIR/T00_git_diff_check.log")"
+  printf 'rc_paths_against_target_parent=PASS changed_files=%s\n' "$(wc -l < "$EVIDENCE_DIR/T00_rc_paths.log")"
 } >"$EVIDENCE_DIR/T00_environment.log"
 
 export GOTOOLCHAIN=local
@@ -94,18 +115,11 @@ printf 'T05_SOCKET_SCOPE: principal=loopback dashboard=loopback control_nonloop=
 
 ip_addr="$(ip -4 -o addr show scope global | awk 'NR==1 {split($4, part, "/"); print part[1]}')"
 [[ -n "$ip_addr" ]] || { printf 'Adresse IPv4 non loopback indisponible\n' >&2; exit 1; }
-nonloop_issuance="$($NONLOOP_BASE_DIR/forgelocal --base-dir "$NONLOOP_BASE_DIR" readonly-session code --base-url "http://127.0.0.1:${NONLOOP_PORT}" --json)"
-nonloop_code="$(printf '%s' "$nonloop_issuance" | sed -n 's/.*"code"[[:space:]]*:[[:space:]]*"\([a-f0-9]*\)".*/\1/p')"
-[[ "$nonloop_code" =~ ^[a-f0-9]{64}$ ]] || { printf 'Émission nonloop invalide\n' >&2; exit 1; }
-nonloop_result="$(curl --silent --noproxy '*' --request POST "http://${ip_addr}:${NONLOOP_PORT}/api/v1/readonly/session/bootstrap" --header 'Content-Type: application/json' --data "{\"code\":\"${nonloop_code}\"}" --write-out $'\n%{http_code}')"
-nonloop_status="${nonloop_result##*$'\n'}"
-nonloop_body="${nonloop_result%$'\n'*}"
-[[ "$nonloop_status" == 403 ]] && printf '%s' "$nonloop_body" | grep -q 'LOOPBACK_REQUIRED'
-printf 'T05_NONLOOPBACK: PASS status=403 code=LOOPBACK_REQUIRED\n' >"$EVIDENCE_DIR/T05_nonloopback.log"
 
 FORGELOCAL_BINARY="$CORE_BASE_DIR/forgelocal" FORGELOCAL_BASE_DIR="$CORE_BASE_DIR" FORGELOCAL_BASE_URL="http://127.0.0.1:${CORE_PORT}" \
-  FORGELOCAL_NONLOOPBACK_BASE_URL="" BOOTSTRAP_RO_EVIDENCE_FILE="$EVIDENCE_DIR/T05_core_contract.log" VERIFY_EXPIRY=1 \
-  "$SOURCE_DIR/scripts/validate-bootstrap-ro-01.sh" >"$EVIDENCE_DIR/T05_core_contract_runner.log" 2>&1
+  FORGELOCAL_NONLOOPBACK_BASE_URL="http://${ip_addr}:${NONLOOP_PORT}" FORGELOCAL_NONLOOPBACK_ISSUANCE_URL="http://127.0.0.1:${NONLOOP_PORT}" FORGELOCAL_NONLOOPBACK_BINARY="$NONLOOP_BASE_DIR/forgelocal" FORGELOCAL_NONLOOPBACK_BASE_DIR="$NONLOOP_BASE_DIR" \
+  BOOTSTRAP_RO_EVIDENCE_FILE="$EVIDENCE_DIR/T05_core_contract.log" BOOTSTRAP_RO_NONLOOPBACK_EVIDENCE_FILE="$EVIDENCE_DIR/T05_nonloopback.log" VERIFY_EXPIRY=1 \
+  "$ROOT/scripts/validate-bootstrap-ro-01.sh" >"$EVIDENCE_DIR/T05_core_contract_runner.log" 2>&1
 
 DASHBOARD_DIR="$DASHBOARD_DIR" FORGELOCAL_E2E_BASE_DIR="$CORE_BASE_DIR" FORGELOCAL_E2E_PORT="$CORE_PORT" \
   FORGELOCAL_DASHBOARD_PORT="$DASHBOARD_PORT" "$ROOT/scripts/test-bootstrap-ro-playwright.sh" >"$EVIDENCE_DIR/T05_playwright.log" 2>&1
@@ -116,8 +130,9 @@ if grep -Eiq 'authorization:|bearer[[:space:]]+[a-f0-9]{16,}|"token"[[:space:]]*
 fi
 printf 'T05_LOG_REDACTION: PASS authorization=absent bearer=absent token_value=absent\n' >"$EVIDENCE_DIR/T05_log_redaction.log"
 
-git -C "$SOURCE_DIR" diff --name-only "$TARGET_COMMIT" -- release/back01-minimal dist/back01-minimal >"$EVIDENCE_DIR/T06_rc_paths.log"
-test ! -s "$EVIDENCE_DIR/T06_rc_paths.log"
-printf 'T06_RC_PATHS: PASS changed_files=0\n' >>"$EVIDENCE_DIR/T06_rc_paths.log"
-find "$EVIDENCE_DIR" -maxdepth 1 -type f ! -name 'SHA256SUMS' -printf '%f\n' | sort | while read -r name; do sha256sum "$EVIDENCE_DIR/$name"; done >"$EVIDENCE_DIR/SHA256SUMS"
+stop_services
+(
+  cd "$EVIDENCE_DIR"
+  find . -maxdepth 1 -type f ! -name 'SHA256SUMS' -printf '%f\n' | sort | while read -r name; do sha256sum "$name"; done
+) >"$EVIDENCE_DIR/SHA256SUMS"
 printf 'BOOTSTRAP_RO_EXECUTION_EVIDENCE: PASS target_commit=%s\n' "$TARGET_COMMIT"
