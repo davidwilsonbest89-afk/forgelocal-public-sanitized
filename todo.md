@@ -105,3 +105,12 @@
 - [x] Archiver et hacher les sorties T00 : `git status --short`, `git diff --check` et diff des chemins RC gelés.
 - [x] Exécuter le run corrigé, vérifier `19/19` hashes après extraction et scanner le delta ainsi que l’archive extraite.
 - [x] Versionner exclusivement les scripts et documents de preuve, sans démarrer T06, modifier le RC, créer un tag ou une release.
+
+# T06 — Groupes et Runtimes lecture seule
+
+- [ ] Préflight : vérifier le commit propre, les chemins RC inchangés, les versions verrouillées et le dossier de preuves T06.
+- [ ] T06-1 : compléter et passer les contrats API v1 Groups/Runtimes redacted, paginés, limités, authentifiés et sans mutation, y compris `-race`.
+- [ ] T06-2 : créer les fixtures SQLite synthétiques via le chemin Core, vérifier l’intégrité et l’absence de sentinelles dans les réponses.
+- [ ] T06-3 : raccorder les vues React Groupes/Runtimes au client mémoire seule et prouver le parcours local Playwright (chargement, vide, erreur, timeout, `401`, réessai).
+- [ ] T06-4 : prouver redaction, absence des sentinelles dans DOM/réponses/logs/preuves et absence ou refus des mutations.
+- [ ] T06-5 : produire l’archive hashée et portable, le rapport Gitleaks redacted du delta et de l’archive extraite, puis vérifier zéro delta RC avant revue indépendante.
