@@ -1,6 +1,7 @@
 package backup
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"errors"
@@ -11,6 +12,67 @@ import (
 )
 
 type SQLiteStore struct{ db *sql.DB }
+
+// ReadOnlyGroup and ReadOnlyRuntimeCandidate deliberately exclude proxy
+// endpoints, secret references, binary paths and binary hashes.
+type ReadOnlyGroup struct {
+	ID              string
+	Name            string
+	ProxyMode       string
+	ProxyConfigured bool
+	ProfileCount    int
+	CreatedAt       string
+	UpdatedAt       string
+}
+
+type ReadOnlyRuntimeCandidate struct {
+	ID           string
+	Name         string
+	Version      string
+	Architecture string
+	Status       string
+}
+
+// ReadOnlyCatalog is the narrow SQLite read contract used by dashboard-only
+// API projections. It has no mutation methods.
+type ReadOnlyCatalog interface {
+	ListReadOnlyGroups(context.Context) ([]ReadOnlyGroup, error)
+	ListReadOnlyRuntimeCandidates(context.Context) ([]ReadOnlyRuntimeCandidate, error)
+}
+
+func (s *SQLiteStore) ListReadOnlyGroups(ctx context.Context) ([]ReadOnlyGroup, error) {
+	rows, err := s.db.QueryContext(ctx, `SELECT g.id, g.name, g.proxy_mode, g.proxy_type <> '', COUNT(p.id), g.created_at, g.updated_at FROM groups g LEFT JOIN profiles p ON p.group_id = g.id GROUP BY g.id, g.name, g.proxy_mode, g.proxy_type, g.created_at, g.updated_at ORDER BY g.id`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ReadOnlyGroup{}
+	for rows.Next() {
+		var item ReadOnlyGroup
+		if err := rows.Scan(&item.ID, &item.Name, &item.ProxyMode, &item.ProxyConfigured, &item.ProfileCount, &item.CreatedAt, &item.UpdatedAt); err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	return items, rows.Err()
+}
+
+func (s *SQLiteStore) ListReadOnlyRuntimeCandidates(ctx context.Context) ([]ReadOnlyRuntimeCandidate, error) {
+	rows, err := s.db.QueryContext(ctx, `SELECT id, name, version, architecture, status FROM runtime_candidates ORDER BY id`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ReadOnlyRuntimeCandidate{}
+	for rows.Next() {
+		var item ReadOnlyRuntimeCandidate
+		if err := rows.Scan(&item.ID, &item.Name, &item.Version, &item.Architecture, &item.Status); err != nil {
+			return nil, err
+		}
+		items = append(items, item)
+	}
+	return items, rows.Err()
+}
 
 func OpenSQLite(path string) (*SQLiteStore, error) {
 	db, err := sql.Open("sqlite", path)

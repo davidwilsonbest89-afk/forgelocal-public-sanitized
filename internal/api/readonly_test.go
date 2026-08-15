@@ -1,16 +1,28 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
+	"forgelocal/internal/backup"
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
 	"forgelocal/internal/profile"
 )
+
+type t06Catalog struct{}
+
+func (t06Catalog) ListReadOnlyGroups(context.Context) ([]backup.ReadOnlyGroup, error) {
+	return []backup.ReadOnlyGroup{{ID: "group-t06", Name: "T06 Group", ProxyMode: "enforced", ProxyConfigured: true, ProfileCount: 1, CreatedAt: "2026-08-15T00:00:00Z", UpdatedAt: "2026-08-15T00:00:00Z"}}, nil
+}
+
+func (t06Catalog) ListReadOnlyRuntimeCandidates(context.Context) ([]backup.ReadOnlyRuntimeCandidate, error) {
+	return []backup.ReadOnlyRuntimeCandidate{{ID: "runtime-t06", Name: "T06 Runtime", Version: "1.0", Architecture: "amd64", Status: "candidate"}}, nil
+}
 
 func TestReadOnlyProfilesAreRedactedAndPaginated(t *testing.T) {
 	store, err := profile.NewStore(t.TempDir())
@@ -64,6 +76,29 @@ func TestReadOnlyRuntimeMarksCamoufoxCandidateNonLaunchable(t *testing.T) {
 	}
 	if !strings.Contains(rec.Body.String(), `"candidate":true`) || !strings.Contains(rec.Body.String(), `"launchable":false`) {
 		t.Fatalf("Camoufox candidate state missing: %s", rec.Body.String())
+	}
+}
+
+func TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted(t *testing.T) {
+	h := &handler{readonlyCatalog: t06Catalog{}}
+	for _, path := range []string{"/api/v1/readonly/groups?limit=1", "/api/v1/readonly/runtimes?limit=1"} {
+		rec := httptest.NewRecorder()
+		if strings.Contains(path, "groups") {
+			h.readonlyGroups(rec, httptest.NewRequest(http.MethodGet, path, nil))
+		} else {
+			h.readonlyRuntimes(rec, httptest.NewRequest(http.MethodGet, path, nil))
+		}
+		if rec.Code != http.StatusOK {
+			t.Fatalf("path=%s status=%d body=%s", path, rec.Code, rec.Body.String())
+		}
+		for _, forbidden := range []string{"secret_ref", "proxy_host", "binary_path", "binary_sha256", "/t06/private", "t06-sentinel"} {
+			if strings.Contains(rec.Body.String(), forbidden) {
+				t.Fatalf("path=%s leaked %q: %s", path, forbidden, rec.Body.String())
+			}
+		}
+		if !strings.Contains(rec.Body.String(), `"api_version":"v1"`) || !strings.Contains(rec.Body.String(), `"limit":1`) {
+			t.Fatalf("unexpected response: %s", rec.Body.String())
+		}
 	}
 }
 

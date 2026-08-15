@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/base64"
 	"net/http"
 	"sort"
@@ -8,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"forgelocal/internal/backup"
 	"forgelocal/internal/profile"
 	bfruntime "forgelocal/internal/runtime"
 )
@@ -106,14 +108,27 @@ func (h *handler) readonlyGroups(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	type groupDTO struct {
+		ID              string    `json:"id"`
 		Name            string    `json:"name"`
 		ProxyMode       string    `json:"proxy_mode"`
 		ProxyConfigured bool      `json:"proxy_configured"`
+		ProfileCount    int       `json:"profile_count"`
 		CreatedAt       time.Time `json:"created_at"`
 		UpdatedAt       time.Time `json:"updated_at"`
 	}
 	items := make([]groupDTO, 0)
-	if h.groupStore != nil {
+	if h.readonlyCatalog != nil {
+		catalogItems, err := h.readonlyCatalog.ListReadOnlyGroups(context.Background())
+		if err != nil {
+			writeError(w, http.StatusServiceUnavailable, "READONLY_CATALOG_UNAVAILABLE", "readonly catalog unavailable")
+			return
+		}
+		for _, item := range catalogItems {
+			created, _ := time.Parse(time.RFC3339Nano, item.CreatedAt)
+			updated, _ := time.Parse(time.RFC3339Nano, item.UpdatedAt)
+			items = append(items, groupDTO{ID: item.ID, Name: item.Name, ProxyMode: item.ProxyMode, ProxyConfigured: item.ProxyConfigured, ProfileCount: item.ProfileCount, CreatedAt: created, UpdatedAt: updated})
+		}
+	} else if h.groupStore != nil {
 		for _, item := range h.groupStore.List() {
 			items = append(items, groupDTO{Name: item.Name, ProxyMode: item.ProxyMode, ProxyConfigured: item.Proxy != nil, CreatedAt: item.CreatedAt, UpdatedAt: item.UpdatedAt})
 		}
@@ -137,27 +152,55 @@ func (h *handler) readonlyGroups(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) readonlyRuntimes(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Query().Get("cursor") != "" || r.URL.Query().Get("limit") != "" {
-		writeError(w, http.StatusBadRequest, "PAGINATION_NOT_SUPPORTED", "runtime descriptors are returned as one bounded registry")
+	limit, cursor, ok := readOnlyPageRequest(w, r)
+	if !ok {
 		return
 	}
 	type runtimeDTO struct {
-		ID                bfruntime.ID `json:"id"`
-		DisplayName       string       `json:"display_name"`
-		Enabled           bool         `json:"enabled"`
-		PlatformSupported bool         `json:"platform_supported"`
-		Candidate         bool         `json:"candidate"`
-		Launchable        bool         `json:"launchable"`
+		ID                string `json:"id"`
+		DisplayName       string `json:"display_name"`
+		Version           string `json:"version,omitempty"`
+		Architecture      string `json:"architecture,omitempty"`
+		Status            string `json:"status,omitempty"`
+		Enabled           bool   `json:"enabled"`
+		PlatformSupported bool   `json:"platform_supported"`
+		Candidate         bool   `json:"candidate"`
+		Launchable        bool   `json:"launchable"`
 	}
 	items := make([]runtimeDTO, 0)
-	if h.mgr != nil {
+	if h.readonlyCatalog != nil {
+		catalogItems, err := h.readonlyCatalog.ListReadOnlyRuntimeCandidates(context.Background())
+		if err != nil {
+			writeError(w, http.StatusServiceUnavailable, "READONLY_CATALOG_UNAVAILABLE", "readonly catalog unavailable")
+			return
+		}
+		for _, item := range catalogItems {
+			items = append(items, runtimeDTO{ID: item.ID, DisplayName: item.Name, Version: item.Version, Architecture: item.Architecture, Status: item.Status, Candidate: true, Launchable: false})
+		}
+	} else if h.mgr != nil {
 		for _, item := range h.mgr.RuntimeRegistry().List() {
 			candidate := item.ID == bfruntime.Camoufox
-			items = append(items, runtimeDTO{ID: item.ID, DisplayName: item.DisplayName, Enabled: item.Enabled, PlatformSupported: item.PlatformSupported, Candidate: candidate, Launchable: item.Enabled && item.PlatformSupported && !candidate})
+			items = append(items, runtimeDTO{ID: string(item.ID), DisplayName: item.DisplayName, Enabled: item.Enabled, PlatformSupported: item.PlatformSupported, Candidate: candidate, Launchable: item.Enabled && item.PlatformSupported && !candidate})
 		}
 	}
-	writeJSON(w, http.StatusOK, map[string]any{"api_version": readOnlyAPIVersion, "data": items})
+	start, validCursor := readOnlyStart(items, cursor, func(item runtimeDTO) string { return item.ID })
+	if !validCursor {
+		writeError(w, http.StatusBadRequest, "INVALID_CURSOR", "cursor does not identify a runtime in this result")
+		return
+	}
+	end := start + limit
+	if end > len(items) {
+		end = len(items)
+	}
+	response := readOnlyPage[runtimeDTO]{APIVersion: readOnlyAPIVersion, Data: items[start:end]}
+	response.Page.Limit = limit
+	if end < len(items) {
+		response.Page.NextCursor = encodeReadOnlyCursor(items[end-1].ID)
+	}
+	writeJSON(w, http.StatusOK, response)
 }
+
+var _ backup.ReadOnlyCatalog = (*backup.SQLiteStore)(nil)
 
 func redactProfile(item *profile.Profile) ReadOnlyProfile {
 	if item == nil {

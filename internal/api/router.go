@@ -27,6 +27,20 @@ import (
 )
 
 func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStores ...*groups.Store) (*chi.Mux, error) {
+	var groupStore *groups.Store
+	if len(groupStores) > 0 {
+		groupStore = groupStores[0]
+	}
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil)
+}
+
+// NewRouterWithReadOnlyCatalog extends only the v1 readonly projections with
+// the Core-owned SQLite catalog. Existing business routes remain unchanged.
+func NewRouterWithReadOnlyCatalog(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog) (*chi.Mux, error) {
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog)
+}
+
+func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
@@ -44,11 +58,7 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	var groupStore *groups.Store
-	if len(groupStores) > 0 {
-		groupStore = groupStores[0]
-	}
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlySessions: newReadOnlySessionBroker()}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker()}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -120,6 +130,7 @@ type handler struct {
 	hcfg             humanize.Config
 	token            string
 	backupSvc        *backup.Service
+	readonlyCatalog  backup.ReadOnlyCatalog
 	readonlySessions *readOnlySessionBroker
 }
 
