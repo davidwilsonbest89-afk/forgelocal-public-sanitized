@@ -32,7 +32,8 @@ const releaseEnvironmentFragments = [
 const releaseEnvironmentMissing = releaseEnvironmentFragments.filter(
   (fragment) => !releaseWorkflow.includes(fragment)
 );
-const securityOwners = "@boucheriechefimane-cmd @davidwilsonbest89-afk";
+const primaryReviewOwners = "@boucheriechefimane-cmd @davidwilsonbest89-afk";
+const independentReviewer = "@hajarbenmlih91-cloud";
 const sensitiveCodeownerPaths = [
   "/.github/CODEOWNERS",
   "/.github/workflows/",
@@ -49,7 +50,21 @@ const sensitiveCodeownerPaths = [
   "/dist/"
 ];
 const codeownersMissing = sensitiveCodeownerPaths.filter(
-  (path) => !codeowners.includes(`${path} ${securityOwners}`)
+  (path) => !codeowners.includes(`${path} ${primaryReviewOwners}`)
+);
+const criticalCodeownerPaths = [
+  "/.github/CODEOWNERS",
+  "/.github/workflows/",
+  "/scripts/check-component-rights.mjs",
+  "/scripts/test-component-rights.mjs",
+  "/scripts/create-component-rights-evidence.mjs",
+  "/docs/component-rights-register.json",
+  "/release/",
+  "/dist/"
+];
+const independentReviewerMissing = criticalCodeownerPaths.filter(
+  (path) =>
+    !codeowners.includes(`${path} ${primaryReviewOwners} ${independentReviewer}`)
 );
 
 if (
@@ -57,7 +72,8 @@ if (
   releaseMissing.length > 0 ||
   releaseDependencyMissing.length > 0 ||
   releaseEnvironmentMissing.length > 0 ||
-  codeownersMissing.length > 0
+  codeownersMissing.length > 0 ||
+  independentReviewerMissing.length > 0
 ) {
   console.error("ci provenance workflow: FAILED");
   for (const fragment of ciMissing) console.error(`- CI: fragment absent: ${fragment}`);
@@ -73,9 +89,12 @@ if (
   for (const path of codeownersMissing) {
     console.error(`- CODEOWNERS: règle sensible absente ou owners incorrects: ${path}`);
   }
+  for (const path of independentReviewerMissing) {
+    console.error(`- CODEOWNERS: relectrice indépendante absente d’un chemin critique: ${path}`);
+  }
   process.exit(1);
 }
 
 console.log(
-  `ci provenance workflow: OK (${provenanceFragments.length} invariants CI + release, ${releaseDependencyFragments.length} dépendances de release, ${sensitiveCodeownerPaths.length} règles CODEOWNERS)`
+  `ci provenance workflow: OK (${provenanceFragments.length} invariants CI + release, ${releaseDependencyFragments.length} dépendances de release, ${sensitiveCodeownerPaths.length} règles CODEOWNERS, ${criticalCodeownerPaths.length} chemins critiques à trois relecteurs)`
 );

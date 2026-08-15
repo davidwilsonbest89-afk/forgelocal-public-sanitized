@@ -1,16 +1,16 @@
-# ForgeLocal — fichiers qui exigent une revue de @boucheriechefimane-cmd ou @davidwilsonbest89-afk.
-# Le ruleset distant doit imposer les revues CODEOWNERS et une approbation distincte du dernier contributeur.
+# ForgeLocal — les chemins critiques incluent la relectrice indépendante @hajarbenmlih91-cloud.
+# Le ruleset distant doit imposer deux approbations, les revues CODEOWNERS et une approbation distincte du dernier contributeur.
 
-/.github/CODEOWNERS @boucheriechefimane-cmd @davidwilsonbest89-afk
-/.github/workflows/ @boucheriechefimane-cmd @davidwilsonbest89-afk
-/scripts/check-component-rights.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk
-/scripts/test-component-rights.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk
-/scripts/create-component-rights-evidence.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk
-/docs/component-rights-register.json @boucheriechefimane-cmd @davidwilsonbest89-afk
+/.github/CODEOWNERS @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/.github/workflows/ @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/scripts/check-component-rights.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/scripts/test-component-rights.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/scripts/create-component-rights-evidence.mjs @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/docs/component-rights-register.json @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
 /package.json @boucheriechefimane-cmd @davidwilsonbest89-afk
 /package-lock.json @boucheriechefimane-cmd @davidwilsonbest89-afk
 /pnpm-lock.yaml @boucheriechefimane-cmd @davidwilsonbest89-afk
 /go.mod @boucheriechefimane-cmd @davidwilsonbest89-afk
 /go.sum @boucheriechefimane-cmd @davidwilsonbest89-afk
-/release/ @boucheriechefimane-cmd @davidwilsonbest89-afk
-/dist/ @boucheriechefimane-cmd @davidwilsonbest89-afk
+/release/ @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud
+/dist/ @boucheriechefimane-cmd @davidwilsonbest89-afk @hajarbenmlih91-cloud

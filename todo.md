@@ -43,3 +43,10 @@
 - [x] Rattacher l’environnement GitHub protégé `production-release` au seul job de publication après `provenance → verify → build`.
 - [x] Documenter les réglages ruleset obligatoires : revue Code Owners, auteur distinct du dernier push, approbations obsolètes, absence de bypass et tags `v*` restreints.
 - [x] Vérifier le delta, scanner les changements et les versionner sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.
+
+# Revue renforcée des changements de release sensibles
+
+- [x] Confirmer la relectrice indépendante réelle : `@hajarbenmlih91-cloud`.
+- [x] Étendre la politique CODEOWNERS des chemins critiques à la relectrice indépendante, sans remplacer les rôles Sécurité et Release.
+- [x] Documenter la règle distante requise : deux approbations, Code Owners, dernier push approuvé par une autre personne et zéro bypass.
+- [x] Vérifier la cohérence, scanner le delta et versionner le lot sans modifier le RC ni les gates publics. Contrôles locaux, test API Go 1.25.13, format Git et scan Gitleaks du delta réussis.
