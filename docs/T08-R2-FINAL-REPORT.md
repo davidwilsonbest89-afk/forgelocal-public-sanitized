@@ -91,13 +91,19 @@ La race précédemment identifiée entre `cancelSession` et `begin.func1` est fe
 pointeur heap dédié.
 
 **SECURITY SCAN:** Gitleaks 8.18.4 `detect --no-git --source <snapshot 5 fichiers Go>` :
-JSON `[]`, zéro détection, exit 0. Le delta git T08 (9 fichiers) ne contient aucun chemin RC
+JSON `[]`, zéro détection, exit 0. Le delta git T08 ne contient aucun chemin RC
 et aucune valeur de secret ; la preuve `gitleaks-t08-snap.json` est dans l'archive.
 Pas d'introduction d'identifiants proxy, cookie, chemin absolu, valeur de coffre ni détail runtime.
+Commande canonique effectivement exécutée : `go test -count=1 -race -timeout 180s -v ./internal/launch`
+(la spécification `T08_CONCURRENCY_SPEC.md` a été harmonisée au chemin réel `./internal/launch` dans le commit `e10a48c`).
 
-**EVIDENCE:** archive `t08-r2.zip` — SHA-256 :
-`9c904b1ef520d0828b8d9591ad0e6f795b9176d4fa22e57dffbf2e8e01fca335` ;
-contenu vérifié : `unzip -t` sans erreur, `sha256sum -c SHA256SUMS` 10/10 OK après extraction ;
+**EVIDENCE:** archive `t08-r2.zip` (clôture documentaire post-audit). Le rapport annonce ici
+les empreintes des fichiers sources et du log de preuves, vérifiables par
+`sha256sum -c SHA256SUMS` après extraction. L'empreinte du ZIP lui-même étant auto-référentielle
+(elle changerait à chaque réédition du rapport inclus dans l'archive), elle n'est pas annoncée
+dans le rapport : elle doit être calculée par le relecteur sur le fichier livré, puis rapprochée
+de la livraison par un hash externe (par exemple un commentaire redacted dans l'Issue de revue).
+Le contenu a été vérifié : `unzip -t` sans erreur, `sha256sum -c SHA256SUMS` 11/11 OK après extraction ;
 inclus : 5 sources Go, `T08_CONCURRENCY_SPEC.md`, `test-out.log` (-race -v complet),
 `gitleaks-t08-snap.json` (`[]`), `source-info.txt` (commit `99a22f5106ebf0cef27e46c551757de8355e5cad`,
 baseline `31a51e948e5975af4726db78c26b5da4a72e47c3`, branche `forgelocal-product-v0.3`,
@@ -119,7 +125,10 @@ dans le registre des composants externes).
 
 **CURRENT STATUS:** `🟢 COMPLET` pour le périmètre T08 (toutes les preuves T08 exigées sont
 présentes : tests + négatifs + concurrence, `-race` propre, `go vet` propre, Gitleaks propre,
-`git diff --check` propre, archive + manifeste + hashes, commit publié).
+`git diff --check` propre, archive + manifeste + hashes, commits publiés `99a22f5`, `0e6a95f`, `e10a48c`).
+Le code produit n'a pas été modifié depuis la clôture fonctionnelle (`99a22f5`) : seules des
+corrections documentaires (harmonisation du chemin canonique et preuve de cleanup bornée) ont
+été apportées en réponse à l'audit de la relectrice indépendante.
 Statuts inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, pilote suspendu,
 cinq gates publics actifs, aucun composant Camoufox intégré ni exécuté.
 
