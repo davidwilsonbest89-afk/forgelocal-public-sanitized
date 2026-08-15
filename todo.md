@@ -123,8 +123,8 @@
 
 # T07 — Provenance des modules Camoflox candidats
 
-- [ ] T07-1 : inventorier les modules Camoflox candidats et leurs sources sans importer, exécuter ni porter de code.
-- [ ] T07-2 : vérifier pour chaque candidat les droits, licence, propriétaire, révision exacte, hash, dépendances et décision de périmètre.
-- [ ] T07-3 : compléter le registre machine-readable et produire une SBOM de provenance sans secret ni donnée de runtime.
-- [ ] T07-4 : exécuter et documenter les contrôles PROV-01 à PROV-07, y compris les refus `unknown` et `denied`.
-- [ ] T07-5 : produire une archive de preuves T07 redacted et portable pour audit indépendant ; ne pas commencer T08.
+- [x] T07-1 : inventorier les modules Camoflox candidats et leurs sources sans importer, exécuter ni porter de code.
+- [x] T07-2 : vérifier pour chaque candidat les droits, licence, propriétaire, révision exacte, hash, dépendances et décision de périmètre ; résultat `PARTIAL/BLOCKED` consigné sans exception.
+- [x] T07-3 : compléter le registre machine-readable et produire une SBOM de provenance sans secret ni donnée de runtime.
+- [x] T07-4 : exécuter et documenter les contrôles PROV-01 à PROV-07, y compris les refus `unknown` et `denied`.
+- [x] T07-5 : produire une archive de preuves T07 redacted et portable pour audit indépendant ; ne pas commencer T08.
