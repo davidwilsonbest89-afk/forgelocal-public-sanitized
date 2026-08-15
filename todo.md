@@ -128,3 +128,11 @@
 - [x] T07-3 : compléter le registre machine-readable et produire une SBOM de provenance sans secret ni donnée de runtime.
 - [x] T07-4 : exécuter et documenter les contrôles PROV-01 à PROV-07, y compris les refus `unknown` et `denied`.
 - [x] T07-5 : produire une archive de preuves T07 redacted et portable pour audit indépendant ; ne pas commencer T08.
+
+# T07-R — Remédiation de preuve et de sécurité (T08 interdit)
+
+- [ ] T07-R1 : consigner la chaîne de liaison vérifiable `révision privée attestée → hash du snapshot étudié → décision de portage/réimplémentation/écarter → futur commit ForgeLocal → tests`, sans source privée ni clé dans Git.
+- [ ] T07-R2 : obtenir ou référencer sous contrôle d’accès une preuve indépendante de propriété/droits, une licence racine ou un accord attesté et les notices tierces applicables.
+- [ ] T07-R3 : soumettre l’alerte redacted de `tests/smoke.test.js:24` à un mainteneur et une relectrice indépendante ; conserver `UNKNOWN` et le blocage tant qu’aucune décision `REAL_SECRET` ou `FALSE_POSITIVE` n’est prouvée.
+- [ ] T07-R4 : si une décision `FALSE_POSITIVE` est produite, exiger un snapshot candidat nouveau, redacted, rescané et hashé ; si `REAL_SECRET`, exiger révocation/rotation avant toute nouvelle preuve.
+- [ ] T07-R5 : reconstruire une archive T07 redacted avec registre, CI, SBOM ciblée, scans et manifeste portable, puis demander une revue indépendante ; ne pas commencer T08 avant `PROV-01`, `PROV-04` et `PROV-06` à `PASS`.

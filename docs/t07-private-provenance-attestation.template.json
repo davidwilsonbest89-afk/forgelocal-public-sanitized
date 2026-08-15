@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "purpose": "T07 private provenance linkage template; no secret, source archive or credential belongs in this file",
+  "status": "pending_external_evidence",
+  "candidate": {
+    "display_name": "Camoflox private archive",
+    "archive_sha256": "dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
+    "private_evidence_reference": "PRIVATE-RIGHTS-CAMOFLOX-001"
+  },
+  "source_revision": {
+    "evidence_status": "pending",
+    "private_repository_or_attestation_id": "<required-non-secret-identifier>",
+    "revision_kind": "private_commit|immutable_snapshot",
+    "revision_identifier": "<required-exact-revision>",
+    "snapshot_sha256": "<required-sha256-matching-studied-content>",
+    "independent_review_reference": "<required-private-review-reference>"
+  },
+  "rights_and_license": {
+    "evidence_status": "pending",
+    "rights_holder_or_authorized_grantor": "<required-controlled-identifier>",
+    "rights_scope": {
+      "internal_use": "<required-yes-or-no>",
+      "modification": "<required-yes-or-no>",
+      "redistribution": "<required-yes-or-no>",
+      "third_party_obligations_reference": "<required-private-or-public-reference>"
+    },
+    "license_or_agreement_reference": "<required-non-secret-reference>",
+    "notices_reference": "<required-non-secret-reference>"
+  },
+  "security_triage": {
+    "ticket_id": "T07-CAMOFLOX-GEN-API-001",
+    "location": "tests/smoke.test.js:24",
+    "secret_value_recorded_here": false,
+    "maintainer_decision": "pending",
+    "independent_reviewer_decision": "pending",
+    "allowed_decisions": ["REAL_SECRET", "FALSE_POSITIVE", "UNKNOWN"],
+    "required_remediation_for_real_secret": "revocation_or_rotation_confirmation",
+    "required_remediation_for_false_positive": "new_redacted_snapshot_rescan_and_hash"
+  },
+  "future_module_decision": {
+    "status": "not_authorized",
+    "one_module_only": true,
+    "module_path": null,
+    "module_sha256": null,
+    "decision": "pending",
+    "allowed_decisions": ["porter", "reimplementer", "ecarter"]
+  },
+  "constraints": {
+    "no_private_source_in_git": true,
+    "no_credentials_in_git": true,
+    "t08_authorized": false,
+    "requires_prov_01_04_06_pass": true
+  }
+}
