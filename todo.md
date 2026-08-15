@@ -64,3 +64,9 @@
 - [x] Formaliser les deux approbatrices requises : Release `@davidwilsonbest89-afk` et indépendante `@hajarbenmlih91-cloud`.
 - [x] Mettre à jour la procédure mainteneur et le contrôle versionné de l’environnement déclaré dans le workflow.
 - [x] Vérifier, scanner et versionner sans modifier le RC ni les gates publics ; conserver la configuration GitHub effective comme preuve distante PENDING. Contrôles locaux, test API Go 1.25.13 et format Git réussis avant scan final.
+
+# Dépôt ForgeLocal administré par le propriétaire
+
+- [x] Vérifier que l’identité GitHub active est `@boucheriechefimane-cmd` et que le nom privé `IPcache` est disponible.
+- [x] Créer le dépôt privé `IPcache`, préserver `upstream` BrowseForge et rattacher `origin` au dépôt administré.
+- [x] Vérifier les remotes et l’absence de publication de release ; documenter les réglages d’administration GitHub restants. La branche produit est publiée, sans tag ni release.
