@@ -237,3 +237,9 @@ Tauri devient envisageable seulement après stabilisation de l’API et du dashb
 | R12 | `docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json` |
 
 > Ce cahier des charges est un document de pilotage. Il ne remplace pas les validateurs machine-readable de release et ne peut pas à lui seul lever un gate de publication.
+
+## Addendum de version (2026-08-15)
+
+Ce cahier (`FL-CDC-1.0-20260814`) est **supersédé par la version 3.9.7** (`FL-CDC-3.9.7-20260815`, document `docs/CAHIER_DES_CHARGES_v3_9_7.md`, SHA-256 `58de4650bd14d71fe774ba75ccb9d2b8cb2468a85ee8f4e85d6313b784a145b8`). En cas de conflit, `v3.9.7` prévaut pour le développement actuel ; le prompt source exact est `PROMPT_FORGELOCAL_IMPLEMENTATION_REAL_v3.9.7.md` et l’addendum produit `v3.9.1`.
+
+Les statuts de release restent inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, pilote BACK-01 suspendu, cinq gates publics en attente. Depuis le 2026-08-15, le statut Camoufox/Camoflox est `T07_PROVENANCE_APPROVED_FOR_SELECTIVE_GO_REIMPLEMENTATION` : seule une réimplémentation Go sélective d’un module hashé à la fois est autorisée, le premier module étant `lib/concurrency.js` (T08). La vision camoufox « candidat non lançable » reste pleinement applicable jusqu’à qualification indépendante séparée.

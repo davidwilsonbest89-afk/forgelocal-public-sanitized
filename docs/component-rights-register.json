@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0",
-  "registry_id": "FL-COMP-RIGHTS-20260814",
+  "schema_version": "1.1",
+  "registry_id": "FL-COMP-RIGHTS-20260814-R1",
   "canonical": true,
   "human_view": "docs/COMPONENT_RIGHTS_REGISTER.md",
   "policy": {
@@ -45,8 +45,8 @@
       "source": "private archive camoflox-FINAL.zip",
       "source_revision": "sha256:dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2",
       "rights_status": "authorized",
-      "decision": "qualification-provenance-t07",
-      "integration_state": "provenance-qualification-blocked",
+      "decision": "reimplementer-selective",
+      "integration_state": "t08-concurrency-in-progress",
       "scope": ["internal-use", "modification"],
       "dependency_inventory_ref": ["docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json", "docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json"],
       "excluded_material": ["Node/Electron control plane", "browser runtime", "queue", "locks", "ports", "runtime lifecycle", "unreviewed dependencies"],
@@ -59,23 +59,53 @@
         "source_commit_status": "unknown-blocking",
         "root_license": null,
         "root_license_status": "absent-blocking",
-        "scan_status": "unknown-blocking",
+        "scan_status": "false-positive-confirmed-rescanned",
         "scan_rule_id": "generic-api-key",
         "scan_location_redacted": "tests/smoke.test.js:24",
         "sbom_ref": "docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json",
         "dependency_inventory_ref": "docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json",
+        "t07_status": "T07_PROVENANCE_APPROVED_FOR_SELECTIVE_GO_REIMPLEMENTATION",
+        "t07_decision_id": "T07-DECISION-20260815-001",
+        "t07_decision_archive_sha256": "a10087c8b112949797ffd9f270693f8ddddc399234e445167c3126ad040041c3",
+        "t07_decision_date": "2026-08-15",
+        "chain_t07_r1": "camoflox-source.zip sha256:dcf668d463bccd9a3469a0dcb909f447c4d7672f3322ab4680a004b3ee4851c2 → files hashed per module → reimplementer decision (register, before code) → future ForgeLocal commit → tests",
+        "attestation": "ATT-T07R-CAMOFLOX-001",
+        "independent_reviews": ["REV-T07R-2026-001", "REV-T07R-2026-002"],
+        "independent_review_final": "REVIEW_ACCEPTED_FOR_T07_DECISION",
+        "redacted_snapshot_sha256": "b8e71d3b2fdad98de8346c8063aa438caa0c1b0578a71528feab8fe5852326cf",
+        "triage_maintainer": "FALSE_POSITIVE",
+        "triage_independent": "FALSE_POSITIVE",
+        "triage_concordant": true,
+        "distribution": "not_granted",
+        "future_distribution": "blocked",
+        "prov_status": {
+          "PROV-01": "PASS",
+          "PROV-02": "PASS",
+          "PROV-03": "PASS",
+          "PROV-04": "PASS",
+          "PROV-05": "DEFERRED_TO_T08",
+          "PROV-06": "PASS",
+          "PROV-07": "DEFERRED_TO_T08"
+        },
         "candidate_modules": [
           {
             "source_path": "lib/concurrency.js",
             "sha256": "b055a3e1c995c3dddca054aa90ce2c0b8ff660237bf96b1f2b168dd5a36085d7",
             "t07_decision": "conceptual-review-only",
-            "integration_state": "not-integrated"
+            "integration_state": "not-integrated",
+            "t08_decision": "reimplementer",
+            "t08_role": "concurrency-contract-inspiration-only",
+            "t08_registered_before_code": true,
+            "t08_reason": "contrat de concurrence Go pur (queue bornée, limite globale, lock par profil, timeout, contexte) : premier module autorisé par T07-DECISION-20260815-001",
+            "t08_explicit_exclusions": ["Node/Electron source", "runtime launch", "browser lifecycle", "ports", "profile launch queue runtime", "process isolation", "Camoufox activation"]
           },
           {
             "source_path": "lib/global-action-limiter.js",
             "sha256": "a5f6838be5731ff64836f013b3b27fa280874de43afd817829de92052a487d05",
             "t07_decision": "conceptual-review-only",
-            "integration_state": "not-integrated"
+            "integration_state": "not-integrated",
+            "t08_decision": "deferred",
+            "t08_note": "aucune décision reimplementer prise ; T08 interdit hors périmètre concurrence"
           }
         ],
         "out_of_scope_modules": [
@@ -169,5 +199,21 @@
     }
   ],
   "controlled_paths": ["internal", "cmd", "scripts", "extension", "assets", "runtime", "third_party", "vendor"],
-  "forbidden_markers": ["gologin"]
+  "forbidden_markers": ["gologin"],
+  "release_gates": {
+    "PUBLIC_RELEASE_BLOCKED": true,
+    "SCAN_BLOCKED_UNKNOWN": true,
+    "BACK01_PILOT": "suspended",
+    "public_gates_remaining": 5,
+    "t08_constraints": {
+      "direct_import": "forbidden",
+      "node_electron_backend": "forbidden",
+      "launchable_runtime": "forbidden",
+      "t08_out_of_concurrency_scope": "forbidden",
+      "ui_writes": "forbidden",
+      "proxy": "forbidden",
+      "backup": "forbidden",
+      "restore": "forbidden"
+    }
+  }
 }
