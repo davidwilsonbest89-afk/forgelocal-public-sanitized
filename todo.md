@@ -104,4 +104,4 @@
 - [x] Intégrer le refus hors loopback au résultat global T05 avec un statut `PASS` et une référence explicite à ses deux preuves autoritatives.
 - [x] Archiver et hacher les sorties T00 : `git status --short`, `git diff --check` et diff des chemins RC gelés.
 - [x] Exécuter le run corrigé, vérifier `19/19` hashes après extraction et scanner le delta ainsi que l’archive extraite.
-- [ ] Versionner exclusivement les scripts et documents de preuve, sans démarrer T06, modifier le RC, créer un tag ou une release.
+- [x] Versionner exclusivement les scripts et documents de preuve, sans démarrer T06, modifier le RC, créer un tag ou une release.
