@@ -29,7 +29,7 @@ dashboard_pid=""
 
 stop_dashboard() {
   if [[ -n "$dashboard_pid" ]]; then
-    kill "$dashboard_pid" 2>/dev/null || true
+    kill -TERM -- "-$dashboard_pid" 2>/dev/null || true
     wait "$dashboard_pid" 2>/dev/null || true
     dashboard_pid=""
   fi
@@ -87,7 +87,7 @@ export GOTOOLCHAIN=local
 ) >"$EVIDENCE_DIR/T06_3_dashboard_build.log" 2>&1
 (
   cd "$DASHBOARD_DIR"
-  pnpm exec vite --host 127.0.0.1 --port "$DASHBOARD_PORT"
+  exec setsid pnpm exec vite --host 127.0.0.1 --port "$DASHBOARD_PORT"
 ) >"$EVIDENCE_DIR/T06_3_dashboard_server.log" 2>&1 &
 dashboard_pid="$!"
 for _ in $(seq 1 60); do
