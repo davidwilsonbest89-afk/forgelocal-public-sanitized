@@ -8,6 +8,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 GO="${FORGELOCAL_GO:-/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.13.linux-amd64/bin/go}"
 GITLEAKS="${FORGELOCAL_GITLEAKS:-/tmp/forgelocal-gitleaks-8.18.4-verified/gitleaks}"
 TARGET_COMMIT="${FORGELOCAL_TARGET_COMMIT:-$(git -C "$ROOT" rev-parse HEAD)}"
+BASELINE_COMMIT="${FORGELOCAL_T06_BASELINE_COMMIT:?FORGELOCAL_T06_BASELINE_COMMIT requis}"
 DASHBOARD_DIR="${DASHBOARD_DIR:?DASHBOARD_DIR requis}"
 DASHBOARD_PORT="${FORGELOCAL_T06_DASHBOARD_PORT:-3012}"
 EVIDENCE_DIR="${T06_EVIDENCE_DIR:?T06_EVIDENCE_DIR requis}"
@@ -52,17 +53,17 @@ done
 
 mkdir -p "$EVIDENCE_DIR"
 git -C "$ROOT" worktree add --detach "$SOURCE_DIR" "$TARGET_COMMIT" >/dev/null
-parent_commit="$(git -C "$SOURCE_DIR" rev-parse "${TARGET_COMMIT}^")"
+git -C "$SOURCE_DIR" merge-base --is-ancestor "$BASELINE_COMMIT" "$TARGET_COMMIT"
 
 git -C "$SOURCE_DIR" status --short >"$EVIDENCE_DIR/T00_git_status_short.log"
 git -C "$SOURCE_DIR" diff --check >"$EVIDENCE_DIR/T00_git_diff_check.log"
-git -C "$SOURCE_DIR" diff --name-only "$parent_commit" "$TARGET_COMMIT" -- release/back01-minimal dist/back01-minimal >"$EVIDENCE_DIR/T00_rc_paths.log"
+git -C "$SOURCE_DIR" diff --name-only "$BASELINE_COMMIT" "$TARGET_COMMIT" -- release/back01-minimal dist/back01-minimal >"$EVIDENCE_DIR/T00_rc_paths.log"
 test ! -s "$EVIDENCE_DIR/T00_git_status_short.log"
 test ! -s "$EVIDENCE_DIR/T00_git_diff_check.log"
 test ! -s "$EVIDENCE_DIR/T00_rc_paths.log"
 {
   printf 'target_commit=%s\n' "$TARGET_COMMIT"
-  printf 'target_parent=%s\n' "$parent_commit"
+  printf 'baseline_commit=%s\n' "$BASELINE_COMMIT"
   printf 'dashboard_commit=%s\n' "$(git -C "$DASHBOARD_DIR" rev-parse HEAD)"
   printf 'go_version=%s\n' "$(GOTOOLCHAIN=local "$GO" version)"
   printf 'node_version=%s\n' "$(node --version)"
@@ -70,7 +71,7 @@ test ! -s "$EVIDENCE_DIR/T00_rc_paths.log"
   printf 'gitleaks_version=%s\n' "$("$GITLEAKS" version)"
   printf 'git_status_short=PASS bytes=%s\n' "$(wc -c < "$EVIDENCE_DIR/T00_git_status_short.log")"
   printf 'git_diff_check=PASS bytes=%s\n' "$(wc -c < "$EVIDENCE_DIR/T00_git_diff_check.log")"
-  printf 'rc_paths_against_target_parent=PASS changed_files=%s\n' "$(wc -l < "$EVIDENCE_DIR/T00_rc_paths.log")"
+  printf 'rc_paths_against_t06_baseline=PASS changed_files=%s\n' "$(wc -l < "$EVIDENCE_DIR/T00_rc_paths.log")"
 } >"$EVIDENCE_DIR/T00_environment.log"
 
 export GOTOOLCHAIN=local
@@ -100,7 +101,7 @@ curl --fail --silent --noproxy '*' "http://127.0.0.1:${DASHBOARD_PORT}" >/dev/nu
 ) >"$EVIDENCE_DIR/T06_3_playwright.log" 2>&1
 stop_dashboard
 
-"$GITLEAKS" detect --source "$SOURCE_DIR" --log-opts="${parent_commit}..${TARGET_COMMIT}" --redact --report-format json --report-path "$EVIDENCE_DIR/T06_4_gitleaks_delta_redacted.json" >"$EVIDENCE_DIR/T06_4_gitleaks_delta.log" 2>&1
+"$GITLEAKS" detect --source "$SOURCE_DIR" --log-opts="${BASELINE_COMMIT}..${TARGET_COMMIT}" --redact --report-format json --report-path "$EVIDENCE_DIR/T06_4_gitleaks_delta_redacted.json" >"$EVIDENCE_DIR/T06_4_gitleaks_delta.log" 2>&1
 if grep -R -Eiq 't06-sentinel|/t06/private|T06-RUNTIME-HASH|authorization:|bearer[[:space:]]+[a-f0-9]{16,}' "$EVIDENCE_DIR"; then
   printf 'Une sentinelle ou un motif d’autorisation interdit est présent dans les preuves T06.\n' >&2
   exit 1
