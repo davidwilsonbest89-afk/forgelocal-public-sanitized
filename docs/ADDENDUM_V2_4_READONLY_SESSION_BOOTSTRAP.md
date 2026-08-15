@@ -12,6 +12,12 @@ Le dashboard ForgeLocal ne reçoit jamais le Bearer principal du Core. Il consom
 
 Le Core reste lié au loopback. Les deux étapes du bootstrap vérifient que la requête provient de `127.0.0.0/8` ou `::1`; aucune origine distante ne peut donc émettre ni échanger un code de bootstrap.
 
+Pour une validation de ce contrat sans qualifier, télécharger, activer ni lancer de navigateur, le Core peut être démarré avec `serve --no-runtime`. Ce mode désactive tous les runtimes dans l’instance locale concernée et autorise uniquement l’observation des surfaces API ; il ne constitue pas une qualification de Camoufox.
+
+Le Core n’accepte les prévols CORS que depuis une origine HTTP(S) de loopback (`localhost`, `127.0.0.0/8` ou `::1`). L’origine exacte est renvoyée dans `Access-Control-Allow-Origin`; une origine distante reçoit `403 CORS_ORIGIN_NOT_ALLOWED`. Cette règle permet au dashboard local de faire le bootstrap sans étendre la surface d’accès à une prévisualisation ou à un hôte distant.
+
+Le dashboard local cible le Core sur `http://<hôte-loopback>:19280` par défaut, même s’il est servi par son propre port de développement. Une valeur de compilation `VITE_CORE_BASE_URL` n’est honorée que si elle est une URL HTTP loopback valide ; toute valeur distante ou malformée est ignorée.
+
 ## 2. Parcours contractuel
 
 | Étape | Acteur | Route ou commande | Garanties |

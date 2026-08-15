@@ -39,12 +39,16 @@ func main() {
 
 // serveFlags holds CLI overrides for serve mode
 type serveFlags struct {
-	baseDir      string
-	configPath   string
-	host         string
-	port         string
-	noSandbox    bool
-	noOpen       bool
+	baseDir    string
+	configPath string
+	host       string
+	port       string
+	noSandbox  bool
+	noOpen     bool
+	// noRuntime is reserved for read-only diagnostics and contract validation.
+	// It prevents runtime bootstrap and permits the Core to start with every
+	// browser runtime disabled; it does not qualify or launch any runtime.
+	noRuntime    bool
 	pauseOnError bool
 }
 
@@ -172,6 +176,18 @@ func runServer(flags *serveFlags) {
 		if flags.noSandbox {
 			cfg.NoSandbox = true
 		}
+		if flags.noRuntime {
+			if cfg.Runtimes == nil {
+				cfg.Runtimes = map[string]config.RuntimeConfig{}
+			}
+			for _, id := range []string{"camoufox", "cloakbrowser", browser.BrowseForgeChromiumRuntimeID} {
+				raw := cfg.Runtimes[id]
+				disabled := false
+				raw.Enabled = &disabled
+				raw.BinaryPath = ""
+				cfg.Runtimes[id] = raw
+			}
+		}
 	}
 
 	// Setup logger (stdout in Docker, file otherwise)
@@ -298,7 +314,7 @@ func runServer(flags *serveFlags) {
 		raw, ok := cfg.Runtimes[id]
 		return ok && raw.Enabled != nil && *raw.Enabled && raw.BinaryPath != ""
 	}
-	if !defaultReady(cfg.DefaultRuntimeID) {
+	if !flags.noRuntime && !defaultReady(cfg.DefaultRuntimeID) {
 		for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "camoufox", "cloakbrowser"} {
 			if defaultReady(id) {
 				cfg.DefaultRuntimeID = id
@@ -307,7 +323,7 @@ func runServer(flags *serveFlags) {
 			}
 		}
 	}
-	if !defaultReady(cfg.DefaultRuntimeID) {
+	if !flags.noRuntime && !defaultReady(cfg.DefaultRuntimeID) {
 		exitServerError(flags, "No supported browser runtime is available for %s/%s", runtime.GOOS, runtime.GOARCH)
 	}
 	if configChanged {
@@ -389,16 +405,15 @@ func runServer(flags *serveFlags) {
 			resp, err := http.Get("http://127.0.0.1:" + cfg.Port + "/api/status")
 			if err == nil && resp.StatusCode == 200 {
 				resp.Body.Close()
-				token := cfg.APIToken
 				fmt.Println("╔══════════════════════════════════════════╗")
 				fmt.Printf("║        🦊 BrowseForge v%-16s║\n", Version)
 				fmt.Println("╠══════════════════════════════════════════╣")
 				fmt.Printf("║  Dashboard: http://%s:%-12s║\n", cfg.Host, cfg.Port)
 				fmt.Printf("║  MCP:       http://%s:%-12s║\n", cfg.Host, cfg.Port+"/mcp")
-				fmt.Printf("║  Token:     %s...  ║\n", tokenPreview(token))
+				fmt.Println("║  Local authentication: configured        ║")
 				fmt.Println("╚══════════════════════════════════════════╝")
 				if cfg.Host == "127.0.0.1" && !flags.noOpen {
-					openBrowser(fmt.Sprintf("http://127.0.0.1:%s#%s", cfg.Port, token))
+					openBrowser(fmt.Sprintf("http://127.0.0.1:%s", cfg.Port))
 				}
 				return
 			}

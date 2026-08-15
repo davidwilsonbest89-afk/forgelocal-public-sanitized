@@ -79,3 +79,12 @@
 - [x] Définir les contrats préparatoires Groupes, Runtimes, Proxys, Backups et Audit avec états redacted et sans secrets.
 - [x] Poursuivre uniquement le triage documentaire de `generic-api-key` hors RC, sans relancer SystemVault ni reconstruire une release. Les documents existants confirment le statut `SCAN_BLOCKED_UNKNOWN` et ne permettent aucune action sur le candidat.
 - [x] Exécuter les contrôles, scanner le delta et publier les commits produit isolés vers IPcache. Tests Core/CLI, contrôle CI, vérification dashboard, format Git et scans Gitleaks des deux deltas réussis.
+
+# BOOTSTRAP-RO-01 — validation locale lecture seule
+
+- [x] Préparer une matrice d’acceptation assainie et un harness local sans impression de code ni de token.
+- [x] Prouver : code usage unique, échange loopback autorisé, refus de seconde utilisation et refus après expiration.
+- [x] Prouver les refus d’origine, host et port non autorisés.
+- [x] Prouver : aucune persistance navigateur, aucun Bearer dans URL, logs, analytics ou exports, invalidation immédiate après `401`/expiration.
+- [x] Prouver les lectures redacted `health`, `dashboard/summary` et `profiles`, sans aucune écriture ni opération runtime.
+- [x] Exécuter les tests ciblés et `go test -race`, scanner les preuves, versionner la décision `BOOTSTRAP_RO_APPROVED`.

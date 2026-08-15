@@ -44,7 +44,7 @@ type doctorReport struct {
 const usageText = `BrowseForge CLI
 
 Usage:
-  BrowseForge [global flags] serve [--host HOST] [--port PORT] [--no-sandbox] [--no-open]
+	  BrowseForge [global flags] serve [--host HOST] [--port PORT] [--no-sandbox] [--no-open] [--no-runtime]
   BrowseForge [global flags] mcp-stdio
   BrowseForge --mcp
   BrowseForge [global flags] init [--force] [--json]
@@ -233,6 +233,7 @@ func parseServeFlags(args []string, global cliGlobal) (*serveFlags, error) {
 	fs.StringVar(&f.port, "port", "", "API port")
 	fs.BoolVar(&f.noSandbox, "no-sandbox", false, "Disable Chromium sandbox")
 	fs.BoolVar(&f.noOpen, "no-open", false, "Do not open the dashboard browser")
+	fs.BoolVar(&f.noRuntime, "no-runtime", false, "Disable all browser runtimes; intended for read-only diagnostics")
 	if err := fs.Parse(args); err != nil {
 		return nil, err
 	}

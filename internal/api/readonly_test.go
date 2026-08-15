@@ -78,6 +78,32 @@ func TestRequestIDMiddlewareRejectsMalformedInput(t *testing.T) {
 	}
 }
 
+func TestCORSAllowsOnlyLoopbackDashboardOrigins(t *testing.T) {
+	h := corsLocal(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }))
+
+	allowed := httptest.NewRecorder()
+	allowedRequest := httptest.NewRequest(http.MethodOptions, "/api/v1/readonly/session/bootstrap", nil)
+	allowedRequest.Header.Set("Origin", "http://127.0.0.1:3000")
+	h.ServeHTTP(allowed, allowedRequest)
+	if allowed.Code != http.StatusNoContent {
+		t.Fatalf("loopback preflight status=%d, want %d", allowed.Code, http.StatusNoContent)
+	}
+	if got := allowed.Header().Get("Access-Control-Allow-Origin"); got != "http://127.0.0.1:3000" {
+		t.Fatalf("loopback allow origin=%q", got)
+	}
+
+	denied := httptest.NewRecorder()
+	deniedRequest := httptest.NewRequest(http.MethodOptions, "/api/v1/readonly/session/bootstrap", nil)
+	deniedRequest.Header.Set("Origin", "https://dashboard.example.invalid")
+	h.ServeHTTP(denied, deniedRequest)
+	if denied.Code != http.StatusForbidden {
+		t.Fatalf("remote preflight status=%d, want %d", denied.Code, http.StatusForbidden)
+	}
+	if got := denied.Header().Get("Access-Control-Allow-Origin"); got != "" {
+		t.Fatalf("remote origin unexpectedly allowed: %q", got)
+	}
+}
+
 func TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID(t *testing.T) {
 	store, err := profile.NewStore(t.TempDir())
 	if err != nil {
