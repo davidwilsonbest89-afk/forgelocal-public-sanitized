@@ -120,20 +120,33 @@ dans le registre des composants externes).
 - aucune garantie d'empreinte navigateur / fingerprint (hors périmètre) ;
 - le stress test est borné à 120 goroutines / 24 profils ; des environnements très chargés
   devront être re-qualifiés avant intégration réelle ;
-- le jalon ne débloque pas T09 : l'autorisation T09 reste soumise à votre validation unique
-  finale de T08.
+- le jalon ne débloque pas T09 : T09 ne peut commencer qu'après l'autorisation explicite
+  de la relectrice indépendante (et reste par ailleurs conditionné au déblocage T07 par les
+  preuves externes).
 
-**CURRENT STATUS:** `🟢 COMPLET` pour le périmètre T08 (toutes les preuves T08 exigées sont
-présentes : tests + négatifs + concurrence, `-race` propre, `go vet` propre, Gitleaks propre,
-`git diff --check` propre, archive + manifeste + hashes, commits publiés `99a22f5`, `0e6a95f`, `e10a48c`).
+**CURRENT STATUS:** `🟢 COMPLET` pour le périmètre T08, avec validation indépendante enregistrée.
+Preuves exigées présentes : tests + négatifs + concurrence, `-race` propre, `go vet` propre,
+Gitleaks propre, `git diff --check` propre, archive + manifeste + hashes, commits publiés
+`99a22f5`, `0e6a95f`, `e10a48c` (et `903f6bd` pour la version finale du rapport).
 Le code produit n'a pas été modifié depuis la clôture fonctionnelle (`99a22f5`) : seules des
 corrections documentaires (harmonisation du chemin canonique et preuve de cleanup bornée) ont
 été apportées en réponse à l'audit de la relectrice indépendante.
+
+> **Décision du 16 août 2026 : `T08_APPROVED_VERIFIABLE_LOCAL`.**
+> La validation porte uniquement sur le périmètre T08 Core Reliability : archive réelle intègre
+> (SHA-256 `4918ac9876545904c822ff72fb3dfcc4f8b12f6fb2214452e308a39b4c0719bb`),
+> manifeste 11/11, 13 tests PASS sous `-race`, `TestConcurrentStress` présent et exécuté,
+> cleanup borné documenté, chemin `internal/launch` harmonisé. Le runtime n'est pas qualifié,
+> Camoufox n'est pas lançable, T09 n'est pas terminé et la release n'est pas autorisée.
+
 Statuts inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, pilote suspendu,
 cinq gates publics actifs, aucun composant Camoufox intégré ni exécuté.
 
-**NEXT ALLOWED STEP:** attente de votre validation unique finale de T08. Après validation,
-le prochain jalon autorisé est **T09** (portage/runtime réel) si et seulement si T07 est
-débloqué par les preuves externes indépendantes ; sinon, l'attente contrôlée T07-R continue.
-Aucune mutation UI, aucun lancement de runtime, aucun proxy, aucun backup/restauration et
-aucun changement RC ne sont autorisés avant ces validations.
+**NEXT ALLOWED STEP:** le code T08 est conservé en l'état (commit `99a22f5`, docs `0e6a95f`/
+`e10a48c`/`903f6bd`). **T09 (portage/runtime réel) reste interdit** jusqu'à l'autorisation
+explicite de la relectrice indépendante, et reste par ailleurs conditionné au déblocage T07
+par les preuves externes indépendantes (registres Camoufox toujours
+`provenance-qualification-blocked`). En attendant : aucune mutation UI, aucun lancement de
+runtime, aucun proxy, aucun backup/restauration et aucun changement RC. Statuts release
+inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, pilote suspendu, cinq gates
+publics actifs.

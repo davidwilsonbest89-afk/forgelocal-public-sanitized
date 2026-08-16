@@ -814,7 +814,7 @@ Un code de sortie `0` sans test sélectionné, une sortie `skip`, un scan sans p
 | T05 | `BOOTSTRAP-RO-01` dashboard local → Core local | **`BOOTSTRAP_RO_APPROVED_VERIFIABLE`** |
 | T06 | Groupes/Runtimes lecture seule depuis SQLite/Core | **`T06_APPROVED_VERIFIABLE`** |
 | T07 | Provenance Camoflox | **Clôturé pour réimplémentation Go sélective** |
-| T08 | Fiabilité Core : queue/locks/cleanup/recovery | **Autorisé, périmètre restreint** |
+| T08 | Fiabilité Core : queue/locks/cleanup/recovery | **`T08_APPROVED_VERIFIABLE_LOCAL`** (16/08/2026 — archive `t08-r2-final.zip` SHA-256 `4918ac9876545904c822ff72fb3dfcc4f8b12f6fb2214452e308a39b4c0719bb`, 13/13 tests sous `-race`, zéro data race, `go vet` propre, Gitleaks JSON `[]`, cleanup borné documenté ; périmètre strict sans runtime/Camoufox/Proxy/UI/release — **ne qualifie pas T09**) |
 | T09 | Écritures profils, audit et `correlation_id` | À venir |
 | T10 | Import, proxies, backup/restauration intégrés | À venir |
 | T11 | Fuzzing, hardening, charge et endurance | À venir |
