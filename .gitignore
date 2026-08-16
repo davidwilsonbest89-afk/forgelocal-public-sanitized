@@ -35,3 +35,11 @@ Thumbs.db
 
 # Reproducible local evidence is inspected and hashed locally, never committed.
 evidence/local/
+# Preuves antérieures T06/T07 déjà archivées (non suivies par Git)
+launch.test
+validation_ac_back01_runtime.out
+validation_runtime_chromium.out
+validation_systemvault_native.err
+validation_systemvault_native.json
+validation_back01_integration/
+evidence/t06-working/
