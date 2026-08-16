@@ -91,6 +91,8 @@ func OpenSQLite(path string) (*SQLiteStore, error) {
 }
 func (s *SQLiteStore) Close() error { return s.db.Close() }
 func now() string                   { return time.Now().UTC().Format(time.RFC3339Nano) }
+// DB returns the underlying database handle for read-only audit writers.
+func (s *SQLiteStore) DB() *sql.DB { return s.db }
 func (s *SQLiteStore) audit(tx *sql.Tx, event, id, correlation string, details map[string]string) error {
 	data, err := json.Marshal(details)
 	if err != nil {
@@ -241,5 +243,4 @@ func (s *SQLiteStore) FailRestore(id, code string) error {
 	_, err := s.db.Exec(`UPDATE restore_operations SET state='failed',updated_at=?,error_code=? WHERE id=?`, now(), code, id)
 	return err
 }
-func (s *SQLiteStore) DB() *sql.DB    { return s.db }
 func (s *SQLiteStore) String() string { return fmt.Sprintf("SQLiteStore(%p)", s.db) }

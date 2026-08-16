@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"forgelocal/internal/secrets"
@@ -20,6 +21,7 @@ type Profile struct {
 	Identity        *IdentityConfig `json:"identity,omitempty"`
 	Group           string          `json:"group,omitempty"`
 	Tags            []string        `json:"tags,omitempty"`
+	LifecycleState  LifecycleState  `json:"lifecycle_state,omitempty"`
 	CreatedAt       time.Time       `json:"created_at"`
 	LastUsed        time.Time       `json:"last_used"`
 	Fingerprint     map[string]any  `json:"fingerprint,omitempty"`
@@ -53,7 +55,16 @@ type Store struct {
 	mu       sync.RWMutex
 	profiles map[string]*Profile
 	vault    secrets.SecretVault
+	// locksByName is the uniqueness budget for profile names, guarded by mu.
+	locksByName map[string]string // name -> owning profile id
+	// perProfile is the lazy per-profile isolation map used by T09 write
+	// operations. Its own mu is held only long enough to look up or register
+	// a mutex; the per-profile mutex is held only by a single writer at a time.
+	perProfileMu sync.Mutex
+	perProfile   map[string]*sync.Mutex
 }
+
+const maxProfileTags = 20
 
 func NewStore(dir string, vaults ...secrets.SecretVault) (*Store, error) {
 	var vault secrets.SecretVault
@@ -67,7 +78,7 @@ func NewStore(dir string, vaults ...secrets.SecretVault) (*Store, error) {
 	if err := os.Chmod(dir, 0700); err != nil {
 		return nil, err
 	}
-	s := &Store{dir: dir, profiles: make(map[string]*Profile), vault: vault}
+	s := &Store{dir: dir, profiles: make(map[string]*Profile), vault: vault, locksByName: make(map[string]string), perProfile: make(map[string]*sync.Mutex)}
 	return s, s.loadAll()
 }
 
@@ -93,6 +104,7 @@ func (s *Store) loadAll() error {
 		if err := validateV2Profile(&p, path); err != nil {
 			return err
 		}
+		s.locksByName[normalizeName(p.Name)] = p.ID
 		if err := s.restoreProxySecret(&p); err != nil {
 			return err
 		}
@@ -111,8 +123,14 @@ func (s *Store) Create(p *Profile) error {
 		}
 		p.ID = id
 	}
+	if _, exists := s.profiles[p.ID]; exists {
+		return ErrDuplicateID
+	}
 	if err := validateV2Profile(p, "new profile"); err != nil {
 		return err
+	}
+	if owner, taken := s.locksByName[normalizeName(p.Name)]; taken && owner != p.ID {
+		return ErrDuplicateName
 	}
 	p.CreatedAt = time.Now()
 	p.LastUsed = p.CreatedAt
@@ -150,6 +168,7 @@ func (s *Store) Create(p *Profile) error {
 		return err
 	}
 	s.profiles[p.ID] = p
+	s.locksByName[normalizeName(p.Name)] = p.ID
 	return nil
 }
 
@@ -159,6 +178,67 @@ func validateV2Profile(p *Profile, source string) error {
 	}
 	if p.RuntimeID == "" {
 		return fmt.Errorf("%s uses v1 profile schema: runtime_id is required; run BrowseForge migrate profiles --from v1 --to v2", source)
+	}
+	return validateProfileInputs(p)
+}
+
+// validateProfileInputs is the T09 input contract: names must be short
+// printable strings, lifecycle state must belong to the enum, proxy fields
+// must agree with each other, and the tag budget is enforced.
+func validateProfileInputs(p *Profile) error {
+	if !validName(p.Name) {
+		return ErrInvalidName
+	}
+	if p.LifecycleState == "" {
+		p.LifecycleState = LifecycleActive
+	}
+	if !ValidLifecycleState(p.LifecycleState) {
+		return fmt.Errorf("%w: %s", ErrInvalidName, p.LifecycleState)
+	}
+	if err := validateProxyShape(p); err != nil {
+		return err
+	}
+	if len(p.Tags) > maxProfileTags {
+		return ErrTooManyTags
+	}
+	for _, tag := range p.Tags {
+		if !validName(tag) {
+			return ErrInvalidTag
+		}
+	}
+	return nil
+}
+
+func validName(value string) bool {
+	if value == "" || len(value) > 128 {
+		return false
+	}
+	for _, c := range value {
+		if c < 0x20 || c == 0x7f {
+			return false
+		}
+	}
+	return true
+}
+
+// validateProxyShape enforces the proxy consistency rule: an empty proxy is
+// allowed, and any configured proxy must carry a port in the 1..65535 range
+// with a type that is either empty (protocol-agnostic) or one of the
+// supported transports. This preserves the pre-T09 historical contract where
+// a host and port without an explicit type remain valid.
+func validateProxyShape(p *Profile) error {
+	if p.Proxy == nil {
+		return nil
+	}
+	px := p.Proxy
+	if px.Type == "" && px.Host == "" && px.Port == 0 {
+		return nil
+	}
+	if px.Type != "" && px.Type != "http" && px.Type != "socks5" {
+		return ErrInvalidProxy
+	}
+	if px.Port < 0 || px.Port > 65535 {
+		return ErrInvalidProxy
 	}
 	return nil
 }
@@ -189,18 +269,77 @@ func (s *Store) List(group, tag string) []*Profile {
 	return result
 }
 
+// WithProfile isolates a single writer per profile. The returned unlock
+// function releases the per-profile lock and MUST be deferred by the caller.
+// Concurrent mutations on the same profile serialize through this lock, and
+// each lock acquisition is bounded by the isolation budget.
+func (s *Store) WithProfile(id string, budget time.Duration) (unlock func(), err error) {
+	s.perProfileMu.Lock()
+	mu, known := s.perProfile[id]
+	if !known {
+		mu = &sync.Mutex{}
+		s.perProfile[id] = mu
+	}
+	s.perProfileMu.Unlock()
+
+	done := make(chan struct{})
+	go func() {
+		mu.Lock()
+		close(done)
+	}()
+	select {
+	case <-done:
+		return func() { mu.Unlock() }, nil
+	case <-time.After(budget):
+		return nil, ErrLocked
+	}
+}
+
+const perProfileIsolationBudget = 5 * time.Second
+
 func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 	s.mu.Lock()
-	defer s.mu.Unlock()
 	p, ok := s.profiles[id]
 	if !ok {
+		s.mu.Unlock()
 		return nil, fmt.Errorf("profile not found: %s", id)
+	}
+	// Archive prevents any further mutation; updates to an archived profile are
+	// refused so the dormant state stays observable.
+	if p.LifecycleState == LifecycleArchived || p.LifecycleState == LifecycleQuarantined {
+		s.mu.Unlock()
+		return nil, ErrNotArchived // routed to INVALID_LIFECYCLE by the handler mapper
+	}
+	s.mu.Unlock()
+
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		return nil, err
+	}
+	defer unlock()
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	// Re-check existence and lifecycle after acquiring the store lock.
+	if p, ok = s.profiles[id]; !ok {
+		return nil, ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		return nil, ErrNotArchived
 	}
 	// Only the currently loaded profile may retain its own vault reference;
 	// client-provided update payloads must not select another profile's secret.
 	hadProxySecret := p.Proxy != nil && p.Proxy.SecretRef == proxySecretRef(p.ID)
-
-	data, err := json.Marshal(p)
+	// Keep the normalized name before the merge so the uniqueness check
+	// compares the new name against the profile's actual previous name,
+	// not against the already-merged value.
+	previousName := normalizeName(p.Name)
+	// Mutations are applied to a disposable copy first: an invalid or
+	// refused update must never leave the in-memory profile half-changed,
+	// since callers hold the store pointer and read it directly.
+	tmp := new(Profile)
+	*tmp = *p
+	data, err := json.Marshal(tmp)
 	if err != nil {
 		return nil, err
 	}
@@ -215,27 +354,37 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := json.Unmarshal(merged, p); err != nil {
+	if err := json.Unmarshal(merged, tmp); err != nil {
 		return nil, err
 	}
-	if err := validateV2Profile(p, "updated profile"); err != nil {
+	if err := validateV2Profile(tmp, "updated profile"); err != nil {
 		return nil, err
 	}
-	if p.Proxy != nil {
-		if p.Proxy.Username != "" || p.Proxy.Password != "" || hadProxySecret {
-			p.Proxy.SecretRef = proxySecretRef(p.ID)
+	// A name change must keep the global name budget.
+	if name, ok := updates["name"].(string); ok && normalizeName(name) != previousName {
+		if owner, taken := s.locksByName[normalizeName(name)]; taken && owner != id {
+			return nil, ErrDuplicateName
+		}
+		s.locksByName[normalizeName(name)] = id
+		delete(s.locksByName, previousName)
+	}
+	if tmp.Proxy != nil {
+		if tmp.Proxy.Username != "" || tmp.Proxy.Password != "" || hadProxySecret {
+			tmp.Proxy.SecretRef = proxySecretRef(id)
 		} else {
-			p.Proxy.SecretRef = ""
+			tmp.Proxy.SecretRef = ""
 		}
 	}
-	if err := s.restoreProxySecret(p); err != nil {
+	if err := s.restoreProxySecret(tmp); err != nil {
 		return nil, err
 	}
-	if err := s.persistProxySecret(p); err != nil {
+	if err := s.persistProxySecret(tmp); err != nil {
 		return nil, err
 	}
-
-	return p, s.save(p)
+	tmp.ID = id
+	tmp.ProfileDir = p.ProfileDir
+	s.profiles[id] = tmp
+	return tmp, s.save(tmp)
 
 }
 
@@ -252,8 +401,149 @@ func (s *Store) Delete(id string) error {
 	if p.Proxy != nil && p.Proxy.SecretRef != "" && s.vault != nil {
 		_ = s.vault.DeleteSecret(p.Proxy.SecretRef)
 	}
+	if locksByNameName, taken := s.locksByName[normalizeName(p.Name)]; taken && locksByNameName == id {
+		delete(s.locksByName, normalizeName(p.Name))
+	}
 	delete(s.profiles, id)
+	delete(s.perProfile, id)
 	return nil
+}
+
+// normalizeName folds a profile name to its uniqueness key (lower-cased,
+// trimmed). Comparison remains case-insensitive, matching the SQLite NOCASE
+// collation used for the names table column.
+func normalizeName(value string) string {
+	return strings.ToLower(strings.TrimSpace(value))
+}
+
+// ArchiveProfile transitions an active profile to the archived state. Archived
+// profiles keep their directory and vault entry but refuse mutations.
+func (s *Store) ArchiveProfile(id string) error {
+	s.mu.Lock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.Unlock()
+		return ErrNotFound
+	}
+	if p.LifecycleState == LifecycleArchived {
+		s.mu.Unlock()
+		return nil // idempotent: the profile is already in the target state
+	}
+	if p.LifecycleState == LifecycleQuarantined {
+		s.mu.Unlock()
+		return ErrQuarantined
+	}
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		s.mu.Unlock()
+		return err
+	}
+	// The per-profile lock must serialize every write for this profile; the
+	// store lock cannot be released before the archive state is flushed.
+	defer s.mu.Unlock()
+	defer unlock()
+	p.LifecycleState = LifecycleArchived
+	return s.save(p)
+}
+
+// ReopenProfile returns an archived profile to the active state. Quarantined
+// profiles refuse reopening: only an external authority can lift quarantine.
+func (s *Store) ReopenProfile(id string) error {
+	s.mu.Lock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.Unlock()
+		return ErrNotFound
+	}
+	if p.LifecycleState == LifecycleActive {
+		s.mu.Unlock()
+		return ErrAlreadyArchived // reused sentinel meaning "not archived"; mapper routes to INVALID_LIFECYCLE
+	}
+	if p.LifecycleState == LifecycleQuarantined {
+		s.mu.Unlock()
+		return ErrQuarantined
+	}
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		s.mu.Unlock()
+		return err
+	}
+	defer s.mu.Unlock()
+	defer unlock()
+	p.LifecycleState = LifecycleActive
+	return s.save(p)
+}
+
+// AddProfileTag assigns a tag to a profile. The tag budget and active state
+// are enforced; quarantined or archived profiles refuse new tags.
+func (s *Store) AddProfileTag(id string, tag string) error {
+	if !validName(tag) {
+		return ErrInvalidTag
+	}
+	s.mu.Lock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.Unlock()
+		return ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		s.mu.Unlock()
+		return fmt.Errorf("%w: profile is %s", ErrNotArchived, p.LifecycleState)
+	}
+	if contains(p.Tags, tag) {
+		s.mu.Unlock()
+		return ErrAlreadyTagged
+	}
+	if len(p.Tags) >= maxProfileTags {
+		s.mu.Unlock()
+		return ErrTooManyTags
+	}
+	p.Tags = append(p.Tags, tag)
+	if err := s.save(p); err != nil {
+		s.mu.Unlock()
+		return err
+	}
+	s.mu.Unlock()
+	return nil
+}
+
+// RemoveProfileTag unassigns a tag from a profile. Archived profiles refuse
+// tag changes so their observable state stays stable.
+func (s *Store) RemoveProfileTag(id string, tag string) error {
+	if !validName(tag) {
+		return ErrInvalidTag
+	}
+	s.mu.Lock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.Unlock()
+		return ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		s.mu.Unlock()
+		return fmt.Errorf("%w: profile is %s", ErrNotArchived, p.LifecycleState)
+	}
+	if !contains(p.Tags, tag) {
+		s.mu.Unlock()
+		return ErrTagNotAssigned
+	}
+	p.Tags = removeTag(p.Tags, tag)
+	if err := s.save(p); err != nil {
+		s.mu.Unlock()
+		return err
+	}
+	s.mu.Unlock()
+	return nil
+}
+
+func removeTag(tags []string, tag string) []string {
+	kept := make([]string, 0, len(tags))
+	for _, t := range tags {
+		if t != tag {
+			kept = append(kept, t)
+		}
+	}
+	return kept
 }
 
 func (s *Store) Duplicate(id string) (*Profile, error) {
@@ -389,4 +679,27 @@ func (s *Store) restoreProxySecret(p *Profile) error {
 	p.Proxy.Username = values.Username
 	p.Proxy.Password = values.Password
 	return nil
+}
+
+// quarantineForTest is a controlled test-only transition; production leaves
+// quarantine to the external authority flow and never exposes this path.
+func (s *Store) quarantineForTest(id string) error {
+	s.mu.Lock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.Unlock()
+		return ErrNotFound
+	}
+	p.LifecycleState = LifecycleQuarantined
+	s.mu.Unlock()
+	return nil
+}
+
+// ArchiveQuarantinedForTest moves a profile into the quarantined state for
+// cross-package write-contract tests. Production quarantines only through
+// the external authority flow; this helper exists so the API layer can
+// assert that quarantined profiles refuse reopen without reusing the
+// package-private helper.
+func (s *Store) ArchiveQuarantinedForTest(id string) error {
+	return s.quarantineForTest(id)
 }

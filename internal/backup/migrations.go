@@ -11,6 +11,7 @@ const (
 	productSchemaVersion          = 2
 	proxyIndexesSchemaVersion     = 3
 	operationJournalSchemaVersion = 4
+	profileWritesSchemaVersion    = 5
 )
 
 //go:embed migrations/0001_back01.sql
@@ -25,6 +26,9 @@ var proxyIndexesSchemaSQL string
 //go:embed migrations/0004_profile_import_operations_started.sql
 var operationJournalSchemaSQL string
 
+//go:embed migrations/0005_t09_profile_writes.sql
+var profileWritesSchemaSQL string
+
 type schemaMigration struct {
 	version int
 	sql     string
@@ -35,6 +39,7 @@ var schemaMigrations = []schemaMigration{
 	{version: productSchemaVersion, sql: productSchemaSQL},
 	{version: proxyIndexesSchemaVersion, sql: proxyIndexesSchemaSQL},
 	{version: operationJournalSchemaVersion, sql: operationJournalSchemaSQL},
+	{version: profileWritesSchemaVersion, sql: profileWritesSchemaSQL},
 }
 
 // Migrate applies the Core SQLite schema in order. Each migration and its ledger

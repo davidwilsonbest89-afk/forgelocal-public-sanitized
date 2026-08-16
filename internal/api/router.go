@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/subtle"
 	"encoding/hex"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log/slog"
@@ -31,18 +32,19 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if len(groupStores) > 0 {
 		groupStore = groupStores[0]
 	}
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil)
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil, nil)
 }
 
 // NewRouterWithReadOnlyCatalog extends only the v1 readonly projections with
 // the Core-owned SQLite catalog. Existing business routes remain unchanged.
-func NewRouterWithReadOnlyCatalog(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog) (*chi.Mux, error) {
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog)
+func NewRouterWithReadOnlyCatalog(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB) (*chi.Mux, error) {
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB)
 }
 
-func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog) (*chi.Mux, error) {
+func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(correlationMiddleware)
 	r.Use(middleware.Recoverer)
 	r.Use(corsLocal)
 	r.Use(requestIDMiddleware)
@@ -58,7 +60,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker()}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB)}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -74,6 +76,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Get("/api/profiles/{id}", h.getProfile)
 		r.Put("/api/profiles/{id}", h.updateProfile)
 		r.Delete("/api/profiles/{id}", h.deleteProfile)
+r.Post("/api/profiles/{id}/archive", h.archiveProfile)
+r.Post("/api/profiles/{id}/reopen", h.reopenProfile)
+r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
+r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
 		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
 		r.Post("/api/profiles/{id}/export", h.exportProfile)
 		r.Post("/api/profiles/import", h.importProfile)
@@ -131,6 +137,7 @@ type handler struct {
 	token            string
 	backupSvc        *backup.Service
 	readonlyCatalog  backup.ReadOnlyCatalog
+	auditSink        *writeAuditSink
 	readonlySessions *readOnlySessionBroker
 }
 
@@ -215,7 +222,7 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := h.store.Create(&p); err != nil {
-		writeError(w, http.StatusInternalServerError, "CREATE_FAILED", err.Error())
+		writeProfileError(w, err, correlationIDFrom(r.Context()))
 		return
 	}
 	writeJSON(w, http.StatusCreated, map[string]any{"data": p})
@@ -302,7 +309,7 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 	}
 	p, err := h.store.Update(chi.URLParam(r, "id"), updates)
 	if err != nil {
-		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+		writeProfileError(w, err, correlationIDFrom(r.Context()))
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{"data": p})

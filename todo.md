@@ -673,3 +673,19 @@ Reste à faire :
 - [ ] Attente preuves externes T07-R : à réception, rapport de complétude brut uniquement (pas de décision T07_APPROVED ni autorisation T09).
 - [ ] T09 exige : (1) T07 débloqué par revue indépendante avec registre mis à jour, et (2) autorisation explicite d'ouverture T09.
 - Statuts : PUBLIC_RELEASE_BLOCKED, SCAN_BLOCKED_UNKNOWN, pilote suspendu, cinq gates publics actifs.
+
+# T09 — Profile Writes (ouvert 16/08/2026, instruction utilisateur validée)
+- Autorisé sans attestation/certificat intermédiaire ; rapport unique 16 champs à la fin.
+- Contrat : création/modification/archivage profils via Core Go unique ; React = client ; zéro écriture SQLite par le dashboard.
+- Backend : correlation_id, audit redacted (SQLite audit_events), archivage/réouverture, isolation par profil, unicité, tags/groupes, validation serveur renforcée.
+- Preuves : tests unitaires + intégration SQLite/migrations + négatifs + concurrence -race, go vet, gosec, build tsc + prod, Playwright E2E, Gitleaks/Gosec, git diff --check, RC inchangés.
+- Interdit : T10, runtime/Camoufox/proxy réel/backup-restore UI, release. PUBLIC_RELEASE_BLOCKED inchangé.
+- [ ] Migration 0005_t09_profile_writes.sql (index lifecycle_state)
+- [ ] internal/api/audit.go — WriteAudit sink SQLite + redaction
+- [ ] internal/api/correlation.go — middleware CorrelationID
+- [ ] internal/profile/store.go — LifecycleState, mutex par profil, archive/reopen, validation, sentinel errors
+- [ ] internal/api/profiles_write.go — handlers archive/reopen/tags + validation renforcée
+- [ ] internal/api/router.go — routes + middleware
+- [ ] Tests profile (13+) et API (12+) sous -race, go vet, gosec
+- [ ] Frontend : client écriture mémoire seule + UI création/édition/archivage/réouverture/tags
+- [ ] Playwright E2E, archive de preuves, rapport 16 champs, commit

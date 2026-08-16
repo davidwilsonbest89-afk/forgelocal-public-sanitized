@@ -34,3 +34,19 @@ Le projet public [Camoufox][1] est distinct de l’archive privée Camoflox : il
 ## Références
 
 [1]: https://github.com/daijro/camoufox "Dépôt public officiel Camoufox"
+
+## Addendum de clôture T07 (2026-08-15)
+
+Le présent document décrit l’audit passif initial de provenance. Il est **clôturé** par la décision d’audit `T07-DECISION-20260815-001` au statut `T07_PROVENANCE_APPROVED_FOR_SELECTIVE_GO_REIMPLEMENTATION` : l’attestation du détenteur `ATT-T07R-CAMOFLOX-001`, les revues indépendantes `REV-T07R-2026-001` et `REV-T07R-2026-002` (décision finale `REVIEW_ACCEPTED_FOR_T07_DECISION`), le snapshot redacted rescanné à zéro détection et le triage concordant `FALSE_POSITIVE` ont levé les blocages documentés ci-dessus.
+
+| Contrôle | Statut initial (document historique) | Statut après décision T07 |
+|---|---|---|
+| `PROV-01` Rights | PARTIEL | **PASS** — snapshot privé attesté |
+| `PROV-02` Dependency | PARTIEL | **PASS** — inventaire/SBOM ; nouvelle dépendance = revue avant ajout |
+| `PROV-03` Architecture | PASS | **PASS** maintenu |
+| `PROV-04` Security | BLOQUÉ sur `generic-api-key` | **PASS** — triage concordant `FALSE_POSITIVE`, snapshot redacted rescanné |
+| `PROV-05` Reliability | NON ÉVALUÉ | **DIFFÉRÉ À T08** |
+| `PROV-06` SBOM | PARTIEL | **PASS** — distribution future soumise à revue de droits |
+| `PROV-07` Product | NON ÉVALUÉ | **DIFFÉRÉ À T08** |
+
+La source camoflox reste **non admissible à l’import direct, à l’exécution Node/Electron et à la distribution** (`redistribution=not_granted`, `future_distribution=blocked`) ; seule une réimplémentation Go sélective d’un module hashé à la fois est autorisée. Le premier module autorisé est `lib/concurrency.js` (T08) ; tous les autres modules restent bloqués jusqu’à une décision et des tests propres.

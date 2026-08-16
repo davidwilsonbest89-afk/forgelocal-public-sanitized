@@ -360,7 +360,7 @@ func runServer(flags *serveFlags) {
 	}
 	defer backupDB.Close()
 
-	router, err := api.NewRouterWithReadOnlyCatalog(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore, backupDB)
+	router, err := api.NewRouterWithReadOnlyCatalog(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore, backupDB, backupDB.DB())
 	if err != nil {
 		slog.Error("api router", "error", err)
 		exitServerError(flags, "API router error: %v", err)
