@@ -1,0 +1,334 @@
+{
+	"Golang errors": {},
+	"Issues": [
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "389: \t// Dial internal Playwright WebSocket\n390: \tbackendConn, err := net.Dial(\"tcp\", internalAddr)\n391: \tif err != nil {\n",
+			"line": "390",
+			"column": "30",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "79",
+				"url": "https://cwe.mitre.org/data/definitions/79.html"
+			},
+			"rule_id": "G705",
+			"details": "XSS via taint analysis",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "232: \tw.Header().Set(\"Content-Type\", \"image/png\")\n233: \tw.Write(data)\n234: }\n",
+			"line": "233",
+			"column": "9",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/router.go",
+			"code": "349: \tpath := dataDir + \"/.api-token\"\n350: \tif data, err := os.ReadFile(path); err == nil {\n351: \t\ttoken := strings.TrimSpace(string(data))\n",
+			"line": "350",
+			"column": "18",
+			"nosec": false,
+			"suppressions": null,
+			"autofix": "Consider using os.Root to scope file access under a fixed root (Go \u003e=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal."
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/artifacts.go",
+			"code": "30: \t}\n31: \tfile, err := os.Open(path)\n32: \tif err != nil {\n",
+			"line": "31",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null,
+			"autofix": "Consider using os.Root to scope file access under a fixed root (Go \u003e=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal."
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/router.go",
+			"code": "345: \t}\n346: \tif err := os.MkdirAll(dataDir, 0755); err != nil {\n347: \t\treturn \"\", fmt.Errorf(\"create token directory: %w\", err)\n",
+			"line": "346",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "427: \tgo func() { io.Copy(backendConn, clientBuf); done \u003c- struct{}{} }()\n428: \tgo func() { io.Copy(clientConn, backendBuf); done \u003c- struct{}{} }()\n429: \t\u003c-done\n",
+			"line": "428",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "426: \tdone := make(chan struct{}, 2)\n427: \tgo func() { io.Copy(backendConn, clientBuf); done \u003c- struct{}{} }()\n428: \tgo func() { io.Copy(clientConn, backendBuf); done \u003c- struct{}{} }()\n",
+			"line": "427",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "422: \t}\n423: \tclientConn.Write([]byte(\"\\r\\n\"))\n424: \n",
+			"line": "423",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "419: \t\tfor _, val := range vals {\n420: \t\t\tclientConn.Write([]byte(key + \": \" + val + \"\\r\\n\"))\n421: \t\t}\n",
+			"line": "420",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "416: \t// Forward ALL response headers to client (critical: includes Sec-WebSocket-Extensions)\n417: \tclientConn.Write([]byte(\"HTTP/1.1 101 Switching Protocols\\r\\n\"))\n418: \tfor key, vals := range resp.Header {\n",
+			"line": "417",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "411: \tif err != nil || resp.StatusCode != 101 {\n412: \t\tclientConn.Write([]byte(\"HTTP/1.1 502 Bad Gateway\\r\\n\\r\\n\"))\n413: \t\treturn\n",
+			"line": "412",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "405: \tupgradeReq += \"\\r\\n\"\n406: \tbackendConn.Write([]byte(upgradeReq))\n407: \n",
+			"line": "406",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "391: \tif err != nil {\n392: \t\tclientConn.Write([]byte(\"HTTP/1.1 502 Bad Gateway\\r\\n\\r\\n\"))\n393: \t\treturn\n",
+			"line": "392",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/sessions.go",
+			"code": "232: \tw.Header().Set(\"Content-Type\", \"image/png\")\n233: \tw.Write(data)\n234: }\n",
+			"line": "233",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/router.go",
+			"code": "312: \tw.WriteHeader(status)\n313: \tjson.NewEncoder(w).Encode(v)\n314: }\n",
+			"line": "313",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/dashboard.go",
+			"code": "12: \tw.Header().Set(\"Content-Type\", \"text/html; charset=utf-8\")\n13: \tw.Write(dashboardHTML)\n14: }\n",
+			"line": "13",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/backup.go",
+			"code": "125: \t\tprofileData, err = io.ReadAll(io.LimitReader(rc, maxProfileJSONBytes+1))\n126: \t\trc.Close()\n127: \t\tif err != nil {\n",
+			"line": "126",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/backup.go",
+			"code": "85: \t\t}\n86: \t\tpart.Close()\n87: \t}\n",
+			"line": "86",
+			"column": "3",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/backup.go",
+			"code": "78: \t\t\tif filePart != nil {\n79: \t\t\t\tpart.Close()\n80: \t\t\t\twriteError(w, http.StatusBadRequest, \"INVALID_FORM\", \"multiple file fields\")\n",
+			"line": "79",
+			"column": "5",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/ForgeLocal/internal/api/backup.go",
+			"code": "72: \t\tif parts \u003e= maxProfileImportParts {\n73: \t\t\tpart.Close()\n74: \t\t\twriteError(w, http.StatusBadRequest, \"INVALID_FORM\", \"too many multipart fields\")\n",
+			"line": "73",
+			"column": "4",
+			"nosec": false,
+			"suppressions": null
+		}
+	],
+	"Stats": {
+		"files": 14,
+		"lines": 2923,
+		"nosec": 10,
+		"found": 20
+	},
+	"GosecVersion": "dev"
+}

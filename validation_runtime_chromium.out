@@ -1,0 +1,10 @@
+wrapper=/usr/bin/chromium
+runtime=/etc/chromium
+Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS
+package=chromium
+version=151.0.7922.71-1xtradeb1.2404.1
+source=
+architecture=amd64
+36cbbb620daeb933ae7861de07fcff05b5e1f7527303b5992459b8aa6707b845  /usr/bin/chromium
+binary=/usr/lib/chromium/chromium
+ad69c6632131d3a8b0e7395c3bb36d05cad6a2c650ecfa7ebe2e8dcba955c2de  /usr/lib/chromium/chromium

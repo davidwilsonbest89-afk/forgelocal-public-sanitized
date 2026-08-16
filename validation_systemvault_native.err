@@ -1,0 +1,6 @@
+dbus-daemon[63425]: [session uid=1000 pid=63425] Activating service name='org.freedesktop.secrets' requested by ':1.1' (uid=1000 pid=63426 comm="/tmp/systemvault-doctor" label="kernel")
+dbus-daemon[63425]: [session uid=1000 pid=63425] Successfully activated service 'org.freedesktop.secrets'
+system-vault matrix failed
+** Message: 00:42:36.717: couldn't connect to dbus session bus: Unexpected lack of content trying to read a line
+** Message: 00:42:36.718: couldn't connect to dbus session bus: Could not connect: No such file or directory
+** Message: 00:42:36.718: couldn't connect to dbus session bus: Could not connect: No such file or directory

@@ -1,0 +1,16 @@
+
+Running 3 tests using 1 worker
+
+[1A[2K[1/3] tests/t06-groups-runtimes.spec.ts:125:1 › T06-3 — affiche les catalogues Core redacted sans mutation ni sentinelle
+[1A[2Ktests/t06-groups-runtimes.spec.ts:125:1 › T06-3 — affiche les catalogues Core redacted sans mutation ni sentinelle
+T06_CATALOGS: PASS groups=1 runtimes=1 sentinels=absent mutations=0
+
+[1A[2K[2/3] tests/t06-groups-runtimes.spec.ts:145:1 › T06-3 — rend les inventaires vides explicitement
+[1A[2Ktests/t06-groups-runtimes.spec.ts:145:1 › T06-3 — rend les inventaires vides explicitement
+T06_EMPTY_CATALOGS: PASS groups=0 runtimes=0
+
+[1A[2K[3/3] tests/t06-groups-runtimes.spec.ts:158:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
+[1A[2Ktests/t06-groups-runtimes.spec.ts:158:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
+T06_FORCED_401: PASS token=cleared ui=Core_non_connecte
+
+[1A[2K  3 passed (4.5s)

@@ -1,0 +1,23 @@
+Package: chromium
+Priority: optional
+Section: web
+Installed-Size: 315818
+Maintainer: XtraDeb Team <team@xtradeb.net>
+Architecture: amd64
+Version: 151.0.7922.108-1xtradeb1.2404.1
+Recommends: chromium-sandbox
+Suggests: chromium-l10n, chromium-shell, chromium-driver
+Provides: gnome-www-browser, www-browser
+Depends: libasound2t64 (>= 1.0.17), libatk-bridge2.0-0t64 (>= 2.5.3), libatk1.0-0t64 (>= 2.32.0), libatspi2.0-0t64 (>= 2.9.90), libc6 (>= 2.38), libcairo2 (>= 1.6.0), libcups2t64 (>= 1.7.0), libdav1d7 (>= 0.1.0), libdbus-1-3 (>= 1.9.14), libdouble-conversion3 (>= 2.0.0), libexpat1 (>= 2.1~beta3), libflac12t64 (>= 1.3.0), libfontconfig1 (>= 2.12.6), libfreetype6 (>= 2.11.1), libgbm1 (>= 21.1.0), libgcc-s1 (>= 4.2), libglib2.0-0t64 (>= 2.40.0), libharfbuzz-subset0 (>= 6.0.0), libharfbuzz0b (>= 5.1.0), libjpeg8 (>= 8c), liblcms2-2 (>= 2.2+git20110628), libminizip1t64, libnspr4 (>= 2:4.9-2~), libnss3 (>= 2:3.30), libopenh264-7 (>= 2.4.1+dfsg), libopenjp2-7 (>= 2.5.0), libopus0 (>= 1.1), libpango-1.0-0 (>= 1.14.0), libpulse0 (>= 0.99.1), libudev1 (>= 183), libx11-6, libxcb1 (>= 1.9.2), libxcomposite1 (>= 1:0.4.5), libxdamage1 (>= 1:1.1), libxext6, libxfixes3, libxkbcommon0 (>= 0.5.0), libxnvctrl0, libxrandr2, libzstd1 (>= 1.5.5), zlib1g (>= 1:1.2.11), libgtk-3-0t64 | xdg-desktop-portal-backend, chromium-common (= 151.0.7922.108-1xtradeb1.2404.1)
+Conflicts: libgl1-mesa-swx11, libnettle4, libsecret-1-0 (<< 0.18)
+Breaks: chromium-lwn4chrome (<= 1.0-2), chromium-tt-rss-notifier (<= 0.5.2-2)
+Filename: pool/main/c/chromium/chromium_151.0.7922.108-1xtradeb1.2404.1_amd64.deb
+Size: 93984652
+MD5sum: 1b0af33e81939b1365958fb1425e2bf9
+SHA1: 5ece8f71a3d66a1b661b6a380f2b406438a2bb45
+SHA256: 8bb8686eec56afddd29fb40371808b6117a60b9b1a4cdece791d2056f3f93948
+SHA512: e47f532245ac2d19ba2eabad8f54531b0fe6ff66cc38eca4e52f1ff41035bf650b6dad1b54af15dc813da4ccbb89c5b7eae05d2015d65873b940b3ba8ebe9209
+Description: web browser
+Description-md5: 3a7ed4512cf49e4fe53b4490bcc1060b
+Original-Maintainer: Debian Chromium Team <chromium@packages.debian.org>
+

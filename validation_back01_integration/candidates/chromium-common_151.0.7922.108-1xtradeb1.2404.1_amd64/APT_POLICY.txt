@@ -1,0 +1,7 @@
+chromium-common:
+  Installed: 151.0.7922.108-1xtradeb1.2404.1
+  Candidate: 151.0.7922.108-1xtradeb1.2404.1
+  Version table:
+ *** 151.0.7922.108-1xtradeb1.2404.1 500
+        500 http://ppa.launchpad.net/xtradeb/apps/ubuntu noble/main amd64 Packages
+        100 /var/lib/dpkg/status

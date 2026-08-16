@@ -1,0 +1,16 @@
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	(cached)
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	0.384s
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/browser	3.009s
+ok  	forgelocal/internal/config	(cached)
+ok  	forgelocal/internal/fingerprint	(cached)
+ok  	forgelocal/internal/groups	(cached)
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/mcp	(cached)
+ok  	forgelocal/internal/profile	(cached)
+ok  	forgelocal/internal/runtime	(cached)
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	(cached)
+ok  	forgelocal/internal/workflow	(cached)

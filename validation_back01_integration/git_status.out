@@ -1,0 +1,17 @@
+ [31mM[m cmd/server/main.go
+ [31mM[m internal/api/backup.go
+ [31mM[m internal/api/groups_test.go
+ [31mM[m internal/api/router.go
+ [31mM[m internal/backup/service.go
+ [31mM[m internal/backup/store.go
+ [31mM[m internal/browser/manager.go
+ [31mM[m internal/profile/store.go
+ [31mM[m internal/secrets/keyring.go
+[31m??[m internal/api/backup_v1.go
+[31m??[m internal/api/backup_v1_test.go
+[31m??[m internal/backup/bootstrap.go
+[31m??[m internal/browser/snapshot_gate_test.go
+[31m??[m internal/profile/backup_snapshot.go
+[31m??[m internal/profile/backup_snapshot_test.go
+[31m??[m internal/profile/store_secrets_test.go
+[31m??[m validation_back01_integration/

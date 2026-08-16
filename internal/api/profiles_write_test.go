@@ -12,6 +12,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -65,6 +66,7 @@ func testWriteRouter(t *testing.T) (http.Handler, *sql.DB, *profile.Store) {
 
 	r := chi.NewRouter()
 	r.Use(correlationMiddleware)
+	r.Use(h.requireLoopbackMiddleware)
 	r.Route("/api/profiles", func(r chi.Router) {
 		r.Post("/", h.createProfile)
 		r.Get("/{id}", h.getProfile)
@@ -96,12 +98,22 @@ func bytesReader(body string) *strings.Reader {
 	return strings.NewReader(body)
 }
 
+// newLoopbackRequest builds an httptest request whose RemoteAddr is on the
+// loopback interface: the write contract mounts requireLoopbackMiddleware, so
+// every mutation must originate locally, exactly as the browser dashboard
+// would when served from the same machine.
+func newLoopbackRequest(method, path string, body io.Reader) *http.Request {
+	req := httptest.NewRequest(method, path, body)
+	req.RemoteAddr = "127.0.0.1:0"
+	return req
+}
+
 // ---------------------------------------------------------------------------
 // createProfile helpers — the router-level contract for profile creation.
 
 func createTestProfile(t *testing.T, r http.Handler, name, runtimeID string) (id string) {
 	t.Helper()
-	req := httptest.NewRequest(http.MethodPost, "/api/profiles", bytesReader(
+	req := newLoopbackRequest(http.MethodPost, "/api/profiles", bytesReader(
 		fmt.Sprintf(`{"name":%q,"runtime_id":%q}`, name, runtimeID)))
 	req.Header.Set("Content-Type", "application/json")
 	rec := httptest.NewRecorder()
@@ -134,7 +146,7 @@ func createTestProfile(t *testing.T, r http.Handler, name, runtimeID string) (id
 func profileJSON(t *testing.T, r http.Handler, id string) []byte {
 	t.Helper()
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/profiles/"+id, nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodGet, "/api/profiles/"+id, nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("get %s: status %d body=%s", id, rec.Code, rec.Body.String())
 	}
@@ -149,7 +161,7 @@ func TestArchiveReopenLifecycleRoundTrip(t *testing.T) {
 	id := createTestProfile(t, r, "Life", "cloakbrowser")
 
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("archive: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -159,7 +171,7 @@ func TestArchiveReopenLifecycleRoundTrip(t *testing.T) {
 	checkAuditEvent(t, db, "profile.archived", id, rec.Header().Get(correlationHeader))
 
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/reopen", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/reopen", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("reopen: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -183,7 +195,7 @@ func TestArchiveQuarantinedStaysRefused(t *testing.T) {
 	}
 
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/reopen", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/reopen", nil))
 	if rec.Code == http.StatusOK {
 		t.Fatalf("reopen quarantined succeeded: %s", rec.Body.String())
 	}
@@ -196,7 +208,7 @@ func TestArchiveIdempotentAndMutationsRefusedAfterArchive(t *testing.T) {
 	id := createTestProfile(t, r, "Frozen", "cloakbrowser")
 
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("archive: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -204,14 +216,14 @@ func TestArchiveIdempotentAndMutationsRefusedAfterArchive(t *testing.T) {
 	// A second archive is accepted as idempotent: the target is already in
 	// the terminal state the caller asked for.
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("second archive: status %d body=%s", rec.Code, rec.Body.String())
 	}
 
 	// Archived profiles refuse writes and tag changes with an explicit code.
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/tags/t1", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/tags/t1", nil))
 	if rec.Code == http.StatusOK {
 		t.Fatalf("tag on archived succeeded: %s", rec.Body.String())
 	}
@@ -228,7 +240,7 @@ func TestTagAssignmentAndRemoval(t *testing.T) {
 	id := createTestProfile(t, r, "Tagged", "cloakbrowser")
 
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/tags/team-a", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/tags/team-a", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("add tag: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -256,7 +268,7 @@ func TestTagAssignmentAndRemoval(t *testing.T) {
 	_ = store // referenced to keep the import for lifecycle helpers
 
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodDelete, "/api/profiles/"+id+"/tags/team-a", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodDelete, "/api/profiles/"+id+"/tags/team-a", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("remove tag: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -283,13 +295,41 @@ func TestTagAssignmentAndRemoval(t *testing.T) {
 	}
 }
 
+func TestWriteMutationsRefusedOutsideLoopback(t *testing.T) {
+	r, _, _ := testWriteRouter(t)
+	id := createTestProfile(t, r, "Remote", "cloakbrowser")
+
+	// An authenticated request arriving from a non-loopback address must be
+	// refused even with a valid token: write endpoints stay local-only.
+	for _, endpoint := range []struct {
+		method, path, description string
+	}{
+		{http.MethodPost, "/api/profiles", "create profile"},
+		{http.MethodPut, "/api/profiles/" + id, "update profile"},
+		{http.MethodPost, "/api/profiles/" + id + "/archive", "archive profile"},
+		{http.MethodPost, "/api/profiles/" + id + "/reopen", "reopen profile"},
+		{http.MethodPost, "/api/profiles/" + id + "/tags/outside", "assign tag"},
+		{http.MethodDelete, "/api/profiles/" + id + "/tags/outside", "remove tag"},
+	} {
+		rec := httptest.NewRecorder()
+		req := httptest.NewRequest(endpoint.method, endpoint.path, bytesReader(`{"name":"Intruder","runtime_id":"cloakbrowser"}`))
+		req.Header.Set("Content-Type", "application/json")
+		req.RemoteAddr = "203.0.113.10:41237"
+		r.ServeHTTP(rec, req)
+		if rec.Code == http.StatusOK || rec.Code == http.StatusCreated {
+			t.Fatalf("%s accepted from %s: %s", endpoint.description, req.RemoteAddr, rec.Body.String())
+		}
+		assertErrorCode(t, rec, "LOOPBACK_REQUIRED")
+	}
+}
+
 func TestTagRejectionRules(t *testing.T) {
 	r, _, store := testWriteRouter(t)
 	id := createTestProfile(t, r, "Tags", "cloakbrowser")
 
 	// A valid tag over the router exercises the happy path of the URL contract.
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/tags/web-via-router", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/tags/web-via-router", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("valid tag rejected: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -309,7 +349,7 @@ func TestWriteCorrelationIdAlwaysPresent(t *testing.T) {
 	// POST the reopen of an already-active profile to exercise the failure
 	// path, which must still carry the correlation id.
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/archive", nil))
 	if rec.Code != http.StatusOK {
 		t.Fatalf("archive: status %d body=%s", rec.Code, rec.Body.String())
 	}
@@ -318,7 +358,7 @@ func TestWriteCorrelationIdAlwaysPresent(t *testing.T) {
 	}
 
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/unknown-id/reopen", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/unknown-id/reopen", nil))
 	if got := rec.Header().Get(correlationHeader); got == "" {
 		t.Error("error response missing correlation id")
 	}
@@ -333,12 +373,12 @@ func TestWriteContractErrorsAreMachineReadable(t *testing.T) {
 
 	// Unknown profile.
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/nonexistent/archive", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/nonexistent/archive", nil))
 	assertErrorCode(t, rec, "PROFILE_NOT_FOUND")
 
 	// Duplicate name through the router.
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles", bytesReader(
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles", bytesReader(
 		`{"name":"Readable","runtime_id":"cloakbrowser"}`)))
 	if rec.Code == http.StatusOK || rec.Code == http.StatusCreated {
 		t.Fatalf("duplicate name accepted: %s", rec.Body.String())
@@ -358,7 +398,7 @@ func TestAuditEventsAreRedacted(t *testing.T) {
 		t.Fatal(err)
 	}
 	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/tags/sec", nil))
+	r.ServeHTTP(rec, newLoopbackRequest(http.MethodPost, "/api/profiles/"+id+"/tags/sec", nil))
 	if rec.Code == http.StatusOK {
 		t.Fatalf("tag archived: %s", rec.Body.String())
 	}

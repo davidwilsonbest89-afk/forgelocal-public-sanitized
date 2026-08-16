@@ -69,6 +69,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 
 	r.Group(func(r chi.Router) {
 		r.Use(h.authMiddleware)
+		r.Use(h.requireLoopbackMiddleware)
 
 		r.Post("/api/profiles", h.createProfile)
 		r.Get("/api/runtimes", h.listRuntimes)

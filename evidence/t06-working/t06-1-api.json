@@ -1,0 +1,8 @@
+{"Time":"2026-08-15T13:01:07.187074727Z","Action":"start","Package":"forgelocal/internal/api"}
+{"Time":"2026-08-15T13:01:07.190198309Z","Action":"run","Package":"forgelocal/internal/api","Test":"TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted"}
+{"Time":"2026-08-15T13:01:07.190248844Z","Action":"output","Package":"forgelocal/internal/api","Test":"TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted","Output":"=== RUN   TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted\n"}
+{"Time":"2026-08-15T13:01:07.19033363Z","Action":"output","Package":"forgelocal/internal/api","Test":"TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted","Output":"--- PASS: TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted (0.00s)\n"}
+{"Time":"2026-08-15T13:01:07.190346579Z","Action":"pass","Package":"forgelocal/internal/api","Test":"TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted","Elapsed":0}
+{"Time":"2026-08-15T13:01:07.190349724Z","Action":"output","Package":"forgelocal/internal/api","Output":"PASS\n"}
+{"Time":"2026-08-15T13:01:07.190649627Z","Action":"output","Package":"forgelocal/internal/api","Output":"ok  \tforgelocal/internal/api\t0.003s\n"}
+{"Time":"2026-08-15T13:01:07.190669186Z","Action":"pass","Package":"forgelocal/internal/api","Elapsed":0.004}

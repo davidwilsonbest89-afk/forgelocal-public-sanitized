@@ -1,0 +1,186 @@
+=== tracked_top_level ===
+.gitignore
+API.md
+API.zh-TW.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+Dockerfile
+LICENSE
+Makefile
+README.md
+README.zh-TW.md
+SECURITY.md
+SUPPORT.md
+config.default.json
+go.mod
+go.sum
+package.json
+=== web_desktop_manifests ===
+./package.json
+=== code_areas ===
+cmd
+cmd/back01-core
+cmd/server
+cmd/systemvault-doctor
+internal
+internal/api
+internal/backup
+internal/backup/migrations
+internal/browser
+internal/config
+internal/fingerprint
+internal/groups
+internal/humanize
+internal/mcp
+internal/profile
+internal/runtime
+internal/secrets
+internal/spike
+internal/workflow
+=== proxy_and_desktop_references ===
+.github/workflows/ci.yml
+API.md
+API.zh-TW.md
+CHANGELOG.md
+README.md
+README.zh-TW.md
+SECURITY.md
+cmd/server/cli.go
+cmd/server/cli_runtime.go
+cmd/server/cli_test.go
+cmd/systemvault-doctor/main.go
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-07f603d/PROFILE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-07f603d/SYSTEMVAULT_RUNTIME_RELEASE_GATE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-b02f143/DEPENDENCY_GRAPH.json
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-b02f143/PROFILE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-bd1fcac/PROFILE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-bf642bd/PROFILE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-c2d478b/DEPENDENCY_GRAPH.json
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-c2d478b/PROFILE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz.release-manifest.json
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108/PROFILE.md
+dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108/SYSTEMVAULT_RUNTIME_RELEASE_GATE.md
+docker/README.md
+docker/README.zh-TW.md
+docker/entrypoint.sh
+docs/agent-integration.md
+docs/agent-prompt-guide.md
+docs/anti-detection.md
+docs/architecture.md
+docs/cli.md
+docs/cloud-deployment.md
+docs/developer-integration.md
+docs/dual-browser-architecture.md
+docs/dual-browser-architecture.zh-TW.md
+docs/execution.md
+docs/fingerprint-detection-report.md
+docs/linux-server.md
+docs/linux-server.zh-TW.md
+docs/local-quickstart.md
+docs/plan.md
+docs/platform-support.md
+docs/platform-support.zh-TW.md
+docs/security/GOSEC_BASELINE_BACK_01.md
+docs/security/SYSTEM_VAULT_NATIVE_MATRIX.md
+docs/spike-results.md
+docs/wbs.md
+extension/background.js
+extension/manifest.json
+extension/sidebar/style.css
+internal/api/dashboard.go
+internal/api/dashboard.html
+internal/api/groups.go
+internal/api/groups_test.go
+internal/api/router.go
+internal/api/sessions.go
+internal/backup/store.go
+internal/browser/launch_chromium.go
+internal/browser/launch_firefox.go
+internal/browser/launch_helpers.go
+internal/browser/manager_test.go
+internal/browser/proxy_test.go
+internal/browser/socks5relay.go
+internal/fingerprint/local.go
+internal/groups/store.go
+internal/groups/store_test.go
+internal/mcp/advanced_tools.go
+internal/mcp/server.go
+internal/mcp/server_test.go
+internal/mcp/tool_schema.go
+internal/profile/backup_snapshot.go
+internal/profile/backup_snapshot_test.go
+internal/profile/store.go
+internal/profile/store_secrets_test.go
+internal/runtime/runtime.go
+internal/workflow/engine.go
+internal/workflow/engine_test.go
+release/back01-minimal/PILOT_LOCAL_TEMPORARY_QUALIFICATION_CHECKLIST.md
+release/back01-minimal/PROFILE.md
+release/back01-minimal/RELEASE_SCOPE_AND_OS_MATRIX.md
+release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md
+=== api_route_declarations ===
+internal/api/artifacts.go:21:	p, err := h.store.Get(profileID)
+internal/api/artifacts_test.go:46:	if got := rec.Header().Get("Content-Type"); !strings.HasPrefix(got, "image/png") {
+internal/api/backup.go:21:	p, err := h.store.Get(chi.URLParam(r, "id"))
+internal/api/groups.go:38:	g, ok := h.groupStore.Get(name)
+internal/api/groups.go:161:		p, err := h.store.Get(sess.ProfileID)
+internal/api/groups_test.go:97:	got, err := store.Get(body.Data.ID)
+internal/api/groups_test.go:155:	got, err := store.Get(p.ID)
+internal/api/groups_test.go:332:	if g, ok := groupStore.Get("Client A"); ok {
+internal/api/groups_test.go:337:func TestGroupProxyAPIRequiresProxyOnPut(t *testing.T) {
+internal/api/groups_test.go:379:	updated, err := profileStore.Get(p.ID)
+internal/api/groups_test.go:386:	if g, ok := groupStore.Get("Client A"); ok {
+internal/api/router.go:50:	r.Get("/api/status", h.status)
+internal/api/router.go:51:	r.Get("/api/health", h.health)
+internal/api/router.go:52:	r.Get("/", h.dashboard)
+internal/api/router.go:57:		r.Post("/api/profiles", h.createProfile)
+internal/api/router.go:58:		r.Get("/api/runtimes", h.listRuntimes)
+internal/api/router.go:59:		r.Get("/api/profiles", h.listProfiles)
+internal/api/router.go:60:		r.Get("/api/profiles/{id}", h.getProfile)
+internal/api/router.go:61:		r.Put("/api/profiles/{id}", h.updateProfile)
+internal/api/router.go:62:		r.Delete("/api/profiles/{id}", h.deleteProfile)
+internal/api/router.go:63:		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
+internal/api/router.go:64:		r.Post("/api/profiles/{id}/export", h.exportProfile)
+internal/api/router.go:65:		r.Post("/api/profiles/import", h.importProfile)
+internal/api/router.go:66:		r.Get("/api/profiles/{id}/artifacts/*", h.artifact)
+internal/api/router.go:67:		r.Get("/api/groups", h.listGroups)
+internal/api/router.go:68:		r.Get("/api/groups/{name}", h.getGroup)
+internal/api/router.go:69:		r.Put("/api/groups/{name}", h.upsertGroup)
+internal/api/router.go:70:		r.Delete("/api/groups/{name}", h.deleteGroup)
+internal/api/router.go:71:		r.Delete("/api/groups/{name}/proxy", h.clearGroupProxy)
+internal/api/router.go:73:		r.Post("/api/sessions", h.createSession)
+internal/api/router.go:74:		r.Get("/api/sessions", h.listSessions)
+internal/api/router.go:75:		r.Delete("/api/sessions/{id}", h.deleteSession)
+internal/api/router.go:77:		r.Post("/api/sessions/{id}/navigate", h.navigate)
+internal/api/router.go:78:		r.Post("/api/sessions/{id}/click", h.click)
+internal/api/router.go:79:		r.Post("/api/sessions/{id}/type", h.typeText)
+internal/api/router.go:80:		r.Post("/api/sessions/{id}/eval", h.evaluate)
+internal/api/router.go:81:		r.Get("/api/sessions/{id}/screenshot", h.screenshot)
+internal/api/router.go:82:		r.Get("/api/sessions/{id}/content", h.content)
+internal/api/router.go:83:		r.Post("/api/sessions/{id}/wait", h.waitFor)
+internal/api/router.go:84:		r.Get("/api/sessions/{id}/cookies", h.getCookies)
+internal/api/router.go:85:		r.Post("/api/sessions/{id}/cookies", h.setCookies)
+internal/api/router.go:87:		r.Get("/api/playwright/endpoint", h.playwrightEndpoint)
+internal/api/router.go:88:		r.Get("/api/playwright/ws/{id}", h.playwrightWSProxy)
+internal/api/router.go:90:			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
+internal/api/router.go:91:			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
+internal/api/router.go:94:		r.Post("/api/shutdown", h.shutdown)
+internal/api/router.go:113:		if !validBearerToken(r.Header.Get("Authorization"), h.token) {
+internal/api/router.go:218:	group := r.URL.Query().Get("group")
+internal/api/router.go:219:	tag := r.URL.Query().Get("tag")
+internal/api/router.go:225:	p, err := h.store.Get(chi.URLParam(r, "id"))
+internal/api/router.go:244:		current, err := h.store.Get(chi.URLParam(r, "id"))
+internal/api/router.go:276:	if err := h.store.Delete(chi.URLParam(r, "id")); err != nil {
+internal/api/router.go:284:	src, err := h.store.Get(chi.URLParam(r, "id"))
+internal/api/sessions.go:30:	p, err := h.store.Get(req.ProfileID)
+internal/api/sessions.go:224:	fullPage := r.URL.Query().Get("full_page") == "true"
+internal/api/sessions.go:242:	selector := r.URL.Query().Get("selector")
+internal/api/sessions.go:400:		r.Header.Get("Sec-WebSocket-Version"),
+internal/api/sessions.go:401:		r.Header.Get("Sec-WebSocket-Key"))
+internal/api/sessions.go:402:	if ext := r.Header.Get("Sec-WebSocket-Extensions"); ext != "" {
+internal/api/backup_v1.go:22:	if _, err := h.backupSvc.Vault.Get(keyID); err == nil {
+internal/api/backup_v1.go:29:	if err := h.backupSvc.Vault.Put(keyID, key); err != nil {
+internal/api/backup_v1.go:46:	if _, err := h.store.Get(profileID); err != nil {
+internal/api/backup_v1.go:90:	if _, err := h.store.Get(req.TargetProfileID); err == nil {
+internal/api/backup_v1.go:127:	p, err := h.store.Get(restored.TargetProfileID)

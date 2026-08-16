@@ -1,0 +1,22 @@
+Package: chromium-common
+Source: chromium
+Priority: optional
+Section: web
+Installed-Size: 64690
+Maintainer: XtraDeb Team <team@xtradeb.net>
+Architecture: amd64
+Version: 151.0.7922.108-1xtradeb1.2404.1
+Recommends: upower, udev, libgl1-mesa-dri, chromium-sandbox, fonts-liberation, notification-daemon, system-config-printer
+Replaces: chromium (<< 151.0.7922.108-1xtradeb1.2404.1)
+Depends: libc6 (>= 2.39), libgcc-s1 (>= 4.2), zlib1g (>= 1:1.2.11), x11-utils, xdg-utils
+Breaks: chromium (<< 151.0.7922.108-1xtradeb1.2404.1)
+Filename: pool/main/c/chromium/chromium-common_151.0.7922.108-1xtradeb1.2404.1_amd64.deb
+Size: 30648270
+MD5sum: 355ff00f8e9912c38f88b3337410f235
+SHA1: 4b5a70f557f128ceb65053d6b6fff029ab1a9c14
+SHA256: 2c1037d840475767d6d06a8c4da6359ec180038efe40ec88ebc27d33fe337150
+SHA512: 2168686646be739824dc998e4f037ee0586fd2bf5d436d5c475606bdf0d4f438036c8f94f3a124b9a609a6aa7b3f2ee754fc0853ff3bd71e79e82045cdff214e
+Description: web browser - common resources used by the chromium packages
+Description-md5: 6f8b66c61b0d01bc4c6ea3fa84a5ff38
+Original-Maintainer: Debian Chromium Team <chromium@packages.debian.org>
+

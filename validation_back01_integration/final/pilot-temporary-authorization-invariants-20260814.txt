@@ -1,0 +1,18 @@
+[candidate]
+553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6  dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz
+[authorization_status]
+  "status": "PILOT_LOCAL_APPROVED_TEMPORARY_SYSTEMVAULT_PENDING",
+    "target_os_version": "24.04.4 LTS",
+    "target_architecture": "amd64",
+    "decision": "PUBLIC_RELEASE_BLOCKED",
+[whitespace_check]
+git_diff_check_exit_code=0
+[traceability_validator]
+{"chains": 2, "public_release_decision": "PUBLIC_RELEASE_BLOCKED", "valid": true}
+traceability_exit_code=0
+[public_gate_validator]
+{"decision": "PUBLIC_RELEASE_BLOCKED", "gate_decisions": {"MAINTAINER_MANIFEST_SIGNATURE": "PENDING", "OS_COMPATIBILITY_EVIDENCE": "PENDING", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW": "PENDING", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW": "PENDING", "SYSTEMVAULT_NATIVE_PER_TARGET": "PENDING"}, "pending_gates": ["SYSTEMVAULT_NATIVE_PER_TARGET", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW", "MAINTAINER_MANIFEST_SIGNATURE", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW", "OS_COMPATIBILITY_EVIDENCE"], "valid": true}
+public_gate_exit_code=0
+[authorization_files]
+8b72b9e5aef4b3deddeaf0d44377ec10022fb63224d6fec0cb2220eb36572105  release/back01-minimal/PILOT_LOCAL_TEMPORARY_AUTHORIZATION.json
+841ff20d420d32f518f78bee35f39cd5ecacb818c10182db345f30fd423e408a  release/back01-minimal/PILOT_LOCAL_TEMPORARY_QUALIFICATION_CHECKLIST.md

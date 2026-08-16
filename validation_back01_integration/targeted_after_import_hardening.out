@@ -1,0 +1,10 @@
+2026/08/13 23:56:04 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation296844548/001/.api-token
+2026/08/13 23:56:04 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 192.0.2.1:1234 - 201 207B in 1.558964ms
+2026/08/13 23:56:04 "POST http://example.com/api/v1/backups/bkp-1786665364196782669-e7f1e65baf6385cc/restore HTTP/1.1" from 192.0.2.1:1234 - 201 393B in 1.272547ms
+--- FAIL: TestImportProfileRejectsDisabledRuntimeID (0.00s)
+    groups_test.go:213: body missing disabled INVALID_RUNTIME: {"error":{"code":"INVALID_ZIP","message":"zip: not a valid zip file"}}
+FAIL
+FAIL	forgelocal/internal/api	0.309s
+ok  	forgelocal/internal/backup	0.052s
+ok  	forgelocal/internal/profile	0.007s
+FAIL

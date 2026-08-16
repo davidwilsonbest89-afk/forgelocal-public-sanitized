@@ -46,7 +46,7 @@ func TestBackupV1CreateModifyRestoreIsolation(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	request := httptest.NewRequest(http.MethodPost, "/api/v1/profiles/source-api/backups", nil)
+	request := newLoopbackRequest(http.MethodPost, "/api/v1/profiles/source-api/backups", nil)
 	request.Header.Set("Authorization", "Bearer "+cfg.APIToken)
 	response := httptest.NewRecorder()
 	router.ServeHTTP(response, request)
@@ -68,7 +68,7 @@ func TestBackupV1CreateModifyRestoreIsolation(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	body := httptest.NewRequest(http.MethodPost, "/api/v1/backups/"+created.Data.ID+"/restore", strings.NewReader(`{"target_profile_id":"target-api"}`))
+	body := newLoopbackRequest(http.MethodPost, "/api/v1/backups/"+created.Data.ID+"/restore", strings.NewReader(`{"target_profile_id":"target-api"}`))
 	body.Header.Set("Authorization", "Bearer "+cfg.APIToken)
 	restoredResponse := httptest.NewRecorder()
 	router.ServeHTTP(restoredResponse, body)

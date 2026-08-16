@@ -1,0 +1,4 @@
+refusing SystemVault release gate in a container; run on the target OS host
+exit_code=3
+expected_exit_code=3
+refusal_check=passed

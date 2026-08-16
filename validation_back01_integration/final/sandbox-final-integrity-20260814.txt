@@ -1,0 +1,2 @@
+report_sha256=abd4a3e0e9cfa71bba28f03f864aa4c10355082f2fd3e43978c991686f88d9f8  validation_back01_integration/final/SANDBOX_SYSTEMVAULT_LIMITATION_REPORT_2026-08-14.md
+candidate_sha256=553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6  dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz

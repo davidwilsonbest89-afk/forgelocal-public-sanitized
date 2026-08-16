@@ -1,0 +1,76 @@
+=== head ===
+e6cda846a2a8bac777141ca3a330cbea40657a29
+=== candidate_hash ===
+553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6  dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz
+=== authorization_status ===
+PILOT_LOCAL_SUSPENDED_PENDING_SECRET_SCAN_TRIAGE
+=== traceability ===
+{"chains": 2, "public_release_decision": "PUBLIC_RELEASE_BLOCKED", "valid": true}
+=== public_gate ===
+{"decision": "PUBLIC_RELEASE_BLOCKED", "gate_decisions": {"MAINTAINER_MANIFEST_SIGNATURE": "PENDING", "OS_COMPATIBILITY_EVIDENCE": "PENDING", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW": "PENDING", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW": "PENDING", "SYSTEMVAULT_NATIVE_PER_TARGET": "PENDING"}, "pending_gates": ["SYSTEMVAULT_NATIVE_PER_TARGET", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW", "MAINTAINER_MANIFEST_SIGNATURE", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW", "OS_COMPATIBILITY_EVIDENCE"], "valid": true}
+=== worktree ===
+[31m??[m validation_ac_back01_runtime.out
+[31m??[m validation_back01_integration/candidates/
+[31m??[m validation_back01_integration/final/DISTROSEA_SYSTEMVAULT_FEASIBILITY.md
+[31m??[m validation_back01_integration/final/ORACLE_FREE_SYSTEMVAULT_PROTOCOL.md
+[31m??[m validation_back01_integration/final/SANDBOX_SYSTEMVAULT_LIMITATION_REPORT_2026-08-14.md
+[31m??[m validation_back01_integration/final/pilot-expiry-invariants-20260814.txt
+[31m??[m validation_back01_integration/final/pilot-temporary-authorization-invariants-20260814.txt
+[31m??[m validation_back01_integration/final/pilot-temporary-authorization-postcommit-20260814.txt
+[31m??[m validation_back01_integration/final/pilot-temporary-authorization-syntax-20260814.txt
+[31m??[m validation_back01_integration/final/release_traceability_clean_clone_diagnostic.out
+[31m??[m validation_back01_integration/final/sandbox-back01-targeted-test-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-back01-test-list-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-cdc-and-suspension-invariants-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-cdc-postcommit-invariants-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-coverage-security-inventory-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-evidence-integrity-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-final-integrity-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-gitleaks-20260814.json
+[31m??[m validation_back01_integration/final/sandbox-gitleaks-rc-archive-20260814.json
+[31m??[m validation_back01_integration/final/sandbox-go-test-all-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-gosec-20260814.json
+[31m??[m validation_back01_integration/final/sandbox-gosec-classification-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-minimal-profile-verification-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-product-gap-inventory-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-race-verification-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-release-gates-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-reproducible-verification-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-secret-scan-suspension-invariants-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-security-scans-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-systemvault-gate-refusal-20260814.txt
+[31m??[m validation_back01_integration/final/sandbox-systemvault-preflight-20260814.txt
+[31m??[m validation_back01_integration/final_summary.out
+[31m??[m validation_back01_integration/git_status.out
+[31m??[m validation_back01_integration/gitleaks.json
+[31m??[m validation_back01_integration/gitleaks.log
+[31m??[m validation_back01_integration/gitleaks_after_multipart_fix.json
+[31m??[m validation_back01_integration/gitleaks_after_multipart_fix.log
+[31m??[m validation_back01_integration/gitleaks_final.json
+[31m??[m validation_back01_integration/gitleaks_final.log
+[31m??[m validation_back01_integration/go_test_all.out
+[31m??[m validation_back01_integration/gosec_after_import_hardening.json
+[31m??[m validation_back01_integration/gosec_after_import_hardening.log
+[31m??[m validation_back01_integration/gosec_after_io_hardening.json
+[31m??[m validation_back01_integration/gosec_after_io_hardening.log
+[31m??[m validation_back01_integration/gosec_after_multipart_fix.json
+[31m??[m validation_back01_integration/gosec_after_multipart_fix.log
+[31m??[m validation_back01_integration/gosec_final.json
+[31m??[m validation_back01_integration/gosec_final.log
+[31m??[m validation_back01_integration/gosec_modified.json
+[31m??[m validation_back01_integration/gosec_modified.log
+[31m??[m validation_back01_integration/import_hardening_summary.out
+[31m??[m validation_back01_integration/io_hardening_summary.out
+[31m??[m validation_back01_integration/summary.out
+[31m??[m validation_back01_integration/targeted_after_import_hardening.out
+[31m??[m validation_back01_integration/targeted_after_io_hardening.out
+[31m??[m validation_back01_integration/targeted_after_multipart_fix.out
+[31m??[m validation_back01_integration/targeted_final.out
+[31m??[m validation_back01_integration/targeted_packages.out
+[31m??[m validation_back01_integration/targeted_packages_race.out
+[31m??[m validation_back01_integration/targeted_race_after_multipart_fix.out
+[31m??[m validation_back01_integration/targeted_race_final.out
+[31m??[m validation_back01_minimal_build.out
+[31m??[m validation_runtime_chromium.out
+[31m??[m validation_systemvault_native.err
+[31m??[m validation_systemvault_native.json

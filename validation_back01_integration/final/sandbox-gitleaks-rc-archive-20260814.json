@@ -1,0 +1,22 @@
+[
+ {
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 8,
+  "EndLine": 9,
+  "StartColumn": 10,
+  "EndColumn": 1,
+  "Match": "key_fingerprint=REDACTED",
+  "Secret": "REDACTED",
+  "File": "/tmp/tmp.xAAYuUdcR6/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108/evidence/RUNTIME_PROVENANCE.out",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 3.6445885,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "RuleID": "generic-api-key",
+  "Fingerprint": "/tmp/tmp.xAAYuUdcR6/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108/evidence/RUNTIME_PROVENANCE.out:generic-api-key:8"
+ }
+]

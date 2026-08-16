@@ -1,0 +1,25 @@
+[gosec] 2026/08/13 23:56:34 Including rules: default
+[gosec] 2026/08/13 23:56:34 Excluding rules: default
+[gosec] 2026/08/13 23:56:34 Including analyzers: default
+[gosec] 2026/08/13 23:56:34 Excluding analyzers: default
+[gosec] 2026/08/13 23:56:34 Import directory: /home/ubuntu/ForgeLocal/internal/api
+[gosec] 2026/08/13 23:56:34 Import directory: /home/ubuntu/ForgeLocal/internal/profile
+[gosec] 2026/08/13 23:56:34 Import directory: /home/ubuntu/ForgeLocal/internal/backup
+[gosec] 2026/08/13 23:56:34 Checking package: profile
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/profile/backup_snapshot.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/profile/store.go
+[gosec] 2026/08/13 23:56:34 Checking package: backup
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/backup/bootstrap.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/backup/migrations.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/backup/service.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/backup/store.go
+[gosec] 2026/08/13 23:56:34 Checking package: api
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/artifacts.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/backup.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/backup_v1.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/dashboard.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/groups.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/router.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/sessions.go
+[gosec] 2026/08/13 23:56:34 Checking file: /home/ubuntu/ForgeLocal/internal/api/workflow.go
+[gosec] 2026/08/13 23:56:34 Error building the SSA representation of the package api: package api has type errors, skipping SSA analysis, no ssa result

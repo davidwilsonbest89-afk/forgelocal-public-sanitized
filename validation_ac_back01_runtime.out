@@ -1,0 +1,7 @@
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/14 00:44:32 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation3717713016/001/.api-token
+2026/08/14 00:44:32 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 192.0.2.1:1234 - 201 207B in 1.519876ms
+2026/08/14 00:44:32 "POST http://example.com/api/v1/backups/bkp-1786668272178881829-55ccdf585887c209/restore HTTP/1.1" from 192.0.2.1:1234 - 201 394B in 1.378885ms
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (0.33s)
+PASS
+ok  	forgelocal/internal/api	0.338s

@@ -1,0 +1,15 @@
+kind=sandbox_preflight_not_native_evidence
+utc=2026-08-14T03:21:01Z
+git_branch=forgelocal-back01
+git_head=4f99af24f042cb74d280b7aae87434104b5181f8
+git_dirty_before=false
+os=ubuntu 24.04
+arch=x86_64
+euid=1000
+user=ubuntu
+dockerenv=true
+container_cgroup=not_detected
+dbus_session=present
+xdg_runtime=absent
+secret_tool=present
+candidate_sha256=553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6  dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz

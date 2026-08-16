@@ -1,0 +1,3 @@
+go_test_all=1
+gosec_modified=1
+gitleaks=0

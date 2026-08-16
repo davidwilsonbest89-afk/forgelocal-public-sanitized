@@ -1,0 +1,12 @@
+[traceability]
+{"chains": 2, "public_release_decision": "PUBLIC_RELEASE_BLOCKED", "valid": true}
+traceability_exit_code=0
+[public_gate]
+{"decision": "PUBLIC_RELEASE_BLOCKED", "gate_decisions": {"MAINTAINER_MANIFEST_SIGNATURE": "PENDING", "OS_COMPATIBILITY_EVIDENCE": "PENDING", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW": "PENDING", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW": "PENDING", "SYSTEMVAULT_NATIVE_PER_TARGET": "PENDING"}, "pending_gates": ["SYSTEMVAULT_NATIVE_PER_TARGET", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW", "MAINTAINER_MANIFEST_SIGNATURE", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW", "OS_COMPATIBILITY_EVIDENCE"], "valid": true}
+public_gate_exit_code=0
+expected_release_state=unexpected
+
+[interpretation]
+validator_exit_code=0 means gate metadata is structurally valid.
+reported_decision=PUBLIC_RELEASE_BLOCKED means publication remains correctly blocked.
+interpretation=passed_valid_blocked_state

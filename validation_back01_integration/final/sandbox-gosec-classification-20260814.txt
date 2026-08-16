@@ -1,0 +1,153 @@
+=== by_rule_and_severity ===
+G104	LOW	64
+G107	MEDIUM	1
+G110	MEDIUM	3
+G112	MEDIUM	1
+G115	HIGH	4
+G122	HIGH	1
+G204	MEDIUM	6
+G301	MEDIUM	32
+G302	MEDIUM	4
+G304	MEDIUM	22
+G305	MEDIUM	3
+G306	MEDIUM	9
+G404	HIGH	17
+G703	HIGH	14
+G704	HIGH	7
+G705	MEDIUM	1
+=== by_directory ===
+cmd/server	56
+internal/api	16
+internal/browser	79
+internal/config	5
+internal/fingerprint	3
+internal/groups	1
+internal/humanize	19
+internal/mcp	7
+internal/workflow	3
+=== high_medium_findings ===
+G115	HIGH	internal/browser/launch_chromium.go	1009	190
+G115	HIGH	internal/browser/download.go	623	190
+G115	HIGH	cmd/server/cli_runtime.go	646	190
+G115	HIGH	cmd/server/cli_runtime.go	639	190
+G404	HIGH	internal/humanize/mouse.go	89	338
+G404	HIGH	internal/humanize/mouse.go	37	338
+G404	HIGH	internal/humanize/mouse.go	36	338
+G404	HIGH	internal/humanize/math.go	128	338
+G404	HIGH	internal/humanize/math.go	120	338
+G404	HIGH	internal/humanize/math.go	115	338
+G404	HIGH	internal/humanize/math.go	108	338
+G404	HIGH	internal/humanize/math.go	98	338
+G404	HIGH	internal/humanize/math.go	97	338
+G404	HIGH	internal/humanize/math.go	77	338
+G404	HIGH	internal/humanize/math.go	76	338
+G404	HIGH	internal/humanize/math.go	59	338
+G404	HIGH	internal/humanize/math.go	55	338
+G404	HIGH	internal/humanize/math.go	49	338
+G404	HIGH	internal/humanize/keyboard.go	84	338
+G404	HIGH	internal/humanize/keyboard.go	56	338
+G404	HIGH	internal/fingerprint/pool.go	64	338
+G704	HIGH	internal/api/sessions.go	390	
+G704	HIGH	cmd/server/cli_runtime.go	746	
+G704	HIGH	cmd/server/cli_runtime.go	697	
+G704	HIGH	cmd/server/cli_runtime.go	692	
+G704	HIGH	cmd/server/cli.go	992	
+G704	HIGH	cmd/server/cli.go	979	
+G704	HIGH	cmd/server/cli.go	964	
+G703	HIGH	internal/browser/download.go	640	
+G703	HIGH	cmd/server/cli_runtime.go	736	
+G703	HIGH	cmd/server/cli_runtime.go	708	
+G703	HIGH	cmd/server/cli_runtime.go	705	
+G703	HIGH	cmd/server/cli_runtime.go	662	
+G703	HIGH	cmd/server/cli_runtime.go	659	
+G703	HIGH	cmd/server/cli_runtime.go	646	
+G703	HIGH	cmd/server/cli_runtime.go	643	
+G703	HIGH	cmd/server/cli_runtime.go	639	
+G703	HIGH	cmd/server/cli_runtime.go	608	
+G703	HIGH	cmd/server/cli_runtime.go	542	
+G703	HIGH	cmd/server/cli_runtime.go	539	
+G703	HIGH	cmd/server/cli_runtime.go	529	
+G703	HIGH	cmd/server/cli_runtime.go	405	
+G122	HIGH	cmd/server/cli_runtime.go	597	367
+G705	MEDIUM	internal/api/sessions.go	233	
+G204	MEDIUM	internal/browser/download.go	448	78
+G204	MEDIUM	internal/browser/download.go	369	78
+G204	MEDIUM	internal/browser/download.go	332	78
+G204	MEDIUM	cmd/server/main.go	508	78
+G204	MEDIUM	cmd/server/main.go	506	78
+G204	MEDIUM	cmd/server/main.go	504	78
+G304	MEDIUM	internal/workflow/engine.go	52	22
+G304	MEDIUM	internal/mcp/advanced_tools.go	534	22
+G304	MEDIUM	internal/fingerprint/pool.go	25	22
+G304	MEDIUM	internal/config/config.go	169	22
+G304	MEDIUM	internal/config/config.go	90	22
+G304	MEDIUM	internal/browser/launch_chromium.go	195	22
+G304	MEDIUM	internal/browser/download.go	639	22
+G304	MEDIUM	internal/browser/download.go	624	22
+G304	MEDIUM	internal/browser/download.go	593	22
+G304	MEDIUM	internal/browser/download.go	573	22
+G304	MEDIUM	internal/browser/download.go	514	22
+G304	MEDIUM	internal/browser/download.go	135	22
+G304	MEDIUM	internal/api/router.go	350	22
+G304	MEDIUM	internal/api/artifacts.go	31	22
+G304	MEDIUM	cmd/server/cli_runtime.go	736	22
+G304	MEDIUM	cmd/server/cli_runtime.go	708	22
+G304	MEDIUM	cmd/server/cli_runtime.go	646	22
+G304	MEDIUM	cmd/server/cli_runtime.go	608	22
+G304	MEDIUM	cmd/server/cli_runtime.go	597	22
+G304	MEDIUM	cmd/server/cli_runtime.go	542	22
+G304	MEDIUM	cmd/server/cli.go	838	22
+G304	MEDIUM	cmd/server/cli.go	566	22
+G112	MEDIUM	cmd/server/main.go	376	400
+G107	MEDIUM	internal/browser/download.go	505	88
+G110	MEDIUM	internal/browser/download.go	628	409
+G110	MEDIUM	internal/browser/download.go	582	409
+G110	MEDIUM	cmd/server/cli_runtime.go	650	409
+G305	MEDIUM	internal/browser/download.go	638	22
+G305	MEDIUM	internal/browser/download.go	614	22
+G305	MEDIUM	internal/browser/download.go	563	22
+G302	MEDIUM	internal/config/config.go	169	276
+G302	MEDIUM	internal/browser/download.go	455	276
+G302	MEDIUM	internal/browser/download.go	376	276
+G302	MEDIUM	internal/browser/download.go	339	276
+G301	MEDIUM	internal/workflow/engine.go	251	276
+G301	MEDIUM	internal/mcp/advanced_tools.go	777	276
+G301	MEDIUM	internal/groups/store.go	45	276
+G301	MEDIUM	internal/config/config.go	168	276
+G301	MEDIUM	internal/browser/launch_firefox.go	77	276
+G301	MEDIUM	internal/browser/launch_firefox.go	63	276
+G301	MEDIUM	internal/browser/launch_chromium.go	1898	276
+G301	MEDIUM	internal/browser/launch_chromium.go	943	276
+G301	MEDIUM	internal/browser/launch_chromium.go	190	276
+G301	MEDIUM	internal/browser/launch_chromium.go	185	276
+G301	MEDIUM	internal/browser/launch_chromium.go	63	276
+G301	MEDIUM	internal/browser/download.go	634	276
+G301	MEDIUM	internal/browser/download.go	622	276
+G301	MEDIUM	internal/browser/download.go	620	276
+G301	MEDIUM	internal/browser/download.go	571	276
+G301	MEDIUM	internal/browser/download.go	568	276
+G301	MEDIUM	internal/browser/download.go	431	276
+G301	MEDIUM	internal/browser/download.go	352	276
+G301	MEDIUM	internal/browser/download.go	306	276
+G301	MEDIUM	internal/api/router.go	346	276
+G301	MEDIUM	cmd/server/main.go	139	276
+G301	MEDIUM	cmd/server/main.go	136	276
+G301	MEDIUM	cmd/server/main.go	133	276
+G301	MEDIUM	cmd/server/main.go	66	276
+G301	MEDIUM	cmd/server/main.go	62	276
+G301	MEDIUM	cmd/server/cli_runtime.go	705	276
+G301	MEDIUM	cmd/server/cli_runtime.go	659	276
+G301	MEDIUM	cmd/server/cli_runtime.go	643	276
+G301	MEDIUM	cmd/server/cli_runtime.go	539	276
+G301	MEDIUM	cmd/server/cli_runtime.go	405	276
+G301	MEDIUM	cmd/server/cli.go	766	276
+G301	MEDIUM	cmd/server/cli.go	751	276
+G306	MEDIUM	internal/mcp/advanced_tools.go	780	276
+G306	MEDIUM	internal/browser/launch_chromium.go	951	276
+G306	MEDIUM	internal/browser/launch_chromium.go	211	276
+G306	MEDIUM	internal/browser/download.go	640	276
+G306	MEDIUM	internal/browser/download.go	143	276
+G306	MEDIUM	cmd/server/main.go	319	276
+G306	MEDIUM	cmd/server/cli.go	775	276
+G306	MEDIUM	cmd/server/cli.go	619	276
+G306	MEDIUM	cmd/server/cli.go	614	276

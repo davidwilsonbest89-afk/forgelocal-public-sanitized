@@ -138,3 +138,16 @@ func isLoopbackRequest(r *http.Request) bool {
 	ip := net.ParseIP(host)
 	return ip != nil && ip.IsLoopback()
 }
+
+// requireLoopbackMiddleware refuses any write contract call originating from
+// outside the loopback interface: even a captured API token cannot drive
+// profile mutations from a remote consumer.
+func (h *handler) requireLoopbackMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if !isLoopbackRequest(r) {
+			writeError(w, http.StatusForbidden, "LOOPBACK_REQUIRED", "write endpoints are only reachable from the local loopback interface")
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}

@@ -1,0 +1,41 @@
+=== candidate_integrity ===
+553095461c94a44fd4f4d8c4040590134ca344b3d1a86cb1a5e9d400245b16d6  dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-rc1-chromium151108-linux-amd64.tar.gz
+=== selected_api_tests ===
+TestBackupV1CreateModifyRestoreIsolation
+TestLegacyRestoreEndpointRetired
+TestLegacyBackupEndpointRetired
+ok  	forgelocal/internal/api	0.003s
+=== targeted_backup_restore ===
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/14 13:57:27 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation835863224/001/.api-token
+2026/08/14 13:57:27 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 192.0.2.1:1234 - 201 207B in 1.29458ms
+2026/08/14 13:57:27 "POST http://example.com/api/v1/backups/bkp-1786715847406626682-7ca8be42e2dcb88b/restore HTTP/1.1" from 192.0.2.1:1234 - 201 393B in 1.206869ms
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.108 built on Ubuntu 24.04.4 LTS" pid=81958 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation835863224/001/profiles/target-api/browser-data" endpoint="none (--dump-dom direct process)" navigation="about:blank"
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch stopped cleanly: pid=81958 profile_lock_cleanup=verified
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (0.34s)
+PASS
+ok  	forgelocal/internal/api	0.348s
+=== full_go_tests ===
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	0.009s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	0.444s
+ok  	forgelocal/internal/backup	0.063s
+ok  	forgelocal/internal/browser	2.923s
+ok  	forgelocal/internal/config	0.002s
+ok  	forgelocal/internal/fingerprint	0.003s
+ok  	forgelocal/internal/groups	0.007s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/mcp	0.006s
+ok  	forgelocal/internal/profile	0.011s
+ok  	forgelocal/internal/runtime	0.007s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	1.214s
+ok  	forgelocal/internal/workflow	0.005s
+=== go_vet ===
+=== gate_metadata_negative_test ===
+{"baseline": "accepted", "incomplete_passed_gate": "rejected", "valid": true}
+=== traceability ===
+{"chains": 2, "public_release_decision": "PUBLIC_RELEASE_BLOCKED", "valid": true}
+=== public_gate ===
+{"decision": "PUBLIC_RELEASE_BLOCKED", "gate_decisions": {"MAINTAINER_MANIFEST_SIGNATURE": "PENDING", "OS_COMPATIBILITY_EVIDENCE": "PENDING", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW": "PENDING", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW": "PENDING", "SYSTEMVAULT_NATIVE_PER_TARGET": "PENDING"}, "pending_gates": ["SYSTEMVAULT_NATIVE_PER_TARGET", "SYSTEMVAULT_ANTI_LEAK_INTEGRATED_FLOW", "MAINTAINER_MANIFEST_SIGNATURE", "RUNTIME_LICENSE_AND_REDISTRIBUTION_REVIEW", "OS_COMPATIBILITY_EVIDENCE"], "valid": true}

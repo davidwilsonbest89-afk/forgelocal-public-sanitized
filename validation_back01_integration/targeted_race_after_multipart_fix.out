@@ -1,0 +1,6 @@
+# forgelocal/internal/api [forgelocal/internal/api.test]
+internal/api/backup.go:9:2: "mime/multipart" imported and not used
+FAIL	forgelocal/internal/api [build failed]
+ok  	forgelocal/internal/backup	1.114s
+ok  	forgelocal/internal/profile	1.014s
+FAIL

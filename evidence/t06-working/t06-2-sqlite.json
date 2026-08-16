@@ -1,0 +1,8 @@
+{"Time":"2026-08-15T13:01:10.532483526Z","Action":"start","Package":"forgelocal/internal/backup"}
+{"Time":"2026-08-15T13:01:10.53507822Z","Action":"run","Package":"forgelocal/internal/backup","Test":"TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels"}
+{"Time":"2026-08-15T13:01:10.535110969Z","Action":"output","Package":"forgelocal/internal/backup","Test":"TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels","Output":"=== RUN   TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels\n"}
+{"Time":"2026-08-15T13:01:10.543318386Z","Action":"output","Package":"forgelocal/internal/backup","Test":"TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels","Output":"--- PASS: TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels (0.01s)\n"}
+{"Time":"2026-08-15T13:01:10.543413763Z","Action":"pass","Package":"forgelocal/internal/backup","Test":"TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels","Elapsed":0.01}
+{"Time":"2026-08-15T13:01:10.543437659Z","Action":"output","Package":"forgelocal/internal/backup","Output":"PASS\n"}
+{"Time":"2026-08-15T13:01:10.543858102Z","Action":"output","Package":"forgelocal/internal/backup","Output":"ok  \tforgelocal/internal/backup\t0.011s\n"}
+{"Time":"2026-08-15T13:01:10.543883289Z","Action":"pass","Package":"forgelocal/internal/backup","Elapsed":0.011}

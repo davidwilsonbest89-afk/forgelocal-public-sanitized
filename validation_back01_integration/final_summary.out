@@ -1,0 +1,4 @@
+tests=0
+race=0
+gosec=1
+gitleaks=0

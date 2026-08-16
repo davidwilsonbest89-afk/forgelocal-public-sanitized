@@ -1,0 +1,26 @@
+ new Debian package, version 2.0.
+ size 30648270 bytes: control archive=1421 bytes.
+     892 bytes,    20 lines      control
+    1528 bytes,    21 lines      md5sums
+      28 bytes,     1 lines      shlibs
+      75 bytes,     2 lines      triggers
+ Package: chromium-common
+ Source: chromium
+ Version: 151.0.7922.108-1xtradeb1.2404.1
+ Architecture: amd64
+ Maintainer: XtraDeb Team <team@xtradeb.net>
+ Installed-Size: 64690
+ Depends: libc6 (>= 2.39), libgcc-s1 (>= 4.2), zlib1g (>= 1:1.2.11), x11-utils, xdg-utils
+ Recommends: upower, udev, libgl1-mesa-dri, chromium-sandbox, fonts-liberation, notification-daemon, system-config-printer
+ Breaks: chromium (<< 151.0.7922.108-1xtradeb1.2404.1)
+ Replaces: chromium (<< 151.0.7922.108-1xtradeb1.2404.1)
+ Section: web
+ Priority: optional
+ Homepage: http://www.chromium.org/Home
+ Description: web browser - common resources used by the chromium packages
+  Web browser that aims to build a safer, faster, and more stable internet
+  browsing experience.
+  .
+  This package contains resources that are in common to different chromium
+  packages.
+ Original-Maintainer: Debian Chromium Team <chromium@packages.debian.org>

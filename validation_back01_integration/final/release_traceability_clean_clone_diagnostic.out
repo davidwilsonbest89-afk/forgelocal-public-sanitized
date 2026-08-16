@@ -1,0 +1,7 @@
+clone_rc=0
+git_status_rc=0
+git_status=EMPTY
+copy_archive_rc=0
+copy_manifest_rc=0
+validator_rc=1
+validator_output={"error": "required_file_missing:dist/back01-minimal/forgelocal-back01-core-0.1.0-back01-07f603d-linux-amd64.tar.gz", "valid": false}
