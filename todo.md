@@ -669,23 +669,24 @@ Reste à faire :
 - [x] T08 clôturé : `T08_APPROVED_VERIFIABLE_LOCAL` (CDC v3.9.7 commit `f3a19df`, rapport final commit `903f6bd`, code commit `99a22f5`).
 - [x] Archive figée `t08-r2-final.zip` SHA-256 `4918ac9876545904c822ff72fb3dfcc4f8b12f6fb2214452e308a39b4c0719bb` (deux copies identiques vérifiées par la relectrice).
 - [x] Document de suivi non normatif : `docs/T08-FOLLOW-UP-WATCH-STATE.md` (commit `0bcc94f`), sans nouveau statut/exigence/certificat.
-- [x] Mode gel contrôlé : aucune modification code T08, aucune nouvelle archive, aucun T09, aucun runtime/Camoufox/proxy/backup/UI, pas de changement CDC hors préservation.
-- [ ] Attente preuves externes T07-R : à réception, rapport de complétude brut uniquement (pas de décision T07_APPROVED ni autorisation T09).
-- [ ] T09 exige : (1) T07 débloqué par revue indépendante avec registre mis à jour, et (2) autorisation explicite d'ouverture T09.
-- Statuts : PUBLIC_RELEASE_BLOCKED, SCAN_BLOCKED_UNKNOWN, pilote suspendu, cinq gates publics actifs.
+- [x] Mode gel contrôlé : aucune modification code T08, aucune nouvelle archive, aucun T09 (avant autorisation), aucun runtime/Camoufox/proxy/backup/UI, pas de changement CDC hors préservation.
+- [x] T07 : décision d'audit `T07_PROVENANCE_APPROVED_FOR_SELECTIVE_GO_REIMPLEMENTATION` reçue ; attestation `ATT-T07R-CAMOFLOX-001`, revues `REV-T07R-2026-001`/`REV-T07R-2026-002`, `REVIEW_ACCEPTED_FOR_T07_DECISION` ; statut intermédiaire T07-R `ATTESTATION_REDACTED_PENDING_SIGNATURE_AND_EXTERNAL_REFERENCES` (références obligations tierces/notices et informations de signature finale en attente dans l'Issue `#1`).
+- [ ] T09 exigeait (conditions levées) : (1) T07 débloqué par revue indépendante avec registre mis à jour, et (2) autorisation explicite d'ouverture T09. T09 clôturé `T09_APPROVED_VERIFIABLE_LOCAL`.
+- Statuts : PUBLIC_RELEASE_BLOCKED, SCAN_BLOCKED_UNKNOWN (réserves pré-T09 maintenues), pilote suspendu, cinq gates publics actifs.
 
-# T09 — Profile Writes (ouvert 16/08/2026, instruction utilisateur validée)
-- Autorisé sans attestation/certificat intermédiaire ; rapport unique 16 champs à la fin.
-- Contrat : création/modification/archivage profils via Core Go unique ; React = client ; zéro écriture SQLite par le dashboard.
-- Backend : correlation_id, audit redacted (SQLite audit_events), archivage/réouverture, isolation par profil, unicité, tags/groupes, validation serveur renforcée.
-- Preuves : tests unitaires + intégration SQLite/migrations + négatifs + concurrence -race, go vet, gosec, build tsc + prod, Playwright E2E, Gitleaks/Gosec, git diff --check, RC inchangés.
-- Interdit : T10, runtime/Camoufox/proxy réel/backup-restore UI, release. PUBLIC_RELEASE_BLOCKED inchangé.
-- [ ] Migration 0005_t09_profile_writes.sql (index lifecycle_state)
-- [ ] internal/api/audit.go — WriteAudit sink SQLite + redaction
-- [ ] internal/api/correlation.go — middleware CorrelationID
-- [ ] internal/profile/store.go — LifecycleState, mutex par profil, archive/reopen, validation, sentinel errors
-- [ ] internal/api/profiles_write.go — handlers archive/reopen/tags + validation renforcée
-- [ ] internal/api/router.go — routes + middleware
-- [ ] Tests profile (13+) et API (12+) sous -race, go vet, gosec
-- [ ] Frontend : client écriture mémoire seule + UI création/édition/archivage/réouverture/tags
-- [ ] Playwright E2E, archive de preuves, rapport 16 champs, commit
+# T09 — Profile Writes — CLÔTURÉ
+
+- [x] Clôture validée par le valideur : `T09_APPROVED_VERIFIABLE_LOCAL` (16/08/2026). Archive `t09-r1.zip` SHA-256 `1d032a53c516e7e61fad4ca3523a6d685d1f7b1a8cf605e79626359bd7108369`, manifeste 13/13, 74 tests Core sélectionnés (63 + 11 sous-tests) 0 FAIL 0 DATA RACE, E2E Playwright 2/2 (7 assertions nommées), Gitleaks delta T09 + delta UI `[]`, build tsc + prod propres.
+- [x] Commits : `e66ba0e`, `fe1f91b`, `3dad8db`, `dc32d96` (HEAD) sur `forgelocal-product-v0.3` de `boucheriechefimane-cmd/IPcache`. Dashboard : checkpoint publié `bd96760e` → `forgelocal-d-c8wqrxmp.manus.space` (auto-publish).
+- [x] Périmètre exact validé : création, modification, archivage, réouverture autorisée, tags, validation serveur, audit redacted, `correlation_id`, loopback 403 `LOOPBACK_REQUIRED`, client React mémoire seule connecté au Core. Rapports finaux 16 champs livrés (`T09-R1-FINAL-REPORT.md`).
+- [x] Code livré : migration `0005_t09_profile_writes.sql`, `internal/api/profiles_write.go`, `audit.go`, `correlation.go`, `readonly_session.go` (requireLoopbackMiddleware), `internal/profile/store.go` (mutex par profil, cycle de vie), `errors.go` ; dashboard `coreWrite.ts`, `LocalCoreConnection.tsx`, `Home.tsx`, `tests/profile-writes-t09.spec.ts`.
+- [x] T10 (Proxys) autorisé à préparer (cadrage seulement) mais interdit à démarrer dans le même lot : aucun code T10 produit. Aucune validation intermédiaire demandée pendant T10 ; rapport unique 16 champs à la fin.
+
+# T10 — Proxys (cadrage seulement, DÉMARRAGE INTERDIT jusqu'à autorisation)
+
+- Périmètre prévu (à confirmer par instruction explicite avant démarrage) : contrat réel des proxies via Core Go unique (référentiel proxy, affectation profil↔proxy, validation serveur, erreurs machine-readable, audit redacted, loopback) ; dashboard client mémoire seule sans écriture SQLite directe ; exclusions : proxy réseau réel, runtime/Camoufox, backup/restore UI, import, release.
+- [ ] T10-F1 : cadrage documentaire non normatif du lot T10 (contrats, dépendances, critères d'acceptation) — autorisation explicite requise AVANT ce document.
+- [ ] T10-F2 : autorisation explicite d'ouverture T10 (instruction utilisateur ou du valideur). Tout code T10 est interdit avant cette autorisation.
+- Note T10 : `Profile.Proxy` existe déjà (store.go l.43 : `ProxyConfig` socks5/http + `secret_ref` vers vault local `internal/secrets`), et T09 valide déjà `proxy_config` à la création. Le cœur T10 est le référentiel proxy indépendant (CRUD, validation, allocation profil, redaction, audit, loopback) + la qualification complète du vault `internal/secrets` (chiffrement/verrouillage SystemVault selon CDC) qui devient une dépendance critique : sans vault qualifié, aucun `secret_ref` réel ne doit être activé.
+- Interdictions T10 confirmées : aucun proxy réseau réel configuré/utilisé par le runtime, aucun Camoufox actif, aucun lancement, aucune intégration Decodo/fournisseur, aucun backup/restore UI, aucune release. T10 est un contrat local de gestion de référentiel, pas un connecteur réseau.
+- Statuts inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `SCAN_BLOCKED_UNKNOWN` (findings `validation_back01_integration/` préexistants, règle `generic-api-key`, classés antérieurs à T09), pilote suspendu, cinq gates publics en attente.
