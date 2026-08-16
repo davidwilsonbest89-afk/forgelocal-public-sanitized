@@ -138,6 +138,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Get("/api/v1/readonly/health", h.readonlyHealth)
 		r.Get("/api/v1/readonly/summary", h.readonlySummary)
 		r.Get("/api/v1/readonly/profiles", h.readonlyProfiles)
+		r.Get("/api/v1/readonly/proxies", h.readonlyProxies)
 		r.Get("/api/v1/readonly/groups", h.readonlyGroups)
 		r.Get("/api/v1/readonly/runtimes", h.readonlyRuntimes)
 	})

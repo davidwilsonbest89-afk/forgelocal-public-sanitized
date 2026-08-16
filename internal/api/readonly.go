@@ -102,6 +102,49 @@ func (h *handler) readonlyProfiles(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, response)
 }
 
+func (h *handler) readonlyProxies(w http.ResponseWriter, r *http.Request) {
+	limit, cursor, ok := readOnlyPageRequest(w, r)
+	if !ok {
+		return
+	}
+	type proxyDTO struct {
+		ID          string `json:"id"`
+		Name        string `json:"name"`
+		Type        string `json:"type"`
+		Region      string `json:"region,omitempty"`
+		HasSecret   bool   `json:"has_secret"`
+		AssignedTo  string `json:"assigned_to,omitempty"`
+		CreatedAt   time.Time `json:"created_at"`
+		UpdatedAt   time.Time `json:"updated_at"`
+	}
+	items := make([]proxyDTO, 0)
+	if h.proxyStore != nil {
+		for _, p := range h.proxyStore.List() {
+			items = append(items, proxyDTO{
+				ID: p.ID, Name: p.Name, Type: p.Type, Region: p.Region,
+				HasSecret: p.HasSecret,
+				CreatedAt: p.CreatedAt, UpdatedAt: p.UpdatedAt,
+			})
+		}
+	}
+	sort.Slice(items, func(i, j int) bool { return items[i].ID < items[j].ID })
+	start, validCursor := readOnlyStart(items, cursor, func(item proxyDTO) string { return item.ID })
+	if !validCursor {
+		writeError(w, http.StatusBadRequest, "INVALID_CURSOR", "cursor does not identify a proxy in this result")
+		return
+	}
+	end := start + limit
+	if end > len(items) {
+		end = len(items)
+	}
+	response := readOnlyPage[proxyDTO]{APIVersion: readOnlyAPIVersion, Data: items[start:end]}
+	response.Page.Limit = limit
+	if end < len(items) {
+		response.Page.NextCursor = encodeReadOnlyCursor(items[end-1].ID)
+	}
+	writeJSON(w, http.StatusOK, response)
+}
+
 func (h *handler) readonlyGroups(w http.ResponseWriter, r *http.Request) {
 	limit, cursor, ok := readOnlyPageRequest(w, r)
 	if !ok {
