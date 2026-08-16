@@ -416,6 +416,7 @@ func corsLocal(next http.Handler) http.Handler {
 			w.Header().Set("Vary", "Origin")
 			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 			w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Request-ID")
+			w.Header().Set("Access-Control-Expose-Headers", "X-Correlation-ID, X-Request-ID")
 		}
 		if r.Method == "OPTIONS" {
 			if origin != "" && !isLoopbackOrigin(origin) {
