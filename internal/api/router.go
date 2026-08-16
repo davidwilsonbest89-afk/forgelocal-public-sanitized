@@ -289,7 +289,15 @@ func (h *handler) getProfile(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
 		return
 	}
-	writeJSON(w, http.StatusOK, map[string]any{"data": p})
+	// T10 — reference-only projection: only the proxy registry id is returned
+	// (metadata, no credentials). The vault secret remains behind proxy.ref.*.
+	data := map[string]any{"data": p}
+	if h.proxyStore != nil {
+		if assigned := h.proxyStore.AssignedProxy(p.ID); assigned != nil {
+			data["proxy_id"] = assigned.ID
+		}
+	}
+	writeJSON(w, http.StatusOK, data)
 }
 
 func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {

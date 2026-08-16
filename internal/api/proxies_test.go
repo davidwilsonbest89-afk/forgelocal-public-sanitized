@@ -16,10 +16,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/go-chi/chi/v5"
 
+	"forgelocal/internal/profile"
 	"forgelocal/internal/proxies"
 )
 
@@ -27,7 +29,7 @@ import (
 // loopback interface, mirroring the T09 admin loopback test helper.
 type loopbackNet struct{}
 
-func (loopbackNet) Dial(network, address string) (net.Conn, error)         { return nil, nil }
+func (loopbackNet) Dial(network, address string) (net.Conn, error)           { return nil, nil }
 func (loopbackNet) DialTimeout(network, address string, _ interface{}) error { return nil }
 func (loopbackNet) Listen(network, address string) (net.Listener, error) {
 	return net.Listen("tcp", "127.0.0.1:0")
@@ -364,4 +366,73 @@ func TestProxyConcurrentMutationsAPI(t *testing.T) {
 	if err != nil || got.Port < 1000 || got.Port >= 1008 {
 		t.Errorf("unexpected final port: %+v %v", got, err)
 	}
+}
+
+// T10 — getProfile exposes only the proxy registry id, never credentials.
+func TestGetProfileProxyIdRedacted(t *testing.T) {
+	dir := t.TempDir()
+	proxyStore, err := proxies.NewStore(dir)
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	profileStore, err := profile.NewStore(dir)
+	if err != nil {
+		t.Fatalf("profile.NewStore: %v", err)
+	}
+	if err := profileStore.Create(&profile.Profile{ID: "p-1", Name: "redacted", RuntimeID: "rt-1"}); err != nil {
+		t.Fatalf("create profile: %v", err)
+	}
+	r := chi.NewRouter()
+	h := &handler{
+		cfg:        nil,
+		token:      "t10-test-token",
+		store:      profileStore,
+		proxyStore: proxyStore,
+		auditSink:  newWriteAuditSink(nil),
+	}
+	r.Use(correlationMiddleware)
+	r.Group(func(r chi.Router) {
+		r.Use(h.authMiddleware)
+		r.Use(h.requireLoopbackMiddleware)
+		r.Get("/api/profiles/{id}", h.getProfile)
+		r.Post("/api/proxies", h.createProxy)
+		r.Post("/api/proxies/{id}/assign", h.assignProxy)
+	})
+	ts := httptest.NewUnstartedServer(r)
+	ln, listenErr := net.Listen("tcp", "127.0.0.1:0")
+	if listenErr != nil {
+		t.Fatalf("listen: %v", listenErr)
+	}
+	ts.Listener = ln
+	ts.Start()
+	defer ts.Close()
+	id, createResp := createProxy(t, ts, map[string]any{"name": "px-redact", "type": "http", "host": "h", "port": 9090})
+	if createResp.StatusCode != 201 {
+		t.Fatalf("create proxy: %d", createResp.StatusCode)
+	}
+	if err := proxyStore.Assign("p-1", id); err != nil {
+		t.Fatal(err)
+	}
+	resp, data := doJSON(t, ts, http.MethodGet, "/api/profiles/p-1", "t10-test-token", nil)
+	if resp.StatusCode != 200 {
+		t.Fatalf("get profile: %d", resp.StatusCode)
+	}
+	if data["proxy_id"] != id {
+		t.Errorf("proxy_id: got %v, want %s", data["proxy_id"], id)
+	}
+	encoded := encodeJSON(t, data["proxy_data"])
+	for _, forbidden := range []string{"username", "password", "\"proxy\""} {
+		if strings.Contains(encoded, forbidden) {
+			t.Errorf("credential or proxy object leaked in getProfile: %s", forbidden)
+		}
+	}
+}
+
+func encodeJSON(t *testing.T, value any) string {
+	t.Helper()
+	encoded, err := json.Marshal(value)
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	return string(encoded)
 }
