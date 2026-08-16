@@ -27,6 +27,7 @@ import (
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/mcp"
 	"forgelocal/internal/profile"
+	"forgelocal/internal/proxies"
 	"forgelocal/internal/secrets"
 	"forgelocal/internal/workflow"
 )
@@ -360,7 +361,16 @@ func runServer(flags *serveFlags) {
 	}
 	defer backupDB.Close()
 
-	router, err := api.NewRouterWithReadOnlyCatalog(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore, backupDB, backupDB.DB())
+	// T10 proxy registry: a local-first file store in the same data
+	// directory as groups and fingerprint pools. Start failures are
+	// non-fatal to preserve existing behaviour; the proxy routes are
+	// simply not mounted without a store.
+	proxyStore, err := proxies.NewStore(cfg.DataDir)
+	if err != nil {
+		slog.Warn("proxy registry unavailable", "error", err)
+	}
+
+	router, err := api.NewRouterWithProxyRegistry(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore, backupDB, backupDB.DB(), proxyStore)
 	if err != nil {
 		slog.Error("api router", "error", err)
 		exitServerError(flags, "API router error: %v", err)

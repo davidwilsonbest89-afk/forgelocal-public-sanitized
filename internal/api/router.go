@@ -3,8 +3,8 @@ package api
 import (
 	"crypto/rand"
 	"crypto/subtle"
-	"encoding/hex"
 	"database/sql"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"log/slog"
@@ -24,6 +24,7 @@ import (
 	"forgelocal/internal/groups"
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/profile"
+	"forgelocal/internal/proxies"
 	bfruntime "forgelocal/internal/runtime"
 )
 
@@ -32,16 +33,23 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if len(groupStores) > 0 {
 		groupStore = groupStores[0]
 	}
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil, nil)
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil, nil, nil)
 }
 
 // NewRouterWithReadOnlyCatalog extends only the v1 readonly projections with
 // the Core-owned SQLite catalog. Existing business routes remain unchanged.
 func NewRouterWithReadOnlyCatalog(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB) (*chi.Mux, error) {
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB)
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, nil)
 }
 
-func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB) (*chi.Mux, error) {
+// NewRouterWithProxyRegistry adds the T10 proxy registry contract (CRUD,
+// profile↔proxy assignment) to the existing loopback-only admin group. All
+// other routes stay unchanged.
+func NewRouterWithProxyRegistry(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store) (*chi.Mux, error) {
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore)
+}
+
+func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -60,7 +68,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB)}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), proxyStore: proxyStore}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -77,10 +85,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Get("/api/profiles/{id}", h.getProfile)
 		r.Put("/api/profiles/{id}", h.updateProfile)
 		r.Delete("/api/profiles/{id}", h.deleteProfile)
-r.Post("/api/profiles/{id}/archive", h.archiveProfile)
-r.Post("/api/profiles/{id}/reopen", h.reopenProfile)
-r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
-r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
+		r.Post("/api/profiles/{id}/archive", h.archiveProfile)
+		r.Post("/api/profiles/{id}/reopen", h.reopenProfile)
+		r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
+		r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
 		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
 		r.Post("/api/profiles/{id}/export", h.exportProfile)
 		r.Post("/api/profiles/import", h.importProfile)
@@ -90,6 +98,15 @@ r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
 		r.Put("/api/groups/{name}", h.upsertGroup)
 		r.Delete("/api/groups/{name}", h.deleteGroup)
 		r.Delete("/api/groups/{name}/proxy", h.clearGroupProxy)
+		if h.proxyStore != nil {
+			r.Get("/api/proxies", h.listProxies)
+			r.Post("/api/proxies", h.createProxy)
+			r.Get("/api/proxies/{id}", h.getProxy)
+			r.Put("/api/proxies/{id}", h.updateProxy)
+			r.Post("/api/proxies/{id}/assign", h.assignProxy)
+			r.Delete("/api/proxies/{id}/assign", h.unassignProxy)
+			r.Delete("/api/proxies/{id}", h.deleteProxy)
+		}
 
 		r.Post("/api/sessions", h.createSession)
 		r.Get("/api/sessions", h.listSessions)
@@ -140,6 +157,7 @@ type handler struct {
 	readonlyCatalog  backup.ReadOnlyCatalog
 	auditSink        *writeAuditSink
 	readonlySessions *readOnlySessionBroker
+	proxyStore       *proxies.Store
 }
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {
