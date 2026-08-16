@@ -688,12 +688,12 @@ Reste à faire :
 - [x] T10-F1 : cadrage documentaire non normatif du lot T10. Cadrage produit : `docs/T10_PROXIES_FRAMING.md` (T10-FRAMING-20260816-001).
 - [x] T10-F2 : autorisation explicite d'ouverture T10 reçue du valideur (validation du cadrage + instruction de démarrage) ; code T10 autorisé.
 - Périmètre : référentiel proxy local Core Go (CRUD, validation http/socks5, hôte, port borné, région, secret_ref synthétique, affectation profil↔proxy, désaffectation, listing redacted, audit, correlation_id, loopback, erreurs machine-readable) ; dashboard client mémoire seule sans écriture SQLite directe. Interdictions : aucun proxy réseau réel, navigateur, runtime, Camoufox, intégration Decodo/fournisseur, backup/restore UI, release. `PUBLIC_RELEASE_BLOCKED` inchangé.
-- [ ] T10-1 : migration 0006_t10_proxies.sql (table proxies + index) ; store proxy avec mutex par proxy, validation serveur.
-- [ ] T10-2 : API `GET/POST /api/proxies`, `GET/PUT/DELETE /api/proxies/{id}`, affectation/désaffectation sur `PUT /api/profiles/{id}` (proxy_id), listing redacted (secret_ref seul).
-- [ ] T10-3 : tests Core : AC-PROXY-01/02/03/04/05/06 (validation, refus, affectation, jamais en clair, loopback 403, concurrence), migration, secrets synthétiques uniquement.
-- [ ] T10-4 : dashboard : client mémoire seule coreWrite étendu (routes proxy), UI référentiel + affectation, build prod + tsc + Playwright E2E T10.
-- [ ] T10-5 : contrôles finaux : `go test -race` (0 DATA RACE), `go vet`, `go build`, Gitleaks delta `[]`, `git diff --check`, RC inchangés.
-- [ ] T10-6 : archive de preuves redacted + manifeste portable + SHA-256 + rapport final 16 champs + commit/push.
+- [x] T10-1 : migration 0006_t10_proxies.sql (table proxies + index) ; store proxy avec mutex par proxy, validation serveur.
+- [x] T10-2 : API `GET/POST /api/proxies`, `GET/PUT/DELETE /api/proxies/{id}`, affectation/désaffectation sur `PUT /api/profiles/{id}` (proxy_id), listing redacted (secret_ref seul).
+- [x] T10-3 : tests Core : AC-PROXY-01/02/03/04/05/06 (validation, refus, affectation, jamais en clair, loopback 403, concurrence), migration, secrets synthétiques uniquement.
+- [x] T10-4 : dashboard : client mémoire seule coreWrite étendu (routes proxy), UI référentiel + affectation, build prod + tsc + Playwright E2E T10.
+- [x] T10-5 : contrôles finaux : `go test -race` (0 DATA RACE), `go vet`, `go build`, Gitleaks delta `[]`, `git diff --check`, RC inchangés.
+- [x] T10-6 : archive de preuves redacted + manifeste portable + SHA-256 + rapport final 16 champs + commit/push.
 - Note T10 : `Profile.Proxy` existe déjà (store.go l.43 : `ProxyConfig` socks5/http + `secret_ref` vers vault local `internal/secrets`), et T09 valide déjà `proxy_config` à la création. Le cœur T10 est le référentiel proxy indépendant (CRUD, validation, allocation profil, redaction, audit, loopback) + la qualification complète du vault `internal/secrets` (chiffrement/verrouillage SystemVault selon CDC) qui devient une dépendance critique : sans vault qualifié, aucun `secret_ref` réel ne doit être activé.
 - Interdictions T10 confirmées : aucun proxy réseau réel configuré/utilisé par le runtime, aucun Camoufox actif, aucun lancement, aucune intégration Decodo/fournisseur, aucun backup/restore UI, aucune release. T10 est un contrat local de gestion de référentiel, pas un connecteur réseau.
 - Statuts inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `SCAN_BLOCKED_UNKNOWN` (findings `validation_back01_integration/` préexistants, règle `generic-api-key`, classés antérieurs à T09), pilote suspendu, cinq gates publics en attente.
