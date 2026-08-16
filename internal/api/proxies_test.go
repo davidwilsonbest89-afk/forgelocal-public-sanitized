@@ -436,3 +436,63 @@ func encodeJSON(t *testing.T, value any) string {
 	}
 	return string(encoded)
 }
+
+func TestProxyAssignRefusesUnknownProfile(t *testing.T) {
+	// Le contrat d'affectation exige un profil réel du Core : un profile_id
+	// inexistant est refusé en 404 PROFILE_NOT_FOUND sans toucher au registre.
+	dir := t.TempDir()
+	proxyStore, err := proxies.NewStore(dir)
+	if err != nil {
+		t.Fatalf("NewStore: %v", err)
+	}
+	profileStore, err := profile.NewStore(dir)
+	if err != nil {
+		t.Fatalf("profile.NewStore: %v", err)
+	}
+	if err := profileStore.Create(&profile.Profile{ID: "p-known", Name: "known", RuntimeID: "rt-1"}); err != nil {
+		t.Fatalf("create profile: %v", err)
+	}
+	p := &proxies.Proxy{Name: "qa-refuse-ghost", Type: "http", Host: "198.51.100.10", Port: 8080, Region: "eu"}
+	if err := proxyStore.Create(p); err != nil {
+		t.Fatalf("create proxy: %v", err)
+	}
+	r := chi.NewRouter()
+	h := &handler{
+		cfg:        nil,
+		token:      "t10-test-token",
+		store:      profileStore,
+		proxyStore: proxyStore,
+		auditSink:  newWriteAuditSink(nil),
+	}
+	r.Use(correlationMiddleware)
+	r.Group(func(r chi.Router) {
+		r.Use(h.authMiddleware)
+		r.Use(h.requireLoopbackMiddleware)
+		r.Post("/api/proxies/{id}/assign", h.assignProxy)
+	})
+	ts := httptest.NewUnstartedServer(r)
+	ln, listenErr := net.Listen("tcp", "127.0.0.1:0")
+	if listenErr != nil {
+		t.Fatalf("listen: %v", listenErr)
+	}
+	ts.Listener = ln
+	ts.Start()
+	defer ts.Close()
+
+	resp, data := doJSON(t, ts, http.MethodPost, "/api/proxies/"+p.ID+"/assign?profile_id=ghost-profile-absent", "t10-test-token", nil)
+	if resp.StatusCode != 404 {
+		t.Fatalf("expected 404, got %d: %v", resp.StatusCode, data)
+	}
+	if data["error"].(map[string]any)["code"].(string) != "PROFILE_NOT_FOUND" {
+		t.Errorf("code: %s", data["error"])
+	}
+	// Aucune affectation fantôme n'a été produite.
+	if assigned := proxyStore.AssignedProxy("ghost-profile-absent"); assigned != nil {
+		t.Fatalf("ghost binding was created: %+v", assigned)
+	}
+	// L'affectation vers un profil réel du Core réussit.
+	resp2, _ := doJSON(t, ts, http.MethodPost, "/api/proxies/"+p.ID+"/assign?profile_id=p-known", "t10-test-token", nil)
+	if resp2.StatusCode != 200 {
+		t.Fatalf("assign known: expected 200, got %d", resp2.StatusCode)
+	}
+}

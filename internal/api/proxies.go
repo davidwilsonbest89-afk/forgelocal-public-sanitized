@@ -197,6 +197,17 @@ func (h *handler) assignProxy(w http.ResponseWriter, r *http.Request) {
 		proxyError(w, proxies.ErrInvalidProxy, correlationID)
 		return
 	}
+	// La liaison exige un profil réel du Core : un identifiant inconnu du registre
+	// des profils est refusé (404). Le référentiel proxy ne connaît pas les
+	// profils ; le contrat d'affectation appartient au Core, pas au dashboard.
+	if h.store != nil {
+		if _, err := h.store.Get(profileID); err != nil {
+			h.auditSink.auditRecord(r.Context(), "proxy.assign_failed", proxyID, correlationID, map[string]any{"error": "PROFILE_NOT_FOUND"})
+			writeError(w, http.StatusNotFound, "PROFILE_NOT_FOUND", "the profile does not exist")
+			w.Header().Set(correlationHeader, correlationID)
+			return
+		}
+	}
 	if err := h.proxyStore.Assign(profileID, proxyID); err != nil {
 		h.auditSink.auditRecord(r.Context(), "proxy.assign_failed", proxyID, correlationID, map[string]any{"error": mapProxyErrorCodeStr(err)})
 		proxyError(w, err, correlationID)
