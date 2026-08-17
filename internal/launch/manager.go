@@ -30,12 +30,12 @@ type sessionID string
 type LaunchState string
 
 const (
-	StateQueued    LaunchState = "queued"
-	StateStarting  LaunchState = "starting"
-	StateRunning   LaunchState = "running"
-	StateStopping  LaunchState = "stopping"
-	StateStopped   LaunchState = "stopped"
-	StateError     LaunchState = "error"
+	StateQueued      LaunchState = "queued"
+	StateStarting    LaunchState = "starting"
+	StateRunning     LaunchState = "running"
+	StateStopping    LaunchState = "stopping"
+	StateStopped     LaunchState = "stopped"
+	StateError       LaunchState = "error"
 	StateInterrupted LaunchState = "interrupted"
 )
 
@@ -66,6 +66,9 @@ type Options struct {
 	StartTimeout  time.Duration
 	// Recoverer reopens a session store snapshot recorded before a crash.
 	Recoverer Recoverer
+	// Journal persists T18 queue lifecycle transitions atomically. When set,
+	// no launcher is attached before its intent reached durable storage.
+	Journal OperationJournal
 }
 
 // Recoverer replays a durable session snapshot (crash recovery input).
@@ -104,6 +107,9 @@ type Session struct {
 	StartedAt time.Time
 	StoppedAt time.Time
 	Err       string // redacted error reason only
+	// CorrelID is a validated request correlation identifier. It is safe for
+	// audit joins and never carries a secret, token, path or runtime detail.
+	CorrelID string
 }
 
 // auditSink persists launch lifecycle events without secrets.
@@ -113,25 +119,26 @@ type auditSink interface {
 
 // AuditEvent is an append-only, redactable launch event.
 type AuditEvent struct {
-	Time     time.Time     `json:"time"`
-	Event    string        `json:"event"`
-	Session  sessionID     `json:"session"`
-	Profile  profileID     `json:"profile"`
-	From     LaunchState   `json:"from"`
-	To       LaunchState   `json:"to"`
-	Reason   string        `json:"reason,omitempty"` // redacted
-	CorrelID string        `json:"correlation_id,omitempty"`
+	Time     time.Time   `json:"time"`
+	Event    string      `json:"event"`
+	Session  sessionID   `json:"session"`
+	Profile  profileID   `json:"profile"`
+	From     LaunchState `json:"from"`
+	To       LaunchState `json:"to"`
+	Reason   string      `json:"reason,omitempty"` // redacted
+	CorrelID string      `json:"correlation_id,omitempty"`
 }
 
 // Manager serializes launch intent per profile under a global bound.
 type Manager struct {
-	mu       sync.Mutex
-	opt      Options
-	running  map[sessionID]*Session
+	mu        sync.Mutex
+	opt       Options
+	running   map[sessionID]*Session
 	byProfile map[profileID]*Session // at most one running|starting per profile
-	queue    []queuedRequest
-	attached map[sessionID]chan struct{} // closed when attach completes (ok/err)
-	sink     auditSink
+	queue     []queuedRequest
+	attached  map[sessionID]chan struct{} // closed when attach completes (ok/err)
+	sink      auditSink
+	journal   OperationJournal
 	// attach tracks every attach goroutine ever started so termination
 	// can be proven within a bounded deadline (no leaked goroutine).
 	attach sync.WaitGroup
@@ -160,7 +167,7 @@ type queuedRequest struct {
 	ctx      context.Context
 	cancel   context.CancelFunc
 	profile  profileID
-	session  sessionID
+	session  Session
 	replied  bool
 	result   chan Session
 	launcher Launcher
@@ -190,6 +197,7 @@ func NewManager(opt *Options, sink auditSink) *Manager {
 		byProfile: map[profileID]*Session{},
 		attached:  map[sessionID]chan struct{}{},
 		sink:      sink,
+		journal:   opt.Journal,
 		ctx:       ctx,
 		cancel:    cancel,
 	}
@@ -216,10 +224,10 @@ func (m *Manager) Status() Status {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	return Status{
-		Running:   len(m.running),
-		Queued:    len(m.queue),
-		Limit:     m.opt.GlobalLimit,
-		QueueMax:  m.opt.MaxQueueDepth,
+		Running:  len(m.running),
+		Queued:   len(m.queue),
+		Limit:    m.opt.GlobalLimit,
+		QueueMax: m.opt.MaxQueueDepth,
 	}
 }
 

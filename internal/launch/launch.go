@@ -2,6 +2,7 @@ package launch
 
 import (
 	"context"
+	"errors"
 	"sync"
 	"time"
 )
@@ -23,9 +24,30 @@ func (m *Manager) Request(ctx context.Context, launcher Launcher, p profileID) (
 		State:     StateQueued,
 		CreatedAt: time.Now().UTC(),
 	}
+	if err := ctx.Err(); err != nil {
+		if errors.Is(err, context.DeadlineExceeded) {
+			return Session{}, ErrWaitExpired
+		}
+		return Session{}, ErrCancelled
+	}
+	meta := metadataFromContext(ctx, sess.ID)
+	sess.CorrelID = meta.correlationID
 
 	m.mu.Lock()
 	m.CLockTaken.Add(1)
+	if m.journal != nil {
+		op, found, err := m.journal.Lookup(ctx, meta.idempotencyKey)
+		if err != nil {
+			m.mu.Unlock()
+			return Session{}, err
+		}
+		if found {
+			m.mu.Unlock()
+			return Session{ID: op.SessionID, ProfileID: op.ProfileID, State: op.State,
+				CreatedAt: op.CreatedAt, StoppedAt: op.UpdatedAt, Err: op.Reason,
+				CorrelID: op.CorrelationID}, nil
+		}
+	}
 	if _, taken := m.byProfile[p]; taken {
 		m.mu.Unlock()
 		m.record(AuditEvent{
@@ -40,12 +62,35 @@ func (m *Manager) Request(ctx context.Context, launcher Launcher, p profileID) (
 		m.mu.Unlock()
 		return Session{}, ErrQueueFull
 	}
+	if m.journal != nil {
+		op, created, err := m.journal.Reserve(ctx, JournalOperation{
+			SessionID:      sess.ID,
+			ProfileID:      sess.ProfileID,
+			IdempotencyKey: meta.idempotencyKey,
+			State:          StateQueued,
+			CorrelationID:  sess.CorrelID,
+		})
+		if err != nil {
+			m.mu.Unlock()
+			return Session{}, err
+		}
+		if !created {
+			m.mu.Unlock()
+			return Session{ID: op.SessionID, ProfileID: op.ProfileID, State: op.State,
+				CreatedAt: op.CreatedAt, StoppedAt: op.UpdatedAt, Err: op.Reason,
+				CorrelID: op.CorrelationID}, nil
+		}
+	}
 
 	// If the global limit is free and no conflicting session exists,
 	// start immediately without queuing (AC-CAMO-01 fast path). A
 	// dedicated reply channel still carries the final snapshot so attach
 	// failures are never reported as a bare context error.
 	if len(m.running) < m.opt.GlobalLimit {
+		if err := m.transitionDurable(ctx, sess, StateQueued, StateStarting, ""); err != nil {
+			m.mu.Unlock()
+			return Session{}, err
+		}
 		reply := make(chan Session, 1)
 		m.begin(ctx, sess, launcher, reply)
 		m.mu.Unlock()
@@ -77,7 +122,7 @@ func (m *Manager) Request(ctx context.Context, launcher Launcher, p profileID) (
 		ctx:      ctx,
 		cancel:   cancel,
 		profile:  p,
-		session:  sess.ID,
+		session:  sess,
 		result:   make(chan Session, 1),
 		launcher: launcher,
 	}
@@ -97,11 +142,12 @@ func (m *Manager) Request(ctx context.Context, launcher Launcher, p profileID) (
 			}
 		}
 		m.mu.Unlock()
+		_ = m.transitionDurable(context.Background(), sess, StateQueued, StateInterrupted, "queue context ended")
 		if ctx.Err() == context.DeadlineExceeded {
 			m.record(AuditEvent{
 				Time: time.Now().UTC(), Event: "wait_expired",
 				Session: sess.ID, Profile: p, From: StateQueued,
-				Reason: "queue wait deadline",
+				Reason: "queue wait deadline", CorrelID: sess.CorrelID,
 			})
 			m.CReqResolved.Add(1)
 			return sess, ErrWaitExpired
@@ -139,7 +185,7 @@ func (m *Manager) begin(ctx context.Context, sess Session, launcher Launcher, no
 	// (shared with this goroutine and with cancelSession) : allocate a
 	// dedicated heap copy so the parameter stays local to begin.func1.
 	heap := &Session{ID: sess.ID, ProfileID: sess.ProfileID,
-		State: sess.State, CreatedAt: sess.CreatedAt}
+		State: sess.State, CreatedAt: sess.CreatedAt, CorrelID: sess.CorrelID}
 	m.running[sess.ID] = heap
 	m.byProfile[sess.ProfileID] = heap
 
@@ -153,30 +199,38 @@ func (m *Manager) begin(ctx context.Context, sess Session, launcher Launcher, no
 		// guaranteeing bounded termination even when the caller context
 		// never cancels. A start-timeout cap applies only when the
 		// caller did not already bound the request.
-		ctx = mergeContexts(ctx, m.ctx)
+		callerCtx := ctx
+		attachCtx := mergeContexts(callerCtx, m.ctx)
 		var cancel context.CancelFunc
-		if _, hasDeadline := ctx.Deadline(); !hasDeadline {
-			ctx, cancel = context.WithTimeout(ctx, m.opt.StartTimeout)
+		if _, hasDeadline := attachCtx.Deadline(); !hasDeadline {
+			attachCtx, cancel = context.WithTimeout(attachCtx, m.opt.StartTimeout)
 		} else {
 			cancel = func() {}
 		}
 		defer cancel()
 
-		err := launcher.Attach(ctx, sess)
+		err := launcher.Attach(attachCtx, sess)
 
 		// The final snapshot (success or redacted failure) is always
 		// pushed to notify, so waiters never read a stale running map.
 		m.mu.Lock()
 		var final Session
 		if err != nil {
-			m.failLocked(sess, err)
+			m.failLocked(sess, err, attachFailureState(err, callerCtx))
 			final = sess
-			final.State = StateError
+			final.State = attachFailureState(err, callerCtx)
 			final.Err = redacted(err.Error())
 		} else if st, ok := m.running[sess.ID]; ok {
-			st.State = StateRunning
-			st.StartedAt = time.Now().UTC()
-			final = *st
+			if journalErr := m.transitionDurable(context.Background(), *st, StateStarting, StateRunning, ""); journalErr != nil {
+				m.failLocked(sess, journalErr, StateError)
+				final = sess
+				final.State = StateError
+				final.Err = redacted(journalErr.Error())
+			} else {
+				st.State = StateRunning
+				st.StartedAt = time.Now().UTC()
+				final = *st
+			}
 		} else {
 			final = sess
 			final.State = StateInterrupted
@@ -189,13 +243,13 @@ func (m *Manager) begin(ctx context.Context, sess Session, launcher Launcher, no
 		m.CNotifySent.Add(1)
 
 		// Promotion is delegated to a single dedicated goroutine so that
-	// finish-of-attach never hammers the manager mutex under load
-	// (no lock contention fan-out, AC-CAMO-02 fairness).
-	m.CPromoteSign.Add(1)
-	select {
-	case m.promote <- struct{}{}:
-	default:
-	}
+		// finish-of-attach never hammers the manager mutex under load
+		// (no lock contention fan-out, AC-CAMO-02 fairness).
+		m.CPromoteSign.Add(1)
+		select {
+		case m.promote <- struct{}{}:
+		default:
+		}
 	}()
 }
 
@@ -210,9 +264,13 @@ func (m *Manager) notifyNotifyLocked(notify chan<- Session, sess Session) {
 
 // failLocked records a failed attach and cleans up without leaving a
 // lock or stale state (AC-CAMO-04). m.mu must be held.
-func (m *Manager) failLocked(sess Session, err error) {
+func (m *Manager) failLocked(sess Session, err error, finalState LaunchState) {
+	reason := "attach error"
+	if finalState == StateInterrupted {
+		reason = "attach cancelled"
+	}
 	if st, ok := m.running[sess.ID]; ok {
-		st.State = StateError
+		st.State = finalState
 		st.StoppedAt = time.Now().UTC()
 		st.Err = redacted(err.Error())
 	}
@@ -222,9 +280,17 @@ func (m *Manager) failLocked(sess Session, err error) {
 	m.record(AuditEvent{
 		Time: time.Now().UTC(), Event: "attach_failed",
 		Session: sess.ID, Profile: sess.ProfileID,
-		From: StateStarting, To: StateError,
-		Reason: "attach error",
+		From: StateStarting, To: finalState,
+		Reason: reason, CorrelID: sess.CorrelID,
 	})
+	_ = m.transitionDurable(context.Background(), sess, StateStarting, finalState, reason)
+}
+
+func attachFailureState(err error, callerCtx context.Context) LaunchState {
+	if errors.Is(err, context.Canceled) && errors.Is(callerCtx.Err(), context.Canceled) {
+		return StateInterrupted
+	}
+	return StateError
 }
 
 // wakeNext promotes the oldest waiter for a free profile slot, if any.
@@ -236,20 +302,24 @@ func (m *Manager) wakeNext() {
 	if len(m.running) >= m.opt.GlobalLimit || len(m.queue) == 0 {
 		return
 	}
-		// Find the first waiter whose profile is free and promote it.
-		for i := range m.queue {
-			if _, taken := m.byProfile[m.queue[i].profile]; taken {
-				continue
-			}
-			qr := m.queue[i]
-			m.queue = append(m.queue[:i], m.queue[i+1:]...)
-			sess := Session{
-				ID: qr.session, ProfileID: qr.profile,
-				State: StateStarting, CreatedAt: time.Now().UTC(),
-			}
-			m.begin(qr.ctx, sess, qr.launcher, qr.result)
+	// Find the first waiter whose profile is free and promote it.
+	for i := range m.queue {
+		if _, taken := m.byProfile[m.queue[i].profile]; taken {
+			continue
+		}
+		qr := m.queue[i]
+		m.queue = append(m.queue[:i], m.queue[i+1:]...)
+		sess := qr.session
+		sess.State = StateStarting
+		if err := m.transitionDurable(qr.ctx, sess, StateQueued, StateStarting, ""); err != nil {
+			sess.State = StateError
+			sess.Err = redacted(err.Error())
+			m.notifyNotifyLocked(qr.result, sess)
 			return
 		}
+		m.begin(qr.ctx, sess, qr.launcher, qr.result)
+		return
+	}
 }
 
 // removeRequest marks a queue entry as already answered so wakeNext skips it.
@@ -290,6 +360,7 @@ func (m *Manager) Stop(ctx context.Context) {
 		if m.queue[i].cancel != nil {
 			m.queue[i].cancel()
 		}
+		_ = m.transitionDurable(context.Background(), m.queue[i].session, StateQueued, StateInterrupted, "manager shutdown")
 		m.queue[i].replied = true
 	}
 	m.queue = nil
@@ -370,14 +441,20 @@ func (m *Manager) stopOne(ctx context.Context, w stopWork) {
 			Time: time.Now().UTC(), Event: "session_stopped",
 			Session: w.sess.ID, Profile: w.sess.ProfileID,
 			From: w.sess.State, To: StateStopped,
-			Reason: "manager shutdown",
+			Reason: "manager shutdown", CorrelID: snap.CorrelID,
 		})
+		_ = m.transitionDurable(context.Background(), snap, w.sess.State, StateStopped, "manager shutdown")
 	}
 }
 
 // Recover replays a crash snapshot: interrupted or running sessions are
 // reconciled so no ghost session survives (AC-CAMO-03).
 func (m *Manager) Recover(recs []RecoveredSession) []Session {
+	if m.journal != nil && len(recs) == 0 {
+		if persisted, err := m.journal.Reconcile(context.Background()); err == nil {
+			recs = persisted
+		}
+	}
 	if m.opt.Recoverer != nil && len(recs) == 0 {
 		recs = m.opt.Recoverer.Recover()
 	}
@@ -453,6 +530,7 @@ func (m *Manager) cancelSession(sess Session) {
 		delete(m.running, sess.ID)
 		delete(m.byProfile, sess.ProfileID)
 		delete(m.attached, sess.ID)
+		_ = m.transitionDurable(context.Background(), *st, StateStarting, StateInterrupted, "cancelled")
 	}
 	m.mu.Unlock()
 }
@@ -463,6 +541,13 @@ func (m *Manager) record(e AuditEvent) {
 	}
 }
 
+func (m *Manager) transitionDurable(ctx context.Context, sess Session, from, to LaunchState, reason string) error {
+	if m.journal == nil {
+		return nil
+	}
+	return m.journal.Transition(ctx, sess.ID, from, to, reason, sess.CorrelID)
+}
+
 // SessionCopy returns a redactable snapshot of the session.
 func (s *Session) SessionCopy() Session {
 	if s == nil {
@@ -470,5 +555,3 @@ func (s *Session) SessionCopy() Session {
 	}
 	return *s
 }
-
-
