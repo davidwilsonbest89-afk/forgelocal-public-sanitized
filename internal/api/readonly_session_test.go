@@ -27,6 +27,7 @@ func TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited(t *testing.T) {
 	issue := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/codes", nil)
 	issue.RemoteAddr = "127.0.0.1:41234"
 	issue.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	issue.Header.Set("Origin", "http://localhost:3000")
 	issued := httptest.NewRecorder()
 	router.ServeHTTP(issued, issue)
 	if issued.Code != http.StatusCreated {
@@ -42,6 +43,7 @@ func TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited(t *testing.T) {
 	payload, _ := json.Marshal(map[string]string{"code": codeReply.Code})
 	exchange := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/bootstrap", bytes.NewReader(payload))
 	exchange.RemoteAddr = "127.0.0.1:41235"
+	exchange.Header.Set("Origin", "http://localhost:3000")
 	bootstrapped := httptest.NewRecorder()
 	router.ServeHTTP(bootstrapped, exchange)
 	if bootstrapped.Code != http.StatusOK {
@@ -64,6 +66,7 @@ func TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited(t *testing.T) {
 
 	writeAttempt := httptest.NewRequest(http.MethodPost, "/api/profiles", bytes.NewBufferString(`{"name":"must-not-create"}`))
 	writeAttempt.Header.Set("Authorization", "Bearer "+sessionReply.Token)
+	writeAttempt.Header.Set("Origin", "http://localhost:3000")
 	writeDenied := httptest.NewRecorder()
 	router.ServeHTTP(writeDenied, writeAttempt)
 	if writeDenied.Code != http.StatusUnauthorized {
@@ -72,14 +75,18 @@ func TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited(t *testing.T) {
 
 	replay := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/bootstrap", bytes.NewReader(payload))
 	replay.RemoteAddr = "127.0.0.1:41236"
+	replay.Header.Set("Origin", "http://localhost:3000")
 	replayed := httptest.NewRecorder()
 	router.ServeHTTP(replayed, replay)
 	if replayed.Code != http.StatusUnauthorized {
 		t.Fatalf("replayed code status=%d body=%s", replayed.Code, replayed.Body.String())
 	}
 
+	// Remote origin: the request now fails at originGuard (403 ORIGIN_REQUIRED_LOCAL_ONLY)
+	// before requireLoopbackMiddleware; the effective refusal of the mutation is unchanged.
 	remote := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/bootstrap", bytes.NewReader(payload))
 	remote.RemoteAddr = "203.0.113.10:41237"
+	remote.Header.Set("Origin", "https://203.0.113.10")
 	nonLoopback := httptest.NewRecorder()
 	router.ServeHTTP(nonLoopback, remote)
 	if nonLoopback.Code != http.StatusForbidden {

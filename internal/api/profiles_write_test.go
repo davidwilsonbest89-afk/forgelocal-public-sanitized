@@ -105,6 +105,9 @@ func bytesReader(body string) *strings.Reader {
 func newLoopbackRequest(method, path string, body io.Reader) *http.Request {
 	req := httptest.NewRequest(method, path, body)
 	req.RemoteAddr = "127.0.0.1:0"
+	// originGuard (G15-B): mutations require a loopback Origin or Referer.
+	req.Header.Set("Origin", "http://localhost:3000")
+	req.Header.Set("Referer", "http://localhost:3000/")
 	return req
 }
 

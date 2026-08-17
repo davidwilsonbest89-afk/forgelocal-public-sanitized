@@ -98,11 +98,6 @@ func (h *handler) getSessionPage(r *http.Request) (playwright.Page, error) {
 }
 
 func (h *handler) navigate(w http.ResponseWriter, r *http.Request) {
-	page, err := h.getSessionPage(r)
-	if err != nil {
-		writeError(w, 404, "NOT_FOUND", err.Error())
-		return
-	}
 	var req struct {
 		URL       string `json:"url"`
 		WaitUntil string `json:"wait_until,omitempty"`
@@ -112,12 +107,22 @@ func (h *handler) navigate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Fail-closed local-only policy (W2): validate the URL BEFORE touching any
+	// session state. Reject everything except file:// and
+	// http(s)://127.0.0.1|localhost. No implicit https:// prefixing.
 	if req.URL == "" {
 		writeError(w, 400, "INVALID_URL", "url is required")
 		return
 	}
-	if !strings.HasPrefix(req.URL, "http://") && !strings.HasPrefix(req.URL, "https://") {
-		req.URL = "https://" + req.URL
+	if err := ValidateLocalURL(req.URL); err != nil {
+		writeError(w, 400, "URL_REJECTED_LOCAL_ONLY", err.Error())
+		return
+	}
+
+	page, err := h.getSessionPage(r)
+	if err != nil {
+		writeError(w, 404, "NOT_FOUND", err.Error())
+		return
 	}
 
 	opts := playwright.PageGotoOptions{}

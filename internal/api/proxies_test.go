@@ -93,6 +93,9 @@ func doJSON(t *testing.T, ts *httptest.Server, method, path string, token string
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
+	// originGuard (G15-B): mutations require a loopback Origin/Referer.
+	// ts.URL is http://127.0.0.1:<port> — a valid loopback origin.
+	req.Header.Set("Origin", ts.URL)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		t.Fatalf("do: %v", err)

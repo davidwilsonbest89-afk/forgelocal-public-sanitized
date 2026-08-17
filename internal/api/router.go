@@ -55,6 +55,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	r.Use(correlationMiddleware)
 	r.Use(middleware.Recoverer)
 	r.Use(corsLocal)
+	r.Use(originGuard)
 	r.Use(requestIDMiddleware)
 
 	token, err := loadOrCreateToken(cfg.DataDir)
@@ -455,6 +456,32 @@ func corsLocal(next http.Handler) http.Handler {
 		}
 		next.ServeHTTP(w, r)
 	})
+}
+
+// originGuard enforces the fail-closed G15-B contract: state-changing requests
+// (POST, PUT, DELETE, PATCH) must carry a loopback Origin OR Referer header.
+// Cross-origin mutation attempts from the network are rejected before auth.
+func originGuard(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet || r.Method == http.MethodHead || r.Method == http.MethodOptions {
+			next.ServeHTTP(w, r)
+			return
+		}
+		origin := r.Header.Get("Origin")
+		if isLoopbackOrigin(origin) {
+			next.ServeHTTP(w, r)
+			return
+		}
+		if isLoopbackReferrer(r.Referer()) {
+			next.ServeHTTP(w, r)
+			return
+		}
+		writeError(w, http.StatusForbidden, "ORIGIN_REQUIRED_LOCAL_ONLY", "mutations require a loopback Origin or Referer")
+	})
+}
+
+func isLoopbackReferrer(ref string) bool {
+	return ref != "" && isLoopbackOrigin(ref)
 }
 
 func isLoopbackOrigin(origin string) bool {
