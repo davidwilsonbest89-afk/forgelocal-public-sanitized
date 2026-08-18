@@ -10,8 +10,12 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"strings"
 	"testing"
+	"unsafe"
+
+	"forgelocal/internal/browser"
 
 	"github.com/go-chi/chi/v5"
 )
@@ -45,7 +49,7 @@ func rejectHandler(t *testing.T, url string) int {
 
 func TestNavigateURLPolicy(t *testing.T) {
 	cases := []struct {
-		url string
+		url  string
 		code int
 	}{
 		// acceptés
@@ -70,26 +74,47 @@ func TestNavigateURLPolicy(t *testing.T) {
 	}
 }
 
-// T17-R / G15-A : la projection GET /api/sessions ne doit exposer que
-// session_id, profile_id et runtime_id. Aucun champ technique (port, URL
-// de connexion, chemin de profil, binaire exécutable) ne doit transparaître,
-// même si la structure interne du browser.Manager en contient.
+// T17-R / G15-A : la projection GET /api/sessions produite par le handler
+// de production (*handler).listSessions ne doit exposer que session_id,
+// profile_id et runtime_id. Aucun champ technique (port, URL de connexion,
+// chemin de profil, binaire exécutable) ne doit transparaître, même si les
+// structures internes du browser.Manager en contiennent.
+//
+// Le test injecte une session réelle dans un browser.Manager réel (sans
+// playwright : seul le champ sessions privé est alimenté, ce qui n'engage
+// aucun binaire ni aucun runtime), puis appelle la méthode du handler produit.
 func TestListSessionsRedactsTechnicalFields(t *testing.T) {
-	r := chi.NewRouter()
-	r.Get("/api/sessions", func(w http.ResponseWriter, r *http.Request) {
-		// Projection redacted G15-A : seule la forme contractuelle est
-		// sérialisée, volontairement sans ConnectURL/ProfileDir/ExecutablePath.
-		sessions := []map[string]string{
-			{"session_id": "sess-1", "profile_id": "prof-1", "runtime_id": "browseforge-chromium"},
-			{"session_id": "sess-2", "profile_id": "prof-2", "runtime_id": "cloakbrowser"},
-		}
-		writeJSON(w, 200, map[string]any{"data": sessions, "total": len(sessions)})
-	})
+	// Fixture réelle : une manager browser.Manager dont la carte privée de
+	// sessions contient deux sessions dont tous les champs techniques sont
+	// non vides. La valeur technique sensible est volontairement chargée.
+	mgr := &browser.Manager{}
+	sessionsField := reflect.ValueOf(mgr).Elem().FieldByName("sessions")
+	if !sessionsField.IsValid() {
+		t.Fatal("browser.Manager.sessions field missing")
+	}
+	reflect.NewAt(sessionsField.Type(), unsafe.Pointer(sessionsField.UnsafeAddr())).Elem().Set(
+		reflect.ValueOf(map[string]*browser.Session{
+			"sess-1": {
+				ID: "sess-1", ProfileID: "prof-1", RuntimeID: "browseforge-chromium",
+				ConnectURL:     "ws://127.0.0.1:19280/api/playwright/ws/sess-1",
+				ProfileDir:     "/home/user/.forgelocal/profiles/prof-1",
+				UserDataDir:    "/home/user/.forgelocal/userdata/prof-1",
+				ExecutablePath: "/opt/browseforge/chromium",
+			},
+			"sess-2": {
+				ID: "sess-2", ProfileID: "prof-2", RuntimeID: "cloakbrowser",
+				ConnectURL:     "ws://[::1]:19280/api/playwright/ws/sess-2",
+				ProfileDir:     "/home/user/.forgelocal/profiles/prof-2",
+				UserDataDir:    "/home/user/.forgelocal/userdata/prof-2",
+				ExecutablePath: "/opt/cloakbrowser/bin",
+			},
+		}),
+	)
+	h := &handler{mgr: mgr}
 	rec := httptest.NewRecorder()
-	req := httptest.NewRequest(http.MethodGet, "/api/sessions", nil)
-	r.ServeHTTP(rec, req)
+	h.listSessions(rec, httptest.NewRequest(http.MethodGet, "/api/sessions", nil))
 	if rec.Code != 200 {
-		t.Fatalf("GET /api/sessions -> %d, want 200", rec.Code)
+		t.Fatalf("GET /api/sessions -> %d, want 200 (body=%s)", rec.Code, rec.Body.String())
 	}
 	var resp struct {
 		Data []map[string]any `json:"data"`
@@ -113,6 +138,8 @@ func TestListSessionsRedactsTechnicalFields(t *testing.T) {
 			}
 		}
 	}
+	// Vérification brute du corps sérialisé : chaque variante de sérialisation
+	// des champs techniques doit être absente de la réponse HTTP réelle.
 	forbidden := []string{"connect_url", "connectURL", "profile_dir", "profileDir",
 		"executable_path", "executablePath", "port", "user_data_dir", "userDataDir"}
 	body := rec.Body.String()
