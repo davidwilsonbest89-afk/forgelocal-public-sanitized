@@ -30,3 +30,12 @@
 - [ ] Ajouter les tests de sécurité et de non-régression nécessaires aux accès fichiers et à leur fermeture.
 - [ ] Exécuter `go test -count=1 -race ./...`, vet, build, Gitleaks et Gosec sur un clone frais.
 - [ ] Créer uniquement après les contrôles un commit G6, un tag local de conservation, bundle, clone neuf et archive finale non auto-référentielle.
+
+## T17-R / G15-R — lot propre post-G6
+
+- [ ] Phase 1 : auditer G15-A (projections redacted), G15-B (origin/referer fail-closed), G15-C (sérialisation par profil) — tableau PRESENT_AND_TESTED / PRESENT_UNTESTED / ABSENT.
+- [ ] Phase 2 : ajouter uniquement le code et les tests minimaux manquants (aucune réécriture de l’existant testé).
+- [ ] Phase 3 : tests ciblés `-race`, suite complète `-race`, vet, build, Gitleaks et Gosec sur la plage immuable du lot.
+- [ ] Phase 4 : commit, tag, bundle + sidecar, clone neuf, `git fsck --full`, manifeste non auto-référentiel, archive ZIP + sidecar + re-scan.
+- [ ] Phase 5 : rapport final avec statut `T17-R_APPROVED_VERIFIABLE_LOCAL` ou écarts documentés honnêtement.
+- [ ] Interdictions : pas de Camoufox, pas de proxy réel, pas de SystemVault natif, pas de dashboard hors tests, pas de T08, pas de release, statuts bloquants inchangés.
