@@ -1,0 +1,12 @@
+{
+  "added_go_file_count": 0,
+  "added_go_line_count": 0,
+  "added_go_lines": {},
+  "baseline_commit": "55776a4a802e5c9c36b4a49a98787a40bd215619",
+  "gosec_findings_on_added_line_count": 0,
+  "gosec_findings_on_added_lines": [],
+  "gosec_total_issue_count": 194,
+  "range": "55776a4a802e5c9c36b4a49a98787a40bd215619..e6e4ebd96f12089dcc38d77226ddfacb8b6806c7",
+  "reimplementation_commit": "e6e4ebd96f12089dcc38d77226ddfacb8b6806c7",
+  "repository": "/home/ubuntu/forgebaseline-reimpl"
+}
