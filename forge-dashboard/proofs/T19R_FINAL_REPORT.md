@@ -4,7 +4,7 @@
 
 ## 1. Périmètre et non-restauration
 
-T19-R est une **qualification intégrée clean-room de la lignée actuelle** (`e6e4ebd96f12089dcc38d77226ddfacb8b6806c7`, post-T18-R). Il ne restaure pas le T17 historique perdu ; `T17_SOURCE_SNAPSHOT_UNRECOVERABLE` demeure inchangé, tout comme le blocage historique T18 (`T18_BLOCKED_BASELINE_SOURCE_NOT_FOUND` pour la validation globale originale). Aucun artefact T00–T18 n'a été modifié.
+T19-R est une **qualification intégrée clean-room de la lignée actuelle** (`96d8f71664c27cbb99b299623f1cd07f90212d9e`, post-T18-R ; la base de qualification est `e6e4ebd96f12089dcc38d77226ddfacb8b6806c7`). Il ne restaure pas le T17 historique perdu ; `T17_SOURCE_SNAPSHOT_UNRECOVERABLE` demeure inchangé, tout comme le blocage historique T18 (`T18_BLOCKED_BASELINE_SOURCE_NOT_FOUND` pour la validation globale originale). Aucun artefact T00–T18 n'a été modifié.
 
 ## 2. Gap audit (Phase 1)
 
@@ -54,7 +54,7 @@ Les 22 tests couvrent T05 (bootstrap loopback à usage unique, mémoire seule, r
 
 ## 7. Conservation
 
-Commit de preuves : `tbd` — tag `tbd`. Bundle avec sidecar SHA-256, `git bundle verify`, clone neuf, `git fsck --full`, archive ZIP avec manifeste non auto-référentiel et sidecar SHA-256.
+Commits de preuves : `bda7723` (métadonnées JSON, audit, rapports) puis `96d8f71664c27cbb99b299623f1cd07f90212d9e` (logs bruts), tous deux poussés. Tag annoté : `t19r-dashboard-core-integration-verified-2026-08-18` (objet `5c4187498afbe1b2c5715bcffbd16068487edd49`), poussé. Bundle : `forgelocal-t19r-dashboard-core-96d8f71.bundle`, SHA-256 `751f90abb3996747c8de9f4a8a60413cc6dbccc8a34adf5a5220fd0960353ada`, `git bundle verify` OK. Clone neuf exclusivement depuis le bundle : `HEAD=96d8f71664c27cbb99b299623f1cd07f90212d9e`, tag vérifié, `git fsck --full` exit 0, qualification Core rejouée (exit 0, 0, 0), Gosec filtré 0 finding / 0 ligne Go ajoutée, Gitleaks patch 0 finding exit 0. Archive ZIP : `forgelocal-t19r-evidence-96d8f71.zip`, SHA-256 `962a660a03df36f195fe8c153074419fcad39cbae6e9fc1f7321eaf8ce6d250e`, manifeste non auto-référentiel 22/22.
 
 ## 8. Statuts bloquants maintenus (inchangés)
 
