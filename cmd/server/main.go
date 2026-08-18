@@ -23,6 +23,7 @@ import (
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
 	"forgelocal/internal/fingerprint"
+	bfrt "forgelocal/internal/runtime"
 	"forgelocal/internal/groups"
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/mcp"
@@ -370,7 +371,31 @@ func runServer(flags *serveFlags) {
 		slog.Warn("proxy registry unavailable", "error", err)
 	}
 
-	router, err := api.NewRouterWithProxyRegistry(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore, backupDB, backupDB.DB(), proxyStore)
+	// T14 runtime qualification: qualify enabled runtimes (real headless
+	// probe, SHA-256, SQLite state machine) at startup and expose the
+	// redacted registry to the local API surface.
+	qualifier := bfrt.NewQualifier(backupDB.DB())
+	if err := qualifier.Migrate(context.Background()); err != nil {
+		slog.Warn("runtime qualification migration skipped", "error", err)
+	}
+	qualifyRuntime := func(id string) {
+		raw, ok := cfg.Runtimes[id]
+		if !ok || raw.Enabled == nil || !*raw.Enabled || raw.BinaryPath == "" {
+			return
+		}
+		info, err := qualifier.Qualify(context.Background(), bfrt.ID(id), raw.BinaryPath)
+		if err != nil {
+			slog.Warn("runtime qualification failed", "id", id, "error", err)
+			return
+		}
+		slog.Info("runtime qualified", "id", id, "state", info.State, "version", info.Version)
+	}
+	for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "camoufox", "cloakbrowser"} {
+		qualifyRuntime(id)
+	}
+	qualifiedRegistry := bfrt.NewQualifiedRegistry(backupDB.DB())
+
+	router, err := api.NewRouterWithQualifiedRegistry(cfg, profileStore, browserMgr, fpPool, backupSvc, groupStore, backupDB, backupDB.DB(), proxyStore, qualifiedRegistry)
 	if err != nil {
 		slog.Error("api router", "error", err)
 		exitServerError(flags, "API router error: %v", err)

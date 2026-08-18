@@ -7,7 +7,9 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
+	urlpkg "net/url"
 	"os"
 	"path/filepath"
 	"strings"
@@ -834,6 +836,12 @@ func validateConfig(cfg *config.Config) error {
 }
 
 func readToken(configPath, baseDir string) (string, string, error) {
+	// The server honours BROWSEFORGE_TOKEN in preference to the on-disk token;
+	// the CLI must resolve the same secret so read-only session codes can be
+	// emitted when the admin token lives in the environment only.
+	if envToken := strings.TrimSpace(os.Getenv("BROWSEFORGE_TOKEN")); envToken != "" {
+		return envToken, "env:BROWSEFORGE_TOKEN", nil
+	}
 	cfg, err := config.Load(configPath)
 	if err != nil {
 		return "", "", err
@@ -969,6 +977,7 @@ func apiGET(url, token string) (map[string]any, error) {
 	if err != nil {
 		return nil, err
 	}
+	setCLILoopbackOrigin(req, url)
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)
 	}
@@ -985,10 +994,41 @@ func apiPOST(url, token string, body any) (map[string]any, error) {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
+	setCLILoopbackOrigin(req, url)
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)
 	}
 	return doJSON(req)
+}
+
+// setCLILoopbackOrigin stamps the CLI request with a loopback Origin derived
+// from the target URL so the Core's originGuard (G15-B) accepts local-first
+// mutations. Hostile hosts get no Origin/Referer and are refused by the Core.
+func setCLILoopbackOrigin(req *http.Request, url string) {
+	u, err := urlpkg.Parse(url)
+	if err != nil {
+		return
+	}
+	if !isLoopbackHost(u.Hostname()) {
+		return
+	}
+	scheme := u.Scheme
+	if scheme == "" {
+		scheme = "http"
+	}
+	origin := scheme + "://" + u.Host
+	req.Header.Set("Origin", origin)
+	req.Header.Set("Referer", origin+"/")
+}
+
+func isLoopbackHost(host string) bool {
+	if host == "localhost" || host == "127.0.0.1" || host == "[::1]" {
+		return true
+	}
+	if ip := net.ParseIP(strings.Trim(host, "[]")); ip != nil && ip.IsLoopback() {
+		return true
+	}
+	return false
 }
 
 func doJSON(req *http.Request) (map[string]any, error) {

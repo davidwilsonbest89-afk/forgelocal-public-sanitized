@@ -1,11 +1,13 @@
 package api
 
 import (
+	"context"
 	"crypto/rand"
 	"crypto/subtle"
 	"database/sql"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net"
@@ -20,6 +22,7 @@ import (
 	"forgelocal/internal/backup"
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
+	"forgelocal/internal/environment"
 	"forgelocal/internal/fingerprint"
 	"forgelocal/internal/groups"
 	"forgelocal/internal/humanize"
@@ -33,23 +36,35 @@ func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if len(groupStores) > 0 {
 		groupStore = groupStores[0]
 	}
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil, nil, nil)
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil, nil, nil, nil)
 }
 
 // NewRouterWithReadOnlyCatalog extends only the v1 readonly projections with
 // the Core-owned SQLite catalog. Existing business routes remain unchanged.
 func NewRouterWithReadOnlyCatalog(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB) (*chi.Mux, error) {
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, nil)
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, nil, nil)
 }
 
 // NewRouterWithProxyRegistry adds the T10 proxy registry contract (CRUD,
 // profile↔proxy assignment) to the existing loopback-only admin group. All
 // other routes stay unchanged.
 func NewRouterWithProxyRegistry(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store) (*chi.Mux, error) {
-	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore)
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore, nil)
 }
 
-func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store) (*chi.Mux, error) {
+// NewRouterWithQualifiedRegistry wires the T14 runtime qualification registry
+// (redacted SQLite-backed qualified catalog) into the router.
+func NewRouterWithQualifiedRegistry(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore, registry)
+}
+
+// NewRouterWithEnvironment exposes the T13 projected environment diagnostic
+// alongside the qualification registry. Existing routes are untouched.
+func NewRouterWithEnvironment(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
+	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore, registry)
+}
+
+func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -69,7 +84,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), proxyStore: proxyStore}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -126,6 +141,13 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Get("/api/playwright/endpoint", h.playwrightEndpoint)
 		r.Get("/api/playwright/ws/{id}", h.playwrightWSProxy)
 		r.Post("/api/v1/readonly/session/codes", h.issueReadOnlySessionCode)
+		// T13/T14 are projected diagnostic catalogues. They remain admin-only:
+		// read-only session tokens are explicitly refused by authMiddleware.
+		if h.qualifiedRegistry != nil {
+			r.Get("/api/v1/runtimes/qualified", h.listQualifiedRuntimes)
+			r.Get("/api/v1/runtimes/qualified/{id}", h.getQualifiedRuntime)
+		}
+		r.Get("/api/v1/environment/profiles/{id}", h.getEnvironmentDiagnostic)
 		if h.backupSvc != nil {
 			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
 			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
@@ -148,18 +170,94 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 }
 
 type handler struct {
-	cfg              *config.Config
-	store            *profile.Store
-	groupStore       *groups.Store
-	mgr              *browser.Manager
-	fpPool           *fingerprint.Pool
-	hcfg             humanize.Config
-	token            string
-	backupSvc        *backup.Service
-	readonlyCatalog  backup.ReadOnlyCatalog
-	auditSink        *writeAuditSink
-	readonlySessions *readOnlySessionBroker
-	proxyStore       *proxies.Store
+	cfg               *config.Config
+	store             *profile.Store
+	groupStore        *groups.Store
+	mgr               *browser.Manager
+	fpPool            *fingerprint.Pool
+	hcfg              humanize.Config
+	token             string
+	backupSvc         *backup.Service
+	readonlyCatalog   backup.ReadOnlyCatalog
+	auditSink         *writeAuditSink
+	readonlySessions  *readOnlySessionBroker
+	proxyStore        *proxies.Store
+	qualifiedRegistry *bfruntime.QualifiedRegistry
+	backupDB          *sql.DB
+}
+
+// t13Checker projects environment diagnostics from stored metadata and the
+// runtime qualification registry; it never observes a real browser.
+type t13Checker struct {
+	db       *sql.DB
+	registry *bfruntime.QualifiedRegistry
+}
+
+func (c *t13Checker) ProfileExists(ctx context.Context, id string) (bool, error) {
+	row := c.db.QueryRowContext(ctx, "SELECT COUNT(*) FROM profiles WHERE id = ?", id)
+	var n int
+	if err := row.Scan(&n); err != nil {
+		return false, err
+	}
+	return n > 0, nil
+}
+
+func (c *t13Checker) ProfileRuntimeID(ctx context.Context, id string) (string, error) {
+	row := c.db.QueryRowContext(ctx, "SELECT runtime_id FROM profiles WHERE id = ?", id)
+	var rt sql.NullString
+	if err := row.Scan(&rt); err != nil {
+		return "", err
+	}
+	if !rt.Valid {
+		return "", nil
+	}
+	return rt.String, nil
+}
+
+func (c *t13Checker) RuntimeQualified(ctx context.Context, runtimeID string) (bool, error) {
+	if c.registry == nil {
+		return false, nil
+	}
+	entry, err := c.registry.Get(ctx, bfruntime.ID(runtimeID))
+	if err != nil {
+		return false, err
+	}
+	return entry != nil && entry.State == bfruntime.QSQualified, nil
+}
+
+func (c *t13Checker) RuntimeVersion(ctx context.Context, runtimeID string) (string, error) {
+	if c.registry == nil {
+		return "", nil
+	}
+	entry, err := c.registry.Get(ctx, bfruntime.ID(runtimeID))
+	if err != nil {
+		return "", err
+	}
+	if entry == nil {
+		return "", nil
+	}
+	return strings.TrimSpace(entry.Version), nil
+}
+
+// getEnvironmentDiagnostic serves the T13 projected diagnostic. The admin
+// group middleware already refused read-only tokens (401); an unknown profile
+// is refused explicitly with PROFILE_NOT_FOUND instead of a silent 404 body.
+func (h *handler) getEnvironmentDiagnostic(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if h.auditSink == nil || h.qualifiedRegistry == nil {
+		writeError(w, http.StatusNotFound, "ENVIRONMENT_DIAGNOSTIC_UNAVAILABLE", "diagnostic subsystem disabled")
+		return
+	}
+	diag, err := environment.Diagnose(r.Context(), &t13Checker{db: h.backupDB, registry: h.qualifiedRegistry}, string(bfruntime.ID(id)))
+	if errors.Is(err, environment.ErrProfileNotFound) {
+		writeError(w, http.StatusNotFound, "ENVIRONMENT_DIAGNOSTIC_NOT_FOUND", "environment: PROFILE_NOT_FOUND")
+		return
+	}
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "ENVIRONMENT_DIAGNOSTIC_ERROR", "diagnostic unavailable")
+		return
+	}
+	writeJSON(w, http.StatusOK, diag)
 }
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {
@@ -196,6 +294,64 @@ func (h *handler) health(w http.ResponseWriter, r *http.Request) {
 func (h *handler) listRuntimes(w http.ResponseWriter, r *http.Request) {
 	reg := h.mgr.RuntimeRegistry()
 	writeJSON(w, http.StatusOK, map[string]any{"data": reg.List(), "default_runtime_id": reg.DefaultID()})
+}
+
+// qualifiedRuntimeProjection is the intentionally minimal T14/G15-A surface.
+// Binary paths, debugging ports and integrity hashes are internal-only and
+// must never cross the API boundary, even to the local administration UI.
+type qualifiedRuntimeProjection struct {
+	ID          string                       `json:"id"`
+	State       bfruntime.QualificationState `json:"state"`
+	Version     string                       `json:"version,omitempty"`
+	QualifiedAt any                          `json:"qualified_at,omitempty"`
+}
+
+func redactQualifiedRuntime(info bfruntime.QualifiedInfo) qualifiedRuntimeProjection {
+	return qualifiedRuntimeProjection{
+		ID:          info.ID,
+		State:       info.State,
+		Version:     strings.TrimSpace(info.Version),
+		QualifiedAt: info.QualifiedAt,
+	}
+}
+
+// listQualifiedRuntimes projects only state, version and qualification time.
+// No filesystem paths, debug ports or hashes are exposed to the admin surface.
+func (h *handler) listQualifiedRuntimes(w http.ResponseWriter, r *http.Request) {
+	if h.qualifiedRegistry == nil {
+		writeError(w, http.StatusServiceUnavailable, "QUALIFICATION_UNAVAILABLE", "runtime qualification registry is not initialized")
+		return
+	}
+	list, err := h.qualifiedRegistry.ListQualified(r.Context())
+	if err != nil {
+		slog.Error("list qualified runtimes", "error", err)
+		writeError(w, http.StatusInternalServerError, "INTERNAL_ERROR", "qualified catalog unavailable")
+		return
+	}
+	projected := make([]qualifiedRuntimeProjection, 0, len(list))
+	for _, info := range list {
+		projected = append(projected, redactQualifiedRuntime(info))
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"runtimes": projected})
+}
+
+func (h *handler) getQualifiedRuntime(w http.ResponseWriter, r *http.Request) {
+	if h.qualifiedRegistry == nil {
+		writeError(w, http.StatusServiceUnavailable, "QUALIFICATION_UNAVAILABLE", "runtime qualification registry is not initialized")
+		return
+	}
+	id := chi.URLParam(r, "id")
+	info, err := h.qualifiedRegistry.Get(r.Context(), bfruntime.ID(id))
+	if err != nil {
+		if errors.Is(err, bfruntime.ErrRuntimeNotQualified) {
+			writeError(w, http.StatusNotFound, "RUNTIME_NOT_QUALIFIED", id)
+			return
+		}
+		slog.Error("get qualified runtime", "error", err)
+		writeError(w, http.StatusInternalServerError, "INTERNAL_ERROR", "qualified catalog unavailable")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"runtime": redactQualifiedRuntime(*info)})
 }
 
 func requireEnabledRuntime(desc bfruntime.Descriptor) error {
