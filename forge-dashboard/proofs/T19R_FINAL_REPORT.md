@@ -4,7 +4,7 @@
 
 ## 1. Périmètre et non-restauration
 
-T19-R est une **qualification intégrée clean-room de la lignée actuelle** (`96d8f71664c27cbb99b299623f1cd07f90212d9e`, post-T18-R ; la base de qualification est `e6e4ebd96f12089dcc38d77226ddfacb8b6806c7`). Il ne restaure pas le T17 historique perdu ; `T17_SOURCE_SNAPSHOT_UNRECOVERABLE` demeure inchangé, tout comme le blocage historique T18 (`T18_BLOCKED_BASELINE_SOURCE_NOT_FOUND` pour la validation globale originale). Aucun artefact T00–T18 n'a été modifié.
+T19-R est une **qualification intégrée clean-room de la lignée actuelle** (`63e167e8f543a25ad3df81d7003a7eae2fecaf70`, post-T18-R ; la base de qualification est `e6e4ebd96f12089dcc38d77226ddfacb8b6806c7`). Il ne restaure pas le T17 historique perdu ; `T17_SOURCE_SNAPSHOT_UNRECOVERABLE` demeure inchangé, tout comme le blocage historique T18 (`T18_BLOCKED_BASELINE_SOURCE_NOT_FOUND` pour la validation globale originale). Aucun artefact T00–T18 n'a été modifié.
 
 ## 2. Gap audit (Phase 1)
 
@@ -54,7 +54,7 @@ Les 22 tests couvrent T05 (bootstrap loopback à usage unique, mémoire seule, r
 
 ## 7. Conservation
 
-Commits de preuves : `bda7723` (métadonnées JSON, audit, rapports) puis `96d8f71664c27cbb99b299623f1cd07f90212d9e` (logs bruts), tous deux poussés. Tag annoté : `t19r-dashboard-core-integration-verified-2026-08-18` (objet `403505ef5cab0a6d93647dfbeb2927511832b5ec`), poussé. Bundle : `forgelocal-t19r-dashboard-core-7d71ba6.bundle`, SHA-256 `def2bdc031174cad7f06defeeadf234b96bd93b643e7c0a5841d09ae8ab0c24f`, `git bundle verify` OK. Clone neuf exclusivement depuis le bundle : `HEAD=96d8f71664c27cbb99b299623f1cd07f90212d9e`, tag vérifié, `git fsck --full` exit 0, qualification Core rejouée (exit 0, 0, 0), Gosec filtré 0 finding / 0 ligne Go ajoutée, Gitleaks patch 0 finding exit 0. Archive ZIP : `forgelocal-t19r-evidence-96d8f71.zip`, SHA-256 `962a660a03df36f195fe8c153074419fcad39cbae6e9fc1f7321eaf8ce6d250e`, manifeste non auto-référentiel 22/22.
+Commits de preuves poussés sur `forgelocal-baseline-2026-08-17` : `bda77236…` (métadonnées JSON, audit, rapports), `96d8f71664c27cbb99b299623f1cd07f90212d9e` (logs bruts), `7d71ba6151eb0e91de694ef3d1a64131a850a60d` (rapport final v1) puis `63e167e8f543a25ad3df81d7003a7eae2fecaf70` (rapport final définitif — HEAD actuel). Tag annoté : `t19r-dashboard-core-integration-verified-2026-08-18` (pointe sur `63e167e8f543a25ad3df81d7003a7eae2fecaf70`, objet tag vérifiable via `git cat-file -p`), poussé. Bundle : `forgelocal-t19r-dashboard-core-7d71ba6.bundle`, SHA-256 `def2bdc031174cad7f06defeeadf234b96bd93b643e7c0a5841d09ae8ab0c24f`, `git bundle verify` OK. Clone neuf exclusivement depuis le bundle : `HEAD=7d71ba6151eb0e91de694ef3d1a64131a850a60d`, tag vérifié, `git fsck --full` exit 0, qualification Core rejouée (exit 0, 0, 0), Gosec filtré 0 finding / 0 ligne Go ajoutée, Gitleaks patch 0 finding exit 0. Archive ZIP : `forgelocal-t19r-evidence-7d71ba6.zip`, SHA-256 `1fd737ff44c2dc4ed2fc009229077c647dfcdb8bb6d8a9e2a45306b422030d4e`, manifeste non auto-référentiel 23/23.
 
 ## 8. Statuts bloquants maintenus (inchangés)
 
