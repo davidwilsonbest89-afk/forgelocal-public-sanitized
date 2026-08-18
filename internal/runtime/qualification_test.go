@@ -3,6 +3,7 @@ package runtime
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -126,6 +127,21 @@ func TestT14Qualification_MissingBinary(t *testing.T) {
 	}
 	if info.FailedReason == "" {
 		t.Fatal("missing reason")
+	}
+}
+
+func TestT14Qualification_HashBinaryRejectsUntrustedPaths(t *testing.T) {
+	if _, err := hashBinary("relative-binary"); !errors.Is(err, ErrBinaryNotExecutable) {
+		t.Fatalf("relative path: want ErrBinaryNotExecutable, got %v", err)
+	}
+
+	outside := fakeBinary(t, "outside binary")
+	inside := filepath.Join(t.TempDir(), "linked-binary")
+	if err := os.Symlink(outside, inside); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := hashBinary(inside); !errors.Is(err, ErrBinaryNotExecutable) {
+		t.Fatalf("escaping symlink: want ErrBinaryNotExecutable, got %v", err)
 	}
 }
 

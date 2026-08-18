@@ -72,9 +72,10 @@ const maxPlaintext = 64 * 1024
 // Vault is the LocalVault handle. It is opened once with a secret unlock token
 // held only in memory for the lifetime of the process and must be Closed.
 type Vault struct {
-	root   string
-	master []byte // 32 bytes, in-memory only
-	mu     sync.Mutex
+	root    string
+	fsRoot  *os.Root // confines salt and journal accesses beneath root
+	master  []byte   // 32 bytes, in-memory only
+	mu      sync.Mutex
 	entries map[EntryID][]byte
 	journal *os.File
 	seq     uint64
@@ -113,17 +114,22 @@ func Open(root string, unlockToken []byte, opts ...OpenOption) (*Vault, error) {
 	if err := os.MkdirAll(root, 0700); err != nil {
 		return nil, fmt.Errorf("localvault: create root: %w", err)
 	}
-	v := &Vault{root: root, entries: map[EntryID][]byte{}}
+	fsRoot, err := os.OpenRoot(root)
+	if err != nil {
+		return nil, fmt.Errorf("localvault: open root: %w", err)
+	}
+	v := &Vault{root: root, fsRoot: fsRoot, entries: map[EntryID][]byte{}}
 
 	// Master key derivation: master = HMAC-less KDF (SHA-256) over
 	// (unlockToken || fixed-scope || persistent-salt). The persistent salt is
 	// created on first open and never changes; it binds this vault instance
 	// to the unlock token without storing the token itself.
-	if err := os.MkdirAll(root, 0700); err != nil {
-		return nil, fmt.Errorf("localvault: create root: %w", err)
-	}
 	master, err := v.deriveMaster(unlockToken)
 	if err != nil {
+		closeErr := fsRoot.Close()
+		if closeErr != nil {
+			return nil, errors.Join(err, closeErr)
+		}
 		return nil, err
 	}
 	v.master = master
@@ -132,13 +138,19 @@ func Open(root string, unlockToken []byte, opts ...OpenOption) (*Vault, error) {
 		// Fail closed: a corrupt journal means we cannot reconcile what was
 		// stored; refusing all operations is safer than partial loss.
 		v.master = nil
+		closeErr := fsRoot.Close()
+		if closeErr != nil {
+			return nil, errors.Join(fmt.Errorf("localvault: journal load failed (fail-closed): %w", err), closeErr)
+		}
 		return nil, fmt.Errorf("localvault: journal load failed (fail-closed): %w", err)
 	}
 	return v, nil
 }
 
-func (v *Vault) saltPath() string { return filepath.Join(v.root, ".lv_salt") }
-func (v *Vault) journalPath() string { return filepath.Join(v.root, "lv_journal.jsonl") }
+const (
+	saltFileName    = ".lv_salt"
+	journalFileName = "lv_journal.jsonl"
+)
 
 func (v *Vault) deriveMaster(token []byte) ([]byte, error) {
 	salt, err := v.persistentSalt()
@@ -156,8 +168,7 @@ func (v *Vault) deriveMaster(token []byte) ([]byte, error) {
 // persistentSalt creates a 16-byte salt on first open; subsequent opens read
 // the same salt. Written once, never rewritten, never logged.
 func (v *Vault) persistentSalt() ([]byte, error) {
-	path := v.saltPath()
-	existing, err := os.ReadFile(path)
+	existing, err := v.fsRoot.ReadFile(saltFileName)
 	if err == nil {
 		if len(existing) != 16 {
 			return nil, ErrIntegrity
@@ -171,37 +182,43 @@ func (v *Vault) persistentSalt() ([]byte, error) {
 	if _, err := rand.Read(salt); err != nil {
 		return nil, fmt.Errorf("localvault: read random: %w", err)
 	}
-	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
+	f, err := v.fsRoot.OpenFile(saltFileName, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
 	if err != nil {
 		// Race: another process created the file first; reread.
-		if existing, err2 := os.ReadFile(path); err2 == nil && len(existing) == 16 {
+		if existing, err2 := v.fsRoot.ReadFile(saltFileName); err2 == nil && len(existing) == 16 {
 			return existing, nil
 		}
 		return nil, fmt.Errorf("localvault: create salt: %w", err)
 	}
 	if _, err := f.Write(salt); err != nil {
-		f.Close()
-		return nil, err
+		return nil, closeWithError(f, err)
 	}
 	if err := f.Sync(); err != nil {
-		f.Close()
-		return nil, err
+		return nil, closeWithError(f, err)
 	}
 	return salt, f.Close()
 }
 
+// closeWithError keeps the primary operation failure while preserving a close
+// failure. Callers must not silently lose an fsync/close error on vault files.
+func closeWithError(f *os.File, opErr error) error {
+	if closeErr := f.Close(); closeErr != nil {
+		return errors.Join(opErr, closeErr)
+	}
+	return opErr
+}
+
 type journalEntry struct {
-	Seq  uint64 `json:"seq"`
-	Op   string `json:"op"`   // put | delete
-	ID   string `json:"id"`
-	At   string `json:"at"`
-	Data string `json:"data,omitempty"` // base64 ciphertext blob
+	Seq   uint64 `json:"seq"`
+	Op    string `json:"op"` // put | delete
+	ID    string `json:"id"`
+	At    string `json:"at"`
+	Data  string `json:"data,omitempty"` // base64 ciphertext blob
 	Nonce string `json:"nonce,omitempty"`
 }
 
 func (v *Vault) loadJournal() error {
-	path := v.journalPath()
-	f, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0600)
+	f, err := v.fsRoot.OpenFile(journalFileName, os.O_CREATE|os.O_RDWR, 0600)
 	if err != nil {
 		return err
 	}
@@ -216,34 +233,34 @@ func (v *Vault) loadJournal() error {
 			if err == io.EOF {
 				break
 			}
-			return fmt.Errorf("journal decode at seq %d: %w", latestSeq+1, err)
+			return closeWithError(f, fmt.Errorf("journal decode at seq %d: %w", latestSeq+1, err))
 		}
 		if e.Seq == 0 || e.ID == "" {
-			return fmt.Errorf("journal malformed entry")
+			return closeWithError(f, fmt.Errorf("journal malformed entry"))
 		}
 		if e.Seq <= latestSeq {
-			return fmt.Errorf("journal sequence regression at %d", e.Seq)
+			return closeWithError(f, fmt.Errorf("journal sequence regression at %d", e.Seq))
 		}
 		latestSeq = e.Seq
 		switch e.Op {
-	case "put":
-		nonce, err := base64.RawStdEncoding.DecodeString(e.Nonce)
-		if err != nil {
-			return fmt.Errorf("journal nonce decode at %d: %w", e.Seq, ErrIntegrity)
-		}
-		ct, err := base64.RawStdEncoding.DecodeString(e.Data)
-		if err != nil {
-			return fmt.Errorf("journal data decode at %d: %w", e.Seq, ErrIntegrity)
-		}
-		pt, err := v.decrypt(EntryID(e.ID), nonce, ct)
+		case "put":
+			nonce, err := base64.RawStdEncoding.DecodeString(e.Nonce)
 			if err != nil {
-				return fmt.Errorf("journal decrypt at %d: %w", e.Seq, ErrIntegrity)
+				return closeWithError(f, fmt.Errorf("journal nonce decode at %d: %w", e.Seq, ErrIntegrity))
+			}
+			ct, err := base64.RawStdEncoding.DecodeString(e.Data)
+			if err != nil {
+				return closeWithError(f, fmt.Errorf("journal data decode at %d: %w", e.Seq, ErrIntegrity))
+			}
+			pt, err := v.decrypt(EntryID(e.ID), nonce, ct)
+			if err != nil {
+				return closeWithError(f, fmt.Errorf("journal decrypt at %d: %w", e.Seq, ErrIntegrity))
 			}
 			entries[EntryID(e.ID)] = pt
 		case "delete":
 			delete(entries, EntryID(e.ID))
 		default:
-			return fmt.Errorf("journal unknown op %q", e.Op)
+			return closeWithError(f, fmt.Errorf("journal unknown op %q", e.Op))
 		}
 	}
 	v.entries = entries
@@ -401,12 +418,20 @@ func (v *Vault) Close() error {
 		v.entries[k] = nil
 	}
 	v.entries = nil
+	var closeErrs []error
 	if v.journal != nil {
-		err := v.journal.Close()
+		if err := v.journal.Close(); err != nil {
+			closeErrs = append(closeErrs, err)
+		}
 		v.journal = nil
-		return err
 	}
-	return nil
+	if v.fsRoot != nil {
+		if err := v.fsRoot.Close(); err != nil {
+			closeErrs = append(closeErrs, err)
+		}
+		v.fsRoot = nil
+	}
+	return errors.Join(closeErrs...)
 }
 
 // Exists reports whether an id has an entry without revealing its value.

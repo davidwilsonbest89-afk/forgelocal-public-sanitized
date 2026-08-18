@@ -23,6 +23,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 )
@@ -49,10 +50,10 @@ type QualifiedInfo struct {
 }
 
 var (
-	ErrRuntimeUnknown    = errors.New("runtime: runtime id not registered")
+	ErrRuntimeUnknown      = errors.New("runtime: runtime id not registered")
 	ErrRuntimeNotQualified = errors.New("runtime: not qualified")
-	ErrProbeTimeout      = errors.New("runtime: probe timeout")
-	ErrProbeNoVersion    = errors.New("runtime: probe returned no version")
+	ErrProbeTimeout        = errors.New("runtime: probe timeout")
+	ErrProbeNoVersion      = errors.New("runtime: probe returned no version")
 	ErrBinaryNotExecutable = errors.New("runtime: binary missing or not executable")
 )
 
@@ -167,16 +168,62 @@ func (q *Qualifier) Qualify(ctx context.Context, id ID, binaryPath string) (*Qua
 }
 
 func hashBinary(path string) (string, error) {
-	f, err := os.Open(path)
+	f, err := openQualifiedBinary(path)
 	if err != nil {
 		return "", ErrBinaryNotExecutable
 	}
-	defer f.Close()
 	h := sha256.New()
 	if _, err := io.Copy(h, f); err != nil {
-		return "", fmt.Errorf("hash read: %w", err)
+		return "", closeBinaryWithError(f, fmt.Errorf("hash read: %w", err))
+	}
+	if err := f.Close(); err != nil {
+		return "", fmt.Errorf("hash close: %w", err)
 	}
 	return fmt.Sprintf("%x", h.Sum(nil)), nil
+}
+
+// openQualifiedBinary accepts only an absolute runtime path and opens its final
+// component through os.Root. This confines traversal and symlink resolution to
+// the binary’s parent directory, rather than handing an unchecked string to a
+// filesystem open. The path is supplied by the internal runtime catalog, never
+// by an API caller; confinement still makes a catalog/configuration mistake
+// fail closed.
+func openQualifiedBinary(path string) (*os.File, error) {
+	if !filepath.IsAbs(path) {
+		return nil, ErrBinaryNotExecutable
+	}
+	clean := filepath.Clean(path)
+	base := filepath.Base(clean)
+	if base == "." || base == string(filepath.Separator) {
+		return nil, ErrBinaryNotExecutable
+	}
+	root, err := os.OpenRoot(filepath.Dir(clean))
+	if err != nil {
+		return nil, ErrBinaryNotExecutable
+	}
+	f, openErr := root.Open(base)
+	rootCloseErr := root.Close()
+	if openErr != nil {
+		if rootCloseErr != nil {
+			return nil, errors.Join(openErr, rootCloseErr)
+		}
+		return nil, ErrBinaryNotExecutable
+	}
+	if rootCloseErr != nil {
+		return nil, closeBinaryWithError(f, rootCloseErr)
+	}
+	info, err := f.Stat()
+	if err != nil || !info.Mode().IsRegular() || info.Mode().Perm()&0o111 == 0 {
+		return nil, closeBinaryWithError(f, ErrBinaryNotExecutable)
+	}
+	return f, nil
+}
+
+func closeBinaryWithError(f *os.File, opErr error) error {
+	if closeErr := f.Close(); closeErr != nil {
+		return errors.Join(opErr, closeErr)
+	}
+	return opErr
 }
 
 func (q *Qualifier) record(ctx context.Context, id ID, state QualificationState, version, hash string, at *time.Time, reason string) error {

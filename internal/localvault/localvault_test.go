@@ -5,8 +5,8 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"os"
-	"strings"
 	"path/filepath"
+	"strings"
 	"sync"
 	"testing"
 )
@@ -320,6 +320,43 @@ func TestT12LocalVault_Permissions(t *testing.T) {
 	}
 	if info.Mode().Perm() != 0700 {
 		t.Errorf("root perm %v, want 0700", info.Mode().Perm())
+	}
+}
+
+func TestT12LocalVault_ConfinesSaltAndJournalToRoot(t *testing.T) {
+	root := tempRoot(t)
+	outside := filepath.Join(t.TempDir(), "outside")
+	if err := os.MkdirAll(outside, 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.MkdirAll(root, 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(outside, filepath.Join(root, ".lv_salt")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Open(root, token(t)); err == nil {
+		t.Fatal("salt symlink escaping the vault root must fail closed")
+	}
+
+	// Create a valid salt first, then substitute only the journal path. The
+	// opened os.Root must reject the second symlink independently.
+	if err := os.Remove(filepath.Join(root, ".lv_salt")); err != nil {
+		t.Fatal(err)
+	}
+	tok := token(t)
+	v := mustOpen(t, root, tok)
+	if err := v.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Remove(filepath.Join(root, "lv_journal.jsonl")); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(filepath.Join(outside, "journal"), filepath.Join(root, "lv_journal.jsonl")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Open(root, tok); err == nil {
+		t.Fatal("journal symlink escaping the vault root must fail closed")
 	}
 }
 
