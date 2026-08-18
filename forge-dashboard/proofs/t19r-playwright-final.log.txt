@@ -1,0 +1,156 @@
+
+Running 22 tests using 1 worker
+
+[1A[2K[1/22] tests/automation-t15.spec.ts:103:3 › T15 local CDP automation › W1: session opens and lists without port/path leakage
+[1A[2K[2/22] tests/automation-t15.spec.ts:118:3 › T15 local CDP automation › W2: fail-closed local-only navigation policy
+[1A[2K[3/22] tests/automation-t15.spec.ts:139:3 › T15 local CDP automation › W3: content projection redacted and screenshot available for client-side hashing
+[1A[2K[4/22] tests/automation-t15.spec.ts:157:3 › T15 local CDP automation › W4: session close and refusal after close
+[1A[2K[5/22] tests/automation-t15.spec.ts:172:3 › T15 local CDP automation › W5: dashboard automation panel mounts and projects digests only
+[1A[2K[6/22] tests/backups-t11.spec.ts:101:1 › T11 — coffre de sauvegardes BACK-01 du dashboard vers le Core local
+[1A[2Ktests/backups-t11.spec.ts:101:1 › T11 — coffre de sauvegardes BACK-01 du dashboard vers le Core local
+T11_ADMIN_LINK: PASS memory_only
+
+[1A[2KT11_VAULT_PANEL_OPEN: PASS count=0 redacted_only
+
+[1A[2KT11_EMPTY_STATE: PASS no_backup_registered
+
+[1A[2KT11_LISTING_REDACTED: PASS sha256_only_no_artifact_no_key
+
+[1A[2KT11_PHANTOM_SOURCE: SKIPPED (aucun bouton rangée visible sans sélection Core)
+
+[1A[2KT11_RESTORE_TARGET: SKIPPED (aucune sauvegarde sélectionnable)
+
+[1A[2KT11_ADMIN_UNLINKED: PASS memory_only unlink_clean
+
+[1A[2KT11_BACKUP_VAULT: PASS redacted_phantom_refused_target_free_memory_only
+
+[1A[2K[7/22] tests/backups-t11.spec.ts:180:1 › T11 — refus des écritures hors boucle locale
+[1A[2Ktests/backups-t11.spec.ts:180:1 › T11 — refus des écritures hors boucle locale
+T11_OFFLOOPBACK_REFUSED: PASS no_write_path_origin_offloopback
+
+[1A[2K[8/22] tests/bootstrap-ro.spec.ts:42:1 › T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance
+[1A[2Ktests/bootstrap-ro.spec.ts:42:1 › T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance
+T05_BROWSER_STORAGE: PASS url=clean localStorage=0 sessionStorage=0 indexedDB=0 caches=0
+
+[1A[2KT05_REPLAY: PASS status=401 ui=disconnected
+
+[1A[2KT05_EXPIRY: PASS status=401 ui=disconnected
+
+[1A[2KT05_FORCED_401: PASS token=cleared ui=Core_non_connecte
+
+[1A[2KT05_BOOTSTRAP_LOOPBACK: PASS exchange=accepted reads=redacted
+
+[1A[2K[9/22] tests/environment-t13.spec.ts:91:1 › T13 — panneau Identité navigateur du dashboard vers le Core local
+[1A[2Ktests/environment-t13.spec.ts:91:1 › T13 — panneau Identité navigateur du dashboard vers le Core local
+T13_ADMIN_LINK: PASS memory_only
+
+[1A[2KT13_PANEL_OPEN: PASS no_preload_no_mutation
+
+[1A[2KT13_NO_PRELOAD: PASS no_request_until_explicit_consult
+
+[1A[2KT13_REDACTED_ONLY: PASS no_raw_observables_in_dom
+
+[1A[2KT13_NO_PROJECTION_UNTIL_CONSULT: PASS no_status_before_explicit_consult
+
+[1A[2KT13_PHANTOM_READONLY_REFUSED: PASS status=401 read_only_token_rejected
+
+[1A[2KT13_PHANTOM_ERROR_CODE: PASS code=ENVIRONMENT_DIAGNOSTIC_NOT_FOUND explicit
+
+[1A[2KT13_NO_BROWSER_MUTATION: PASS consultation_server_side_only
+
+[1A[2KT13_MEMORY_ONLY: PASS no_persistence_after_unlink
+
+[1A[2K[10/22] tests/probes/t10-probe.spec.ts:48:1 › T10 probe: form state before create click
+[1A[2Ktests/probes/t10-probe.spec.ts:48:1 › T10 probe: form state before create click
+PROBE_LINKED
+
+[1A[2KPROBE_STATE {"name":"E2E · T10 · Paris","host":"198.51.100.10","port":"8080","region":"eu","buttonDisabled":false,"buttonText":"Ajouter au Core"}
+
+[1A[2KPROBE_EVENTS
+RESP 200 http://localhost:19280/api/v1/readonly/profiles?limit=100
+RESP 200 http://localhost:19280/api/profiles/prof_55c2288ce90a
+RESP 200 http://localhost:19280/api/profiles/prof_55c2288ce90a
+RESP 200 http://localhost:19280/api/proxies
+RESP 200 http://localhost:19280/api/profiles/prof_55c2288ce90a
+
+[1A[2K[11/22] tests/probes/verify-form-t16.spec.ts:71:1 › T16-VERIFY — fills proxy après purge + capture DOM
+[1A[2Ktests/probes/verify-form-t16.spec.ts:71:1 › T16-VERIFY — fills proxy après purge + capture DOM
+T16_AFTER_NAME: {"inputs":[{"id":"proxy-name","value":"E2E · T16 · Paris"},{"id":"proxy-host","value":""},{"id":"proxy-port","value":""},{"id":"proxy-region","value":""},{"id":"proxy-secret-ref","value":""}],"button":{"disabled":true,"text":"Ajouter au Core"}}
+
+[1A[2KT16_AFTER_SELECT: {"inputs":[{"id":"proxy-name","value":"E2E · T16 · Paris"},{"id":"proxy-host","value":""},{"id":"proxy-port","value":""},{"id":"proxy-region","value":""},{"id":"proxy-secret-ref","value":""}],"button":{"disabled":true,"text":"Ajouter au Core"}}
+
+[1A[2KT16_AFTER_HOST: {"inputs":[{"id":"proxy-name","value":"E2E · T16 · Paris"},{"id":"proxy-host","value":"198.51.100.10"},{"id":"proxy-port","value":""},{"id":"proxy-region","value":""},{"id":"proxy-secret-ref","value":""}],"button":{"disabled":true,"text":"Ajouter au Core"}}
+
+[1A[2KT16_AFTER_PORT: {"inputs":[{"id":"proxy-name","value":"E2E · T16 · Paris"},{"id":"proxy-host","value":"198.51.100.10"},{"id":"proxy-port","value":"8080"},{"id":"proxy-region","value":""},{"id":"proxy-secret-ref","value":""}],"button":{"disabled":false,"text":"Ajouter au Core"}}
+
+[1A[2KT16_DOM: {"inputs":[{"id":"proxy-name","value":"E2E · T16 · Paris"},{"id":"proxy-host","value":"198.51.100.10"},{"id":"proxy-port","value":"8080"},{"id":"proxy-region","value":"eu"},{"id":"proxy-secret-ref","value":""}],"button":{"disabled":false,"text":"Ajouter au Core"}}
+
+[1A[2K[12/22] tests/profile-writes-t09.spec.ts:104:1 › T09 — écritures de profils du dashboard vers le Core local
+[1A[2Ktests/profile-writes-t09.spec.ts:104:1 › T09 — écritures de profils du dashboard vers le Core local
+T09_ADMIN_LINK: PASS memory_only probe=200
+
+[1A[2KT09_UNVALIDATED_RUNTIME_REFUSED: PASS explicit_server_error correlated
+
+[1A[2KT09_INVALID_RUNTIME_NO_WRITE: PASS no_write_no_storage
+
+[1A[2KT09_INVALID_REFUSED: PASS explicit_client_error
+
+[1A[2KT09_MUTATIONS_UNEMITTED_AFTER_REFUSAL: PASS no_write_no_storage
+
+[1A[2KT09_INCOMPLETE_PROFILE_REFUSED: PASS client_guard_core_contract
+
+[1A[2KT09_ADMIN_UNLINKED: PASS memory_only unlink_clean
+
+[1A[2KT09_PROFILE_WRITES: PASS create_refuse_archive_reopen_tags
+
+[1A[2K[13/22] tests/profile-writes-t09.spec.ts:179:1 › T09 — refus des écritures hors boucle locale
+[1A[2Ktests/profile-writes-t09.spec.ts:179:1 › T09 — refus des écritures hors boucle locale
+T09_OFFLOOPBACK_REFUSED: PASS no_write_path_origin_offloopback
+
+[1A[2K[14/22] tests/proxies-t10.spec.ts:97:1 › T10 — référentiel proxy du dashboard vers le Core local
+[1A[2Ktests/proxies-t10.spec.ts:97:1 › T10 — référentiel proxy du dashboard vers le Core local
+T10_ADMIN_LINK: PASS memory_only
+
+[1A[2KT10_LISTING_REDACTED_PRE: PASS count=0 secret_ref_only
+
+[1A[2KT10_VALID_PROXY_CREATED: PASS server_validated
+
+[1A[2KT10_LISTING_REDACTED: PASS no_credential_value_in_ui
+
+[1A[2KT10_INVALID_PORT_REFUSED: PASS no_write_on_rejection
+
+[1A[2KT10_ASSIGN_REQUIRES_CORE_PROFILE: PASS explicit_refusal_no_ghost_binding correlated
+
+[1A[2KT10_ADMIN_UNLINKED: PASS memory_only unlink_clean
+
+[1A[2KT10_PROXY_REGISTRY: PASS create_refuse_assign_unassign_redacted
+
+[1A[2K[15/22] tests/proxies-t10.spec.ts:213:1 › T10 — refus des écritures hors boucle locale
+[1A[2Ktests/proxies-t10.spec.ts:213:1 › T10 — refus des écritures hors boucle locale
+T10_OFFLOOPBACK_REFUSED: PASS no_write_path_origin_offloopback
+
+[1A[2K[16/22] tests/runtime-t14.spec.ts:70:3 › T14 runtime qualification › W1: qualified catalog mounts and lists the real Chromium
+[1A[2K[17/22] tests/runtime-t14.spec.ts:83:3 › T14 runtime qualification › W2: no raw binary paths, ports or tokens are rendered
+[1A[2K[18/22] tests/runtime-t14.spec.ts:99:3 › T14 runtime qualification › W3: read-only contract, no write surface on the runtime panel
+[1A[2K[19/22] tests/t06-groups-runtimes.spec.ts:129:1 › T06-3 — affiche les catalogues Core redacted sans mutation ni sentinelle
+[1A[2Ktests/t06-groups-runtimes.spec.ts:129:1 › T06-3 — affiche les catalogues Core redacted sans mutation ni sentinelle
+T06_CATALOGS: PASS groups=1 runtimes=1 sentinels=absent mutations=0
+
+[1A[2K[20/22] tests/t06-groups-runtimes.spec.ts:149:1 › T06-3 — rend les inventaires vides explicitement
+[1A[2Ktests/t06-groups-runtimes.spec.ts:149:1 › T06-3 — rend les inventaires vides explicitement
+T06_EMPTY_CATALOGS: PASS groups=0 runtimes=0
+
+[1A[2K[21/22] tests/t06-groups-runtimes.spec.ts:162:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
+[1A[2Ktests/t06-groups-runtimes.spec.ts:162:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
+T06_FORCED_401: PASS token=cleared ui=Core_non_connecte
+
+[1A[2K[22/22] tests/t10-standalone.spec.ts:103:3 › T10 — référentiel proxy standalone (reproduction hang) › W1 valide puis W2 port invalide
+[1A[2Ktests/t10-standalone.spec.ts:103:3 › T10 — référentiel proxy standalone (reproduction hang) › W1 valide puis W2 port invalide
+T10_STANDALONE_DISABLED_BEFORE_CLICK false
+
+[1A[2KT10_STANDALONE_W2_AFTERCLICK PORT_ERROR_VISIBLE
+
+[1A[2K  Slow test file: tests/bootstrap-ro.spec.ts (10.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  22 passed (10.8m)
+playwright_exit=0
