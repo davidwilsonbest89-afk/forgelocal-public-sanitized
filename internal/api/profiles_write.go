@@ -18,12 +18,47 @@
 package api
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 
 	"forgelocal/internal/profile"
 )
+
+const maxProfileMetadataBytes = 16 << 10
+
+type profileMetadataRequest struct {
+	Note         string                         `json:"note"`
+	CustomFields map[string]profile.CustomField `json:"custom_fields"`
+}
+
+// updateProfileMetadata is the audited Core-only mutation for non-sensitive
+// Notes and Custom Fields. Values are returned to the authenticated caller but
+// never copied into audit payloads, which carry only shape metadata.
+func (h *handler) updateProfileMetadata(w http.ResponseWriter, r *http.Request) {
+	correlationID := correlationIDFrom(r.Context())
+	id := chi.URLParam(r, "id")
+	r.Body = http.MaxBytesReader(w, r.Body, maxProfileMetadataBytes)
+	defer r.Body.Close()
+	var req profileMetadataRequest
+	decoder := json.NewDecoder(r.Body)
+	decoder.DisallowUnknownFields()
+	if err := decoder.Decode(&req); err != nil {
+		h.auditSink.auditRecord(r.Context(), "profile.metadata_failed", id, correlationID, map[string]any{"error": "INVALID_PROFILE"})
+		profileMutationError(w, http.StatusBadRequest, "INVALID_PROFILE", "profile metadata is invalid", correlationID)
+		return
+	}
+	p, err := h.store.SetMetadata(id, req.Note, req.CustomFields)
+	if err != nil {
+		h.auditSink.auditRecord(r.Context(), "profile.metadata_failed", id, correlationID, map[string]any{"error": mapErrorCode(err)})
+		writeProfileError(w, err, correlationID)
+		return
+	}
+	h.auditSink.auditRecord(r.Context(), "profile.metadata_updated", id, correlationID, map[string]any{"has_note": req.Note != "", "custom_field_count": len(req.CustomFields)})
+	w.Header().Set(correlationHeader, correlationID)
+	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": p.ID, "note": p.Note, "custom_fields": p.CustomFields}})
+}
 
 // profileMutationError writes an explicit error response with the request's
 // correlation id attached, so failing operations stay traceable in the ledger.

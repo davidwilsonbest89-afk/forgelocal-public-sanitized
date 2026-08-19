@@ -105,6 +105,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/profiles/{id}/reopen", h.reopenProfile)
 		r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
 		r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
+		r.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)
 		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
 		r.Post("/api/profiles/{id}/export", h.exportProfile)
 		r.Post("/api/profiles/import", h.importProfile)
@@ -371,6 +372,14 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, "DEPRECATED_FIELD", "engine was removed in v2; use runtime_id")
 		return
 	}
+	if _, ok := raw["note"]; ok {
+		writeError(w, http.StatusBadRequest, "METADATA_ENDPOINT_REQUIRED", "use the profile metadata endpoint")
+		return
+	}
+	if _, ok := raw["custom_fields"]; ok {
+		writeError(w, http.StatusBadRequest, "METADATA_ENDPOINT_REQUIRED", "use the profile metadata endpoint")
+		return
+	}
 	data, err := json.Marshal(raw)
 	if err != nil {
 		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
@@ -466,6 +475,14 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 	}
 	if _, ok := updates["engine"]; ok {
 		writeError(w, http.StatusBadRequest, "DEPRECATED_FIELD", "engine was removed in v2; use runtime_id")
+		return
+	}
+	if _, ok := updates["note"]; ok {
+		writeError(w, http.StatusBadRequest, "METADATA_ENDPOINT_REQUIRED", "use the profile metadata endpoint")
+		return
+	}
+	if _, ok := updates["custom_fields"]; ok {
+		writeError(w, http.StatusBadRequest, "METADATA_ENDPOINT_REQUIRED", "use the profile metadata endpoint")
 		return
 	}
 	if _, runtimeChanged := updates["runtime_id"]; runtimeChanged {

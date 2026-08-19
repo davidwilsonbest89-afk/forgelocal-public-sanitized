@@ -29,16 +29,19 @@ var (
 
 // Validation errors are returned for inputs that violate the write contract.
 var (
-	ErrInvalidName        = errors.New("name is required and must be a short printable string")
-	ErrDuplicateName      = errors.New("a profile with this name already exists")
-	ErrInvalidGroup       = errors.New("group does not exist")
-	ErrInvalidRuntime     = errors.New("runtime is not enabled or not registered")
-	ErrInvalidProxy       = errors.New("proxy configuration is inconsistent: type, host and port must agree")
-	ErrDuplicateID        = errors.New("profile id already exists")
-	ErrTooManyTags        = errors.New("profile exceeds the maximum number of tags")
-	ErrInvalidTag         = errors.New("tag is required and must be a short printable string")
-	ErrAlreadyTagged      = errors.New("tag is already assigned")
-	ErrTagNotAssigned     = errors.New("tag is not assigned to this profile")
+	ErrInvalidName         = errors.New("name is required and must be a short printable string")
+	ErrDuplicateName       = errors.New("a profile with this name already exists")
+	ErrInvalidGroup        = errors.New("group does not exist")
+	ErrInvalidRuntime      = errors.New("runtime is not enabled or not registered")
+	ErrInvalidProxy        = errors.New("proxy configuration is inconsistent: type, host and port must agree")
+	ErrDuplicateID         = errors.New("profile id already exists")
+	ErrTooManyTags         = errors.New("profile exceeds the maximum number of tags")
+	ErrInvalidTag          = errors.New("tag is required and must be a short printable string")
+	ErrAlreadyTagged       = errors.New("tag is already assigned")
+	ErrTagNotAssigned      = errors.New("tag is not assigned to this profile")
+	ErrInvalidNote         = errors.New("profile note is invalid")
+	ErrInvalidCustomField  = errors.New("profile custom field is invalid")
+	ErrTooManyCustomFields = errors.New("profile exceeds the maximum number of custom fields")
 )
 
 // IsNotFoundError reports whether the error identifies a missing profile.
@@ -67,7 +70,8 @@ func IsValidationError(err error) bool {
 		return false
 	}
 	for _, target := range []error{ErrInvalidName, ErrInvalidGroup, ErrInvalidRuntime,
-		ErrInvalidProxy, ErrTooManyTags, ErrInvalidTag, ErrAlreadyTagged, ErrTagNotAssigned} {
+		ErrInvalidProxy, ErrTooManyTags, ErrInvalidTag, ErrAlreadyTagged, ErrTagNotAssigned,
+		ErrInvalidNote, ErrInvalidCustomField, ErrTooManyCustomFields} {
 		if errors.Is(err, target) {
 			return true
 		}

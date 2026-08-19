@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,6 +30,19 @@ type Profile struct {
 	Proxy           *ProxyConfig    `json:"proxy,omitempty"`
 	ContainerID     string          `json:"container_id,omitempty"`
 	ProfileDir      string          `json:"profile_dir"`
+	// Note and CustomFields are non-sensitive profile metadata. They are never
+	// projected by the dashboard read-only catalogue; authenticated metadata
+	// writes go through the Core-only T20-NCF contract and produce redacted audit.
+	Note         string                 `json:"note,omitempty"`
+	CustomFields map[string]CustomField `json:"custom_fields,omitempty"`
+}
+
+// CustomField is a typed, non-secret profile metadata value. Select values
+// carry their allowed options so the Core can validate values deterministically.
+type CustomField struct {
+	Type    string   `json:"type"`
+	Value   any      `json:"value"`
+	Options []string `json:"options,omitempty"`
 }
 
 type IdentityConfig struct {
@@ -65,6 +79,14 @@ type Store struct {
 }
 
 const maxProfileTags = 20
+
+const (
+	maxProfileNoteBytes   = 4096
+	maxCustomFieldNameLen = 64
+	maxCustomFields       = 20
+	maxCustomFieldText    = 2048
+	maxSelectOptions      = 20
+)
 
 func NewStore(dir string, vaults ...secrets.SecretVault) (*Store, error) {
 	var vault secrets.SecretVault
@@ -205,6 +227,84 @@ func validateProfileInputs(p *Profile) error {
 		if !validName(tag) {
 			return ErrInvalidTag
 		}
+	}
+	if err := validateProfileMetadata(p.Note, p.CustomFields); err != nil {
+		return err
+	}
+	return nil
+}
+
+func validateProfileMetadata(note string, fields map[string]CustomField) error {
+	if len(note) > maxProfileNoteBytes || !validNote(note) {
+		return ErrInvalidNote
+	}
+	if len(fields) > maxCustomFields {
+		return ErrTooManyCustomFields
+	}
+	for name, field := range fields {
+		if name == "" || len(name) > maxCustomFieldNameLen || !validName(name) {
+			return ErrInvalidCustomField
+		}
+		if err := validateCustomField(field); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func validNote(value string) bool {
+	for _, c := range value {
+		if c == '\n' || c == '\t' {
+			continue
+		}
+		if c < 0x20 || c == 0x7f {
+			return false
+		}
+	}
+	return true
+}
+
+func validateCustomField(field CustomField) error {
+	switch field.Type {
+	case "text":
+		value, ok := field.Value.(string)
+		if !ok || len(value) > maxCustomFieldText || !validName(value) || len(field.Options) != 0 {
+			return ErrInvalidCustomField
+		}
+	case "number":
+		value, ok := field.Value.(float64)
+		if !ok || math.IsNaN(value) || math.IsInf(value, 0) || len(field.Options) != 0 {
+			return ErrInvalidCustomField
+		}
+	case "boolean":
+		if _, ok := field.Value.(bool); !ok || len(field.Options) != 0 {
+			return ErrInvalidCustomField
+		}
+	case "select":
+		value, ok := field.Value.(string)
+		if !ok || len(field.Options) == 0 || len(field.Options) > maxSelectOptions {
+			return ErrInvalidCustomField
+		}
+		seen := make(map[string]struct{}, len(field.Options))
+		found := false
+		for _, option := range field.Options {
+			if !validName(option) {
+				return ErrInvalidCustomField
+			}
+			key := normalizeName(option)
+			if _, duplicate := seen[key]; duplicate {
+				return ErrInvalidCustomField
+			}
+			seen[key] = struct{}{}
+			if option == value {
+				found = true
+			}
+		}
+		if !found {
+			return ErrInvalidCustomField
+		}
+	default:
+		return ErrInvalidCustomField
 	}
 	return nil
 }
@@ -386,6 +486,69 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 	s.profiles[id] = tmp
 	return tmp, s.save(tmp)
 
+}
+
+// SetMetadata is the sole Core mutation for notes and custom fields. It uses
+// the same per-profile isolation and lifecycle guard as other profile writes,
+// and copies caller-owned maps before persistence.
+func (s *Store) SetMetadata(id, note string, fields map[string]CustomField) (*Profile, error) {
+	s.mu.RLock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.RUnlock()
+		return nil, ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		s.mu.RUnlock()
+		return nil, ErrNotArchived
+	}
+	s.mu.RUnlock()
+
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		return nil, err
+	}
+	defer unlock()
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok = s.profiles[id]
+	if !ok {
+		return nil, ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		return nil, ErrNotArchived
+	}
+	cloned, err := cloneCustomFields(fields)
+	if err != nil {
+		return nil, err
+	}
+	tmp := *p
+	tmp.Note = note
+	tmp.CustomFields = cloned
+	if err := validateProfileMetadata(tmp.Note, tmp.CustomFields); err != nil {
+		return nil, err
+	}
+	if err := s.save(&tmp); err != nil {
+		return nil, err
+	}
+	s.profiles[id] = &tmp
+	return &tmp, nil
+}
+
+func cloneCustomFields(fields map[string]CustomField) (map[string]CustomField, error) {
+	if fields == nil {
+		return nil, nil
+	}
+	b, err := json.Marshal(fields)
+	if err != nil {
+		return nil, ErrInvalidCustomField
+	}
+	var clone map[string]CustomField
+	if err := json.Unmarshal(b, &clone); err != nil {
+		return nil, ErrInvalidCustomField
+	}
+	return clone, nil
 }
 
 func (s *Store) Delete(id string) error {

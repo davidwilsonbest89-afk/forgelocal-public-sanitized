@@ -58,9 +58,9 @@ func testWriteRouter(t *testing.T) (http.Handler, *sql.DB, *profile.Store) {
 	}
 
 	h := &handler{
-		cfg:   cfg,
-		store: store,
-		mgr:   testManagerWithRuntimeConfig(t, cfg),
+		cfg:       cfg,
+		store:     store,
+		mgr:       testManagerWithRuntimeConfig(t, cfg),
 		auditSink: &writeAuditSink{db: db},
 	}
 
@@ -76,6 +76,7 @@ func testWriteRouter(t *testing.T) (http.Handler, *sql.DB, *profile.Store) {
 		r.Post("/{id}/reopen", h.reopenProfile)
 		r.Post("/{id}/tags/{tag}", h.addProfileTag)
 		r.Delete("/{id}/tags/{tag}", h.removeProfileTag)
+		r.Put("/{id}/metadata", h.updateProfileMetadata)
 	})
 	return r, db, store
 }
@@ -313,6 +314,7 @@ func TestWriteMutationsRefusedOutsideLoopback(t *testing.T) {
 		{http.MethodPost, "/api/profiles/" + id + "/reopen", "reopen profile"},
 		{http.MethodPost, "/api/profiles/" + id + "/tags/outside", "assign tag"},
 		{http.MethodDelete, "/api/profiles/" + id + "/tags/outside", "remove tag"},
+		{http.MethodPut, "/api/profiles/" + id + "/metadata", "update profile metadata"},
 	} {
 		rec := httptest.NewRecorder()
 		req := httptest.NewRequest(endpoint.method, endpoint.path, bytesReader(`{"name":"Intruder","runtime_id":"cloakbrowser"}`))
