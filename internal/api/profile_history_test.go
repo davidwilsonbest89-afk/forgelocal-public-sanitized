@@ -201,3 +201,49 @@ func TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers(t *testing.T) {
 	recovered.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history?limit=10&offset=0", "", cfg.APIToken))
 	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"action":"recovery"`)) { t.Fatalf("recovered history: %d %s", rec.Code, rec.Body.String()) }
 }
+
+func TestT23ArchiveHistoryFailureLeavesDurableLifecycleAndStartupRecovers(t *testing.T) {
+	r, cfg, store := testHistoryRouter(t)
+	p := &profile.Profile{Name: "Archive failure injection", RuntimeID: "cloakbrowser", LifecycleState: profile.LifecycleActive}
+	if err := store.Create(p); err != nil { t.Fatal(err) }
+	if err := store.ClearHistoryPending(p.ID, p.HistoryPending.OperationID); err != nil { t.Fatal(err) }
+	dbPath := filepath.Join(cfg.DataDir, "profile_history.sqlite")
+	db, err := sql.Open("sqlite", dbPath)
+	if err != nil { t.Fatal(err) }
+	if _, err := db.Exec(`DROP TABLE profile_history_versions`); err != nil { db.Close(); t.Fatal(err) }
+	if err := db.Close(); err != nil { t.Fatal(err) }
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+p.ID+"/archive", "", cfg.APIToken))
+	if rec.Code < http.StatusInternalServerError { t.Fatalf("archive capture failure must be surfaced: %d %s", rec.Code, rec.Body.String()) }
+	pending, err := store.Get(p.ID)
+	if err != nil || pending.LifecycleState != profile.LifecycleArchived || pending.ArchivedAt == nil || pending.HistoryPending == nil { t.Fatalf("archive must remain durable and pending: %#v %v", pending, err) }
+	for _, suffix := range []string{"", "-wal", "-shm"} {
+		if err := os.Remove(dbPath + suffix); err != nil && !os.IsNotExist(err) { t.Fatal(err) }
+	}
+	if _, err := NewRouter(cfg, store, testManagerWithRuntimeConfig(t, cfg), nil, nil); err != nil { t.Fatalf("startup archive recovery: %v", err) }
+	confirmed, err := store.Get(p.ID)
+	if err != nil || confirmed.LifecycleState != profile.LifecycleArchived || confirmed.ArchivedAt == nil || confirmed.HistoryPending != nil { t.Fatalf("recovered archive lifecycle=%#v err=%v", confirmed, err) }
+}
+
+func TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker(t *testing.T) {
+	r, cfg, store := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	start := make(chan struct{})
+	statuses := make(chan int, 2)
+	for _, path := range []string{"/api/profiles/" + id + "/archive", "/api/profiles/" + id + "/reopen"} {
+		path := path
+		go func() {
+			<-start
+			rec := httptest.NewRecorder()
+			r.ServeHTTP(rec, historyRequest(http.MethodPost, path, "", cfg.APIToken))
+			statuses <- rec.Code
+		}()
+	}
+	close(start)
+	for range 2 {
+		status := <-statuses
+		if status != http.StatusOK && status != http.StatusConflict { t.Fatalf("archive/reopen concurrent status=%d", status) }
+	}
+	current, err := store.Get(id)
+	if err != nil || current.HistoryPending != nil { t.Fatalf("concurrent lifecycle left pending marker: %#v %v", current, err) }
+}

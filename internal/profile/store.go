@@ -24,6 +24,7 @@ type Profile struct {
 	Group           string          `json:"group,omitempty"`
 	Tags            []string        `json:"tags,omitempty"`
 	LifecycleState  LifecycleState  `json:"lifecycle_state,omitempty"`
+	ArchivedAt      *time.Time      `json:"archived_at,omitempty"`
 	CreatedAt       time.Time       `json:"created_at"`
 	LastUsed        time.Time       `json:"last_used"`
 	Fingerprint     map[string]any  `json:"fingerprint,omitempty"`
@@ -720,62 +721,110 @@ func normalizeName(value string) string {
 	return strings.ToLower(strings.TrimSpace(value))
 }
 
-// ArchiveProfile transitions an active profile to the archived state. Archived
-// profiles keep their directory and vault entry but refuse mutations.
+// ArchiveProfile preserves the historical error-only API. T23 handlers use
+// ArchiveProfileResult to distinguish a real transition from an idempotent
+// no-op and thereby avoid a duplicate History capture.
 func (s *Store) ArchiveProfile(id string) error {
-	s.mu.Lock()
+	_, _, err := s.ArchiveProfileResult(id)
+	return err
+}
+
+// ArchiveProfileResult persists the archive transition before publishing it to
+// readers. An already archived profile is a successful no-op (`changed=false`).
+func (s *Store) ArchiveProfileResult(id string) (*Profile, bool, error) {
+	s.mu.RLock()
 	p, ok := s.profiles[id]
 	if !ok {
-		s.mu.Unlock()
-		return ErrNotFound
+		s.mu.RUnlock()
+		return nil, false, ErrNotFound
 	}
 	if p.LifecycleState == LifecycleArchived {
-		s.mu.Unlock()
-		return nil // idempotent: the profile is already in the target state
+		s.mu.RUnlock()
+		return p, false, nil
 	}
 	if p.LifecycleState == LifecycleQuarantined {
-		s.mu.Unlock()
-		return ErrQuarantined
+		s.mu.RUnlock()
+		return nil, false, ErrQuarantined
 	}
+	s.mu.RUnlock()
 	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
 	if err != nil {
-		s.mu.Unlock()
-		return err
+		return nil, false, err
 	}
-	// The per-profile lock must serialize every write for this profile; the
-	// store lock cannot be released before the archive state is flushed.
-	defer s.mu.Unlock()
 	defer unlock()
-	p.LifecycleState = LifecycleArchived
-	return s.save(p, "archive")
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok = s.profiles[id]
+	if !ok {
+		return nil, false, ErrNotFound
+	}
+	if p.LifecycleState == LifecycleArchived {
+		return p, false, nil
+	}
+	if p.LifecycleState == LifecycleQuarantined {
+		return nil, false, ErrQuarantined
+	}
+	tmp := *p
+	archivedAt := time.Now().UTC().Truncate(time.Microsecond)
+	tmp.LifecycleState = LifecycleArchived
+	tmp.ArchivedAt = &archivedAt
+	if err := s.save(&tmp, "archive"); err != nil {
+		return nil, false, err
+	}
+	s.profiles[id] = &tmp
+	return &tmp, true, nil
 }
 
 // ReopenProfile returns an archived profile to the active state. Quarantined
 // profiles refuse reopening: only an external authority can lift quarantine.
 func (s *Store) ReopenProfile(id string) error {
-	s.mu.Lock()
+	_, err := s.ReopenProfileResult(id)
+	return err
+}
+
+// ReopenProfileResult restores only lifecycle metadata. It does not restore
+// browser data, sessions, vault values or backups.
+func (s *Store) ReopenProfileResult(id string) (*Profile, error) {
+	s.mu.RLock()
 	p, ok := s.profiles[id]
 	if !ok {
-		s.mu.Unlock()
-		return ErrNotFound
+		s.mu.RUnlock()
+		return nil, ErrNotFound
 	}
 	if p.LifecycleState == LifecycleActive {
-		s.mu.Unlock()
-		return ErrAlreadyArchived // reused sentinel meaning "not archived"; mapper routes to INVALID_LIFECYCLE
+		s.mu.RUnlock()
+		return nil, ErrAlreadyArchived
 	}
 	if p.LifecycleState == LifecycleQuarantined {
-		s.mu.Unlock()
-		return ErrQuarantined
+		s.mu.RUnlock()
+		return nil, ErrQuarantined
 	}
+	s.mu.RUnlock()
 	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
 	if err != nil {
-		s.mu.Unlock()
-		return err
+		return nil, err
 	}
-	defer s.mu.Unlock()
 	defer unlock()
-	p.LifecycleState = LifecycleActive
-	return s.save(p, "reopen")
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok = s.profiles[id]
+	if !ok {
+		return nil, ErrNotFound
+	}
+	if p.LifecycleState == LifecycleActive {
+		return nil, ErrAlreadyArchived
+	}
+	if p.LifecycleState == LifecycleQuarantined {
+		return nil, ErrQuarantined
+	}
+	tmp := *p
+	tmp.LifecycleState = LifecycleActive
+	tmp.ArchivedAt = nil
+	if err := s.save(&tmp, "reopen"); err != nil {
+		return nil, err
+	}
+	s.profiles[id] = &tmp
+	return &tmp, nil
 }
 
 // AddProfileTag assigns a tag to a profile. The tag budget and active state

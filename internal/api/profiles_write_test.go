@@ -224,6 +224,16 @@ func TestArchiveIdempotentAndMutationsRefusedAfterArchive(t *testing.T) {
 	if rec.Code != http.StatusOK {
 		t.Fatalf("second archive: status %d body=%s", rec.Code, rec.Body.String())
 	}
+	if !strings.Contains(rec.Body.String(), `"changed":false`) {
+		t.Fatalf("idempotent archive must report changed=false: %s", rec.Body.String())
+	}
+	var archiveAuditCount int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM audit_events WHERE event_type='profile.archived' AND entity_id=?`, id).Scan(&archiveAuditCount); err != nil {
+		t.Fatal(err)
+	}
+	if archiveAuditCount != 1 {
+		t.Fatalf("idempotent archive must not write a second mutation audit, got %d", archiveAuditCount)
+	}
 
 	// Archived profiles refuse writes and tag changes with an explicit code.
 	rec = httptest.NewRecorder()

@@ -86,12 +86,18 @@ func (h *handler) archiveProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer unlock()
-	if err := h.store.ArchiveProfile(id); err != nil {
+	p, changed, err := h.store.ArchiveProfileResult(id)
+	if err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.archive_failed", id, correlationID, map[string]any{"error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
 		return
 	}
-	if p, err := h.store.Get(id); err != nil || h.captureProfileHistory(r.Context(), p, "archive", correlationID) != nil {
+	if !changed {
+		w.Header().Set(correlationHeader, correlationID)
+		writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "lifecycle_state": "archived", "changed": false}})
+		return
+	}
+	if err := h.captureProfileHistory(r.Context(), p, "archive", correlationID); err != nil {
 		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
 		return
 	}
@@ -109,12 +115,13 @@ func (h *handler) reopenProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer unlock()
-	if err := h.store.ReopenProfile(id); err != nil {
+	p, err := h.store.ReopenProfileResult(id)
+	if err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.reopen_failed", id, correlationID, map[string]any{"error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
 		return
 	}
-	if p, err := h.store.Get(id); err != nil || h.captureProfileHistory(r.Context(), p, "reopen", correlationID) != nil {
+	if err := h.captureProfileHistory(r.Context(), p, "reopen", correlationID); err != nil {
 		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
 		return
 	}
