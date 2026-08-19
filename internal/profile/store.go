@@ -252,6 +252,38 @@ func validateProfileMetadata(note string, fields map[string]CustomField) error {
 	return nil
 }
 
+// ValidateTemplateMetadata reuses the canonical Profile/T20-NCF syntax and
+// value rules for a Template payload without creating or changing a profile.
+// Nil values mean that the corresponding field is absent from the template.
+func ValidateTemplateMetadata(group *string, tags []string, note *string, fields map[string]CustomField) error {
+	if group != nil && *group != "" && !validName(*group) {
+		return ErrInvalidGroup
+	}
+	if len(tags) > maxProfileTags {
+		return ErrTooManyTags
+	}
+	seenTags := make(map[string]struct{}, len(tags))
+	for _, tag := range tags {
+		if !validName(tag) {
+			return ErrInvalidTag
+		}
+		key := normalizeName(tag)
+		if _, duplicate := seenTags[key]; duplicate {
+			return ErrAlreadyTagged
+		}
+		seenTags[key] = struct{}{}
+	}
+	if note != nil {
+		return validateProfileMetadata(*note, fields)
+	}
+	return validateProfileMetadata("", fields)
+}
+
+// CanonicalMetadataName is the case-insensitive comparison rule used by the
+// Profile Store. Templates use it for names and tag union so their behaviour
+// cannot silently diverge from existing Core metadata.
+func CanonicalMetadataName(value string) string { return normalizeName(value) }
+
 func validNote(value string) bool {
 	for _, c := range value {
 		if c == '\n' || c == '\t' {

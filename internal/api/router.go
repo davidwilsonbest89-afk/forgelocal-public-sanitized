@@ -29,6 +29,7 @@ import (
 	"forgelocal/internal/profile"
 	"forgelocal/internal/proxies"
 	bfruntime "forgelocal/internal/runtime"
+	"forgelocal/internal/templates"
 )
 
 func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStores ...*groups.Store) (*chi.Mux, error) {
@@ -65,6 +66,10 @@ func NewRouterWithEnvironment(cfg *config.Config, store *profile.Store, mgr *bro
 }
 
 func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
+	templateStore, err := templates.Open(cfg.DataDir)
+	if err != nil {
+		return nil, fmt.Errorf("open template repository: %w", err)
+	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -84,7 +89,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -106,6 +111,12 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
 		r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
 		r.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)
+		r.Post("/api/templates", h.createTemplate)
+		r.Get("/api/templates", h.listTemplates)
+		r.Get("/api/templates/{id}/versions/{version}", h.getTemplateVersion)
+		r.Post("/api/templates/{id}/versions", h.createTemplateVersion)
+		r.Post("/api/templates/{id}/versions/{version}/archive", h.archiveTemplateVersion)
+		r.Post("/api/templates/{id}/versions/{version}/draft", h.calculateTemplateDraft)
 		r.Post("/api/profiles/{id}/duplicate", h.duplicateProfile)
 		r.Post("/api/profiles/{id}/export", h.exportProfile)
 		r.Post("/api/profiles/import", h.importProfile)
@@ -185,6 +196,7 @@ type handler struct {
 	proxyStore        *proxies.Store
 	qualifiedRegistry *bfruntime.QualifiedRegistry
 	backupDB          *sql.DB
+	templateStore     *templates.Store
 }
 
 // t13Checker projects environment diagnostics from stored metadata and the
