@@ -174,3 +174,30 @@ func TestT22HistoryConcurrentRestoreAndMutationAreSerialized(t *testing.T) {
 	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=10&offset=0", "", cfg.APIToken))
 	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"total":`)) { t.Fatalf("post-race history: %d %s", rec.Code, rec.Body.String()) }
 }
+
+func TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers(t *testing.T) {
+	r, cfg, store := testHistoryRouter(t)
+	p := &profile.Profile{Name: "Failure injection", RuntimeID: "cloakbrowser", LifecycleState: profile.LifecycleActive}
+	if err := store.Create(p); err != nil { t.Fatal(err) }
+	if err := store.ClearHistoryPending(p.ID); err != nil { t.Fatal(err) }
+	dbPath := filepath.Join(cfg.DataDir, "profile_history.sqlite")
+	db, err := sql.Open("sqlite", dbPath)
+	if err != nil { t.Fatal(err) }
+	if _, err := db.Exec(`DROP TABLE profile_history_versions`); err != nil { db.Close(); t.Fatal(err) }
+	if err := db.Close(); err != nil { t.Fatal(err) }
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+p.ID, `{"name":"Written before failed capture"}`, cfg.APIToken))
+	if rec.Code < http.StatusInternalServerError { t.Fatalf("capture failure must be surfaced: %d %s", rec.Code, rec.Body.String()) }
+	pending, err := store.Get(p.ID)
+	if err != nil || !pending.HistoryPending || pending.Name != "Written before failed capture" { t.Fatalf("profile write must persist as pending: %#v %v", pending, err) }
+	for _, suffix := range []string{"", "-wal", "-shm"} {
+		if err := os.Remove(dbPath + suffix); err != nil && !os.IsNotExist(err) { t.Fatal(err) }
+	}
+	recovered, err := NewRouter(cfg, store, testManagerWithRuntimeConfig(t, cfg), nil, nil)
+	if err != nil { t.Fatalf("startup recovery: %v", err) }
+	confirmed, err := store.Get(p.ID)
+	if err != nil || confirmed.HistoryPending { t.Fatalf("recovery must clear pending marker: %#v %v", confirmed, err) }
+	rec = httptest.NewRecorder()
+	recovered.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history?limit=10&offset=0", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"action":"recovery"`)) { t.Fatalf("recovered history: %d %s", rec.Code, rec.Body.String()) }
+}
