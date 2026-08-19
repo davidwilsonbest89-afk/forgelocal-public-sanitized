@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -23,12 +24,28 @@ import { pathToFileURL } from "node:url";
 //      HTML brut, aucune image, aucune coordonnée dans le DOM du panneau.
 const exec = promisify(execFile);
 // Nouvelle baseline forgebaseline-2026-08-17 (T15 réimplémenté clean-room).
-const coreBaseURL = process.env.FORGELOCAL_CORE_BASE_URL ?? "http://127.0.0.1:19280";
-const dashboardBase = process.env.FORGELOCAL_DASHBOARD_URL ?? "http://127.0.0.1:3000";
+const localOnlyHosts = new Set(["127.0.0.1", "localhost", "::1"]);
+
+function localBaseURL(variable: "FORGELOCAL_CORE_BASE_URL" | "FORGELOCAL_DASHBOARD_URL", fallback: string): string {
+  const configured = (process.env[variable] ?? fallback).trim();
+  let parsed: URL;
+  try {
+    parsed = new URL(configured);
+  } catch {
+    throw new Error(`T15_${variable}_INVALID: URL HTTP(S) loopback attendue, valeur reçue=${JSON.stringify(configured)}`);
+  }
+  if ((parsed.protocol !== "http:" && parsed.protocol !== "https:") || !localOnlyHosts.has(parsed.hostname)) {
+    throw new Error(`T15_${variable}_NOT_LOOPBACK: URL HTTP(S) loopback attendue, valeur reçue=${JSON.stringify(configured)}`);
+  }
+  return parsed.origin;
+}
+
+const coreBaseURL = localBaseURL("FORGELOCAL_CORE_BASE_URL", "http://127.0.0.1:19280");
+const dashboardBase = localBaseURL("FORGELOCAL_DASHBOARD_URL", "http://127.0.0.1:3000");
 const dashboardOrigin = new URL(dashboardBase).origin;
-const fixtureDir = mkdtempSync(join(tmpdir(), "forgelocal-t15-fixture-"));
-const fixturePath = join(fixtureDir, "index.html");
-const fixtureFile = pathToFileURL(fixturePath).href;
+let fixtureDir = "";
+let fixturePath = "";
+let fixtureFile = "";
 // Profil créé par la suite elle-même (nom unique par exécution pour éviter les collisions
 // entre Core frais sans state partagé). Le Core T15 exige un runtime_id valide ;
 // "browseforge-chromium" est activé dans la config de référence E2E.
@@ -85,6 +102,16 @@ function payloadOf<T>(output: string): T {
   return JSON.parse(String(output).split("__CODE__")[0]) as T;
 }
 
+async function requireReachable(label: "CORE" | "DASHBOARD", url: string): Promise<void> {
+  const result = await exec("curl", ["-sS", "--connect-timeout", "2", "--max-time", "5", "-o", "/dev/null", "-w", "%{http_code}", url]).then(
+    res => String(res.stdout).trim(),
+    err => String(err.stdout ?? "").trim(),
+  );
+  if (result !== "200") {
+    throw new Error(`T15_${label}_UNAVAILABLE: url=${url} status=${result || "NO_RESPONSE"}; vérifiez la variable d’environnement avant de lancer Playwright.`);
+  }
+}
+
 async function linkAdmin(page: import("@playwright/test").Page, token: string) {
   await page.getByTestId("local-core-admin-token").fill(token);
   await page.getByTestId("local-core-admin-link").click();
@@ -104,15 +131,16 @@ test.describe("T15 local CDP automation", () => {
   const auth = `Authorization: Bearer ${token}`;
 
   test.beforeAll(async () => {
-    writeFileSync(fixturePath, "<!doctype html><html><body><h1>Automation locale T15</h1><p>fixture synthétique locale</p></body></html>", "utf8");
-    const health = await curl("-s", `${coreBaseURL}/api/health`);
-    if (health.code < 200 || health.code >= 300) {
-      throw new Error(`T15_CORE_UNAVAILABLE: status=${health.code} url=${coreBaseURL}`);
-    }
+    await requireReachable("CORE", `${coreBaseURL}/api/health`);
+    await requireReachable("DASHBOARD", dashboardBase);
+    fixtureDir = await mkdtemp(join(tmpdir(), "forgelocal-t15-fixture-"));
+    fixturePath = join(fixtureDir, "index.html");
+    fixtureFile = pathToFileURL(fixturePath).href;
+    await writeFile(fixturePath, "<!doctype html><html><body><h1>Automation locale T15</h1><p>fixture synthétique locale</p></body></html>", { encoding: "utf8", mode: 0o600 });
   });
 
-  test.afterAll(() => {
-    rmSync(fixtureDir, { recursive: true, force: true });
+  test.afterAll(async () => {
+    if (fixtureDir) await rm(fixtureDir, { recursive: true, force: true });
   });
 
   test("W1: session opens and lists without port/path leakage", async () => {
@@ -147,8 +175,9 @@ test.describe("T15 local CDP automation", () => {
     // Acceptation locale uniquement.
     const local = await curl("-s", "-X", "POST", "-H", auth, "-H", "Content-Type: application/json", "-d", JSON.stringify({ url: fixtureFile }), `${coreBaseURL}/api/sessions/${sid}/navigate`);
     expect(payloadOf<{ data: { url: string } }>(local.stdout).data.url).toBe(fixtureFile);
-    const localHttp = await curl("-s", "-X", "POST", "-H", auth, "-H", "Content-Type: application/json", "-d", JSON.stringify({ url: "http://127.0.0.1:19280/api/health" }), `${coreBaseURL}/api/sessions/${sid}/navigate`);
-    expect(payloadOf<{ data: { url: string } }>(localHttp.stdout).data.url).toContain("127.0.0.1");
+    const localHealthURL = `${coreBaseURL}/api/health`;
+    const localHttp = await curl("-s", "-X", "POST", "-H", auth, "-H", "Content-Type: application/json", "-d", JSON.stringify({ url: localHealthURL }), `${coreBaseURL}/api/sessions/${sid}/navigate`);
+    expect(payloadOf<{ data: { url: string } }>(localHttp.stdout).data.url).toContain(new URL(coreBaseURL).hostname);
   });
 
   test("W3: content projection redacted and screenshot available for client-side hashing", async () => {
