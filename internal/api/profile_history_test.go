@@ -247,3 +247,93 @@ func TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker(t *testing.T) {
 	current, err := store.Get(id)
 	if err != nil || current.HistoryPending != nil { t.Fatalf("concurrent lifecycle left pending marker: %#v %v", current, err) }
 }
+
+func TestT23IdempotentArchiveDoesNotCreateSecondHistoryVersion(t *testing.T) {
+	r, cfg, _ := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	first := httptest.NewRecorder()
+	r.ServeHTTP(first, historyRequest(http.MethodPost, "/api/profiles/"+id+"/archive", "", cfg.APIToken))
+	if first.Code != http.StatusOK { t.Fatalf("first archive: %d %s", first.Code, first.Body.String()) }
+	db, err := sql.Open("sqlite", filepath.Join(cfg.DataDir, "profile_history.sqlite"))
+	if err != nil { t.Fatal(err) }
+	defer db.Close()
+	var before int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_history_versions WHERE profile_id=? AND action='archive'`, id).Scan(&before); err != nil || before != 1 { t.Fatalf("archive versions before second request=%d err=%v", before, err) }
+	second := httptest.NewRecorder()
+	r.ServeHTTP(second, historyRequest(http.MethodPost, "/api/profiles/"+id+"/archive", "", cfg.APIToken))
+	if second.Code != http.StatusOK || !bytes.Contains(second.Body.Bytes(), []byte(`"changed":false`)) { t.Fatalf("second archive: %d %s", second.Code, second.Body.String()) }
+	var after int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_history_versions WHERE profile_id=? AND action='archive'`, id).Scan(&after); err != nil || after != before { t.Fatalf("idempotent archive history before=%d after=%d err=%v", before, after, err) }
+}
+
+func TestT23ArchiveReopenUpdateConcurrentProductionRouter(t *testing.T) {
+	r, cfg, store := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	start := make(chan struct{})
+	statuses := make(chan int, 3)
+	requests := []struct{ method, path, body string }{
+		{http.MethodPost, "/api/profiles/" + id + "/archive", ""},
+		{http.MethodPost, "/api/profiles/" + id + "/reopen", ""},
+		{http.MethodPut, "/api/profiles/" + id, `{"name":"T23 concurrent update"}`},
+	}
+	for _, item := range requests {
+		item := item
+		go func() { <-start; rec := httptest.NewRecorder(); r.ServeHTTP(rec, historyRequest(item.method, item.path, item.body, cfg.APIToken)); statuses <- rec.Code }()
+	}
+	close(start)
+	for range requests {
+		status := <-statuses
+		if status != http.StatusOK && status != http.StatusConflict { t.Fatalf("concurrent T23 status=%d", status) }
+	}
+	current, err := store.Get(id)
+	if err != nil || current.HistoryPending != nil { t.Fatalf("concurrent T23 state=%#v err=%v", current, err) }
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=20&offset=0", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"total":`)) { t.Fatalf("concurrent history: %d %s", rec.Code, rec.Body.String()) }
+}
+
+func TestT23ArchiveReopenProductionGuardsAndRedaction(t *testing.T) {
+	r, cfg, _ := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	for _, path := range []string{"/api/profiles/" + id + "/archive", "/api/profiles/" + id + "/reopen"} {
+		req := httptest.NewRequest(http.MethodPost, path, nil)
+		req.RemoteAddr = "127.0.0.1:7777"
+		req.Header.Set("Origin", "http://localhost:3000")
+		rec := httptest.NewRecorder()
+		r.ServeHTTP(rec, req)
+		if rec.Code != http.StatusUnauthorized { t.Fatalf("missing bearer %s: %d", path, rec.Code) }
+		for _, guard := range []struct{ origin, referer string }{
+			{},
+			{origin: "https://remote.invalid"},
+			{referer: "https://remote.invalid/path"},
+		} {
+			req := httptest.NewRequest(http.MethodPost, path, nil)
+			req.RemoteAddr = "127.0.0.1:7777"
+			req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+			if guard.origin != "" { req.Header.Set("Origin", guard.origin) }
+			if guard.referer != "" { req.Header.Set("Referer", guard.referer) }
+			rec = httptest.NewRecorder()
+			r.ServeHTTP(rec, req)
+			if rec.Code != http.StatusForbidden || !bytes.Contains(rec.Body.Bytes(), []byte("ORIGIN_REQUIRED_LOCAL_ONLY")) { t.Fatalf("origin guard %s origin=%q referer=%q: %d %s", path, guard.origin, guard.referer, rec.Code, rec.Body.String()) }
+		}
+	}
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/archive", "", cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("guarded archive success: %d %s", rec.Code, rec.Body.String()) }
+	for _, forbidden := range []string{"profile_dir", "history_pending", "secret_ref", "username", "password"} {
+		if bytes.Contains(rec.Body.Bytes(), []byte(forbidden)) { t.Fatalf("archive response leaked %q: %s", forbidden, rec.Body.String()) }
+	}
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/reopen", "", cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("guarded reopen success: %d %s", rec.Code, rec.Body.String()) }
+	for _, forbidden := range []string{"profile_dir", "history_pending", "secret_ref", "username", "password"} {
+		if bytes.Contains(rec.Body.Bytes(), []byte(forbidden)) { t.Fatalf("reopen response leaked %q: %s", forbidden, rec.Body.String()) }
+	}
+	db, err := sql.Open("sqlite", filepath.Join(cfg.DataDir, "profile_history.sqlite"))
+	if err != nil { t.Fatal(err) }
+	defer db.Close()
+	var events int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_history_audit_events WHERE profile_id=? AND action='history_created' AND result='success'`, id).Scan(&events); err != nil || events < 2 { t.Fatalf("redacted archive/reopen history audit events=%d err=%v", events, err) }
+	var leaked int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_history_audit_events WHERE profile_id=? AND (action LIKE '%secret%' OR correlation_id LIKE '%secret%' OR action LIKE '%profile_dir%' OR correlation_id LIKE '%profile_dir%')`, id).Scan(&leaked); err != nil || leaked != 0 { t.Fatalf("history audit redaction leaked=%d err=%v", leaked, err) }
+}
