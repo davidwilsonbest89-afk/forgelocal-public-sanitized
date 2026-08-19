@@ -2,6 +2,7 @@ package profile
 
 import (
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -35,9 +36,19 @@ type Profile struct {
 	// writes go through the Core-only T20-NCF contract and produce redacted audit.
 	Note         string                 `json:"note,omitempty"`
 	CustomFields map[string]CustomField `json:"custom_fields,omitempty"`
-	// HistoryPending is an internal durability marker for T22. It is never
+	// HistoryPending is an owner-only durability marker for T22. It is never
 	// projected by API responses or copied to History snapshots.
-	HistoryPending bool `json:"history_pending,omitempty"`
+	HistoryPending *HistoryPendingOperation `json:"history_pending,omitempty"`
+}
+
+// HistoryPendingOperation identifies the exact durable Profile write that
+// still needs a History confirmation. SnapshotDigest is a redacted canonical
+// Profile digest, never a vault value.
+type HistoryPendingOperation struct {
+	OperationID    string    `json:"operation_id"`
+	Action         string    `json:"action"`
+	CreatedAt      time.Time `json:"created_at"`
+	SnapshotDigest string    `json:"snapshot_digest"`
 }
 
 // CustomField is a typed, non-secret profile metadata value. Select values
@@ -79,6 +90,9 @@ type Store struct {
 	// a mutex; the per-profile mutex is held only by a single writer at a time.
 	perProfileMu sync.Mutex
 	perProfile   map[string]*sync.Mutex
+	// historySequence covers the handler-owned Profile → History → clear flow.
+	historySequenceMu sync.Mutex
+	historySequence   map[string]*sync.Mutex
 }
 
 const maxProfileTags = 20
@@ -103,7 +117,7 @@ func NewStore(dir string, vaults ...secrets.SecretVault) (*Store, error) {
 	if err := os.Chmod(dir, 0700); err != nil {
 		return nil, err
 	}
-	s := &Store{dir: dir, profiles: make(map[string]*Profile), vault: vault, locksByName: make(map[string]string), perProfile: make(map[string]*sync.Mutex)}
+	s := &Store{dir: dir, profiles: make(map[string]*Profile), vault: vault, locksByName: make(map[string]string), perProfile: make(map[string]*sync.Mutex), historySequence: make(map[string]*sync.Mutex)}
 	return s, s.loadAll()
 }
 
@@ -189,7 +203,7 @@ func (s *Store) Create(p *Profile) error {
 		return err
 	}
 
-	if err := s.save(p); err != nil {
+	if err := s.save(p, "create"); err != nil {
 		return err
 	}
 	s.profiles[p.ID] = p
@@ -430,6 +444,31 @@ func (s *Store) WithProfile(id string, budget time.Duration) (unlock func(), err
 	}
 }
 
+// WithHistorySequence serializes a complete T22 handler sequence for one
+// profile. Store mutation methods retain their own locks, so this lock avoids
+// re-entrant locking while preventing an older capture from clearing a newer
+// pending operation.
+func (s *Store) WithHistorySequence(id string) (unlock func(), err error) {
+	s.historySequenceMu.Lock()
+	mu, known := s.historySequence[id]
+	if !known {
+		mu = &sync.Mutex{}
+		s.historySequence[id] = mu
+	}
+	s.historySequenceMu.Unlock()
+	done := make(chan struct{})
+	go func() {
+		mu.Lock()
+		close(done)
+	}()
+	select {
+	case <-done:
+		return func() { mu.Unlock() }, nil
+	case <-time.After(perProfileIsolationBudget):
+		return nil, ErrLocked
+	}
+}
+
 const perProfileIsolationBudget = 5 * time.Second
 
 func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
@@ -519,7 +558,7 @@ func (s *Store) Update(id string, updates map[string]any) (*Profile, error) {
 	tmp.ID = id
 	tmp.ProfileDir = p.ProfileDir
 	s.profiles[id] = tmp
-	return tmp, s.save(tmp)
+	return tmp, s.save(tmp, "update")
 
 }
 
@@ -564,7 +603,7 @@ func (s *Store) SetMetadata(id, note string, fields map[string]CustomField) (*Pr
 	if err := validateProfileMetadata(tmp.Note, tmp.CustomFields); err != nil {
 		return nil, err
 	}
-	if err := s.save(&tmp); err != nil {
+	if err := s.save(&tmp, "metadata"); err != nil {
 		return nil, err
 	}
 	s.profiles[id] = &tmp
@@ -631,7 +670,7 @@ func (s *Store) RestoreHistory(id string, restored *Profile) (*Profile, error) {
 		s.locksByName[nextName] = id
 		delete(s.locksByName, previousName)
 	}
-	if err := s.save(&tmp); err != nil {
+	if err := s.save(&tmp, "restore"); err != nil {
 		return nil, err
 	}
 	s.profiles[id] = &tmp
@@ -708,7 +747,7 @@ func (s *Store) ArchiveProfile(id string) error {
 	defer s.mu.Unlock()
 	defer unlock()
 	p.LifecycleState = LifecycleArchived
-	return s.save(p)
+	return s.save(p, "archive")
 }
 
 // ReopenProfile returns an archived profile to the active state. Quarantined
@@ -736,7 +775,7 @@ func (s *Store) ReopenProfile(id string) error {
 	defer s.mu.Unlock()
 	defer unlock()
 	p.LifecycleState = LifecycleActive
-	return s.save(p)
+	return s.save(p, "reopen")
 }
 
 // AddProfileTag assigns a tag to a profile. The tag budget and active state
@@ -764,7 +803,7 @@ func (s *Store) AddProfileTag(id string, tag string) error {
 		return ErrTooManyTags
 	}
 	p.Tags = append(p.Tags, tag)
-	if err := s.save(p); err != nil {
+	if err := s.save(p, "tag_add"); err != nil {
 		s.mu.Unlock()
 		return err
 	}
@@ -793,7 +832,7 @@ func (s *Store) RemoveProfileTag(id string, tag string) error {
 		return ErrTagNotAssigned
 	}
 	p.Tags = removeTag(p.Tags, tag)
-	if err := s.save(p); err != nil {
+	if err := s.save(p, "tag_remove"); err != nil {
 		s.mu.Unlock()
 		return err
 	}
@@ -833,8 +872,12 @@ func (s *Store) Duplicate(id string) (*Profile, error) {
 	return &dup, s.Create(&dup)
 }
 
-func (s *Store) save(p *Profile) error {
-	p.HistoryPending = true
+func (s *Store) save(p *Profile, action string) error {
+	marker, err := newHistoryPendingOperation(p, action)
+	if err != nil {
+		return err
+	}
+	p.HistoryPending = marker
 	return s.saveRaw(p)
 }
 
@@ -851,10 +894,9 @@ func (s *Store) saveRaw(p *Profile) error {
 	return os.Rename(tmp, path)
 }
 
-// ClearHistoryPending clears the durable T22 marker only after the matching
-// History transaction has committed. A failed clear intentionally leaves the
-// marker for deterministic startup recovery.
-func (s *Store) ClearHistoryPending(id string) error {
+// ClearHistoryPending clears only the exact durable marker captured in SQLite.
+// If a newer write replaced the operation, it remains pending for recovery.
+func (s *Store) ClearHistoryPending(id, operationID string) error {
 	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
 	if err != nil {
 		return err
@@ -866,11 +908,11 @@ func (s *Store) ClearHistoryPending(id string) error {
 	if !ok {
 		return ErrNotFound
 	}
-	if !p.HistoryPending {
+	if p.HistoryPending == nil || p.HistoryPending.OperationID != operationID {
 		return nil
 	}
 	tmp := *p
-	tmp.HistoryPending = false
+	tmp.HistoryPending = nil
 	if err := s.saveRaw(&tmp); err != nil {
 		return err
 	}
@@ -885,7 +927,7 @@ func (s *Store) PendingHistoryProfiles() []*Profile {
 	defer s.mu.RUnlock()
 	result := make([]*Profile, 0)
 	for _, p := range s.profiles {
-		if !p.HistoryPending {
+		if p.HistoryPending == nil {
 			continue
 		}
 		data, err := json.Marshal(p)
@@ -898,6 +940,44 @@ func (s *Store) PendingHistoryProfiles() []*Profile {
 		}
 	}
 	return result
+}
+
+func newHistoryPendingOperation(p *Profile, action string) (*HistoryPendingOperation, error) {
+	if p == nil || action == "" {
+		return nil, ErrInvalidName
+	}
+	idBytes := make([]byte, 16)
+	if _, err := rand.Read(idBytes); err != nil {
+		return nil, err
+	}
+	digest, err := HistorySnapshotDigest(p)
+	if err != nil {
+		return nil, err
+	}
+	return &HistoryPendingOperation{OperationID: hex.EncodeToString(idBytes), Action: action, CreatedAt: time.Now().UTC().Truncate(time.Microsecond), SnapshotDigest: digest}, nil
+}
+
+// HistorySnapshotDigest produces a deterministic redacted reference for the
+// Profile content to capture. It excludes internal markers, paths, credentials
+// and vault references.
+func HistorySnapshotDigest(p *Profile) (string, error) {
+	if p == nil {
+		return "", ErrInvalidName
+	}
+	copy := *p
+	copy.HistoryPending = nil
+	copy.ProfileDir = ""
+	if copy.Proxy != nil {
+		proxy := *copy.Proxy
+		proxy.Username, proxy.Password, proxy.SecretRef = "", "", ""
+		copy.Proxy = &proxy
+	}
+	encoded, err := json.Marshal(copy)
+	if err != nil {
+		return "", err
+	}
+	digest := sha256.Sum256(encoded)
+	return hex.EncodeToString(digest[:]), nil
 }
 
 func generateID() (string, error) {

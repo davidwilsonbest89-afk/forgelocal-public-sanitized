@@ -497,6 +497,13 @@ func (h *handler) getProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeProfileError(w, err, correlationIDFrom(r.Context()))
+		return
+	}
+	defer unlock()
 	var updates map[string]any
 	if err := json.NewDecoder(r.Body).Decode(&updates); err != nil {
 		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
@@ -515,7 +522,7 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if _, runtimeChanged := updates["runtime_id"]; runtimeChanged {
-		current, err := h.store.Get(chi.URLParam(r, "id"))
+		current, err := h.store.Get(id)
 		if err != nil {
 			writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
 			return
@@ -538,7 +545,7 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 		}
 		updates["runtime_id"] = draft.RuntimeID
 	}
-	p, err := h.store.Update(chi.URLParam(r, "id"), updates)
+	p, err := h.store.Update(id, updates)
 	if err != nil {
 		writeProfileError(w, err, correlationIDFrom(r.Context()))
 		return
@@ -557,10 +564,14 @@ func (h *handler) captureProfileHistory(ctx context.Context, p *profile.Profile,
 		// preserves the old unit harness without weakening the runtime contract.
 		return nil
 	}
+	if p == nil || p.HistoryPending == nil {
+		return fmt.Errorf("profile history operation marker is required")
+	}
+	operationID := p.HistoryPending.OperationID
 	if _, err := h.historyStore.Capture(ctx, p, action, correlation); err != nil {
 		return err
 	}
-	return h.store.ClearHistoryPending(p.ID)
+	return h.store.ClearHistoryPending(p.ID, operationID)
 }
 
 func (h *handler) recoverPendingProfileHistory(ctx context.Context) error {
@@ -568,10 +579,11 @@ func (h *handler) recoverPendingProfileHistory(ctx context.Context) error {
 		return nil
 	}
 	for _, p := range h.store.PendingHistoryProfiles() {
+		operationID := p.HistoryPending.OperationID
 		if _, err := h.historyStore.ReconcilePending(ctx, p, "startup-recovery"); err != nil {
 			return err
 		}
-		if err := h.store.ClearHistoryPending(p.ID); err != nil {
+		if err := h.store.ClearHistoryPending(p.ID, operationID); err != nil {
 			return err
 		}
 	}

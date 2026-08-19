@@ -39,6 +39,12 @@ type profileMetadataRequest struct {
 func (h *handler) updateProfileMetadata(w http.ResponseWriter, r *http.Request) {
 	correlationID := correlationIDFrom(r.Context())
 	id := chi.URLParam(r, "id")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeProfileError(w, err, correlationID)
+		return
+	}
+	defer unlock()
 	r.Body = http.MaxBytesReader(w, r.Body, maxProfileMetadataBytes)
 	defer r.Body.Close()
 	var req profileMetadataRequest
@@ -74,6 +80,12 @@ func profileMutationError(w http.ResponseWriter, status int, code, message strin
 func (h *handler) archiveProfile(w http.ResponseWriter, r *http.Request) {
 	correlationID := correlationIDFrom(r.Context())
 	id := chi.URLParam(r, "id")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeProfileError(w, err, correlationID)
+		return
+	}
+	defer unlock()
 	if err := h.store.ArchiveProfile(id); err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.archive_failed", id, correlationID, map[string]any{"error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
@@ -91,6 +103,12 @@ func (h *handler) archiveProfile(w http.ResponseWriter, r *http.Request) {
 func (h *handler) reopenProfile(w http.ResponseWriter, r *http.Request) {
 	correlationID := correlationIDFrom(r.Context())
 	id := chi.URLParam(r, "id")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeProfileError(w, err, correlationID)
+		return
+	}
+	defer unlock()
 	if err := h.store.ReopenProfile(id); err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.reopen_failed", id, correlationID, map[string]any{"error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
@@ -109,6 +127,12 @@ func (h *handler) addProfileTag(w http.ResponseWriter, r *http.Request) {
 	correlationID := correlationIDFrom(r.Context())
 	id := chi.URLParam(r, "id")
 	tag := chi.URLParam(r, "tag")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeProfileError(w, err, correlationID)
+		return
+	}
+	defer unlock()
 	if err := h.store.AddProfileTag(id, tag); err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.tag_failed", id, correlationID, map[string]any{"tag": tag, "error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
@@ -127,6 +151,12 @@ func (h *handler) removeProfileTag(w http.ResponseWriter, r *http.Request) {
 	correlationID := correlationIDFrom(r.Context())
 	id := chi.URLParam(r, "id")
 	tag := chi.URLParam(r, "tag")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeProfileError(w, err, correlationID)
+		return
+	}
+	defer unlock()
 	if err := h.store.RemoveProfileTag(id, tag); err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.tag_failed", id, correlationID, map[string]any{"tag": tag, "error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)

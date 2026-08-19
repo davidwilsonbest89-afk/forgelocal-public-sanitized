@@ -56,11 +56,26 @@ func (h *handler) restoreProfileHistory(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 	id := chi.URLParam(r, "id")
+	unlock, err := h.store.WithHistorySequence(id)
+	if err != nil {
+		writeHistoryError(w, err, correlation)
+		return
+	}
+	defer unlock()
+	operationID := ""
 	entry, err := h.historyStore.Restore(r.Context(), id, version, req.ExpectedCurrentVersion, correlation, func(snapshot *profile.Profile) (*profile.Profile, error) {
-		return h.store.RestoreHistory(id, snapshot)
+		restored, err := h.store.RestoreHistory(id, snapshot)
+		if err == nil && restored.HistoryPending != nil {
+			operationID = restored.HistoryPending.OperationID
+		}
+		return restored, err
 	})
 	if err != nil { writeHistoryError(w, err, correlation); return }
-	if err := h.store.ClearHistoryPending(id); err != nil {
+	if operationID == "" {
+		writeHistoryError(w, profile.ErrInvalidName, correlation)
+		return
+	}
+	if err := h.store.ClearHistoryPending(id, operationID); err != nil {
 		writeHistoryError(w, err, correlation)
 		return
 	}

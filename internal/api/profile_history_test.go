@@ -85,7 +85,7 @@ func TestT22ProfileHistoryReadDiffRestoreAndRedaction(t *testing.T) {
 	if rec.Code != http.StatusOK || rec.Header().Get(correlationHeader) == "" { t.Fatalf("restore: %d %s", rec.Code, rec.Body.String()) }
 	p, err := store.Get(id)
 	if err != nil || p.Name != "History One" { t.Fatalf("restored profile: %#v %v", p, err) }
-	if p.HistoryPending { t.Fatal("successful history restore must clear the durable pending marker") }
+	if p.HistoryPending != nil { t.Fatal("successful history restore must clear the durable pending marker") }
 
 	rec = httptest.NewRecorder()
 	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":3}`, cfg.APIToken))
@@ -179,7 +179,7 @@ func TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers(t *testing.T) {
 	r, cfg, store := testHistoryRouter(t)
 	p := &profile.Profile{Name: "Failure injection", RuntimeID: "cloakbrowser", LifecycleState: profile.LifecycleActive}
 	if err := store.Create(p); err != nil { t.Fatal(err) }
-	if err := store.ClearHistoryPending(p.ID); err != nil { t.Fatal(err) }
+	if err := store.ClearHistoryPending(p.ID, p.HistoryPending.OperationID); err != nil { t.Fatal(err) }
 	dbPath := filepath.Join(cfg.DataDir, "profile_history.sqlite")
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil { t.Fatal(err) }
@@ -189,14 +189,14 @@ func TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers(t *testing.T) {
 	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+p.ID, `{"name":"Written before failed capture"}`, cfg.APIToken))
 	if rec.Code < http.StatusInternalServerError { t.Fatalf("capture failure must be surfaced: %d %s", rec.Code, rec.Body.String()) }
 	pending, err := store.Get(p.ID)
-	if err != nil || !pending.HistoryPending || pending.Name != "Written before failed capture" { t.Fatalf("profile write must persist as pending: %#v %v", pending, err) }
+	if err != nil || pending.HistoryPending == nil || pending.Name != "Written before failed capture" { t.Fatalf("profile write must persist as pending: %#v %v", pending, err) }
 	for _, suffix := range []string{"", "-wal", "-shm"} {
 		if err := os.Remove(dbPath + suffix); err != nil && !os.IsNotExist(err) { t.Fatal(err) }
 	}
 	recovered, err := NewRouter(cfg, store, testManagerWithRuntimeConfig(t, cfg), nil, nil)
 	if err != nil { t.Fatalf("startup recovery: %v", err) }
 	confirmed, err := store.Get(p.ID)
-	if err != nil || confirmed.HistoryPending { t.Fatalf("recovery must clear pending marker: %#v %v", confirmed, err) }
+	if err != nil || confirmed.HistoryPending != nil { t.Fatalf("recovery must clear pending marker: %#v %v", confirmed, err) }
 	rec = httptest.NewRecorder()
 	recovered.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history?limit=10&offset=0", "", cfg.APIToken))
 	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"action":"recovery"`)) { t.Fatalf("recovered history: %d %s", rec.Code, rec.Body.String()) }

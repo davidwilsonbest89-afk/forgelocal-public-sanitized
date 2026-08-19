@@ -81,7 +81,7 @@ func Open(dataDir string) (*Store, error) {
 		`CREATE TABLE IF NOT EXISTS profile_history_schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)`,
 		`CREATE TABLE IF NOT EXISTS profile_history_versions (
 			profile_id TEXT NOT NULL, version INTEGER NOT NULL, action TEXT NOT NULL,
-			snapshot_json TEXT NOT NULL, created_at TEXT NOT NULL,
+			snapshot_json TEXT NOT NULL, created_at TEXT NOT NULL, operation_id TEXT NOT NULL DEFAULT '',
 			PRIMARY KEY(profile_id, version)
 		)`,
 		`CREATE TABLE IF NOT EXISTS profile_history_audit_events (
@@ -96,6 +96,14 @@ func Open(dataDir string) (*Store, error) {
 		}
 	}
 	if _, err := db.Exec(`INSERT OR IGNORE INTO profile_history_schema_migrations(version, applied_at) VALUES(1, ?)`, timestamp()); err != nil {
+		_ = db.Close()
+		return nil, err
+	}
+	if _, err := db.Exec(`ALTER TABLE profile_history_versions ADD COLUMN operation_id TEXT NOT NULL DEFAULT ''`); err != nil && !strings.Contains(strings.ToLower(err.Error()), "duplicate column") {
+		_ = db.Close()
+		return nil, err
+	}
+	if _, err := db.Exec(`INSERT OR IGNORE INTO profile_history_schema_migrations(version, applied_at) VALUES(2, ?)`, timestamp()); err != nil {
 		_ = db.Close()
 		return nil, err
 	}
@@ -116,6 +124,10 @@ func (s *Store) Capture(ctx context.Context, p *profile.Profile, action, correla
 	if err != nil {
 		return nil, ErrInvalidSnapshot
 	}
+	operationID := ""
+	if p.HistoryPending != nil {
+		operationID = p.HistoryPending.OperationID
+	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	tx, err := s.db.BeginTx(ctx, nil)
@@ -128,7 +140,7 @@ func (s *Store) Capture(ctx context.Context, p *profile.Profile, action, correla
 		return nil, err
 	}
 	created := now()
-	if _, err = tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at) VALUES(?,?,?,?,?)`, p.ID, next, action, string(payload), created.Format(time.RFC3339Nano)); err != nil {
+	if _, err = tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at, operation_id) VALUES(?,?,?,?,?,?)`, p.ID, next, action, string(payload), created.Format(time.RFC3339Nano), operationID); err != nil {
 		return nil, err
 	}
 	if err = audit(ctx, tx, p.ID, next, "history_created", "success", correlation); err != nil {
@@ -144,7 +156,11 @@ func (s *Store) Capture(ctx context.Context, p *profile.Profile, action, correla
 // durable History snapshot, or records one recovery version when it does not.
 // It is called at router startup before a pending marker can be cleared.
 func (s *Store) ReconcilePending(ctx context.Context, p *profile.Profile, correlation string) (*Entry, error) {
-	if p == nil || strings.TrimSpace(p.ID) == "" {
+	if p == nil || strings.TrimSpace(p.ID) == "" || p.HistoryPending == nil {
+		return nil, ErrInvalidSnapshot
+	}
+	digest, err := profile.HistorySnapshotDigest(p)
+	if err != nil || digest != p.HistoryPending.SnapshotDigest {
 		return nil, ErrInvalidSnapshot
 	}
 	snapshot, err := makeSnapshot(p)
@@ -159,11 +175,11 @@ func (s *Store) ReconcilePending(ctx context.Context, p *profile.Profile, correl
 	}
 	defer tx.Rollback()
 	var version int
-	var payload, created string
-	err = tx.QueryRowContext(ctx, `SELECT version, snapshot_json, created_at FROM profile_history_versions WHERE profile_id=? ORDER BY version DESC LIMIT 1`, p.ID).Scan(&version, &payload, &created)
+	var payload, created, operationID string
+	err = tx.QueryRowContext(ctx, `SELECT version, snapshot_json, created_at, operation_id FROM profile_history_versions WHERE profile_id=? ORDER BY version DESC LIMIT 1`, p.ID).Scan(&version, &payload, &created, &operationID)
 	if err == nil {
 		var latest Snapshot
-		if json.Unmarshal([]byte(payload), &latest) == nil && reflect.DeepEqual(latest, snapshot) {
+		if operationID == p.HistoryPending.OperationID && json.Unmarshal([]byte(payload), &latest) == nil && reflect.DeepEqual(latest, snapshot) {
 			if err := audit(ctx, tx, p.ID, version, "history_recovery_confirmed", "success", correlation); err != nil {
 				return nil, err
 			}
@@ -188,7 +204,7 @@ func (s *Store) ReconcilePending(ctx context.Context, p *profile.Profile, correl
 		return nil, ErrInvalidSnapshot
 	}
 	createdAt := now()
-	if _, err := tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at) VALUES(?,?,?,?,?)`, p.ID, next, "recovery", string(encoded), createdAt.Format(time.RFC3339Nano)); err != nil {
+	if _, err := tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at, operation_id) VALUES(?,?,?,?,?,?)`, p.ID, next, "recovery", string(encoded), createdAt.Format(time.RFC3339Nano), p.HistoryPending.OperationID); err != nil {
 		return nil, err
 	}
 	if err := audit(ctx, tx, p.ID, next, "history_recovered", "success", correlation); err != nil {
@@ -330,7 +346,11 @@ func (s *Store) Restore(ctx context.Context, profileID string, target, expected 
 	}
 	next := current + 1
 	created := now()
-	if _, err = tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at) VALUES(?,?,?,?,?)`, profileID, next, "restore", string(encoded), created.Format(time.RFC3339Nano)); err != nil {
+	operationID := ""
+	if restored.HistoryPending != nil {
+		operationID = restored.HistoryPending.OperationID
+	}
+	if _, err = tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at, operation_id) VALUES(?,?,?,?,?,?)`, profileID, next, "restore", string(encoded), created.Format(time.RFC3339Nano), operationID); err != nil {
 		return nil, err
 	}
 	if err = audit(ctx, tx, profileID, next, "history_restored", "success", correlation); err != nil {
@@ -383,7 +403,7 @@ func makeSnapshot(p *profile.Profile) (Snapshot, error) {
 		return Snapshot{}, err
 	}
 	clone.ProfileDir = ""
-	clone.HistoryPending = false
+	clone.HistoryPending = nil
 	if clone.Proxy != nil {
 		clone.Proxy.Username = ""
 		clone.Proxy.Password = ""
