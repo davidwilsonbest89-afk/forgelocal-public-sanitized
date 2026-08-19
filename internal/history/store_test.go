@@ -72,3 +72,22 @@ func TestCaptureSerializesConcurrentVersions(t *testing.T) {
 	if err != nil { t.Fatal(err) }
 	if list.Total != 9 || list.Data[0].Version != 9 { t.Fatalf("concurrent versions: %#v", list) }
 }
+
+func TestReconcilePendingRecoversOnceThenConfirms(t *testing.T) {
+	s, err := Open(t.TempDir())
+	if err != nil { t.Fatal(err) }
+	defer s.Close()
+	ctx := context.Background()
+	p := testProfile("Before")
+	if _, err := s.Capture(ctx, p, "create", "corr-base"); err != nil { t.Fatal(err) }
+	p.Name = "After interrupted profile write"
+	first, err := s.ReconcilePending(ctx, p, "corr-recovery")
+	if err != nil { t.Fatal(err) }
+	if first.Action != "recovery" || first.Version != 2 { t.Fatalf("first recovery = %#v", first) }
+	second, err := s.ReconcilePending(ctx, p, "corr-confirm")
+	if err != nil { t.Fatal(err) }
+	if second.Action != "confirmed" || second.Version != 2 { t.Fatalf("second recovery = %#v", second) }
+	list, err := s.List(ctx, p.ID, 10, 0)
+	if err != nil { t.Fatal(err) }
+	if list.Total != 2 { t.Fatalf("reconciliation duplicated history: %#v", list) }
+}

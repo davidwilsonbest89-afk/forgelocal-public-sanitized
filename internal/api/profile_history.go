@@ -60,6 +60,10 @@ func (h *handler) restoreProfileHistory(w http.ResponseWriter, r *http.Request) 
 		return h.store.RestoreHistory(id, snapshot)
 	})
 	if err != nil { writeHistoryError(w, err, correlation); return }
+	if err := h.store.ClearHistoryPending(id); err != nil {
+		writeHistoryError(w, err, correlation)
+		return
+	}
 	w.Header().Set(correlationHeader, correlation)
 	writeJSON(w, http.StatusOK, map[string]any{"data": entry})
 }

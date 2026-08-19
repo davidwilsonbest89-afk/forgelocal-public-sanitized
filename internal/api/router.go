@@ -95,6 +95,9 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	}
 
 	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore}
+	if err := h.recoverPendingProfileHistory(context.Background()); err != nil {
+		return nil, fmt.Errorf("recover pending profile history: %w", err)
+	}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -554,8 +557,25 @@ func (h *handler) captureProfileHistory(ctx context.Context, p *profile.Profile,
 		// preserves the old unit harness without weakening the runtime contract.
 		return nil
 	}
-	_, err := h.historyStore.Capture(ctx, p, action, correlation)
-	return err
+	if _, err := h.historyStore.Capture(ctx, p, action, correlation); err != nil {
+		return err
+	}
+	return h.store.ClearHistoryPending(p.ID)
+}
+
+func (h *handler) recoverPendingProfileHistory(ctx context.Context) error {
+	if h.historyStore == nil {
+		return nil
+	}
+	for _, p := range h.store.PendingHistoryProfiles() {
+		if _, err := h.historyStore.ReconcilePending(ctx, p, "startup-recovery"); err != nil {
+			return err
+		}
+		if err := h.store.ClearHistoryPending(p.ID); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (h *handler) deleteProfile(w http.ResponseWriter, r *http.Request) {

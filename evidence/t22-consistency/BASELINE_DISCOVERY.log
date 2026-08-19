@@ -1,0 +1,28 @@
+started_utc=2026-08-19T18:45:50Z
+cwd=/home/ubuntu/forgelocal-t22-consistency-20260819T1835Z/clone
+$ git rev-parse t22-profile-history-2026-08-19
+48988552720b1461cf503dc3b4e4822b831a19ff
+exit_code=0
+$ git rev-parse t22-profile-history-2026-08-19^{}
+5cfe7df3b5bb24c3d84ba455d3c32569555c4bdc
+exit_code=0
+$ git cat-file -t t22-profile-history-2026-08-19
+tag
+exit_code=0
+$ git fsck --full
+exit_code=0
+$ sha256sum /home/ubuntu/forgelocal-t22-delivery/forgelocal-core-t22-profile-history-5cfe7df.bundle
+e90e21204f6741aa6d24c926be98385e23adf4873b7e8cbf07645013f460d3bd  /home/ubuntu/forgelocal-t22-delivery/forgelocal-core-t22-profile-history-5cfe7df.bundle
+exit_code=0
+$ git status --short
+ [31mM[m internal/api/profile_history.go
+ [31mM[m internal/api/profile_history_test.go
+ [31mM[m internal/api/router.go
+ [31mM[m internal/history/store.go
+ [31mM[m internal/history/store_test.go
+ [31mM[m internal/profile/store.go
+[31m??[m docs/T22_CONSISTENCY_AND_RECOVERY_ADDENDUM.md
+[31m??[m evidence/t22-consistency/
+[31m??[m internal/profile/history_pending_test.go
+exit_code=0
+completed_utc=2026-08-19T18:45:51Z

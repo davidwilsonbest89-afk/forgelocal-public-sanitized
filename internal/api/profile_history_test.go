@@ -69,6 +69,9 @@ func TestT22ProfileHistoryReadDiffRestoreAndRedaction(t *testing.T) {
 	after, err := os.ReadFile(profilePath)
 	if err != nil { t.Fatal(err) }
 	if !bytes.Equal(before, after) { t.Fatal("history list modified profile.json") }
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=1&offset=1", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"limit":1`)) || !bytes.Contains(rec.Body.Bytes(), []byte(`"offset":1`)) || !bytes.Contains(rec.Body.Bytes(), []byte(`"version":2`)) { t.Fatalf("pagination: %d %s", rec.Code, rec.Body.String()) }
 
 	rec = httptest.NewRecorder()
 	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history/diff?from=1&to=2", "", cfg.APIToken))
@@ -82,6 +85,7 @@ func TestT22ProfileHistoryReadDiffRestoreAndRedaction(t *testing.T) {
 	if rec.Code != http.StatusOK || rec.Header().Get(correlationHeader) == "" { t.Fatalf("restore: %d %s", rec.Code, rec.Body.String()) }
 	p, err := store.Get(id)
 	if err != nil || p.Name != "History One" { t.Fatalf("restored profile: %#v %v", p, err) }
+	if p.HistoryPending { t.Fatal("successful history restore must clear the durable pending marker") }
 
 	rec = httptest.NewRecorder()
 	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":3}`, cfg.APIToken))
@@ -102,9 +106,71 @@ func TestT22ProfileHistoryRequiresAuthAndLocalOrigin(t *testing.T) {
 	rec := httptest.NewRecorder()
 	r.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/profiles/"+id+"/history", nil))
 	if rec.Code != http.StatusUnauthorized { t.Fatalf("unauth list: %d", rec.Code) }
-	req := historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":1}`, cfg.APIToken)
-	req.Header.Set("Origin", "https://remote.invalid")
+	for _, testCase := range []struct { name, origin, referer string }{
+		{name: "origin and referer absent"},
+		{name: "origin distant", origin: "https://remote.invalid"},
+		{name: "referer distant", referer: "https://remote.invalid/path"},
+	} {
+		t.Run(testCase.name, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", strings.NewReader(`{"expected_current_version":1}`))
+			req.RemoteAddr = "127.0.0.1:7777"
+			req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+			req.Header.Set("Content-Type", "application/json")
+			if testCase.origin != "" { req.Header.Set("Origin", testCase.origin) }
+			if testCase.referer != "" { req.Header.Set("Referer", testCase.referer) }
+			rec := httptest.NewRecorder()
+			r.ServeHTTP(rec, req)
+			if rec.Code != http.StatusForbidden || !bytes.Contains(rec.Body.Bytes(), []byte("ORIGIN_REQUIRED_LOCAL_ONLY")) || rec.Header().Get(correlationHeader) == "" { t.Fatalf("refusal: %d %s", rec.Code, rec.Body.String()) }
+		})
+	}
+}
+
+func TestT22HistoryProjectionRedactsActualProxySecrets(t *testing.T) {
+	r, cfg, store := testHistoryRouter(t)
+	p := &profile.Profile{Name: "Sensitive Proxy", RuntimeID: "cloakbrowser", LifecycleState: profile.LifecycleActive, Proxy: &profile.ProxyConfig{Type: "http", Host: "proxy.test", Port: 8080, SecretRef: "proxy.ref.sensitive"}}
+	if err := store.Create(p); err != nil { t.Fatal(err) }
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+p.ID, `{"name":"Sensitive Proxy Updated"}`, cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("update: %d %s", rec.Code, rec.Body.String()) }
 	rec = httptest.NewRecorder()
-	r.ServeHTTP(rec, req)
-	if rec.Code != http.StatusForbidden || !bytes.Contains(rec.Body.Bytes(), []byte("ORIGIN_REQUIRED_LOCAL_ONLY")) { t.Fatalf("remote origin: %d %s", rec.Code, rec.Body.String()) }
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history/1", "", cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("version: %d %s", rec.Code, rec.Body.String()) }
+	for _, forbidden := range []string{"proxy.ref.sensitive", `"username"`, `"password"`, `"secret_ref"`, "profile_dir"} {
+		if bytes.Contains(rec.Body.Bytes(), []byte(forbidden)) { t.Fatalf("history projection leaks %q: %s", forbidden, rec.Body.String()) }
+	}
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history/diff?from=1&to=1", "", cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("diff: %d %s", rec.Code, rec.Body.String()) }
+	for _, forbidden := range []string{"proxy.ref.sensitive"} {
+		if bytes.Contains(rec.Body.Bytes(), []byte(forbidden)) { t.Fatalf("history diff leaks %q: %s", forbidden, rec.Body.String()) }
+	}
+}
+
+func TestT22HistoryConcurrentRestoreAndMutationAreSerialized(t *testing.T) {
+	r, cfg, _ := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	res := httptest.NewRecorder()
+	r.ServeHTTP(res, historyRequest(http.MethodPut, "/api/profiles/"+id, `{"name":"Before race"}`, cfg.APIToken))
+	if res.Code != http.StatusOK { t.Fatalf("baseline update: %d %s", res.Code, res.Body.String()) }
+	start := make(chan struct{})
+	statuses := make(chan int, 2)
+	go func() {
+		<-start
+		rec := httptest.NewRecorder()
+		r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":2}`, cfg.APIToken))
+		statuses <- rec.Code
+	}()
+	go func() {
+		<-start
+		rec := httptest.NewRecorder()
+		r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+id, `{"name":"Concurrent mutation"}`, cfg.APIToken))
+		statuses <- rec.Code
+	}()
+	close(start)
+	for range 2 {
+		if status := <-statuses; status != http.StatusOK && status != http.StatusConflict { t.Fatalf("concurrent status=%d", status) }
+	}
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=10&offset=0", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"total":`)) { t.Fatalf("post-race history: %d %s", rec.Code, rec.Body.String()) }
 }

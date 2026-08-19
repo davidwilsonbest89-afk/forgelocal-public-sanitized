@@ -140,6 +140,66 @@ func (s *Store) Capture(ctx context.Context, p *profile.Profile, action, correla
 	return &Entry{ProfileID: p.ID, Version: next, Action: action, CreatedAt: created}, nil
 }
 
+// ReconcilePending confirms that a pending Profile write already has the same
+// durable History snapshot, or records one recovery version when it does not.
+// It is called at router startup before a pending marker can be cleared.
+func (s *Store) ReconcilePending(ctx context.Context, p *profile.Profile, correlation string) (*Entry, error) {
+	if p == nil || strings.TrimSpace(p.ID) == "" {
+		return nil, ErrInvalidSnapshot
+	}
+	snapshot, err := makeSnapshot(p)
+	if err != nil {
+		return nil, err
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	tx, err := s.db.BeginTx(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+	var version int
+	var payload, created string
+	err = tx.QueryRowContext(ctx, `SELECT version, snapshot_json, created_at FROM profile_history_versions WHERE profile_id=? ORDER BY version DESC LIMIT 1`, p.ID).Scan(&version, &payload, &created)
+	if err == nil {
+		var latest Snapshot
+		if json.Unmarshal([]byte(payload), &latest) == nil && reflect.DeepEqual(latest, snapshot) {
+			if err := audit(ctx, tx, p.ID, version, "history_recovery_confirmed", "success", correlation); err != nil {
+				return nil, err
+			}
+			if err := tx.Commit(); err != nil {
+				return nil, err
+			}
+			at, err := time.Parse(time.RFC3339Nano, created)
+			if err != nil {
+				return nil, err
+			}
+			return &Entry{ProfileID: p.ID, Version: version, Action: "confirmed", CreatedAt: at}, nil
+		}
+	} else if err != sql.ErrNoRows {
+		return nil, err
+	}
+	next, err := nextVersion(ctx, tx, p.ID)
+	if err != nil {
+		return nil, err
+	}
+	encoded, err := json.Marshal(snapshot)
+	if err != nil {
+		return nil, ErrInvalidSnapshot
+	}
+	createdAt := now()
+	if _, err := tx.ExecContext(ctx, `INSERT INTO profile_history_versions(profile_id, version, action, snapshot_json, created_at) VALUES(?,?,?,?,?)`, p.ID, next, "recovery", string(encoded), createdAt.Format(time.RFC3339Nano)); err != nil {
+		return nil, err
+	}
+	if err := audit(ctx, tx, p.ID, next, "history_recovered", "success", correlation); err != nil {
+		return nil, err
+	}
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+	return &Entry{ProfileID: p.ID, Version: next, Action: "recovery", CreatedAt: createdAt}, nil
+}
+
 func (s *Store) List(ctx context.Context, profileID string, limit, offset int) (*ListResult, error) {
 	if strings.TrimSpace(profileID) == "" || !validPage(limit, offset) {
 		return nil, ErrInvalidVersion
@@ -323,6 +383,7 @@ func makeSnapshot(p *profile.Profile) (Snapshot, error) {
 		return Snapshot{}, err
 	}
 	clone.ProfileDir = ""
+	clone.HistoryPending = false
 	if clone.Proxy != nil {
 		clone.Proxy.Username = ""
 		clone.Proxy.Password = ""
@@ -359,6 +420,6 @@ func diffValue(path string, left, right any, paths *[]string) {
 }
 
 func validPage(limit, offset int) bool { return limit >= 1 && limit <= 100 && offset >= 0 }
-func validAction(action string) bool { return action == "create" || action == "update" || action == "metadata" || action == "archive" || action == "reopen" || action == "tag_add" || action == "tag_remove" }
+func validAction(action string) bool { return action == "create" || action == "update" || action == "metadata" || action == "archive" || action == "reopen" || action == "tag_add" || action == "tag_remove" || action == "recovery" }
 func now() time.Time { return time.Now().UTC().Truncate(time.Microsecond) }
 func timestamp() string { return now().Format(time.RFC3339Nano) }

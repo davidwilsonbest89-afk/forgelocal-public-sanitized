@@ -35,6 +35,9 @@ type Profile struct {
 	// writes go through the Core-only T20-NCF contract and produce redacted audit.
 	Note         string                 `json:"note,omitempty"`
 	CustomFields map[string]CustomField `json:"custom_fields,omitempty"`
+	// HistoryPending is an internal durability marker for T22. It is never
+	// projected by API responses or copied to History snapshots.
+	HistoryPending bool `json:"history_pending,omitempty"`
 }
 
 // CustomField is a typed, non-secret profile metadata value. Select values
@@ -831,6 +834,11 @@ func (s *Store) Duplicate(id string) (*Profile, error) {
 }
 
 func (s *Store) save(p *Profile) error {
+	p.HistoryPending = true
+	return s.saveRaw(p)
+}
+
+func (s *Store) saveRaw(p *Profile) error {
 	path := filepath.Join(p.ProfileDir, "profile.json")
 	tmp := path + ".tmp"
 	data, err := json.MarshalIndent(p, "", "  ")
@@ -841,6 +849,55 @@ func (s *Store) save(p *Profile) error {
 		return err
 	}
 	return os.Rename(tmp, path)
+}
+
+// ClearHistoryPending clears the durable T22 marker only after the matching
+// History transaction has committed. A failed clear intentionally leaves the
+// marker for deterministic startup recovery.
+func (s *Store) ClearHistoryPending(id string) error {
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		return err
+	}
+	defer unlock()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok := s.profiles[id]
+	if !ok {
+		return ErrNotFound
+	}
+	if !p.HistoryPending {
+		return nil
+	}
+	tmp := *p
+	tmp.HistoryPending = false
+	if err := s.saveRaw(&tmp); err != nil {
+		return err
+	}
+	s.profiles[id] = &tmp
+	return nil
+}
+
+// PendingHistoryProfiles returns copies of profiles whose last durable Profile
+// write has not yet been confirmed by a committed History version.
+func (s *Store) PendingHistoryProfiles() []*Profile {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	result := make([]*Profile, 0)
+	for _, p := range s.profiles {
+		if !p.HistoryPending {
+			continue
+		}
+		data, err := json.Marshal(p)
+		if err != nil {
+			continue
+		}
+		var copy Profile
+		if json.Unmarshal(data, &copy) == nil {
+			result = append(result, &copy)
+		}
+	}
+	return result
 }
 
 func generateID() (string, error) {
