@@ -568,6 +568,73 @@ func (s *Store) SetMetadata(id, note string, fields map[string]CustomField) (*Pr
 	return &tmp, nil
 }
 
+// RestoreHistory applies a sanitized immutable T22 snapshot to an active
+// profile. It preserves current vault credentials when a restored proxy remains
+// configured; snapshots themselves never contain vault references or values.
+func (s *Store) RestoreHistory(id string, restored *Profile) (*Profile, error) {
+	if restored == nil || restored.ID != id {
+		return nil, ErrNotFound
+	}
+	s.mu.RLock()
+	current, ok := s.profiles[id]
+	if !ok {
+		s.mu.RUnlock()
+		return nil, ErrNotFound
+	}
+	if current.LifecycleState != LifecycleActive {
+		s.mu.RUnlock()
+		return nil, ErrNotArchived
+	}
+	s.mu.RUnlock()
+
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		return nil, err
+	}
+	defer unlock()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	current, ok = s.profiles[id]
+	if !ok {
+		return nil, ErrNotFound
+	}
+	if current.LifecycleState != LifecycleActive {
+		return nil, ErrNotArchived
+	}
+	data, err := json.Marshal(restored)
+	if err != nil {
+		return nil, err
+	}
+	var tmp Profile
+	if err := json.Unmarshal(data, &tmp); err != nil {
+		return nil, err
+	}
+	tmp.ID = id
+	tmp.ProfileDir = current.ProfileDir
+	tmp.CreatedAt = current.CreatedAt
+	if tmp.Proxy != nil && current.Proxy != nil && current.Proxy.SecretRef == proxySecretRef(id) {
+		tmp.Proxy.SecretRef = current.Proxy.SecretRef
+		tmp.Proxy.Username = current.Proxy.Username
+		tmp.Proxy.Password = current.Proxy.Password
+	}
+	if err := validateV2Profile(&tmp, "history restore"); err != nil {
+		return nil, err
+	}
+	previousName := normalizeName(current.Name)
+	if nextName := normalizeName(tmp.Name); nextName != previousName {
+		if owner, taken := s.locksByName[nextName]; taken && owner != id {
+			return nil, ErrDuplicateName
+		}
+		s.locksByName[nextName] = id
+		delete(s.locksByName, previousName)
+	}
+	if err := s.save(&tmp); err != nil {
+		return nil, err
+	}
+	s.profiles[id] = &tmp
+	return &tmp, nil
+}
+
 func cloneCustomFields(fields map[string]CustomField) (map[string]CustomField, error) {
 	if fields == nil {
 		return nil, nil

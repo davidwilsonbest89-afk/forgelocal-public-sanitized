@@ -25,6 +25,7 @@ import (
 	"forgelocal/internal/environment"
 	"forgelocal/internal/fingerprint"
 	"forgelocal/internal/groups"
+	"forgelocal/internal/history"
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/profile"
 	"forgelocal/internal/proxies"
@@ -70,6 +71,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if err != nil {
 		return nil, fmt.Errorf("open template repository: %w", err)
 	}
+	historyStore, err := history.Open(cfg.DataDir)
+	if err != nil {
+		return nil, fmt.Errorf("open profile history repository: %w", err)
+	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -89,7 +94,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore}
 
 	r.Get("/api/status", h.status)
 	r.Get("/api/health", h.health)
@@ -109,9 +114,13 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/profiles/{id}/archive", h.archiveProfile)
 		r.Post("/api/profiles/{id}/reopen", h.reopenProfile)
 		r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
-		r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
-		r.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)
-		r.Post("/api/templates", h.createTemplate)
+			r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
+			r.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)
+			r.Get("/api/profiles/{id}/history", h.listProfileHistory)
+			r.Get("/api/profiles/{id}/history/diff", h.diffProfileHistory)
+			r.Get("/api/profiles/{id}/history/{version}", h.getProfileHistoryVersion)
+			r.Post("/api/profiles/{id}/history/{version}/restore", h.restoreProfileHistory)
+			r.Post("/api/templates", h.createTemplate)
 		r.Get("/api/templates", h.listTemplates)
 		r.Get("/api/templates/{id}/versions/{version}", h.getTemplateVersion)
 		r.Post("/api/templates/{id}/versions", h.createTemplateVersion)
@@ -197,6 +206,7 @@ type handler struct {
 	qualifiedRegistry *bfruntime.QualifiedRegistry
 	backupDB          *sql.DB
 	templateStore     *templates.Store
+	historyStore      *history.Store
 }
 
 // t13Checker projects environment diagnostics from stored metadata and the
@@ -423,6 +433,10 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		writeProfileError(w, err, correlationIDFrom(r.Context()))
 		return
 	}
+	if err := h.captureProfileHistory(r.Context(), &p, "create", correlationIDFrom(r.Context())); err != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+		return
+	}
 	writeJSON(w, http.StatusCreated, map[string]any{"data": p})
 }
 
@@ -526,7 +540,22 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 		writeProfileError(w, err, correlationIDFrom(r.Context()))
 		return
 	}
+	if err := h.captureProfileHistory(r.Context(), p, "update", correlationIDFrom(r.Context())); err != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+		return
+	}
 	writeJSON(w, http.StatusOK, map[string]any{"data": p})
+}
+
+func (h *handler) captureProfileHistory(ctx context.Context, p *profile.Profile, action, correlation string) error {
+	if h.historyStore == nil {
+		// Existing package-local handler tests construct a narrow handler without
+		// NewRouter. Production routers always initialize historyStore; this no-op
+		// preserves the old unit harness without weakening the runtime contract.
+		return nil
+	}
+	_, err := h.historyStore.Capture(ctx, p, action, correlation)
+	return err
 }
 
 func (h *handler) deleteProfile(w http.ResponseWriter, r *http.Request) {

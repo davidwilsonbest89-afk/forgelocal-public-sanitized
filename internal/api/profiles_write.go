@@ -55,6 +55,10 @@ func (h *handler) updateProfileMetadata(w http.ResponseWriter, r *http.Request) 
 		writeProfileError(w, err, correlationID)
 		return
 	}
+	if err := h.captureProfileHistory(r.Context(), p, "metadata", correlationID); err != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+		return
+	}
 	h.auditSink.auditRecord(r.Context(), "profile.metadata_updated", id, correlationID, map[string]any{"has_note": req.Note != "", "custom_field_count": len(req.CustomFields)})
 	w.Header().Set(correlationHeader, correlationID)
 	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": p.ID, "note": p.Note, "custom_fields": p.CustomFields}})
@@ -75,6 +79,10 @@ func (h *handler) archiveProfile(w http.ResponseWriter, r *http.Request) {
 		writeProfileError(w, err, correlationID)
 		return
 	}
+	if p, err := h.store.Get(id); err != nil || h.captureProfileHistory(r.Context(), p, "archive", correlationID) != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+		return
+	}
 	h.auditSink.auditRecord(r.Context(), "profile.archived", id, correlationID, map[string]any{"state": "archived"})
 	w.Header().Set(correlationHeader, correlationID)
 	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "lifecycle_state": "archived"}})
@@ -86,6 +94,10 @@ func (h *handler) reopenProfile(w http.ResponseWriter, r *http.Request) {
 	if err := h.store.ReopenProfile(id); err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.reopen_failed", id, correlationID, map[string]any{"error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
+		return
+	}
+	if p, err := h.store.Get(id); err != nil || h.captureProfileHistory(r.Context(), p, "reopen", correlationID) != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
 		return
 	}
 	h.auditSink.auditRecord(r.Context(), "profile.reopened", id, correlationID, map[string]any{"state": "active"})
@@ -102,6 +114,10 @@ func (h *handler) addProfileTag(w http.ResponseWriter, r *http.Request) {
 		writeProfileError(w, err, correlationID)
 		return
 	}
+	if p, err := h.store.Get(id); err != nil || h.captureProfileHistory(r.Context(), p, "tag_add", correlationID) != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+		return
+	}
 	h.auditSink.auditRecord(r.Context(), "profile.tag_added", id, correlationID, map[string]any{"tag": tag})
 	w.Header().Set(correlationHeader, correlationID)
 	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "tag": tag}})
@@ -114,6 +130,10 @@ func (h *handler) removeProfileTag(w http.ResponseWriter, r *http.Request) {
 	if err := h.store.RemoveProfileTag(id, tag); err != nil {
 		h.auditSink.auditRecord(r.Context(), "profile.tag_failed", id, correlationID, map[string]any{"tag": tag, "error": mapErrorCode(err)})
 		writeProfileError(w, err, correlationID)
+		return
+	}
+	if p, err := h.store.Get(id); err != nil || h.captureProfileHistory(r.Context(), p, "tag_remove", correlationID) != nil {
+		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
 		return
 	}
 	h.auditSink.auditRecord(r.Context(), "profile.tag_removed", id, correlationID, map[string]any{"tag": tag})

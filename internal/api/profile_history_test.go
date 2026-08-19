@@ -1,0 +1,110 @@
+package api
+
+import (
+	"bytes"
+	"database/sql"
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"forgelocal/internal/config"
+	"forgelocal/internal/profile"
+	_ "modernc.org/sqlite"
+)
+
+func testHistoryRouter(t *testing.T) (http.Handler, *config.Config, *profile.Store) {
+	t.Helper()
+	dir := t.TempDir()
+	cfg := &config.Config{DataDir: dir, DefaultRuntimeID: "cloakbrowser", Runtimes: map[string]config.RuntimeConfig{
+		"cloakbrowser": {BinaryPath: "/opt/cloakbrowser"},
+		"camoufox": {BinaryPath: "/opt/camoufox"},
+	}}
+	store, err := profile.NewStore(filepath.Join(dir, "profiles"))
+	if err != nil { t.Fatal(err) }
+	r, err := NewRouter(cfg, store, testManagerWithRuntimeConfig(t, cfg), nil, nil)
+	if err != nil { t.Fatal(err) }
+	return r, cfg, store
+}
+
+func historyRequest(method, path, body, token string) *http.Request {
+	req := httptest.NewRequest(method, path, strings.NewReader(body))
+	req.RemoteAddr = "127.0.0.1:7777"
+	req.Header.Set("Authorization", "Bearer "+token)
+	if method != http.MethodGet { req.Header.Set("Origin", "http://localhost:3000") }
+	if body != "" { req.Header.Set("Content-Type", "application/json") }
+	return req
+}
+
+func createHistoryProfile(t *testing.T, r http.Handler, token string) string {
+	t.Helper()
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles", `{"name":"History One","runtime_id":"cloakbrowser"}`, token))
+	if rec.Code != http.StatusCreated { t.Fatalf("create: %d %s", rec.Code, rec.Body.String()) }
+	var out struct { Data struct { ID string `json:"id"` } `json:"data"` }
+	if err := json.Unmarshal(rec.Body.Bytes(), &out); err != nil { t.Fatal(err) }
+	if out.Data.ID == "" { t.Fatalf("missing profile id: %s", rec.Body.String()) }
+	return out.Data.ID
+}
+
+func TestT22ProfileHistoryReadDiffRestoreAndRedaction(t *testing.T) {
+	r, cfg, store := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+id, `{"name":"History Two"}`, cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("update: %d %s", rec.Code, rec.Body.String()) }
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+id+"/metadata", `{"note":"t22-private-note","custom_fields":{"status":{"type":"text","value":"t22-private-value"}}}`, cfg.APIToken))
+	if rec.Code != http.StatusOK { t.Fatalf("metadata: %d %s", rec.Code, rec.Body.String()) }
+
+	profilePath := filepath.Join(cfg.DataDir, "profiles", id, "profile.json")
+	before, err := os.ReadFile(profilePath)
+	if err != nil { t.Fatal(err) }
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=10&offset=0", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"version":3`)) { t.Fatalf("list: %d %s", rec.Code, rec.Body.String()) }
+	after, err := os.ReadFile(profilePath)
+	if err != nil { t.Fatal(err) }
+	if !bytes.Equal(before, after) { t.Fatal("history list modified profile.json") }
+
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history/diff?from=1&to=2", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte("name")) { t.Fatalf("diff: %d %s", rec.Code, rec.Body.String()) }
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history/1", "", cfg.APIToken))
+	if rec.Code != http.StatusOK || bytes.Contains(rec.Body.Bytes(), []byte("proxy.")) || bytes.Contains(rec.Body.Bytes(), []byte("profile_dir")) { t.Fatalf("version redaction: %d %s", rec.Code, rec.Body.String()) }
+
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":3}`, cfg.APIToken))
+	if rec.Code != http.StatusOK || rec.Header().Get(correlationHeader) == "" { t.Fatalf("restore: %d %s", rec.Code, rec.Body.String()) }
+	p, err := store.Get(id)
+	if err != nil || p.Name != "History One" { t.Fatalf("restored profile: %#v %v", p, err) }
+
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":3}`, cfg.APIToken))
+	if rec.Code != http.StatusConflict || !bytes.Contains(rec.Body.Bytes(), []byte("PROFILE_HISTORY_VERSION_CONFLICT")) { t.Fatalf("conflict: %d %s", rec.Code, rec.Body.String()) }
+
+	db, err := sql.Open("sqlite", filepath.Join(cfg.DataDir, "profile_history.sqlite"))
+	if err != nil { t.Fatal(err) }
+	defer db.Close()
+	var auditCount int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_history_audit_events`).Scan(&auditCount); err != nil || auditCount < 5 { t.Fatalf("history audit: %d %v", auditCount, err) }
+	var leaked int
+	if err := db.QueryRow(`SELECT COUNT(*) FROM profile_history_audit_events WHERE profile_id LIKE '%t22-private-%' OR action LIKE '%t22-private-%' OR correlation_id LIKE '%t22-private-%'`).Scan(&leaked); err != nil || leaked != 0 { t.Fatalf("history audit redaction: %d %v", leaked, err) }
+}
+
+func TestT22ProfileHistoryRequiresAuthAndLocalOrigin(t *testing.T) {
+	r, cfg, _ := testHistoryRouter(t)
+	id := createHistoryProfile(t, r, cfg.APIToken)
+	rec := httptest.NewRecorder()
+	r.ServeHTTP(rec, httptest.NewRequest(http.MethodGet, "/api/profiles/"+id+"/history", nil))
+	if rec.Code != http.StatusUnauthorized { t.Fatalf("unauth list: %d", rec.Code) }
+	req := historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":1}`, cfg.APIToken)
+	req.Header.Set("Origin", "https://remote.invalid")
+	rec = httptest.NewRecorder()
+	r.ServeHTTP(rec, req)
+	if rec.Code != http.StatusForbidden || !bytes.Contains(rec.Body.Bytes(), []byte("ORIGIN_REQUIRED_LOCAL_ONLY")) { t.Fatalf("remote origin: %d %s", rec.Code, rec.Body.String()) }
+}
