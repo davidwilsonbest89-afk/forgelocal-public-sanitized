@@ -12,11 +12,9 @@ import { existsSync, readFileSync } from "node:fs";
 //      update or delete controls); the route accepts only GET.
 const exec = promisify(execFile);
 // Nouvelle baseline forgebaseline-2026-08-17 (T14 réimplémenté clean-room).
-const coreBinary = "/tmp/forge-core-e2e";
-const coreBaseDir = "/tmp/forge-e2e-base";
-const coreBaseURL = "http://127.0.0.1:19280";
-const tokenPath = "/tmp/forge-e2e-token.txt";
-const dashboardBase = "http://localhost:3000";
+const coreBaseURL = process.env.FORGELOCAL_CORE_BASE_URL ?? "http://127.0.0.1:19280";
+const dashboardBase = process.env.FORGELOCAL_DASHBOARD_URL ?? "http://127.0.0.1:3000";
+const dashboardOrigin = new URL(dashboardBase).origin;
 const coreQualifiedUrl = `${coreBaseURL}/api/v1/runtimes/qualified`;
 
 function readToken(): string {
@@ -49,12 +47,13 @@ async function bootstrapReadOnly(page: import("@playwright/test").Page) {
   // Émission du code à usage unique via le contrat API Core (la CLI de la nouvelle
   // baseline lit un token de configuration distinct de BROWSEFORGE_TOKEN).
   const token = readToken();
-  const res = await exec("curl", ["-s", "-X", "POST", "-H", `Authorization: Bearer ${token}`, "-H", "Origin: http://localhost:3000", "-H", "Content-Type: application/json", "-d", "{}", `${coreBaseURL}/api/v1/readonly/session/codes`]);
+  const res = await exec("curl", ["-s", "-X", "POST", "-H", `Authorization: Bearer ${token}`, "-H", `Origin: ${dashboardOrigin}`, "-H", `Referer: ${dashboardOrigin}/`, "-H", "Content-Type: application/json", "-d", "{}", `${coreBaseURL}/api/v1/readonly/session/codes`]);
   const payload = JSON.parse(res.stdout) as { code?: string };
   if (typeof payload.code !== "string" || !/^[a-f0-9]{64}$/i.test(payload.code)) {
     throw new Error("EMISSION_CODE_T14_INVALIDE");
   }
   await page.goto(dashboardBase, { waitUntil: "domcontentloaded" });
+  await expect(page.getByLabel("Code local à usage unique")).toBeVisible({ timeout: 15_000 });
   await page.getByLabel("Code local à usage unique").fill(payload.code);
   await page.getByRole("button", { name: "Relier au Core local" }).click();
   await expect(page.getByText("Lecture Core sécurisée")).toBeVisible({ timeout: 15_000 });
@@ -90,7 +89,8 @@ test.describe("T14 runtime qualification", () => {
     for (const forbid of ["/usr/bin", "debug_port", "user_data", "chromium --"]) {
       expect(html).not.toContain(forbid);
     }
-    const tokenValue = readFileSync(tokenPath, "utf8").trim();
+    const configuredTokenPath = process.env.FORGELOCAL_TOKEN_PATH;
+    const tokenValue = configuredTokenPath && existsSync(configuredTokenPath) ? readFileSync(configuredTokenPath, "utf8").trim() : "";
     if (tokenValue) {
       expect(html).not.toContain(tokenValue);
     }

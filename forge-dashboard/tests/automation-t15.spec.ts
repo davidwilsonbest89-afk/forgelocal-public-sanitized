@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 
 // T15 — Automation locale (pilote CDP loopback) E2E.
 // Vérifie contre le Core réel T15 (loopback, Bearer admin, mémoire seule) :
@@ -20,12 +23,12 @@ import { existsSync, readFileSync } from "node:fs";
 //      HTML brut, aucune image, aucune coordonnée dans le DOM du panneau.
 const exec = promisify(execFile);
 // Nouvelle baseline forgebaseline-2026-08-17 (T15 réimplémenté clean-room).
-const coreBinary = "/tmp/forge-core-e2e";
-const coreBaseDir = "/tmp/forge-e2e-base";
-const coreBaseURL = "http://127.0.0.1:19280";
-const tokenPath = "/tmp/forge-e2e-token.txt";
-const dashboardBase = "http://localhost:3000";
-const fixtureFile = "file:///tmp/t15-fixtures/index.html";
+const coreBaseURL = process.env.FORGELOCAL_CORE_BASE_URL ?? "http://127.0.0.1:19280";
+const dashboardBase = process.env.FORGELOCAL_DASHBOARD_URL ?? "http://127.0.0.1:3000";
+const dashboardOrigin = new URL(dashboardBase).origin;
+const fixtureDir = mkdtempSync(join(tmpdir(), "forgelocal-t15-fixture-"));
+const fixturePath = join(fixtureDir, "index.html");
+const fixtureFile = pathToFileURL(fixturePath).href;
 // Profil créé par la suite elle-même (nom unique par exécution pour éviter les collisions
 // entre Core frais sans state partagé). Le Core T15 exige un runtime_id valide ;
 // "browseforge-chromium" est activé dans la config de référence E2E.
@@ -67,9 +70,9 @@ function readToken(): string {
 }
 
 // G15-B — durcissement : toute mutation du Core doit déclarer l'origine locale
-// (Origin + Referer du dashboard localhost:3000), sinon le Core refuse (ORIGIN_REJECTED).
+// (Origin + Referer du dashboard réellement lancé), sinon le Core refuse (ORIGIN_REJECTED).
 function curl(...args: string[]): Promise<{ stdout: string; code: number }> {
-  return exec("curl", [...args, "-H", "Origin: http://localhost:3000", "-H", "Referer: http://localhost:3000/", "-w", "\n__CODE__:%{http_code}"]).then(
+  return exec("curl", [...args, "-H", `Origin: ${dashboardOrigin}`, "-H", `Referer: ${dashboardOrigin}/`, "-w", "\n__CODE__:%{http_code}"]).then(
     res => ({ stdout: res.stdout, code: httpCodeOf(res.stdout) }),
     err => ({ stdout: err.stdout, code: httpCodeOf(err.stdout) }),
   );
@@ -99,6 +102,18 @@ async function clearSessions(token: string) {
 test.describe("T15 local CDP automation", () => {
   const token = readToken();
   const auth = `Authorization: Bearer ${token}`;
+
+  test.beforeAll(async () => {
+    writeFileSync(fixturePath, "<!doctype html><html><body><h1>Automation locale T15</h1><p>fixture synthétique locale</p></body></html>", "utf8");
+    const health = await curl("-s", `${coreBaseURL}/api/health`);
+    if (health.code < 200 || health.code >= 300) {
+      throw new Error(`T15_CORE_UNAVAILABLE: status=${health.code} url=${coreBaseURL}`);
+    }
+  });
+
+  test.afterAll(() => {
+    rmSync(fixtureDir, { recursive: true, force: true });
+  });
 
   test("W1: session opens and lists without port/path leakage", async () => {
     await ensureProfile(token);
@@ -174,6 +189,7 @@ test.describe("T15 local CDP automation", () => {
     // ouverte d'un test précédent, sinon l'ouverture serait refusée.
     await clearSessions(token);
     await page.goto(dashboardBase, { waitUntil: "networkidle" });
+    await expect(page.getByLabel("Code local à usage unique")).toBeVisible({ timeout: 15_000 });
     // Émission du code à usage unique via le contrat API Core (la CLI de la nouvelle
     // baseline lit un token de configuration distinct de BROWSEFORGE_TOKEN ; on appelle
     // directement l'API, comme le ferait tout client local authentifié).
