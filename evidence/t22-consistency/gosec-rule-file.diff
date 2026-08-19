@@ -1,0 +1,3 @@
+base_rule_file_unique=59
+head_rule_file_unique=59
+classification=NO_NEW_GOSEC_RULE_FILE_FINDINGS; LINE_SHIFT_ONLY_IN_INTERNAL_API_ROUTER_GO

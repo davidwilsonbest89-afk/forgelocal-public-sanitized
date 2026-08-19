@@ -1,0 +1,10 @@
+docs/T22_CONSISTENCY_AND_RECOVERY_ADDENDUM.md
+evidence/t22-consistency/BASELINE_DISCOVERY.log
+evidence/t22-consistency/full-qualification.log
+internal/api/profile_history.go
+internal/api/profile_history_test.go
+internal/api/router.go
+internal/history/store.go
+internal/history/store_test.go
+internal/profile/history_pending_test.go
+internal/profile/store.go

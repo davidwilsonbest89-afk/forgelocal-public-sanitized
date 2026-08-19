@@ -1,0 +1,30 @@
+started_utc=2026-08-19T18:47:03Z
+repository_cwd=/home/ubuntu/forgelocal-t22-consistency-20260819T1835Z/clone
+source_delta=/tmp/forgelocal-t22-delta-7a95c61
+base=5cfe7df3b5bb24c3d84ba455d3c32569555c4bdc
+head=7a95c616d7d80ae3c7a64559544c9866b28758c7
+$ git diff --name-only 5cfe7df3b5bb24c3d84ba455d3c32569555c4bdc..HEAD
+docs/T22_CONSISTENCY_AND_RECOVERY_ADDENDUM.md
+evidence/t22-consistency/BASELINE_DISCOVERY.log
+evidence/t22-consistency/full-qualification.log
+internal/api/profile_history.go
+internal/api/profile_history_test.go
+internal/api/router.go
+internal/history/store.go
+internal/history/store_test.go
+internal/profile/history_pending_test.go
+internal/profile/store.go
+file_count=10
+bytes=96373
+$ gitleaks detect --no-git --source /tmp/forgelocal-t22-delta-7a95c61 --report-format json --report-path evidence/t22-consistency/gitleaks-delta.json --config /home/ubuntu/forgelocal-t22-evidence/gitleaks-t22-extraction.toml
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m6:47PM[0m [32mINF[0m scan completed in 2.55ms
+[90m6:47PM[0m [32mINF[0m no leaks found
+exit_code=0
+completed_utc=2026-08-19T18:47:03Z

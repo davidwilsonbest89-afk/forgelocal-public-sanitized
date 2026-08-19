@@ -1,0 +1,31 @@
+base_unique=167
+head_unique=167
+--- evidence/t22-consistency/gosec-base-normalized.txt	2026-08-19 18:48:27.601382151 +0000
++++ evidence/t22-consistency/gosec-head-normalized.txt	2026-08-19 18:48:27.605382239 +0000
+@@ -4,7 +4,7 @@
+ "rule_id":"G104"	"file":"cmd/server/main.go"	"line":"472"
+ "rule_id":"G104"	"file":"cmd/server/main.go"	"line":"561"
+ "rule_id":"G104"	"file":"internal/api/dashboard.go"	"line":"13"
+-"rule_id":"G104"	"file":"internal/api/router.go"	"line":"599"
++"rule_id":"G104"	"file":"internal/api/router.go"	"line":"619"
+ "rule_id":"G104"	"file":"internal/api/sessions.go"	"line":"238"
+ "rule_id":"G104"	"file":"internal/api/sessions.go"	"line":"397"
+ "rule_id":"G104"	"file":"internal/api/sessions.go"	"line":"411"
+@@ -90,7 +90,7 @@
+ "rule_id":"G301"	"file":"cmd/server/main.go"	"line":"145"
+ "rule_id":"G301"	"file":"cmd/server/main.go"	"line":"68"
+ "rule_id":"G301"	"file":"cmd/server/main.go"	"line":"72"
+-"rule_id":"G301"	"file":"internal/api/router.go"	"line":"719"
++"rule_id":"G301"	"file":"internal/api/router.go"	"line":"739"
+ "rule_id":"G301"	"file":"internal/browser/download.go"	"line":"306"
+ "rule_id":"G301"	"file":"internal/browser/download.go"	"line":"352"
+ "rule_id":"G301"	"file":"internal/browser/download.go"	"line":"431"
+@@ -123,7 +123,7 @@
+ "rule_id":"G304"	"file":"cmd/server/cli_runtime.go"	"line":"753"
+ "rule_id":"G304"	"file":"cmd/server/cli_runtime.go"	"line":"781"
+ "rule_id":"G304"	"file":"internal/api/artifacts.go"	"line":"31"
+-"rule_id":"G304"	"file":"internal/api/router.go"	"line":"723"
++"rule_id":"G304"	"file":"internal/api/router.go"	"line":"743"
+ "rule_id":"G304"	"file":"internal/browser/download.go"	"line":"135"
+ "rule_id":"G304"	"file":"internal/browser/download.go"	"line":"514"
+ "rule_id":"G304"	"file":"internal/browser/download.go"	"line":"573"
