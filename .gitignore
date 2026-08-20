@@ -1,0 +1,49 @@
+# Build outputs
+dist/
+.codebase-memory/
+# Browser binaries (downloaded at runtime)
+browsers/
+
+# Node dependencies (npm install)
+node_modules/
+
+# Generated at runtime
+config.json
+data/.api-token
+logs/
+profiles/prof_*
+docker/browseforge/
+.docker-review/
+
+# Fingerprint pool (generated via npm script)
+data/fingerprints-*.json
+
+# Phase 2 fork workspace
+camoufox-src/
+camoufox-fork/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+/tmp/
+
+# Tool-managed environment metadata: not application source and may contain
+# redacted connector field names that create scanner noise.
+.project-config.json
+
+# Generated CI evidence; archived by the pipeline and never committed.
+.ci-artifacts/
+
+# Reproducible local evidence is inspected and hashed locally, never committed.
+evidence/local/
+# Preuves antérieures T06/T07 déjà archivées (non suivies par Git)
+launch.test
+validation_ac_back01_runtime.out
+validation_runtime_chromium.out
+validation_systemvault_native.err
+validation_systemvault_native.json
+validation_back01_integration/
+evidence/t06-working/
