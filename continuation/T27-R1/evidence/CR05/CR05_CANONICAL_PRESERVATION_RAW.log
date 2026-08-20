@@ -1,0 +1,26 @@
+started_utc=2026-08-20T10:50:48Z
+base=967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a
+head=9386e5c4fbc733fdda2b717ea9dd208c1da7872c
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:50AM[0m [32mINF[0m scan completed in 1.05ms
+[90m10:50AM[0m [32mINF[0m no leaks found
+gitleaks_exit_code=0
+forgelocal-t27-r1-cr05-9386e5c.delta.bundle: OK
+/home/ubuntu/forgelocal-t27-r1-canonical/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle is okay
+The bundle contains this ref:
+a62ce4664777de9def6253a8cfd3c84e5e3df424 refs/heads/t27-r1-corrective-foundation
+The bundle requires this ref:
+967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a 
+The bundle uses this hash algorithm: sha1
+From /home/ubuntu/forgelocal-t27-r1-canonical/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle
+ * [new branch]      t27-r1-corrective-foundation -> cr05-qualified
+Previous HEAD position was 967d293 fix(t27-cr04): remediate dashboard dependency audit
+HEAD is now at 9386e5c feat(t27-cr05): add protected v1 API facade and OpenAPI index
+fresh_head=9386e5c4fbc733fdda2b717ea9dd208c1da7872c
+completed_utc=2026-08-20T10:50:49Z

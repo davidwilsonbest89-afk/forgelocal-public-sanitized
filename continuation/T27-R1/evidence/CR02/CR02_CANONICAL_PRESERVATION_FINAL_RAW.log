@@ -1,0 +1,250 @@
+started_utc=2026-08-20T10:31:55Z
+head=d993289b415ff96ed68a1fde52b50d39db63c0c4
+--- rehydrated_clone_test ---
+ok  	forgelocal/internal/api	0.004s
+ok  	forgelocal/internal/mcp	0.003s
+ok  	forgelocal/cmd/server	0.004s
+clone_targeted_tests_exit_code=0
+--- kit_assembly ---
+./BASELINE_DISCOVERY_RAW.log: OK
+./CR02_CANONICAL_PRESERVATION_R1_FAILED_RAW.log: OK
+./CR02_CANONICAL_PRESERVATION_R2_FAILED_RAW.log: OK
+./CR02_DELTA.patch: OK
+./CR02_DELTA_FILES.txt: OK
+./CR02_EXTERNAL_BIND_STDERR.log: OK
+./CR02_EXTERNAL_BIND_STDOUT.log: OK
+./CR02_FINAL_LOCAL_DECISION.md: OK
+./CR02_GITLEAKS_DELTA.json: OK
+./CR02_GITLEAKS_DELTA_R2.json: OK
+./CR02_GITLEAKS_DELTA_STAGED.json: OK
+./CR02_GITLEAKS_DELTA_STAGED_RAW.log: OK
+./CR02_GITLEAKS_DIFF_STDIN_RAW.log: OK
+./CR02_GOSEC_RELEVANT.json: OK
+./CR02_GOVULNCHECK_R2_RAW.log: OK
+./CR02_GOVULNCHECK_R3_DRIVER.log: OK
+./CR02_GOVULNCHECK_R3_RAW.log: OK
+./CR02_LOOPBACK_R2_SERVER_STDERR.log: OK
+./CR02_LOOPBACK_R2_SERVER_STDOUT.log: OK
+./CR02_LOOPBACK_R3_SERVER_STDERR.log: OK
+./CR02_LOOPBACK_R3_SERVER_STDOUT.log: OK
+./CR02_LOOPBACK_SERVER_STDERR.log: OK
+./CR02_LOOPBACK_SERVER_STDOUT.log: OK
+./CR02_LOOPBACK_SOCKET.txt: OK
+./CR02_LOOPBACK_SOCKET_R3.txt: OK
+./CR02_MCP_ISOLATED_R4_RAW.log: OK
+./CR02_MCP_ISOLATED_SERVER_STDERR.log: OK
+./CR02_MCP_ISOLATED_SERVER_STDOUT.log: OK
+./CR02_MCP_TOOLS_RESPONSE_R3.json: OK
+./CR02_MCP_TOOLS_RESPONSE_R4.json: OK
+./CR02_MCP_WORKFLOW_REFUSAL_RESPONSE_R4.json: OK
+./CR02_NETWORK_R2_RAW.log: OK
+./CR02_NETWORK_R3_RAW.log: OK
+./CR02_NETWORK_RAW.log: OK
+./CR02_OSV_R3_RAW.log: OK
+./CR02_OSV_SOURCE_R3.json: OK
+./CR02_OSV_SOURCE_R3.stderr: OK
+./CR02_QUALIFICATION_RAW.log: OK
+./CR02_SECURITY_R2_RAW.log: OK
+./CR02_SECURITY_RAW.log: OK
+./CR02_STATUS.md: OK
+./CR02_STATUS_RESPONSE.json: OK
+./CR02_STATUS_RESPONSE_R3.json: OK
+./CR02_TARGETED_R2_RAW.log: OK
+./CR02_TARGETED_RAW.log: OK
+./CR02_TRIVY_BOUNDED_R3_RAW.log: OK
+./CR02_TRIVY_MISCONFIG_R3.json: OK
+./CR02_TRIVY_SECRET_R3.json: OK
+./CR02_WORKFLOW_RESPONSE.json: OK
+./CR02_WORKFLOW_RESPONSE_R3.json: OK
+./CR02_WORKFLOW_UNAUTH_RESPONSE_R3.json: OK
+./bundle-verify-repo/.git/HEAD: OK
+./bundle-verify-repo/.git/config: OK
+./bundle-verify-repo/.git/description: OK
+./bundle-verify-repo/.git/hooks/applypatch-msg.sample: OK
+./bundle-verify-repo/.git/hooks/commit-msg.sample: OK
+./bundle-verify-repo/.git/hooks/fsmonitor-watchman.sample: OK
+./bundle-verify-repo/.git/hooks/post-update.sample: OK
+./bundle-verify-repo/.git/hooks/pre-applypatch.sample: OK
+./bundle-verify-repo/.git/hooks/pre-commit.sample: OK
+./bundle-verify-repo/.git/hooks/pre-merge-commit.sample: OK
+./bundle-verify-repo/.git/hooks/pre-push.sample: OK
+./bundle-verify-repo/.git/hooks/pre-rebase.sample: OK
+./bundle-verify-repo/.git/hooks/pre-receive.sample: OK
+./bundle-verify-repo/.git/hooks/prepare-commit-msg.sample: OK
+./bundle-verify-repo/.git/hooks/push-to-checkout.sample: OK
+./bundle-verify-repo/.git/hooks/sendemail-validate.sample: OK
+./bundle-verify-repo/.git/hooks/update.sample: OK
+./bundle-verify-repo/.git/info/exclude: OK
+./forgelocal-t27-r1-cr02-d993289.delta.bundle: OK
+./forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256: OK
+forgelocal-t27-r1-cr02-evidence-d993289.zip: OK
+Archive:  forgelocal-t27-r1-cr02-evidence-d993289.zip
+    testing: bundle-verify-repo/      OK
+    testing: bundle-verify-repo/.git/   OK
+    testing: bundle-verify-repo/.git/branches/   OK
+    testing: bundle-verify-repo/.git/info/   OK
+    testing: bundle-verify-repo/.git/info/exclude   OK
+    testing: bundle-verify-repo/.git/refs/   OK
+    testing: bundle-verify-repo/.git/refs/heads/   OK
+    testing: bundle-verify-repo/.git/refs/tags/   OK
+    testing: bundle-verify-repo/.git/hooks/   OK
+    testing: bundle-verify-repo/.git/hooks/applypatch-msg.sample   OK
+    testing: bundle-verify-repo/.git/hooks/commit-msg.sample   OK
+    testing: bundle-verify-repo/.git/hooks/fsmonitor-watchman.sample   OK
+    testing: bundle-verify-repo/.git/hooks/post-update.sample   OK
+    testing: bundle-verify-repo/.git/hooks/pre-applypatch.sample   OK
+    testing: bundle-verify-repo/.git/hooks/pre-commit.sample   OK
+    testing: bundle-verify-repo/.git/hooks/pre-merge-commit.sample   OK
+    testing: bundle-verify-repo/.git/hooks/pre-push.sample   OK
+    testing: bundle-verify-repo/.git/hooks/pre-rebase.sample   OK
+    testing: bundle-verify-repo/.git/hooks/pre-receive.sample   OK
+    testing: bundle-verify-repo/.git/hooks/prepare-commit-msg.sample   OK
+    testing: bundle-verify-repo/.git/hooks/push-to-checkout.sample   OK
+    testing: bundle-verify-repo/.git/hooks/sendemail-validate.sample   OK
+    testing: bundle-verify-repo/.git/hooks/update.sample   OK
+    testing: bundle-verify-repo/.git/objects/   OK
+    testing: bundle-verify-repo/.git/objects/pack/   OK
+    testing: bundle-verify-repo/.git/objects/info/   OK
+    testing: bundle-verify-repo/.git/description   OK
+    testing: bundle-verify-repo/.git/HEAD   OK
+    testing: bundle-verify-repo/.git/config   OK
+    testing: BASELINE_DISCOVERY_RAW.log   OK
+    testing: CR02_TARGETED_RAW.log    OK
+    testing: CR02_TARGETED_R2_RAW.log   OK
+    testing: CR02_NETWORK_R2_RAW.log   OK
+    testing: CR02_QUALIFICATION_RAW.log   OK
+    testing: CR02_MCP_ISOLATED_R4_RAW.log   OK
+    testing: CR02_GOSEC_RELEVANT.json   OK
+    testing: CR02_GITLEAKS_DIFF_STDIN_RAW.log   OK
+    testing: CR02_GITLEAKS_DELTA_STAGED_RAW.log   OK
+    testing: CR02_TRIVY_BOUNDED_R3_RAW.log   OK
+    testing: CR02_MCP_ISOLATED_SERVER_STDOUT.log   OK
+    testing: CR02_SECURITY_R2_RAW.log   OK
+    testing: CR02_DELTA.patch         OK
+    testing: CR02_LOOPBACK_R2_SERVER_STDOUT.log   OK
+    testing: CR02_GITLEAKS_DELTA_STAGED.json   OK
+    testing: CR02_TRIVY_SECRET_R3.json   OK
+    testing: CR02_TRIVY_MISCONFIG_R3.json   OK
+    testing: CR02_OSV_R3_RAW.log      OK
+    testing: CR02_OSV_SOURCE_R3.json   OK
+    testing: CR02_NETWORK_R3_RAW.log   OK
+    testing: CR02_MCP_ISOLATED_SERVER_STDERR.log   OK
+    testing: CR02_NETWORK_RAW.log     OK
+    testing: CR02_EXTERNAL_BIND_STDOUT.log   OK
+    testing: CR02_EXTERNAL_BIND_STDERR.log   OK
+    testing: CR02_LOOPBACK_SERVER_STDOUT.log   OK
+    testing: CR02_LOOPBACK_SERVER_STDERR.log   OK
+    testing: CR02_STATUS_RESPONSE.json   OK
+    testing: CR02_LOOPBACK_SOCKET.txt   OK
+    testing: CR02_WORKFLOW_RESPONSE.json   OK
+    testing: CR02_LOOPBACK_R2_SERVER_STDERR.log   OK
+    testing: CR02_LOOPBACK_R3_SERVER_STDOUT.log   OK
+    testing: CR02_LOOPBACK_R3_SERVER_STDERR.log   OK
+    testing: CR02_STATUS_RESPONSE_R3.json   OK
+    testing: CR02_LOOPBACK_SOCKET_R3.txt   OK
+    testing: CR02_WORKFLOW_UNAUTH_RESPONSE_R3.json   OK
+    testing: CR02_WORKFLOW_RESPONSE_R3.json   OK
+    testing: CR02_MCP_TOOLS_RESPONSE_R3.json   OK
+    testing: CR02_MCP_TOOLS_RESPONSE_R4.json   OK
+    testing: CR02_MCP_WORKFLOW_REFUSAL_RESPONSE_R4.json   OK
+    testing: CR02_SECURITY_RAW.log    OK
+    testing: CR02_DELTA_FILES.txt     OK
+    testing: CR02_GITLEAKS_DELTA.json   OK
+    testing: CR02_OSV_SOURCE_R3.stderr   OK
+    testing: CR02_CANONICAL_PRESERVATION_R1_FAILED_RAW.log   OK
+    testing: CR02_GITLEAKS_DELTA_R2.json   OK
+    testing: CR02_GOVULNCHECK_R2_RAW.log   OK
+    testing: CR02_GOVULNCHECK_R3_DRIVER.log   OK
+    testing: CR02_GOVULNCHECK_R3_RAW.log   OK
+    testing: CR02_STATUS.md           OK
+    testing: CR02_FINAL_LOCAL_DECISION.md   OK
+    testing: CR02_CANONICAL_PRESERVATION_R2_FAILED_RAW.log   OK
+    testing: forgelocal-t27-r1-cr02-d993289.delta.bundle   OK
+    testing: forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256   OK
+    testing: SHA256SUMS               OK
+No errors detected in compressed data of forgelocal-t27-r1-cr02-evidence-d993289.zip.
+./BASELINE_DISCOVERY_RAW.log: OK
+./CR02_CANONICAL_PRESERVATION_R1_FAILED_RAW.log: OK
+./CR02_CANONICAL_PRESERVATION_R2_FAILED_RAW.log: OK
+./CR02_DELTA.patch: OK
+./CR02_DELTA_FILES.txt: OK
+./CR02_EXTERNAL_BIND_STDERR.log: OK
+./CR02_EXTERNAL_BIND_STDOUT.log: OK
+./CR02_FINAL_LOCAL_DECISION.md: OK
+./CR02_GITLEAKS_DELTA.json: OK
+./CR02_GITLEAKS_DELTA_R2.json: OK
+./CR02_GITLEAKS_DELTA_STAGED.json: OK
+./CR02_GITLEAKS_DELTA_STAGED_RAW.log: OK
+./CR02_GITLEAKS_DIFF_STDIN_RAW.log: OK
+./CR02_GOSEC_RELEVANT.json: OK
+./CR02_GOVULNCHECK_R2_RAW.log: OK
+./CR02_GOVULNCHECK_R3_DRIVER.log: OK
+./CR02_GOVULNCHECK_R3_RAW.log: OK
+./CR02_LOOPBACK_R2_SERVER_STDERR.log: OK
+./CR02_LOOPBACK_R2_SERVER_STDOUT.log: OK
+./CR02_LOOPBACK_R3_SERVER_STDERR.log: OK
+./CR02_LOOPBACK_R3_SERVER_STDOUT.log: OK
+./CR02_LOOPBACK_SERVER_STDERR.log: OK
+./CR02_LOOPBACK_SERVER_STDOUT.log: OK
+./CR02_LOOPBACK_SOCKET.txt: OK
+./CR02_LOOPBACK_SOCKET_R3.txt: OK
+./CR02_MCP_ISOLATED_R4_RAW.log: OK
+./CR02_MCP_ISOLATED_SERVER_STDERR.log: OK
+./CR02_MCP_ISOLATED_SERVER_STDOUT.log: OK
+./CR02_MCP_TOOLS_RESPONSE_R3.json: OK
+./CR02_MCP_TOOLS_RESPONSE_R4.json: OK
+./CR02_MCP_WORKFLOW_REFUSAL_RESPONSE_R4.json: OK
+./CR02_NETWORK_R2_RAW.log: OK
+./CR02_NETWORK_R3_RAW.log: OK
+./CR02_NETWORK_RAW.log: OK
+./CR02_OSV_R3_RAW.log: OK
+./CR02_OSV_SOURCE_R3.json: OK
+./CR02_OSV_SOURCE_R3.stderr: OK
+./CR02_QUALIFICATION_RAW.log: OK
+./CR02_SECURITY_R2_RAW.log: OK
+./CR02_SECURITY_RAW.log: OK
+./CR02_STATUS.md: OK
+./CR02_STATUS_RESPONSE.json: OK
+./CR02_STATUS_RESPONSE_R3.json: OK
+./CR02_TARGETED_R2_RAW.log: OK
+./CR02_TARGETED_RAW.log: OK
+./CR02_TRIVY_BOUNDED_R3_RAW.log: OK
+./CR02_TRIVY_MISCONFIG_R3.json: OK
+./CR02_TRIVY_SECRET_R3.json: OK
+./CR02_WORKFLOW_RESPONSE.json: OK
+./CR02_WORKFLOW_RESPONSE_R3.json: OK
+./CR02_WORKFLOW_UNAUTH_RESPONSE_R3.json: OK
+./bundle-verify-repo/.git/HEAD: OK
+./bundle-verify-repo/.git/config: OK
+./bundle-verify-repo/.git/description: OK
+./bundle-verify-repo/.git/hooks/applypatch-msg.sample: OK
+./bundle-verify-repo/.git/hooks/commit-msg.sample: OK
+./bundle-verify-repo/.git/hooks/fsmonitor-watchman.sample: OK
+./bundle-verify-repo/.git/hooks/post-update.sample: OK
+./bundle-verify-repo/.git/hooks/pre-applypatch.sample: OK
+./bundle-verify-repo/.git/hooks/pre-commit.sample: OK
+./bundle-verify-repo/.git/hooks/pre-merge-commit.sample: OK
+./bundle-verify-repo/.git/hooks/pre-push.sample: OK
+./bundle-verify-repo/.git/hooks/pre-rebase.sample: OK
+./bundle-verify-repo/.git/hooks/pre-receive.sample: OK
+./bundle-verify-repo/.git/hooks/prepare-commit-msg.sample: OK
+./bundle-verify-repo/.git/hooks/push-to-checkout.sample: OK
+./bundle-verify-repo/.git/hooks/sendemail-validate.sample: OK
+./bundle-verify-repo/.git/hooks/update.sample: OK
+./bundle-verify-repo/.git/info/exclude: OK
+./forgelocal-t27-r1-cr02-d993289.delta.bundle: OK
+./forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256: OK
+--- gitleaks_extraction ---
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:31AM[0m [32mINF[0m scan completed in 1.77ms
+[90m10:31AM[0m [32mINF[0m no leaks found
+gitleaks_extraction_exit_code=0
+bundle_sha256=7f81f07f78b4f852909a51522c26bd341a1473c5b54bfec911ae084f4d3be9fc
+kit_sha256=bf82242685a0b8ca2ebabd3371b878744f0915cd1d11ce3da961457a38b61bd9
+completed_utc=2026-08-20T10:31:57Z

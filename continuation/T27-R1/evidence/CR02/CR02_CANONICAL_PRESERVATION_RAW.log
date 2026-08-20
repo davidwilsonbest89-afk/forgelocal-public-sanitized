@@ -1,0 +1,7 @@
+started_utc=2026-08-20T10:30:35Z
+work=/home/ubuntu/forgelocal-t27-r1-work
+base=df50a2b242f74558d2e405f099bdfe6db6437c9c
+head=d993289b415ff96ed68a1fde52b50d39db63c0c4
+base_bundle=/home/ubuntu/forgelocal-t27-r1-canonical/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+--- create_delta_bundle ---
+fatal: Refusing to create empty bundle.

@@ -1,0 +1,58 @@
+started_utc=2026-08-20T10:17:57Z
+work=/home/ubuntu/forgelocal-t27-r1-work
+commit=df50a2b242f74558d2e405f099bdfe6db6437c9c
+--- bundle_create ---
+forgelocal-t27-r1-cr01-df50a2b.bundle: OK
+--- bundle_verify ---
+/home/ubuntu/forgelocal-t27-r1-canonical/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle is okay
+The bundle contains these 13 refs:
+df50a2b242f74558d2e405f099bdfe6db6437c9c refs/heads/t27-r1-corrective-foundation
+a7d3c6afe1627d23f6d4d990f4ab7e00186b780d refs/tags/baseline-discovery-policy-2026-08-20
+9a0245aa92710df892e0ea1d81200ee70527684e refs/tags/t22-consistency-and-tests-2026-08-19
+d25007fc53ff63274e19666d47fac5a998939fbf refs/tags/t22-consistency-and-tests-final-2026-08-19
+1de858733eff65ba5112c3ca74ac9ffd04811494 refs/tags/t22-pending-operation-correction-2026-08-19
+48988552720b1461cf503dc3b4e4822b831a19ff refs/tags/t22-profile-history-2026-08-19
+89cae50a1e1694df80a3e5c66c87dcddfe0ed1c8 refs/tags/t23-archive-restore-2026-08-19
+e54e18a4a616207a3d47984c1a420a84354d8436 refs/tags/t23-scope-and-evidence-correction-2026-08-19
+436eebd4937352476c9e4c44a13b536c48d0c048 refs/tags/t24-bulk-operations-2026-08-20
+f77fd0bb02993854eec9ecf05fda9788546860ec refs/tags/t24-sr-dependency-remediation-2026-08-20
+f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7 refs/tags/t25-synthetic-cookie-fixtures-2026-08-20
+3ebcf55fcab7ab10e34ffea652f2398e07e299da refs/tags/t26-simulated-proxy-provider-2026-08-20
+df50a2b242f74558d2e405f099bdfe6db6437c9c HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+--- fresh_clone ---
+HEAD is now at df50a2b fix(t27-cr01): deny unauthorized Camoufox runtime paths
+fresh_head=df50a2b242f74558d2e405f099bdfe6db6437c9c
+--- targeted_clone_test ---
+ok  	forgelocal/internal/browser	0.003s
+targeted_clone_test_exit_code=0
+--- kit_assembly ---
+CR01_FINAL_LOCAL_DECISION.md: OK
+CR01_GITLEAKS_DELTA.json: OK
+CR01_GOSEC_RELEVANT.json: OK
+CR01_GOVULNCHECK_RAW.log: OK
+CR01_OSV_SOURCE.json: OK
+CR01_OSV_SOURCE.stderr: OK
+CR01_QUALIFICATION_R2_RAW.log: OK
+CR01_QUALIFICATION_R3_RAW.log: OK
+CR01_QUALIFICATION_RAW.log: OK
+CR01_SAFE_CACHE_CLEANUP_R2_RAW.log: OK
+CR01_SAFE_CACHE_CLEANUP_RAW.log: OK
+CR01_SBOM.spdx.json: OK
+CR01_SECURITY_RAW.log: OK
+CR01_STATIC_ANALYSIS_RAW.log: OK
+CR01_STATUS.md: OK
+CR01_TRIVY_BOUNDED_RAW.log: OK
+CR01_TRIVY_DELTA_FILES.txt: OK
+CR01_TRIVY_DELTA_R3.json: OK
+CR01_TRIVY_DELTA_R3_RAW.log: OK
+CR01_TRIVY_FS_R2.json: OK
+CR01_TRIVY_FS_R2_RAW.log: OK
+CR01_TRIVY_MISCONFIG_BOUNDED.json: OK
+CR01_TRIVY_SECRET_BOUNDED.json: OK
+CR01_TRIVY_STATUS.log: OK
+SHA256SUMS: FAILED
+forgelocal-t27-r1-cr01-df50a2b.bundle: OK
+forgelocal-t27-r1-cr01-df50a2b.bundle.sha256: OK
+sha256sum: WARNING: 1 computed checksum did NOT match

@@ -1,0 +1,191 @@
+started_utc=2026-08-20T10:46:14Z
+base=a912cd6ee77ea853a1374e94a5d21932d04e0356
+head=967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a
+--- delta_bundle ---
+forgelocal-t27-r1-cr04-967d293.delta.bundle: OK
+--- rehydration ---
+/home/ubuntu/forgelocal-t27-r1-canonical/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle is okay
+The bundle contains this ref:
+967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a refs/heads/t27-r1-corrective-foundation
+The bundle requires this ref:
+a912cd6ee77ea853a1374e94a5d21932d04e0356 
+The bundle uses this hash algorithm: sha1
+From /home/ubuntu/forgelocal-t27-r1-canonical/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle
+ * [new branch]      t27-r1-corrective-foundation -> cr04-qualified
+Previous HEAD position was a912cd6 fix(t27-cr03): redact collector data and disable MCP cookies
+HEAD is now at 967d293 fix(t27-cr04): remediate dashboard dependency audit
+fresh_head=967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a
+--- package_integrity ---
+rehydrated_package_integrity_exit_code=0
+--- kit ---
+./BASELINE_DISCOVERY_RAW.log: OK
+./CR04_AUDIT_BASELINE_RAW.log: OK
+./CR04_AUDIT_FIX_RAW.log: OK
+./CR04_AUDIT_FIX_STDERR.log: OK
+./CR04_AUDIT_FIX_STDOUT.log: OK
+./CR04_AUDIT_POSTLOCK_RAW.log: OK
+./CR04_AUDIT_REGENERATED_RAW.log: OK
+./CR04_DASHBOARD_QUALIFICATION_RAW.log: OK
+./CR04_FINAL_LOCAL_DECISION.md: OK
+./CR04_FROZEN_INSTALL_RAW.log: OK
+./CR04_FROZEN_INSTALL_STDERR.log: OK
+./CR04_FROZEN_INSTALL_STDOUT.log: OK
+./CR04_GITLEAKS_DELTA.json: OK
+./CR04_LIST_CORE.stderr: OK
+./CR04_LIST_CORE.stdout: OK
+./CR04_LIST_R3_CORE.stderr: OK
+./CR04_LIST_R3_CORE.stdout: OK
+./CR04_LOCKFILE_FORCE_RAW.log: OK
+./CR04_LOCKFILE_FORCE_STDERR.log: OK
+./CR04_LOCKFILE_FORCE_STDOUT.log: OK
+./CR04_LOCKFILE_RAW.log: OK
+./CR04_LOCKFILE_STDERR.log: OK
+./CR04_LOCKFILE_STDOUT.log: OK
+./CR04_LOCK_REGEN_RAW.log: OK
+./CR04_LOCK_REGEN_STDERR.log: OK
+./CR04_LOCK_REGEN_STDOUT.log: OK
+./CR04_PLAYWRIGHT_LIST.stderr: OK
+./CR04_PLAYWRIGHT_LIST.stdout: OK
+./CR04_PLAYWRIGHT_LIST_R2.stderr: OK
+./CR04_PLAYWRIGHT_LIST_R2.stdout: OK
+./CR04_PLAYWRIGHT_LIST_R2_RAW.log: OK
+./CR04_PLAYWRIGHT_LIST_R3.stderr: OK
+./CR04_PLAYWRIGHT_LIST_R3.stdout: OK
+./CR04_PLAYWRIGHT_LIST_R3_RAW.log: OK
+./CR04_PLAYWRIGHT_LIST_RAW.log: OK
+./CR04_PNPM_AUDIT_BASELINE.json: OK
+./CR04_PNPM_AUDIT_BASELINE.stderr: OK
+./CR04_PNPM_AUDIT_FINAL.json: OK
+./CR04_PNPM_AUDIT_POSTLOCK.json: OK
+./CR04_PNPM_AUDIT_POSTLOCK.stderr: OK
+./CR04_PNPM_AUDIT_REGENERATED.json: OK
+./CR04_PNPM_AUDIT_REGENERATED.stderr: OK
+./CR04_PNPM_LOCK_BEFORE_REGEN.yaml: OK
+./CR04_SECURITY_RAW.log: OK
+./CR04_SPACE_RECOVERY_RAW.log: OK
+./CR04_STATUS.md: OK
+./CR04_TEMPORARY_ARTIFACT_CLEANUP_RAW.log: OK
+./CR04_TRIVY_MISCONFIG.json: OK
+./CR04_TRIVY_SECRET.json: OK
+./forgelocal-t27-r1-cr04-967d293.delta.bundle: OK
+./forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256: OK
+forgelocal-t27-r1-cr04-evidence-967d293.zip: OK
+Archive:  forgelocal-t27-r1-cr04-evidence-967d293.zip
+    testing: BASELINE_DISCOVERY_RAW.log   OK
+    testing: CR04_SPACE_RECOVERY_RAW.log   OK
+    testing: CR04_AUDIT_FIX_RAW.log   OK
+    testing: CR04_LOCKFILE_RAW.log    OK
+    testing: CR04_LOCK_REGEN_RAW.log   OK
+    testing: CR04_PNPM_LOCK_BEFORE_REGEN.yaml   OK
+    testing: CR04_LOCK_REGEN_STDOUT.log   OK
+    testing: CR04_AUDIT_BASELINE_RAW.log   OK
+    testing: CR04_PNPM_AUDIT_BASELINE.json   OK
+    testing: CR04_PNPM_AUDIT_BASELINE.stderr   OK
+    testing: CR04_AUDIT_FIX_STDOUT.log   OK
+    testing: CR04_AUDIT_FIX_STDERR.log   OK
+    testing: CR04_LOCKFILE_STDOUT.log   OK
+    testing: CR04_LOCKFILE_STDERR.log   OK
+    testing: CR04_AUDIT_POSTLOCK_RAW.log   OK
+    testing: CR04_PNPM_AUDIT_POSTLOCK.json   OK
+    testing: CR04_PNPM_AUDIT_POSTLOCK.stderr   OK
+    testing: CR04_LOCKFILE_FORCE_RAW.log   OK
+    testing: CR04_LOCKFILE_FORCE_STDOUT.log   OK
+    testing: CR04_LOCKFILE_FORCE_STDERR.log   OK
+    testing: CR04_LOCK_REGEN_STDERR.log   OK
+    testing: CR04_AUDIT_REGENERATED_RAW.log   OK
+    testing: CR04_PNPM_AUDIT_REGENERATED.json   OK
+    testing: CR04_PNPM_AUDIT_REGENERATED.stderr   OK
+    testing: CR04_FROZEN_INSTALL_RAW.log   OK
+    testing: CR04_FROZEN_INSTALL_STDOUT.log   OK
+    testing: CR04_FROZEN_INSTALL_STDERR.log   OK
+    testing: CR04_SECURITY_RAW.log    OK
+    testing: CR04_TRIVY_MISCONFIG.json   OK
+    testing: CR04_PLAYWRIGHT_LIST_R3_RAW.log   OK
+    testing: CR04_LIST_R3_CORE.stdout   OK
+    testing: CR04_PLAYWRIGHT_LIST_RAW.log   OK
+    testing: CR04_LIST_R3_CORE.stderr   OK
+    testing: CR04_PLAYWRIGHT_LIST_R3.stdout   OK
+    testing: CR04_PLAYWRIGHT_LIST_R3.stderr   OK
+    testing: CR04_FINAL_LOCAL_DECISION.md   OK
+    testing: CR04_PLAYWRIGHT_LIST.stdout   OK
+    testing: CR04_STATUS.md           OK
+    testing: CR04_TEMPORARY_ARTIFACT_CLEANUP_RAW.log   OK
+    testing: CR04_PLAYWRIGHT_LIST.stderr   OK
+    testing: CR04_PLAYWRIGHT_LIST_R2_RAW.log   OK
+    testing: CR04_LIST_CORE.stdout    OK
+    testing: CR04_LIST_CORE.stderr    OK
+    testing: CR04_PLAYWRIGHT_LIST_R2.stdout   OK
+    testing: CR04_PLAYWRIGHT_LIST_R2.stderr   OK
+    testing: CR04_DASHBOARD_QUALIFICATION_RAW.log   OK
+    testing: CR04_PNPM_AUDIT_FINAL.json   OK
+    testing: CR04_GITLEAKS_DELTA.json   OK
+    testing: CR04_TRIVY_SECRET.json   OK
+    testing: forgelocal-t27-r1-cr04-967d293.delta.bundle   OK
+    testing: forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256   OK
+    testing: SHA256SUMS               OK
+No errors detected in compressed data of forgelocal-t27-r1-cr04-evidence-967d293.zip.
+./BASELINE_DISCOVERY_RAW.log: OK
+./CR04_AUDIT_BASELINE_RAW.log: OK
+./CR04_AUDIT_FIX_RAW.log: OK
+./CR04_AUDIT_FIX_STDERR.log: OK
+./CR04_AUDIT_FIX_STDOUT.log: OK
+./CR04_AUDIT_POSTLOCK_RAW.log: OK
+./CR04_AUDIT_REGENERATED_RAW.log: OK
+./CR04_DASHBOARD_QUALIFICATION_RAW.log: OK
+./CR04_FINAL_LOCAL_DECISION.md: OK
+./CR04_FROZEN_INSTALL_RAW.log: OK
+./CR04_FROZEN_INSTALL_STDERR.log: OK
+./CR04_FROZEN_INSTALL_STDOUT.log: OK
+./CR04_GITLEAKS_DELTA.json: OK
+./CR04_LIST_CORE.stderr: OK
+./CR04_LIST_CORE.stdout: OK
+./CR04_LIST_R3_CORE.stderr: OK
+./CR04_LIST_R3_CORE.stdout: OK
+./CR04_LOCKFILE_FORCE_RAW.log: OK
+./CR04_LOCKFILE_FORCE_STDERR.log: OK
+./CR04_LOCKFILE_FORCE_STDOUT.log: OK
+./CR04_LOCKFILE_RAW.log: OK
+./CR04_LOCKFILE_STDERR.log: OK
+./CR04_LOCKFILE_STDOUT.log: OK
+./CR04_LOCK_REGEN_RAW.log: OK
+./CR04_LOCK_REGEN_STDERR.log: OK
+./CR04_LOCK_REGEN_STDOUT.log: OK
+./CR04_PLAYWRIGHT_LIST.stderr: OK
+./CR04_PLAYWRIGHT_LIST.stdout: OK
+./CR04_PLAYWRIGHT_LIST_R2.stderr: OK
+./CR04_PLAYWRIGHT_LIST_R2.stdout: OK
+./CR04_PLAYWRIGHT_LIST_R2_RAW.log: OK
+./CR04_PLAYWRIGHT_LIST_R3.stderr: OK
+./CR04_PLAYWRIGHT_LIST_R3.stdout: OK
+./CR04_PLAYWRIGHT_LIST_R3_RAW.log: OK
+./CR04_PLAYWRIGHT_LIST_RAW.log: OK
+./CR04_PNPM_AUDIT_BASELINE.json: OK
+./CR04_PNPM_AUDIT_BASELINE.stderr: OK
+./CR04_PNPM_AUDIT_FINAL.json: OK
+./CR04_PNPM_AUDIT_POSTLOCK.json: OK
+./CR04_PNPM_AUDIT_POSTLOCK.stderr: OK
+./CR04_PNPM_AUDIT_REGENERATED.json: OK
+./CR04_PNPM_AUDIT_REGENERATED.stderr: OK
+./CR04_PNPM_LOCK_BEFORE_REGEN.yaml: OK
+./CR04_SECURITY_RAW.log: OK
+./CR04_SPACE_RECOVERY_RAW.log: OK
+./CR04_STATUS.md: OK
+./CR04_TEMPORARY_ARTIFACT_CLEANUP_RAW.log: OK
+./CR04_TRIVY_MISCONFIG.json: OK
+./CR04_TRIVY_SECRET.json: OK
+./forgelocal-t27-r1-cr04-967d293.delta.bundle: OK
+./forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256: OK
+--- extraction_gitleaks ---
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:46AM[0m [32mINF[0m scan completed in 17.8ms
+[90m10:46AM[0m [32mINF[0m no leaks found
+gitleaks_extraction_exit_code=0
+bundle_sha256=1693c40d214f659aad9fdef4366e22f40b7ac1e7967b618d472c5e55f3c32757
+kit_sha256=08c07a4c7923124eff18abd7c95718cce3bedcbb17e9163bfa43e57c636e1433
+completed_utc=2026-08-20T10:46:15Z

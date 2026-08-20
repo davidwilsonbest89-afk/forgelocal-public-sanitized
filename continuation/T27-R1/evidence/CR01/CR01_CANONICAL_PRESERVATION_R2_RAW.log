@@ -1,0 +1,102 @@
+started_utc=2026-08-20T10:18:31Z
+canonical=/home/ubuntu/forgelocal-t27-r1-canonical/CR01
+evidence=/home/ubuntu/forgelocal-t27-r1-evidence/CR01
+--- assembly_r2 ---
+./CR01_CANONICAL_PRESERVATION_R1_FAILED_RAW.log: OK
+./CR01_FINAL_LOCAL_DECISION.md: OK
+./CR01_GITLEAKS_DELTA.json: OK
+./CR01_GOSEC_RELEVANT.json: OK
+./CR01_GOVULNCHECK_RAW.log: OK
+./CR01_OSV_SOURCE.json: OK
+./CR01_OSV_SOURCE.stderr: OK
+./CR01_QUALIFICATION_R2_RAW.log: OK
+./CR01_QUALIFICATION_R3_RAW.log: OK
+./CR01_QUALIFICATION_RAW.log: OK
+./CR01_SAFE_CACHE_CLEANUP_R2_RAW.log: OK
+./CR01_SAFE_CACHE_CLEANUP_RAW.log: OK
+./CR01_SBOM.spdx.json: OK
+./CR01_SECURITY_RAW.log: OK
+./CR01_STATIC_ANALYSIS_RAW.log: OK
+./CR01_STATUS.md: OK
+./CR01_TRIVY_BOUNDED_RAW.log: OK
+./CR01_TRIVY_DELTA_FILES.txt: OK
+./CR01_TRIVY_DELTA_R3.json: OK
+./CR01_TRIVY_DELTA_R3_RAW.log: OK
+./CR01_TRIVY_FS_R2.json: OK
+./CR01_TRIVY_FS_R2_RAW.log: OK
+./CR01_TRIVY_MISCONFIG_BOUNDED.json: OK
+./CR01_TRIVY_SECRET_BOUNDED.json: OK
+./CR01_TRIVY_STATUS.log: OK
+./forgelocal-t27-r1-cr01-df50a2b.bundle: OK
+./forgelocal-t27-r1-cr01-df50a2b.bundle.sha256: OK
+forgelocal-t27-r1-cr01-evidence-df50a2b.zip: OK
+Archive:  forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+    testing: CR01_STATUS.md           OK
+    testing: CR01_TRIVY_BOUNDED_RAW.log   OK
+    testing: CR01_TRIVY_SECRET_BOUNDED.json   OK
+    testing: CR01_TRIVY_MISCONFIG_BOUNDED.json   OK
+    testing: CR01_FINAL_LOCAL_DECISION.md   OK
+    testing: CR01_CANONICAL_PRESERVATION_R1_FAILED_RAW.log   OK
+    testing: CR01_STATIC_ANALYSIS_RAW.log   OK
+    testing: CR01_QUALIFICATION_R2_RAW.log   OK
+    testing: CR01_QUALIFICATION_RAW.log   OK
+    testing: CR01_QUALIFICATION_R3_RAW.log   OK
+    testing: CR01_SAFE_CACHE_CLEANUP_RAW.log   OK
+    testing: CR01_SECURITY_RAW.log    OK
+    testing: CR01_GITLEAKS_DELTA.json   OK
+    testing: CR01_GOSEC_RELEVANT.json   OK
+    testing: CR01_GOVULNCHECK_RAW.log   OK
+    testing: CR01_SBOM.spdx.json      OK
+    testing: CR01_OSV_SOURCE.json     OK
+    testing: CR01_TRIVY_DELTA_R3_RAW.log   OK
+    testing: CR01_TRIVY_DELTA_FILES.txt   OK
+    testing: CR01_TRIVY_DELTA_R3.json   OK
+    testing: CR01_OSV_SOURCE.stderr   OK
+    testing: CR01_TRIVY_FS_R2_RAW.log   OK
+    testing: CR01_TRIVY_FS_R2.json    OK
+    testing: CR01_TRIVY_STATUS.log    OK
+    testing: CR01_SAFE_CACHE_CLEANUP_R2_RAW.log   OK
+    testing: forgelocal-t27-r1-cr01-df50a2b.bundle   OK
+    testing: forgelocal-t27-r1-cr01-df50a2b.bundle.sha256   OK
+    testing: SHA256SUMS               OK
+No errors detected in compressed data of forgelocal-t27-r1-cr01-evidence-df50a2b.zip.
+./CR01_CANONICAL_PRESERVATION_R1_FAILED_RAW.log: OK
+./CR01_FINAL_LOCAL_DECISION.md: OK
+./CR01_GITLEAKS_DELTA.json: OK
+./CR01_GOSEC_RELEVANT.json: OK
+./CR01_GOVULNCHECK_RAW.log: OK
+./CR01_OSV_SOURCE.json: OK
+./CR01_OSV_SOURCE.stderr: OK
+./CR01_QUALIFICATION_R2_RAW.log: OK
+./CR01_QUALIFICATION_R3_RAW.log: OK
+./CR01_QUALIFICATION_RAW.log: OK
+./CR01_SAFE_CACHE_CLEANUP_R2_RAW.log: OK
+./CR01_SAFE_CACHE_CLEANUP_RAW.log: OK
+./CR01_SBOM.spdx.json: OK
+./CR01_SECURITY_RAW.log: OK
+./CR01_STATIC_ANALYSIS_RAW.log: OK
+./CR01_STATUS.md: OK
+./CR01_TRIVY_BOUNDED_RAW.log: OK
+./CR01_TRIVY_DELTA_FILES.txt: OK
+./CR01_TRIVY_DELTA_R3.json: OK
+./CR01_TRIVY_DELTA_R3_RAW.log: OK
+./CR01_TRIVY_FS_R2.json: OK
+./CR01_TRIVY_FS_R2_RAW.log: OK
+./CR01_TRIVY_MISCONFIG_BOUNDED.json: OK
+./CR01_TRIVY_SECRET_BOUNDED.json: OK
+./CR01_TRIVY_STATUS.log: OK
+./forgelocal-t27-r1-cr01-df50a2b.bundle: OK
+./forgelocal-t27-r1-cr01-df50a2b.bundle.sha256: OK
+--- extraction_gitleaks ---
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:18AM[0m [32mINF[0m scan completed in 486ms
+[90m10:18AM[0m [32mINF[0m no leaks found
+gitleaks_extraction_exit_code=0
+kit_sha256=b1cdcf44d081ef6e30f2f5524156765c88d1dc2a9e24a08048cad025935d741b
+completed_utc=2026-08-20T10:18:36Z

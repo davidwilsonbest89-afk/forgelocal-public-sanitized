@@ -1,0 +1,16 @@
+started_utc=2026-08-20T10:58:35Z
+cwd=/home/ubuntu/forgelocal-t27-r1-evidence/CR09
+T27_R1_SBOM_CYCLONEDX.json: OK
+T27_R1_SBOM_SPDX.json: OK
+T27_R1_LOCAL_PROVENANCE.md: OK
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:58AM[0m [32mINF[0m scan completed in 26.6ms
+[90m10:58AM[0m [32mINF[0m no leaks found
+gitleaks_exit_code=0
+completed_utc=2026-08-20T10:58:35Z

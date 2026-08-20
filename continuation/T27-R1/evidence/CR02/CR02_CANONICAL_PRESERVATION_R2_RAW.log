@@ -1,0 +1,5 @@
+started_utc=2026-08-20T10:31:00Z
+base=df50a2b242f74558d2e405f099bdfe6db6437c9c
+head=d993289b415ff96ed68a1fde52b50d39db63c0c4
+--- create_delta_bundle ---
+fatal: Refusing to create empty bundle.
