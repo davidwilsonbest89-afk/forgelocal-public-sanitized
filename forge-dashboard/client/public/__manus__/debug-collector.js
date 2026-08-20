@@ -451,6 +451,21 @@
   // ==========================================================================
 
   var originalFetch = window.fetch.bind(window);
+  var NETWORK_HEADER_ALLOWLIST = ["accept", "content-type", "x-request-id"];
+
+  function allowlistedHeaders(headers) {
+    var safe = {};
+    try {
+      var parsed = new Headers(headers || {});
+      NETWORK_HEADER_ALLOWLIST.forEach(function (name) {
+        var value = parsed.get(name);
+        if (value) safe[name] = value.slice(0, 256);
+      });
+    } catch (e) {
+      safe._parseError = true;
+    }
+    return safe;
+  }
 
   window.fetch = function (input, init) {
     init = init || {};
@@ -466,15 +481,7 @@
       return originalFetch(input, init);
     }
 
-    // Safely parse headers (avoid breaking if headers format is invalid)
-    var requestHeaders = {};
-    try {
-      if (init.headers) {
-        requestHeaders = Object.fromEntries(new Headers(init.headers).entries());
-      }
-    } catch (e) {
-      requestHeaders = { _parseError: true };
-    }
+    var requestHeaders = allowlistedHeaders(init.headers);
 
     var entry = {
       timestamp: startTime,
@@ -483,7 +490,7 @@
       url: url,
       request: {
         headers: requestHeaders,
-        body: init.body ? sanitizeValue(tryParseJson(init.body)) : null,
+        body: init.body ? "[REDACTED_NOT_CAPTURED]" : null,
       },
       response: null,
       duration: null,
@@ -494,14 +501,11 @@
       .then(function (response) {
         entry.duration = Date.now() - startTime;
 
-        var contentType = (response.headers.get("content-type") || "").toLowerCase();
-        var contentLength = response.headers.get("content-length");
-
         entry.response = {
           status: response.status,
           statusText: response.statusText,
-          headers: Object.fromEntries(response.headers.entries()),
-          body: null,
+          headers: allowlistedHeaders(response.headers),
+          body: "[REDACTED_NOT_CAPTURED]",
         };
 
         // Semantic network hint for agents on failures (sync, no need to wait for body)
@@ -515,61 +519,8 @@
           });
         }
 
-        // Skip body capture for streaming responses (SSE, etc.) to avoid memory leaks
-        var isStreaming = contentType.indexOf("text/event-stream") !== -1 ||
-                          contentType.indexOf("application/stream") !== -1 ||
-                          contentType.indexOf("application/x-ndjson") !== -1;
-        if (isStreaming) {
-          entry.response.body = "[Streaming response - not captured]";
-          store.networkRequests.push(entry);
-          pruneBuffer(store.networkRequests, CONFIG.bufferSize.network);
-          return response;
-        }
-
-        // Skip body capture for large responses to avoid memory issues
-        if (contentLength && parseInt(contentLength, 10) > CONFIG.maxBodyLength) {
-          entry.response.body = "[Response too large: " + contentLength + " bytes]";
-          store.networkRequests.push(entry);
-          pruneBuffer(store.networkRequests, CONFIG.bufferSize.network);
-          return response;
-        }
-
-        // Skip body capture for binary content types
-        var isBinary = contentType.indexOf("image/") !== -1 ||
-                       contentType.indexOf("video/") !== -1 ||
-                       contentType.indexOf("audio/") !== -1 ||
-                       contentType.indexOf("application/octet-stream") !== -1 ||
-                       contentType.indexOf("application/pdf") !== -1 ||
-                       contentType.indexOf("application/zip") !== -1;
-        if (isBinary) {
-          entry.response.body = "[Binary content: " + contentType + "]";
-          store.networkRequests.push(entry);
-          pruneBuffer(store.networkRequests, CONFIG.bufferSize.network);
-          return response;
-        }
-
-        // For text responses, clone and read body in background
-        var clonedResponse = response.clone();
-
-        // Async: read body in background, don't block the response
-        clonedResponse
-          .text()
-          .then(function (text) {
-            if (text.length <= CONFIG.maxBodyLength) {
-              entry.response.body = sanitizeValue(tryParseJson(text));
-            } else {
-              entry.response.body = text.slice(0, CONFIG.maxBodyLength) + "...[truncated]";
-            }
-          })
-          .catch(function () {
-            entry.response.body = "[Unable to read body]";
-          })
-          .finally(function () {
-            store.networkRequests.push(entry);
-            pruneBuffer(store.networkRequests, CONFIG.bufferSize.network);
-          });
-
-        // Return response immediately, don't wait for body reading
+        store.networkRequests.push(entry);
+        pruneBuffer(store.networkRequests, CONFIG.bufferSize.network);
         return response;
       })
       .catch(function (error) {
@@ -615,43 +566,10 @@
       xhr._manusData.url.indexOf("/__manus__/") !== 0
     ) {
       xhr._manusData.startTime = Date.now();
-      xhr._manusData.requestBody = body ? sanitizeValue(tryParseJson(body)) : null;
+      xhr._manusData.requestBody = body ? "[REDACTED_NOT_CAPTURED]" : null;
 
       xhr.addEventListener("load", function () {
-        var contentType = (xhr.getResponseHeader("content-type") || "").toLowerCase();
-        var responseBody = null;
-
-        // Skip body capture for streaming responses
-        var isStreaming = contentType.indexOf("text/event-stream") !== -1 ||
-                          contentType.indexOf("application/stream") !== -1 ||
-                          contentType.indexOf("application/x-ndjson") !== -1;
-
-        // Skip body capture for binary content types
-        var isBinary = contentType.indexOf("image/") !== -1 ||
-                       contentType.indexOf("video/") !== -1 ||
-                       contentType.indexOf("audio/") !== -1 ||
-                       contentType.indexOf("application/octet-stream") !== -1 ||
-                       contentType.indexOf("application/pdf") !== -1 ||
-                       contentType.indexOf("application/zip") !== -1;
-
-        if (isStreaming) {
-          responseBody = "[Streaming response - not captured]";
-        } else if (isBinary) {
-          responseBody = "[Binary content: " + contentType + "]";
-        } else {
-          // Safe to read responseText for text responses
-          try {
-            var text = xhr.responseText || "";
-            if (text.length > CONFIG.maxBodyLength) {
-              responseBody = text.slice(0, CONFIG.maxBodyLength) + "...[truncated]";
-            } else {
-              responseBody = sanitizeValue(tryParseJson(text));
-            }
-          } catch (e) {
-            // responseText may throw for non-text responses
-            responseBody = "[Unable to read response: " + e.message + "]";
-          }
-        }
+        var responseBody = "[REDACTED_NOT_CAPTURED]";
 
         var entry = {
           timestamp: xhr._manusData.startTime,

@@ -108,15 +108,6 @@ var tools = []map[string]any{
 		"session_id":      prop("string", "Agent session ID for an isolated agent page. Provide either profile_id or session_id."),
 		"text_max_length": prop("number", "Maximum visible text excerpt length. Default 1000."),
 	}, []string{}),
-	toolWithRequired("get_cookies", "Read browser-context cookies for a profile. Use for state inspection/export; do not parse page HTML for cookies.", map[string]any{
-		"profile_id": prop("string", "Profile ID. Provide either profile_id or session_id."),
-		"session_id": prop("string", "Agent session ID whose profile context should be read."),
-	}, []string{}),
-	toolWithRequired("set_cookies", "Add browser-context cookies. Use for restoring known session state; then navigate or reload and wait_for an authenticated page marker.", map[string]any{
-		"profile_id": prop("string", "Profile ID. Provide either profile_id or session_id."),
-		"session_id": prop("string", "Agent session ID whose profile context should receive cookies."),
-		"cookies":    prop("array", "Playwright OptionalCookie array."),
-	}, []string{"cookies"}),
 	toolWithRequired("form_fill", "Fill multiple form fields with humanized typing. Prefer this over repeated type_text calls for forms; use wait_for before and after submit.", map[string]any{
 		"profile_id": prop("string", "Profile ID for the active profile page. Provide either profile_id or session_id."),
 		"session_id": prop("string", "Agent session ID for an isolated agent page. Provide either profile_id or session_id."),

@@ -229,55 +229,11 @@ func (s *Server) toolGetPageState(args map[string]any) (any, *mcpError) {
 }
 
 func (s *Server) toolGetCookies(args map[string]any) (any, *mcpError) {
-	target, mcpErr := s.resolvePageTarget(args)
-	if mcpErr != nil {
-		return nil, mcpErr
-	}
-	if target.context == nil {
-		return nil, newError(-32000, "browser context is not available for "+target.profileID)
-	}
-	cookies, err := target.context.Cookies()
-	if err != nil {
-		return nil, newError(-32000, err.Error())
-	}
-	payload := map[string]any{"profile_id": target.profileID, "cookies": cookies, "total": len(cookies)}
-	res := textResult(mustJSON(payload))
-	res["profile_id"] = target.profileID
-	res["cookies"] = cookies
-	res["total"] = len(cookies)
-	return res, nil
+	return nil, newError(-32601, "SENSITIVE_COOKIE_ACCESS_DISABLED")
 }
 
 func (s *Server) toolSetCookies(args map[string]any) (any, *mcpError) {
-	target, mcpErr := s.resolvePageTarget(args)
-	if mcpErr != nil {
-		return nil, mcpErr
-	}
-	if target.context == nil {
-		return nil, newError(-32000, "browser context is not available for "+target.profileID)
-	}
-	rawCookies, ok := args["cookies"]
-	if !ok {
-		return nil, newError(-32602, "cookies is required")
-	}
-	var cookies []playwright.OptionalCookie
-	raw, err := json.Marshal(rawCookies)
-	if err != nil {
-		return nil, newError(-32602, "encode cookies: "+err.Error())
-	}
-	if err := json.Unmarshal(raw, &cookies); err != nil {
-		return nil, newError(-32602, "decode cookies: "+err.Error())
-	}
-	if len(cookies) == 0 {
-		return nil, newError(-32602, "cookies must not be empty")
-	}
-	if err := target.context.AddCookies(cookies); err != nil {
-		return nil, newError(-32000, err.Error())
-	}
-	res := textResult(fmt.Sprintf("Set %d cookies for %s", len(cookies), target.profileID))
-	res["profile_id"] = target.profileID
-	res["count"] = len(cookies)
-	return res, nil
+	return nil, newError(-32601, "SENSITIVE_COOKIE_ACCESS_DISABLED")
 }
 
 func (s *Server) toolRunWorkflow(args map[string]any) (any, *mcpError) {

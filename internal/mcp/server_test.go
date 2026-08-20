@@ -208,8 +208,6 @@ func TestToolSchemasRequiredFields(t *testing.T) {
 		"gc_sessions":        {},
 		"wait_for":           {"selector"},
 		"get_page_state":     {},
-		"get_cookies":        {},
-		"set_cookies":        {"cookies"},
 		"form_fill":          {"fields"},
 		"select_option":      {"selector"},
 		"check":              {"selector"},
