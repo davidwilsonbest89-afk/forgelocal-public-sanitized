@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"errors"
 	"fmt"
 	goruntime "runtime"
 	"sort"
@@ -17,6 +18,12 @@ const (
 	CloakBrowser        ID = "cloakbrowser"
 	BrowseForgeChromium ID = "browseforge-chromium"
 )
+
+const CamoufoxExecutionNotAuthorizedCode = "CAMOUFOX_EXECUTION_NOT_AUTHORIZED"
+
+// ErrCamoufoxExecutionNotAuthorized is a product-policy denial. It is not a
+// transient missing-binary condition and configuration cannot override it.
+var ErrCamoufoxExecutionNotAuthorized = errors.New(CamoufoxExecutionNotAuthorizedCode)
 
 // Family identifies the browser engine family exposed by a runtime.
 type Family string
@@ -43,15 +50,16 @@ type Capabilities struct {
 // Descriptor is the stable, serializable runtime metadata exposed to API, MCP,
 // dashboard, and future installer/probe surfaces.
 type Descriptor struct {
-	ID                 ID           `json:"id"`
-	DisplayName        string       `json:"display_name"`
-	Family             Family       `json:"family"`
-	FingerprintPoolKey string       `json:"fingerprint_pool_key,omitempty"`
-	BinaryPath         string       `json:"binary_path,omitempty"`
-	Enabled            bool         `json:"enabled"`
-	PlatformSupported  bool         `json:"platform_supported"`
-	UnsupportedReason  string       `json:"unsupported_reason,omitempty"`
-	Capabilities       Capabilities `json:"capabilities"`
+	ID                  ID           `json:"id"`
+	DisplayName         string       `json:"display_name"`
+	Family              Family       `json:"family"`
+	FingerprintPoolKey  string       `json:"fingerprint_pool_key,omitempty"`
+	BinaryPath          string       `json:"binary_path,omitempty"`
+	Enabled             bool         `json:"enabled"`
+	ExecutionAuthorized bool         `json:"execution_authorized"`
+	PlatformSupported   bool         `json:"platform_supported"`
+	UnsupportedReason   string       `json:"unsupported_reason,omitempty"`
+	Capabilities        Capabilities `json:"capabilities"`
 }
 
 // Registry resolves runtime IDs to concrete runtime descriptors.
@@ -86,6 +94,27 @@ func applyPlatformSupport(desc Descriptor) Descriptor {
 		desc.BinaryPath = ""
 	}
 	return desc
+}
+
+func applyExecutionPolicy(desc Descriptor) Descriptor {
+	if desc.ID == Camoufox {
+		desc.Enabled = false
+		desc.ExecutionAuthorized = false
+		desc.BinaryPath = ""
+		desc.UnsupportedReason = CamoufoxExecutionNotAuthorizedCode
+		return desc
+	}
+	desc.ExecutionAuthorized = true
+	return desc
+}
+
+// RequireExecution is the mandatory gate for all installer and launcher
+// surfaces. It stays fail-closed until a separately authorized policy change.
+func RequireExecution(id ID) error {
+	if id == Camoufox {
+		return ErrCamoufoxExecutionNotAuthorized
+	}
+	return nil
 }
 
 // NewRegistry builds the default BrowseForge runtime registry from the v2
@@ -148,11 +177,11 @@ func NewRegistry(cfg *config.Config) *Registry {
 	}
 	reg := &Registry{
 		byID: map[ID]Descriptor{
-			BrowseForgeChromium: applyPlatformSupport(applyRuntimeConfig(browseForgeChromium, cfg.Runtimes[string(BrowseForgeChromium)])),
-			Camoufox:            applyPlatformSupport(applyRuntimeConfig(camoufox, cfg.Runtimes[string(Camoufox)])),
-			CloakBrowser:        applyPlatformSupport(applyRuntimeConfig(cloak, cfg.Runtimes[string(CloakBrowser)])),
+			BrowseForgeChromium: applyPlatformSupport(applyExecutionPolicy(applyRuntimeConfig(browseForgeChromium, cfg.Runtimes[string(BrowseForgeChromium)]))),
+			Camoufox:            applyPlatformSupport(applyExecutionPolicy(applyRuntimeConfig(camoufox, cfg.Runtimes[string(Camoufox)]))),
+			CloakBrowser:        applyPlatformSupport(applyExecutionPolicy(applyRuntimeConfig(cloak, cfg.Runtimes[string(CloakBrowser)]))),
 		},
-		defaultID: Camoufox,
+		defaultID: BrowseForgeChromium,
 	}
 	if cfg.DefaultRuntimeID != "" {
 		if id, err := reg.ResolveID(cfg.DefaultRuntimeID); err == nil {

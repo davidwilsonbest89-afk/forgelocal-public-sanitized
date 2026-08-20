@@ -4,11 +4,11 @@
   "profiles_dir": "profiles",
   "data_dir": "data",
   "log_file": "logs/server.log",
-  "default_runtime_id": "camoufox",
+  "default_runtime_id": "browseforge-chromium",
   "runtimes": {
     "camoufox": {
-      "enabled": true,
-      "binary_path": "camoufox/camoufox",
+      "enabled": false,
+      "binary_path": "",
       "family": "firefox",
       "display_name": "Camoufox"
     },

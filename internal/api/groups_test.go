@@ -54,8 +54,8 @@ func TestListRuntimesReturnsRuntimeDescriptors(t *testing.T) {
 	if body.Data[0].ID != bfruntime.BrowseForgeChromium || body.Data[0].Enabled {
 		t.Fatalf("first runtime = %+v, want disabled BrowseForge Chromium descriptor", body.Data[0])
 	}
-	if body.Data[1].ID != bfruntime.Camoufox || body.Data[1].BinaryPath != "/opt/camoufox" {
-		t.Fatalf("second runtime = %+v, want Camoufox with configured binary path", body.Data[1])
+	if body.Data[1].ID != bfruntime.Camoufox || body.Data[1].BinaryPath != "" || body.Data[1].Enabled || body.Data[1].ExecutionAuthorized {
+		t.Fatalf("second runtime = %+v, want disabled unauthorized Camoufox projection", body.Data[1])
 	}
 	if body.Data[2].ID != bfruntime.CloakBrowser || body.Data[2].BinaryPath != "/opt/cloakbrowser" {
 		t.Fatalf("third runtime = %+v, want CloakBrowser with configured binary path", body.Data[2])
@@ -116,11 +116,11 @@ func TestCreateProfileRejectsDisabledRuntimeID(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/api/profiles", strings.NewReader(`{"name":"Disabled","runtime_id":"camoufox"}`))
 	rec := httptest.NewRecorder()
 	h.createProfile(rec, req)
-	if rec.Code != http.StatusBadRequest {
+	if rec.Code != http.StatusForbidden {
 		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
 	}
-	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
-		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	if !strings.Contains(rec.Body.String(), `"code":"CAMOUFOX_EXECUTION_NOT_AUTHORIZED"`) {
+		t.Fatalf("body missing Camoufox policy denial: %s", rec.Body.String())
 	}
 	if profiles := store.List("", ""); len(profiles) != 0 {
 		t.Fatalf("stored profiles = %d, want 0 after disabled runtime rejection", len(profiles))
@@ -146,11 +146,11 @@ func TestUpdateProfileRejectsDisabledRuntimeID(t *testing.T) {
 	req := requestWithProfileID(http.MethodPatch, "/api/profiles/"+p.ID, p.ID, strings.NewReader(`{"runtime_id":"camoufox"}`))
 	rec := httptest.NewRecorder()
 	h.updateProfile(rec, req)
-	if rec.Code != http.StatusBadRequest {
+	if rec.Code != http.StatusForbidden {
 		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
 	}
-	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
-		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	if !strings.Contains(rec.Body.String(), `"code":"CAMOUFOX_EXECUTION_NOT_AUTHORIZED"`) {
+		t.Fatalf("body missing Camoufox policy denial: %s", rec.Body.String())
 	}
 	got, err := store.Get(p.ID)
 	if err != nil {
@@ -178,11 +178,11 @@ func TestDuplicateProfileRejectsDisabledRuntimeID(t *testing.T) {
 	req := requestWithProfileID(http.MethodPost, "/api/profiles/"+p.ID+"/duplicate", p.ID, nil)
 	rec := httptest.NewRecorder()
 	h.duplicateProfile(rec, req)
-	if rec.Code != http.StatusBadRequest {
+	if rec.Code != http.StatusForbidden {
 		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
 	}
-	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
-		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	if !strings.Contains(rec.Body.String(), `"code":"CAMOUFOX_EXECUTION_NOT_AUTHORIZED"`) {
+		t.Fatalf("body missing Camoufox policy denial: %s", rec.Body.String())
 	}
 	if profiles := store.List("", ""); len(profiles) != 1 {
 		t.Fatalf("stored profiles = %d, want original only after disabled runtime duplicate rejection", len(profiles))
@@ -206,11 +206,11 @@ func TestImportProfileRejectsDisabledRuntimeID(t *testing.T) {
 	req.Header.Set("Content-Type", contentType)
 	rec := httptest.NewRecorder()
 	h.importProfile(rec, req)
-	if rec.Code != http.StatusBadRequest {
+	if rec.Code != http.StatusForbidden {
 		t.Fatalf("status = %d body=%s", rec.Code, rec.Body.String())
 	}
-	if !strings.Contains(rec.Body.String(), `"code":"INVALID_RUNTIME"`) || !strings.Contains(rec.Body.String(), `runtime \"camoufox\" is disabled`) {
-		t.Fatalf("body missing disabled INVALID_RUNTIME: %s", rec.Body.String())
+	if !strings.Contains(rec.Body.String(), `"code":"CAMOUFOX_EXECUTION_NOT_AUTHORIZED"`) {
+		t.Fatalf("body missing Camoufox policy denial: %s", rec.Body.String())
 	}
 	if profiles := store.List("", ""); len(profiles) != 0 {
 		t.Fatalf("stored profiles = %d, want 0 after disabled runtime import rejection", len(profiles))

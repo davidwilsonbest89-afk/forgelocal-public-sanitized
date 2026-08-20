@@ -287,8 +287,8 @@ func TestToolListRuntimesReturnsRuntimeDescriptors(t *testing.T) {
 	if got[0].ID != bfruntime.BrowseForgeChromium || got[0].Enabled {
 		t.Fatalf("first runtime = %+v, want disabled BrowseForge Chromium descriptor", got[0])
 	}
-	if got[1].ID != bfruntime.Camoufox || got[1].BinaryPath != "/opt/camoufox" {
-		t.Fatalf("second runtime = %+v, want Camoufox with configured binary path", got[1])
+	if got[1].ID != bfruntime.Camoufox || got[1].BinaryPath != "" || got[1].Enabled || got[1].ExecutionAuthorized {
+		t.Fatalf("second runtime = %+v, want disabled unauthorized Camoufox projection", got[1])
 	}
 	if got[2].ID != bfruntime.CloakBrowser || got[2].BinaryPath != "/opt/cloakbrowser" {
 		t.Fatalf("third runtime = %+v, want CloakBrowser with configured binary path", got[2])
@@ -345,8 +345,8 @@ func TestToolCreateProfileRejectsDisabledRuntimeID(t *testing.T) {
 	if raw != nil {
 		t.Fatalf("raw result = %#v, want nil", raw)
 	}
-	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, `runtime "camoufox" is disabled`) {
-		t.Fatalf("mcpErr = %+v, want -32602 disabled runtime", mcpErr)
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, "CAMOUFOX_EXECUTION_NOT_AUTHORIZED") {
+		t.Fatalf("mcpErr = %+v, want -32602 Camoufox policy denial", mcpErr)
 	}
 	if profiles := store.List("", ""); len(profiles) != 0 {
 		t.Fatalf("stored profiles = %d, want 0 after disabled runtime rejection", len(profiles))
@@ -376,8 +376,8 @@ func TestToolUpdateProfileRejectsDisabledRuntimeID(t *testing.T) {
 	if raw != nil {
 		t.Fatalf("raw result = %#v, want nil", raw)
 	}
-	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, `runtime "camoufox" is disabled`) {
-		t.Fatalf("mcpErr = %+v, want -32602 disabled runtime", mcpErr)
+	if mcpErr == nil || mcpErr.Code != -32602 || !strings.Contains(mcpErr.Message, "CAMOUFOX_EXECUTION_NOT_AUTHORIZED") {
+		t.Fatalf("mcpErr = %+v, want -32602 Camoufox policy denial", mcpErr)
 	}
 	got, err := store.Get(p.ID)
 	if err != nil {

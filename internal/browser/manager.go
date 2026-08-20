@@ -189,6 +189,9 @@ func (m *Manager) launchProfile(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err := bfruntime.RequireExecution(desc.ID); err != nil {
+		return nil, codedError{code: bfruntime.CamoufoxExecutionNotAuthorizedCode, err: err}
+	}
 	if !desc.Enabled {
 		return nil, fmt.Errorf("runtime %q is disabled", desc.ID)
 	}

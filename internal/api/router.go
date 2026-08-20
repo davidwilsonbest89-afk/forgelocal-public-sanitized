@@ -399,10 +399,21 @@ func (h *handler) getQualifiedRuntime(w http.ResponseWriter, r *http.Request) {
 }
 
 func requireEnabledRuntime(desc bfruntime.Descriptor) error {
+	if err := bfruntime.RequireExecution(desc.ID); err != nil {
+		return err
+	}
 	if !desc.Enabled {
 		return fmt.Errorf("runtime %q is disabled", desc.ID)
 	}
 	return nil
+}
+
+func writeRuntimeValidationError(w http.ResponseWriter, err error) {
+	if errors.Is(err, bfruntime.ErrCamoufoxExecutionNotAuthorized) {
+		writeError(w, http.StatusForbidden, bfruntime.CamoufoxExecutionNotAuthorizedCode, "Camoufox execution is not authorized")
+		return
+	}
+	writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
 }
 
 func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
@@ -443,7 +454,7 @@ func (h *handler) createProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := requireEnabledRuntime(desc); err != nil {
-		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		writeRuntimeValidationError(w, err)
 		return
 	}
 	if err := h.prepareProfileIdentity(&p, desc); err != nil {
@@ -558,7 +569,7 @@ func (h *handler) updateProfile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if err := requireEnabledRuntime(desc); err != nil {
-			writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+			writeRuntimeValidationError(w, err)
 			return
 		}
 		updates["runtime_id"] = draft.RuntimeID
@@ -628,7 +639,7 @@ func (h *handler) duplicateProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := requireEnabledRuntime(desc); err != nil {
-		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		writeRuntimeValidationError(w, err)
 		return
 	}
 	p, err := h.store.Duplicate(src.ID)

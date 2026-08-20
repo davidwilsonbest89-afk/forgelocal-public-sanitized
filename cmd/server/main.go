@@ -23,12 +23,12 @@ import (
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
 	"forgelocal/internal/fingerprint"
-	bfrt "forgelocal/internal/runtime"
 	"forgelocal/internal/groups"
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/mcp"
 	"forgelocal/internal/profile"
 	"forgelocal/internal/proxies"
+	bfrt "forgelocal/internal/runtime"
 	"forgelocal/internal/secrets"
 	"forgelocal/internal/workflow"
 )
@@ -283,7 +283,10 @@ func runServer(flags *serveFlags) {
 		return path, true
 	}
 
-	camoufoxPath, camoufoxEnabled := ensureRuntime("camoufox", "Camoufox", true, browser.DownloadCamoufox)
+	// T27-R1: Camoufox is denied by product policy. Do not call
+	// ensureRuntime, which may inspect or install a browser binary.
+	camoufoxPath, camoufoxEnabled := "", false
+	slog.Info("runtime disabled by product execution policy", "runtime_id", "camoufox", "code", bfrt.CamoufoxExecutionNotAuthorizedCode)
 	cloakPath, cloakEnabled := ensureRuntime("cloakbrowser", "CloakBrowser", false, browser.DownloadCloakBrowser)
 	browseForgeChromiumPath, browseForgeChromiumEnabled := ensureRuntime(browser.BrowseForgeChromiumRuntimeID, "BrowseForge Chromium", true, browser.DownloadBrowseForgeChromium)
 
@@ -317,7 +320,7 @@ func runServer(flags *serveFlags) {
 		return ok && raw.Enabled != nil && *raw.Enabled && raw.BinaryPath != ""
 	}
 	if !flags.noRuntime && !defaultReady(cfg.DefaultRuntimeID) {
-		for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "camoufox", "cloakbrowser"} {
+		for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "cloakbrowser"} {
 			if defaultReady(id) {
 				cfg.DefaultRuntimeID = id
 				configChanged = true
@@ -390,7 +393,7 @@ func runServer(flags *serveFlags) {
 		}
 		slog.Info("runtime qualified", "id", id, "state", info.State, "version", info.Version)
 	}
-	for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "camoufox", "cloakbrowser"} {
+	for _, id := range []string{browser.BrowseForgeChromiumRuntimeID, "cloakbrowser"} {
 		qualifyRuntime(id)
 	}
 	qualifiedRegistry := bfrt.NewQualifiedRegistry(backupDB.DB())

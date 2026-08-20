@@ -165,7 +165,7 @@ func (h *handler) importProfile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := requireEnabledRuntime(desc); err != nil {
-		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+		writeRuntimeValidationError(w, err)
 		return
 	}
 	if err := h.store.Create(&p); err != nil {

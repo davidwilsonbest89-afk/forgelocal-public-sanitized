@@ -14,6 +14,7 @@ import (
 	"forgelocal/internal/groups"
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/profile"
+	bfruntime "forgelocal/internal/runtime"
 	"forgelocal/internal/workflow"
 
 	"github.com/mxschmitt/playwright-go"
@@ -309,6 +310,9 @@ func (s *Server) toolCreateProfile(args map[string]any) (any, *mcpError) {
 	if err != nil {
 		return nil, newError(-32602, err.Error())
 	}
+	if err := bfruntime.RequireExecution(desc.ID); err != nil {
+		return nil, newError(-32602, bfruntime.CamoufoxExecutionNotAuthorizedCode)
+	}
 	if !desc.Enabled {
 		return nil, newError(-32602, fmt.Sprintf("runtime %q is disabled", desc.ID))
 	}
@@ -364,6 +368,9 @@ func (s *Server) toolUpdateProfile(args map[string]any) (any, *mcpError) {
 		desc, err := s.mgr.RuntimeRegistry().ApplyProfileDefaults(&draft)
 		if err != nil {
 			return nil, newError(-32602, err.Error())
+		}
+		if err := bfruntime.RequireExecution(desc.ID); err != nil {
+			return nil, newError(-32602, bfruntime.CamoufoxExecutionNotAuthorizedCode)
 		}
 		if !desc.Enabled {
 			return nil, newError(-32602, fmt.Sprintf("runtime %q is disabled", desc.ID))

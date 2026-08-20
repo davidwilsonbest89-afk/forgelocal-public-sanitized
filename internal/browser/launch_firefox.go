@@ -16,6 +16,9 @@ import (
 )
 
 func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
+	if err := bfruntime.RequireExecution(bfruntime.Camoufox); err != nil {
+		return nil, codedError{code: bfruntime.CamoufoxExecutionNotAuthorizedCode, err: err}
+	}
 	desc, err := m.runtimes.ResolveProfile(p)
 	if err != nil {
 		return nil, err

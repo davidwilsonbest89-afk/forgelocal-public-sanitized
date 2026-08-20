@@ -14,6 +14,8 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	bfruntime "forgelocal/internal/runtime"
 )
 
 // Downloader handles first-run browser binary downloads
@@ -344,6 +346,9 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 }
 
 func DownloadCamoufox(baseDir string) (string, error) {
+	if err := bfruntime.RequireExecution(bfruntime.Camoufox); err != nil {
+		return "", err
+	}
 	url, filename, err := camoufoxDownloadURLFor(CamoufoxVersion, runtime.GOOS, runtime.GOARCH)
 	if err != nil {
 		return "", err

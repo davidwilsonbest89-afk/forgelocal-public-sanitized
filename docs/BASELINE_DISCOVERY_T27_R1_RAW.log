@@ -94,3 +94,18 @@ No vulnerabilities found.
 playwright_status=NOT_INSTALLED_IN_BASELINE_CLONE
 exit_code=0
 completed_utc=2026-08-20T09:42:56Z
+--- toolchain_reconciliation ---
+started_utc=2026-08-20T09:45:00Z
+cwd=/home/ubuntu/forgelocal-t27-r1-work
+default_go_path=/usr/local/bin/go
+go version go1.25.13 linux/amd64
+GOTOOLCHAIN=auto
+GOVERSION=go1.25.13
+go.mod.toolchain=go1.25.13
+explicit_local_go=go1.25.3 linux/amd64
+explicit_local_go_status=NOT_QUALIFIED_FOR_THIS_MODULE
+node=v22.13.0
+pnpm_dashboard=10.4.1
+playwright_lock=@playwright/test@1.55.0
+exit_code=0
+completed_utc=2026-08-20T09:45:00Z

@@ -1,6 +1,7 @@
 package runtime
 
 import (
+	"errors"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -121,8 +122,8 @@ func TestRegistryListReturnsStableRuntimeMetadata(t *testing.T) {
 	if camoufox.DisplayName != "Camoufox" || camoufox.Family != FamilyFirefox {
 		t.Fatalf("Camoufox metadata = %+v", camoufox)
 	}
-	if camoufox.BinaryPath != "/opt/camoufox" || !camoufox.Enabled {
-		t.Fatalf("Camoufox binary/enabled = %q/%v", camoufox.BinaryPath, camoufox.Enabled)
+	if camoufox.BinaryPath != "" || camoufox.Enabled || camoufox.ExecutionAuthorized {
+		t.Fatalf("Camoufox policy projection = %+v, want disabled and unauthorized", camoufox)
 	}
 	if camoufox.FingerprintPoolKey != "firefox" {
 		t.Fatalf("Camoufox fingerprint pool = %q, want firefox", camoufox.FingerprintPoolKey)
@@ -181,7 +182,7 @@ func TestRegistryAppliesRuntimeConfigOverrides(t *testing.T) {
 	if !ok {
 		t.Fatal("Camoufox runtime missing")
 	}
-	if camoufox.DisplayName != "Camoufox ESR" || camoufox.BinaryPath != "/custom/camoufox" || camoufox.Enabled {
+	if camoufox.DisplayName != "Camoufox ESR" || camoufox.BinaryPath != "" || camoufox.Enabled || camoufox.ExecutionAuthorized {
 		t.Fatalf("Camoufox override = %+v", camoufox)
 	}
 
@@ -194,5 +195,22 @@ func TestRegistryAppliesRuntimeConfigOverrides(t *testing.T) {
 	}
 	if cloak.Family != FamilyChromium || cloak.Capabilities.Family != FamilyChromium {
 		t.Fatalf("CloakBrowser family override = descriptor %q capabilities %q", cloak.Family, cloak.Capabilities.Family)
+	}
+}
+
+func TestCamoufoxExecutionPolicyCannotBeEnabledByConfig(t *testing.T) {
+	enabled := true
+	reg := NewRegistry(&config.Config{Runtimes: map[string]config.RuntimeConfig{
+		"camoufox": {BinaryPath: "/pretend/camoufox", Enabled: &enabled},
+	}})
+	desc, ok := reg.Get(Camoufox)
+	if !ok {
+		t.Fatal("Camoufox runtime missing")
+	}
+	if desc.Enabled || desc.ExecutionAuthorized || desc.BinaryPath != "" {
+		t.Fatalf("configured Camoufox bypassed policy: %+v", desc)
+	}
+	if !errors.Is(RequireExecution(Camoufox), ErrCamoufoxExecutionNotAuthorized) {
+		t.Fatalf("RequireExecution(Camoufox) must fail closed")
 	}
 }
