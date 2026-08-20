@@ -1,5 +1,20 @@
 # Registre canonique — T22 Profile History
 
+## T27-R1 — Dossier de continuité canonique
+
+| Champ | Valeur |
+|---|---|
+| Décision locale | `T27_R1_TECHNICAL_CLOSURE_APPROVED_VERIFIABLE_LOCAL_PENDING_CR08_NATIVE_VALIDATION` |
+| Branche GitHub privée | `continuation-t27-r1-canonical` sur `davidwilsonbest89-afk/forgelocal-public-sanitized` |
+| Commit distant | `282fb0a28bf48a15465341b02f82c83e09e2fd92` |
+| Manifeste kit | SHA-256 `5e5defbb24b3314bde1c43802b3c81c900603823cac82ab702eb1ec7d3021dab` |
+| Artefacts LFS | Bundle et ZIP CR-01, 308 Mo transférés et pointeurs Git vérifiés localement. |
+| Contenu | Lignée CR-01→CR-05, bundles/sidecars/kits, `TOOLCHAIN.lock`, CDC, registre, checklist, politique baseline, SBOM/provenance CR-09 et guide de reprise. |
+| Exclusions | Secrets, cookies, DB, profils, runtime, builds, `node_modules` et attestations privées hors périmètre. |
+| Règle future | Aucun lot sans `BASELINE_DISCOVERY_RAW.log` avec commandes, chemins, UTC, exit codes et sorties brutes ; copie canonique hashée avant nettoyage. |
+
+Les gates de release et CR-08 restent inchangés.
+
 ## T27-R1 — CR-01 Gate Camoufox/runtime
 
 | Champ | Valeur |
