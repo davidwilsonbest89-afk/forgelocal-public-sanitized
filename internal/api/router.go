@@ -22,6 +22,7 @@ import (
 	"forgelocal/internal/backup"
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
+	"forgelocal/internal/cookies"
 	"forgelocal/internal/environment"
 	"forgelocal/internal/fingerprint"
 	"forgelocal/internal/groups"
@@ -75,6 +76,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if err != nil {
 		return nil, fmt.Errorf("open profile history repository: %w", err)
 	}
+	cookieFixtureStore, err := cookies.Open(cfg.DataDir)
+	if err != nil {
+		return nil, fmt.Errorf("open synthetic cookie fixture repository: %w", err)
+	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -94,7 +99,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore}
 	if err := h.recoverPendingProfileHistory(context.Background()); err != nil {
 		return nil, fmt.Errorf("recover pending profile history: %w", err)
 	}
@@ -120,6 +125,8 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)
 		r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)
 		r.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)
+		r.Post("/api/profiles/{id}/cookie-fixtures/import", h.importCookieFixtures)
+		r.Get("/api/profiles/{id}/cookie-fixtures/export", h.exportCookieFixtures)
 		r.Get("/api/profiles/{id}/history", h.listProfileHistory)
 		r.Get("/api/profiles/{id}/history/diff", h.diffProfileHistory)
 		r.Get("/api/profiles/{id}/history/{version}", h.getProfileHistoryVersion)
@@ -195,22 +202,23 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 }
 
 type handler struct {
-	cfg               *config.Config
-	store             *profile.Store
-	groupStore        *groups.Store
-	mgr               *browser.Manager
-	fpPool            *fingerprint.Pool
-	hcfg              humanize.Config
-	token             string
-	backupSvc         *backup.Service
-	readonlyCatalog   backup.ReadOnlyCatalog
-	auditSink         *writeAuditSink
-	readonlySessions  *readOnlySessionBroker
-	proxyStore        *proxies.Store
-	qualifiedRegistry *bfruntime.QualifiedRegistry
-	backupDB          *sql.DB
-	templateStore     *templates.Store
-	historyStore      *history.Store
+	cfg                *config.Config
+	store              *profile.Store
+	groupStore         *groups.Store
+	mgr                *browser.Manager
+	fpPool             *fingerprint.Pool
+	hcfg               humanize.Config
+	token              string
+	backupSvc          *backup.Service
+	readonlyCatalog    backup.ReadOnlyCatalog
+	auditSink          *writeAuditSink
+	readonlySessions   *readOnlySessionBroker
+	proxyStore         *proxies.Store
+	qualifiedRegistry  *bfruntime.QualifiedRegistry
+	backupDB           *sql.DB
+	templateStore      *templates.Store
+	historyStore       *history.Store
+	cookieFixtureStore *cookies.Store
 }
 
 // t13Checker projects environment diagnostics from stored metadata and the
