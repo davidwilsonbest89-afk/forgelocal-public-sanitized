@@ -1,0 +1,30 @@
+started_utc=2026-08-20T02:13:46Z
+cwd=/home/ubuntu/forgelocal-t24-work
+commit=d811a5c71e4b9398e358f4469408a1917b608a3d
+command=go test -count=1 -race ./...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.027s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	2.801s
+ok  	forgelocal/internal/backup	1.936s
+ok  	forgelocal/internal/browser	4.728s
+ok  	forgelocal/internal/config	1.010s
+ok  	forgelocal/internal/environment	1.008s
+ok  	forgelocal/internal/fingerprint	1.009s
+ok  	forgelocal/internal/groups	1.010s
+ok  	forgelocal/internal/history	1.111s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.656s
+ok  	forgelocal/internal/localvault	1.063s
+ok  	forgelocal/internal/mcp	1.018s
+ok  	forgelocal/internal/productschema	1.468s
+ok  	forgelocal/internal/profile	1.078s
+ok  	forgelocal/internal/profilemigration	1.992s
+ok  	forgelocal/internal/proxies	1.073s
+ok  	forgelocal/internal/runtime	1.185s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	2.438s
+ok  	forgelocal/internal/templates	1.196s
+ok  	forgelocal/internal/workflow	1.011s
+exit_code=0
+completed_utc=2026-08-20T02:13:54Z

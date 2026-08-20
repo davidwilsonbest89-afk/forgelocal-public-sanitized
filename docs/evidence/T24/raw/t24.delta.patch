@@ -1,0 +1,136 @@
+[1mdiff --git a/internal/api/router.go b/internal/api/router.go[m
+[1mindex 401f473..ed5967b 100644[m
+[1m--- a/internal/api/router.go[m
+[1m+++ b/internal/api/router.go[m
+[36m@@ -114,16 +114,17 @@[m [mfunc newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f[m
+ 		r.Get("/api/profiles/{id}", h.getProfile)[m
+ 		r.Put("/api/profiles/{id}", h.updateProfile)[m
+ 		r.Delete("/api/profiles/{id}", h.deleteProfile)[m
+[32m+[m		[32mr.Post("/api/profiles/bulk", h.bulkProfileOperation)[m
+ 		r.Post("/api/profiles/{id}/archive", h.archiveProfile)[m
+ 		r.Post("/api/profiles/{id}/reopen", h.reopenProfile)[m
+ 		r.Post("/api/profiles/{id}/tags/{tag}", h.addProfileTag)[m
+[31m-			r.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)[m
+[31m-			r.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)[m
+[31m-			r.Get("/api/profiles/{id}/history", h.listProfileHistory)[m
+[31m-			r.Get("/api/profiles/{id}/history/diff", h.diffProfileHistory)[m
+[31m-			r.Get("/api/profiles/{id}/history/{version}", h.getProfileHistoryVersion)[m
+[31m-			r.Post("/api/profiles/{id}/history/{version}/restore", h.restoreProfileHistory)[m
+[31m-			r.Post("/api/templates", h.createTemplate)[m
+[32m+[m		[32mr.Delete("/api/profiles/{id}/tags/{tag}", h.removeProfileTag)[m
+[32m+[m		[32mr.Put("/api/profiles/{id}/metadata", h.updateProfileMetadata)[m
+[32m+[m		[32mr.Get("/api/profiles/{id}/history", h.listProfileHistory)[m
+[32m+[m		[32mr.Get("/api/profiles/{id}/history/diff", h.diffProfileHistory)[m
+[32m+[m		[32mr.Get("/api/profiles/{id}/history/{version}", h.getProfileHistoryVersion)[m
+[32m+[m		[32mr.Post("/api/profiles/{id}/history/{version}/restore", h.restoreProfileHistory)[m
+[32m+[m		[32mr.Post("/api/templates", h.createTemplate)[m
+ 		r.Get("/api/templates", h.listTemplates)[m
+ 		r.Get("/api/templates/{id}/versions/{version}", h.getTemplateVersion)[m
+ 		r.Post("/api/templates/{id}/versions", h.createTemplateVersion)[m
+[1mdiff --git a/internal/history/store.go b/internal/history/store.go[m
+[1mindex ec78810..0c76b7d 100644[m
+[1m--- a/internal/history/store.go[m
+[1m+++ b/internal/history/store.go[m
+[36m@@ -427,19 +427,34 @@[m [mfunc diffValue(path string, left, right any, paths *[]string) {[m
+ 	rm, rok := right.(map[string]any)[m
+ 	if lok && rok {[m
+ 		keys := make(map[string]struct{}, len(lm)+len(rm))[m
+[31m-		for key := range lm { keys[key] = struct{}{} }[m
+[31m-		for key := range rm { keys[key] = struct{}{} }[m
+[32m+[m		[32mfor key := range lm {[m
+[32m+[m			[32mkeys[key] = struct{}{}[m
+[32m+[m		[32m}[m
+[32m+[m		[32mfor key := range rm {[m
+[32m+[m			[32mkeys[key] = struct{}{}[m
+[32m+[m		[32m}[m
+ 		for key := range keys {[m
+ 			next := key[m
+[31m-			if path != "" { next = path + "." + key }[m
+[32m+[m			[32mif path != "" {[m
+[32m+[m				[32mnext = path + "." + key[m
+[32m+[m			[32m}[m
+ 			diffValue(next, lm[key], rm[key], paths)[m
+ 		}[m
+ 		return[m
+ 	}[m
+[31m-	if path != "" { *paths = append(*paths, path) }[m
+[32m+[m	[32mif path != "" {[m
+[32m+[m		[32m*paths = append(*paths, path)[m
+[32m+[m	[32m}[m
+ }[m
+ [m
+ func validPage(limit, offset int) bool { return limit >= 1 && limit <= 100 && offset >= 0 }[m
+[31m-func validAction(action string) bool { return action == "create" || action == "update" || action == "metadata" || action == "archive" || action == "reopen" || action == "tag_add" || action == "tag_remove" || action == "recovery" }[m
+[31m-func now() time.Time { return time.Now().UTC().Truncate(time.Microsecond) }[m
+[32m+[m[32mfunc validAction(action string) bool {[m
+[32m+[m	[32mswitch action {[m
+[32m+[m	[32mcase "create", "update", "metadata", "archive", "reopen", "tag_add", "tag_remove", "group_set", "group_clear", "recovery":[m
+[32m+[m		[32mreturn true[m
+[32m+[m	[32mdefault:[m
+[32m+[m		[32mreturn false[m
+[32m+[m	[32m}[m
+[32m+[m[32m}[m
+[32m+[m[32mfunc now() time.Time    { return time.Now().UTC().Truncate(time.Microsecond) }[m
+ func timestamp() string { return now().Format(time.RFC3339Nano) }[m
+[1mdiff --git a/internal/profile/store.go b/internal/profile/store.go[m
+[1mindex 7c3c276..0bea801 100644[m
+[1m--- a/internal/profile/store.go[m
+[1m+++ b/internal/profile/store.go[m
+[36m@@ -889,6 +889,57 @@[m [mfunc (s *Store) RemoveProfileTag(id string, tag string) error {[m
+ 	return nil[m
+ }[m
+ [m
+[32m+[m[32m// SetProfileGroup assigns or clears a non-sensitive profile group. Group[m
+[32m+[m[32m// existence belongs to the API layer, which owns the groups store; this method[m
+[32m+[m[32m// preserves the profile store's active-state, per-profile isolation and durable[m
+[32m+[m[32m// persistence contract.[m
+[32m+[m[32mfunc (s *Store) SetProfileGroup(id, group string) (*Profile, bool, error) {[m
+[32m+[m	[32mif group != "" && !validName(group) {[m
+[32m+[m		[32mreturn nil, false, ErrInvalidGroup[m
+[32m+[m	[32m}[m
+[32m+[m	[32ms.mu.RLock()[m
+[32m+[m	[32mp, ok := s.profiles[id][m
+[32m+[m	[32mif !ok {[m
+[32m+[m		[32ms.mu.RUnlock()[m
+[32m+[m		[32mreturn nil, false, ErrNotFound[m
+[32m+[m	[32m}[m
+[32m+[m	[32mif p.LifecycleState != LifecycleActive {[m
+[32m+[m		[32ms.mu.RUnlock()[m
+[32m+[m		[32mreturn nil, false, ErrNotArchived[m
+[32m+[m	[32m}[m
+[32m+[m	[32ms.mu.RUnlock()[m
+[32m+[m
+[32m+[m	[32munlock, err := s.WithProfile(id, perProfileIsolationBudget)[m
+[32m+[m	[32mif err != nil {[m
+[32m+[m		[32mreturn nil, false, err[m
+[32m+[m	[32m}[m
+[32m+[m	[32mdefer unlock()[m
+[32m+[m
+[32m+[m	[32ms.mu.Lock()[m
+[32m+[m	[32mdefer s.mu.Unlock()[m
+[32m+[m	[32mp, ok = s.profiles[id][m
+[32m+[m	[32mif !ok {[m
+[32m+[m		[32mreturn nil, false, ErrNotFound[m
+[32m+[m	[32m}[m
+[32m+[m	[32mif p.LifecycleState != LifecycleActive {[m
+[32m+[m		[32mreturn nil, false, ErrNotArchived[m
+[32m+[m	[32m}[m
+[32m+[m	[32mif p.Group == group {[m
+[32m+[m		[32mreturn p, false, nil[m
+[32m+[m	[32m}[m
+[32m+[m	[32mtmp := *p[m
+[32m+[m	[32mtmp.Group = group[m
+[32m+[m	[32maction := "group_set"[m
+[32m+[m	[32mif group == "" {[m
+[32m+[m		[32maction = "group_clear"[m
+[32m+[m	[32m}[m
+[32m+[m	[32mif err := s.save(&tmp, action); err != nil {[m
+[32m+[m		[32mreturn nil, false, err[m
+[32m+[m	[32m}[m
+[32m+[m	[32ms.profiles[id] = &tmp[m
+[32m+[m	[32mreturn &tmp, true, nil[m
+[32m+[m[32m}[m
+[32m+[m
+ func removeTag(tags []string, tag string) []string {[m
+ 	kept := make([]string, 0, len(tags))[m
+ 	for _, t := range tags {[m
