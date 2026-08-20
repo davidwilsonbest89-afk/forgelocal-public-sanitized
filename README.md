@@ -18,6 +18,10 @@ GOTOOLCHAIN=local /usr/local/go/bin/go build ./...
 
 Le Dashboard est dans `forge-dashboard/`. Consulter `docs/local-quickstart.md`, `docs/architecture.md` et le CDC inclus pour les conventions du projet.
 
+## Reprise et baseline obligatoire
+
+Avant tout futur lot, correctif ou reprise par un nouveau développeur, appliquer la [politique BASELINE_DISCOVERY](docs/BASELINE_DISCOVERY_POLICY.md). Elle exige un journal brut des commandes, chemins, dates UTC, codes de sortie et sorties de qualification avant toute écriture de code ou de données.
+
 ## Limites connues
 
 Cette publication publique ne contient aucun document de provenance privé, archive privée T07, secret, cookie, session, attestation privée ou artefact de continuité privé. Les gates de release restent `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN` et `NATIVE_SYSTEMVAULT_NOT_TESTED`.
