@@ -1,0 +1,38 @@
+package api
+
+import (
+	"encoding/json"
+	"net/http"
+)
+
+// openAPIV1 is deliberately compact: it is the versioned contract index for
+// the locally supported API surface. Detailed payload schemas stay owned by
+// their handlers until a dedicated schema-authoring lot is opened.
+func (h *handler) openAPIV1(w http.ResponseWriter, _ *http.Request) {
+	spec := map[string]any{
+		"openapi": "3.1.0",
+		"info": map[string]any{
+			"title":   "ForgeLocal Local API",
+			"version": h.cfg.Version,
+		},
+		"servers":  []map[string]string{{"url": "http://127.0.0.1"}},
+		"security": []map[string][]string{{"bearerAuth": {}}},
+		"components": map[string]any{
+			"securitySchemes": map[string]any{
+				"bearerAuth": map[string]any{"type": "http", "scheme": "bearer"},
+			},
+		},
+		"paths": map[string]any{
+			"/api/v1/profiles":          map[string]any{"get": map[string]any{"summary": "List profiles"}, "post": map[string]any{"summary": "Create profile"}},
+			"/api/v1/profiles/{id}":     map[string]any{"get": map[string]any{"summary": "Get profile"}, "put": map[string]any{"summary": "Update profile"}, "delete": map[string]any{"summary": "Delete profile"}},
+			"/api/v1/groups":            map[string]any{"get": map[string]any{"summary": "List groups"}},
+			"/api/v1/runtimes":          map[string]any{"get": map[string]any{"summary": "List runtime projections"}},
+			"/api/v1/proxies":           map[string]any{"get": map[string]any{"summary": "List proxies"}, "post": map[string]any{"summary": "Create proxy"}},
+			"/api/v1/templates":         map[string]any{"get": map[string]any{"summary": "List templates"}, "post": map[string]any{"summary": "Create template"}},
+			"/api/v1/readonly/health":   map[string]any{"get": map[string]any{"summary": "Read-only health"}},
+			"/api/v1/readonly/profiles": map[string]any{"get": map[string]any{"summary": "Read-only profile projection"}},
+		},
+	}
+	w.Header().Set("Content-Type", "application/json")
+	_ = json.NewEncoder(w).Encode(spec)
+}

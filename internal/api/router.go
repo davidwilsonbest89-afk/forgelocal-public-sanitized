@@ -205,8 +205,28 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Get("/api/v1/readonly/groups", h.readonlyGroups)
 		r.Get("/api/v1/readonly/runtimes", h.readonlyRuntimes)
 	})
+	// CR-05: existing /api routes remain protected legacy aliases. The v1 facade
+	// is protected before it delegates to those routes, preventing a public v1
+	// bypass for historically public status/health endpoints.
+	r.Get("/api/v1/openapi.json", h.openAPIV1)
+	r.Handle("/api/v1/*", h.authMiddleware(h.requireLoopbackMiddleware(apiV1LegacyAlias(r))))
 
 	return r, nil
+}
+
+func apiV1LegacyAlias(root http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		suffix := strings.TrimPrefix(r.URL.Path, "/api/v1")
+		if suffix == "" || suffix == "/" || !strings.HasPrefix(suffix, "/") {
+			http.NotFound(w, r)
+			return
+		}
+		clone := r.Clone(r.Context())
+		cloneURL := *r.URL
+		clone.URL = &cloneURL
+		clone.URL.Path = "/api" + suffix
+		root.ServeHTTP(w, clone)
+	})
 }
 
 type handler struct {
