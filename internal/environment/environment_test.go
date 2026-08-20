@@ -65,8 +65,42 @@ func TestT13Environment_CleanVerdict(t *testing.T) {
 	if d.Verdict != VerdictClean {
 		t.Fatalf("want CLEAN, got %s", d.Verdict)
 	}
-	if len(d.Controls) != 2 {
-		t.Fatalf("want 2 controls, got %d", len(d.Controls))
+	if len(d.Controls) != 13 {
+		t.Fatalf("want 13 controls, got %d", len(d.Controls))
+	}
+}
+
+func TestT30Environment_DeclaresProjectionCoverageWithoutObservation(t *testing.T) {
+	d, err := Diagnose(context.Background(), clean(t), "profile-1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if d.DiagnosticVersion != DiagnosticVersion {
+		t.Fatalf("want version %q, got %q", DiagnosticVersion, d.DiagnosticVersion)
+	}
+	if d.ObservationMode != ObservationModeProjected {
+		t.Fatalf("want projection-only mode, got %q", d.ObservationMode)
+	}
+	unsupported := 0
+	for _, control := range d.Controls {
+		if control.State == StateUnsupported {
+			unsupported++
+		}
+	}
+	if unsupported != 11 {
+		t.Fatalf("want 11 declared unsupported capabilities, got %d", unsupported)
+	}
+}
+
+func TestT30Environment_UnobservedCapabilityNotesAreFixedAndRedacted(t *testing.T) {
+	d, err := Diagnose(context.Background(), clean(t), "profile-1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, control := range d.Controls {
+		if control.State == StateUnsupported && control.Note != "runtime observation not implemented" && control.Note != "network observation not implemented" {
+			t.Fatalf("unsupported control %q has unexpected note %q", control.Name, control.Note)
+		}
 	}
 }
 

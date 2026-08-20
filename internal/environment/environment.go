@@ -24,10 +24,10 @@ import (
 type State string
 
 const (
-	StatePass      State = "PASS"
-	StateWarning   State = "WARNING"
-	StateFail      State = "FAIL"
-	StateUnsupported State = "UNSUPPORTED"
+	StatePass           State = "PASS"
+	StateWarning        State = "WARNING"
+	StateFail           State = "FAIL"
+	StateUnsupported    State = "UNSUPPORTED"
 	StateRuntimeDefined State = "RUNTIME_DEFINED"
 )
 
@@ -35,10 +35,17 @@ const (
 type Verdict string
 
 const (
-	VerdictClean  Verdict = "CLEAN"
-	VerdictRisky  Verdict = "RISKY"
-	VerdictBroken Verdict = "BROKEN"
+	VerdictClean   Verdict = "CLEAN"
+	VerdictRisky   Verdict = "RISKY"
+	VerdictBroken  Verdict = "BROKEN"
 	VerdictUnknown Verdict = "UNKNOWN"
+)
+
+const (
+	// DiagnosticVersion identifies this deterministic, read-only projection.
+	DiagnosticVersion = "environment-projection-v2"
+	// ObservationModeProjected declares that no browser or runtime was launched.
+	ObservationModeProjected = "PROJECTED_METADATA_ONLY"
 )
 
 // Control is a single projected diagnostic check; note is a fixed label,
@@ -51,9 +58,11 @@ type Control struct {
 
 // Diagnostic is the projected, redacted result for one profile.
 type Diagnostic struct {
-	ProfileID string   `json:"profile_id"`
-	Verdict   Verdict  `json:"verdict"`
-	Controls  []Control `json:"controls"`
+	DiagnosticVersion string    `json:"diagnostic_version"`
+	ObservationMode   string    `json:"observation_mode"`
+	ProfileID         string    `json:"profile_id"`
+	Verdict           Verdict   `json:"verdict"`
+	Controls          []Control `json:"controls"`
 }
 
 var (
@@ -92,10 +101,13 @@ func Diagnose(ctx context.Context, chk Checker, id string) (*Diagnostic, error) 
 		controlProfileMetadata(),
 		controlRuntimeBinding(rt, chk, ctx),
 	}
+	controls = append(controls, declaredUnobservedCapabilities()...)
 	return &Diagnostic{
-		ProfileID: id,
-		Verdict:   aggregate(controls),
-		Controls:  controls,
+		DiagnosticVersion: DiagnosticVersion,
+		ObservationMode:   ObservationModeProjected,
+		ProfileID:         id,
+		Verdict:           aggregate(controls),
+		Controls:          controls,
 	}, nil
 }
 
@@ -131,6 +143,25 @@ func controlRuntimeBinding(rt string, chk Checker, ctx context.Context) Control 
 		return Control{Name: "runtime-bound", State: StateWarning, Note: "version unknown"}
 	}
 	return Control{Name: "runtime-bound", State: StatePass, Note: "qualified@" + ver}
+}
+
+// declaredUnobservedCapabilities makes the current coverage explicit. These
+// controls are deliberately not probed: observing them would require a real
+// runtime, which remains outside this local read-only diagnostic.
+func declaredUnobservedCapabilities() []Control {
+	return []Control{
+		{Name: "navigator", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "battery", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "network", State: StateUnsupported, Note: "network observation not implemented"},
+		{Name: "webrtc", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "storage-capabilities", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "plugins-mime", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "input-devices", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "rendering-apis", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "font-rendering", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "performance", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "permissions", State: StateUnsupported, Note: "runtime observation not implemented"},
+	}
 }
 
 func aggregate(controls []Control) Verdict {
