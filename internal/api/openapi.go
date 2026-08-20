@@ -9,6 +9,45 @@ import (
 // the locally supported API surface. Detailed payload schemas stay owned by
 // their handlers until a dedicated schema-authoring lot is opened.
 func (h *handler) openAPIV1(w http.ResponseWriter, _ *http.Request) {
+	capabilitySchema := map[string]any{
+		"type": "object",
+		"properties": map[string]any{
+			"name":  map[string]any{"type": "string"},
+			"state": map[string]any{"type": "string", "enum": []string{"SUPPORTED", "UNSUPPORTED"}},
+			"note":  map[string]any{"type": "string"},
+		},
+	}
+	environmentDataSchema := map[string]any{
+		"type": "object",
+		"properties": map[string]any{
+			"diagnostic_version": map[string]any{"type": "string", "example": "environment-projection-v2"},
+			"observation_mode":   map[string]any{"type": "string", "enum": []string{"PROJECTED_METADATA_ONLY"}},
+			"capabilities":       map[string]any{"type": "array", "items": capabilitySchema},
+		},
+	}
+	environmentResponseSchema := map[string]any{
+		"type":       "object",
+		"properties": map[string]any{"data": environmentDataSchema},
+	}
+	environmentDiagnosticPath := map[string]any{
+		"get": map[string]any{
+			"summary": "Read-only redacted environment diagnostic",
+			"parameters": []map[string]any{
+				{"name": "id", "in": "path", "required": true, "schema": map[string]any{"type": "string"}},
+			},
+			"responses": map[string]any{
+				"200": map[string]any{
+					"description": "Projected metadata only; unsupported browser-runtime controls are never executed",
+					"content": map[string]any{
+						"application/json": map[string]any{"schema": environmentResponseSchema},
+					},
+				},
+				"401": map[string]any{"description": "Missing or invalid bearer token"},
+				"404": map[string]any{"description": "Unknown profile"},
+			},
+		},
+	}
+
 	spec := map[string]any{
 		"openapi": "3.1.0",
 		"info": map[string]any{
@@ -23,14 +62,15 @@ func (h *handler) openAPIV1(w http.ResponseWriter, _ *http.Request) {
 			},
 		},
 		"paths": map[string]any{
-			"/api/v1/profiles":          map[string]any{"get": map[string]any{"summary": "List profiles"}, "post": map[string]any{"summary": "Create profile"}},
-			"/api/v1/profiles/{id}":     map[string]any{"get": map[string]any{"summary": "Get profile"}, "put": map[string]any{"summary": "Update profile"}, "delete": map[string]any{"summary": "Delete profile"}},
-			"/api/v1/groups":            map[string]any{"get": map[string]any{"summary": "List groups"}},
-			"/api/v1/runtimes":          map[string]any{"get": map[string]any{"summary": "List runtime projections"}},
-			"/api/v1/proxies":           map[string]any{"get": map[string]any{"summary": "List proxies"}, "post": map[string]any{"summary": "Create proxy"}},
-			"/api/v1/templates":         map[string]any{"get": map[string]any{"summary": "List templates"}, "post": map[string]any{"summary": "Create template"}},
-			"/api/v1/readonly/health":   map[string]any{"get": map[string]any{"summary": "Read-only health"}},
-			"/api/v1/readonly/profiles": map[string]any{"get": map[string]any{"summary": "Read-only profile projection"}},
+			"/api/v1/profiles":                  map[string]any{"get": map[string]any{"summary": "List profiles"}, "post": map[string]any{"summary": "Create profile"}},
+			"/api/v1/profiles/{id}":             map[string]any{"get": map[string]any{"summary": "Get profile"}, "put": map[string]any{"summary": "Update profile"}, "delete": map[string]any{"summary": "Delete profile"}},
+			"/api/v1/environment/profiles/{id}": environmentDiagnosticPath,
+			"/api/v1/groups":                    map[string]any{"get": map[string]any{"summary": "List groups"}},
+			"/api/v1/runtimes":                  map[string]any{"get": map[string]any{"summary": "List runtime projections"}},
+			"/api/v1/proxies":                   map[string]any{"get": map[string]any{"summary": "List proxies"}, "post": map[string]any{"summary": "Create proxy"}},
+			"/api/v1/templates":                 map[string]any{"get": map[string]any{"summary": "List templates"}, "post": map[string]any{"summary": "Create template"}},
+			"/api/v1/readonly/health":           map[string]any{"get": map[string]any{"summary": "Read-only health"}},
+			"/api/v1/readonly/profiles":         map[string]any{"get": map[string]any{"summary": "Read-only profile projection"}},
 		},
 	}
 	w.Header().Set("Content-Type", "application/json")

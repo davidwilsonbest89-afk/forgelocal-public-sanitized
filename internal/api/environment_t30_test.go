@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -79,6 +80,36 @@ func TestT30EnvironmentHTTPResponseIsVersionedAndRedacted(t *testing.T) {
 	for _, forbidden := range []string{"private-runtime-hash", "runtime-t30", "127.0.0.1", "canvas", "UserAgent", "binary_hash_sha256"} {
 		if strings.Contains(body, forbidden) {
 			t.Fatalf("response leaked %q: %s", forbidden, body)
+		}
+	}
+}
+
+func TestT30EnvironmentOpenAPIContractIsVersionedAndRedacted(t *testing.T) {
+	h := &handler{cfg: &config.Config{Version: "t30-openapi-test"}}
+	rec := httptest.NewRecorder()
+	h.openAPIV1(rec, httptest.NewRequest(http.MethodGet, "/api/v1/openapi.json", nil))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("openapi status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	var spec struct {
+		Paths map[string]json.RawMessage `json:"paths"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &spec); err != nil {
+		t.Fatal(err)
+	}
+	path, ok := spec.Paths["/api/v1/environment/profiles/{id}"]
+	if !ok {
+		t.Fatalf("T30 environment route absent from OpenAPI: %s", rec.Body.String())
+	}
+	contract := string(path)
+	for _, required := range []string{"diagnostic_version", "environment-projection-v2", "observation_mode", "PROJECTED_METADATA_ONLY", "UNSUPPORTED", "401", "404"} {
+		if !strings.Contains(contract, required) {
+			t.Fatalf("OpenAPI route contract missing %q: %s", required, contract)
+		}
+	}
+	for _, forbidden := range []string{"binary_hash_sha256", "user_agent", "canvas_value", "127.0.0.1"} {
+		if strings.Contains(contract, forbidden) {
+			t.Fatalf("OpenAPI route contract must stay redacted, found %q: %s", forbidden, contract)
 		}
 	}
 }
