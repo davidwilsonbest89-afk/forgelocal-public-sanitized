@@ -8,6 +8,8 @@ The internal French product reference is versioned separately from the public do
 
 Every future lot must begin with the mandatory [BASELINE_DISCOVERY policy](BASELINE_DISCOVERY_POLICY.md). It requires raw, timestamped verification of the qualified baseline before any code or product-state change.
 
+The authorized local continuation path through T26 is documented in the French [T00–T26 restart handover](T00_T26_RESTART_HANDOVER.md). It identifies the qualified code tag, the private evidence releases, the mandatory security gates and the replay procedure; the historical root README does not supersede that handover.
+
 ## Public Documentation
 
 These documents should remain understandable for international users:
