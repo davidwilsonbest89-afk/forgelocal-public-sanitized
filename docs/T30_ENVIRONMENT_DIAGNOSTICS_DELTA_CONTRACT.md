@@ -24,3 +24,5 @@ Les diagnostics observés Canvas/WebGL/Audio, WebRTC, géolocalisation, matérie
 ## Critères T30
 
 Le format de sortie est stable et machine-readable. Les contrôles non observés sont explicitement déclarés `UNSUPPORTED`. Les valeurs brutes ne sont pas retournées. Les IDs invalides et inconnus restent refusés comme dans T13. Les tests vérifient la version, le mode projeté, le nombre de capacités non supportées et l’absence de note dynamique.
+
+Un test HTTP authentifié vérifie également la réponse réelle : version de diagnostic, mode projeté, contrôles non supportés, refus sans bearer token et absence de hash runtime, identifiant runtime, adresse locale, valeur Canvas, User-Agent ou champ de hash binaire. Le replay global `go test -count=1 -race ./...` est fourni dans `scripts/run_t30_full_race_replay.sh`; il refuse de démarrer avec moins de 5 GiB disponibles et doit être exécuté dans un environnement spacieux avant approbation finale.
