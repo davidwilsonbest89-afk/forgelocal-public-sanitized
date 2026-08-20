@@ -1,0 +1,4 @@
+# Reconstruct the original T00-T23 package in lexical order:
+# cat forgelocal-continuation-t00-t23-20260819.zip.part.* > forgelocal-continuation-t00-t23-20260819.zip
+# Expected reconstructed SHA-256:
+0046e99e22ad1498a6307f4acd43d1cebbb7c317d47edee16329fc38b59b924d  forgelocal-continuation-t00-t23-20260819.zip
