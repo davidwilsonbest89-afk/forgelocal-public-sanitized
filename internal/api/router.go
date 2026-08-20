@@ -30,6 +30,7 @@ import (
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/profile"
 	"forgelocal/internal/proxies"
+	"forgelocal/internal/proxyprovider"
 	bfruntime "forgelocal/internal/runtime"
 	"forgelocal/internal/templates"
 )
@@ -80,6 +81,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if err != nil {
 		return nil, fmt.Errorf("open synthetic cookie fixture repository: %w", err)
 	}
+	proxyProviderStore, err := proxyprovider.Open(cfg.DataDir)
+	if err != nil {
+		return nil, fmt.Errorf("open simulated proxy provider catalogue: %w", err)
+	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -99,7 +104,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore, proxyProviderStore: proxyProviderStore}
 	if err := h.recoverPendingProfileHistory(context.Background()); err != nil {
 		return nil, fmt.Errorf("recover pending profile history: %w", err)
 	}
@@ -155,6 +160,9 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 			r.Delete("/api/proxies/{id}/assign", h.unassignProxy)
 			r.Delete("/api/proxies/{id}", h.deleteProxy)
 		}
+		r.Post("/api/proxy-providers", h.createProxyProvider)
+		r.Get("/api/proxy-providers", h.listProxyProviders)
+		r.Post("/api/proxy-providers/{id}/simulate-resolve", h.simulateProxyProviderResolve)
 
 		r.Post("/api/sessions", h.createSession)
 		r.Get("/api/sessions", h.listSessions)
@@ -219,6 +227,7 @@ type handler struct {
 	templateStore      *templates.Store
 	historyStore       *history.Store
 	cookieFixtureStore *cookies.Store
+	proxyProviderStore *proxyprovider.Store
 }
 
 // t13Checker projects environment diagnostics from stored metadata and the
