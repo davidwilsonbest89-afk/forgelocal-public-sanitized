@@ -1,23 +1,18 @@
 package api
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"forgelocal/internal/workflow"
 )
 
-func WorkflowHandler(engine *workflow.Engine) http.HandlerFunc {
+const WorkflowExecutionDisabledCode = "WORKFLOW_EXECUTION_DISABLED"
+
+func WorkflowHandler(_ *workflow.Engine) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var wf workflow.Workflow
-		if err := json.NewDecoder(r.Body).Decode(&wf); err != nil {
-			writeError(w, 400, "INVALID_BODY", err.Error())
-			return
-		}
-		if wf.Name == "" {
-			wf.Name = "unnamed"
-		}
-		results := engine.Execute(&wf)
-		writeJSON(w, 200, map[string]any{"data": results})
+		// CR-02: workflows remain intentionally unavailable until a separately
+		// authorized, loopback-only execution contract exists. Refuse before
+		// body decoding so an unauthorised payload cannot trigger parsing work.
+		writeError(w, http.StatusGone, WorkflowExecutionDisabledCode, "workflow execution is disabled by T27-R1 policy")
 	}
 }

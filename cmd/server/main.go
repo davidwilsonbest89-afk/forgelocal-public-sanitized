@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"net"
 	"net/http"
 	"os"
 	"os/exec"
@@ -30,7 +31,6 @@ import (
 	"forgelocal/internal/proxies"
 	bfrt "forgelocal/internal/runtime"
 	"forgelocal/internal/secrets"
-	"forgelocal/internal/workflow"
 )
 
 var Version = "dev"
@@ -157,16 +157,6 @@ func runServer(flags *serveFlags) {
 		exitServerError(flags, "Group store error: %v", err)
 	}
 
-	// Docker auto-detection
-	if isDocker() {
-		if cfg.Host == "127.0.0.1" {
-			cfg.Host = "0.0.0.0"
-		}
-		if !cfg.NoSandbox {
-			cfg.NoSandbox = true
-		}
-	}
-
 	// CLI flags override config
 	if flags != nil {
 		if flags.host != "" {
@@ -191,6 +181,11 @@ func runServer(flags *serveFlags) {
 			}
 		}
 	}
+	loopbackHost, err := loopbackBindHost(cfg.Host)
+	if err != nil {
+		exitServerError(flags, "%v", err)
+	}
+	cfg.Host = loopbackHost
 
 	// Setup logger (stdout in Docker, file otherwise)
 	if isDocker() {
@@ -414,20 +409,19 @@ func runServer(flags *serveFlags) {
 		defer sessionPool.CloseAll()
 	}
 
-	// Workflow engine
-	wfEngine := workflow.NewEngine("http://127.0.0.1:"+cfg.Port, cfg.APIToken)
-	router.Post("/api/workflow/run", api.WorkflowHandler(wfEngine))
+	// CR-02: retain an explicit disabled response rather than an unguarded
+	// workflow executor. The handler performs no body parsing or execution.
+	router.Post("/api/workflow/run", api.WorkflowHandler(nil))
 
 	// MCP Server (same HTTP service port, integrated with the main router)
 	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, cfg.APIToken, cfg.Version, groupStore)
-	mcpServer.SetWorkflowEngine(wfEngine)
 	mcpServer.SetPublicBaseURL(cfg.PublicBaseURL)
 	mcpServer.SetScreenshotArtifactDir(filepath.Join(cfg.DataDir, "screenshots"))
 	router.Post("/mcp", mcpServer.ServeHTTP)
 	router.Get("/api/screenshots/{id}", mcpServer.ServeScreenshotArtifact)
 
 	// HTTP Server with error channel (no os.Exit in goroutine)
-	srv := &http.Server{Addr: cfg.Host + ":" + cfg.Port, Handler: router}
+	srv := &http.Server{Addr: net.JoinHostPort(cfg.Host, cfg.Port), Handler: router}
 	serverErr := make(chan error, 1)
 
 	go func() {
@@ -507,6 +501,15 @@ func existingRuntimeBinaryPath(path string) string {
 		return ""
 	}
 	return path
+}
+
+func loopbackBindHost(raw string) (string, error) {
+	host := strings.TrimSpace(raw)
+	ip := net.ParseIP(host)
+	if ip == nil || !ip.IsLoopback() {
+		return "", fmt.Errorf("LOOPBACK_BIND_REQUIRED: host %q is not a literal loopback address", host)
+	}
+	return ip.String(), nil
 }
 
 func envBool(name string) bool {

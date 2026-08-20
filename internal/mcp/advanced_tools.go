@@ -281,18 +281,9 @@ func (s *Server) toolSetCookies(args map[string]any) (any, *mcpError) {
 }
 
 func (s *Server) toolRunWorkflow(args map[string]any) (any, *mcpError) {
-	if s.workflow == nil {
-		return nil, newError(-32000, "workflow engine is not available in this MCP mode")
-	}
-	wf, err := parseWorkflowArgs(args)
-	if err != nil {
-		return nil, newError(-32602, err.Error())
-	}
-	results := s.workflow.Execute(wf)
-	res := textResult(mustJSON(results))
-	res["results"] = results
-	res["workflow"] = wf.Name
-	return res, nil
+	// CR-02: keep the implementation present for controlled future work, but
+	// deny before parsing YAML/JSON or reaching the workflow engine.
+	return nil, newError(-32601, "WORKFLOW_EXECUTION_DISABLED")
 }
 
 func parseWorkflowArgs(args map[string]any) (*workflow.Workflow, error) {

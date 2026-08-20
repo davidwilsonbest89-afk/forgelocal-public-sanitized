@@ -171,7 +171,14 @@ func (s *Server) handleInitialize(params json.RawMessage) any {
 }
 
 func (s *Server) handleToolsList() any {
-	return map[string]any{"tools": tools}
+	filtered := make([]map[string]any, 0, len(tools)-1)
+	for _, tool := range tools {
+		if name, _ := tool["name"].(string); name == "run_workflow" {
+			continue
+		}
+		filtered = append(filtered, tool)
+	}
+	return map[string]any{"tools": filtered}
 }
 
 func (s *Server) handleToolsCall(params json.RawMessage, r *http.Request) (any, *mcpError) {

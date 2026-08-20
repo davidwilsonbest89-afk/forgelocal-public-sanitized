@@ -117,10 +117,6 @@ var tools = []map[string]any{
 		"session_id": prop("string", "Agent session ID whose profile context should receive cookies."),
 		"cookies":    prop("array", "Playwright OptionalCookie array."),
 	}, []string{"cookies"}),
-	toolWithRequired("run_workflow", "Execute a BrowseForge workflow for repeatable multi-step automation. Prefer this for known procedures instead of many ad hoc tool calls.", map[string]any{
-		"workflow": prop("object", "Workflow object: {name, steps}."),
-		"yaml":     prop("string", "Workflow YAML string. Ignored when workflow object is provided."),
-	}, []string{}),
 	toolWithRequired("form_fill", "Fill multiple form fields with humanized typing. Prefer this over repeated type_text calls for forms; use wait_for before and after submit.", map[string]any{
 		"profile_id": prop("string", "Profile ID for the active profile page. Provide either profile_id or session_id."),
 		"session_id": prop("string", "Agent session ID for an isolated agent page. Provide either profile_id or session_id."),
