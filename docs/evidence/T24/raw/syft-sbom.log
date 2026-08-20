@@ -1,7 +1,0 @@
-started_utc=2026-08-20T02:15:39Z
-cwd=/home/ubuntu/forgelocal-t24-work
-commit=d811a5c71e4b9398e358f4469408a1917b608a3d
-command=syft dir:. -o cyclonedx-json=docs/evidence/T24/raw/t24-sbom.cdx.json
-[0;90m[0003][0m [0;33m WARN[0m no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
-exit_code=0
-completed_utc=2026-08-20T02:16:06Z

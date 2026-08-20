@@ -1,6 +1,0 @@
-started_utc=2026-08-20T02:14:00Z
-cwd=/home/ubuntu/forgelocal-t24-work
-commit=d811a5c71e4b9398e358f4469408a1917b608a3d
-command=go vet ./...
-exit_code=0
-completed_utc=2026-08-20T02:14:01Z
