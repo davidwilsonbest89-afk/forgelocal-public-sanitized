@@ -889,6 +889,57 @@ func (s *Store) RemoveProfileTag(id string, tag string) error {
 	return nil
 }
 
+// SetProfileGroup assigns or clears a non-sensitive profile group. Group
+// existence belongs to the API layer, which owns the groups store; this method
+// preserves the profile store's active-state, per-profile isolation and durable
+// persistence contract.
+func (s *Store) SetProfileGroup(id, group string) (*Profile, bool, error) {
+	if group != "" && !validName(group) {
+		return nil, false, ErrInvalidGroup
+	}
+	s.mu.RLock()
+	p, ok := s.profiles[id]
+	if !ok {
+		s.mu.RUnlock()
+		return nil, false, ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		s.mu.RUnlock()
+		return nil, false, ErrNotArchived
+	}
+	s.mu.RUnlock()
+
+	unlock, err := s.WithProfile(id, perProfileIsolationBudget)
+	if err != nil {
+		return nil, false, err
+	}
+	defer unlock()
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok = s.profiles[id]
+	if !ok {
+		return nil, false, ErrNotFound
+	}
+	if p.LifecycleState != LifecycleActive {
+		return nil, false, ErrNotArchived
+	}
+	if p.Group == group {
+		return p, false, nil
+	}
+	tmp := *p
+	tmp.Group = group
+	action := "group_set"
+	if group == "" {
+		action = "group_clear"
+	}
+	if err := s.save(&tmp, action); err != nil {
+		return nil, false, err
+	}
+	s.profiles[id] = &tmp
+	return &tmp, true, nil
+}
+
 func removeTag(tags []string, tag string) []string {
 	kept := make([]string, 0, len(tags))
 	for _, t := range tags {

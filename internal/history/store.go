@@ -427,19 +427,34 @@ func diffValue(path string, left, right any, paths *[]string) {
 	rm, rok := right.(map[string]any)
 	if lok && rok {
 		keys := make(map[string]struct{}, len(lm)+len(rm))
-		for key := range lm { keys[key] = struct{}{} }
-		for key := range rm { keys[key] = struct{}{} }
+		for key := range lm {
+			keys[key] = struct{}{}
+		}
+		for key := range rm {
+			keys[key] = struct{}{}
+		}
 		for key := range keys {
 			next := key
-			if path != "" { next = path + "." + key }
+			if path != "" {
+				next = path + "." + key
+			}
 			diffValue(next, lm[key], rm[key], paths)
 		}
 		return
 	}
-	if path != "" { *paths = append(*paths, path) }
+	if path != "" {
+		*paths = append(*paths, path)
+	}
 }
 
 func validPage(limit, offset int) bool { return limit >= 1 && limit <= 100 && offset >= 0 }
-func validAction(action string) bool { return action == "create" || action == "update" || action == "metadata" || action == "archive" || action == "reopen" || action == "tag_add" || action == "tag_remove" || action == "recovery" }
-func now() time.Time { return time.Now().UTC().Truncate(time.Microsecond) }
+func validAction(action string) bool {
+	switch action {
+	case "create", "update", "metadata", "archive", "reopen", "tag_add", "tag_remove", "group_set", "group_clear", "recovery":
+		return true
+	default:
+		return false
+	}
+}
+func now() time.Time    { return time.Now().UTC().Truncate(time.Microsecond) }
 func timestamp() string { return now().Format(time.RFC3339Nano) }
