@@ -5,10 +5,10 @@ go 1.25.0
 toolchain go1.25.13
 
 require (
-	github.com/go-chi/chi/v5 v5.1.0
+	github.com/go-chi/chi/v5 v5.3.1
 	github.com/mxschmitt/playwright-go v0.6100.0
 	github.com/zalando/go-keyring v0.2.8
-	golang.org/x/net v0.53.0
+	golang.org/x/net v0.58.0
 	gopkg.in/yaml.v3 v3.0.1
 	modernc.org/sqlite v1.56.0
 )
