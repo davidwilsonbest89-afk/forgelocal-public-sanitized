@@ -8,6 +8,8 @@ The internal French product reference is versioned separately from the public do
 
 Every future lot must begin with the mandatory [BASELINE_DISCOVERY policy](BASELINE_DISCOVERY_POLICY.md). It requires raw, timestamped verification of the qualified baseline before any code or product-state change.
 
+The corrective execution gate for CR-01 through CR-09 is [T27-R1 corrective execution contract](T27_R1_CORRECTIVE_EXECUTION_CONTRACT.md). No corrective implementation may begin until its baseline and toolchain conditions are satisfied.
+
 ## Public Documentation
 
 These documents should remain understandable for international users:

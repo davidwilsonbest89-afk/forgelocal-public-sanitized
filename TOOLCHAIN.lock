@@ -1,0 +1,17 @@
+# ForgeLocal T27-R1 normative toolchain lock
+# Generated from BASELINE_DISCOVERY T26 on 2026-08-20 UTC.
+# Executable paths are part of the qualification; do not substitute a version silently.
+go.path=/usr/local/go/bin/go
+go.version=go1.25.3 linux/amd64
+node.version=v22.13.0
+pnpm.version=10.4.1
+playwright.package=@playwright/test@1.55.0
+typescript.package=typescript@5.6.3
+gitleaks.version=8.18.4
+trivy.version=0.74.0
+osv-scanner.version=2.0.3
+syft.version=1.51.0
+gosec.path=/home/ubuntu/forgelocal-tools/bin/gosec
+gosec.version=dev
+staticcheck.version=2025.1.1
+govulncheck.version=1.1.4

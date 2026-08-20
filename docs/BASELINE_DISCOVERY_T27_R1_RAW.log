@@ -1,0 +1,96 @@
+started_utc=2026-08-20T09:34:03Z
+cwd=/home/ubuntu
+bundle=/home/ubuntu/forgelocal-t26-canonical/forgelocal-core-t26-simulated-provider-930003c.bundle
+sidecar=/home/ubuntu/forgelocal-t26-canonical/forgelocal-core-t26-simulated-provider-930003c.bundle.sha256
+--- disk ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G   39G  1.3G  97% /
+--- sidecar ---
+forgelocal-core-t26-simulated-provider-930003c.bundle: OK
+--- bundle verify ---
+/home/ubuntu/forgelocal-t26-canonical/forgelocal-core-t26-simulated-provider-930003c.bundle is okay
+The bundle contains these 12 refs:
+a7d3c6afe1627d23f6d4d990f4ab7e00186b780d refs/tags/baseline-discovery-policy-2026-08-20
+9a0245aa92710df892e0ea1d81200ee70527684e refs/tags/t22-consistency-and-tests-2026-08-19
+d25007fc53ff63274e19666d47fac5a998939fbf refs/tags/t22-consistency-and-tests-final-2026-08-19
+1de858733eff65ba5112c3ca74ac9ffd04811494 refs/tags/t22-pending-operation-correction-2026-08-19
+48988552720b1461cf503dc3b4e4822b831a19ff refs/tags/t22-profile-history-2026-08-19
+89cae50a1e1694df80a3e5c66c87dcddfe0ed1c8 refs/tags/t23-archive-restore-2026-08-19
+e54e18a4a616207a3d47984c1a420a84354d8436 refs/tags/t23-scope-and-evidence-correction-2026-08-19
+436eebd4937352476c9e4c44a13b536c48d0c048 refs/tags/t24-bulk-operations-2026-08-20
+f77fd0bb02993854eec9ecf05fda9788546860ec refs/tags/t24-sr-dependency-remediation-2026-08-20
+f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7 refs/tags/t25-synthetic-cookie-fixtures-2026-08-20
+3ebcf55fcab7ab10e34ffea652f2398e07e299da refs/tags/t26-simulated-proxy-provider-2026-08-20
+930003ca95a934fd996c94ae897693ffb6be21fb HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+--- clone ---
+Cloning into '/home/ubuntu/forgelocal-t27-r1-work'...
+Note: switching to '930003ca95a934fd996c94ae897693ffb6be21fb'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 930003c feat(t26): add simulated local proxy provider catalogue
+head=930003ca95a934fd996c94ae897693ffb6be21fb
+--- toolchain ---
+go version go1.25.13 linux/amd64
+v22.13.0
+11.21.0
+Need to install the following packages:
+playwright@1.62.1
+Ok to proceed? (y) --- recovery_after_interactive_playwright_prompt ---
+started_utc=2026-08-20T09:42:51Z
+cwd=/home/ubuntu/forgelocal-t27-r1-work
+--- toolchain_noninteractive ---
+go version go1.25.3 linux/amd64
+v22.13.0
+10.4.1
+8.18.4
+Version: 0.74.0
+osv-scanner version: 2.0.3
+commit: n/a
+built at: n/a
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+Version: dev
+Git tag: 
+Build date: 
+staticcheck 2025.1.1 (0.6.1)
+Go: go1.25.3
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-19 17:06:06 +0000 UTC
+
+No vulnerabilities found.
+--- locked_frontend_tooling ---
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/package.json:    "@playwright/test": "1.55.0",
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:      '@playwright/test':
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:  '@playwright/test@1.55.0':
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:  playwright@1.55.0:
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:  typescript@5.6.3:
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:  '@playwright/test@1.55.0':
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:  playwright@1.55.0:
+/home/ubuntu/forgelocal-t27-r1-work/forge-dashboard/pnpm-lock.yaml:  typescript@5.6.3: {}
+playwright_status=NOT_INSTALLED_IN_BASELINE_CLONE
+exit_code=0
+completed_utc=2026-08-20T09:42:56Z
