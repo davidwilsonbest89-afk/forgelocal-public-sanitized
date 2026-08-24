@@ -43,3 +43,5 @@ Les archives originales, les copies de correction et les archives rejetées pour
 - **Décision :** `T00_T42_PREHUMAN_VALIDATION_DELIVERED_PENDING_INDEPENDENT_REVIEW`
 
 Cette livraison fige la chaîne de preuve pour revue humaine. Elle ne constitue ni une release, ni une autorisation produit, ni une levée de gate. Les statuts T28, T29, T39, T40, T41 et T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`; T31–T38 restent `APPROVED_VERIFIABLE_LOCAL_WITH_POSTHOC_BASELINE_RECONSTRUCTION`.
+
+Le journal brut de conservation ZIP/bundle est inclus dans le commit de livraison `cd6a95c66c029adf2140784491b06b8d9bf64fce`, qui est le head publié de la branche au moment du gel. Le bundle delta requiert explicitement la baseline ; le clone standalone sans baseline est conservé comme sortie attendue, tandis que la réhydratation seeded avec la baseline et le `git fsck --full` ont réussi.
