@@ -1,0 +1,642 @@
+
+===== versions =====
+start_utc=2026-08-24T15:56:35Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=bash -c go\ version\;\ node\ --version\;\ pnpm\ --version\;\ git\ lfs\ version\;\ /home/ubuntu/bin/gitleaks\ version\;\ gosec\ -version\;\ staticcheck\ -version\;\ govulncheck\ -version
+----- raw output -----
+go version go1.25.13 linux/amd64
+v22.13.0
+10.4.1
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+8.18.4
+Version: dev
+Git tag: 
+Build date: 
+staticcheck 2025.1.1 (0.6.1)
+Go: go1.25.13
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== master_manifest_check =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=sha256sum -c SHA256SUMS
+----- raw output -----
+./CONTENTS.txt: OK
+./README_T30_MASTER_HANDOVER.md: OK
+./archive_r1/BASELINE_DISCOVERY_GITHUB_TAG_CORRECTION_RAW.log: OK
+./archive_r1/BASELINE_DISCOVERY_RAW.log: OK
+./archive_r1/BASELINE_DISCOVERY_WORKTREE_CORRECTION_RAW.log: OK
+./archive_r1/BASELINE_DISCOVERY_WORKTREE_RAW.log: OK
+./archive_r1/T30_DELIVERY.md: OK
+./archive_r1/T30_EVIDENCE_EXTRACTION_GITLEAKS.json: OK
+./archive_r1/T30_EVIDENCE_PRESERVATION_CORRECTION_RAW.log: OK
+./archive_r1/T30_EVIDENCE_PRESERVATION_RAW.log: OK
+./archive_r1/T30_MASTER_HANDOVER_INVENTORY_RAW.log: OK
+./archive_r1/bundle/forgelocal-t30-environment-4f415eb.delta.bundle: OK
+./archive_r1/bundle/forgelocal-t30-environment-4f415eb.delta.bundle.sha256: OK
+./archive_r1/forgelocal-t30-environment-evidence-4f415eb.zip: OK
+./archive_r1/forgelocal-t30-environment-evidence-4f415eb.zip.sha256: OK
+./archive_r1/qualification/T30_DELTA_SECURITY_RAW.log: OK
+./archive_r1/qualification/T30_FRESH_BUNDLE_VERIFY_RAW.log: OK
+./archive_r1/qualification/T30_GITLEAKS_DELTA.json: OK
+./archive_r1/qualification/T30_GOSEC_ENVIRONMENT.json: OK
+./archive_r1/qualification/T30_GO_QUALIFICATION_RAW.log: OK
+./archive_r2/T30_R2_DELIVERY.md: OK
+./archive_r2/T30_R2_EVIDENCE_GITLEAKS.json: OK
+./archive_r2/T30_R2_EVIDENCE_MANIFEST_CORRECTION_RAW.log: OK
+./archive_r2/T30_R2_EVIDENCE_PRESERVATION_RAW.log: OK
+./archive_r2/T30_R2_FINAL_COMPLETENESS_AUDIT_RAW.log: OK
+./archive_r2/T30_R2_FRESH_BUNDLE_VERIFY_FINAL_RAW.log: OK
+./archive_r2/T30_R2_FRESH_BUNDLE_VERIFY_RAW.log: OK
+./archive_r2/T30_R2_FULL_QUALIFICATION_RAW.log: OK
+./archive_r2/T30_R2_GITLEAKS_DELTA.json: OK
+./archive_r2/T30_R2_GOSEC.json: OK
+./archive_r2/T30_R2_TARGETED_QUALIFICATION_RAW.log: OK
+./archive_r2/bundle/forgelocal-t30-environment-5d100a0.delta.bundle: OK
+./archive_r2/bundle/forgelocal-t30-environment-5d100a0.delta.bundle.sha256: OK
+./archive_r2/forgelocal-t30-environment-evidence-5d100a0-r2.zip: OK
+./archive_r2/forgelocal-t30-environment-evidence-5d100a0-r2.zip.sha256: OK
+./archive_r3/T30_FINAL_QUALIFICATION_RAW.log: OK
+./archive_r3/T30_FULL_RACE_GUARD_HEAD_RAW.log: OK
+./archive_r3/T30_GITLEAKS_IMMUTABLE_RANGE.json: OK
+./archive_r3/T30_GITLEAKS_SOURCE_DELTA.json: OK
+./archive_r3/T30_GOSEC_BASELINE.json: OK
+./archive_r3/T30_GOSEC_BASELINE.normalized.txt: OK
+./archive_r3/T30_GOSEC_BASELINE_HEAD_DIFFERENTIAL_FINAL_RAW.log: OK
+./archive_r3/T30_GOSEC_HEAD.json: OK
+./archive_r3/T30_GOSEC_HEAD.normalized.txt: OK
+./archive_r3/T30_GOSEC_NEW_FINDINGS.txt: OK
+./archive_r3/T30_OPENAPI_CONTRACT_TEST_RAW.log: OK
+./archive_r3/T30_R3_CONSOLIDATED_DELIVERY.md: OK
+./archive_r3/T30_R3_EVIDENCE_GITLEAKS.json: OK
+./archive_r3/T30_R3_EVIDENCE_PRESERVATION_RAW.log: OK
+./archive_r3/T30_R3_FRESH_BUNDLE_VERIFY_RAW.log: OK
+./archive_r3/T30_R3_GUARD_KIT_REFRESH_RAW.log: OK
+./archive_r3/T30_TARGETED_RACE_HEAD_RAW.log: OK
+./archive_r3/baseline/BASELINE_DISCOVERY_GITHUB_TAG_CORRECTION_RAW.log: OK
+./archive_r3/baseline/BASELINE_DISCOVERY_RAW.log: OK
+./archive_r3/baseline/BASELINE_DISCOVERY_WORKTREE_CORRECTION_RAW.log: OK
+./archive_r3/baseline/BASELINE_DISCOVERY_WORKTREE_RAW.log: OK
+./archive_r3/bundle/forgelocal-t30-environment-cbf3a50.delta.bundle: OK
+./archive_r3/bundle/forgelocal-t30-environment-cbf3a50.delta.bundle.sha256: OK
+./archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip: OK
+./archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip.sha256: OK
+./final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle: OK
+./final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle.sha256: OK
+./source_snapshot/docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md: OK
+./source_snapshot/internal/api/environment_t30_test.go: OK
+./source_snapshot/internal/api/openapi.go: OK
+./source_snapshot/internal/environment/environment.go: OK
+./source_snapshot/internal/environment/environment_test.go: OK
+./source_snapshot/scripts/run_t30_full_race_replay.sh: OK
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== r3_zip_sidecar =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=bash -c cd\ archive_r3\ \&\&\ sha256sum\ -c\ forgelocal-t30-environment-evidence-cbf3a50-r3.zip.sha256
+----- raw output -----
+forgelocal-t30-environment-evidence-cbf3a50-r3.zip: OK
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== r3_zip_test =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=unzip -t archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip
+----- raw output -----
+Archive:  archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip
+    testing: T30_R3_CONSOLIDATED_DELIVERY.md   OK
+    testing: T30_FINAL_QUALIFICATION_RAW.log   OK
+    testing: T30_TARGETED_RACE_HEAD_RAW.log   OK
+    testing: T30_FULL_RACE_GUARD_HEAD_RAW.log   OK
+    testing: T30_OPENAPI_CONTRACT_TEST_RAW.log   OK
+    testing: T30_GOSEC_BASELINE_HEAD_DIFFERENTIAL_FINAL_RAW.log   OK
+    testing: T30_GOSEC_BASELINE.json   OK
+    testing: T30_GOSEC_HEAD.json      OK
+    testing: T30_GOSEC_BASELINE.normalized.txt   OK
+    testing: T30_GOSEC_HEAD.normalized.txt   OK
+    testing: T30_GOSEC_NEW_FINDINGS.txt   OK
+    testing: T30_GITLEAKS_IMMUTABLE_RANGE.json   OK
+    testing: T30_GITLEAKS_SOURCE_DELTA.json   OK
+    testing: T30_R3_FRESH_BUNDLE_VERIFY_RAW.log   OK
+    testing: T30_R3_EVIDENCE_GITLEAKS.json   OK
+    testing: SHA256SUMS               OK
+    testing: baseline/BASELINE_DISCOVERY_RAW.log   OK
+    testing: baseline/BASELINE_DISCOVERY_GITHUB_TAG_CORRECTION_RAW.log   OK
+    testing: baseline/BASELINE_DISCOVERY_WORKTREE_RAW.log   OK
+    testing: baseline/BASELINE_DISCOVERY_WORKTREE_CORRECTION_RAW.log   OK
+    testing: bundle/forgelocal-t30-environment-cbf3a50.delta.bundle   OK
+    testing: bundle/forgelocal-t30-environment-cbf3a50.delta.bundle.sha256   OK
+No errors detected in compressed data of archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip.
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== final_bundle_sidecar =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=bash -c cd\ final_bundle\ \&\&\ sha256sum\ -c\ forgelocal-t30-environment-cbf3a50.delta.bundle.sha256
+----- raw output -----
+forgelocal-t30-environment-cbf3a50.delta.bundle: OK
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== final_bundle_hash =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=sha256sum final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle
+----- raw output -----
+c4f514ffe4bc24c3adfefff3cfb3a6b07db4a4e19c4c764c16bc9a395c867f14  final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== bundle_verify_with_baseline =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle
+----- raw output -----
+/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle is okay
+The bundle contains this ref:
+cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb HEAD
+The bundle requires this ref:
+69411e65c880d168832a65fc8475cc97d562a9ad 
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== bundle_listing =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=git bundle list-heads final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle
+----- raw output -----
+cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb HEAD
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== bundle_head_discovered =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=printf %s\\n cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb
+----- raw output -----
+cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== source_snapshot_manifest =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=python3 - /home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/SHA256SUMS
+----- raw output -----
+SOURCE_SNAPSHOT_HASHES_OK
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== fresh_clone =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=git clone -q --no-checkout /home/ubuntu/forgelocal /home/ubuntu/t30-master-independent-validation-20260824/clone
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== fresh_baseline_checkout =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git checkout -q --detach t00-t27-complete-20260820
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== fresh_baseline_ref =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+69411e65c880d168832a65fc8475cc97d562a9ad
+----- end raw output -----
+end_utc=2026-08-24T15:56:41Z
+exit_code=0
+
+===== fresh_baseline_fsck =====
+start_utc=2026-08-24T15:56:41Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:56:43Z
+exit_code=0
+
+===== baseline_gosec =====
+start_utc=2026-08-24T15:56:43Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ gosec\ -fmt=json\ -out=/home/ubuntu/t30-master-independent-validation-20260824/T30_GOSEC_BASELINE.json\ ./internal/api\ ./internal/environment
+----- raw output -----
+[gosec] 2026/08/24 15:56:43 Including rules: default
+[gosec] 2026/08/24 15:56:43 Excluding rules: default
+[gosec] 2026/08/24 15:56:43 Including analyzers: default
+[gosec] 2026/08/24 15:56:43 Excluding analyzers: default
+[gosec] 2026/08/24 15:56:43 Import directory: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api
+[gosec] 2026/08/24 15:56:43 Import directory: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/environment
+[gosec] 2026/08/24 15:56:43 Checking package: environment
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/environment/environment.go
+[gosec] 2026/08/24 15:56:43 Checking package: api
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/artifacts.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/audit.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/backup.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/backup_v1.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/cookie_fixtures.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/correlation.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/dashboard.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/groups.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/localsession.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/openapi.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/profile_history.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/profiles_bulk.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/profiles_write.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/proxies.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/proxy_providers.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/readonly.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/readonly_session.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/router.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/sessions.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/templates.go
+[gosec] 2026/08/24 15:56:43 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/workflow.go
+----- end raw output -----
+end_utc=2026-08-24T15:56:43Z
+exit_code=1
+
+===== bundle_fetch =====
+start_utc=2026-08-24T15:56:43Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git fetch -q /home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb:refs/remotes/t30/delivery
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:43Z
+exit_code=0
+
+===== delivery_checkout =====
+start_utc=2026-08-24T15:56:43Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git checkout -q --detach cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:44Z
+exit_code=0
+
+===== delivery_ref =====
+start_utc=2026-08-24T15:56:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb
+----- end raw output -----
+end_utc=2026-08-24T15:56:44Z
+exit_code=0
+
+===== parent_check =====
+start_utc=2026-08-24T15:56:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git rev-parse HEAD\^1
+----- raw output -----
+5d100a0d0a8f51f4a99bb02a995ab18e32c25889
+----- end raw output -----
+end_utc=2026-08-24T15:56:44Z
+exit_code=0
+
+===== diff_check =====
+start_utc=2026-08-24T15:56:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git diff --check t00-t27-complete-20260820..HEAD
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:44Z
+exit_code=0
+
+===== diff_stat =====
+start_utc=2026-08-24T15:56:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git diff --stat t00-t27-complete-20260820..HEAD
+----- raw output -----
+ docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md |  28 [32m+++++[m
+ internal/api/environment_t30_test.go               | 115 [32m+++++++++++++++++++++[m
+ internal/api/openapi.go                            |  56 [32m++++++++[m[31m--[m
+ internal/environment/environment.go                |  57 [32m+++++++[m[31m---[m
+ internal/environment/environment_test.go           |  38 [32m++++++[m[31m-[m
+ scripts/run_t30_full_race_replay.sh                |  29 [32m++++++[m
+ 6 files changed, 300 insertions(+), 23 deletions(-)
+----- end raw output -----
+end_utc=2026-08-24T15:56:44Z
+exit_code=0
+
+===== changed_paths =====
+start_utc=2026-08-24T15:56:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git diff --name-status t00-t27-complete-20260820..HEAD
+----- raw output -----
+A	docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md
+A	internal/api/environment_t30_test.go
+M	internal/api/openapi.go
+M	internal/environment/environment.go
+M	internal/environment/environment_test.go
+A	scripts/run_t30_full_race_replay.sh
+----- end raw output -----
+end_utc=2026-08-24T15:56:44Z
+exit_code=0
+
+===== delivery_fsck =====
+start_utc=2026-08-24T15:56:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:56:45Z
+exit_code=0
+
+===== gitleaks_diff_pipe =====
+start_utc=2026-08-24T15:56:45Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c git\ diff\ --binary\ t00-t27-complete-20260820..HEAD\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ /home/ubuntu/t30-master-independent-validation-20260824/T30_GITLEAKS_DIFF_PIPE.json
+----- raw output -----
+[90m3:56PM[0m [32mINF[0m scan completed in 7.8ms
+[90m3:56PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:56:45Z
+exit_code=0
+
+===== gitleaks_full_detect =====
+start_utc=2026-08-24T15:56:45Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=/home/ubuntu/bin/gitleaks detect --no-banner --redact --source . --report-format json --report-path /home/ubuntu/t30-master-independent-validation-20260824/T30_GITLEAKS_FULL.json
+----- raw output -----
+[90m3:56PM[0m [32mINF[0m 0 commits scanned.
+[90m3:56PM[0m [32mINF[0m scan completed in 1.29s
+[90m3:56PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:56:47Z
+exit_code=0
+
+===== head_gosec =====
+start_utc=2026-08-24T15:56:47Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ gosec\ -fmt=json\ -out=/home/ubuntu/t30-master-independent-validation-20260824/T30_GOSEC_HEAD.json\ ./internal/api\ ./internal/environment
+----- raw output -----
+[gosec] 2026/08/24 15:56:47 Including rules: default
+[gosec] 2026/08/24 15:56:47 Excluding rules: default
+[gosec] 2026/08/24 15:56:47 Including analyzers: default
+[gosec] 2026/08/24 15:56:47 Excluding analyzers: default
+[gosec] 2026/08/24 15:56:47 Import directory: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api
+[gosec] 2026/08/24 15:56:47 Import directory: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/environment
+[gosec] 2026/08/24 15:56:47 Checking package: environment
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/environment/environment.go
+[gosec] 2026/08/24 15:56:47 Checking package: api
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/artifacts.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/audit.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/backup.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/backup_v1.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/cookie_fixtures.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/correlation.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/dashboard.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/groups.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/localsession.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/openapi.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/profile_history.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/profiles_bulk.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/profiles_write.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/proxies.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/proxy_providers.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/readonly.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/readonly_session.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/router.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/sessions.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/templates.go
+[gosec] 2026/08/24 15:56:47 Checking file: /home/ubuntu/t30-master-independent-validation-20260824/clone/internal/api/workflow.go
+----- end raw output -----
+end_utc=2026-08-24T15:56:47Z
+exit_code=1
+
+===== go_test =====
+start_utc=2026-08-24T15:56:47Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ test\ -count=1\ -race\ ./...
+----- raw output -----
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.145s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.354s
+ok  	forgelocal/internal/backup	2.731s
+ok  	forgelocal/internal/browser	7.255s
+ok  	forgelocal/internal/config	1.015s
+ok  	forgelocal/internal/cookies	1.013s
+ok  	forgelocal/internal/environment	1.013s
+ok  	forgelocal/internal/fingerprint	1.015s
+ok  	forgelocal/internal/groups	1.019s
+ok  	forgelocal/internal/history	1.192s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.779s
+ok  	forgelocal/internal/localvault	1.080s
+ok  	forgelocal/internal/mcp	1.031s
+ok  	forgelocal/internal/productschema	1.843s
+ok  	forgelocal/internal/profile	1.135s
+ok  	forgelocal/internal/profilemigration	2.751s
+ok  	forgelocal/internal/proxies	1.088s
+ok  	forgelocal/internal/proxyprovider	1.014s
+ok  	forgelocal/internal/runtime	1.259s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	3.253s
+ok  	forgelocal/internal/templates	1.351s
+ok  	forgelocal/internal/workflow	1.023s
+----- end raw output -----
+end_utc=2026-08-24T15:56:57Z
+exit_code=0
+
+===== go_vet =====
+start_utc=2026-08-24T15:56:57Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ vet\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:58Z
+exit_code=0
+
+===== go_build =====
+start_utc=2026-08-24T15:56:58Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ build\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:56:59Z
+exit_code=0
+
+===== supplied_full_race_script =====
+start_utc=2026-08-24T15:56:59Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=bash -c cp\ /home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/source_snapshot/scripts/run_t30_full_race_replay.sh\ ./run_t30_full_race_replay.sh\;\ chmod\ +x\ ./run_t30_full_race_replay.sh\;\ CGO_ENABLED=1\ ./run_t30_full_race_replay.sh
+----- raw output -----
+started_utc=2026-08-24T15:56:59Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+git_head=cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb
+available_kib=35533224
+required_kib=5242880
+command=go test -count=1 -race ./...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.066s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.271s
+ok  	forgelocal/internal/backup	2.835s
+ok  	forgelocal/internal/browser	7.324s
+ok  	forgelocal/internal/config	1.015s
+ok  	forgelocal/internal/cookies	1.013s
+ok  	forgelocal/internal/environment	1.012s
+ok  	forgelocal/internal/fingerprint	1.015s
+ok  	forgelocal/internal/groups	1.018s
+ok  	forgelocal/internal/history	1.190s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.782s
+ok  	forgelocal/internal/localvault	1.140s
+ok  	forgelocal/internal/mcp	1.031s
+ok  	forgelocal/internal/productschema	1.808s
+ok  	forgelocal/internal/profile	1.153s
+ok  	forgelocal/internal/profilemigration	2.688s
+ok  	forgelocal/internal/proxies	1.086s
+ok  	forgelocal/internal/proxyprovider	1.014s
+ok  	forgelocal/internal/runtime	1.243s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	3.294s
+ok  	forgelocal/internal/templates	1.425s
+ok  	forgelocal/internal/workflow	1.018s
+exit_code=0
+completed_utc=2026-08-24T15:57:09Z
+----- end raw output -----
+end_utc=2026-08-24T15:57:09Z
+exit_code=0
+
+===== extracted_master_zip_test =====
+start_utc=2026-08-24T15:57:09Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/forgelocal-t30-master-handover-cbf3a50_1_.zip
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/forgelocal-t30-master-handover-cbf3a50_1_.zip
+    testing: final_bundle/            OK
+    testing: final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle   OK
+    testing: final_bundle/forgelocal-t30-environment-cbf3a50.delta.bundle.sha256   OK
+    testing: source_snapshot/         OK
+    testing: source_snapshot/internal/   OK
+    testing: source_snapshot/internal/api/   OK
+    testing: source_snapshot/internal/api/openapi.go   OK
+    testing: source_snapshot/internal/api/environment_t30_test.go   OK
+    testing: source_snapshot/internal/environment/   OK
+    testing: source_snapshot/internal/environment/environment.go   OK
+    testing: source_snapshot/internal/environment/environment_test.go   OK
+    testing: source_snapshot/docs/    OK
+    testing: source_snapshot/docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md   OK
+    testing: source_snapshot/scripts/   OK
+    testing: source_snapshot/scripts/run_t30_full_race_replay.sh   OK
+    testing: archive_r1/              OK
+    testing: archive_r1/BASELINE_DISCOVERY_RAW.log   OK
+    testing: archive_r1/BASELINE_DISCOVERY_GITHUB_TAG_CORRECTION_RAW.log   OK
+    testing: archive_r1/BASELINE_DISCOVERY_WORKTREE_RAW.log   OK
+    testing: archive_r1/BASELINE_DISCOVERY_WORKTREE_CORRECTION_RAW.log   OK
+    testing: archive_r1/T30_DELIVERY.md   OK
+    testing: archive_r1/T30_EVIDENCE_PRESERVATION_RAW.log   OK
+    testing: archive_r1/T30_EVIDENCE_EXTRACTION_GITLEAKS.json   OK
+    testing: archive_r1/SHA256SUMS    OK
+    testing: archive_r1/forgelocal-t30-environment-evidence-4f415eb.zip   OK
+    testing: archive_r1/forgelocal-t30-environment-evidence-4f415eb.zip.sha256   OK
+    testing: archive_r1/T30_EVIDENCE_PRESERVATION_CORRECTION_RAW.log   OK
+    testing: archive_r1/T30_MASTER_HANDOVER_INVENTORY_RAW.log   OK
+    testing: archive_r1/bundle/       OK
+    testing: archive_r1/bundle/forgelocal-t30-environment-4f415eb.delta.bundle   OK
+    testing: archive_r1/bundle/forgelocal-t30-environment-4f415eb.delta.bundle.sha256   OK
+    testing: archive_r1/qualification/   OK
+    testing: archive_r1/qualification/T30_GOSEC_ENVIRONMENT.json   OK
+    testing: archive_r1/qualification/T30_FRESH_BUNDLE_VERIFY_RAW.log   OK
+    testing: archive_r1/qualification/T30_GO_QUALIFICATION_RAW.log   OK
+    testing: archive_r1/qualification/T30_DELTA_SECURITY_RAW.log   OK
+    testing: archive_r1/qualification/T30_GITLEAKS_DELTA.json   OK
+    testing: archive_r2/              OK
+    testing: archive_r2/bundle/       OK
+    testing: archive_r2/bundle/forgelocal-t30-environment-5d100a0.delta.bundle   OK
+    testing: archive_r2/bundle/forgelocal-t30-environment-5d100a0.delta.bundle.sha256   OK
+    testing: archive_r2/T30_R2_GOSEC.json   OK
+    testing: archive_r2/T30_R2_DELIVERY.md   OK
+    testing: archive_r2/T30_R2_FRESH_BUNDLE_VERIFY_FINAL_RAW.log   OK
+    testing: archive_r2/T30_R2_EVIDENCE_PRESERVATION_RAW.log   OK
+    testing: archive_r2/T30_R2_FRESH_BUNDLE_VERIFY_RAW.log   OK
+    testing: archive_r2/T30_R2_TARGETED_QUALIFICATION_RAW.log   OK
+    testing: archive_r2/T30_R2_EVIDENCE_GITLEAKS.json   OK
+    testing: archive_r2/SHA256SUMS    OK
+    testing: archive_r2/forgelocal-t30-environment-evidence-5d100a0-r2.zip   OK
+    testing: archive_r2/T30_R2_EVIDENCE_MANIFEST_CORRECTION_RAW.log   OK
+    testing: archive_r2/T30_R2_FINAL_COMPLETENESS_AUDIT_RAW.log   OK
+    testing: archive_r2/T30_R2_FULL_QUALIFICATION_RAW.log   OK
+    testing: archive_r2/T30_R2_GITLEAKS_DELTA.json   OK
+    testing: archive_r2/forgelocal-t30-environment-evidence-5d100a0-r2.zip.sha256   OK
+    testing: archive_r3/              OK
+    testing: archive_r3/baseline/     OK
+    testing: archive_r3/baseline/BASELINE_DISCOVERY_RAW.log   OK
+    testing: archive_r3/baseline/BASELINE_DISCOVERY_GITHUB_TAG_CORRECTION_RAW.log   OK
+    testing: archive_r3/baseline/BASELINE_DISCOVERY_WORKTREE_RAW.log   OK
+    testing: archive_r3/baseline/BASELINE_DISCOVERY_WORKTREE_CORRECTION_RAW.log   OK
+    testing: archive_r3/bundle/       OK
+    testing: archive_r3/bundle/forgelocal-t30-environment-cbf3a50.delta.bundle   OK
+    testing: archive_r3/bundle/forgelocal-t30-environment-cbf3a50.delta.bundle.sha256   OK
+    testing: archive_r3/T30_FINAL_QUALIFICATION_RAW.log   OK
+    testing: archive_r3/T30_TARGETED_RACE_HEAD_RAW.log   OK
+    testing: archive_r3/T30_R3_FRESH_BUNDLE_VERIFY_RAW.log   OK
+    testing: archive_r3/T30_FULL_RACE_GUARD_HEAD_RAW.log   OK
+    testing: archive_r3/T30_R3_CONSOLIDATED_DELIVERY.md   OK
+    testing: archive_r3/T30_OPENAPI_CONTRACT_TEST_RAW.log   OK
+    testing: archive_r3/T30_GOSEC_BASELINE_HEAD_DIFFERENTIAL_FINAL_RAW.log   OK
+    testing: archive_r3/T30_GOSEC_BASELINE.json   OK
+    testing: archive_r3/T30_GOSEC_HEAD.json   OK
+    testing: archive_r3/T30_GOSEC_BASELINE.normalized.txt   OK
+    testing: archive_r3/T30_GOSEC_HEAD.normalized.txt   OK
+    testing: archive_r3/T30_GOSEC_NEW_FINDINGS.txt   OK
+    testing: archive_r3/T30_R3_GUARD_KIT_REFRESH_RAW.log   OK
+    testing: archive_r3/T30_GITLEAKS_IMMUTABLE_RANGE.json   OK
+    testing: archive_r3/T30_GITLEAKS_SOURCE_DELTA.json   OK
+    testing: archive_r3/T30_R3_EVIDENCE_PRESERVATION_RAW.log   OK
+    testing: archive_r3/T30_R3_EVIDENCE_GITLEAKS.json   OK
+    testing: archive_r3/SHA256SUMS    OK
+    testing: archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip   OK
+    testing: archive_r3/forgelocal-t30-environment-evidence-cbf3a50-r3.zip.sha256   OK
+    testing: README_T30_MASTER_HANDOVER.md   OK
+    testing: CONTENTS.txt             OK
+    testing: SHA256SUMS               OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/forgelocal-t30-master-handover-cbf3a50_1_.zip.
+----- end raw output -----
+end_utc=2026-08-24T15:57:09Z
+exit_code=0

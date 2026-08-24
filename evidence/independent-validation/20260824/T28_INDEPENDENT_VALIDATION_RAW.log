@@ -1,0 +1,398 @@
+
+===== versions =====
+start_utc=2026-08-24T15:48:40Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=bash -c go\ version\;\ node\ --version\;\ pnpm\ --version\;\ git\ lfs\ version\;\ /home/ubuntu/bin/gitleaks\ version\;\ gosec\ -version\;\ staticcheck\ -version\;\ govulncheck\ -version
+----- raw output -----
+go version go1.25.13 linux/amd64
+v22.13.0
+10.4.1
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+8.18.4
+Version: dev
+Git tag: 
+Build date: 
+staticcheck 2025.1.1 (0.6.1)
+Go: go1.25.13
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== package_manifest_json =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=python3 -c import\ json\;\ json.load\(open\(\"artifacts/MANIFEST_SHA256.json\"\)\)\;\ print\(\"MANIFEST_JSON_OK\"\)
+----- raw output -----
+MANIFEST_JSON_OK
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== package_manifest_raw =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=bash -c sha256sum\ -c\ artifacts/MANIFEST_VERIFY_SHA256SUMS.txt
+----- raw output -----
+sha256sum: agent03-t28.bundle: No such file or directory
+agent03-t28.bundle: FAILED open or read
+sha256sum: agent03-t28.bundle.sha256: No such file or directory
+agent03-t28.bundle.sha256: FAILED open or read
+sha256sum: BUNDLE_AND_FRESH_CLONE.log: No such file or directory
+BUNDLE_AND_FRESH_CLONE.log: FAILED open or read
+sha256sum: FRESH_CLONE_LFS_FSCK.log: No such file or directory
+FRESH_CLONE_LFS_FSCK.log: FAILED open or read
+sha256sum: FRESH_CLONE_GITLEAKS_FULL.json: No such file or directory
+FRESH_CLONE_GITLEAKS_FULL.json: FAILED open or read
+sha256sum: FRESH_CLONE_GITLEAKS_DELTA.json: No such file or directory
+FRESH_CLONE_GITLEAKS_DELTA.json: FAILED open or read
+sha256sum: docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: No such file or directory
+docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: FAILED open or read
+sha256sum: evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log: No such file or directory
+evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log: FAILED open or read
+sha256sum: evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log: No such file or directory
+evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log: FAILED open or read
+sha256sum: evidence/AGENT_03/DELIVERY.md: No such file or directory
+evidence/AGENT_03/DELIVERY.md: FAILED open or read
+sha256sum: evidence/AGENT_03/GITLEAKS_DELTA.json: No such file or directory
+evidence/AGENT_03/GITLEAKS_DELTA.json: FAILED open or read
+sha256sum: evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json: No such file or directory
+evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json: FAILED open or read
+sha256sum: evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log: No such file or directory
+evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log: FAILED open or read
+sha256sum: WARNING: 13 listed files could not be read
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=1
+
+===== package_manifest_rerooted =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=bash -c stage=\$\(mktemp\ -d\)\;\ trap\ \"rm\ -rf\ \\\"\$stage\\\"\"\ EXIT\;\ cp\ -a\ repository/docs\ \"\$stage/docs\"\;\ cp\ -a\ repository/evidence\ \"\$stage/evidence\"\;\ cp\ -a\ artifacts/.\ \"\$stage\"\;\ cd\ \"\$stage\"\;\ sha256sum\ -c\ MANIFEST_VERIFY_SHA256SUMS.txt
+----- raw output -----
+agent03-t28.bundle: OK
+agent03-t28.bundle.sha256: OK
+BUNDLE_AND_FRESH_CLONE.log: OK
+FRESH_CLONE_LFS_FSCK.log: OK
+FRESH_CLONE_GITLEAKS_FULL.json: OK
+FRESH_CLONE_GITLEAKS_DELTA.json: OK
+docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: OK
+evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log: OK
+evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log: OK
+evidence/AGENT_03/DELIVERY.md: OK
+evidence/AGENT_03/GITLEAKS_DELTA.json: OK
+evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json: OK
+evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log: OK
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== bundle_actual_sha256 =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=sha256sum artifacts/agent03-t28.bundle
+----- raw output -----
+6d4e7c10d86431510f0d9be387aafb134619404fa7a75fbfcac33b089cfa335f  artifacts/agent03-t28.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== bundle_sidecar_text =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=cat artifacts/agent03-t28.bundle.sha256
+----- raw output -----
+6d4e7c10d86431510f0d9be387aafb134619404fa7a75fbfcac33b089cfa335f  /home/ubuntu/agent03-delivery/agent03-t28.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== bundle_sidecar_portable_check =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=bash -c cd\ artifacts\ \&\&\ sha256sum\ -c\ agent03-t28.bundle.sha256
+----- raw output -----
+sha256sum: /home/ubuntu/agent03-delivery/agent03-t28.bundle: No such file or directory
+/home/ubuntu/agent03-delivery/agent03-t28.bundle: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=1
+
+===== bundle_verify_with_baseline =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery/artifacts/agent03-t28.bundle
+----- raw output -----
+/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery/artifacts/agent03-t28.bundle is okay
+The bundle contains this ref:
+a3a6ff621d7d30dace02678631ac2dc701b77f07 HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== bundle_listing =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=git bundle list-heads artifacts/agent03-t28.bundle
+----- raw output -----
+a3a6ff621d7d30dace02678631ac2dc701b77f07 HEAD
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== fresh_clone =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=git clone -q --no-checkout /home/ubuntu/forgelocal /home/ubuntu/t28-independent-validation-20260824/clone
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:48:46Z
+exit_code=0
+
+===== fresh_baseline_checkout =====
+start_utc=2026-08-24T15:48:46Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git checkout -q --detach t00-t27-complete-20260820
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:48:47Z
+exit_code=0
+
+===== fresh_baseline_ref =====
+start_utc=2026-08-24T15:48:47Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+69411e65c880d168832a65fc8475cc97d562a9ad
+----- end raw output -----
+end_utc=2026-08-24T15:48:47Z
+exit_code=0
+
+===== fresh_baseline_fsck =====
+start_utc=2026-08-24T15:48:47Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:48:48Z
+exit_code=0
+
+===== bundle_fetch =====
+start_utc=2026-08-24T15:48:48Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git fetch -q /home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery/artifacts/agent03-t28.bundle a3a6ff621d7d30dace02678631ac2dc701b77f07:refs/remotes/t28/delivery
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:48:50Z
+exit_code=0
+
+===== delivery_checkout =====
+start_utc=2026-08-24T15:48:50Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git checkout -q --detach a3a6ff621d7d30dace02678631ac2dc701b77f07
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:48:51Z
+exit_code=0
+
+===== delivery_ref =====
+start_utc=2026-08-24T15:48:51Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+a3a6ff621d7d30dace02678631ac2dc701b77f07
+----- end raw output -----
+end_utc=2026-08-24T15:48:51Z
+exit_code=0
+
+===== parent_check =====
+start_utc=2026-08-24T15:48:51Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git rev-parse HEAD\^1
+----- raw output -----
+d65a4d1267f657ea07e92881f828894241a95df4
+----- end raw output -----
+end_utc=2026-08-24T15:48:51Z
+exit_code=0
+
+===== diff_check =====
+start_utc=2026-08-24T15:48:51Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git diff --check t00-t27-complete-20260820..HEAD
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:48:51Z
+exit_code=0
+
+===== diff_stat =====
+start_utc=2026-08-24T15:48:51Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git diff --stat t00-t27-complete-20260820..HEAD
+----- raw output -----
+ docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md    | 194 [32m+++++++++++++++++++++[m
+ evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log       |  64 [32m+++++++[m
+ evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log     |  37 [32m++++[m
+ evidence/AGENT_03/DELIVERY.md                      |  53 [32m++++++[m
+ evidence/AGENT_03/GITLEAKS_DELTA.json              |   1 [32m+[m
+ ...GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json | 122 [32m+++++++++++++[m
+ evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log        |  28 [32m+++[m
+ 7 files changed, 499 insertions(+)
+----- end raw output -----
+end_utc=2026-08-24T15:48:51Z
+exit_code=0
+
+===== changed_paths =====
+start_utc=2026-08-24T15:48:51Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git diff --name-status t00-t27-complete-20260820..HEAD
+----- raw output -----
+A	docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+A	evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log
+A	evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log
+A	evidence/AGENT_03/DELIVERY.md
+A	evidence/AGENT_03/GITLEAKS_DELTA.json
+A	evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json
+A	evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log
+----- end raw output -----
+end_utc=2026-08-24T15:48:51Z
+exit_code=0
+
+===== delivery_fsck =====
+start_utc=2026-08-24T15:48:51Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:48:54Z
+exit_code=0
+
+===== gitleaks_diff_pipe =====
+start_utc=2026-08-24T15:48:54Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=bash -c git\ diff\ --binary\ t00-t27-complete-20260820..HEAD\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ /home/ubuntu/t28-independent-validation-20260824/T28_GITLEAKS_DIFF_PIPE.json
+----- raw output -----
+[90m3:48PM[0m [32mINF[0m scan completed in 18.4ms
+[90m3:48PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:48:54Z
+exit_code=0
+
+===== gitleaks_full_detect =====
+start_utc=2026-08-24T15:48:54Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=/home/ubuntu/bin/gitleaks detect --no-banner --redact --source . --report-format json --report-path /home/ubuntu/t28-independent-validation-20260824/T28_GITLEAKS_FULL.json
+----- raw output -----
+[90m3:48PM[0m [32mINF[0m 0 commits scanned.
+[90m3:48PM[0m [32mINF[0m scan completed in 1.45s
+[90m3:48PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:48:55Z
+exit_code=0
+
+===== go_test =====
+start_utc=2026-08-24T15:48:55Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ test\ -count=1\ -race\ ./...
+----- raw output -----
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.049s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.561s
+ok  	forgelocal/internal/backup	2.675s
+ok  	forgelocal/internal/browser	7.373s
+ok  	forgelocal/internal/config	1.027s
+ok  	forgelocal/internal/cookies	1.028s
+ok  	forgelocal/internal/environment	1.022s
+ok  	forgelocal/internal/fingerprint	1.019s
+ok  	forgelocal/internal/groups	1.022s
+ok  	forgelocal/internal/history	1.195s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.768s
+ok  	forgelocal/internal/localvault	1.088s
+ok  	forgelocal/internal/mcp	1.032s
+ok  	forgelocal/internal/productschema	1.836s
+ok  	forgelocal/internal/profile	1.112s
+ok  	forgelocal/internal/profilemigration	2.743s
+ok  	forgelocal/internal/proxies	1.090s
+ok  	forgelocal/internal/proxyprovider	1.012s
+ok  	forgelocal/internal/runtime	1.243s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	19.578s
+ok  	forgelocal/internal/templates	1.334s
+ok  	forgelocal/internal/workflow	1.016s
+----- end raw output -----
+end_utc=2026-08-24T15:50:20Z
+exit_code=0
+
+===== go_vet =====
+start_utc=2026-08-24T15:50:20Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ vet\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:50:36Z
+exit_code=0
+
+===== go_build =====
+start_utc=2026-08-24T15:50:36Z
+cwd=/home/ubuntu/t28-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ build\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:50:37Z
+exit_code=0
+
+===== extracted_archive_test =====
+start_utc=2026-08-24T15:50:37Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/agent03-t28-delivery_1_.zip
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/agent03-t28-delivery_1_.zip
+    testing: agent03-t28-delivery/    OK
+    testing: agent03-t28-delivery/repository/   OK
+    testing: agent03-t28-delivery/repository/docs/   OK
+    testing: agent03-t28-delivery/repository/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md   OK
+    testing: agent03-t28-delivery/repository/evidence/   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/DELIVERY.md   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/GITLEAKS_DELTA.json   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log   OK
+    testing: agent03-t28-delivery/artifacts/   OK
+    testing: agent03-t28-delivery/artifacts/agent03-t28.bundle   OK
+    testing: agent03-t28-delivery/artifacts/agent03-t28.bundle.sha256   OK
+    testing: agent03-t28-delivery/artifacts/MANIFEST_SHA256.json   OK
+    testing: agent03-t28-delivery/artifacts/BUNDLE_AND_FRESH_CLONE.log   OK
+    testing: agent03-t28-delivery/artifacts/FRESH_CLONE_LFS_FSCK.log   OK
+    testing: agent03-t28-delivery/artifacts/FRESH_CLONE_GITLEAKS_DELTA.json   OK
+    testing: agent03-t28-delivery/artifacts/FRESH_CLONE_GITLEAKS_FULL.json   OK
+    testing: agent03-t28-delivery/artifacts/MANIFEST_EXTRACTION_VERIFY.log   OK
+    testing: agent03-t28-delivery/artifacts/MANIFEST_VERIFY_SHA256SUMS.txt   OK
+    testing: agent03-t28-delivery/README.md   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/agent03-t28-delivery_1_.zip.
+----- end raw output -----
+end_utc=2026-08-24T15:50:38Z
+exit_code=0

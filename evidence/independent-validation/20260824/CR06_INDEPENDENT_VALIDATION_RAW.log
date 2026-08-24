@@ -1,0 +1,354 @@
+
+===== versions =====
+start_utc=2026-08-24T15:59:04Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=bash -c go\ version\;\ node\ --version\;\ pnpm\ --version\;\ git\ lfs\ version\;\ /home/ubuntu/bin/gitleaks\ version\;\ gosec\ -version\;\ staticcheck\ -version\;\ govulncheck\ -version
+----- raw output -----
+go version go1.25.13 linux/amd64
+v22.13.0
+10.4.1
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+8.18.4
+Version: dev
+Git tag: 
+Build date: 
+staticcheck 2025.1.1 (0.6.1)
+Go: go1.25.13
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+----- end raw output -----
+end_utc=2026-08-24T15:59:09Z
+exit_code=0
+
+===== manifest_check =====
+start_utc=2026-08-24T15:59:09Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=sha256sum -c forgelocal-agent-02-cr06.MANIFEST.sha256
+----- raw output -----
+forgelocal-agent-02-cr06.bundle: OK
+forgelocal-agent-02-cr06.bundle.sha256: OK
+forgelocal-agent-02-cr06-bundle-verify.log: OK
+forgelocal-agent-02-cr06-clone-verification.log: OK
+forgelocal-agent-02-cr06-clone-GITLEAKS.json: OK
+forgelocal-agent-02-cr06-clone-GITLEAKS.log: OK
+CR06_CANONICAL_STORAGE_CONTRACT.md: OK
+CR06_MIGRATION_RISK_MATRIX.md: OK
+BASELINE_DISCOVERY_RAW.log: OK
+DELIVERY.md: OK
+GITLEAKS_DELTA.json: OK
+SECURITY_BASELINE_TRIAGE.md: OK
+COUNTER_AUDIT.log: OK
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== bundle_sidecar_text =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=cat forgelocal-agent-02-cr06.bundle.sha256
+----- raw output -----
+30db4b5ee689623ca92eb00229e1482e23767d164c2e0f64859b144cf9d03ae9  /home/ubuntu/cr06-counter-audit-final/forgelocal-agent-02-cr06.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== bundle_actual_sha256 =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=sha256sum forgelocal-agent-02-cr06.bundle
+----- raw output -----
+30db4b5ee689623ca92eb00229e1482e23767d164c2e0f64859b144cf9d03ae9  forgelocal-agent-02-cr06.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== bundle_sidecar_check =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=sha256sum -c forgelocal-agent-02-cr06.bundle.sha256
+----- raw output -----
+sha256sum: /home/ubuntu/cr06-counter-audit-final/forgelocal-agent-02-cr06.bundle: No such file or directory
+/home/ubuntu/cr06-counter-audit-final/forgelocal-agent-02-cr06.bundle: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=1
+
+===== bundle_verify_with_baseline =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery/forgelocal-agent-02-cr06.bundle
+----- raw output -----
+/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery/forgelocal-agent-02-cr06.bundle is okay
+The bundle contains this ref:
+4c1be659841019d0592bef8253414338ca404aa1 refs/heads/agent/02-canonical-storage-contract
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== bundle_listing =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=git bundle list-heads forgelocal-agent-02-cr06.bundle
+----- raw output -----
+4c1be659841019d0592bef8253414338ca404aa1 refs/heads/agent/02-canonical-storage-contract
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== bundle_head_discovered =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=printf %s\\n 4c1be659841019d0592bef8253414338ca404aa1
+----- raw output -----
+4c1be659841019d0592bef8253414338ca404aa1
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== fresh_clone =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=git clone -q --no-checkout /home/ubuntu/forgelocal /home/ubuntu/cr06-independent-validation-20260824/clone
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== fresh_baseline_checkout =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git checkout -q --detach t00-t27-complete-20260820
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== fresh_baseline_ref =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+69411e65c880d168832a65fc8475cc97d562a9ad
+----- end raw output -----
+end_utc=2026-08-24T15:59:10Z
+exit_code=0
+
+===== fresh_baseline_fsck =====
+start_utc=2026-08-24T15:59:10Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:59:12Z
+exit_code=0
+
+===== bundle_fetch =====
+start_utc=2026-08-24T15:59:12Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git fetch -q /home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery/forgelocal-agent-02-cr06.bundle 4c1be659841019d0592bef8253414338ca404aa1:refs/remotes/cr06/delivery
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== delivery_checkout =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git checkout -q --detach 4c1be659841019d0592bef8253414338ca404aa1
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== delivery_ref =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+4c1be659841019d0592bef8253414338ca404aa1
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== parent_check =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git rev-parse HEAD\^1
+----- raw output -----
+69411e65c880d168832a65fc8475cc97d562a9ad
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== diff_check =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git diff --check t00-t27-complete-20260820..HEAD
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== diff_stat =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git diff --stat t00-t27-complete-20260820..HEAD
+----- raw output -----
+ docs/CR06_CANONICAL_STORAGE_CONTRACT.md       | 144 [32m++++++++++++++++++++++++++[m
+ docs/CR06_MIGRATION_RISK_MATRIX.md            |  56 [32m++++++++++[m
+ evidence/AGENT_02/BASELINE_DISCOVERY_RAW.log  |  68 [32m++++++++++++[m
+ evidence/AGENT_02/COUNTER_AUDIT.log           |  78 [32m++++++++++++++[m
+ evidence/AGENT_02/DELIVERY.md                 |  88 [32m++++++++++++++++[m
+ evidence/AGENT_02/GITLEAKS_DELTA.json         |   1 [32m+[m
+ evidence/AGENT_02/SECURITY_BASELINE_TRIAGE.md |  20 [32m++++[m
+ 7 files changed, 455 insertions(+)
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== changed_paths =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git diff --name-status t00-t27-complete-20260820..HEAD
+----- raw output -----
+A	docs/CR06_CANONICAL_STORAGE_CONTRACT.md
+A	docs/CR06_MIGRATION_RISK_MATRIX.md
+A	evidence/AGENT_02/BASELINE_DISCOVERY_RAW.log
+A	evidence/AGENT_02/COUNTER_AUDIT.log
+A	evidence/AGENT_02/DELIVERY.md
+A	evidence/AGENT_02/GITLEAKS_DELTA.json
+A	evidence/AGENT_02/SECURITY_BASELINE_TRIAGE.md
+----- end raw output -----
+end_utc=2026-08-24T15:59:14Z
+exit_code=0
+
+===== delivery_fsck =====
+start_utc=2026-08-24T15:59:14Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:59:17Z
+exit_code=0
+
+===== gitleaks_diff_pipe =====
+start_utc=2026-08-24T15:59:17Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=bash -c git\ diff\ --binary\ t00-t27-complete-20260820..HEAD\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ /home/ubuntu/cr06-independent-validation-20260824/CR06_GITLEAKS_DIFF_PIPE.json
+----- raw output -----
+[90m3:59PM[0m [32mINF[0m scan completed in 20ms
+[90m3:59PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:59:17Z
+exit_code=0
+
+===== gitleaks_full_detect =====
+start_utc=2026-08-24T15:59:17Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=/home/ubuntu/bin/gitleaks detect --no-banner --redact --source . --report-format json --report-path /home/ubuntu/cr06-independent-validation-20260824/CR06_GITLEAKS_FULL.json
+----- raw output -----
+[90m3:59PM[0m [32mINF[0m 0 commits scanned.
+[90m3:59PM[0m [32mINF[0m scan completed in 1.39s
+[90m3:59PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:59:19Z
+exit_code=0
+
+===== go_test =====
+start_utc=2026-08-24T15:59:19Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ test\ -count=1\ -race\ ./...
+----- raw output -----
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.058s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.437s
+ok  	forgelocal/internal/backup	2.734s
+ok  	forgelocal/internal/browser	7.334s
+ok  	forgelocal/internal/config	1.018s
+ok  	forgelocal/internal/cookies	1.015s
+ok  	forgelocal/internal/environment	1.013s
+ok  	forgelocal/internal/fingerprint	1.015s
+ok  	forgelocal/internal/groups	1.019s
+ok  	forgelocal/internal/history	1.196s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.796s
+ok  	forgelocal/internal/localvault	1.158s
+ok  	forgelocal/internal/mcp	1.032s
+ok  	forgelocal/internal/productschema	1.843s
+ok  	forgelocal/internal/profile	1.130s
+ok  	forgelocal/internal/profilemigration	2.723s
+ok  	forgelocal/internal/proxies	1.091s
+ok  	forgelocal/internal/proxyprovider	1.013s
+ok  	forgelocal/internal/runtime	1.245s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	3.486s
+ok  	forgelocal/internal/templates	1.389s
+ok  	forgelocal/internal/workflow	1.017s
+----- end raw output -----
+end_utc=2026-08-24T15:59:30Z
+exit_code=0
+
+===== go_vet =====
+start_utc=2026-08-24T15:59:30Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ vet\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:30Z
+exit_code=0
+
+===== go_build =====
+start_utc=2026-08-24T15:59:30Z
+cwd=/home/ubuntu/cr06-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ build\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:59:31Z
+exit_code=0
+
+===== package_zip_test =====
+start_utc=2026-08-24T15:59:31Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/CR06-final-delivery.zip
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/CR06-final-delivery.zip
+    testing: CR06_CANONICAL_STORAGE_CONTRACT.md   OK
+    testing: CR06_MIGRATION_RISK_MATRIX.md   OK
+    testing: DELIVERY.md              OK
+    testing: COUNTER_AUDIT.log        OK
+    testing: SECURITY_BASELINE_TRIAGE.md   OK
+    testing: forgelocal-agent-02-cr06.bundle   OK
+    testing: forgelocal-agent-02-cr06.bundle.sha256   OK
+    testing: forgelocal-agent-02-cr06.MANIFEST.sha256   OK
+    testing: forgelocal-agent-02-cr06-manifest-verification.log   OK
+    testing: forgelocal-agent-02-cr06-bundle-verify.log   OK
+    testing: forgelocal-agent-02-cr06-clone-verification.log   OK
+    testing: GITLEAKS_DELTA.json      OK
+    testing: forgelocal-agent-02-cr06-clone-GITLEAKS.json   OK
+    testing: forgelocal-agent-02-cr06-clone-GITLEAKS.log   OK
+    testing: BASELINE_DISCOVERY_RAW.log   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/CR06-final-delivery.zip.
+----- end raw output -----
+end_utc=2026-08-24T15:59:32Z
+exit_code=0

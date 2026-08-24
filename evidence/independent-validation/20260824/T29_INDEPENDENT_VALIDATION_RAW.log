@@ -1,0 +1,419 @@
+
+===== versions =====
+start_utc=2026-08-24T15:51:52Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=bash -c go\ version\;\ node\ --version\;\ pnpm\ --version\;\ git\ lfs\ version\;\ /home/ubuntu/bin/gitleaks\ version\;\ gosec\ -version\;\ staticcheck\ -version\;\ govulncheck\ -version
+----- raw output -----
+go version go1.25.13 linux/amd64
+v22.13.0
+10.4.1
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+8.18.4
+Version: dev
+Git tag: 
+Build date: 
+staticcheck 2025.1.1 (0.6.1)
+Go: go1.25.13
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== outer_zip_manifest =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=bash -c sha256sum\ -c\ ZIP_CONTENTS_SHA256SUMS
+----- raw output -----
+./CONTENTS.md: OK
+./external-delivery/BUNDLE_VERIFICATION.log: OK
+./external-delivery/FINAL_RESULT.md: OK
+./external-delivery/GITLEAKS_NEW_CLONE_DELTA.json: OK
+./external-delivery/forgelocal-agent-04-t29.bundle: OK
+./external-delivery/forgelocal-agent-04-t29.bundle.sha256: OK
+./repo-delivery/docs/T29_COMPLETENESS_REVIEW.md: OK
+./repo-delivery/docs/T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md: OK
+./repo-delivery/docs/T29_SECRET_REDACTION_TEST_MATRIX.md: OK
+./repo-delivery/docs/T29_SENIOR_REVIEW.md: OK
+./repo-delivery/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log: OK
+./repo-delivery/evidence/AGENT_04/BASELINE_LFS_RECHECK.log: OK
+./repo-delivery/evidence/AGENT_04/COMPLETENESS_CHECK.log: OK
+./repo-delivery/evidence/AGENT_04/DELIVERY.md: OK
+./repo-delivery/evidence/AGENT_04/DELIVERY_VERIFICATION.log: OK
+./repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA.json: OK
+./repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA_RUN.log: OK
+./repo-delivery/evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md: OK
+./repo-delivery/evidence/AGENT_04/MANIFEST_SHA256SUMS: OK
+./repo-delivery/evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log: OK
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== internal_manifest_json =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=python3 -c import\ json\;\ print\(json.load\(open\(\"repo-delivery/evidence/AGENT_04/MANIFEST_SHA256SUMS\"\)\)\)
+----- raw output -----
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/usr/lib/python3.12/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 1 column 4 (char 3)
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=1
+
+===== internal_manifest_check =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=bash -c stage=\$\(mktemp\ -d\)\;\ trap\ \"rm\ -rf\ \\\"\$stage\\\"\"\ EXIT\;\ cp\ -a\ repo-delivery/docs\ \"\$stage/docs\"\;\ cp\ -a\ repo-delivery/evidence\ \"\$stage/evidence\"\;\ cp\ -a\ external-delivery/.\ \"\$stage\"\;\ cd\ \"\$stage\"\;\ sha256sum\ -c\ evidence/AGENT_04/MANIFEST_SHA256SUMS
+----- raw output -----
+docs/T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md: OK
+docs/T29_SECRET_REDACTION_TEST_MATRIX.md: OK
+docs/T29_SENIOR_REVIEW.md: OK
+docs/T29_COMPLETENESS_REVIEW.md: OK
+evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log: OK
+evidence/AGENT_04/BASELINE_LFS_RECHECK.log: OK
+evidence/AGENT_04/DELIVERY.md: OK
+evidence/AGENT_04/DELIVERY_VERIFICATION.log: OK
+evidence/AGENT_04/COMPLETENESS_CHECK.log: OK
+evidence/AGENT_04/GITLEAKS_DELTA.json: OK
+evidence/AGENT_04/GITLEAKS_DELTA_RUN.log: OK
+evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md: OK
+evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log: OK
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== bundle_actual_sha256 =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=sha256sum external-delivery/forgelocal-agent-04-t29.bundle
+----- raw output -----
+199e89a23a3d87b58ba25727060f0c085c4fcb5ab1107f03d48320179bf72689  external-delivery/forgelocal-agent-04-t29.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== bundle_sidecar_text =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=cat external-delivery/forgelocal-agent-04-t29.bundle.sha256
+----- raw output -----
+199e89a23a3d87b58ba25727060f0c085c4fcb5ab1107f03d48320179bf72689  /home/ubuntu/AGENT_04_T29_COMPLETENESS_DELIVERY/forgelocal-agent-04-t29.bundle
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== bundle_sidecar_portable_check =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=bash -c cd\ external-delivery\ \&\&\ sha256sum\ -c\ forgelocal-agent-04-t29.bundle.sha256
+----- raw output -----
+sha256sum: /home/ubuntu/AGENT_04_T29_COMPLETENESS_DELIVERY/forgelocal-agent-04-t29.bundle: No such file or directory
+/home/ubuntu/AGENT_04_T29_COMPLETENESS_DELIVERY/forgelocal-agent-04-t29.bundle: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=1
+
+===== bundle_verify_with_baseline =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle
+----- raw output -----
+/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle is okay
+The bundle contains this ref:
+5e35e0d11bd833a10fa49c0866a7e421e23faf5a HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== bundle_head_discovered =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=printf %s\\n 5e35e0d11bd833a10fa49c0866a7e421e23faf5a
+----- raw output -----
+5e35e0d11bd833a10fa49c0866a7e421e23faf5a
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== fresh_clone =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=git clone -q --no-checkout /home/ubuntu/forgelocal /home/ubuntu/t29-independent-validation-20260824/clone
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:51:58Z
+exit_code=0
+
+===== fresh_baseline_checkout =====
+start_utc=2026-08-24T15:51:58Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git checkout -q --detach t00-t27-complete-20260820
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:51:59Z
+exit_code=0
+
+===== fresh_baseline_ref =====
+start_utc=2026-08-24T15:51:59Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+69411e65c880d168832a65fc8475cc97d562a9ad
+----- end raw output -----
+end_utc=2026-08-24T15:51:59Z
+exit_code=0
+
+===== fresh_baseline_fsck =====
+start_utc=2026-08-24T15:51:59Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:52:00Z
+exit_code=0
+
+===== bundle_fetch =====
+start_utc=2026-08-24T15:52:00Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git fetch -q /home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle 5e35e0d11bd833a10fa49c0866a7e421e23faf5a:refs/remotes/t29/delivery
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:52:02Z
+exit_code=0
+
+===== delivery_checkout =====
+start_utc=2026-08-24T15:52:02Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git checkout -q --detach 5e35e0d11bd833a10fa49c0866a7e421e23faf5a
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:52:03Z
+exit_code=0
+
+===== delivery_ref =====
+start_utc=2026-08-24T15:52:03Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git rev-parse HEAD
+----- raw output -----
+5e35e0d11bd833a10fa49c0866a7e421e23faf5a
+----- end raw output -----
+end_utc=2026-08-24T15:52:03Z
+exit_code=0
+
+===== parent_check =====
+start_utc=2026-08-24T15:52:03Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git rev-parse HEAD\^1
+----- raw output -----
+645f07d9270d697601666458c16678d0201dc0b7
+----- end raw output -----
+end_utc=2026-08-24T15:52:03Z
+exit_code=0
+
+===== diff_check =====
+start_utc=2026-08-24T15:52:03Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git diff --check t00-t27-complete-20260820..HEAD
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:52:03Z
+exit_code=0
+
+===== diff_stat =====
+start_utc=2026-08-24T15:52:03Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git diff --stat t00-t27-complete-20260820..HEAD
+----- raw output -----
+ docs/T29_COMPLETENESS_REVIEW.md                    |  81 [32m+++++++++++[m
+ ...T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md | 149 [32m+++++++++++++++++++++[m
+ docs/T29_SECRET_REDACTION_TEST_MATRIX.md           |  86 [32m++++++++++++[m
+ docs/T29_SENIOR_REVIEW.md                          |  87 [32m++++++++++++[m
+ evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log       | 103 [32m++++++++++++++[m
+ evidence/AGENT_04/BASELINE_LFS_RECHECK.log         |  25 [32m++++[m
+ evidence/AGENT_04/COMPLETENESS_CHECK.log           |  51 [32m+++++++[m
+ evidence/AGENT_04/DELIVERY.md                      |  45 [32m+++++++[m
+ evidence/AGENT_04/DELIVERY_VERIFICATION.log        |  62 [32m+++++++++[m
+ evidence/AGENT_04/GITLEAKS_DELTA.json              |   1 [32m+[m
+ evidence/AGENT_04/GITLEAKS_DELTA_RUN.log           |   7 [32m+[m
+ evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md     |   9 [32m++[m
+ evidence/AGENT_04/MANIFEST_SHA256SUMS              |  13 [32m++[m
+ evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log        |  77 [32m+++++++++++[m
+ 14 files changed, 796 insertions(+)
+----- end raw output -----
+end_utc=2026-08-24T15:52:03Z
+exit_code=0
+
+===== changed_paths =====
+start_utc=2026-08-24T15:52:03Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git diff --name-status t00-t27-complete-20260820..HEAD
+----- raw output -----
+A	docs/T29_COMPLETENESS_REVIEW.md
+A	docs/T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md
+A	docs/T29_SECRET_REDACTION_TEST_MATRIX.md
+A	docs/T29_SENIOR_REVIEW.md
+A	evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log
+A	evidence/AGENT_04/BASELINE_LFS_RECHECK.log
+A	evidence/AGENT_04/COMPLETENESS_CHECK.log
+A	evidence/AGENT_04/DELIVERY.md
+A	evidence/AGENT_04/DELIVERY_VERIFICATION.log
+A	evidence/AGENT_04/GITLEAKS_DELTA.json
+A	evidence/AGENT_04/GITLEAKS_DELTA_RUN.log
+A	evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md
+A	evidence/AGENT_04/MANIFEST_SHA256SUMS
+A	evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log
+----- end raw output -----
+end_utc=2026-08-24T15:52:03Z
+exit_code=0
+
+===== delivery_fsck =====
+start_utc=2026-08-24T15:52:03Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=git fsck --full
+----- raw output -----
+dangling blob ff022df6ec38724a7cfbf333b3b762f3e249b1c8
+dangling blob 4c44ad6b8d05b91b20f616640cdd7df08d83c48e
+dangling blob d96641d5ec742f241092a40ff228243b341b8df9
+dangling blob 46cd7d20b1db2dbd8e6f4554c214b5e29f8905f0
+dangling blob ddafb66881a7df5b579d906bffb87a8a74f7dacd
+dangling commit 1a5112b6e9b0206c30cebe6fc5d37e820555f3e5
+dangling commit f03b58454a6c5e96c29e4ad045b469d16bf97f40
+----- end raw output -----
+end_utc=2026-08-24T15:52:06Z
+exit_code=0
+
+===== gitleaks_diff_pipe =====
+start_utc=2026-08-24T15:52:06Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=bash -c git\ diff\ --binary\ t00-t27-complete-20260820..HEAD\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ /home/ubuntu/t29-independent-validation-20260824/T29_GITLEAKS_DIFF_PIPE.json
+----- raw output -----
+[90m3:52PM[0m [32mINF[0m scan completed in 21.8ms
+[90m3:52PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:52:06Z
+exit_code=0
+
+===== gitleaks_full_detect =====
+start_utc=2026-08-24T15:52:06Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=/home/ubuntu/bin/gitleaks detect --no-banner --redact --source . --report-format json --report-path /home/ubuntu/t29-independent-validation-20260824/T29_GITLEAKS_FULL.json
+----- raw output -----
+[90m3:52PM[0m [32mINF[0m 0 commits scanned.
+[90m3:52PM[0m [32mINF[0m scan completed in 1.43s
+[90m3:52PM[0m [32mINF[0m no leaks found
+----- end raw output -----
+end_utc=2026-08-24T15:52:07Z
+exit_code=0
+
+===== go_test =====
+start_utc=2026-08-24T15:52:07Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ test\ -count=1\ -race\ ./...
+----- raw output -----
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.051s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.731s
+ok  	forgelocal/internal/backup	2.785s
+ok  	forgelocal/internal/browser	7.580s
+ok  	forgelocal/internal/config	1.018s
+ok  	forgelocal/internal/cookies	1.016s
+ok  	forgelocal/internal/environment	1.017s
+ok  	forgelocal/internal/fingerprint	1.015s
+ok  	forgelocal/internal/groups	1.017s
+ok  	forgelocal/internal/history	1.194s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.843s
+ok  	forgelocal/internal/localvault	1.166s
+ok  	forgelocal/internal/mcp	1.043s
+ok  	forgelocal/internal/productschema	1.918s
+ok  	forgelocal/internal/profile	1.136s
+ok  	forgelocal/internal/profilemigration	2.751s
+ok  	forgelocal/internal/proxies	1.089s
+ok  	forgelocal/internal/proxyprovider	1.014s
+ok  	forgelocal/internal/runtime	1.268s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	3.374s
+ok  	forgelocal/internal/templates	1.376s
+ok  	forgelocal/internal/workflow	1.018s
+----- end raw output -----
+end_utc=2026-08-24T15:52:25Z
+exit_code=0
+
+===== go_vet =====
+start_utc=2026-08-24T15:52:25Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ vet\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:52:26Z
+exit_code=0
+
+===== go_build =====
+start_utc=2026-08-24T15:52:26Z
+cwd=/home/ubuntu/t29-independent-validation-20260824/clone
+command=bash -c CGO_ENABLED=1\ go\ build\ ./...
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:52:27Z
+exit_code=0
+
+===== extracted_archive_test =====
+start_utc=2026-08-24T15:52:27Z
+cwd=/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/T29_COMPLETE_PACKAGE.zip
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/T29_COMPLETE_PACKAGE.zip
+    testing: T29_COMPLETE_PACKAGE/    OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_COMPLETENESS_REVIEW.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_SECRET_REDACTION_TEST_MATRIX.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_SENIOR_REVIEW.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/BASELINE_LFS_RECHECK.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/COMPLETENESS_CHECK.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/DELIVERY.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/DELIVERY_VERIFICATION.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA.json   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA_RUN.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/MANIFEST_SHA256SUMS   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/FINAL_RESULT.md   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle.sha256   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/BUNDLE_VERIFICATION.log   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/GITLEAKS_NEW_CLONE_DELTA.json   OK
+    testing: T29_COMPLETE_PACKAGE/CONTENTS.md   OK
+    testing: T29_COMPLETE_PACKAGE/ZIP_CONTENTS_SHA256SUMS   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/T29_COMPLETE_PACKAGE.zip.
+----- end raw output -----
+end_utc=2026-08-24T15:52:28Z
+exit_code=0

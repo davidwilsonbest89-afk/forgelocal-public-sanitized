@@ -1,0 +1,327 @@
+
+===== t28_bundle_sidecar =====
+start_utc=2026-08-24T16:10:34Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery
+command=bash -c cd\ artifacts\ \&\&\ sha256sum\ -c\ agent03-t28.bundle.sha256 
+----- raw output -----
+agent03-t28.bundle: OK
+----- end raw output -----
+exit_code=0
+
+===== t28_manifest =====
+start_utc=2026-08-24T16:10:34Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery
+command=sha256sum -c MANIFEST_CORRECTED_SHA256SUMS 
+----- raw output -----
+artifacts/agent03-t28.bundle: OK
+artifacts/agent03-t28.bundle.sha256: OK
+artifacts/BUNDLE_AND_FRESH_CLONE.log: OK
+artifacts/FRESH_CLONE_LFS_FSCK.log: OK
+artifacts/FRESH_CLONE_GITLEAKS_FULL.json: OK
+artifacts/FRESH_CLONE_GITLEAKS_DELTA.json: OK
+repository/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: OK
+repository/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log: OK
+repository/evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log: OK
+repository/evidence/AGENT_03/DELIVERY.md: OK
+repository/evidence/AGENT_03/GITLEAKS_DELTA.json: OK
+repository/evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json: OK
+repository/evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log: OK
+----- end raw output -----
+exit_code=0
+
+===== t28_bundle_verify =====
+start_utc=2026-08-24T16:10:34Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery/artifacts/agent03-t28.bundle 
+----- raw output -----
+/home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery/artifacts/agent03-t28.bundle is okay
+The bundle contains this ref:
+a3a6ff621d7d30dace02678631ac2dc701b77f07 HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+exit_code=0
+
+===== t28_zip_test =====
+start_utc=2026-08-24T16:10:34Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/agent03-t28-delivery_1_.zip 
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/agent03-t28-delivery_1_.zip
+    testing: agent03-t28-delivery/    OK
+    testing: agent03-t28-delivery/repository/   OK
+    testing: agent03-t28-delivery/repository/docs/   OK
+    testing: agent03-t28-delivery/repository/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md   OK
+    testing: agent03-t28-delivery/repository/evidence/   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/BASELINE_TOOLING_RECHECK.log   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/DELIVERY.md   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/GITLEAKS_DELTA.json   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/GITLEAKS_FULL_REPOSITORY_BASELINE_FINDINGS.json   OK
+    testing: agent03-t28-delivery/repository/evidence/AGENT_03/PRE_DELIVERY_CONTROLS.log   OK
+    testing: agent03-t28-delivery/artifacts/   OK
+    testing: agent03-t28-delivery/artifacts/agent03-t28.bundle   OK
+    testing: agent03-t28-delivery/artifacts/agent03-t28.bundle.sha256   OK
+    testing: agent03-t28-delivery/artifacts/MANIFEST_SHA256.json   OK
+    testing: agent03-t28-delivery/artifacts/BUNDLE_AND_FRESH_CLONE.log   OK
+    testing: agent03-t28-delivery/artifacts/FRESH_CLONE_LFS_FSCK.log   OK
+    testing: agent03-t28-delivery/artifacts/FRESH_CLONE_GITLEAKS_DELTA.json   OK
+    testing: agent03-t28-delivery/artifacts/FRESH_CLONE_GITLEAKS_FULL.json   OK
+    testing: agent03-t28-delivery/artifacts/MANIFEST_EXTRACTION_VERIFY.log   OK
+    testing: agent03-t28-delivery/artifacts/MANIFEST_VERIFY_SHA256SUMS.txt   OK
+    testing: agent03-t28-delivery/README.md   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/agent03-t28-delivery_1_.zip.
+----- end raw output -----
+exit_code=0
+
+===== t29_bundle_sidecar =====
+start_utc=2026-08-24T16:10:35Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t29-complete-package
+command=bash -c cd\ external-delivery\ \&\&\ sha256sum\ -c\ forgelocal-agent-04-t29.bundle.sha256 
+----- raw output -----
+forgelocal-agent-04-t29.bundle: OK
+----- end raw output -----
+exit_code=0
+
+===== t29_manifest =====
+start_utc=2026-08-24T16:10:35Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t29-complete-package
+command=sha256sum -c ZIP_CONTENTS_SHA256SUMS.corrected 
+----- raw output -----
+CONTENTS.md: OK
+external-delivery/BUNDLE_VERIFICATION.log: OK
+external-delivery/FINAL_RESULT.md: OK
+external-delivery/GITLEAKS_NEW_CLONE_DELTA.json: OK
+external-delivery/forgelocal-agent-04-t29.bundle: OK
+external-delivery/forgelocal-agent-04-t29.bundle.sha256: OK
+repo-delivery/docs/T29_COMPLETENESS_REVIEW.md: OK
+repo-delivery/docs/T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md: OK
+repo-delivery/docs/T29_SECRET_REDACTION_TEST_MATRIX.md: OK
+repo-delivery/docs/T29_SENIOR_REVIEW.md: OK
+repo-delivery/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log: OK
+repo-delivery/evidence/AGENT_04/BASELINE_LFS_RECHECK.log: OK
+repo-delivery/evidence/AGENT_04/COMPLETENESS_CHECK.log: OK
+repo-delivery/evidence/AGENT_04/DELIVERY.md: OK
+repo-delivery/evidence/AGENT_04/DELIVERY_VERIFICATION.log: OK
+repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA.json: OK
+repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA_RUN.log: OK
+repo-delivery/evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md: OK
+repo-delivery/evidence/AGENT_04/MANIFEST_SHA256SUMS: OK
+repo-delivery/evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log: OK
+----- end raw output -----
+exit_code=0
+
+===== t29_bundle_verify =====
+start_utc=2026-08-24T16:10:36Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t29-complete-package
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-corrections-20260824/t29-complete-package/external-delivery/forgelocal-agent-04-t29.bundle 
+----- raw output -----
+/home/ubuntu/forgelocal-corrections-20260824/t29-complete-package/external-delivery/forgelocal-agent-04-t29.bundle is okay
+The bundle contains this ref:
+5e35e0d11bd833a10fa49c0866a7e421e23faf5a HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+exit_code=0
+
+===== t29_zip_test =====
+start_utc=2026-08-24T16:10:36Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/t29-complete-package
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/T29_COMPLETE_PACKAGE.zip 
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/T29_COMPLETE_PACKAGE.zip
+    testing: T29_COMPLETE_PACKAGE/    OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_COMPLETENESS_REVIEW.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_PASSWORD_MANAGER_POLICY_AND_THREAT_MODEL.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_SECRET_REDACTION_TEST_MATRIX.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/docs/T29_SENIOR_REVIEW.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/BASELINE_LFS_RECHECK.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/COMPLETENESS_CHECK.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/DELIVERY.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/DELIVERY_VERIFICATION.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA.json   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/GITLEAKS_DELTA_RUN.log   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/GITLEAKS_REPO_SCAN_STATUS.md   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/MANIFEST_SHA256SUMS   OK
+    testing: T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/PRE_DELIVERY_CONTROLS.log   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/FINAL_RESULT.md   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/forgelocal-agent-04-t29.bundle.sha256   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/BUNDLE_VERIFICATION.log   OK
+    testing: T29_COMPLETE_PACKAGE/external-delivery/GITLEAKS_NEW_CLONE_DELTA.json   OK
+    testing: T29_COMPLETE_PACKAGE/CONTENTS.md   OK
+    testing: T29_COMPLETE_PACKAGE/ZIP_CONTENTS_SHA256SUMS   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/T29_COMPLETE_PACKAGE.zip.
+----- end raw output -----
+exit_code=0
+
+===== cr06_bundle_sidecar =====
+start_utc=2026-08-24T16:10:37Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery
+command=sha256sum -c forgelocal-agent-02-cr06.bundle.sha256 
+----- raw output -----
+forgelocal-agent-02-cr06.bundle: OK
+----- end raw output -----
+exit_code=0
+
+===== cr06_manifest =====
+start_utc=2026-08-24T16:10:37Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery
+command=sha256sum -c forgelocal-agent-02-cr06.MANIFEST.corrected.sha256 
+----- raw output -----
+forgelocal-agent-02-cr06.bundle: OK
+forgelocal-agent-02-cr06.bundle.sha256: OK
+forgelocal-agent-02-cr06-bundle-verify.log: OK
+forgelocal-agent-02-cr06-clone-verification.log: OK
+forgelocal-agent-02-cr06-clone-GITLEAKS.json: OK
+forgelocal-agent-02-cr06-clone-GITLEAKS.log: OK
+CR06_CANONICAL_STORAGE_CONTRACT.md: OK
+CR06_MIGRATION_RISK_MATRIX.md: OK
+BASELINE_DISCOVERY_RAW.log: OK
+DELIVERY.md: OK
+GITLEAKS_DELTA.json: OK
+SECURITY_BASELINE_TRIAGE.md: OK
+COUNTER_AUDIT.log: OK
+----- end raw output -----
+exit_code=0
+
+===== cr06_bundle_verify =====
+start_utc=2026-08-24T16:10:37Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery/forgelocal-agent-02-cr06.bundle 
+----- raw output -----
+/home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery/forgelocal-agent-02-cr06.bundle is okay
+The bundle contains this ref:
+4c1be659841019d0592bef8253414338ca404aa1 refs/heads/agent/02-canonical-storage-contract
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+exit_code=0
+
+===== cr06_zip_test =====
+start_utc=2026-08-24T16:10:37Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/CR06-final-delivery.zip 
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/CR06-final-delivery.zip
+    testing: CR06_CANONICAL_STORAGE_CONTRACT.md   OK
+    testing: CR06_MIGRATION_RISK_MATRIX.md   OK
+    testing: DELIVERY.md              OK
+    testing: COUNTER_AUDIT.log        OK
+    testing: SECURITY_BASELINE_TRIAGE.md   OK
+    testing: forgelocal-agent-02-cr06.bundle   OK
+    testing: forgelocal-agent-02-cr06.bundle.sha256   OK
+    testing: forgelocal-agent-02-cr06.MANIFEST.sha256   OK
+    testing: forgelocal-agent-02-cr06-manifest-verification.log   OK
+    testing: forgelocal-agent-02-cr06-bundle-verify.log   OK
+    testing: forgelocal-agent-02-cr06-clone-verification.log   OK
+    testing: GITLEAKS_DELTA.json      OK
+    testing: forgelocal-agent-02-cr06-clone-GITLEAKS.json   OK
+    testing: forgelocal-agent-02-cr06-clone-GITLEAKS.log   OK
+    testing: BASELINE_DISCOVERY_RAW.log   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/CR06-final-delivery.zip.
+----- end raw output -----
+exit_code=0
+
+===== cr08_bundle_sidecar =====
+start_utc=2026-08-24T16:10:38Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete
+command=bash -c cd\ delivery-kit\ \&\&\ sha256sum\ -c\ agent01-cr08-senior.bundle.sha256 
+----- raw output -----
+agent01-cr08-senior.bundle: OK
+----- end raw output -----
+exit_code=0
+
+===== cr08_manifest =====
+start_utc=2026-08-24T16:10:38Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete
+command=sha256sum -c delivery-kit/agent01-cr08-senior-manifest.corrected.sha256 
+----- raw output -----
+CONTENTS.txt: OK
+README.md: OK
+delivery-kit/SENIOR_REVIEW.md: OK
+delivery-kit/agent01-cr08-senior.bundle: OK
+delivery-kit/agent01-cr08-senior.bundle.sha256: OK
+delivery-kit/bundle-final-summary.txt: OK
+delivery-kit/bundle-verify.log: OK
+delivery-kit/final-exact-control-summary.log: OK
+delivery-kit/final-exact-diff-check.log: OK
+delivery-kit/final-exact-diff-names.log: OK
+delivery-kit/final-exact-status.log: OK
+delivery-kit/fresh-clone-default.log: OK
+delivery-kit/fresh-clone-fsck.log: OK
+delivery-kit/fresh-clone-skip-smudge.log: OK
+delivery-kit/fresh-clone-status.log: OK
+delivery-kit/fresh-clone-summary.txt: OK
+delivery-kit/fresh-gitleaks.json: OK
+delivery-kit/manifest-verify-after-extraction.log: OK
+repository/docs/CR08_NATIVE_EVIDENCE_TEMPLATE.md: OK
+repository/docs/CR08_NATIVE_QUALIFICATION_PROTOCOL.md: OK
+repository/evidence/AGENT_01/BASELINE_DISCOVERY_RAW.log: OK
+repository/evidence/AGENT_01/DELIVERY.md: OK
+repository/evidence/AGENT_01/DIFF_CHECK.log: OK
+repository/evidence/AGENT_01/FRESH_CLONE_SKIP_SMUDGE.log: OK
+----- end raw output -----
+exit_code=0
+
+===== cr08_bundle_verify =====
+start_utc=2026-08-24T16:10:38Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete
+command=git -C /home/ubuntu/forgelocal bundle verify /home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete/delivery-kit/agent01-cr08-senior.bundle 
+----- raw output -----
+/home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete/delivery-kit/agent01-cr08-senior.bundle is okay
+The bundle contains these 2 refs:
+72d54110c89583beacc556bb103f881b667d8137 refs/tags/t00-t27-complete-20260820
+b98f0e035a03c413e279ebe80593d0e7b33a72da HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+----- end raw output -----
+exit_code=0
+
+===== cr08_zip_test =====
+start_utc=2026-08-24T16:10:38Z
+cwd=/home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete
+command=unzip -t /home/ubuntu/forgelocal-audit-incoming-20260824/agent01-cr08-senior-complete.zip 
+----- raw output -----
+Archive:  /home/ubuntu/forgelocal-audit-incoming-20260824/agent01-cr08-senior-complete.zip
+    testing: home/ubuntu/agent01-cr08-senior-zip/   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/docs/   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/docs/CR08_NATIVE_EVIDENCE_TEMPLATE.md   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/docs/CR08_NATIVE_QUALIFICATION_PROTOCOL.md   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/evidence/   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/evidence/AGENT_01/   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/evidence/AGENT_01/FRESH_CLONE_SKIP_SMUDGE.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/evidence/AGENT_01/DIFF_CHECK.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/evidence/AGENT_01/BASELINE_DISCOVERY_RAW.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/repository/evidence/AGENT_01/DELIVERY.md   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/fresh-clone-status.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/fresh-gitleaks.json   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/fresh-clone-skip-smudge.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/fresh-clone-default.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/fresh-clone-fsck.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/fresh-clone-summary.txt   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/manifest-verify-after-extraction.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/final-exact-status.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/final-exact-diff-check.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/bundle-final-summary.txt   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/final-exact-diff-names.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/final-exact-control-summary.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/agent01-cr08-senior-manifest.sha256   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/bundle-verify.log   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/SENIOR_REVIEW.md   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/agent01-cr08-senior.bundle.sha256   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/delivery-kit/agent01-cr08-senior.bundle   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/README.md   OK
+    testing: home/ubuntu/agent01-cr08-senior-zip/CONTENTS.txt   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-audit-incoming-20260824/agent01-cr08-senior-complete.zip.
+----- end raw output -----
+exit_code=0

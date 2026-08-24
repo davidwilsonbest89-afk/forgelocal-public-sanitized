@@ -1,0 +1,19 @@
+{
+  "baseline_issue_count": 16,
+  "head_issue_count": 16,
+  "new_findings": [],
+  "resolved_findings": [],
+  "same_finding_set": true,
+  "baseline_stats": {
+    "files": 22,
+    "lines": 4027,
+    "nosec": 0,
+    "found": 16
+  },
+  "head_stats": {
+    "files": 22,
+    "lines": 4098,
+    "nosec": 0,
+    "found": 16
+  }
+}
