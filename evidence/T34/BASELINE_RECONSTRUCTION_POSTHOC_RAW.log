@@ -1,0 +1,47 @@
+started_utc=2026-08-24T17:15:48Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+command=git rev-parse t00-t27-complete-20260820^{commit}
+baseline_commit=69411e65c880d168832a65fc8475cc97d562a9ad
+command=git rev-parse t00-t27-complete-20260820^{tag}
+baseline_tag_object=72d54110c89583beacc556bb103f881b667d8137
+head=6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0
+go_version=/home/ubuntu/t30-master-independent-validation-20260824/reconstruct_portable_evidence.sh: line 8: go: command not found
+git_version=git version 2.43.0
+gitleaks_version=8.18.4
+command=git status --short --branch
+## [32maudit/t28-t42-evidence-correction[m
+[31m??[m evidence/T31/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+[31m??[m evidence/T32/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+[31m??[m evidence/T33/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+[31m??[m evidence/T34/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+exit_code=0
+command=git show-ref --verify refs/tags/t00-t27-complete-20260820
+72d54110c89583beacc556bb103f881b667d8137 refs/tags/t00-t27-complete-20260820
+exit_code=0
+search_scope=/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/T34 and repository history
+search_method=find /home/ubuntu -name BASELINE_DISCOVERY_RAW.log -o -name BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+/home/ubuntu/cr06-independent-validation-20260824/clone/evidence/AGENT_02/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/cr08-independent-validation-20260824/clone/evidence/AGENT_01/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-audit-extracted-20260824/CR06-final-delivery/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-audit-extracted-20260824/T29_COMPLETE_PACKAGE/T29_COMPLETE_PACKAGE/repo-delivery/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-audit-extracted-20260824/agent01-cr08-senior-complete/home/ubuntu/agent01-cr08-senior-zip/repository/evidence/AGENT_01/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-audit-extracted-20260824/agent03-t28-delivery_1_/agent03-t28-delivery/repository/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/archive_r1/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-audit-extracted-20260824/forgelocal-t30-master-handover-cbf3a50_1_/archive_r3/baseline/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-corrections-20260824/cr06-final-delivery/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-corrections-20260824/cr08-senior-complete/repository/evidence/AGENT_01/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-corrections-20260824/t28-agent03-delivery/repository/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-corrections-20260824/t29-complete-package/repo-delivery/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-post-correction-clones-20260824/cr06/evidence/AGENT_02/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-post-correction-clones-20260824/cr08/evidence/AGENT_01/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-post-correction-clones-20260824/t28/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-post-correction-clones-20260824/t29/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/t28-independent-validation-20260824/clone/evidence/AGENT_03/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/t29-independent-validation-20260824/clone/evidence/AGENT_04/BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/T31/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/T32/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/T33/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/T34/BASELINE_RECONSTRUCTION_POSTHOC_RAW.log
+exit_code=0
+note=Historical per-lot BASELINE_DISCOVERY_RAW.log was not present in this final branch; this file is a post-hoc reconstruction and is not represented as contemporaneous evidence.
+completed_utc=2026-08-24T17:15:49Z
