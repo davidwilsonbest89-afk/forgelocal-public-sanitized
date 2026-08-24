@@ -65,8 +65,8 @@ func TestT13Environment_CleanVerdict(t *testing.T) {
 	if d.Verdict != VerdictClean {
 		t.Fatalf("want CLEAN, got %s", d.Verdict)
 	}
-	if len(d.Controls) != 18 {
-		t.Fatalf("want 18 controls, got %d", len(d.Controls))
+	if len(d.Controls) != 19 {
+		t.Fatalf("want 19 controls, got %d", len(d.Controls))
 	}
 }
 
@@ -87,8 +87,8 @@ func TestT30Environment_DeclaresProjectionCoverageWithoutObservation(t *testing.
 			unsupported++
 		}
 	}
-	if unsupported != 16 {
-		t.Fatalf("want 16 declared unsupported capabilities, got %d", unsupported)
+	if unsupported != 17 {
+		t.Fatalf("want 17 declared unsupported capabilities, got %d", unsupported)
 	}
 }
 

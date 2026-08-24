@@ -68,7 +68,7 @@ func TestT30EnvironmentHTTPResponseIsVersionedAndRedacted(t *testing.T) {
 	}
 	body := allowed.Body.String()
 	for _, required := range []string{
-		`"diagnostic_version":"environment-projection-v3"`,
+		`"diagnostic_version":"environment-projection-v4"`,
 		`"observation_mode":"PROJECTED_METADATA_ONLY"`,
 		`"name":"navigator","state":"UNSUPPORTED"`,
 		`"name":"rendering-apis","state":"UNSUPPORTED"`,
@@ -102,7 +102,7 @@ func TestT30EnvironmentOpenAPIContractIsVersionedAndRedacted(t *testing.T) {
 		t.Fatalf("T30 environment route absent from OpenAPI: %s", rec.Body.String())
 	}
 	contract := string(path)
-	for _, required := range []string{"diagnostic_version", "environment-projection-v3", "observation_mode", "PROJECTED_METADATA_ONLY", "UNSUPPORTED", "401", "404"} {
+	for _, required := range []string{"diagnostic_version", "environment-projection-v4", "observation_mode", "PROJECTED_METADATA_ONLY", "UNSUPPORTED", "401", "404"} {
 		if !strings.Contains(contract, required) {
 			t.Fatalf("OpenAPI route contract missing %q: %s", required, contract)
 		}
