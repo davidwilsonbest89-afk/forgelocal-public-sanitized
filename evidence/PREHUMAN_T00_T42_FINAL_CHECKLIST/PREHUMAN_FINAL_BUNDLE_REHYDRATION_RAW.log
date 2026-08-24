@@ -1,0 +1,33 @@
+started_utc=2026-08-24T19:15:23Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=310119f91d5a4a89fcbf06ffe8e9ae84ea7c2a73
+command=git bundle create /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.bundle 631605ba136ff864d23e9674ca6adb4a8df0b740..HEAD
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T19:15:23Z
+check=bundle_create
+---
+started_utc=2026-08-24T19:15:23Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=310119f91d5a4a89fcbf06ffe8e9ae84ea7c2a73
+command=git bundle verify /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.bundle
+--- raw_output ---
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.bundle is okay
+The bundle contains this ref:
+310119f91d5a4a89fcbf06ffe8e9ae84ea7c2a73 HEAD
+The bundle requires this ref:
+631605ba136ff864d23e9674ca6adb4a8df0b740 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T19:15:23Z
+check=bundle_verify
+---
+started_utc=2026-08-24T19:15:23Z
+cwd=/tmp/tmp.2QK2sOo8SF
+head=310119f91d5a4a89fcbf06ffe8e9ae84ea7c2a73
+command=seeded fetch prerequisite, fetch bundle HEAD, checkout 310119f91d5a4a89fcbf06ffe8e9ae84ea7c2a73, git fsck --full
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T19:15:40Z
+check=seeded_rehydration
+---
