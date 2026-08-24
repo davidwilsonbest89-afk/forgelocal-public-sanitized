@@ -445,8 +445,11 @@ func runServer(flags *serveFlags) {
 				fmt.Println("║  Local authentication: configured        ║")
 				fmt.Println("╚══════════════════════════════════════════╝")
 				if cfg.Host == "127.0.0.1" && !flags.noOpen {
-					openBrowser(fmt.Sprintf("http://127.0.0.1:%s", cfg.Port))
+					if err := openBrowser(fmt.Sprintf("http://127.0.0.1:%s", cfg.Port)); err != nil {
+						fmt.Fprintf(os.Stderr, "open browser failed: %v\n", err)
+					}
 				}
+
 				return
 			}
 			time.Sleep(500 * time.Millisecond)
