@@ -2,6 +2,15 @@
 
 All notable changes should be documented here. This project follows semantic version tags in the form `vX.Y.Z`.
 
+## Unreleased — 2026-08-24
+
+### T28 Audit
+
+- Completed the physical Agent 03 archive search from the mandatory T00–T27 baseline and recorded `T28-AUDIT-20260824-001`.
+- Kept T28 Extensions blocked because `agent03-t28-delivery.zip` and its SHA-256 sidecar were not present in the repository, GitHub tree, uploads, Downloads, or accessible workspace.
+- Preserved `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, and `release_authorized=false`.
+
+
 ## v2.1.12 - 2026-08-04
 
 ### Fixed

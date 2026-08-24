@@ -716,3 +716,14 @@ Reste à faire :
 - [ ] T11-7 : contrôles finaux : `go test -race` 0 DATA RACE, `go vet`, `go build`, Gitleaks delta `[]`, Gosec delta 0, `git diff --check`, RC inchangés.
 - [ ] T11-8 : archive de preuves canonique (rapport séparé du ZIP, SHA256SUMS stable, hash calculé une seule fois après constitution finale) + rapport final 16 champs + commit/push.
 - Statuts inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN` (findings `validation_back01_integration/` préexistants, règle `generic-api-key`), pilote suspendu, cinq gates publics en attente.
+
+# T28 — audit physique Agent 03 (2026-08-24)
+
+- [x] T28-AUDIT-01 : partir du tag obligatoire `t00-t27-complete-20260820` (`69411e65c880d168832a65fc8475cc97d562a9ad`), vérifier la branche de passation (`f03b58454a6c5e96c29e4ad045b469d16bf97f40`) et consigner `evidence/T28/BASELINE_DISCOVERY_RAW.log`.
+- [x] T28-AUDIT-02 : rechercher physiquement l’archive Agent 03 dans l’arbre Git baseline, la branche de passation, les références/arbre GitHub, les uploads, Downloads et le workspace accessible.
+- [x] T28-AUDIT-03 : consigner le verdict strict `BLOCKED` / `BLOCKED_MISSING_BASELINE` dans `evidence/T28/T28_AGENT03_AUDIT_REPORT.md`, `evidence/T28/t28-audit-status.json` et le registre canonique.
+- [ ] T28-EXT-01 : recevoir et vérifier `agent03-t28-delivery.zip` et son sidecar SHA-256 ; aucune allowlist, provenance ou implémentation d’extension avant ce contrôle.
+- [ ] T29 : non démarré ; contrat Agent 04 et modèle de menace non reçus.
+- [ ] T30 : non démarré ; kit T30-R3 absent et commit annoncé `cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb` introuvable dans les références et objets accessibles.
+
+**Gates maintenus :** `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`.

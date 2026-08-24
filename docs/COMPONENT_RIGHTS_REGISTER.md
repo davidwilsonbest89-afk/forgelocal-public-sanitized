@@ -20,3 +20,13 @@ T08 est autorisé strictement pour la réimplémentation Go d’un module déjà
 Cette approbation ne lève aucun gate de release : `PUBLIC_RELEASE_BLOCKED` et `SCAN_BLOCKED_UNKNOWN` (BACK-01) restent actifs, le pilote BACK-01 est suspendu et cinq gates publics demeurent en attente.
 
 Une source non sélectionnée ou dont la qualification est bloquée n’est pas une dépendance autorisée : avant import, elle doit déclarer une révision exacte et franchir les gates `PROV-01` à `PROV-07`.
+
+## Continuité T28 — audit Agent 03
+
+| Lot | Audit | Verdict | Archive requise | État |
+|---|---|---|---|---|
+| T28 | `T28-AUDIT-20260824-001` | `BLOCKED` | `agent03-t28-delivery.zip` + sidecar SHA-256 | Non reçue dans le dépôt, les uploads ou le workspace accessible |
+
+L’audit physique T28 est documenté dans [`evidence/T28/T28_AGENT03_AUDIT_REPORT.md`](../evidence/T28/T28_AGENT03_AUDIT_REPORT.md), avec sortie brute dans [`BASELINE_DISCOVERY_RAW.log`](../evidence/T28/BASELINE_DISCOVERY_RAW.log). Aucune implémentation d’extension n’est autorisée avant réception et vérification de l’archive Agent 03.
+
+Les gates `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN` et `NATIVE_SYSTEMVAULT_NOT_TESTED` restent actifs ; `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false` restent inchangés.

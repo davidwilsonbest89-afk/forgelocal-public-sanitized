@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "T28-AUDIT-20260824-001",
+  "audit_date_utc": "2026-08-24",
+  "lot": "T28",
+  "scope": "Agent 03 physical archive receipt audit",
+  "verdict": "BLOCKED",
+  "status": "BLOCKED_MISSING_BASELINE",
+  "baseline_tag": "t00-t27-complete-20260820",
+  "baseline_commit": "69411e65c880d168832a65fc8475cc97d562a9ad",
+  "handover_branch": "handover/t28-t42-new-session",
+  "handover_commit": "f03b58454a6c5e96c29e4ad045b469d16bf97f40",
+  "required_artifact": "agent03-t28-delivery.zip",
+  "required_sidecar": "agent03-t28-delivery.zip.sha256",
+  "artifact_found": false,
+  "search_surfaces": [
+    "baseline Git tree",
+    "handover Git tree",
+    "GitHub remote refs and tree",
+    "/home/ubuntu/upload",
+    "/home/ubuntu/Downloads",
+    "/home/ubuntu workspace"
+  ],
+  "t30_commit_found": false,
+  "t30_commit_checked": "cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb",
+  "raw_discovery_log": "evidence/T28/BASELINE_DISCOVERY_RAW.log",
+  "qualification_log": "evidence/T28/T28_AUDIT_QUALIFICATION.log",
+  "evidence_archive": "evidence/T28/t28-agent03-audit-evidence-20260824.zip",
+  "evidence_archive_sidecar": "evidence/T28/t28-agent03-audit-evidence-20260824.zip.sha256",
+  "permanent_gates": {
+    "PUBLIC_RELEASE_BLOCKED": true,
+    "SCAN_BLOCKED_UNKNOWN": true,
+    "NATIVE_SYSTEMVAULT_NOT_TESTED": true,
+    "camoflox_execution_authorized": false,
+    "t08_authorized": false,
+    "release_authorized": false
+  },
+  "next_allowed_step": "Receive the physical Agent 03 archive and sidecar, then repeat the physical audit in a temporary directory."
+}

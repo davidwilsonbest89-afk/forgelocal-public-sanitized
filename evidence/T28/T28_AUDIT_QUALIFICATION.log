@@ -1,0 +1,53 @@
+
+===== json_parse =====
+start_utc=2026-08-24T15:13:34Z
+cwd=
+command=python3 -c import\ json\;\ json.load\(open\(\"docs/component-rights-register.json\"\)\)\;\ json.load\(open\(\"evidence/T28/t28-audit-status.json\"\)\)\;\ print\(\"JSON_OK\"\)
+----- raw output -----
+JSON_OK
+----- end raw output -----
+end_utc=2026-08-24T15:13:34Z
+exit_code=0
+
+===== diff_check =====
+start_utc=2026-08-24T15:13:34Z
+cwd=
+command=git diff --check
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:13:34Z
+exit_code=0
+
+===== zip_test =====
+start_utc=2026-08-24T15:13:34Z
+cwd=
+command=unzip -t evidence/T28/t28-agent03-audit-evidence-20260824.zip
+----- raw output -----
+Archive:  evidence/T28/t28-agent03-audit-evidence-20260824.zip
+    testing: BASELINE_DISCOVERY_RAW.log   OK
+    testing: T28_AGENT03_AUDIT_REPORT.md   OK
+    testing: T28_AUDIT_QUALIFICATION.log   OK
+    testing: t28-audit-status.json    OK
+    testing: t28-agent03-audit-manifest.sha256   OK
+No errors detected in compressed data of evidence/T28/t28-agent03-audit-evidence-20260824.zip.
+----- end raw output -----
+end_utc=2026-08-24T15:13:34Z
+exit_code=0
+
+===== manifest_check =====
+start_utc=2026-08-24T15:13:34Z
+cwd=
+command=bash -c cd\ evidence/T28\ \&\&\ sha256sum\ -c\ t28-agent03-audit-manifest.sha256
+----- raw output -----
+BASELINE_DISCOVERY_RAW.log: OK
+T28_AGENT03_AUDIT_REPORT.md: FAILED
+T28_AUDIT_QUALIFICATION.log: FAILED
+t28-audit-status.json: OK
+sha256sum: WARNING: 2 computed checksums did NOT match
+----- end raw output -----
+end_utc=2026-08-24T15:13:34Z
+exit_code=1
+
+===== gitleaks_delta =====
+status=NOT_TESTED
+reason=gitleaks_not_installed_or_not_on_PATH

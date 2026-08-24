@@ -215,5 +215,22 @@
       "backup": "forbidden",
       "restore": "forbidden"
     }
+  },
+  "continuation_lots": {
+    "T28": {
+      "audit_id": "T28-AUDIT-20260824-001",
+      "verdict": "BLOCKED",
+      "status": "BLOCKED_MISSING_BASELINE",
+      "baseline_tag": "t00-t27-complete-20260820",
+      "baseline_commit": "69411e65c880d168832a65fc8475cc97d562a9ad",
+      "handover_commit": "f03b58454a6c5e96c29e4ad045b469d16bf97f40",
+      "required_artifact": "agent03-t28-delivery.zip",
+      "required_sidecar": "agent03-t28-delivery.zip.sha256",
+      "artifact_found": false,
+      "evidence_ref": "evidence/T28/T28_AGENT03_AUDIT_REPORT.md",
+      "raw_discovery_ref": "evidence/T28/BASELINE_DISCOVERY_RAW.log",
+      "implementation_allowed": false,
+      "next_allowed_step": "Receive and physically audit the Agent 03 archive and SHA-256 sidecar."
+    }
   }
 }

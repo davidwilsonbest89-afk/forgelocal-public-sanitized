@@ -1,0 +1,594 @@
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=date -u +%Y-%m-%dT%H:%M:%SZ
+----- raw output -----
+2026-08-24T15:07:34Z
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=pwd
+----- raw output -----
+/home/ubuntu/forgelocal
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=git status --short
+----- raw output -----
+[31m??[m evidence/T28/
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=git rev-parse HEAD
+----- raw output -----
+69411e65c880d168832a65fc8475cc97d562a9ad
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=git show -s --format=fuller HEAD
+----- raw output -----
+[33mcommit 69411e65c880d168832a65fc8475cc97d562a9ad[m
+Author:     davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+AuthorDate: Thu Aug 20 19:37:22 2026 +0000
+Commit:     davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+CommitDate: Thu Aug 20 19:37:22 2026 +0000
+
+    Archive verified T00-T27 packages with LFS fragments
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=git tag --points-at HEAD
+----- raw output -----
+t00-t27-complete-20260820
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=git remote -v
+----- raw output -----
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch)
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
+----- end raw output -----
+end_utc=2026-08-24T15:07:34Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:34Z
+cwd=/home/ubuntu/forgelocal
+command=git fsck --full
+----- raw output -----
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=df -h .
+----- raw output -----
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G  8.1G   40G  17% /
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=go version
+----- raw output -----
+bash: line 1: go: command not found
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=127
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=node --version
+----- raw output -----
+v22.13.0
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=pnpm --version
+----- raw output -----
+11.20.0
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=git lfs version
+----- raw output -----
+git: 'lfs' is not a git command. See 'git --help'.
+
+The most similar command is
+	lfs-s3
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=1
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=gitleaks version
+----- raw output -----
+bash: line 1: gitleaks: command not found
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=127
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=gosec -version
+----- raw output -----
+bash: line 1: gosec: command not found
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=127
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=printf "\nInstalled tools:\n"; command -v go node pnpm git-lfs gitleaks gosec staticcheck golangci-lint govulncheck syft trivy osv-scanner || true
+----- raw output -----
+
+Installed tools:
+/home/ubuntu/.nvm/versions/node/v22.13.0/bin/node
+/home/ubuntu/.nvm/versions/node/v22.13.0/bin/pnpm
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=printf "\nRepository top-level listing:\n"; find . -maxdepth 2 -type f -o -type d | sort | sed -n "1,240p"
+----- raw output -----
+
+Repository top-level listing:
+.
+./.codebase-memory
+./.codebase-memory/artifact.json
+./.codebase-memory/graph.db.zst
+./.git
+./.git/FETCH_HEAD
+./.git/HEAD
+./.git/branches
+./.git/config
+./.git/description
+./.git/hooks
+./.git/index
+./.git/info
+./.git/logs
+./.git/objects
+./.git/packed-refs
+./.git/refs
+./.gitattributes
+./.github
+./.github/CODEOWNERS
+./.github/ISSUE_TEMPLATE
+./.github/PULL_REQUEST_TEMPLATE.md
+./.github/production-release-policy.json
+./.github/workflows
+./.gitignore
+./.kiro
+./.kiro/settings
+./API.md
+./API.zh-TW.md
+./CHANGELOG.md
+./CODE_OF_CONDUCT.md
+./CONTRIBUTING.md
+./Dockerfile
+./LICENSE
+./Makefile
+./README.md
+./README.zh-TW.md
+./REIMPLEMENTATION_T12_T16_REPORT.md
+./SECURITY.md
+./SUPPORT.md
+./TOOLCHAIN.lock
+./cmd
+./cmd/back01-core
+./cmd/server
+./cmd/systemvault-doctor
+./config.default.json
+./continuation
+./continuation/T00-T27
+./continuation/T27-R1
+./data
+./data/.gitkeep
+./data/webgl-profiles
+./docker
+./docker/.dockerignore
+./docker/Dockerfile.run
+./docker/README.md
+./docker/README.zh-TW.md
+./docker/docker-compose.yml
+./docker/entrypoint.sh
+./docs
+./docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.manifest.json
+./docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md
+./docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.manifest.json
+./docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md
+./docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.manifest.json
+./docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.md
+./docs/ADDENDUM_V2_4_READONLY_SESSION_BOOTSTRAP.md
+./docs/ADDENDUM_V2_5_READONLY_PRODUCT_SURFACES.md
+./docs/API_READONLY_V1.md
+./docs/BASELINE_DISCOVERY_POLICY.md
+./docs/BASELINE_DISCOVERY_T27_R1_RAW.log
+./docs/BOOTSTRAP_RO_01_EVIDENCE.md
+./docs/BOOTSTRAP_RO_01_STRICT_EXECUTION.md
+./docs/BRANCH_PROTECTION_REQUIREMENTS.md
+./docs/CAHIER_DES_CHARGES_FORGELOCAL.md
+./docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json
+./docs/CAHIER_DES_CHARGES_v3_9_7.md
+./docs/CAMO_CORE_01_REGISTER.md
+./docs/COMPONENT_RIGHTS_REGISTER.md
+./docs/README.md
+./docs/SQLITE_SCHEMA_REFERENCE.md
+./docs/T07-R-CHECKLIST.md
+./docs/T07-R-INDEPENDENT-REVIEW-RESPONSE.md
+./docs/T07-R-MESSAGE-TO-REVIEWER.md
+./docs/T07-R-OWNER-COMPLETION-GUIDE.md
+./docs/T07-R-REVIEW-PACKET.md
+./docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json
+./docs/T07_CAMOFLOX_PROVENANCE.md
+./docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json
+./docs/T07_EVIDENCE_REQUEST_TO_RIGHTS_HOLDER.md
+./docs/T07_EXTERNAL_SOURCES.md
+./docs/T07_REMEDIATION_CHAIN.md
+./docs/T07_SECURITY_TRIAGE_REQUEST.md
+./docs/T08-FOLLOW-UP-WATCH-STATE.md
+./docs/T08-R2-FINAL-REPORT.md
+./docs/T08_CONCURRENCY_SPEC.md
+./docs/T10_PROXIES_FRAMING.md
+./docs/T11_BACKUPS_FRAMING.md
+./docs/T20_CDC_GAP_AUDIT_AND_SCOPE_PROPOSAL.md
+./docs/T20_NCF_SCOPE_AND_ACCEPTANCE.md
+./docs/T22_CONSISTENCY_AND_RECOVERY_ADDENDUM.md
+./docs/T22_PROFILE_HISTORY_CONTRACT.md
+./docs/T23_ARCHIVE_RESTORE_CONTRACT.md
+./docs/T23_SCOPE_AND_EVIDENCE_AUTHORIZATION.md
+./docs/T24_BULK_OPERATIONS_CONTRACT.md
+./docs/T24_SR_DEPENDENCY_REMEDIATION_CONTRACT.md
+./docs/T25_COOKIE_FIXTURES_CONTRACT.md
+./docs/T26_SIMULATED_PROXY_PROVIDER_CONTRACT.md
+./docs/T27_R1_CONTINUATION_SCOPE.md
+./docs/T27_R1_CORRECTIVE_EXECUTION_CONTRACT.md
+./docs/T27_R1_CR06_TO_CR09_GATES.md
+./docs/agent-integration.md
+./docs/agent-prompt-guide.md
+./docs/anti-detection.md
+./docs/architecture.md
+./docs/cli.md
+./docs/cloud-deployment.md
+./docs/code-review-web-search.md
+./docs/component-rights-register.json
+./docs/developer-integration.md
+./docs/documentation-language-audit.md
+./docs/dual-browser-architecture.md
+./docs/dual-browser-architecture.zh-TW.md
+./docs/execution.md
+./docs/fingerprint-detection-report.md
+./docs/humanize-research.md
+./docs/i18n.md
+./docs/linux-server.md
+./docs/linux-server.zh-TW.md
+./docs/local-quickstart.md
+./docs/mcp-call-flow.html
+./docs/phase2-fork-plan.md
+./docs/plan.md
+./docs/platform-support.md
+./docs/platform-support.zh-TW.md
+./docs/playwright-patches.md
+./docs/playwright-patches.zh-TW.md
+./docs/release.md
+./docs/security
+./docs/session-arch-design.md
+./docs/spike-results.md
+./docs/t07-private-provenance-attestation.template.json
+./docs/wbs.md
+./docs/webgl-fingerprint-strategy.md
+./evidence
+./evidence/T28
+./evidence/t06-working
+./evidence/t22-consistency
+./evidence/t22-pending-operation
+./examples
+./examples/humanize-test.html
+./examples/multi-login.yaml
+./extension
+./extension/_locales
+./extension/background.js
+./extension/lib
+./extension/manifest.json
+./extension/sidebar
+./forge-dashboard
+./forge-dashboard/.gitignore
+./forge-dashboard/.gitkeep
+./forge-dashboard/.prettierignore
+./forge-dashboard/.prettierrc
+./forge-dashboard/T18_GAP_AUDIT.md
+./forge-dashboard/T19RR_REPRODUCTION.md
+./forge-dashboard/client
+./forge-dashboard/components.json
+./forge-dashboard/ideas.md
+./forge-dashboard/package.json
+./forge-dashboard/patches
+./forge-dashboard/playwright.config.console.ts
+./forge-dashboard/playwright.config.ts
+./forge-dashboard/pnpm-lock.yaml
+./forge-dashboard/pnpm-workspace.yaml
+./forge-dashboard/proofs
+./forge-dashboard/server
+./forge-dashboard/shared
+./forge-dashboard/template.json
+./forge-dashboard/tests
+./forge-dashboard/todo.md
+./forge-dashboard/tsconfig.json
+./forge-dashboard/tsconfig.node.json
+./forge-dashboard/validate-core-readonly-bootstrap.mts
+./forge-dashboard/vite.config.ts
+./go.mod
+./go.sum
+./internal
+./internal/api
+./internal/backup
+./internal/browser
+./internal/config
+./internal/cookies
+./internal/environment
+./internal/fingerprint
+./internal/groups
+./internal/history
+./internal/humanize
+./internal/launch
+./internal/localvault
+./internal/mcp
+./internal/productschema
+./internal/profile
+./internal/profilemigration
+./internal/proxies
+./internal/proxyprovider
+./internal/runtime
+./internal/secrets
+./internal/spike
+./internal/templates
+./internal/workflow
+./launch.test
+./package.json
+./profiles
+./profiles/.gitkeep
+./release
+./release/back01-minimal
+./scripts
+./scripts/browseforge-native-smoke.sh
+./scripts/build-back01-minimal.sh
+./scripts/capture-runtime-release-evidence.sh
+./scripts/check-browseforge-chromium-assets.sh
+./scripts/check-ci-provenance-workflow.mjs
+./scripts/check-component-rights.mjs
+./scripts/check-doc-language.js
+./scripts/check-i18n.js
+./scripts/check-public-release-gate.py
+./scripts/check-release-separation.mjs
+./scripts/check-systemvault-anti-leak.sh
+./scripts/collect-bootstrap-ro-evidence.sh
+./scripts/collect-t06-evidence.sh
+./scripts/collect-t07-evidence.sh
+./scripts/collect-t07-r-evidence.sh
+./scripts/core-dev.sh
+./scripts/create-component-rights-evidence.mjs
+./scripts/dashboard-dev.sh
+./scripts/detector-harness.js
+./scripts/docker-go-validate.sh
+./scripts/generate-fingerprints.js
+./scripts/generate-t07-camoflox-dependency-inventory.mjs
+./scripts/generate-t07-camoflox-sbom.mjs
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=printf "\nT28/T30 candidate artifacts in repository:\n"; git ls-tree -r --name-only HEAD | grep -Ei "(t28|t30|agent03|agent04|password|handover|bundle|zip|proof|kit|evidence)" | sed -n "1,240p" || true
+----- raw output -----
+
+T28/T30 candidate artifacts in repository:
+continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00
+continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01
+continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip
+continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip
+continuation/T27-R1/evidence/CHAIN.md
+continuation/T27-R1/evidence/CR01/CR01_CANONICAL_PRESERVATION_R2_RAW.log
+continuation/T27-R1/evidence/CR01/CR01_CANONICAL_PRESERVATION_RAW.log
+continuation/T27-R1/evidence/CR01/CR01_GITLEAKS_EXTRACTION.json
+continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle.sha256
+continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip.sha256
+continuation/T27-R1/evidence/CR02/CR02_CANONICAL_PRESERVATION_FINAL_RAW.log
+continuation/T27-R1/evidence/CR02/CR02_CANONICAL_PRESERVATION_R2_RAW.log
+continuation/T27-R1/evidence/CR02/CR02_CANONICAL_PRESERVATION_RAW.log
+continuation/T27-R1/evidence/CR02/CR02_GITLEAKS_EXTRACTION.json
+continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle
+continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256
+continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip
+continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip.sha256
+continuation/T27-R1/evidence/CR03/CR03_CANONICAL_PRESERVATION_RAW.log
+continuation/T27-R1/evidence/CR03/CR03_GITLEAKS_EXTRACTION.json
+continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle
+continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle.sha256
+continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip
+continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip.sha256
+continuation/T27-R1/evidence/CR04/CR04_CANONICAL_PRESERVATION_RAW.log
+continuation/T27-R1/evidence/CR04/CR04_GITLEAKS_EXTRACTION.json
+continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle
+continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256
+continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip
+continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip.sha256
+continuation/T27-R1/evidence/CR05/CR05_CANONICAL_PRESERVATION_RAW.log
+continuation/T27-R1/evidence/CR05/CR05_GITLEAKS_EXTRACTION.json
+continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle
+continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle.sha256
+continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip
+continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip.sha256
+docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.manifest.json
+docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md
+docs/BOOTSTRAP_RO_01_EVIDENCE.md
+docs/T07_EVIDENCE_REQUEST_TO_RIGHTS_HOLDER.md
+docs/T23_SCOPE_AND_EVIDENCE_AUTHORIZATION.md
+evidence/t06-working/dashboard/t06-3-playwright.txt
+evidence/t06-working/security/gitleaks-staged-redacted.json
+evidence/t06-working/t06-1-api.json
+evidence/t06-working/t06-2-sqlite.json
+evidence/t06-working/t06-race.txt
+evidence/t22-consistency/BASELINE_DISCOVERY.log
+evidence/t22-consistency/full-qualification.log
+evidence/t22-consistency/gitleaks-delta-files.txt
+evidence/t22-consistency/gitleaks-delta.json
+evidence/t22-consistency/gitleaks-delta.log
+evidence/t22-consistency/gosec-base-head.diff
+evidence/t22-consistency/gosec-base-head.log
+evidence/t22-consistency/gosec-base-normalized.txt
+evidence/t22-consistency/gosec-base-rule-file.txt
+evidence/t22-consistency/gosec-base.json
+evidence/t22-consistency/gosec-head-normalized.txt
+evidence/t22-consistency/gosec-head-rule-file.txt
+evidence/t22-consistency/gosec-head.json
+evidence/t22-consistency/gosec-rule-file.diff
+evidence/t22-consistency/gosec-signatures.txt
+evidence/t22-pending-operation/full-qualification.log
+forge-dashboard/proofs/T19R_FINAL_REPORT.md
+forge-dashboard/proofs/T19R_GAP_AUDIT.md
+forge-dashboard/proofs/gosec_t19r_raw.json
+forge-dashboard/proofs/t19r-core-build-final.log.txt
+forge-dashboard/proofs/t19r-core-test-race-final.log.txt
+forge-dashboard/proofs/t19r-core-vet-final.log.txt
+forge-dashboard/proofs/t19r-gitleaks-delta.err
+forge-dashboard/proofs/t19r-gitleaks-delta.json
+forge-dashboard/proofs/t19r-gosec-filtered.json
+forge-dashboard/proofs/t19r-playwright-final.log.txt
+forge-dashboard/proofs/t19r-playwright-noruntime-attempt.log.txt
+forge-dashboard/proofs/t19r-playwright-qualified-attempt.log.txt
+scripts/capture-runtime-release-evidence.sh
+scripts/collect-bootstrap-ro-evidence.sh
+scripts/collect-t06-evidence.sh
+scripts/collect-t07-evidence.sh
+scripts/collect-t07-r-evidence.sh
+scripts/create-component-rights-evidence.mjs
+scripts/run_t19rr_harness_evidence.sh
+validation_back01_integration/candidates/chromium-common_151.0.7922.108-1xtradeb1.2404.1_amd64/RELEASE_EVIDENCE_SHA256SUMS
+validation_back01_integration/candidates/chromium_151.0.7922.108-1xtradeb1.2404.1_amd64/RELEASE_EVIDENCE_SHA256SUMS
+validation_back01_integration/final/runtime_evidence.sha256
+validation_back01_integration/final/sandbox-evidence-integrity-20260814.txt
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=printf "\nAccessible workspace candidates:\n"; find /home/ubuntu/upload /home/ubuntu/Downloads /home/ubuntu -maxdepth 4 -type f \( -iname "*agent03*" -o -iname "*t28*" -o -iname "*t30*" -o -iname "*handover*" -o -iname "*.bundle" -o -iname "*.zip" -o -iname "*.sha256" \) -print 2>/dev/null | sort | sed -n "1,300p"
+----- raw output -----
+
+Accessible workspace candidates:
+/home/ubuntu/baseline_discovery_t28.sh
+/home/ubuntu/forgelocal/continuation/T00-T27/T00_T27_PACKAGE_CHUNKS.sha256
+/home/ubuntu/forgelocal/continuation/T00-T27/T27_T00_T27_PACKAGE_MANIFEST.sha256
+/home/ubuntu/forgelocal/validation_back01_integration/final/runtime_evidence.sha256
+/home/ubuntu/page_texts/github.com_davidwilsonbest89-afk_forgelocal-public-sanitized_blob_handover_t28-t42-new-session_docs_.md
+----- end raw output -----
+end_utc=2026-08-24T15:07:36Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
+
+===== COMMAND BEGIN =====
+start_utc=2026-08-24T15:07:36Z
+cwd=/home/ubuntu/forgelocal
+command=printf "\nRemote refs:\n"; git ls-remote --heads --tags origin | grep -E "(handover/t28-t42-new-session|continuation-t00-t27-canonical|t00-t27-complete-20260820|t30|t28)" || true
+----- raw output -----
+
+Remote refs:
+69411e65c880d168832a65fc8475cc97d562a9ad	refs/heads/continuation-t00-t27-canonical
+f03b58454a6c5e96c29e4ad045b469d16bf97f40	refs/heads/handover/t28-t42-new-session
+72d54110c89583beacc556bb103f881b667d8137	refs/tags/t00-t27-complete-20260820
+69411e65c880d168832a65fc8475cc97d562a9ad	refs/tags/t00-t27-complete-20260820^{}
+----- end raw output -----
+end_utc=2026-08-24T15:07:37Z
+exit_code=0
+git_ref=69411e65c880d168832a65fc8475cc97d562a9ad
+===== COMMAND END =====
