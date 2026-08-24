@@ -69,3 +69,7 @@ Revue humaine indépendante des preuves et des classifications. Aucun runtime r�
 ## Métadonnées de publication
 
 La livraison append-only est portée par les commits de publication de la branche dédiée `audit/t00-t42-self-validation-synthetic-e2e`. Les hashes du wrapper V4 et du bundle delta sont fournis uniquement par leurs sidecars portables et par `SHA256SUMS`, afin d’éviter toute auto-référence dans les documents inclus. La branche reste en attente de revue humaine indépendante et ne constitue pas une release.
+
+## Référence distante finale
+
+La branche dédiée est publiée au HEAD 5e174dba6dddc35865f5bd943383d988ea12170c. Le wrapper V4 et le bundle delta sont vérifiés par leurs sidecars portables ; le manifeste et les hashes racine donnent les valeurs exactes. Un clone neuf distant a retourné git fsck --full avec code 0.

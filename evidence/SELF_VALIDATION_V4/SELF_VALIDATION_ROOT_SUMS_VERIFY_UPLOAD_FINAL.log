@@ -1,0 +1,11 @@
+SELF_VALIDATION_SUMMARY.md: OK
+SELF_VALIDATION_FINDINGS_CLASSIFICATION.md: OK
+SELF_VALIDATION_SYNTHETIC_E2E_RAW.log: OK
+SELF_VALIDATION_CLEANUP_VERIFICATION.log: OK
+SELF_VALIDATION_BUNDLE_DELTA_VERIFY.log: OK
+evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip: OK
+evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip.portable.sha256: OK
+evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle: OK
+evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle.portable.sha256: OK
+evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip: OK
+root_sums_exit_code=0

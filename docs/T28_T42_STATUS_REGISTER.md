@@ -95,3 +95,9 @@ T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`.
 - **Décision :** `T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW`
 
 Les gates permanentes, T30 `PENDING_REMOTE_EVIDENCE_RECONCILIATION` et les findings historiques restent inchangés. Cette livraison n’est pas une release.
+
+## 2026-08-24 — Référence distante finale de la livraison v4
+
+La branche dédiée audit/t00-t42-self-validation-synthetic-e2e est publiée et sa référence distante vérifiée : 5e174dba6dddc35865f5bd943383d988ea12170c. Le wrapper V4 est evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip, avec SHA-256 f6544091783c2a4d4694d4b5f02c5dd5f0c70d22dab5efbb90abfd81418019bc. Le bundle delta final cible la révision 5e174dba6dddc35865f5bd943383d988ea12170c et requiert 861880e56f13866346cf974110a01c8a890b86e2 ; son SHA-256 est 10059c3c610d5a1b1ade88f936c8bb52ed893741a596326d8ba532f6f415e2fe.
+
+Un clone neuf de cette branche retourne git fsck --full avec code 0. Le statut exact reste T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW. Les gates permanentes restent inchangées et aucune release n’est autorisée.

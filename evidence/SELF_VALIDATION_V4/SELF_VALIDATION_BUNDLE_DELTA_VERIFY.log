@@ -1,7 +1,6 @@
 evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle is okay
 The bundle contains this ref:
-5225aa29ef9ec1ebf2d8d5bdc5ead44ad1a71a2f HEAD
+5e174dba6dddc35865f5bd943383d988ea12170c HEAD
 The bundle requires this ref:
 861880e56f13866346cf974110a01c8a890b86e2 
 The bundle uses this hash algorithm: sha1
-bundle_verify_exit_code=0

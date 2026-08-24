@@ -774,3 +774,8 @@ Reste à faire :
 - [x] Documenter dans le registre les commits `ad41afd`/`c905f88`, hashes wrapper/bundle, résultats E2E et limites.
 - [x] Préparer la branche `audit/t00-t42-self-validation-synthetic-e2e` pour publication.
 - [ ] Obtenir la revue humaine indépendante ; aucune gate ne doit être levée avant celle-ci.
+
+# Publication distante finale V4 — 2026-08-24
+- [x] Vérifier le HEAD distant 5e174dba6dddc35865f5bd943383d988ea12170c et un clone neuf avec fsck code 0.
+- [x] Enregistrer les hashes finaux du wrapper et du bundle delta dans le registre et le CHANGELOG.
+- [ ] Obtenir la revue humaine indépendante ; ne lever aucune gate avant cette revue.
