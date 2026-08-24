@@ -1,0 +1,165 @@
+started_utc=2026-08-24T18:33:28Z
+cwd=/tmp/tmp.Exm4LUTjlN
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=sha256sum -c forgelocal-t28-t42-prehuman-validation.zip.portable.sha256 
+--- raw_output ---
+forgelocal-t28-t42-prehuman-validation.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:33:28Z
+check=zip_portable_sha256
+---
+started_utc=2026-08-24T18:33:28Z
+cwd=/tmp/tmp.Exm4LUTjlN
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=unzip -t forgelocal-t28-t42-prehuman-validation.zip 
+--- raw_output ---
+Archive:  forgelocal-t28-t42-prehuman-validation.zip
+    testing: PREHUMAN_VALIDATION_RAW.log   OK
+    testing: PREHUMAN_T00_T42_REFS.log   OK
+    testing: 06_gitleaks_cumulative.json   OK
+    testing: 07_gosec_baseline.json   OK
+    testing: 08_gosec_head.json       OK
+    testing: SHA256SUMS               OK
+    testing: PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log   OK
+    testing: PREHUMAN_T00_T42_SBOM.cdx.json   OK
+    testing: PREHUMAN_T00_T42_LFS_REHYDRATION_RAW.log   OK
+    testing: PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log   OK
+    testing: PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log   OK
+    testing: PREHUMAN_T00_T42_GITLEAKS.json   OK
+    testing: PREHUMAN_T00_T42_GOSEC_BASELINE_HEAD_DIFF.log   OK
+    testing: PREHUMAN_T00_T42_HISTORICAL_CHAIN_AUDIT.md   OK
+    testing: PREHUMAN_T00_T42_SUMMARY.md   OK
+    testing: SANDBOX_CAPACITY_DISCOVERY_RAW.log   OK
+    testing: PREHUMAN_T00_T42_BUNDLE_VERIFY_RAW.log   OK
+    testing: forgelocal-t28-t42-prehuman-validation.bundle   OK
+    testing: forgelocal-t28-t42-prehuman-validation.bundle.portable.sha256   OK
+    testing: PREHUMAN_T00_T42_BUNDLE_REHYDRATION_RAW.log   OK
+No errors detected in compressed data of forgelocal-t28-t42-prehuman-validation.zip.
+exit_code=0
+completed_utc=2026-08-24T18:33:29Z
+check=zip_integrity
+---
+started_utc=2026-08-24T18:33:29Z
+cwd=/tmp/tmp.Exm4LUTjlN
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=unzip -q forgelocal-t28-t42-prehuman-validation.zip -d /tmp/tmp.Exm4LUTjlN/extracted 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T18:33:29Z
+check=zip_extract
+---
+started_utc=2026-08-24T18:33:29Z
+cwd=/tmp/tmp.Exm4LUTjlN
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ SHA256SUMS bash /tmp/tmp.Exm4LUTjlN/extracted 
+--- raw_output ---
+06_gitleaks_cumulative.json: OK
+07_gosec_baseline.json: OK
+08_gosec_head.json: OK
+PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log: OK
+PREHUMAN_T00_T42_BUNDLE_REHYDRATION_RAW.log: OK
+PREHUMAN_T00_T42_BUNDLE_VERIFY_RAW.log: OK
+PREHUMAN_T00_T42_GITLEAKS.json: OK
+PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log: OK
+PREHUMAN_T00_T42_GOSEC_BASELINE_HEAD_DIFF.log: OK
+PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log: OK
+PREHUMAN_T00_T42_HISTORICAL_CHAIN_AUDIT.md: OK
+PREHUMAN_T00_T42_LFS_REHYDRATION_RAW.log: OK
+PREHUMAN_T00_T42_REFS.log: OK
+PREHUMAN_T00_T42_SBOM.cdx.json: OK
+PREHUMAN_T00_T42_SUMMARY.md: OK
+PREHUMAN_VALIDATION_RAW.log: OK
+SANDBOX_CAPACITY_DISCOVERY_RAW.log: OK
+forgelocal-t28-t42-prehuman-validation.bundle: OK
+exit_code=0
+completed_utc=2026-08-24T18:33:29Z
+check=extracted_manifest
+---
+started_utc=2026-08-24T18:33:29Z
+cwd=/tmp/tmp.Exm4LUTjlN
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=bash -c /home/ubuntu/bin/gitleaks\ detect\ --source\ \"\$1\"\ --no-git\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$2\" bash /tmp/tmp.Exm4LUTjlN/extracted /tmp/tmp.Exm4LUTjlN/EXTRACTED_GITLEAKS.json 
+--- raw_output ---
+[90m6:33PM[0m [32mINF[0m scan completed in 12.2s
+[90m6:33PM[0m [32mINF[0m no leaks found
+exit_code=0
+completed_utc=2026-08-24T18:33:42Z
+check=extracted_gitleaks
+---
+started_utc=2026-08-24T18:33:42Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=bash -c cd\ \"\$2\"\ \&\&\ git\ bundle\ verify\ \"\$1\" bash /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle /home/ubuntu/t30-master-independent-validation-20260824/clone 
+--- raw_output ---
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle is okay
+The bundle contains this ref:
+6ae02e4ceed239b9310fbf3fccb1b5170117251e HEAD
+The bundle requires this ref:
+69411e65c880d168832a65fc8475cc97d562a9ad 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:33:42Z
+check=bundle_verify
+---
+started_utc=2026-08-24T18:33:42Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=env GIT_LFS_SKIP_SMUDGE=1 git clone /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle /tmp/tmp.Exm4LUTjlN/clone-neuf 
+--- raw_output ---
+Cloning into '/tmp/tmp.Exm4LUTjlN/clone-neuf'...
+error: Repository lacks these prerequisite commits:
+error: 69411e65c880d168832a65fc8475cc97d562a9ad 
+fatal: remote transport reported error
+exit_code=128
+completed_utc=2026-08-24T18:33:42Z
+check=bundle_clone_standalone
+---
+started_utc=2026-08-24T18:33:42Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline init --quiet 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T18:33:42Z
+check=bundle_seeded_init
+---
+started_utc=2026-08-24T18:33:42Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline fetch --quiet /home/ubuntu/t30-master-independent-validation-20260824/clone 69411e65c880d168832a65fc8475cc97d562a9ad:refs/heads/baseline 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T18:33:44Z
+check=bundle_seeded_fetch_baseline
+---
+started_utc=2026-08-24T18:33:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline fetch --quiet /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle HEAD 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T18:33:46Z
+check=bundle_seeded_fetch
+---
+started_utc=2026-08-24T18:33:46Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline checkout --quiet --detach 6ae02e4ceed239b9310fbf3fccb1b5170117251e 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T18:33:47Z
+check=bundle_seeded_checkout
+---
+started_utc=2026-08-24T18:33:47Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=b9bbb0366e2a773da22fb10476a922f0471edd79
+command=git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline fsck --full 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T18:33:50Z
+check=bundle_seeded_fsck
+---
+declared_bundle_prerequisite=69411e65c880d168832a65fc8475cc97d562a9ad
+expected_bundle_head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+neutral_workdir=/tmp/tmp.Exm4LUTjlN
+completed_utc=2026-08-24T18:33:50Z
