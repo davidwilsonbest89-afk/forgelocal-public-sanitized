@@ -22,6 +22,8 @@
 | T41 | `BLOCKED` | `work/t41-release-readiness-blocked` `944376fd1c9d22dad44730854ce4b2d6203c743b` | Release publique interdite ; tentative oversized conservée hors dépôt |
 | T42 | `BLOCKED` | [work/t42-final-closure](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/work/t42-final-closure) `6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0` ; livraison [`evidence/T42_DELIVERY.md`](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/blob/work/t42-final-closure/evidence/T42_DELIVERY.md) | Clôture technique produite, clôture produit/release impossible |
 
+> Les lots T31 à T38 disposent de résultats de tests et de bundles réellement conservés. Leurs journaux `BASELINE_DISCOVERY_RAW.log` historiques n’étaient pas présents dans la branche finale ; les fichiers `BASELINE_RECONSTRUCTION_POSTHOC_RAW.log` sont des reconstructions postérieures explicitement étiquetées et ne doivent pas être présentées comme des preuves contemporaines.
+
 ## Gates permanentes
 
 Les valeurs suivantes restent inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false`. Aucun runtime réel, Camoufox, proxy réel, cookie réel, migration utilisateur, récupération de géolocalisation réelle, SystemVault natif ou release n’a été exécuté.
