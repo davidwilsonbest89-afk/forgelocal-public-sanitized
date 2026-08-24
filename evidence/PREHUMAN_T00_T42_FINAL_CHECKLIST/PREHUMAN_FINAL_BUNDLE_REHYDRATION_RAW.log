@@ -55,3 +55,27 @@ exit_code=0
 completed_utc=2026-08-24T19:16:55Z
 check=seeded_rehydration_current
 ---
+started_utc=2026-08-24T19:17:22Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=25afca8ee005d22f8d98c3f44ed7de70d661f2cd
+command=git bundle verify /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.bundle
+--- raw_output ---
+/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.bundle is okay
+The bundle contains this ref:
+25afca8ee005d22f8d98c3f44ed7de70d661f2cd HEAD
+The bundle requires this ref:
+631605ba136ff864d23e9674ca6adb4a8df0b740 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T19:17:22Z
+check=bundle_verify_final_content_head
+---
+started_utc=2026-08-24T19:17:22Z
+cwd=/tmp/tmp.CvOfpEqnfm
+head=25afca8ee005d22f8d98c3f44ed7de70d661f2cd
+command=seed prerequisite 631605ba136ff864d23e9674ca6adb4a8df0b740; fetch bundle; checkout 25afca8ee005d22f8d98c3f44ed7de70d661f2cd; git fsck --full
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T19:17:39Z
+check=seeded_rehydration_final_content_head
+---
