@@ -1,0 +1,15 @@
+started_utc=2026-08-24T19:13:44Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST
+command=gitleaks detect --source /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST --no-git --redact --report-format json --report-path /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_GITLEAKS_ADDENDUM.json
+--- raw_output ---
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m7:13PM[0m [32mINF[0m scan completed in 193ms
+[90m7:13PM[0m [32mINF[0m no leaks found
+exit_code=0
+completed_utc=2026-08-24T19:13:45Z

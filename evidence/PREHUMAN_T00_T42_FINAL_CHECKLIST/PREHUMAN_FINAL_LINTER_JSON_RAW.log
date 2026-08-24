@@ -1,0 +1,36 @@
+started_utc=2026-08-24T19:08:00Z
+cwd=/tmp/tmp.LXAOVs2MqB
+head=69411e65c880d168832a65fc8475cc97d562a9ad
+command=bash -c staticcheck\ -f\ json\ ./...\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_STATICCHECK_BASELINE.jsonl 
+--- raw_output ---
+exit_code=1
+completed_utc=2026-08-24T19:08:05Z
+check=staticcheck_baseline
+---
+started_utc=2026-08-24T19:08:05Z
+cwd=/tmp/tmp.LXAOVs2MqB
+head=69411e65c880d168832a65fc8475cc97d562a9ad
+command=bash -c golangci-lint\ run\ --out-format\ json\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_GOLANGCI_BASELINE.json 
+--- raw_output ---
+exit_code=1
+completed_utc=2026-08-24T19:08:06Z
+check=golangci_baseline
+---
+started_utc=2026-08-24T19:08:06Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c staticcheck\ -f\ json\ ./...\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_STATICCHECK_HEAD.jsonl 
+--- raw_output ---
+exit_code=1
+completed_utc=2026-08-24T19:08:07Z
+check=staticcheck_head
+---
+started_utc=2026-08-24T19:08:07Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c golangci-lint\ run\ --out-format\ json\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_GOLANGCI_HEAD.json 
+--- raw_output ---
+exit_code=1
+completed_utc=2026-08-24T19:08:07Z
+check=golangci_head
+---

@@ -1,0 +1,603 @@
+started_utc=2026-08-24T19:00:07Z
+cwd=/tmp/tmp.pzChYBBK5Z
+head=69411e65c880d168832a65fc8475cc97d562a9ad
+command=staticcheck ./... 
+--- raw_output ---
+cmd/server/cli.go:250:10: should convert global (type cliGlobal) to mcpStdioOptions instead of using struct literal (S1016)
+cmd/server/cli_runtime.go:237:2: this value of cfg is never used (SA4006)
+internal/api/backup_v1.go:35:19: func (*handler).profileHasLiveSession is unused (U1000)
+internal/api/proxies_test.go:30:6: type loopbackNet is unused (U1000)
+internal/api/proxies_test.go:32:20: func loopbackNet.Dial is unused (U1000)
+internal/api/proxies_test.go:33:20: func loopbackNet.DialTimeout is unused (U1000)
+internal/api/proxies_test.go:34:20: func loopbackNet.Listen is unused (U1000)
+internal/api/proxies_test.go:37:20: func loopbackNet.ListenPacket is unused (U1000)
+internal/api/proxies_test.go:38:20: func loopbackNet.ResolveTCPAddr is unused (U1000)
+internal/api/proxies_test.go:325:22: do not pass a nil Context, even if a function permits it; pass context.TODO if you are unsure about which Context to use (SA1012)
+internal/api/sessions.go:289:11: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/api/templates_test.go:32:6: func templateRequest is unused (U1000)
+internal/browser/launch_helpers.go:29:10: error strings should not be capitalized (ST1005)
+internal/browser/launch_helpers.go:33:10: error strings should not be capitalized (ST1005)
+internal/history/store.go:24:7: const defaultPageSize is unused (U1000)
+internal/humanize/keyboard.go:27:10: page.Fill is deprecated: Use locator-based [Locator.Fill] instead. Read more about [locators]. (SA1019)
+internal/humanize/keyboard.go:33:3: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (SA1019)
+internal/humanize/mouse.go:21:10: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (SA1019)
+internal/humanize/mouse.go:56:9: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (SA1019)
+internal/launch/launch.go:497:19: func (*Manager).await is unused (U1000)
+internal/launch/launch_test.go:37:2: field attached is unused (U1000)
+internal/mcp/advanced_tools.go:155:12: target.page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/advanced_tools.go:326:19: target.page.SelectOption is deprecated: Use locator-based [Locator.SelectOption] instead. Read more about [locators]. (SA1019)
+internal/mcp/advanced_tools.go:356:13: target.page.Check is deprecated: Use locator-based [Locator.Check] instead. Read more about [locators]. (SA1019)
+internal/mcp/advanced_tools.go:360:13: target.page.Uncheck is deprecated: Use locator-based [Locator.Uncheck] instead. Read more about [locators]. (SA1019)
+internal/mcp/results.go:9:6: func imageResult is unused (U1000)
+internal/mcp/screenshot_artifacts.go:17:7: const defaultScreenshotURLTTL is unused (U1000)
+internal/mcp/search_provider.go:48:6: func supportedSearchProviderNames is unused (U1000)
+internal/mcp/search_provider.go:66:12: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/search_provider.go:163:12: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/search_provider.go:248:12: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/server.go:36:2: field reqID is unused (U1000)
+internal/profile/backup_snapshot.go:229:49: tar.TypeRegA has been deprecated since Go 1.11 and an alternative has been available since Go 1.1: Use TypeReg instead.  (SA1019)
+internal/profile/errors.go:106:6: func wrap is unused (U1000)
+internal/proxies/errors.go:82:6: func wrap is unused (U1000)
+internal/proxies/store.go:213:2: this value of p is never used (SA4006)
+exit_code=1
+completed_utc=2026-08-24T19:00:12Z
+check=staticcheck_baseline
+---
+started_utc=2026-08-24T19:00:12Z
+cwd=/tmp/tmp.pzChYBBK5Z
+head=69411e65c880d168832a65fc8475cc97d562a9ad
+command=golangci-lint run 
+--- raw_output ---
+internal/config/config.go:168:13: Error return value of `os.MkdirAll` is not checked (errcheck)
+	os.MkdirAll("logs", 0755)
+	           ^
+internal/fingerprint/pool.go:72:18: Error return value of `json.Unmarshal` is not checked (errcheck)
+			json.Unmarshal(data, &copy)
+			              ^
+internal/spike/bind_test.go:20:20: Error return value of `playwright.Install` is not checked (errcheck)
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+	                  ^
+internal/spike/bind_test.go:26:15: Error return value of `pw.Stop` is not checked (errcheck)
+	defer pw.Stop()
+	             ^
+internal/spike/bind_test.go:51:22: Error return value of `browser.Unbind` is not checked (errcheck)
+	defer browser.Unbind()
+	                    ^
+internal/spike/bind_test.go:65:16: Error return value of `pw2.Stop` is not checked (errcheck)
+	defer pw2.Stop()
+	              ^
+internal/spike/bind_test.go:97:20: Error return value of `playwright.Install` is not checked (errcheck)
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+	                  ^
+internal/spike/bind_test.go:103:15: Error return value of `pw.Stop` is not checked (errcheck)
+	defer pw.Stop()
+	             ^
+internal/spike/bind_test.go:132:22: Error return value of `browser.Unbind` is not checked (errcheck)
+	defer browser.Unbind()
+	                    ^
+internal/spike/bind_test.go:146:16: Error return value of `pw2.Stop` is not checked (errcheck)
+	defer pw2.Stop()
+	              ^
+internal/spike/e2e_test.go:32:14: Error return value of `os.WriteFile` is not checked (errcheck)
+	os.WriteFile("/tmp/browseforge-test-config.json", []byte(config), 0644)
+	            ^
+internal/spike/e2e_test.go:33:13: Error return value of `os.MkdirAll` is not checked (errcheck)
+	os.MkdirAll("/tmp/browseforge-test-profiles", 0755)
+	           ^
+internal/spike/e2e_test.go:34:13: Error return value of `os.MkdirAll` is not checked (errcheck)
+	os.MkdirAll("/tmp/browseforge-test-data", 0755)
+	           ^
+internal/spike/e2e_test.go:46:24: Error return value of `cmd.Process.Kill` is not checked (errcheck)
+	defer cmd.Process.Kill()
+	                      ^
+internal/spike/e2e_test.go:82:36: Error return value of `(*encoding/json.Decoder).Decode` is not checked (errcheck)
+		json.NewDecoder(resp.Body).Decode(&result)
+		                                 ^
+internal/spike/fingerprint_test.go:53:20: Error return value of `playwright.Install` is not checked (errcheck)
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+	                  ^
+internal/spike/fingerprint_test.go:58:15: Error return value of `pw.Stop` is not checked (errcheck)
+	defer pw.Stop()
+	             ^
+internal/spike/fingerprint_test.go:64:11: Error return value of `page.Goto` is not checked (errcheck)
+	page.Goto("about:blank")
+	         ^
+internal/spike/fingerprint_test.go:133:11: Error return value of `page.Goto` is not checked (errcheck)
+	page.Goto("about:blank")
+	         ^
+internal/humanize/keyboard.go:33:13: Error return value of `page.Click` is not checked (errcheck)
+		page.Click(selector)
+		          ^
+internal/humanize/keyboard.go:60:13: Error return value of `kb.Press` is not checked (errcheck)
+				kb.Press("Backspace")
+				        ^
+internal/humanize/keyboard.go:73:10: Error return value of `kb.Press` is not checked (errcheck)
+	kb.Press(string(ch), playwright.KeyboardPressOptions{
+	        ^
+internal/workflow/engine.go:281:35: Error return value of `(*encoding/json.Decoder).Decode` is not checked (errcheck)
+	json.NewDecoder(resp.Body).Decode(&result)
+	                                 ^
+internal/history/store.go:137:19: Error return value of `tx.Rollback` is not checked (errcheck)
+	defer tx.Rollback()
+	                 ^
+internal/history/store.go:176:19: Error return value of `tx.Rollback` is not checked (errcheck)
+	defer tx.Rollback()
+	                 ^
+internal/history/store.go:305:19: Error return value of `tx.Rollback` is not checked (errcheck)
+	defer tx.Rollback()
+	                 ^
+internal/launch/launch_test.go:156:23: Error return value of `m.Request` is not checked (errcheck)
+	go func() { m.Request(ctx, lA, profileID(t.Name()+"-a")) }()
+	                     ^
+internal/launch/launch_test.go:157:23: Error return value of `m.Request` is not checked (errcheck)
+	go func() { m.Request(ctx, lB, profileID(t.Name()+"-b")) }()
+	                     ^
+internal/launch/launch_test.go:254:23: Error return value of `m.Request` is not checked (errcheck)
+	go func() { m.Request(ctx, launcher, "occupying") }()
+	                     ^
+internal/browser/download.go:145:14: Error return value of `os.WriteFile` is not checked (errcheck)
+	os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0644)
+	            ^
+internal/browser/download.go:334:44: Error return value of `(*os/exec.Cmd).Run` is not checked (errcheck)
+		exec.Command("xattr", "-cr", destDir).Run()
+		                                         ^
+internal/browser/download.go:341:10: Error return value of `os.Chmod` is not checked (errcheck)
+	os.Chmod(binPath, 0755)
+	        ^
+internal/browser/download.go:374:44: Error return value of `(*os/exec.Cmd).Run` is not checked (errcheck)
+		exec.Command("xattr", "-cr", destDir).Run()
+		                                         ^
+internal/browser/download.go:381:10: Error return value of `os.Chmod` is not checked (errcheck)
+	os.Chmod(binPath, 0755)
+	        ^
+internal/browser/download.go:453:44: Error return value of `(*os/exec.Cmd).Run` is not checked (errcheck)
+		exec.Command("xattr", "-cr", destDir).Run()
+		                                         ^
+internal/browser/download.go:460:10: Error return value of `os.Chmod` is not checked (errcheck)
+	os.Chmod(binPath, 0755)
+	        ^
+internal/browser/download.go:645:18: Error return value of `os.WriteFile` is not checked (errcheck)
+					os.WriteFile(target, data, 0755)
+					            ^
+internal/browser/launch_chromium.go:311:51: Error return value of `d.SaveAs` is not checked (errcheck)
+	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
+	                                                 ^
+internal/browser/launch_firefox.go:137:51: Error return value of `d.SaveAs` is not checked (errcheck)
+	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
+	                                                 ^
+internal/browser/manager.go:399:12: Error return value of `m.pw.Stop` is not checked (errcheck)
+		m.pw.Stop()
+		         ^
+internal/browser/socks5relay.go:87:12: Error return value of `conn.Write` is not checked (errcheck)
+	conn.Write([]byte{0x05, 0x00})
+	          ^
+internal/browser/socks5relay.go:95:13: Error return value of `conn.Write` is not checked (errcheck)
+		conn.Write([]byte{0x05, 0x07, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		          ^
+internal/browser/socks5relay.go:122:13: Error return value of `conn.Write` is not checked (errcheck)
+		conn.Write([]byte{0x05, 0x08, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		          ^
+internal/browser/socks5relay.go:142:10: Error return value of `io.Copy` is not checked (errcheck)
+		io.Copy(dst, src)
+		       ^
+internal/browser/socks5relay.go:144:17: Error return value of `tc.CloseWrite` is not checked (errcheck)
+			tc.CloseWrite()
+			             ^
+internal/mcp/protocol.go:40:27: Error return value of `(*encoding/json.Encoder).Encode` is not checked (errcheck)
+	json.NewEncoder(w).Encode(resp)
+	                         ^
+internal/mcp/server.go:667:36: Error return value of `(github.com/mxschmitt/playwright-go.Locator).Clear` is not checked (errcheck)
+		sess.Page.Locator(selector).Clear()
+		                                 ^
+internal/api/dashboard.go:13:9: Error return value of `w.Write` is not checked (errcheck)
+	w.Write(dashboardHTML)
+	       ^
+internal/api/navigate_policy_test.go:45:16: Error return value of `json.Unmarshal` is not checked (errcheck)
+	json.Unmarshal(rec.Body.Bytes(), &resp)
+	              ^
+internal/api/router.go:680:27: Error return value of `(*encoding/json.Encoder).Encode` is not checked (errcheck)
+	json.NewEncoder(w).Encode(v)
+	                         ^
+internal/proxies/errors.go:82:6: func `wrap` is unused (unused)
+func wrap(source, detail error) error {
+     ^
+internal/profile/errors.go:106:6: func `wrap` is unused (unused)
+func wrap(source, detail error) error {
+     ^
+internal/history/store.go:24:7: const `defaultPageSize` is unused (unused)
+const defaultPageSize = 50
+      ^
+internal/launch/launch.go:497:19: func `(*Manager).await` is unused (unused)
+func (m *Manager) await(ctx context.Context, sess Session) (Session, error) {
+                  ^
+internal/launch/launch_test.go:37:2: field `attached` is unused (unused)
+	attached int64
+	^
+internal/mcp/results.go:9:6: func `imageResult` is unused (unused)
+func imageResult(data []byte) map[string]any {
+     ^
+internal/mcp/screenshot_artifacts.go:17:7: const `defaultScreenshotURLTTL` is unused (unused)
+const defaultScreenshotURLTTL = 10 * time.Minute
+      ^
+internal/mcp/search_provider.go:48:6: func `supportedSearchProviderNames` is unused (unused)
+func supportedSearchProviderNames() []string {
+     ^
+internal/mcp/server.go:36:2: field `reqID` is unused (unused)
+	reqID               atomic.Int64
+	^
+internal/api/backup_v1.go:35:19: func `(*handler).profileHasLiveSession` is unused (unused)
+func (h *handler) profileHasLiveSession(profileID string) bool {
+                  ^
+internal/api/proxies_test.go:30:6: type `loopbackNet` is unused (unused)
+type loopbackNet struct{}
+     ^
+internal/api/proxies_test.go:32:20: func `loopbackNet.Dial` is unused (unused)
+func (loopbackNet) Dial(network, address string) (net.Conn, error)           { return nil, nil }
+                   ^
+internal/api/proxies_test.go:33:20: func `loopbackNet.DialTimeout` is unused (unused)
+func (loopbackNet) DialTimeout(network, address string, _ interface{}) error { return nil }
+                   ^
+internal/api/proxies_test.go:34:20: func `loopbackNet.Listen` is unused (unused)
+func (loopbackNet) Listen(network, address string) (net.Listener, error) {
+                   ^
+internal/api/proxies_test.go:37:20: func `loopbackNet.ListenPacket` is unused (unused)
+func (loopbackNet) ListenPacket(network, address string) (net.PacketConn, error) { return nil, nil }
+                   ^
+internal/api/proxies_test.go:38:20: func `loopbackNet.ResolveTCPAddr` is unused (unused)
+func (loopbackNet) ResolveTCPAddr(network, address string) (*net.TCPAddr, error) { return nil, nil }
+                   ^
+internal/api/templates_test.go:32:6: func `templateRequest` is unused (unused)
+func templateRequest(t *testing.T, cfg *config.Config, method, path string, body any) *httptest.ResponseRecorder {
+     ^
+cmd/server/cli.go:250:10: S1016: should convert global (type cliGlobal) to mcpStdioOptions instead of using struct literal (gosimple)
+	opts := mcpStdioOptions{baseDir: global.baseDir, configPath: global.configPath}
+	        ^
+cmd/server/cli_runtime.go:237:2: ineffectual assignment to cfg (ineffassign)
+	cfg := map[string]any{}
+	^
+internal/api/proxies_test.go:325:22: SA1012: do not pass a nil Context, even if a function permits it; pass context.TODO if you are unsure about which Context to use (staticcheck)
+	nilSink.auditRecord(nil, "proxy.created", "px", "corr", map[string]any{"has_secret": true})
+	                    ^
+internal/humanize/keyboard.go:27:10: SA1019: page.Fill is deprecated: Use locator-based [Locator.Fill] instead. Read more about [locators]. (staticcheck)
+		return page.Fill(selector, text)
+		       ^
+internal/humanize/mouse.go:21:10: SA1019: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (staticcheck)
+		return page.Click(selector)
+		       ^
+internal/humanize/mouse.go:56:9: SA1019: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (staticcheck)
+	return page.Click(selector, playwright.PageClickOptions{
+	       ^
+internal/api/sessions.go:289:11: SA1019: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err = page.WaitForSelector(req.Selector, opts)
+	         ^
+internal/mcp/advanced_tools.go:155:12: SA1019: target.page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err := target.page.WaitForSelector(selector, opts)
+	          ^
+internal/mcp/advanced_tools.go:326:19: SA1019: target.page.SelectOption is deprecated: Use locator-based [Locator.SelectOption] instead. Read more about [locators]. (staticcheck)
+	selected, err := target.page.SelectOption(selector, values, opts)
+	                 ^
+internal/mcp/advanced_tools.go:356:13: SA1019: target.page.Check is deprecated: Use locator-based [Locator.Check] instead. Read more about [locators]. (staticcheck)
+		if err := target.page.Check(selector, checkOpts); err != nil {
+		          ^
+internal/mcp/advanced_tools.go:360:13: SA1019: target.page.Uncheck is deprecated: Use locator-based [Locator.Uncheck] instead. Read more about [locators]. (staticcheck)
+		if err := target.page.Uncheck(selector, uncheckOpts); err != nil {
+		          ^
+internal/mcp/search_provider.go:66:12: SA1019: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err := page.WaitForSelector("#search", playwright.PageWaitForSelectorOptions{
+	          ^
+internal/mcp/search_provider.go:163:12: SA1019: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err := page.WaitForSelector("#b_results", playwright.PageWaitForSelectorOptions{
+	          ^
+internal/profile/backup_snapshot.go:229:49: SA1019: tar.TypeRegA has been deprecated since Go 1.11 and an alternative has been available since Go 1.1: Use TypeReg instead. (staticcheck)
+		if h.Typeflag != tar.TypeReg && h.Typeflag != tar.TypeRegA {
+		                                              ^
+internal/proxies/store.go:213:2: SA4006: this value of `p` is never used (staticcheck)
+	p, ok := s.proxies[id]
+	^
+exit_code=1
+completed_utc=2026-08-24T19:00:13Z
+check=golangci_baseline
+---
+started_utc=2026-08-24T19:00:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=staticcheck ./... 
+--- raw_output ---
+cmd/server/cli.go:250:10: should convert global (type cliGlobal) to mcpStdioOptions instead of using struct literal (S1016)
+cmd/server/cli_runtime.go:237:2: this value of cfg is never used (SA4006)
+internal/api/backup_v1.go:35:19: func (*handler).profileHasLiveSession is unused (U1000)
+internal/api/proxies_test.go:30:6: type loopbackNet is unused (U1000)
+internal/api/proxies_test.go:32:20: func loopbackNet.Dial is unused (U1000)
+internal/api/proxies_test.go:33:20: func loopbackNet.DialTimeout is unused (U1000)
+internal/api/proxies_test.go:34:20: func loopbackNet.Listen is unused (U1000)
+internal/api/proxies_test.go:37:20: func loopbackNet.ListenPacket is unused (U1000)
+internal/api/proxies_test.go:38:20: func loopbackNet.ResolveTCPAddr is unused (U1000)
+internal/api/proxies_test.go:325:22: do not pass a nil Context, even if a function permits it; pass context.TODO if you are unsure about which Context to use (SA1012)
+internal/api/sessions.go:289:11: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/api/templates_test.go:32:6: func templateRequest is unused (U1000)
+internal/browser/launch_helpers.go:29:10: error strings should not be capitalized (ST1005)
+internal/browser/launch_helpers.go:33:10: error strings should not be capitalized (ST1005)
+internal/history/store.go:24:7: const defaultPageSize is unused (U1000)
+internal/humanize/keyboard.go:27:10: page.Fill is deprecated: Use locator-based [Locator.Fill] instead. Read more about [locators]. (SA1019)
+internal/humanize/keyboard.go:33:3: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (SA1019)
+internal/humanize/mouse.go:21:10: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (SA1019)
+internal/humanize/mouse.go:56:9: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (SA1019)
+internal/launch/launch.go:497:19: func (*Manager).await is unused (U1000)
+internal/launch/launch_test.go:37:2: field attached is unused (U1000)
+internal/mcp/advanced_tools.go:155:12: target.page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/advanced_tools.go:326:19: target.page.SelectOption is deprecated: Use locator-based [Locator.SelectOption] instead. Read more about [locators]. (SA1019)
+internal/mcp/advanced_tools.go:356:13: target.page.Check is deprecated: Use locator-based [Locator.Check] instead. Read more about [locators]. (SA1019)
+internal/mcp/advanced_tools.go:360:13: target.page.Uncheck is deprecated: Use locator-based [Locator.Uncheck] instead. Read more about [locators]. (SA1019)
+internal/mcp/results.go:9:6: func imageResult is unused (U1000)
+internal/mcp/screenshot_artifacts.go:17:7: const defaultScreenshotURLTTL is unused (U1000)
+internal/mcp/search_provider.go:48:6: func supportedSearchProviderNames is unused (U1000)
+internal/mcp/search_provider.go:66:12: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/search_provider.go:163:12: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/search_provider.go:248:12: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (SA1019)
+internal/mcp/server.go:36:2: field reqID is unused (U1000)
+internal/profile/backup_snapshot.go:229:49: tar.TypeRegA has been deprecated since Go 1.11 and an alternative has been available since Go 1.1: Use TypeReg instead.  (SA1019)
+internal/profile/errors.go:106:6: func wrap is unused (U1000)
+internal/proxies/errors.go:82:6: func wrap is unused (U1000)
+internal/proxies/store.go:213:2: this value of p is never used (SA4006)
+exit_code=1
+completed_utc=2026-08-24T19:00:14Z
+check=staticcheck_head
+---
+started_utc=2026-08-24T19:00:14Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=golangci-lint run 
+--- raw_output ---
+internal/proxies/errors.go:82:6: func `wrap` is unused (unused)
+func wrap(source, detail error) error {
+     ^
+internal/proxies/store.go:213:2: SA4006: this value of `p` is never used (staticcheck)
+	p, ok := s.proxies[id]
+	^
+internal/sessiontrack/tracker_test.go:35:2: SA9003: empty branch (staticcheck)
+	if r.Start("ok") != nil {
+	^
+internal/api/dashboard.go:13:9: Error return value of `w.Write` is not checked (errcheck)
+	w.Write(dashboardHTML)
+	       ^
+internal/api/navigate_policy_test.go:45:16: Error return value of `json.Unmarshal` is not checked (errcheck)
+	json.Unmarshal(rec.Body.Bytes(), &resp)
+	              ^
+internal/api/router.go:680:27: Error return value of `(*encoding/json.Encoder).Encode` is not checked (errcheck)
+	json.NewEncoder(w).Encode(v)
+	                         ^
+internal/api/sessions.go:238:9: Error return value of `w.Write` is not checked (errcheck)
+	w.Write(data)
+	       ^
+internal/api/sessions.go:397:19: Error return value of `clientConn.Write` is not checked (errcheck)
+		clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+		                ^
+internal/api/sessions.go:411:19: Error return value of `backendConn.Write` is not checked (errcheck)
+	backendConn.Write([]byte(upgradeReq))
+	                 ^
+internal/api/sessions.go:417:19: Error return value of `clientConn.Write` is not checked (errcheck)
+		clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+		                ^
+internal/api/sessions.go:422:18: Error return value of `clientConn.Write` is not checked (errcheck)
+	clientConn.Write([]byte("HTTP/1.1 101 Switching Protocols\r\n"))
+	                ^
+internal/api/sessions.go:432:21: Error return value of `io.Copy` is not checked (errcheck)
+	go func() { io.Copy(backendConn, clientBuf); done <- struct{}{} }()
+	                   ^
+internal/api/sessions.go:433:21: Error return value of `io.Copy` is not checked (errcheck)
+	go func() { io.Copy(clientConn, backendBuf); done <- struct{}{} }()
+	                   ^
+internal/api/backup_v1.go:35:19: func `(*handler).profileHasLiveSession` is unused (unused)
+func (h *handler) profileHasLiveSession(profileID string) bool {
+                  ^
+internal/api/proxies_test.go:30:6: type `loopbackNet` is unused (unused)
+type loopbackNet struct{}
+     ^
+internal/api/proxies_test.go:32:20: func `loopbackNet.Dial` is unused (unused)
+func (loopbackNet) Dial(network, address string) (net.Conn, error)           { return nil, nil }
+                   ^
+internal/api/proxies_test.go:33:20: func `loopbackNet.DialTimeout` is unused (unused)
+func (loopbackNet) DialTimeout(network, address string, _ interface{}) error { return nil }
+                   ^
+internal/api/proxies_test.go:34:20: func `loopbackNet.Listen` is unused (unused)
+func (loopbackNet) Listen(network, address string) (net.Listener, error) {
+                   ^
+internal/api/proxies_test.go:37:20: func `loopbackNet.ListenPacket` is unused (unused)
+func (loopbackNet) ListenPacket(network, address string) (net.PacketConn, error) { return nil, nil }
+                   ^
+internal/api/proxies_test.go:38:20: func `loopbackNet.ResolveTCPAddr` is unused (unused)
+func (loopbackNet) ResolveTCPAddr(network, address string) (*net.TCPAddr, error) { return nil, nil }
+                   ^
+internal/api/templates_test.go:32:6: func `templateRequest` is unused (unused)
+func templateRequest(t *testing.T, cfg *config.Config, method, path string, body any) *httptest.ResponseRecorder {
+     ^
+internal/api/proxies_test.go:325:22: SA1012: do not pass a nil Context, even if a function permits it; pass context.TODO if you are unsure about which Context to use (staticcheck)
+	nilSink.auditRecord(nil, "proxy.created", "px", "corr", map[string]any{"has_secret": true})
+	                    ^
+internal/api/sessions.go:289:11: SA1019: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err = page.WaitForSelector(req.Selector, opts)
+	         ^
+internal/launch/launch_test.go:156:23: Error return value of `m.Request` is not checked (errcheck)
+	go func() { m.Request(ctx, lA, profileID(t.Name()+"-a")) }()
+	                     ^
+internal/launch/launch_test.go:157:23: Error return value of `m.Request` is not checked (errcheck)
+	go func() { m.Request(ctx, lB, profileID(t.Name()+"-b")) }()
+	                     ^
+internal/launch/launch_test.go:254:23: Error return value of `m.Request` is not checked (errcheck)
+	go func() { m.Request(ctx, launcher, "occupying") }()
+	                     ^
+internal/launch/launch.go:497:19: func `(*Manager).await` is unused (unused)
+func (m *Manager) await(ctx context.Context, sess Session) (Session, error) {
+                  ^
+internal/launch/launch_test.go:37:2: field `attached` is unused (unused)
+	attached int64
+	^
+internal/profile/errors.go:106:6: func `wrap` is unused (unused)
+func wrap(source, detail error) error {
+     ^
+internal/profile/backup_snapshot.go:229:49: SA1019: tar.TypeRegA has been deprecated since Go 1.11 and an alternative has been available since Go 1.1: Use TypeReg instead. (staticcheck)
+		if h.Typeflag != tar.TypeReg && h.Typeflag != tar.TypeRegA {
+		                                              ^
+internal/templates/store.go:172:19: Error return value of `tx.Rollback` is not checked (errcheck)
+	defer tx.Rollback()
+	                 ^
+internal/templates/store.go:210:19: Error return value of `tx.Rollback` is not checked (errcheck)
+	defer tx.Rollback()
+	                 ^
+internal/templates/store.go:260:19: Error return value of `tx.Rollback` is not checked (errcheck)
+	defer tx.Rollback()
+	                 ^
+internal/history/store.go:24:7: const `defaultPageSize` is unused (unused)
+const defaultPageSize = 50
+      ^
+internal/workflow/engine.go:281:35: Error return value of `(*encoding/json.Decoder).Decode` is not checked (errcheck)
+	json.NewDecoder(resp.Body).Decode(&result)
+	                                 ^
+internal/humanize/keyboard.go:33:13: Error return value of `page.Click` is not checked (errcheck)
+		page.Click(selector)
+		          ^
+internal/humanize/keyboard.go:60:13: Error return value of `kb.Press` is not checked (errcheck)
+				kb.Press("Backspace")
+				        ^
+internal/humanize/keyboard.go:73:10: Error return value of `kb.Press` is not checked (errcheck)
+	kb.Press(string(ch), playwright.KeyboardPressOptions{
+	        ^
+internal/humanize/keyboard.go:27:10: SA1019: page.Fill is deprecated: Use locator-based [Locator.Fill] instead. Read more about [locators]. (staticcheck)
+		return page.Fill(selector, text)
+		       ^
+internal/humanize/mouse.go:21:10: SA1019: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (staticcheck)
+		return page.Click(selector)
+		       ^
+internal/humanize/mouse.go:56:9: SA1019: page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. (staticcheck)
+	return page.Click(selector, playwright.PageClickOptions{
+	       ^
+internal/fingerprint/pool.go:72:18: Error return value of `json.Unmarshal` is not checked (errcheck)
+			json.Unmarshal(data, &copy)
+			              ^
+internal/browser/download.go:145:14: Error return value of `os.WriteFile` is not checked (errcheck)
+	os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0644)
+	            ^
+internal/browser/download.go:334:44: Error return value of `(*os/exec.Cmd).Run` is not checked (errcheck)
+		exec.Command("xattr", "-cr", destDir).Run()
+		                                         ^
+internal/browser/download.go:341:10: Error return value of `os.Chmod` is not checked (errcheck)
+	os.Chmod(binPath, 0755)
+	        ^
+internal/browser/download.go:357:13: Error return value of `os.MkdirAll` is not checked (errcheck)
+	os.MkdirAll(destDir, 0755)
+	           ^
+internal/browser/download.go:374:44: Error return value of `(*os/exec.Cmd).Run` is not checked (errcheck)
+		exec.Command("xattr", "-cr", destDir).Run()
+		                                         ^
+internal/browser/download.go:381:10: Error return value of `os.Chmod` is not checked (errcheck)
+	os.Chmod(binPath, 0755)
+	        ^
+internal/browser/download.go:436:13: Error return value of `os.MkdirAll` is not checked (errcheck)
+	os.MkdirAll(destDir, 0755)
+	           ^
+internal/browser/download.go:453:44: Error return value of `(*os/exec.Cmd).Run` is not checked (errcheck)
+		exec.Command("xattr", "-cr", destDir).Run()
+		                                         ^
+internal/browser/download.go:460:10: Error return value of `os.Chmod` is not checked (errcheck)
+	os.Chmod(binPath, 0755)
+	        ^
+internal/browser/download.go:573:15: Error return value of `os.MkdirAll` is not checked (errcheck)
+			os.MkdirAll(target, 0755)
+			           ^
+internal/browser/download.go:645:18: Error return value of `os.WriteFile` is not checked (errcheck)
+					os.WriteFile(target, data, 0755)
+					            ^
+internal/browser/launch_chromium.go:311:51: Error return value of `d.SaveAs` is not checked (errcheck)
+	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
+	                                                 ^
+internal/browser/launch_firefox.go:137:51: Error return value of `d.SaveAs` is not checked (errcheck)
+	onDl := func(d playwright.Download) { go d.SaveAs(filepath.Join(dlDir, d.SuggestedFilename())) }
+	                                                 ^
+internal/browser/manager.go:399:12: Error return value of `m.pw.Stop` is not checked (errcheck)
+		m.pw.Stop()
+		         ^
+internal/browser/socks5relay.go:87:12: Error return value of `conn.Write` is not checked (errcheck)
+	conn.Write([]byte{0x05, 0x00})
+	          ^
+internal/browser/socks5relay.go:95:13: Error return value of `conn.Write` is not checked (errcheck)
+		conn.Write([]byte{0x05, 0x07, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		          ^
+internal/browser/socks5relay.go:122:13: Error return value of `conn.Write` is not checked (errcheck)
+		conn.Write([]byte{0x05, 0x08, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		          ^
+internal/browser/socks5relay.go:142:10: Error return value of `io.Copy` is not checked (errcheck)
+		io.Copy(dst, src)
+		       ^
+internal/browser/socks5relay.go:144:17: Error return value of `tc.CloseWrite` is not checked (errcheck)
+			tc.CloseWrite()
+			             ^
+internal/mcp/protocol.go:40:27: Error return value of `(*encoding/json.Encoder).Encode` is not checked (errcheck)
+	json.NewEncoder(w).Encode(resp)
+	                         ^
+internal/mcp/server.go:667:36: Error return value of `(github.com/mxschmitt/playwright-go.Locator).Clear` is not checked (errcheck)
+		sess.Page.Locator(selector).Clear()
+		                                 ^
+internal/mcp/results.go:9:6: func `imageResult` is unused (unused)
+func imageResult(data []byte) map[string]any {
+     ^
+internal/mcp/screenshot_artifacts.go:17:7: const `defaultScreenshotURLTTL` is unused (unused)
+const defaultScreenshotURLTTL = 10 * time.Minute
+      ^
+internal/mcp/search_provider.go:48:6: func `supportedSearchProviderNames` is unused (unused)
+func supportedSearchProviderNames() []string {
+     ^
+internal/mcp/server.go:36:2: field `reqID` is unused (unused)
+	reqID               atomic.Int64
+	^
+internal/mcp/advanced_tools.go:155:12: SA1019: target.page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err := target.page.WaitForSelector(selector, opts)
+	          ^
+internal/mcp/advanced_tools.go:326:19: SA1019: target.page.SelectOption is deprecated: Use locator-based [Locator.SelectOption] instead. Read more about [locators]. (staticcheck)
+	selected, err := target.page.SelectOption(selector, values, opts)
+	                 ^
+internal/mcp/advanced_tools.go:356:13: SA1019: target.page.Check is deprecated: Use locator-based [Locator.Check] instead. Read more about [locators]. (staticcheck)
+		if err := target.page.Check(selector, checkOpts); err != nil {
+		          ^
+internal/mcp/advanced_tools.go:360:13: SA1019: target.page.Uncheck is deprecated: Use locator-based [Locator.Uncheck] instead. Read more about [locators]. (staticcheck)
+		if err := target.page.Uncheck(selector, uncheckOpts); err != nil {
+		          ^
+internal/mcp/search_provider.go:66:12: SA1019: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err := page.WaitForSelector("#search", playwright.PageWaitForSelectorOptions{
+	          ^
+internal/mcp/search_provider.go:163:12: SA1019: page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. (staticcheck)
+	_, err := page.WaitForSelector("#b_results", playwright.PageWaitForSelectorOptions{
+	          ^
+internal/spike/bind_test.go:20:20: Error return value of `playwright.Install` is not checked (errcheck)
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+	                  ^
+internal/spike/bind_test.go:26:15: Error return value of `pw.Stop` is not checked (errcheck)
+	defer pw.Stop()
+	             ^
+internal/spike/bind_test.go:51:22: Error return value of `browser.Unbind` is not checked (errcheck)
+	defer browser.Unbind()
+	                    ^
+internal/spike/bind_test.go:65:16: Error return value of `pw2.Stop` is not checked (errcheck)
+	defer pw2.Stop()
+	              ^
+internal/spike/bind_test.go:97:20: Error return value of `playwright.Install` is not checked (errcheck)
+	playwright.Install(&playwright.RunOptions{SkipInstallBrowsers: true})
+	                  ^
+internal/spike/bind_test.go:103:15: Error return value of `pw.Stop` is not checked (errcheck)
+	defer pw.Stop()
+	             ^
+internal/spike/bind_test.go:132:22: Error return value of `browser.Unbind` is not checked (errcheck)
+	defer browser.Unbind()
+	                    ^
+internal/spike/bind_test.go:146:16: Error return value of `pw2.Stop` is not checked (errcheck)
+	defer pw2.Stop()
+	              ^
+cmd/server/cli.go:250:10: S1016: should convert global (type cliGlobal) to mcpStdioOptions instead of using struct literal (gosimple)
+	opts := mcpStdioOptions{baseDir: global.baseDir, configPath: global.configPath}
+	        ^
+cmd/server/cli_runtime.go:237:2: ineffectual assignment to cfg (ineffassign)
+	cfg := map[string]any{}
+	^
+exit_code=1
+completed_utc=2026-08-24T19:00:14Z
+check=golangci_head
+---

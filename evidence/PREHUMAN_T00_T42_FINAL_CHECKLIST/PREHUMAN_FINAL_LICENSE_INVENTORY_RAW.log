@@ -1,0 +1,7 @@
+started_utc=2026-08-24T19:05:57Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824/forge-dashboard
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=pnpm dlx license-checker --production --json
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T19:05:58Z
