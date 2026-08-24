@@ -1,0 +1,332 @@
+started_utc=2026-08-24T18:07:46Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git lfs fsck 
+--- raw_output ---
+Git LFS fsck OK
+exit_code=0
+completed_utc=2026-08-24T18:07:50Z
+check=lfs_fsck
+---
+started_utc=2026-08-24T18:07:50Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cat\ \"\$1\"/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00\ \"\$1\"/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01\ \>\ \"\$2/forgelocal-continuation-t00-t23-20260819.zip\"\ \&\&\ sha256sum\ \"\$2/forgelocal-continuation-t00-t23-20260819.zip\"\ \&\&\ test\ \"\$\(sha256sum\ \"\$2/forgelocal-continuation-t00-t23-20260819.zip\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\"\ =\ 0046e99e22ad1498a6307f4acd43d1cebbb7c317d47edee16329fc38b59b924d bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27 /tmp/tmp.BI61relEtI 
+--- raw_output ---
+0046e99e22ad1498a6307f4acd43d1cebbb7c317d47edee16329fc38b59b924d  /tmp/tmp.BI61relEtI/forgelocal-continuation-t00-t23-20260819.zip
+exit_code=0
+completed_utc=2026-08-24T18:07:56Z
+check=t00_t23_reconstruct
+---
+started_utc=2026-08-24T18:07:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=unzip -tq /tmp/tmp.BI61relEtI/forgelocal-continuation-t00-t23-20260819.zip 
+--- raw_output ---
+No errors detected in compressed data of /tmp/tmp.BI61relEtI/forgelocal-continuation-t00-t23-20260819.zip.
+exit_code=0
+completed_utc=2026-08-24T18:08:10Z
+check=t00_t23_unzip
+---
+started_utc=2026-08-24T18:08:10Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t24-bulk-evidence-7f63c71.zip 
+--- raw_output ---
+037eb5650a8fcefb1b2ab9bf747772ab3cf2ead9c698ca85675d433da56f4526 forgelocal-t24-bulk-evidence-7f63c71.zip
+exit_code=0
+completed_utc=2026-08-24T18:08:11Z
+check=hash_forgelocal-t24-bulk-evidence-7f63c71.zip
+---
+started_utc=2026-08-24T18:08:11Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip 
+--- raw_output ---
+9c9be6107e420e7a8c83ac64d6f3b80063bcad10b08f5a7c4c395f342bbd61f3 forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+exit_code=0
+completed_utc=2026-08-24T18:08:11Z
+check=hash_forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+---
+started_utc=2026-08-24T18:08:11Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t26-simulated-provider-930003c.zip 
+--- raw_output ---
+bb984b9d991538862079b68d16804136e1912e689d89ac262866cc5221ac3f18 forgelocal-t26-simulated-provider-930003c.zip
+exit_code=0
+completed_utc=2026-08-24T18:08:11Z
+check=hash_forgelocal-t26-simulated-provider-930003c.zip
+---
+started_utc=2026-08-24T18:08:11Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t27-r1-local-continuation-full.tar.gz 
+--- raw_output ---
+2a13180aa44db915313c4bd9a0d2ae8472a5cea6dcbddebcc6c70e222a78fb22 forgelocal-t27-r1-local-continuation-full.tar.gz
+exit_code=0
+completed_utc=2026-08-24T18:08:12Z
+check=hash_forgelocal-t27-r1-local-continuation-full.tar.gz
+---
+started_utc=2026-08-24T18:08:12Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=unzip -tq continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip 
+--- raw_output ---
+No errors detected in compressed data of continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip.
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_zip_continuation_T27-R1_evidence_CR01_forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=unzip -tq continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip 
+--- raw_output ---
+No errors detected in compressed data of continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip.
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_zip_continuation_T27-R1_evidence_CR02_forgelocal-t27-r1-cr02-evidence-d993289.zip
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=unzip -tq continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip 
+--- raw_output ---
+No errors detected in compressed data of continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip.
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_zip_continuation_T27-R1_evidence_CR03_forgelocal-t27-r1-cr03-evidence-a912cd6.zip
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=unzip -tq continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip 
+--- raw_output ---
+No errors detected in compressed data of continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip.
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_zip_continuation_T27-R1_evidence_CR04_forgelocal-t27-r1-cr04-evidence-967d293.zip
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=unzip -tq continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip 
+--- raw_output ---
+No errors detected in compressed data of continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip.
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_zip_continuation_T27-R1_evidence_CR05_forgelocal-t27-r1-cr05-evidence-9386e5c.zip
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git bundle verify continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle 
+--- raw_output ---
+continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle is okay
+The bundle contains these 13 refs:
+df50a2b242f74558d2e405f099bdfe6db6437c9c refs/heads/t27-r1-corrective-foundation
+a7d3c6afe1627d23f6d4d990f4ab7e00186b780d refs/tags/baseline-discovery-policy-2026-08-20
+9a0245aa92710df892e0ea1d81200ee70527684e refs/tags/t22-consistency-and-tests-2026-08-19
+d25007fc53ff63274e19666d47fac5a998939fbf refs/tags/t22-consistency-and-tests-final-2026-08-19
+1de858733eff65ba5112c3ca74ac9ffd04811494 refs/tags/t22-pending-operation-correction-2026-08-19
+48988552720b1461cf503dc3b4e4822b831a19ff refs/tags/t22-profile-history-2026-08-19
+89cae50a1e1694df80a3e5c66c87dcddfe0ed1c8 refs/tags/t23-archive-restore-2026-08-19
+e54e18a4a616207a3d47984c1a420a84354d8436 refs/tags/t23-scope-and-evidence-correction-2026-08-19
+436eebd4937352476c9e4c44a13b536c48d0c048 refs/tags/t24-bulk-operations-2026-08-20
+f77fd0bb02993854eec9ecf05fda9788546860ec refs/tags/t24-sr-dependency-remediation-2026-08-20
+f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7 refs/tags/t25-synthetic-cookie-fixtures-2026-08-20
+3ebcf55fcab7ab10e34ffea652f2398e07e299da refs/tags/t26-simulated-proxy-provider-2026-08-20
+df50a2b242f74558d2e405f099bdfe6db6437c9c HEAD
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_bundle_continuation_T27-R1_evidence_CR01_forgelocal-t27-r1-cr01-df50a2b.bundle
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git bundle verify continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle 
+--- raw_output ---
+continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle is okay
+The bundle contains this ref:
+d993289b415ff96ed68a1fde52b50d39db63c0c4 refs/heads/t27-r1-corrective-foundation
+The bundle requires this ref:
+df50a2b242f74558d2e405f099bdfe6db6437c9c 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_bundle_continuation_T27-R1_evidence_CR02_forgelocal-t27-r1-cr02-d993289.delta.bundle
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git bundle verify continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle 
+--- raw_output ---
+continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle is okay
+The bundle contains this ref:
+a912cd6ee77ea853a1374e94a5d21932d04e0356 refs/heads/t27-r1-corrective-foundation
+The bundle requires this ref:
+d993289b415ff96ed68a1fde52b50d39db63c0c4 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_bundle_continuation_T27-R1_evidence_CR03_forgelocal-t27-r1-cr03-a912cd6.delta.bundle
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git bundle verify continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle 
+--- raw_output ---
+continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle is okay
+The bundle contains this ref:
+967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a refs/heads/t27-r1-corrective-foundation
+The bundle requires this ref:
+a912cd6ee77ea853a1374e94a5d21932d04e0356 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_bundle_continuation_T27-R1_evidence_CR04_forgelocal-t27-r1-cr04-967d293.delta.bundle
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git bundle verify continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle 
+--- raw_output ---
+continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle is okay
+The bundle contains this ref:
+a62ce4664777de9def6253a8cfd3c84e5e3df424 refs/heads/t27-r1-corrective-foundation
+The bundle requires this ref:
+967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_bundle_continuation_T27-R1_evidence_CR05_forgelocal-t27-r1-cr05-9386e5c.delta.bundle
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR01 continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr01-df50a2b.bundle: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR01_forgelocal-t27-r1-cr01-df50a2b.bundle.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR01 continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr01-evidence-df50a2b.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR01_forgelocal-t27-r1-cr01-evidence-df50a2b.zip.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR02 continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr02-d993289.delta.bundle: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR02_forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR02 continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr02-evidence-d993289.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR02_forgelocal-t27-r1-cr02-evidence-d993289.zip.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR03 continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr03-a912cd6.delta.bundle: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR03_forgelocal-t27-r1-cr03-a912cd6.delta.bundle.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR03 continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr03-evidence-a912cd6.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR03_forgelocal-t27-r1-cr03-evidence-a912cd6.zip.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR04 continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr04-967d293.delta.bundle: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR04_forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR04 continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr04-evidence-967d293.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR04_forgelocal-t27-r1-cr04-evidence-967d293.zip.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR05 continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr05-9386e5c.delta.bundle: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR05_forgelocal-t27-r1-cr05-9386e5c.delta.bundle.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR05 continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip.sha256 
+--- raw_output ---
+forgelocal-t27-r1-cr05-evidence-9386e5c.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:13Z
+check=historical_sidecar_continuation_T27-R1_evidence_CR05_forgelocal-t27-r1-cr05-evidence-9386e5c.zip.sha256
+---
+started_utc=2026-08-24T18:08:13Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ ../T27_T00_T27_PACKAGE_MANIFEST.sha256 bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages 
+--- raw_output ---
+sha256sum: forgelocal-continuation-t00-t23-20260819.zip: No such file or directory
+forgelocal-continuation-t00-t23-20260819.zip: FAILED open or read
+forgelocal-t24-bulk-evidence-7f63c71.zip: OK
+forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip: OK
+forgelocal-t26-simulated-provider-930003c.zip: OK
+forgelocal-t27-r1-local-continuation-full.tar.gz: OK
+sha256sum: WARNING: 1 listed file could not be read
+exit_code=1
+completed_utc=2026-08-24T18:08:14Z
+check=historical_top_manifest
+---
+started_utc=2026-08-24T18:08:14Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c cp\ \"\$1/T00_T27_PACKAGE_CHUNKS.sha256\"\ \"\$2/\"\;\ \(cd\ \"\$2\"\ \&\&\ sha256sum\ -c\ T00_T27_PACKAGE_CHUNKS.sha256\) bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27 /tmp/tmp.BI61relEtI 
+--- raw_output ---
+forgelocal-continuation-t00-t23-20260819.zip: OK
+exit_code=0
+completed_utc=2026-08-24T18:08:17Z
+check=historical_lfs_pointer_manifest
+---

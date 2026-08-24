@@ -1,0 +1,289 @@
+started_utc=2026-08-24T17:52:51Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=df -h / 
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   21G   27G  45% /
+exit_code=0
+completed_utc=2026-08-24T17:52:51Z
+check=capacity_df_root
+---
+started_utc=2026-08-24T17:52:51Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=df -h /home/ubuntu 
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   21G   27G  45% /
+exit_code=0
+completed_utc=2026-08-24T17:52:51Z
+check=capacity_df_home
+---
+started_utc=2026-08-24T17:52:51Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c du\ -sh\ /home/ubuntu/\*\ 2\>/dev/null\ \|\ sort\ -h\ \|\ tail\ -20 
+--- raw_output ---
+197M	/home/ubuntu/forgelocal-t41-evidence.zip
+197M	/home/ubuntu/forgelocal-t41-release-readiness-large-rejected.bundle
+197M	/home/ubuntu/forgelocal-t42-closure-large-rejected.bundle
+197M	/home/ubuntu/forgelocal-t42-evidence-large-rejected.zip
+197M	/home/ubuntu/forgelocal-t42-evidence.zip
+243M	/home/ubuntu/toolchain
+284M	/home/ubuntu/cr08-independent-validation-20260824
+284M	/home/ubuntu/t28-independent-validation-20260824
+284M	/home/ubuntu/t29-independent-validation-20260824
+325M	/home/ubuntu/bin
+432M	/home/ubuntu/cr06-independent-validation-20260824
+592M	/home/ubuntu/forgelocal-audit-incoming-20260824
+592M	/home/ubuntu/forgelocal-corrections-20260824
+592M	/home/ubuntu/upload
+593M	/home/ubuntu/forgelocal-audit-extracted-20260824
+633M	/home/ubuntu/forgelocal-t42-fresh-20260824
+634M	/home/ubuntu/forgelocal-prehuman-fresh-20260824
+1.2G	/home/ubuntu/forgelocal-post-correction-clones-20260824
+1.2G	/home/ubuntu/go
+1.4G	/home/ubuntu/t30-master-independent-validation-20260824
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=capacity_du_home
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git --version 
+--- raw_output ---
+git version 2.43.0
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=git_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git lfs version 
+--- raw_output ---
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=git_lfs_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=go version 
+--- raw_output ---
+go version go1.25.13 linux/amd64
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=go_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=node --version 
+--- raw_output ---
+v22.13.0
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=node_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=pnpm --version 
+--- raw_output ---
+10.4.1
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=pnpm_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=/home/ubuntu/bin/gitleaks version 
+--- raw_output ---
+8.18.4
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=gitleaks_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=/home/ubuntu/go/bin/gosec -version 
+--- raw_output ---
+Version: dev
+Git tag: 
+Build date: 
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=gosec_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=/home/ubuntu/go/bin/staticcheck -version 
+--- raw_output ---
+staticcheck 2025.1.1 (0.6.1)
+exit_code=0
+completed_utc=2026-08-24T17:52:52Z
+check=staticcheck_version
+---
+started_utc=2026-08-24T17:52:52Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=/home/ubuntu/go/bin/govulncheck -version 
+--- raw_output ---
+Go: go1.25.13
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=govulncheck_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ golangci-lint\ \&\&\ golangci-lint\ version\ \|\|\ exit\ 127 
+--- raw_output ---
+/home/ubuntu/bin/golangci-lint
+golangci-lint has version 1.64.8 built with go1.24.1 from 8b37f141 on 2025-03-17T20:41:53Z
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=golangci_lint_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ trivy\ \&\&\ trivy\ --version\ \|\|\ exit\ 127 
+--- raw_output ---
+/home/ubuntu/bin/trivy
+Version: 0.74.0
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=trivy_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ osv-scanner\ \&\&\ osv-scanner\ --version\ \|\|\ exit\ 127 
+--- raw_output ---
+/home/ubuntu/bin/osv-scanner
+osv-scanner version: 2.0.3
+commit: 4f77b30556bb6d171b5d55f01da4fb0261b9da7d
+built at: 2025-06-16T01:55:14Z
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=osv_scanner_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ syft\ \&\&\ syft\ version\ \|\|\ exit\ 127 
+--- raw_output ---
+/home/ubuntu/bin/syft
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=syft_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ shellcheck\ \&\&\ shellcheck\ --version\ \|\|\ exit\ 127 
+--- raw_output ---
+/usr/bin/shellcheck
+ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=shellcheck_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ yamllint\ \&\&\ yamllint\ --version\ \|\|\ exit\ 127 
+--- raw_output ---
+/usr/bin/yamllint
+yamllint 1.33.0
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=yamllint_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c command\ -v\ jq\ \&\&\ jq\ --version\ \|\|\ exit\ 127 
+--- raw_output ---
+/usr/bin/jq
+jq-1.7
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=jq_version
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git status --short --branch 
+--- raw_output ---
+## [31mHEAD (no branch)[m
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=git_status
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git rev-parse t00-t27-complete-20260820\^\{commit\} 
+--- raw_output ---
+69411e65c880d168832a65fc8475cc97d562a9ad
+exit_code=0
+completed_utc=2026-08-24T17:52:56Z
+check=baseline_commit
+---
+started_utc=2026-08-24T17:52:56Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git rev-parse t00-t27-complete-20260820\^\{tag\} 
+--- raw_output ---
+72d54110c89583beacc556bb103f881b667d8137
+exit_code=0
+completed_utc=2026-08-24T17:52:57Z
+check=baseline_tag_object
+---
+started_utc=2026-08-24T17:52:57Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=git show-ref --verify refs/tags/t00-t27-complete-20260820 
+--- raw_output ---
+72d54110c89583beacc556bb103f881b667d8137 refs/tags/t00-t27-complete-20260820
+exit_code=0
+completed_utc=2026-08-24T17:52:57Z
+check=baseline_tag_verify
+---
+started_utc=2026-08-24T17:52:57Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+command=bash -c grep\ -RIn\ \"git\ lfs\ pull\"\ /home/ubuntu/run_prehuman\*\ /home/ubuntu/build_\*\ 2\>/dev/null\ \|\|\ true 
+--- raw_output ---
+/home/ubuntu/run_prehuman_baseline_discovery.sh:46:run no_global_lfs_pull bash -c 'grep -RIn "git lfs pull" /home/ubuntu/run_prehuman* /home/ubuntu/build_* 2>/dev/null || true'
+exit_code=0
+completed_utc=2026-08-24T17:52:57Z
+check=no_global_lfs_pull
+---
+completed_utc=2026-08-24T17:52:57Z

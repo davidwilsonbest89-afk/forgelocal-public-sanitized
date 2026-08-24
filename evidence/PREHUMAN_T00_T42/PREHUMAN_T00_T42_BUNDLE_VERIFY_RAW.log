@@ -1,0 +1,14 @@
+started_utc=2026-08-24T18:23:07Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+command=git bundle verify /home/ubuntu/forgelocal-prehuman-validation-20260824/forgelocal-t28-t42-prehuman-validation.bundle
+--- raw_output ---
+/home/ubuntu/forgelocal-prehuman-validation-20260824/forgelocal-t28-t42-prehuman-validation.bundle is okay
+The bundle contains this ref:
+6ae02e4ceed239b9310fbf3fccb1b5170117251e HEAD
+The bundle requires this ref:
+69411e65c880d168832a65fc8475cc97d562a9ad 
+The bundle uses this hash algorithm: sha1
+exit_code=0
+completed_utc=2026-08-24T18:23:07Z
+required=69411e65c880d168832a65fc8475cc97d562a9ad
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e

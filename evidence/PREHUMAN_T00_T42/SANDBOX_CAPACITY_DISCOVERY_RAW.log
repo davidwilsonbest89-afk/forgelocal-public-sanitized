@@ -1,0 +1,36 @@
+started_utc=2026-08-24T17:51:01Z
+cwd=/home/ubuntu
+command=df -h /
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   21G   28G  43% /
+exit_code=0
+command=df -h /home/ubuntu
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   21G   28G  43% /
+exit_code=0
+command=du -sh /home/ubuntu/* 2>/dev/null | sort -h | tail -20
+--- raw_output ---
+197M	/home/ubuntu/forgelocal-t41-evidence-large-rejected.zip
+197M	/home/ubuntu/forgelocal-t41-evidence.zip
+197M	/home/ubuntu/forgelocal-t41-release-readiness-large-rejected.bundle
+197M	/home/ubuntu/forgelocal-t42-closure-large-rejected.bundle
+197M	/home/ubuntu/forgelocal-t42-evidence-large-rejected.zip
+197M	/home/ubuntu/forgelocal-t42-evidence.zip
+243M	/home/ubuntu/toolchain
+284M	/home/ubuntu/cr08-independent-validation-20260824
+284M	/home/ubuntu/t28-independent-validation-20260824
+284M	/home/ubuntu/t29-independent-validation-20260824
+432M	/home/ubuntu/cr06-independent-validation-20260824
+592M	/home/ubuntu/forgelocal-audit-incoming-20260824
+592M	/home/ubuntu/forgelocal-corrections-20260824
+592M	/home/ubuntu/upload
+593M	/home/ubuntu/forgelocal-audit-extracted-20260824
+633M	/home/ubuntu/forgelocal-t42-fresh-20260824
+634M	/home/ubuntu/forgelocal-prehuman-fresh-20260824
+1.2G	/home/ubuntu/forgelocal-post-correction-clones-20260824
+1.2G	/home/ubuntu/go
+1.4G	/home/ubuntu/t30-master-independent-validation-20260824
+exit_code=0
+completed_utc=2026-08-24T17:51:01Z

@@ -1,0 +1,80 @@
+started_utc=2026-08-24T17:59:03Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+started_utc=2026-08-24T17:59:03Z
+path=continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00
+command=git lfs fetch origin --include=continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00
+free_before_kib=27739972
+fetch: Fetching reference HEAD
+free_after_kib=25794344
+exit_code=0
+completed_utc=2026-08-24T18:01:20Z
+---
+started_utc=2026-08-24T18:01:20Z
+path=continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01
+command=git lfs fetch origin --include=continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01
+free_before_kib=25794344
+fetch: Fetching reference HEAD
+free_after_kib=25379248
+exit_code=0
+completed_utc=2026-08-24T18:02:17Z
+---
+started_utc=2026-08-24T18:02:17Z
+path=continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip
+command=git lfs fetch origin --include=continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip
+free_before_kib=25379248
+fetch: Fetching reference HEAD
+free_after_kib=25228880
+exit_code=0
+completed_utc=2026-08-24T18:02:27Z
+---
+started_utc=2026-08-24T18:02:27Z
+path=continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+command=git lfs fetch origin --include=continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+free_before_kib=25228880
+fetch: Fetching reference HEAD
+free_after_kib=25078504
+exit_code=0
+completed_utc=2026-08-24T18:02:45Z
+---
+started_utc=2026-08-24T18:02:45Z
+path=continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip
+command=git lfs fetch origin --include=continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip
+free_before_kib=25078504
+fetch: Fetching reference HEAD
+free_after_kib=24928120
+exit_code=0
+completed_utc=2026-08-24T18:03:06Z
+---
+started_utc=2026-08-24T18:03:06Z
+path=continuation/T00-T27/archive-packages/forgelocal-t27-r1-local-continuation-full.tar.gz
+command=git lfs fetch origin --include=continuation/T00-T27/archive-packages/forgelocal-t27-r1-local-continuation-full.tar.gz
+free_before_kib=24928120
+fetch: Fetching reference HEAD
+free_after_kib=24499548
+exit_code=0
+completed_utc=2026-08-24T18:03:47Z
+---
+started_utc=2026-08-24T18:03:47Z
+path=continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+command=git lfs fetch origin --include=continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+free_before_kib=24499548
+fetch: Fetching reference HEAD
+free_after_kib=24349216
+exit_code=0
+completed_utc=2026-08-24T18:04:03Z
+---
+started_utc=2026-08-24T18:04:03Z
+path=continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+command=git lfs fetch origin --include=continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+free_before_kib=24349216
+fetch: Fetching reference HEAD
+free_after_kib=24198704
+exit_code=0
+completed_utc=2026-08-24T18:04:17Z
+---
+command=git lfs fsck
+--- raw_output ---
+Git LFS fsck OK
+exit_code=0
+completed_utc=2026-08-24T18:04:21Z

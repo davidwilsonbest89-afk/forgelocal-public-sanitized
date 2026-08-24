@@ -1,0 +1,7 @@
+started_utc=2026-08-24T18:23:15Z
+cwd=/tmp/tmp.AywZRCRXzr
+command=init repo, fetch prerequisite, fetch bundle, checkout explicit head, git fsck --full
+required=69411e65c880d168832a65fc8475cc97d562a9ad
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+fsck_exit_code=0
+completed_utc=2026-08-24T18:23:15Z

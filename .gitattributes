@@ -3,3 +3,5 @@ continuation/T27-R1/evidence/CR01/*.bundle filter=lfs diff=lfs merge=lfs -text
 continuation/T00-T27/archive-packages/*.zip filter=lfs diff=lfs merge=lfs -text
 continuation/T00-T27/archive-packages/*.tar.gz filter=lfs diff=lfs merge=lfs -text
 continuation/T00-T27/archive-packages/*.zip.part.* filter=lfs diff=lfs merge=lfs -text
+evidence/PREHUMAN_T00_T42/*.zip filter=lfs diff=lfs merge=lfs -text
+evidence/PREHUMAN_T00_T42/*.bundle filter=lfs diff=lfs merge=lfs -text
