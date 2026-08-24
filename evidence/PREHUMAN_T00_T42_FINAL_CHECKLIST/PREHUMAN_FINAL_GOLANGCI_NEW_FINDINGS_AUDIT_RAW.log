@@ -1,0 +1,194 @@
+audit_utc=2026-08-24T21:23:10Z
+repo=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=6ae02e4ceed239b9310fbf3fccb1b5170117251e
+
+--- cmd/server/main.go:469 ---
+cc554320d937aeb6714aaecac3f73a8f4d599a44 188 469 1
+author HungChun Chiang
+author-mail <im@Mxp.tw>
+author-time 1776965437
+author-tz +0800
+committer HungChun Chiang
+committer-mail <im@Mxp.tw>
+committer-time 1776965437
+committer-tz +0800
+summary v1.0.0 — 雙引擎多指紋反偵測瀏覽器
+boundary
+filename cmd/server/main.go
+		srv.Shutdown(ctx)
+
+--- cmd/server/main.go:567 ---
+cc554320d937aeb6714aaecac3f73a8f4d599a44 225 567 1
+author HungChun Chiang
+author-mail <im@Mxp.tw>
+author-time 1776965437
+author-tz +0800
+committer HungChun Chiang
+committer-mail <im@Mxp.tw>
+committer-time 1776965437
+committer-tz +0800
+summary v1.0.0 — 雙引擎多指紋反偵測瀏覽器
+boundary
+filename cmd/server/main.go
+			cmd.Start()
+
+--- internal/api/sessions.go:238 ---
+cc554320d937aeb6714aaecac3f73a8f4d599a44 180 238 1
+author HungChun Chiang
+author-mail <im@Mxp.tw>
+author-time 1776965437
+author-tz +0800
+committer HungChun Chiang
+committer-mail <im@Mxp.tw>
+committer-time 1776965437
+committer-tz +0800
+summary v1.0.0 — 雙引擎多指紋反偵測瀏覽器
+boundary
+filename internal/api/sessions.go
+		w.Write(data)
+
+--- internal/api/sessions.go:397 ---
+649f80380815d8755799e8eb325a70fe74d1da9c 332 397 1
+author Chiang HungChun
+author-mail <im@mxp.tw>
+author-time 1778592158
+author-tz +0800
+committer Chiang HungChun
+committer-mail <im@mxp.tw>
+committer-time 1778592158
+committer-tz +0800
+summary feat: WebSocket proxy — single port Playwright Connect with token auth
+previous 380531aa3306356180638f80b0ea36f0fdc92e27 internal/api/sessions.go
+filename internal/api/sessions.go
+			clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+
+--- internal/api/sessions.go:411 ---
+649f80380815d8755799e8eb325a70fe74d1da9c 340 411 1
+author Chiang HungChun
+author-mail <im@mxp.tw>
+author-time 1778592158
+author-tz +0800
+committer Chiang HungChun
+committer-mail <im@mxp.tw>
+committer-time 1778592158
+committer-tz +0800
+summary feat: WebSocket proxy — single port Playwright Connect with token auth
+previous 380531aa3306356180638f80b0ea36f0fdc92e27 internal/api/sessions.go
+filename internal/api/sessions.go
+		backendConn.Write([]byte(upgradeReq))
+
+--- internal/api/sessions.go:417 ---
+649f80380815d8755799e8eb325a70fe74d1da9c 346 417 1
+author Chiang HungChun
+author-mail <im@mxp.tw>
+author-time 1778592158
+author-tz +0800
+committer Chiang HungChun
+committer-mail <im@mxp.tw>
+committer-time 1778592158
+committer-tz +0800
+summary feat: WebSocket proxy — single port Playwright Connect with token auth
+previous 380531aa3306356180638f80b0ea36f0fdc92e27 internal/api/sessions.go
+filename internal/api/sessions.go
+			clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+
+--- internal/api/sessions.go:422 ---
+58a5e79490e4a86bc0d22c4d12ded40fdeb1e9b4 358 422 1
+author Chiang HungChun
+author-mail <im@mxp.tw>
+author-time 1778593684
+author-tz +0800
+committer Chiang HungChun
+committer-mail <im@mxp.tw>
+committer-time 1778593684
+committer-tz +0800
+summary wip: WebSocket proxy — handshake works but Playwright protocol init fails
+previous e741288ba2313fe30250073a5a147af8265f0433 internal/api/sessions.go
+filename internal/api/sessions.go
+		clientConn.Write([]byte("HTTP/1.1 101 Switching Protocols\r\n"))
+
+--- internal/api/sessions.go:432 ---
+58a5e79490e4a86bc0d22c4d12ded40fdeb1e9b4 366 432 1
+author Chiang HungChun
+author-mail <im@mxp.tw>
+author-time 1778593684
+author-tz +0800
+committer Chiang HungChun
+committer-mail <im@mxp.tw>
+committer-time 1778593684
+committer-tz +0800
+summary wip: WebSocket proxy — handshake works but Playwright protocol init fails
+previous e741288ba2313fe30250073a5a147af8265f0433 internal/api/sessions.go
+filename internal/api/sessions.go
+		go func() { io.Copy(backendConn, clientBuf); done <- struct{}{} }()
+
+--- internal/api/sessions.go:433 ---
+58a5e79490e4a86bc0d22c4d12ded40fdeb1e9b4 367 433 1
+author Chiang HungChun
+author-mail <im@mxp.tw>
+author-time 1778593684
+author-tz +0800
+committer Chiang HungChun
+committer-mail <im@mxp.tw>
+committer-time 1778593684
+committer-tz +0800
+summary wip: WebSocket proxy — handshake works but Playwright protocol init fails
+previous e741288ba2313fe30250073a5a147af8265f0433 internal/api/sessions.go
+filename internal/api/sessions.go
+		go func() { io.Copy(clientConn, backendBuf); done <- struct{}{} }()
+
+--- internal/backup/store.go:109 ---
+97465bf211348f88131f8763d9be2c878e32c62c 41 109 1
+author Manus AI
+author-mail <manus@local.invalid>
+author-time 1786663401
+author-tz +0000
+committer Manus AI
+committer-mail <manus@local.invalid>
+committer-time 1786663401
+committer-tz +0000
+summary feat(back01): add encrypted local backup foundation
+filename internal/backup/store.go
+		defer tx.Rollback()
+
+--- internal/backup/store.go:125 ---
+97465bf211348f88131f8763d9be2c878e32c62c 57 125 1
+author Manus AI
+author-mail <manus@local.invalid>
+author-time 1786663401
+author-tz +0000
+committer Manus AI
+committer-mail <manus@local.invalid>
+committer-time 1786663401
+committer-tz +0000
+summary feat(back01): add encrypted local backup foundation
+filename internal/backup/store.go
+		defer tx.Rollback()
+
+--- internal/backup/store.go:144 ---
+97465bf211348f88131f8763d9be2c878e32c62c 76 144 1
+author Manus AI
+author-mail <manus@local.invalid>
+author-time 1786663401
+author-tz +0000
+committer Manus AI
+committer-mail <manus@local.invalid>
+committer-time 1786663401
+committer-tz +0000
+summary feat(back01): add encrypted local backup foundation
+filename internal/backup/store.go
+		defer tx.Rollback()
+
+--- internal/sessiontrack/tracker_test.go:35 ---
+57fc8114bf360697bb075bb95d7062d5a2d49134 35 35 1
+author davidwilsonbest89-afk
+author-mail <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+author-time 1787589662
+author-tz +0000
+committer davidwilsonbest89-afk
+committer-mail <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+committer-time 1787589662
+committer-tz +0000
+summary feat: add redacted session lifecycle tracking
+filename internal/sessiontrack/tracker_test.go
+		if r.Start("ok") != nil {

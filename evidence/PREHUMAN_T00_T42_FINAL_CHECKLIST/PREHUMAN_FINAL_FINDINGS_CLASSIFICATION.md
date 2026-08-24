@@ -1,74 +1,128 @@
-# ForgeLocal — classification des findings de la checklist finale
+# ForgeLocal — finalisation des findings T00–T42
 
-**Date d’exécution des contrôles :** 2026-08-24 (UTC)
-**Clone et commit contrôlés :** clone neuf `/home/ubuntu/forgelocal-prehuman-fresh-20260824`, HEAD `6ae02e4ceed239b9310fbf3fccb1b5170117251e`
-**Baseline de comparaison :** tag `t00-t27-complete-20260820`, commit `69411e65c880d168832a65fc8475cc97d562a9ad`
-**Nature de cet ajout :** preuves et documentation uniquement ; aucun fichier de code produit, test métier, gate, runtime, secret ou release n’a été ajouté ou modifié dans cet addendum.
+**Exécution :** 2026-08-24, clone neuf `/home/ubuntu/forgelocal-prehuman-fresh-20260824`, HEAD `6ae02e4ceed239b9310fbf3fccb1b5170117251e`.
+**Baseline :** `t00-t27-complete-20260820` → `69411e65c880d168832a65fc8475cc97d562a9ad`.
+**Principe :** cette finalisation ne modifie aucun fichier de code produit ou test métier. Chaque finding est soit corrigé dans une passe autorisée, soit couvert par une exception explicite avec propriétaire, risque et condition de levée.
 
-## Décision de lecture
+## Décision de finalisation
 
-La checklist finale **n’est pas un passage technique global**. Les contrôles déterministes qui ont retourné `exit_code=0` sont conservés comme réussis. Les outils qui ont trouvé des éléments sont conservés avec leur code de sortie réel et une qualification explicite. Les gates et les absences de configuration protégée empêchent toute requalification implicite en PASS.
+Les 13 findings GolangCI-Lint nouveaux du différentiel sont désormais tous individualisés. Aucun n’est laissé sous la seule étiquette « connu » : les 13 portent une exception ouverte et traçable, car leur correction nécessiterait soit une modification de code Core/API/BACK-01, soit une modification du test T38, ce qui élargirait la passe gelée. Le résultat est donc `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW`, avec risques ouverts explicitement documentés.
 
-| Domaine | Résultat brut | Classification stricte | Conséquence |
+| Contrôle | Baseline | HEAD | Nouveau/résolu | Décision |
+|---|---:|---:|---:|---|
+| GolangCI-Lint | 82 | 83 | 13 nouveaux / 12 résolus | 13 exceptions exhaustives, aucune correction de code dans cette passe |
+| Staticcheck | 36 | 36 | 0 / 0 | 36 exceptions historiques exhaustives |
+| Gosec | 194 | 194 | 0 / 0 | Findings historiques conservés, normalisation jointe |
+| Trivy | 6 | 6 | 0 / 0 | 6 misconfigurations historiques exhaustives |
+| Gitleaks | signal historique | signal historique | `APi=REDACTED`, scanner 1 | `SCAN_BLOCKED_UNKNOWN` maintenu |
+
+## 13 findings GolangCI-Lint nouveaux
+
+La sévérité n’est pas renseignée dans le JSON GolangCI-Lint; aucune sévérité numérique n’est donc inventée. Les messages bruts, chemins et lignes proviennent de la sortie JSON. Les causes listées distinguent les lignes historiquement présentes mais absentes de la sortie baseline des lignes effectivement introduites par T38.
+
+| Règle | Fichier | Ligne | Message brut | Sévérité | Baseline/head | Lot et cause | Risque | Décision | Propriétaire ; condition de levée |
+|---|---|---:|---|---|---|---|---|---|---|
+| staticcheck | internal/sessiontrack/tracker_test.go | 35 | SA9003: empty branch | non renseignée dans JSON | absent baseline / présent HEAD | T38 ; La ligne appartient à 57fc811… introduit dans T38 après la baseline; c’est le seul finding rattachable directement à un lot HEAD. | Branche de test vide pouvant réduire la lisibilité ou masquer une intention. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Propriétaire T38 ; Décider explicitement la forme de la branche de test et rejouer T38; aucune modification dans cette passe. |
+| errcheck | internal/backup/store.go | 109 | Error return value of `tx.Rollback` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | BACK-01 / historique antérieur à la baseline ; La ligne appartient à 97465bf… du socle backup antérieur à la baseline; fichier inchangé dans baseline..HEAD. | Rollback différé non contrôlé. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur BACK-01 ; Autorisation BACK-01 et décision sur les erreurs de rollback différé. |
+| errcheck | internal/backup/store.go | 125 | Error return value of `tx.Rollback` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | BACK-01 / historique antérieur à la baseline ; La ligne appartient à 97465bf… du socle backup antérieur à la baseline; fichier inchangé dans baseline..HEAD. | Rollback différé non contrôlé. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur BACK-01 ; Autorisation BACK-01 et décision sur les erreurs de rollback différé. |
+| errcheck | internal/backup/store.go | 144 | Error return value of `tx.Rollback` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | BACK-01 / historique antérieur à la baseline ; La ligne appartient à 97465bf… du socle backup antérieur à la baseline; fichier inchangé dans baseline..HEAD. | Rollback différé non contrôlé. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur BACK-01 ; Autorisation BACK-01 et décision sur les erreurs de rollback différé. |
+| errcheck | internal/api/sessions.go | 238 | Error return value of `w.Write` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / API legacy, lot précis non établi ; La ligne appartient à cc554320… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Écriture HTTP non contrôlée. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction API et test métier associé. |
+| errcheck | internal/api/sessions.go | 397 | Error return value of `clientConn.Write` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / WebSocket legacy, lot précis non établi ; La ligne appartient à 649f803… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Réponse 502 potentiellement non écrite. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction du proxy WebSocket et test dédié. |
+| errcheck | internal/api/sessions.go | 411 | Error return value of `backendConn.Write` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / WebSocket legacy, lot précis non établi ; La ligne appartient à 649f803… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Requête de montée de tunnel potentiellement non écrite. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction du proxy WebSocket et test dédié. |
+| errcheck | internal/api/sessions.go | 417 | Error return value of `clientConn.Write` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / WebSocket legacy, lot précis non établi ; La ligne appartient à 649f803… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Réponse HTTP d’erreur potentiellement non écrite. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction du proxy WebSocket et test dédié. |
+| errcheck | internal/api/sessions.go | 422 | Error return value of `clientConn.Write` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / WebSocket legacy, lot précis non établi ; La ligne appartient à 58a5e79… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Handshake 101 potentiellement non écrit. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction du proxy WebSocket et test dédié. |
+| errcheck | internal/api/sessions.go | 432 | Error return value of `io.Copy` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / WebSocket legacy, lot précis non établi ; La ligne appartient à 58a5e79… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Copie client→backend potentiellement interrompue sans signal. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction du proxy WebSocket et test dédié. |
+| errcheck | internal/api/sessions.go | 433 | Error return value of `io.Copy` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / WebSocket legacy, lot précis non établi ; La ligne appartient à 58a5e79… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absent de la sortie baseline. | Copie backend→client potentiellement interrompue sans signal. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur API ; Autorisation de correction du proxy WebSocket et test dédié. |
+| errcheck | cmd/server/main.go | 469 | Error return value of `srv.Shutdown` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / Core legacy, lot précis non établi ; La ligne appartient à cc554320… antérieur à la baseline; fichier inchangé dans baseline..HEAD; absence du finding dans la sortie baseline, cause scanner/contexte non résolue. | Perte possible de l’erreur d’arrêt du serveur. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur Core ; Rerun linter sous contexte strictement identique ou autorisation de correction Core. |
+| errcheck | cmd/server/main.go | 567 | Error return value of `cmd.Start` is not checked | non renseignée dans JSON | absent baseline / présent HEAD | T00–T30 / Core legacy, lot précis non établi ; La ligne appartient à cc554320… antérieur à la baseline; fichier inchangé dans baseline..HEAD; différentiel non attribuable à une modification HEAD. | Échec de démarrage potentiellement non propagé. | EXCEPTION_OPEN_DOCUMENTED_NO_CODE_CHANGE | Mainteneur Core ; Rerun linter identique ou autorisation de correction Core. |
+
+## 36 findings Staticcheck historiques
+
+Les 36 entrées ci-dessous sont présentes dans la baseline et dans HEAD, avec zéro nouveau et zéro résolu. Le scanner retourne `exit_code=1`; elles restent des exceptions qualité historiques, non un PASS.
+
+| Règle | Fichier | Ligne | Message brut | Sévérité | Baseline/head | Risque | Décision | Condition de levée |
+|---|---|---:|---|---|---|---|---|---|---|
+| S1016 | cmd/server/cli.go | 250 | should convert global (type cliGlobal) to mcpStdioOptions instead of using struct literal | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA4006 | cmd/server/cli_runtime.go | 237 | this value of cfg is never used | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/backup_v1.go | 35 | func (*handler).profileHasLiveSession is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/proxies_test.go | 30 | type loopbackNet is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/proxies_test.go | 32 | func loopbackNet.Dial is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/proxies_test.go | 33 | func loopbackNet.DialTimeout is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/proxies_test.go | 34 | func loopbackNet.Listen is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/proxies_test.go | 37 | func loopbackNet.ListenPacket is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/proxies_test.go | 38 | func loopbackNet.ResolveTCPAddr is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1012 | internal/api/proxies_test.go | 325 | do not pass a nil Context, even if a function permits it; pass context.TODO if you are unsure about which Context to use | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/api/sessions.go | 289 | page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/api/templates_test.go | 32 | func templateRequest is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| ST1005 | internal/browser/launch_helpers.go | 29 | error strings should not be capitalized | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| ST1005 | internal/browser/launch_helpers.go | 33 | error strings should not be capitalized | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/history/store.go | 24 | const defaultPageSize is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/humanize/keyboard.go | 27 | page.Fill is deprecated: Use locator-based [Locator.Fill] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/humanize/keyboard.go | 33 | page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/humanize/mouse.go | 21 | page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/humanize/mouse.go | 56 | page.Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/launch/launch.go | 497 | func (*Manager).await is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/launch/launch_test.go | 37 | field attached is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/advanced_tools.go | 155 | target.page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/advanced_tools.go | 326 | target.page.SelectOption is deprecated: Use locator-based [Locator.SelectOption] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/advanced_tools.go | 356 | target.page.Check is deprecated: Use locator-based [Locator.Check] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/advanced_tools.go | 360 | target.page.Uncheck is deprecated: Use locator-based [Locator.Uncheck] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/mcp/results.go | 9 | func imageResult is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/mcp/screenshot_artifacts.go | 17 | const defaultScreenshotURLTTL is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/mcp/search_provider.go | 48 | func supportedSearchProviderNames is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/search_provider.go | 66 | page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/search_provider.go | 163 | page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/mcp/search_provider.go | 248 | page.WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators]. | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/mcp/server.go | 36 | field reqID is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA1019 | internal/profile/backup_snapshot.go | 229 | tar.TypeRegA has been deprecated since Go 1.11 and an alternative has been available since Go 1.1: Use TypeReg instead.  | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/profile/errors.go | 106 | func wrap is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| U1000 | internal/proxies/errors.go | 82 | func wrap is unused | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+| SA4006 | internal/proxies/store.go | 213 | this value of p is never used | error | présent / présent | Qualité statique; impact précis à revoir au remédiateur | EXCEPTION_HISTORICAL_OPEN | Autorisation de remédiation et rerun baseline/head sans masquer le finding |
+
+## 6 misconfigurations Trivy historiques
+
+Les six entrées sont présentes à l’identique en baseline et HEAD. Le différentiel est zéro nouveau et zéro résolu. Les rapports ne signalent aucune vulnérabilité Go/pnpm ni secret de dépendance dans cette exécution.
+
+| Cible | Règle | Sévérité | Titre brut | Baseline/head | Risque | Décision | Condition de levée |
+|---|---|---|---|---|---|---|---|
+| Dockerfile | DS-0002 | HIGH | Image user should not be 'root' | présent / présent | Durcissement d’image à évaluer | EXCEPTION_HISTORICAL_OPEN | Revue et correction Dockerfile autorisées, puis rerun Trivy |
+| Dockerfile | DS-0026 | LOW | No HEALTHCHECK defined | présent / présent | Durcissement d’image à évaluer | EXCEPTION_HISTORICAL_OPEN | Revue et correction Dockerfile autorisées, puis rerun Trivy |
+| Dockerfile | DS-0029 | HIGH | 'apt-get' missing '--no-install-recommends' | présent / présent | Durcissement d’image à évaluer | EXCEPTION_HISTORICAL_OPEN | Revue et correction Dockerfile autorisées, puis rerun Trivy |
+| docker/Dockerfile.run | DS-0002 | HIGH | Image user should not be 'root' | présent / présent | Durcissement d’image à évaluer | EXCEPTION_HISTORICAL_OPEN | Revue et correction Dockerfile autorisées, puis rerun Trivy |
+| docker/Dockerfile.run | DS-0026 | LOW | No HEALTHCHECK defined | présent / présent | Durcissement d’image à évaluer | EXCEPTION_HISTORICAL_OPEN | Revue et correction Dockerfile autorisées, puis rerun Trivy |
+| docker/Dockerfile.run | DS-0029 | HIGH | 'apt-get' missing '--no-install-recommends' | présent / présent | Durcissement d’image à évaluer | EXCEPTION_HISTORICAL_OPEN | Revue et correction Dockerfile autorisées, puis rerun Trivy |
+
+## Inventaire de licences de production
+
+L’inventaire JSON de production contient **52 entrées** et a été généré avec `exit_code=0`. La liste exhaustive package par package est jointe dans `PREHUMAN_FINAL_LICENSE_INVENTORY.json`; le tableau ci-dessous donne le regroupement exact retourné par l’outil. La compatibilité juridique de chaque licence reste une décision de revue humaine, non une déduction automatique de l’inventaire.
+
+| Valeur de licence retournée | Nombre d’entrées | Décision | Condition de levée |
 |---|---:|---|---|
-| Intégrité Git, LFS, sidecars, ZIP et bundle de la livraison gelée | Contrôles antérieurs réussis dans le paquet original | `APPROVED_VERIFIABLE_LOCAL` pour la chaîne d’artefacts | Ne vaut pas autorisation produit ou release. |
-| `go mod verify`, `go list`, tests race, `go vet`, `go build` | `exit_code=0` | `PASS_APPLICABLE` | Aucun échec détecté par ces contrôles. |
-| `govulncheck` et OSV | `exit_code=0`, aucun problème signalé | `PASS_APPLICABLE_NO_FINDINGS` | Aucun avis de vulnérabilité détecté dans ces analyses. |
-| Syft CycloneDX et SPDX | `exit_code=0` | `PASS_ARTIFACT_GENERATED` | Les deux SBOM sont conservés séparément. |
-| Dashboard `pnpm install --frozen-lockfile`, TypeScript, build, audit | `exit_code=0` | `PASS_APPLICABLE` | Aucun échec détecté sur ces contrôles Dashboard. |
-| Inventaire de licences production Dashboard | `exit_code=0`, JSON valide | `PASS_INVENTORY_GENERATED` | L’inventaire complet est joint ; il ne constitue pas une décision juridique de compatibilité. |
-| Trivy baseline/head | 6 findings contre 6, `new=0`, `resolved=0` | `BLOCKED_BY_EXISTING_MISCONFIGURATIONS` | Six misconfigurations Docker historiques restent ouvertes ; pas de vulnérabilité Go/pnpm ni secret signalé dans ce rapport. |
-| Gosec baseline/head | Scanner `exit_code=1`; 194 contre 194 ; `new=0`, `resolved=0` | `BLOCKED_BY_EXISTING_SECURITY_FINDINGS` | Les 194 findings existants restent ouverts ; aucune nouveauté différentielle. |
-| Staticcheck | 36 contre 36 ; `new=0`, `resolved=0`; scanner `exit_code=1` | `BLOCKED_BY_EXISTING_QUALITY_FINDINGS` | Findings qualité présents et non corrigés, conformément à l’interdiction de modifier le produit. |
-| GolangCI-Lint | 82 baseline, 83 head ; 13 nouveaux, 12 résolus ; scanner `exit_code=1` | `NOT_APPROVED_PENDING_REMEDIATION` | Le différentiel contient 13 findings head non présents dans la baseline ; aucun PASS ne doit être déclaré. |
-| Gitleaks cumulatif baseline..HEAD | `exit_code=1`, marqueur historique `APi=REDACTED` | `SCAN_BLOCKED_UNKNOWN` | Ce signal n’est pas présenté comme un PASS et maintient la gate correspondante. |
-| Playwright/T10 | Configuration synthétique protégée absente : `FORGELOCAL_CORE_BASE_URL` et token/config requis | `NOT_APPLICABLE_UNDER_CURRENT_GATES` / `BLOCKED_BY_REQUIRED_PROTECTED_CONFIGURATION` | Aucun Core runtime, token, proxy réel, cookie réel ou navigateur réel n’a été lancé. |
+| MIT | 48 | INVENTORIED_NOT_LEGAL_APPROVAL | Validation humaine de compatibilité avec la politique de distribution |
+| Apache-2.0 | 2 | INVENTORIED_NOT_LEGAL_APPROVAL | Validation humaine de compatibilité avec la politique de distribution |
+| ISC | 1 | INVENTORIED_NOT_LEGAL_APPROVAL | Validation humaine de compatibilité avec la politique de distribution |
+| Unlicense | 1 | INVENTORIED_NOT_LEGAL_APPROVAL | Validation humaine de compatibilité avec la politique de distribution |
 
-## Findings explicitement retenus
+## Gosec, Gitleaks et Playwright
 
-### Gitleaks
+Gosec conserve 194 findings en baseline et 194 en HEAD, avec `new_findings=0` et `resolved_findings=0`; le scanner retourne `exit_code=1`, ce qui reste documenté comme findings historiques ouverts. Gitleaks cumulatif conserve le marqueur historique `APi=REDACTED`, `exit_code=1`, et la gate `SCAN_BLOCKED_UNKNOWN` demeure obligatoire. Le scan Gitleaks no-git de l’addendum est vide et ne neutralise pas le signal cumulatif.
 
-Le scan no-git du nouveau dossier d’addendum retourne `exit_code=0` avec un rapport vide `[]` [6]. Cela signifie uniquement qu’aucun nouveau finding n’a été détecté dans les fichiers ajoutés par cet addendum ; ce résultat local ne neutralise pas le signal cumulatif historique.
+Playwright/T10 est `NOT_APPLICABLE_UNDER_CURRENT_GATES` et `BLOCKED_BY_REQUIRED_PROTECTED_CONFIGURATION`: la localisation et le message `CONFIGURATION_T10_ABSENTE`, l’absence de `FORGELOCAL_CORE_BASE_URL` et de token/config, la commande, le CWD, l’UTC et le code de sortie sont conservés dans `PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log` et dans la preuve dédiée `PREHUMAN_FINAL_PLAYWRIGHT_NOT_APPLICABLE.md` [7]. Il ne s’agit pas d’un oubli : aucun Core, token, proxy réel, cookie réel ou navigateur réel n’a été lancé.
 
-Le scan cumulatif sur la plage baseline..HEAD conserve exactement un signal générique historique, `APi=REDACTED`, avec `RuleID=generic-api-key` et `exit_code=1`. La valeur est déjà rédactée dans la preuve. Ce résultat est classé **`SCAN_BLOCKED_UNKNOWN`**, et non `PASS`; il est conservé dans `PREHUMAN_FINAL_GITLEAKS.json` [1].
+## Gates et statut final
 
-### Gosec
+Les gates restent `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false`. Les statuts T28, T29, T39, T40, T41 et T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`; T31–T38 restent `APPROVED_VERIFIABLE_LOCAL_WITH_POSTHOC_BASELINE_RECONSTRUCTION`.
 
-Les sorties scanner baseline et head contiennent chacune **194 findings** et le scanner retourne `exit_code=1`. Le normalisateur corrigé, qui utilise les bons noms de fichiers et ramène les chemins aux chemins relatifs, établit `baseline=194`, `head=194`, `new_findings=0` et `resolved_findings=0` [2]. Les findings existants n’ont pas été supprimés ou minimisés, car toute correction du code produit était hors périmètre.
+> **Sortie attendue :** `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW`.
 
-### Trivy
-
-Trivy produit six misconfigurations dans la baseline et les six mêmes dans HEAD : trois sur `Dockerfile` et trois sur `docker/Dockerfile.run`. Le différentiel normalisé est `new_findings=0` et `resolved_findings=0` [3]. Les règles sont les suivantes, pour chacun des deux fichiers : `DS-0002` (**HIGH**, utilisateur d’image root), `DS-0026` (**LOW**, absence de `HEALTHCHECK`) et `DS-0029` (**HIGH**, `apt-get` sans `--no-install-recommends`). Elles sont classées **historiques/préexistantes** et restent ouvertes ; aucun correctif produit n’a été introduit. Les rapports ne signalent aucune vulnérabilité Go/pnpm ou secret de dépendance dans cette exécution.
-
-### Staticcheck et GolangCI-Lint
-
-Staticcheck retourne **36 findings en baseline et 36 en HEAD**, avec zéro nouveau et zéro résolu après normalisation des chemins [4]. Le scanner retourne `exit_code=1`; le résultat est donc un blocage qualité existant, pas un PASS.
-
-GolangCI-Lint a été reconstruit avec la version compatible Go 1.25.13 (`v1.64.8`) puis exécuté en JSON. Il retourne 82 findings baseline, 83 findings HEAD, **13 nouveaux** et **12 résolus** selon la comparaison chemin/linter/ligne/message [5]. Les 13 findings nouveaux sont tous conservés dans la sortie normalisée ; ils comprennent notamment des retours non vérifiés `errcheck` dans `cmd/server/main.go`, `internal/api/sessions.go` et `internal/backup/store.go`, ainsi qu’un `staticcheck` `SA9003` dans `internal/sessiontrack/tracker_test.go`. Cette différence est classée **`NOT_APPROVED_PENDING_REMEDIATION`**. Aucun finding n’a été masqué et aucun code produit n’a été changé pour améliorer artificiellement le résultat.
-
-### Playwright et configuration protégée
-
-Le harness Playwright n’a pas atteint un test métier : il s’est arrêté sur `CONFIGURATION_T10_ABSENTE`, car l’environnement autorisé ne fournissait ni `FORGELOCAL_CORE_BASE_URL` ni la configuration/token requis. Ce contrôle est donc **non applicable sous les gates courantes et bloqué par configuration protégée manquante**. Le Dashboard a néanmoins réussi ses contrôles d’installation gelée, de typage, de build et d’audit. Il serait incorrect de transformer l’absence de runtime et de credentials en réussite Playwright.
-
-## Gates maintenues
-
-Les valeurs suivantes restent inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false`. Aucun runtime réel, Camoufox, proxy réel, cookie réel, SystemVault natif, migration, géolocalisation réelle ou release n’a été exécuté.
-
-> **Verdict technique strict :** `READY_FOR_INDEPENDENT_REVIEW_WITH_OPEN_EXISTING_FINDINGS`.
->
-> **Verdict de livraison conservé :** `T00_T42_PREHUMAN_VALIDATION_DELIVERED_PENDING_INDEPENDENT_REVIEW`.
->
-> Ces deux formulations signifient que la chaîne de preuves est livrée pour revue humaine avec ses limites exposées. Elles ne signifient ni release readiness, ni approbation produit, ni levée de gate.
-
-## Fichiers sources de preuve
-
-Les fichiers bruts et structurés joints dans ce dossier sont les sources de vérité de cette classification. Le fichier `PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log` contient les commandes complètes, UTC, CWD, HEAD, sorties et codes de sortie de la checklist principale. Les normalisations qualité, Gosec et Trivy sont jointes séparément afin que les différences ne soient pas déduites d’un résumé textuel.
+Cette sortie prépare la revue humaine et ne constitue ni une approbation complète, ni une release, ni une levée de gate.
 
 ## Références
 
-[1]: ./PREHUMAN_FINAL_GITLEAKS.json "Rapport Gitleaks final"
-[2]: ./PREHUMAN_FINAL_GOSEC_BASELINE.json "Gosec baseline" ; ./PREHUMAN_FINAL_GOSEC_HEAD.json "Gosec head" ; ./PREHUMAN_FINAL_GOSEC_NORMALIZED.log "Différentiel Gosec normalisé"
-[3]: ./PREHUMAN_FINAL_TRIVY_BASELINE.json "Trivy baseline" ; ./PREHUMAN_FINAL_TRIVY_HEAD.json "Trivy head" ; ./PREHUMAN_FINAL_TRIVY_NORMALIZED.log "Différentiel Trivy normalisé"
-[4]: ./PREHUMAN_FINAL_STATICCHECK_BASELINE.jsonl "Staticcheck baseline" ; ./PREHUMAN_FINAL_STATICCHECK_HEAD.jsonl "Staticcheck head" ; ./PREHUMAN_FINAL_QUALITY_NORMALIZED.log "Différentiel qualité normalisé"
-[5]: ./PREHUMAN_FINAL_GOLANGCI_BASELINE.json "GolangCI-Lint baseline" ; ./PREHUMAN_FINAL_GOLANGCI_HEAD.json "GolangCI-Lint head" ; ./PREHUMAN_FINAL_QUALITY_NORMALIZED.log "Différentiel qualité normalisé"
-[6]: ./PREHUMAN_FINAL_GITLEAKS_ADDENDUM.json "Scan Gitleaks no-git de l’addendum"
+[1]: ./PREHUMAN_FINAL_GOLANGCI_NEW_FINDINGS_AUDIT_RAW.log "Audit Git blame des 13 findings"
+[2]: ./PREHUMAN_FINAL_QUALITY_NORMALIZED.log "Différentiel qualité normalisé"
+[3]: ./PREHUMAN_FINAL_STATICCHECK_BASELINE.jsonl "Staticcheck baseline" ; ./PREHUMAN_FINAL_STATICCHECK_HEAD.jsonl "Staticcheck HEAD"
+[4]: ./PREHUMAN_FINAL_TRIVY_BASELINE.json "Trivy baseline" ; ./PREHUMAN_FINAL_TRIVY_HEAD.json "Trivy HEAD"
+[5]: ./PREHUMAN_FINAL_LICENSE_INVENTORY.json "Inventaire de licences production"
+[6]: ./PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log "Journal brut final et preuve Playwright"
+[7]: ./PREHUMAN_FINAL_PLAYWRIGHT_NOT_APPLICABLE.md "Preuve Playwright NOT_APPLICABLE dédiée"
