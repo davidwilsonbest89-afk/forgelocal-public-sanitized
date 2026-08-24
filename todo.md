@@ -737,3 +737,15 @@ Reste à faire :
 - [x] Rejouer les contrôles complets depuis un clone neuf et conserver les sorties brutes, les codes de sortie et les timestamps UTC.
 - [x] Conserver le signal Gitleaks cumulatif et les constats Gosec historiques ; ne pas transformer `SCAN_BLOCKED_UNKNOWN` en succès.
 - [ ] Autoriser une release, un runtime réel, Camoufox, un proxy réel, un cookie réel, SystemVault natif ou une migration utilisateur : interdit.
+
+# T00–T42-PREHUMAN-FINDINGS-FINALIZATION — 2026-08-24
+
+- [x] Extraire les 13 findings GolangCI-Lint nouveaux avec règle, fichier, ligne, message brut, sévérité non renseignée, lot/rattachement, cause, risque, propriétaire et condition de levée.
+- [x] Classer chaque finding GolangCI-Lint : 12 sont des lignes de fichiers inchangés entre baseline et HEAD avec différentiel scanner/contexte non réconcilié ; le SA9003 est rattaché à T38 ; aucun finding n’est laissé sous la seule mention « connu ».
+- [x] Documenter les 36 findings Staticcheck historiques et les 6 misconfigurations Trivy avec baseline/head, risque, décision et condition de levée.
+- [x] Joindre l’inventaire de licences production package par package et son regroupement exact.
+- [x] Documenter Playwright/T10 comme `NOT_APPLICABLE_UNDER_CURRENT_GATES` avec commande, CWD, UTC, sortie brute, code de sortie et préconditions absentes ; aucun token ou runtime réel créé.
+- [x] Préparer le wrapper append-only `forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip` contenant le ZIP historique intact et l’addendum complet ; vérifier son manifeste, son extraction, ses hashes et son re-scan Gitleaks.
+- [x] Conserver la sortie `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW` pour revue humaine indépendante uniquement.
+- [ ] Corriger les exceptions qualité ouvertes après autorisation explicite et périmètre de remédiation ; ne pas masquer par `nolint`, exclusion ou modification de configuration.
+- [ ] Lever `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` ou `release_authorized=false` : interdit dans cette passation.

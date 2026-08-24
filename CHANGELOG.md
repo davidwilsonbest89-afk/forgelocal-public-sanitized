@@ -257,3 +257,11 @@ La branche `audit/t00-t42-prehuman-validation` livre le dossier complet sous `ev
 Cette livraison fige uniquement la chaîne de preuve. Elle ne modifie pas le code produit, ne démarre aucun lot bloqué, ne lève aucune gate et ne constitue ni une release ni une autorisation produit.
 
 Le journal brut de conservation ZIP/bundle a ensuite été ajouté dans le commit `cd6a95c66c029adf2140784491b06b8d9bf64fce`, head publié de la branche au moment du gel. Le bundle est un delta nécessitant la baseline ; sa réhydratation seeded avec `69411e65c880d168832a65fc8475cc97d562a9ad` a réussi avec checkout de `6ae02e4ceed239b9310fbf3fccb1b5170117251e` et `git fsck --full` à zéro.
+
+## 2026-08-24 — Finalisation T00–T42-PREHUMAN-FINDINGS-FINALIZATION
+
+La checklist finale a été complétée sans modification du code produit, des tests métier, de la configuration de lint ou des gates. Les 13 findings GolangCI-Lint ont été extraits individuellement avec chemins, lignes, messages bruts, lots/rattachements prudents, risques, propriétaires et conditions de levée. Douze lignes concernent des fichiers inchangés entre la baseline et HEAD et restent classées comme différentiel scanner/contexte non réconcilié; le finding SA9003 est rattaché à T38 et reste une exception de test ouverte. Les 36 findings Staticcheck, les 6 misconfigurations Trivy et l’inventaire de licences sont également détaillés dans l’addendum.
+
+Playwright/T10 est documenté comme `NOT_APPLICABLE_UNDER_CURRENT_GATES`, avec preuve de commande, CWD, UTC, sortie brute et code de sortie; aucun Core, token, navigateur réel, Camoufox, proxy réel, cookie réel, SystemVault natif ou release n’a été exécuté. Le signal Gitleaks cumulatif `APi=REDACTED` conserve `SCAN_BLOCKED_UNKNOWN`; Gosec conserve 194 findings baseline/head sans nouveau différentiel.
+
+Le wrapper append-only `forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip` rassemble le ZIP historique intact, l’addendum et les nouvelles preuves. Le ZIP historique et son hash `5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80` sont inchangés. La sortie attendue est `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW`; elle ne constitue ni une approbation produit, ni une release, ni une levée de gate.
