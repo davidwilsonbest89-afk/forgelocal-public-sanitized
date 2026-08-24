@@ -1,6 +1,9 @@
 # T28–T42 — correction de portabilité et traçabilité
 
 **Statut de cette correction :** `T28_T42_CLOSURE_EVIDENCE_CORRECTION_READY_FOR_INDEPENDENT_REVIEW` après requalification complète.
+**Branche publiée :** `audit/t28-t42-evidence-correction`
+**Commit publié :** `59882a9bcac8755c0fb8a294be32a6b1d1ff4598`
+**Lien :** https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/audit/t28-t42-evidence-correction
 
 Cette branche ne modifie aucun code produit T31–T38 et ne prétend pas réparer une autorisation produit. Les sidecars historiques restent inchangés. Les fichiers `*.portable.sha256` sont des compagnons additionnels contenant uniquement le hash et le nom relatif de l’archive ou du bundle ; ils sont vérifiés depuis le répertoire distribué.
 
