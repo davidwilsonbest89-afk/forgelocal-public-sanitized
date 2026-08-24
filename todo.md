@@ -779,3 +779,7 @@ Reste à faire :
 - [x] Vérifier le HEAD distant 5e174dba6dddc35865f5bd943383d988ea12170c et un clone neuf avec fsck code 0.
 - [x] Enregistrer les hashes finaux du wrapper et du bundle delta dans le registre et le CHANGELOG.
 - [ ] Obtenir la revue humaine indépendante ; ne lever aucune gate avant cette revue.
+
+# HEAD publié v4 — 2026-08-24
+- [x] Enregistrer le HEAD final publié b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5 après synchronisation des preuves.
+- [ ] Obtenir la revue humaine indépendante ; maintenir toutes les gates.

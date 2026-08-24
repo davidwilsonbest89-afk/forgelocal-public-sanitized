@@ -289,3 +289,7 @@ La branche `audit/t00-t42-self-validation-synthetic-e2e` est préparée avec les
 ## 2026-08-24 — Référence distante finale de la self-validation v4
 
 La branche audit/t00-t42-self-validation-synthetic-e2e est publiée au HEAD 5e174dba6dddc35865f5bd943383d988ea12170c. Le wrapper V4 f6544091783c2a4d4694d4b5f02c5dd5f0c70d22dab5efbb90abfd81418019bc et le bundle delta 10059c3c610d5a1b1ade88f936c8bb52ed893741a596326d8ba532f6f415e2fe sont vérifiés par sidecars. Le statut reste T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW, sans levée de gate ni release.
+
+## 2026-08-24 — HEAD publié v4 synchronisé
+
+Le HEAD publié final de la branche audit/t00-t42-self-validation-synthetic-e2e est b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5. Les preuves et hashes sont synchronisés ; le statut de self-validation reste en attente de revue indépendante et aucune release n’est autorisée.

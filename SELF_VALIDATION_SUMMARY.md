@@ -73,3 +73,7 @@ La livraison append-only est portée par les commits de publication de la branch
 ## Référence distante finale
 
 La branche dédiée est publiée au HEAD 5e174dba6dddc35865f5bd943383d988ea12170c. Le wrapper V4 et le bundle delta sont vérifiés par leurs sidecars portables ; le manifeste et les hashes racine donnent les valeurs exactes. Un clone neuf distant a retourné git fsck --full avec code 0.
+
+## HEAD publié final
+
+Le HEAD publié final de la branche dédiée est b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5. Le commit synchronise les preuves et manifestes sans modifier le code produit ni lever de gate.
