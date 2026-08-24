@@ -716,3 +716,14 @@ Reste à faire :
 - [ ] T11-7 : contrôles finaux : `go test -race` 0 DATA RACE, `go vet`, `go build`, Gitleaks delta `[]`, Gosec delta 0, `git diff --check`, RC inchangés.
 - [ ] T11-8 : archive de preuves canonique (rapport séparé du ZIP, SHA256SUMS stable, hash calculé une seule fois après constitution finale) + rapport final 16 champs + commit/push.
 - Statuts inchangés : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN` (findings `validation_back01_integration/` préexistants, règle `generic-api-key`), pilote suspendu, cinq gates publics en attente.
+
+
+# T28–T42 — clôture indépendante 2026-08-24
+
+- [x] T28–T30 : auditer les archives reçues dans une sandbox réelle ; publier uniquement l’audit et les corrections de preuve non destructives ; conserver T28/T29 product-gated et T30 localement vérifiable.
+- [x] T31–T38 : exécuter séquentiellement les lots redacted/localement vérifiables, avec tests race, vet, build, scans, bundles, manifestes et extraction fraîche ; publier les branches GitHub vérifiées.
+- [x] T39 : documenter le blocage de l’import/export de secrets faute d’autorisation T28/T29 et de qualification native SystemVault ; aucune donnée secrète manipulée.
+- [x] T40 : documenter le gate d’intégration sans fusion runtime ni activation de configuration.
+- [x] T41 : documenter la readiness de release `BLOCKED` ; une archive cumulative oversized refusée par GitHub a été conservée hors dépôt et remplacée par une preuve delta compacte.
+- [x] T42 : produire le registre canonique et la clôture technique avec verdicts stricts ; aucune clôture produit, runtime ou release déclarée.
+- [ ] Lever `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` ou `release_authorized=false` : interdit dans cette passation.

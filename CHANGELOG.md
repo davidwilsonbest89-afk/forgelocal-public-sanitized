@@ -240,3 +240,7 @@ All notable changes should be documented here. This project follows semantic ver
 - External Playwright clients should use Playwright 1.60.x for `browserType.connect()`.
 - Existing `config.json`, `data/.api-token`, and `profiles/` remain compatible.
 - MCP HTTP clients must send `Authorization: Bearer <token>`.
+
+## 2026-08-24 — Validation indépendante T28–T42
+
+La validation indépendante en sandbox réelle a été poursuivie jusqu’à T42. T31, T32, T33, T34, T35, T36, T37 et T38 sont `APPROVED_VERIFIABLE_LOCAL` avec preuves séquentielles publiées sur GitHub ; T39, T40, T41 et T42 sont `BLOCKED` pour raisons de dépendances produit, d’environnement natif ou de release. T28 et T29 restent également bloqués malgré la validation documentaire de leurs archives. Aucun runtime réel, Camoufox, proxy, cookie, SystemVault natif, migration utilisateur ou release n’a été exécuté. Les archives originales et les paquets rejetés pour taille restent conservés.
