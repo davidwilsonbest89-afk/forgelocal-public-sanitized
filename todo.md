@@ -727,3 +727,13 @@ Reste à faire :
 - [x] T41 : documenter la readiness de release `BLOCKED` ; une archive cumulative oversized refusée par GitHub a été conservée hors dépôt et remplacée par une preuve delta compacte.
 - [x] T42 : produire le registre canonique et la clôture technique avec verdicts stricts ; aucune clôture produit, runtime ou release déclarée.
 - [ ] Lever `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` ou `release_authorized=false` : interdit dans cette passation.
+
+# Correction de clôture T28–T42 — 2026-08-24
+
+- [x] Vérifier indépendamment les écarts signalés sur la branche finale : logs baseline absents par lot, sidecars absolus, T30 non réconcilié et métadonnées T42 inexactes.
+- [x] Ajouter les reconstructions postérieures explicitement nommées `BASELINE_RECONSTRUCTION_POSTHOC_RAW.log` pour T31–T38, sans les présenter comme des preuves contemporaines.
+- [x] Ajouter des sidecars compagnons `*.portable.sha256` relatifs pour les ZIP et bundles T31–T38 et T42, sans modifier les sidecars historiques.
+- [x] Réconcilier T30 avec son commit, son URL GitHub et les hashes d’archive ; maintenir `PENDING_REMOTE_EVIDENCE_RECONCILIATION` en l’absence de branche distante canonique.
+- [x] Rejouer les contrôles complets depuis un clone neuf et conserver les sorties brutes, les codes de sortie et les timestamps UTC.
+- [x] Conserver le signal Gitleaks cumulatif et les constats Gosec historiques ; ne pas transformer `SCAN_BLOCKED_UNKNOWN` en succès.
+- [ ] Autoriser une release, un runtime réel, Camoufox, un proxy réel, un cookie réel, SystemVault natif ou une migration utilisateur : interdit.

@@ -244,3 +244,7 @@ All notable changes should be documented here. This project follows semantic ver
 ## 2026-08-24 — Validation indépendante T28–T42
 
 La validation indépendante en sandbox réelle a été poursuivie jusqu’à T42. T31, T32, T33, T34, T35, T36, T37 et T38 sont `APPROVED_VERIFIABLE_LOCAL` avec preuves séquentielles publiées sur GitHub ; T39, T40, T41 et T42 sont `BLOCKED` pour raisons de dépendances produit, d’environnement natif ou de release. T28 et T29 restent également bloqués malgré la validation documentaire de leurs archives. Aucun runtime réel, Camoufox, proxy, cookie, SystemVault natif, migration utilisateur ou release n’a été exécuté. Les archives originales et les paquets rejetés pour taille restent conservés.
+
+## 2026-08-24 — Correction de traçabilité T28–T42
+
+Après revue indépendante, une branche dédiée ajoute uniquement des corrections de preuve : reconstructions postérieures explicitement nommées pour les baseline logs absents, sidecars compagnons portables relatifs, réconciliation T30 et métadonnées T42 corrigées. Les sidecars historiques sont conservés inchangés. Une qualification depuis un clone neuf confirme les tests race, vet, build, diff-check et fsck ; Gitleaks cumulatif et Gosec historiques restent présentés honnêtement avec leurs codes de sortie et leurs différentiels. Aucun code produit ni gate permanent n’est modifié.

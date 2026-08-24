@@ -1,0 +1,9 @@
+started_utc=2026-08-24T17:17:58Z
+cwd=/home/ubuntu/forgelocal-t42-fresh-20260824
+head=6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0
+command=git fsck --full
+--- raw_output ---
+
+--- exit_code ---
+0
+completed_utc=2026-08-24T17:18:01Z

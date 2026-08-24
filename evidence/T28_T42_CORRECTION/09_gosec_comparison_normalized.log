@@ -1,0 +1,9 @@
+started_utc=2026-08-24T17:20:51Z
+cwd=/home/ubuntu/forgelocal-t42-fresh-20260824
+command=normalize Gosec baseline/head JSON paths and compare rule/file/line/details
+baseline_count=194
+head_count=194
+new_findings=[]
+resolved_findings=[]
+exit_code=0
+completed_utc=2026-08-24T17:20:51Z

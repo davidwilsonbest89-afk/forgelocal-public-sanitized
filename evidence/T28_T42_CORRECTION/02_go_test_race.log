@@ -1,0 +1,41 @@
+started_utc=2026-08-24T17:18:01Z
+cwd=/home/ubuntu/forgelocal-t42-fresh-20260824
+head=6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0
+command=go test -count=1 -race ./...
+--- raw_output ---
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.049s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.511s
+ok  	forgelocal/internal/backup	2.722s
+ok  	forgelocal/internal/browser	4.043s
+ok  	forgelocal/internal/config	1.017s
+ok  	forgelocal/internal/cookies	1.014s
+ok  	forgelocal/internal/drift	1.012s
+ok  	forgelocal/internal/environment	1.015s
+ok  	forgelocal/internal/fingerprint	1.016s
+ok  	forgelocal/internal/fonts	1.013s
+ok  	forgelocal/internal/geolocation	1.013s
+ok  	forgelocal/internal/groups	1.020s
+ok  	forgelocal/internal/hardware	1.012s
+ok  	forgelocal/internal/history	1.186s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.769s
+ok  	forgelocal/internal/localvault	1.076s
+ok  	forgelocal/internal/mcp	1.032s
+ok  	forgelocal/internal/productschema	1.843s
+ok  	forgelocal/internal/profile	1.108s
+ok  	forgelocal/internal/profilehealth	1.013s
+ok  	forgelocal/internal/profilemigration	2.687s
+ok  	forgelocal/internal/proxies	1.087s
+ok  	forgelocal/internal/proxyprovider	1.014s
+ok  	forgelocal/internal/runtime	1.231s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.012s
+ok  	forgelocal/internal/spike	3.461s
+ok  	forgelocal/internal/templates	1.353s
+ok  	forgelocal/internal/workflow	1.018s
+
+--- exit_code ---
+0
+completed_utc=2026-08-24T17:18:18Z

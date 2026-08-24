@@ -1,0 +1,11 @@
+started_utc=2026-08-24T17:18:21Z
+cwd=/home/ubuntu/forgelocal-t42-fresh-20260824
+head=6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0
+command=bash -c git\ diff\ --binary\ t00-t27-complete-20260820..HEAD\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$1/06_gitleaks.json\" bash /home/ubuntu/forgelocal-correction-qualification-20260824
+--- raw_output ---
+[90m5:19PM[0m [32mINF[0m scan completed in 59s
+[90m5:19PM[0m [31mWRN[0m leaks found: 1
+
+--- exit_code ---
+1
+completed_utc=2026-08-24T17:19:20Z
