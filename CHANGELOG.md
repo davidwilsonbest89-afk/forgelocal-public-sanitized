@@ -271,3 +271,9 @@ Le wrapper append-only `forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip`
 Après analyse senior, les 13 findings ont été traités par deux commits de code : `6ee0840a7b264343be3840998df2a8903b511722` et `e0c9352710eb3710eaf0ea5d71614f2731a7051c`. Les retours de `srv.Shutdown`, `cmd.Start`, écritures réseau, copies bidirectionnelles et rollbacks transactionnels sont désormais traités explicitement; le test T38 ne contient plus de branche vide. Des tests de non-régression couvrent les écritures partielles/échouées, les copies échouées et le cycle transactionnel backup.
 
 La qualification post-correctif depuis un clone neuf confirme zéro des 13 findings ciblés. Les findings Staticcheck/GolangCI-Lint non ciblés, Gosec historique, le signal cumulatif Gitleaks `APi=REDACTED`, les misconfigurations Trivy historiques et le blocage Playwright par configuration protégée restent documentés honnêtement. Cette correction ne lève aucune gate et ne constitue pas une release.
+
+## 2026-08-24 — Publication code-fixed finale T00–T42
+
+Le correctif senior des 13 findings GolangCI-Lint réellement défectueux est publié avec deux commits de code, des tests de non-régression et une qualification depuis un clone neuf. Le wrapper V3 code-fixed conserve le ZIP historique intact et rassemble le mapping, les logs, les SBOM, les scans et la preuve Playwright bloquée. Les findings historiques non ciblés, Gitleaks `APi=REDACTED`, les gates permanentes et l’absence de Core/token réel restent explicitement maintenus.
+
+La livraison reste `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW_WITH_CODE_FIXES`; elle ne constitue pas une release.

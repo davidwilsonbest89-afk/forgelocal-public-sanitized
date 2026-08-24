@@ -64,3 +64,11 @@ La consigne de finalisation a été appliquée : les 13 findings GolangCI-Lint o
 La qualification post-correctif depuis un clone neuf au HEAD `e0c9352710eb3710eaf0ea5d71614f2731a7051c` a produit les logs `POSTFIX_QUALIFICATION_RAW.log` et `POSTFIX_TARGETED_REGRESSION_RAW.log`. `go test -count=1 -race ./...`, `go vet ./...`, `go build ./...`, `go mod verify`, OSV, govulncheck, Trivy, SBOM, Dashboard TypeScript/build/audit et le contrôle ciblé des 13 findings sont à zéro. Les findings historiques et les contrôles protégés restent classés explicitement; aucun scan n’est déclaré globalement vert.
 
 La sortie est `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW_WITH_CODE_FIXES`. Les statuts T28/T29/T39/T40/T41/T42 `BLOCKED`, T30 `PENDING_REMOTE_EVIDENCE_RECONCILIATION` et T31–T38 `APPROVED_VERIFIABLE_LOCAL_WITH_POSTHOC_BASELINE_RECONSTRUCTION` restent inchangés. Les gates restent maintenues.
+
+## 2026-08-24 — Publication du paquet code-fixed final
+
+Le paquet code-fixed final est publié comme ajout append-only. Le wrapper `evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip` a le SHA-256 `5b31ae7afcdc032bec46785a2573ceab9ec797261c3e0d31490f3c6fb9dfbe2b`; son manifeste V3 contient 67 entrées et son scan Gitleaks source/extraction retourne un rapport vide avec code `0`. Il contient le ZIP historique original intact, dont le hash reste `5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80`.
+
+L’addendum code-fixed `evidence/forgelocal-t00-t42-final-exit-checklist-code-fixed.zip` a le SHA-256 `c7b83a2a55f7c623280fad574a6dfdeb0714ff8c51215b0bc33636b5c9daaa77`. Le correctif de code est porté par `6ee0840a7b264343be3840998df2a8903b511722` et `e0c9352710eb3710eaf0ea5d71614f2731a7051c`; les preuves post-correctif confirment zéro des 13 findings ciblés restants.
+
+Le bundle de finalisation reste un delta nécessitant `631605ba136ff864d23e9674ca6adb4a8df0b740`; sa vérification seeded et `git fsck --full` sont à zéro. La décision est `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW_WITH_CODE_FIXES`, sans levée de gate ni déclaration de release.
