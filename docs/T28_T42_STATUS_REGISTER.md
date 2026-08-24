@@ -8,7 +8,7 @@
 |---|---|---|---|
 | T28 | `BLOCKED` | audit indépendant `08107b3ef2d59c8054720fdf4dd81554d4984afb` | Contrat documentaire, pas d’extension ni autorisation produit |
 | T29 | `BLOCKED` | audit indépendant `08107b3ef2d59c8054720fdf4dd81554d4984afb` | Contrat documentaire, SystemVault natif non testé |
-| T30 | `APPROVED_VERIFIABLE_LOCAL` | bundle validé dans branche d’audit | Qualification Go réelle passée, aucune release |
+| T30 | `PENDING_REMOTE_EVIDENCE_RECONCILIATION` | commit `cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb`, [commit GitHub](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/commit/cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb) ; ZIP `c07321fbdf5f16948484264cf9677831cea6f3fd53ee54c0e72273ebea36304d`, bundle `c4f514ffe4bc24c3adfefff3cfb3a6b07db4a4e19c4c764c16bc9a395c867f14` | Commit accessible, mais aucune branche GitHub/kit T30 canonique rattaché à la clôture finale ; preuve distante à réconcilier |
 | T31 | `APPROVED_VERIFIABLE_LOCAL` | `work/t31-canvas-webgl-audio` `9dad98703a748af61cbd3573b00e2bb036739a69` | Projections `UNSUPPORTED`, aucune observation réelle |
 | T32 | `APPROVED_VERIFIABLE_LOCAL` | `work/t32-client-rects` `d7279e81dd724ba2278a65838bc65aaa16912007` | Projection `UNSUPPORTED`, aucune géométrie DOM |
 | T33 | `APPROVED_VERIFIABLE_LOCAL` | `work/t33-synthetic-geolocation` `693632791041fde14db14ec8982b8bff1060a8d3` | Géolocalisation synthétique uniquement |
@@ -20,7 +20,7 @@
 | T39 | `BLOCKED` | `work/t39-secret-import-export-blocked` `08061f1e55a0bba01a4a28df66dc852e8f345ade` | T28/T29 non autorisés, SystemVault non testé |
 | T40 | `BLOCKED` | `work/t40-integration-gated` `077ba90b2c522415aeefdc2d651c457b8c59683d` | Intégration runtime interdite par dépendances |
 | T41 | `BLOCKED` | `work/t41-release-readiness-blocked` `944376fd1c9d22dad44730854ce4b2d6203c743b` | Release publique interdite ; tentative oversized conservée hors dépôt |
-| T42 | `BLOCKED` | branche courante, commit à venir | Clôture technique produite, clôture produit/release impossible |
+| T42 | `BLOCKED` | [work/t42-final-closure](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/work/t42-final-closure) `6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0` ; livraison [`evidence/T42_DELIVERY.md`](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/blob/work/t42-final-closure/evidence/T42_DELIVERY.md) | Clôture technique produite, clôture produit/release impossible |
 
 ## Gates permanentes
 
