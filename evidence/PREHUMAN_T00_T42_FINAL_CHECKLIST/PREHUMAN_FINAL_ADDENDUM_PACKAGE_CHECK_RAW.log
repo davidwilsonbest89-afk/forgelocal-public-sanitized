@@ -1,0 +1,91 @@
+started_utc=2026-08-24T19:14:39Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=a6382aa95c412d91c1bca2de34a87ca7908ed71f
+command=bash -c \!\ grep\ -Fq\ PREHUMAN_FINAL_CHECKLIST_SHA256SUMS\ \"\$1\" bash /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_CHECKLIST_SHA256SUMS 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T19:14:39Z
+check=manifest_non_autoreferential
+---
+started_utc=2026-08-24T19:14:39Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=a6382aa95c412d91c1bca2de34a87ca7908ed71f
+command=unzip -tq /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.zip 
+--- raw_output ---
+No errors detected in compressed data of /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.zip.
+exit_code=0
+completed_utc=2026-08-24T19:14:39Z
+check=archive_unzip_test
+---
+started_utc=2026-08-24T19:14:39Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=a6382aa95c412d91c1bca2de34a87ca7908ed71f
+command=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ forgelocal-t00-t42-final-exit-checklist.zip.portable.sha256 bash /tmp/tmp.RSPDlsLktb 
+--- raw_output ---
+forgelocal-t00-t42-final-exit-checklist.zip: OK
+exit_code=0
+completed_utc=2026-08-24T19:14:39Z
+check=portable_sidecar_check
+---
+started_utc=2026-08-24T19:14:39Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=a6382aa95c412d91c1bca2de34a87ca7908ed71f
+command=bash -c rm\ -rf\ \"\$1/extracted\"\ \&\&\ mkdir\ \"\$1/extracted\"\ \&\&\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\ \&\&\ cd\ \"\$1/extracted/PREHUMAN_T00_T42_FINAL_CHECKLIST\"\ \&\&\ sha256sum\ -c\ PREHUMAN_FINAL_CHECKLIST_SHA256SUMS bash /tmp/tmp.RSPDlsLktb /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.zip 
+--- raw_output ---
+PREHUMAN_FINAL_CHECKLIST_ADDENDUM.md: OK
+PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log: OK
+PREHUMAN_FINAL_FINDINGS_CLASSIFICATION.md: OK
+PREHUMAN_FINAL_GITLEAKS.json: OK
+PREHUMAN_FINAL_GITLEAKS_ADDENDUM.json: OK
+PREHUMAN_FINAL_GITLEAKS_ADDENDUM_RAW.log: OK
+PREHUMAN_FINAL_GOLANGCI_BASELINE.json: OK
+PREHUMAN_FINAL_GOLANGCI_HEAD.json: OK
+PREHUMAN_FINAL_GOSEC_BASELINE.json: OK
+PREHUMAN_FINAL_GOSEC_HEAD.json: OK
+PREHUMAN_FINAL_GOSEC_NORMALIZED.log: OK
+PREHUMAN_FINAL_LICENSE_INVENTORY.json: OK
+PREHUMAN_FINAL_LICENSE_INVENTORY_RAW.log: OK
+PREHUMAN_FINAL_LINTER_JSON_RAW.log: OK
+PREHUMAN_FINAL_QUALITY_DIFFERENTIAL_RAW.log: OK
+PREHUMAN_FINAL_QUALITY_NORMALIZED.log: OK
+PREHUMAN_FINAL_SBOM.cdx.json: OK
+PREHUMAN_FINAL_SBOM.spdx.json: OK
+PREHUMAN_FINAL_SECURITY_LICENSE_RAW.log: OK
+PREHUMAN_FINAL_STATICCHECK_BASELINE.jsonl: OK
+PREHUMAN_FINAL_STATICCHECK_HEAD.jsonl: OK
+PREHUMAN_FINAL_TRIVY_BASELINE.json: OK
+PREHUMAN_FINAL_TRIVY_HEAD.json: OK
+PREHUMAN_FINAL_TRIVY_NORMALIZED.log: OK
+PREHUMAN_T00_T42_MATRIX.md: OK
+SANDBOX_CAPACITY_DISCOVERY_RAW.log: OK
+compare_trivy.py: OK
+export_license_inventory.sh: OK
+normalize_final_gosec.py: OK
+normalize_final_quality.py: OK
+run_final_exit_checklist.sh: OK
+run_linter_json_diff.sh: OK
+run_security_license_differential.sh: OK
+exit_code=0
+completed_utc=2026-08-24T19:14:39Z
+check=fresh_extraction_manifest
+---
+started_utc=2026-08-24T19:14:39Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=a6382aa95c412d91c1bca2de34a87ca7908ed71f
+command=cat /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip.portable.sha256 
+--- raw_output ---
+5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80  forgelocal-t28-t42-prehuman-validation.zip
+exit_code=0
+completed_utc=2026-08-24T19:14:39Z
+check=original_zip_sidecar_cat
+---
+started_utc=2026-08-24T19:14:39Z
+cwd=/home/ubuntu/t30-master-independent-validation-20260824/clone
+head=a6382aa95c412d91c1bca2de34a87ca7908ed71f
+command=cat /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle.portable.sha256 
+--- raw_output ---
+14ef76cb68e7f64ff49fdc649cbcf96c5c69b0e9c410c5824a0592b7e33d1d14  forgelocal-t28-t42-prehuman-validation.bundle
+exit_code=0
+completed_utc=2026-08-24T19:14:39Z
+check=original_bundle_sidecar_cat
+---
