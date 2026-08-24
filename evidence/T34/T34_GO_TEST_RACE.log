@@ -1,0 +1,28 @@
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.062s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.400s
+ok  	forgelocal/internal/backup	2.741s
+ok  	forgelocal/internal/browser	6.690s
+ok  	forgelocal/internal/config	1.014s
+ok  	forgelocal/internal/cookies	1.012s
+ok  	forgelocal/internal/environment	1.013s
+ok  	forgelocal/internal/fingerprint	1.015s
+ok  	forgelocal/internal/geolocation	1.012s
+ok  	forgelocal/internal/groups	1.019s
+ok  	forgelocal/internal/hardware	1.015s
+ok  	forgelocal/internal/history	1.183s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.767s
+ok  	forgelocal/internal/localvault	1.082s
+ok  	forgelocal/internal/mcp	1.032s
+ok  	forgelocal/internal/productschema	1.834s
+ok  	forgelocal/internal/profile	1.127s
+ok  	forgelocal/internal/profilemigration	2.748s
+ok  	forgelocal/internal/proxies	1.086s
+ok  	forgelocal/internal/proxyprovider	1.012s
+ok  	forgelocal/internal/runtime	1.233s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/spike	3.324s
+ok  	forgelocal/internal/templates	1.356s
+ok  	forgelocal/internal/workflow	1.017s
