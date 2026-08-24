@@ -2,7 +2,7 @@
 
 **Statut :** `T28_T42_CLOSURE_EVIDENCE_CORRECTION_READY_FOR_INDEPENDENT_REVIEW`
 **Branche :** `audit/t28-t42-evidence-correction`
-**HEAD :** `71a41567b98eb65d7cb250043082473d92530395`
+**HEAD :** `59a732b516fcf265aac7b5ca875c2cd6a0683cdd`
 **Parent de correction :** `6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0`
 
 Le ZIP V2 est un wrapper compact de correction. Les journaux complets de requalification, les reconstructions postérieures de baseline et les sidecars compagnons T31–T38 restent versionnés et vérifiables dans la branche `audit/t28-t42-evidence-correction`, sous `evidence/T28_T42_CORRECTION/` et `evidence/T31` à `evidence/T38`. Le paquet v2 reprend ces références sans supprimer le paquet v1 et rattache son bundle delta et son ZIP au HEAD final publié.
