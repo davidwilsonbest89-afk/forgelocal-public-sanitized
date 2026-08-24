@@ -65,8 +65,8 @@ func TestT13Environment_CleanVerdict(t *testing.T) {
 	if d.Verdict != VerdictClean {
 		t.Fatalf("want CLEAN, got %s", d.Verdict)
 	}
-	if len(d.Controls) != 13 {
-		t.Fatalf("want 13 controls, got %d", len(d.Controls))
+	if len(d.Controls) != 18 {
+		t.Fatalf("want 18 controls, got %d", len(d.Controls))
 	}
 }
 
@@ -87,8 +87,8 @@ func TestT30Environment_DeclaresProjectionCoverageWithoutObservation(t *testing.
 			unsupported++
 		}
 	}
-	if unsupported != 11 {
-		t.Fatalf("want 11 declared unsupported capabilities, got %d", unsupported)
+	if unsupported != 16 {
+		t.Fatalf("want 16 declared unsupported capabilities, got %d", unsupported)
 	}
 }
 
@@ -167,7 +167,7 @@ func TestT13Environment_NoRawValuesInOutput(t *testing.T) {
 		t.Fatal(err)
 	}
 	raw := fmtSprint(d)
-	for _, forbidden := range []string{"UserAgent", "canvas", "fingerprint", "127.0.0.1", "path"} {
+	for _, forbidden := range []string{"UserAgent", "canvas_value", "canvas fingerprint", "fingerprint", "127.0.0.1", "path"} {
 		if strings.Contains(raw, forbidden) {
 			t.Errorf("raw value hint %q leaked into diagnostic", forbidden)
 		}

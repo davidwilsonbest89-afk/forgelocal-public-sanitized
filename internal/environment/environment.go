@@ -43,7 +43,7 @@ const (
 
 const (
 	// DiagnosticVersion identifies this deterministic, read-only projection.
-	DiagnosticVersion = "environment-projection-v2"
+	DiagnosticVersion = "environment-projection-v3"
 	// ObservationModeProjected declares that no browser or runtime was launched.
 	ObservationModeProjected = "PROJECTED_METADATA_ONLY"
 )
@@ -158,6 +158,11 @@ func declaredUnobservedCapabilities() []Control {
 		{Name: "plugins-mime", State: StateUnsupported, Note: "runtime observation not implemented"},
 		{Name: "input-devices", State: StateUnsupported, Note: "runtime observation not implemented"},
 		{Name: "rendering-apis", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "canvas-2d", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "canvas-webgl", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "webgl2", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "audio-context", State: StateUnsupported, Note: "runtime observation not implemented"},
+		{Name: "offline-audio-context", State: StateUnsupported, Note: "runtime observation not implemented"},
 		{Name: "font-rendering", State: StateUnsupported, Note: "runtime observation not implemented"},
 		{Name: "performance", State: StateUnsupported, Note: "runtime observation not implemented"},
 		{Name: "permissions", State: StateUnsupported, Note: "runtime observation not implemented"},

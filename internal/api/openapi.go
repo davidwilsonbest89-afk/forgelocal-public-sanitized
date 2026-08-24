@@ -20,7 +20,7 @@ func (h *handler) openAPIV1(w http.ResponseWriter, _ *http.Request) {
 	environmentDataSchema := map[string]any{
 		"type": "object",
 		"properties": map[string]any{
-			"diagnostic_version": map[string]any{"type": "string", "example": "environment-projection-v2"},
+			"diagnostic_version": map[string]any{"type": "string", "example": "environment-projection-v3"},
 			"observation_mode":   map[string]any{"type": "string", "enum": []string{"PROJECTED_METADATA_ONLY"}},
 			"capabilities":       map[string]any{"type": "array", "items": capabilitySchema},
 		},
