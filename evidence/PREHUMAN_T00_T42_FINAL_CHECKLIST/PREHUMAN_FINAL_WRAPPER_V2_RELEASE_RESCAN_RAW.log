@@ -1,0 +1,18 @@
+started_utc=2026-08-24T21:33:18Z
+cwd=/home/ubuntu
+archive=/home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+archive_sha256=19382e22daf27063bc14bc78392114422379add98de92d739bbd3d9a28abff31
+extraction=/tmp/tmp.jOaU7gwXkE/forgelocal-wrapper-v2-20260824
+command=gitleaks detect --source /tmp/tmp.jOaU7gwXkE/forgelocal-wrapper-v2-20260824 --no-git --redact --report-format json --report-path /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_WRAPPER_V2_RELEASE_GITLEAKS.json
+--- raw_output ---
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m9:33PM[0m [32mINF[0m scan completed in 192ms
+[90m9:33PM[0m [32mINF[0m no leaks found
+exit_code=0
+completed_utc=2026-08-24T21:33:19Z
