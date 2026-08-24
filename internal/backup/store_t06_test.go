@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels(t *testing.T) {
@@ -42,5 +43,38 @@ func TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels
 		if strings.Contains(serialized, forbidden) {
 			t.Fatalf("projection leaked %q", forbidden)
 		}
+	}
+}
+
+func TestBackupTransactionLifecycleRemainsAtomic(t *testing.T) {
+	store, err := OpenSQLite(filepath.Join(t.TempDir(), "backup-lifecycle.db"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer store.Close()
+
+	backup := Backup{
+		ID:           "backup-t06-regression",
+		ProfileID:    "profile-t06-regression",
+		ArtifactPath: "/tmp/backup-t06-regression.zip",
+		KeyID:        "key-t06-regression",
+		SHA256:       "sha256-t06-regression",
+		CreatedAt:    time.Date(2026, time.August, 24, 0, 0, 0, 0, time.UTC),
+	}
+	if err := store.BeginBackup(backup, "corr-t06-regression"); err != nil {
+		t.Fatal(err)
+	}
+	if err := store.MarkPublished(backup.ID); err != nil {
+		t.Fatal(err)
+	}
+	if err := store.CommitBackup(backup); err != nil {
+		t.Fatal(err)
+	}
+	got, err := store.GetBackup(backup.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.ID != backup.ID || got.SHA256 != backup.SHA256 {
+		t.Fatalf("committed backup = %+v, want %+v", got, backup)
 	}
 }

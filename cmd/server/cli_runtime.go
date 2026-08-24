@@ -162,7 +162,10 @@ func runOpenCommand(args []string, global cliGlobal, stdout, stderr io.Writer) i
 		return 1
 	}
 	url := dashboardOpenURL(resolveBaseURL(*baseURL, cfg))
-	openBrowser(url)
+	if err := openBrowser(url); err != nil {
+		fmt.Fprintf(stderr, "open failed: %v\n", err)
+		return 1
+	}
 	fmt.Fprintf(stdout, "Opened %s\n", url)
 	return 0
 }

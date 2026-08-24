@@ -17,6 +17,25 @@ import (
 	"github.com/mxschmitt/playwright-go"
 )
 
+func writeAll(w io.Writer, data []byte) error {
+	for len(data) > 0 {
+		n, err := w.Write(data)
+		if err != nil {
+			return err
+		}
+		if n <= 0 || n > len(data) {
+			return io.ErrShortWrite
+		}
+		data = data[n:]
+	}
+	return nil
+}
+
+func copyAll(dst io.Writer, src io.Reader) error {
+	_, err := io.Copy(dst, src)
+	return err
+}
+
 // --- Session endpoints ---
 
 func (h *handler) createSession(w http.ResponseWriter, r *http.Request) {
@@ -235,7 +254,9 @@ func (h *handler) screenshot(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "image/png")
-	w.Write(data)
+	if err := writeAll(w, data); err != nil {
+		return
+	}
 }
 
 func (h *handler) content(w http.ResponseWriter, r *http.Request) {
@@ -394,7 +415,9 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 	// Dial internal Playwright WebSocket
 	backendConn, err := net.Dial("tcp", internalAddr)
 	if err != nil {
-		clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+		if err := writeAll(clientConn, []byte("HTTP/1.1 502 Bad Gateway\r\n\r\n")); err != nil {
+			return
+		}
 		return
 	}
 	defer backendConn.Close()
@@ -408,30 +431,44 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 		upgradeReq += "Sec-WebSocket-Extensions: " + ext + "\r\n"
 	}
 	upgradeReq += "\r\n"
-	backendConn.Write([]byte(upgradeReq))
+	if err := writeAll(backendConn, []byte(upgradeReq)); err != nil {
+		return
+	}
 
 	// Read backend upgrade response
 	backendBuf := bufio.NewReader(backendConn)
 	resp, err := http.ReadResponse(backendBuf, nil)
 	if err != nil || resp.StatusCode != 101 {
-		clientConn.Write([]byte("HTTP/1.1 502 Bad Gateway\r\n\r\n"))
+		if err := writeAll(clientConn, []byte("HTTP/1.1 502 Bad Gateway\r\n\r\n")); err != nil {
+			return
+		}
 		return
 	}
 
 	// Forward ALL response headers to client (critical: includes Sec-WebSocket-Extensions)
-	clientConn.Write([]byte("HTTP/1.1 101 Switching Protocols\r\n"))
+	if err := writeAll(clientConn, []byte("HTTP/1.1 101 Switching Protocols\r\n")); err != nil {
+		return
+	}
 	for key, vals := range resp.Header {
 		for _, val := range vals {
-			clientConn.Write([]byte(key + ": " + val + "\r\n"))
+			if err := writeAll(clientConn, []byte(key+": "+val+"\r\n")); err != nil {
+				return
+			}
 		}
 	}
-	clientConn.Write([]byte("\r\n"))
+	if err := writeAll(clientConn, []byte("\r\n")); err != nil {
+		return
+	}
 
 	// Bidirectional pipe (use backendBuf to not lose buffered data)
-	done := make(chan struct{}, 2)
-	go func() { io.Copy(backendConn, clientBuf); done <- struct{}{} }()
-	go func() { io.Copy(clientConn, backendBuf); done <- struct{}{} }()
-	<-done
+	done := make(chan error, 2)
+	go func() { done <- copyAll(backendConn, clientBuf) }()
+	go func() { done <- copyAll(clientConn, backendBuf) }()
+	for range 2 {
+		if err := <-done; err != nil {
+			return
+		}
+	}
 }
 
 // Backup/restore/shutdown are in backup.go

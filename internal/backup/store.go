@@ -91,6 +91,7 @@ func OpenSQLite(path string) (*SQLiteStore, error) {
 }
 func (s *SQLiteStore) Close() error { return s.db.Close() }
 func now() string                   { return time.Now().UTC().Format(time.RFC3339Nano) }
+
 // DB returns the underlying database handle for read-only audit writers.
 func (s *SQLiteStore) DB() *sql.DB { return s.db }
 func (s *SQLiteStore) audit(tx *sql.Tx, event, id, correlation string, details map[string]string) error {
@@ -101,12 +102,16 @@ func (s *SQLiteStore) audit(tx *sql.Tx, event, id, correlation string, details m
 	_, err = tx.Exec(`INSERT INTO audit_events(event_type, entity_id, correlation_id, details_json, created_at) VALUES(?,?,?,?,?)`, event, id, correlation, string(data), now())
 	return err
 }
-func (s *SQLiteStore) BeginBackup(b Backup, correlation string) error {
+func (s *SQLiteStore) BeginBackup(b Backup, correlation string) (err error) {
 	tx, err := s.db.Begin()
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback()
+	defer func() {
+		if rollbackErr := tx.Rollback(); rollbackErr != nil && !errors.Is(rollbackErr, sql.ErrTxDone) {
+			err = errors.Join(err, rollbackErr)
+		}
+	}()
 	t := now()
 	_, err = tx.Exec(`INSERT INTO backup_operations(id,profile_id,state,artifact_path,key_id,correlation_id,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?)`, b.ID, b.ProfileID, "staging", b.ArtifactPath, b.KeyID, correlation, t, t)
 	if err != nil {
@@ -117,12 +122,16 @@ func (s *SQLiteStore) BeginBackup(b Backup, correlation string) error {
 	}
 	return tx.Commit()
 }
-func (s *SQLiteStore) MarkPublished(id string) error {
+func (s *SQLiteStore) MarkPublished(id string) (err error) {
 	tx, err := s.db.Begin()
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback()
+	defer func() {
+		if rollbackErr := tx.Rollback(); rollbackErr != nil && !errors.Is(rollbackErr, sql.ErrTxDone) {
+			err = errors.Join(err, rollbackErr)
+		}
+	}()
 	res, err := tx.Exec(`UPDATE backup_operations SET state='published_unregistered',updated_at=? WHERE id=? AND state='staging'`, now(), id)
 	if err != nil {
 		return err
@@ -136,12 +145,16 @@ func (s *SQLiteStore) MarkPublished(id string) error {
 	}
 	return tx.Commit()
 }
-func (s *SQLiteStore) CommitBackup(b Backup) error {
+func (s *SQLiteStore) CommitBackup(b Backup) (err error) {
 	tx, err := s.db.Begin()
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback()
+	defer func() {
+		if rollbackErr := tx.Rollback(); rollbackErr != nil && !errors.Is(rollbackErr, sql.ErrTxDone) {
+			err = errors.Join(err, rollbackErr)
+		}
+	}()
 	_, err = tx.Exec(`INSERT INTO backups(id,profile_id,artifact_path,key_id,sha256,created_at) VALUES(?,?,?,?,?,?)`, b.ID, b.ProfileID, b.ArtifactPath, b.KeyID, b.SHA256, b.CreatedAt.UTC().Format(time.RFC3339Nano))
 	if err != nil {
 		return err

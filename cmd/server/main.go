@@ -466,7 +466,9 @@ func runServer(flags *serveFlags) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	srv.Shutdown(ctx)
+	if err := srv.Shutdown(ctx); err != nil {
+		fmt.Fprintf(os.Stderr, "server shutdown failed: %v\n", err)
+	}
 }
 
 func exitServerError(flags *serveFlags, format string, args ...any) {
@@ -553,7 +555,7 @@ func tokenPreview(token string) string {
 }
 
 // openBrowser opens URL in the default system browser
-func openBrowser(url string) {
+func openBrowser(url string) error {
 	var cmd *exec.Cmd
 	switch runtime.GOOS {
 	case "darwin":
@@ -563,9 +565,10 @@ func openBrowser(url string) {
 	case "windows":
 		cmd = exec.Command("rundll32", "url.dll,FileProtocolHandler", url)
 	}
-	if cmd != nil {
-		cmd.Start()
+	if cmd == nil {
+		return nil
 	}
+	return cmd.Start()
 }
 
 func buildHumanizeCfg(cfg *config.Config) humanize.Config {

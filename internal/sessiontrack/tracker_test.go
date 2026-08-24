@@ -32,7 +32,8 @@ func TestInvalidOrRawInputsFailClosed(t *testing.T) {
 			t.Fatalf("accepted key %q", key)
 		}
 	}
-	if r.Start("ok") != nil {
+	if err := r.Start("ok"); err != nil {
+		t.Fatalf("valid key rejected: %v", err)
 	}
 	if r.Transition("ok", State("UNKNOWN"), "x") == nil {
 		t.Fatal("accepted unsupported state")
