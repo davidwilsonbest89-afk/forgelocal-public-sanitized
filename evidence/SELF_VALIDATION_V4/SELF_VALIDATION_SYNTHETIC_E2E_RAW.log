@@ -1,0 +1,26 @@
+started_utc=2026-08-24T23:38:17Z
+cwd=/home/ubuntu/forgelocal_self_validation_v4/repo
+head=861880e56f13866346cf974110a01c8a890b86e2
+core_port=19280 dashboard_port=4173
+policy=loopback-only no-runtime synthetic data only
+token_policy=temporary restrictive file never logged never archived
+--- build command
+GOTOOLCHAIN=local CGO_ENABLED=1 go build -o TEMP_BINARY ./cmd/server
+build_exit_code=0
+CORE_READY=PASS
+external_fonts_import=temporarily_removed_for_loopback_policy
+dashboard_install_exit_code=0
+DASHBOARD_READY=PASS
+
+Running 1 test using 1 worker
+
+[1A[2K[1/1] tests/self-validation-synthetic-e2e.spec.ts:36:1 › self-validation synthetic loopback bootstrap
+[1A[2Ktests/self-validation-synthetic-e2e.spec.ts:36:1 › self-validation synthetic loopback bootstrap
+SELF_E2E_STORAGE: PASS localStorage=0 sessionStorage=0 indexedDB=0 caches=0
+
+[1A[2KSELF_E2E_REQUESTS: PASS count=52 origins=loopback-only
+
+[1A[2KSELF_E2E_REPLAY: PASS status=401 ui=disconnected
+
+[1A[2K  1 passed (3.2s)
+playwright_exit_code=0

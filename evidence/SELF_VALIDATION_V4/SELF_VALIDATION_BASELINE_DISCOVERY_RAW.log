@@ -1,0 +1,153 @@
+---
+started_utc=2026-08-24T23:06:36Z
+cwd=/home/ubuntu
+check=disk_root
+command=df -h / 
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   17G   32G  35% /
+exit_code=0
+completed_utc=2026-08-24T23:06:36Z
+---
+started_utc=2026-08-24T23:06:36Z
+cwd=/home/ubuntu
+check=disk_home
+command=df -h /home/ubuntu 
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   17G   32G  35% /
+exit_code=0
+completed_utc=2026-08-24T23:06:36Z
+---
+started_utc=2026-08-24T23:06:36Z
+cwd=/home/ubuntu
+check=disk_inventory
+command=bash -c du\ -xhd1\ /home/ubuntu\ 2\>/dev/null\ \|\ sort\ -h\ \|\ tail\ -20 
+--- raw_output ---
+4.0K	/home/ubuntu/Downloads
+8.0K	/home/ubuntu/.secrets
+8.0K	/home/ubuntu/forgelocal_self_validation_v4
+12K	/home/ubuntu/.manus
+16K	/home/ubuntu/.logs
+20K	/home/ubuntu/page_texts
+24K	/home/ubuntu/upload
+144K	/home/ubuntu/.config
+392K	/home/ubuntu/screenshots
+1012K	/home/ubuntu/terminal_full_output
+2.7M	/home/ubuntu/skills
+14M	/home/ubuntu/.npm
+101M	/home/ubuntu/.browser_data_dir
+262M	/home/ubuntu/.nvm
+344M	/home/ubuntu/bin
+1.1G	/home/ubuntu/.local
+1.5G	/home/ubuntu/go
+2.7G	/home/ubuntu/.cache
+3.2G	/home/ubuntu/forgelocal_validation
+9.0G	/home/ubuntu
+exit_code=0
+completed_utc=2026-08-24T23:06:39Z
+---
+started_utc=2026-08-24T23:06:39Z
+cwd=/home/ubuntu
+check=tool_versions
+command=bash -c printf\ \"git=\"\;\ git\ --version\;\ printf\ \"gh=\"\;\ gh\ --version\ \|\ head\ -1\;\ printf\ \"node=\"\;\ node\ --version\;\ printf\ \"pnpm=\"\;\ pnpm\ --version\;\ printf\ \"python=\"\;\ python3\ --version\;\ printf\ \"unzip=\"\;\ unzip\ -v\ \|\ head\ -1\;\ printf\ \"git-lfs=\"\;\ git\ lfs\ version 
+--- raw_output ---
+git=git version 2.43.0
+gh=gh version 2.97.0 (2026-07-31)
+node=v22.13.0
+pnpm=11.20.0
+python=Python 3.12.3
+unzip=UnZip 6.00 of 20 April 2009, by Debian. Original by Info-ZIP.
+git-lfs=git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+exit_code=0
+completed_utc=2026-08-24T23:06:40Z
+---
+started_utc=2026-08-24T23:06:40Z
+cwd=/home/ubuntu
+check=remote_refs
+command=gh api repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/ref/heads/audit/t00-t42-prehuman-validation 
+--- raw_output ---
+[1;37m{[m
+  [1;34m"ref"[m[1;37m:[m [32m"refs/heads/audit/t00-t42-prehuman-validation"[m[1;37m,[m
+  [1;34m"node_id"[m[1;37m:[m [32m"REF_kwDOT-DVn9oALHJlZnMvaGVhZHMvYXVkaXQvdDAwLXQ0Mi1wcmVodW1hbi12YWxpZGF0aW9u"[m[1;37m,[m
+  [1;34m"url"[m[1;37m:[m [32m"https://api.github.com/repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/refs/heads/audit/t00-t42-prehuman-validation"[m[1;37m,[m
+  [1;34m"object"[m[1;37m:[m [1;37m{[m
+    [1;34m"sha"[m[1;37m:[m [32m"861880e56f13866346cf974110a01c8a890b86e2"[m[1;37m,[m
+    [1;34m"type"[m[1;37m:[m [32m"commit"[m[1;37m,[m
+    [1;34m"url"[m[1;37m:[m [32m"https://api.github.com/repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/commits/861880e56f13866346cf974110a01c8a890b86e2"[m
+  [1;37m}[m
+[1;37m}[m
+exit_code=0
+completed_utc=2026-08-24T23:06:40Z
+---
+started_utc=2026-08-24T23:06:40Z
+cwd=/home/ubuntu
+check=remote_tags
+command=gh api repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/ref/tags/t00-t27-complete-20260820 
+--- raw_output ---
+[1;37m{[m
+  [1;34m"ref"[m[1;37m:[m [32m"refs/tags/t00-t27-complete-20260820"[m[1;37m,[m
+  [1;34m"node_id"[m[1;37m:[m [32m"REF_kwDOT-DVn9oAI3JlZnMvdGFncy90MDAtdDI3LWNvbXBsZXRlLTIwMjYwODIw"[m[1;37m,[m
+  [1;34m"url"[m[1;37m:[m [32m"https://api.github.com/repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/refs/tags/t00-t27-complete-20260820"[m[1;37m,[m
+  [1;34m"object"[m[1;37m:[m [1;37m{[m
+    [1;34m"sha"[m[1;37m:[m [32m"72d54110c89583beacc556bb103f881b667d8137"[m[1;37m,[m
+    [1;34m"type"[m[1;37m:[m [32m"tag"[m[1;37m,[m
+    [1;34m"url"[m[1;37m:[m [32m"https://api.github.com/repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/tags/72d54110c89583beacc556bb103f881b667d8137"[m
+  [1;37m}[m
+[1;37m}[m
+exit_code=0
+completed_utc=2026-08-24T23:06:40Z
+--- clone
+started_utc=2026-08-24T23:06:40Z
+cwd=/home/ubuntu
+command=GIT_LFS_SKIP_SMUDGE=1 gh repo clone davidwilsonbest89-afk/forgelocal-public-sanitized repo -- --branch audit/t00-t42-prehuman-validation
+--- raw_output ---
+Cloning into '/home/ubuntu/forgelocal_self_validation_v4/repo'...
+exit_code=0
+completed_utc=2026-08-24T23:06:47Z
+---
+started_utc=2026-08-24T23:06:47Z
+cwd=/home/ubuntu/forgelocal_self_validation_v4/repo
+check=clone_status
+command=git status --short --branch 
+--- raw_output ---
+## [32maudit/t00-t42-prehuman-validation[m...[31morigin/audit/t00-t42-prehuman-validation[m
+exit_code=0
+completed_utc=2026-08-24T23:06:47Z
+---
+started_utc=2026-08-24T23:06:47Z
+cwd=/home/ubuntu/forgelocal_self_validation_v4/repo
+check=clone_head
+command=git rev-parse HEAD 
+--- raw_output ---
+861880e56f13866346cf974110a01c8a890b86e2
+exit_code=0
+completed_utc=2026-08-24T23:06:47Z
+---
+started_utc=2026-08-24T23:06:47Z
+cwd=/home/ubuntu/forgelocal_self_validation_v4/repo
+check=baseline_commit
+command=git rev-parse 69411e65c880d168832a65fc8475cc97d562a9ad 
+--- raw_output ---
+69411e65c880d168832a65fc8475cc97d562a9ad
+exit_code=0
+completed_utc=2026-08-24T23:06:47Z
+---
+started_utc=2026-08-24T23:06:47Z
+cwd=/home/ubuntu/forgelocal_self_validation_v4/repo
+check=remote_branch
+command=git ls-remote origin refs/heads/audit/t00-t42-prehuman-validation 
+--- raw_output ---
+861880e56f13866346cf974110a01c8a890b86e2	refs/heads/audit/t00-t42-prehuman-validation
+exit_code=0
+completed_utc=2026-08-24T23:06:48Z
+---
+started_utc=2026-08-24T23:06:48Z
+cwd=/home/ubuntu/forgelocal_self_validation_v4/repo
+check=free_after_clone
+command=df -h . 
+--- raw_output ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   18G   31G  36% /
+exit_code=0
+completed_utc=2026-08-24T23:06:48Z

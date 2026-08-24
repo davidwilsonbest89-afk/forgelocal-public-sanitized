@@ -759,3 +759,18 @@ Reste à faire :
 - [x] Conserver les logs post-correctif et le mapping exhaustif sous `evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_*`.
 - [ ] Traiter les findings historiques non ciblés et décider leur remédiation avec les propriétaires concernés.
 - [ ] Lever toute gate permanente ou déclarer une release : interdit dans cette passation.
+
+# T00–T42-SELF-VALIDATION-SYNTHETIC-E2E-V4 — 2026-08-24
+- [x] Rejouer la baseline depuis un clone neuf et consigner CWD, UTC, espace, versions, status, HEAD et refs.
+- [x] Réhydrater uniquement les quatre artefacts LFS critiques et valider sidecars, ZIP, extractions, manifestes et bundles.
+- [x] Rejouer Core, Dashboard, sécurité, SBOM et inventaire de licences ; conserver les codes de sortie réels.
+- [x] Exécuter l’E2E Playwright synthétique loopback avec token éphémère, stockage vide, rejeu refusé et aucune requête tierce.
+- [x] Vérifier le cleanup : aucun processus, token, SQLite ou répertoire temporaire résiduel.
+- [x] Préparer le wrapper v4 append-only, son manifeste non auto-référentiel, ses sidecars, le bundle delta et la classification individuelle.
+- [ ] Traiter les findings historiques avec leurs propriétaires et une revue humaine indépendante.
+- [ ] Lever toute gate permanente ou déclarer une release : interdit.
+
+# Publication V4 — 2026-08-24
+- [x] Documenter dans le registre les commits `ad41afd`/`c905f88`, hashes wrapper/bundle, résultats E2E et limites.
+- [x] Préparer la branche `audit/t00-t42-self-validation-synthetic-e2e` pour publication.
+- [ ] Obtenir la revue humaine indépendante ; aucune gate ne doit être levée avant celle-ci.

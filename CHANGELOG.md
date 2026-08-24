@@ -277,3 +277,11 @@ La qualification post-correctif depuis un clone neuf confirme zéro des 13 findi
 Le correctif senior des 13 findings GolangCI-Lint réellement défectueux est publié avec deux commits de code, des tests de non-régression et une qualification depuis un clone neuf. Le wrapper V3 code-fixed conserve le ZIP historique intact et rassemble le mapping, les logs, les SBOM, les scans et la preuve Playwright bloquée. Les findings historiques non ciblés, Gitleaks `APi=REDACTED`, les gates permanentes et l’absence de Core/token réel restent explicitement maintenus.
 
 La livraison reste `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW_WITH_CODE_FIXES`; elle ne constitue pas une release.
+
+## 2026-08-24 — Self-validation v4 synthetic E2E
+
+Ajout append-only de la chaîne de preuves `SELF_VALIDATION_V4`, incluant baseline brute, réhydratation LFS ciblée, contrôles d’artefacts, qualification Go/Dashboard, scans, SBOM CycloneDX/SPDX, inventaire de licences, classification individuelle des findings, E2E Playwright synthétique loopback et preuve de cleanup. Le statut est `T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW`; aucune gate n’est levée et aucune release n’est autorisée.
+
+## 2026-08-24 — Livraison v4 append-only
+
+La branche `audit/t00-t42-self-validation-synthetic-e2e` est préparée avec les commits `ad41afd71498fa5dda8eacc6a6ae0b47dbc865fd` et `c905f884ad9a84228985add6b7f77391e12b7b03`. Le wrapper V4 a le SHA-256 `429e683472b484076938d71428b5f52e1eb28794da1ad92526b670aa152f706b` et le bundle delta le SHA-256 `0e4159703d453d8bea37617fe8e89460026b0a3118e57257d471af1777fd743e`. Le statut reste `T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW`; aucune gate n’est levée et aucune release n’est autorisée.

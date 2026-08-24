@@ -1,0 +1,29 @@
+--- tsc
+tsc_rc=0
+--- build
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal_self_validation_v4/repo/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+(!) %VITE_ANALYTICS_ENDPOINT% is not defined in env variables found in /index.html. Is the variable mistyped?
+(!) %VITE_ANALYTICS_WEBSITE_ID% is not defined in env variables found in /index.html. Is the variable mistyped?
+<script src="%VITE_ANALYTICS_ENDPOINT%/umami"> in "/index.html" can't be bundled without type="module" attribute
+transforming...
+
+/manus-storage/forgelocal-control-room_fbd8004c.jpg referenced in /manus-storage/forgelocal-control-room_fbd8004c.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+✓ 1627 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.59 kB │ gzip: 105.53 kB
+../dist/public/assets/index-CtIWVWzk.css  132.28 kB │ gzip:  23.60 kB
+../dist/public/assets/index-CeZdj2NR.js   402.25 kB │ gzip: 114.21 kB
+✓ built in 2.07s
+
+  dist/index.js  788b 
+
+⚡ Done in 3ms
+build_rc=0
+--- audit
+No known vulnerabilities found
+audit_rc=0

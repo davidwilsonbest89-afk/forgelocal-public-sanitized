@@ -8,3 +8,5 @@ evidence/PREHUMAN_T00_T42/*.bundle filter=lfs diff=lfs merge=lfs -text
 
 evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip filter=lfs diff=lfs merge=lfs -text
 evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip filter=lfs diff=lfs merge=lfs -text
+evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip filter=lfs diff=lfs merge=lfs -text
+evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle filter=lfs diff=lfs merge=lfs -text

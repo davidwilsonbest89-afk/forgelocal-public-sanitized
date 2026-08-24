@@ -72,3 +72,26 @@ Le paquet code-fixed final est publié comme ajout append-only. Le wrapper `evid
 L’addendum code-fixed `evidence/forgelocal-t00-t42-final-exit-checklist-code-fixed.zip` a le SHA-256 `c7b83a2a55f7c623280fad574a6dfdeb0714ff8c51215b0bc33636b5c9daaa77`. Le correctif de code est porté par `6ee0840a7b264343be3840998df2a8903b511722` et `e0c9352710eb3710eaf0ea5d71614f2731a7051c`; les preuves post-correctif confirment zéro des 13 findings ciblés restants.
 
 Le bundle de finalisation reste un delta nécessitant `631605ba136ff864d23e9674ca6adb4a8df0b740`; sa vérification seeded et `git fsck --full` sont à zéro. La décision est `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW_WITH_CODE_FIXES`, sans levée de gate ni déclaration de release.
+
+## 2026-08-24 — Self-validation v4 avec E2E synthétique locale
+
+Une auto-vérification renforcée a été exécutée depuis un clone neuf sur le HEAD `861880e56f13866346cf974110a01c8a890b86e2`. Elle couvre sidecars portables (31/31), ZIP et extractions fraîches (19/19), bundles (18/18), `git fsck --full`, LFS ciblé, qualification Go, Dashboard, Gitleaks explicite sur la plage demandée, OSV/Govulncheck, Trivy, SBOM CycloneDX/SPDX, licences et E2E Playwright synthétique loopback. L’E2E est vert : 1 test, 52 requêtes loopback, stockage navigateur vide, rejeu refusé et cleanup vérifié.
+
+Le wrapper V3 historique reste inchangé et est inclus dans le wrapper v4 append-only. Les limites demeurent : Staticcheck 36 diagnostics historiques, Gosec 182 findings HEAD contre 194 baseline avec le même outil, golangci-lint 1.61.0 incompatible avec la cible Go 1.25, espaces finaux historiques dans `git diff --check` et huit objets LFS historiques indisponibles. La livraison ne lève aucune gate et ne constitue pas une release.
+
+Statut exact : `T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW`.
+T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`.
+
+## 2026-08-24 — Livraison v4 append-only et branche dédiée
+
+- **Branche :** `audit/t00-t42-self-validation-synthetic-e2e`
+- **Commit d’artefacts et preuves :** `ad41afd71498fa5dda8eacc6a6ae0b47dbc865fd`
+- **Commit des manifestes et bundle delta :** `c905f884ad9a84228985add6b7f77391e12b7b03`
+- **Wrapper V4 :** `evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip`
+- **SHA-256 wrapper V4 :** `429e683472b484076938d71428b5f52e1eb28794da1ad92526b670aa152f706b`
+- **Bundle delta :** `evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle`
+- **SHA-256 bundle delta :** `0e4159703d453d8bea37617fe8e89460026b0a3118e57257d471af1777fd743e`
+- **E2E :** 1 test Playwright, 52 requêtes loopback, stockage vide, rejeu refusé, cleanup PASS
+- **Décision :** `T00_T42_SELF_VALIDATION_WITH_SYNTHETIC_E2E_COMPLETE_PENDING_INDEPENDENT_REVIEW`
+
+Les gates permanentes, T30 `PENDING_REMOTE_EVIDENCE_RECONCILIATION` et les findings historiques restent inchangés. Cette livraison n’est pas une release.

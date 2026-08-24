@@ -1,0 +1,19 @@
+Updated Git hooks.
+Git LFS initialized.
+--- evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-prehuman-validation
+Checking out LFS objects: 100% (1/1), 110 MB | 0 B/s, done.
+--- evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle
+fetch: Fetching reference refs/heads/audit/t00-t42-prehuman-validation
+Checking out LFS objects: 100% (1/1), 110 MB | 0 B/s, done.
+--- evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-prehuman-validation
+Checking out LFS objects: 100% (1/1), 110 MB | 0 B/s, done.
+--- evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-prehuman-validation
+Checking out LFS objects: 100% (1/1), 111 MB | 0 B/s, done.
+--- hashes
+5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80  evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip
+14ef76cb68e7f64ff49fdc649cbcf96c5c69b0e9c410c5824a0592b7e33d1d14  evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle
+27598b6d55c767d338e0f61d7acf7f7d6786664d05752117cf57c7fd28fd48ec  evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+5b31ae7afcdc032bec46785a2573ceab9ec797261c3e0d31490f3c6fb9dfbe2b  evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
