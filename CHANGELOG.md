@@ -248,3 +248,10 @@ La validation indépendante en sandbox réelle a été poursuivie jusqu’à T42
 ## 2026-08-24 — Correction de traçabilité T28–T42
 
 Après revue indépendante, une branche dédiée ajoute uniquement des corrections de preuve : reconstructions postérieures explicitement nommées pour les baseline logs absents, sidecars compagnons portables relatifs, réconciliation T30 et métadonnées T42 corrigées. Les sidecars historiques sont conservés inchangés. Une qualification depuis un clone neuf confirme les tests race, vet, build, diff-check et fsck ; Gitleaks cumulatif et Gosec historiques restent présentés honnêtement avec leurs codes de sortie et leurs différentiels. Aucun code produit ni gate permanent n’est modifié.
+
+
+## 2026-08-24 — Livraison gelée de la prévalidation humaine T00–T42
+
+La branche `audit/t00-t42-prehuman-validation` livre le dossier complet sous `evidence/PREHUMAN_T00_T42/`. Le commit d’artefacts est `cf280858b345e2fd566d391590f23d8cfa6bbe6d`. Le ZIP `forgelocal-t28-t42-prehuman-validation.zip` a le SHA-256 `5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80`, et le bundle `forgelocal-t28-t42-prehuman-validation.bundle` a le SHA-256 `14ef76cb68e7f64ff49fdc649cbcf96c5c69b0e9c410c5824a0592b7e33d1d14`. La décision est `T00_T42_PREHUMAN_VALIDATION_DELIVERED_PENDING_INDEPENDENT_REVIEW`.
+
+Cette livraison fige uniquement la chaîne de preuve. Elle ne modifie pas le code produit, ne démarre aucun lot bloqué, ne lève aucune gate et ne constitue ni une release ni une autorisation produit.

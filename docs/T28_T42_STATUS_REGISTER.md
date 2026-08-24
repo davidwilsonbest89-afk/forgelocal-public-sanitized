@@ -29,3 +29,17 @@
 Les valeurs suivantes restent inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false`. Aucun runtime réel, Camoufox, proxy réel, cookie réel, migration utilisateur, récupération de géolocalisation réelle, SystemVault natif ou release n’a été exécuté.
 
 Les archives originales, les copies de correction et les archives rejetées pour taille sont conservées. Les paquets GitHub sont des preuves auditables et ne constituent pas une approbation produit.
+
+
+## Livraison prévalidation humaine T00–T42
+
+- **Branche de livraison :** `audit/t00-t42-prehuman-validation`
+- **Commit d’artefacts :** `cf280858b345e2fd566d391590f23d8cfa6bbe6d`
+- **Dossier GitHub :** `evidence/PREHUMAN_T00_T42/`
+- **ZIP :** `forgelocal-t28-t42-prehuman-validation.zip`
+- **SHA-256 ZIP :** `5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80`
+- **Bundle :** `forgelocal-t28-t42-prehuman-validation.bundle`
+- **SHA-256 bundle :** `14ef76cb68e7f64ff49fdc649cbcf96c5c69b0e9c410c5824a0592b7e33d1d14`
+- **Décision :** `T00_T42_PREHUMAN_VALIDATION_DELIVERED_PENDING_INDEPENDENT_REVIEW`
+
+Cette livraison fige la chaîne de preuve pour revue humaine. Elle ne constitue ni une release, ni une autorisation produit, ni une levée de gate. Les statuts T28, T29, T39, T40, T41 et T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`; T31–T38 restent `APPROVED_VERIFIABLE_LOCAL_WITH_POSTHOC_BASELINE_RECONSTRUCTION`.
