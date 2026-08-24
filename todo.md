@@ -749,3 +749,13 @@ Reste à faire :
 - [x] Conserver la sortie `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW` pour revue humaine indépendante uniquement.
 - [ ] Corriger les exceptions qualité ouvertes après autorisation explicite et périmètre de remédiation ; ne pas masquer par `nolint`, exclusion ou modification de configuration.
 - [ ] Lever `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` ou `release_authorized=false` : interdit dans cette passation.
+
+# T00–T42-PREHUMAN-CODE-FIX — 2026-08-24
+
+- [x] Analyser individuellement les 13 findings GolangCI-Lint et distinguer erreur réelle, effet de différentiel et dette historique.
+- [x] Corriger les retours `Shutdown`, `Start`, `Write`, `io.Copy` et `Rollback` réellement non traités.
+- [x] Remplacer la branche vide SA9003 de T38 par une assertion de non-régression explicite.
+- [x] Rejouer les tests ciblés, race, Go global, vet, build, linters, vulnérabilités, SBOM et Dashboard depuis un clone neuf.
+- [x] Conserver les logs post-correctif et le mapping exhaustif sous `evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_*`.
+- [ ] Traiter les findings historiques non ciblés et décider leur remédiation avec les propriétaires concernés.
+- [ ] Lever toute gate permanente ou déclarer une release : interdit dans cette passation.

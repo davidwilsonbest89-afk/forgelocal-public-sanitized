@@ -265,3 +265,9 @@ La checklist finale a été complétée sans modification du code produit, des t
 Playwright/T10 est documenté comme `NOT_APPLICABLE_UNDER_CURRENT_GATES`, avec preuve de commande, CWD, UTC, sortie brute et code de sortie; aucun Core, token, navigateur réel, Camoufox, proxy réel, cookie réel, SystemVault natif ou release n’a été exécuté. Le signal Gitleaks cumulatif `APi=REDACTED` conserve `SCAN_BLOCKED_UNKNOWN`; Gosec conserve 194 findings baseline/head sans nouveau différentiel.
 
 Le wrapper append-only `forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip` rassemble le ZIP historique intact, l’addendum et les nouvelles preuves. Le ZIP historique et son hash `5c586895ea9b096ee529207ea57640227c5cb663c77c8d3aa77036258528fd80` sont inchangés. La sortie attendue est `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW`; elle ne constitue ni une approbation produit, ni une release, ni une levée de gate.
+
+## 2026-08-24 — Correction de code des 13 findings GolangCI-Lint
+
+Après analyse senior, les 13 findings ont été traités par deux commits de code : `6ee0840a7b264343be3840998df2a8903b511722` et `e0c9352710eb3710eaf0ea5d71614f2731a7051c`. Les retours de `srv.Shutdown`, `cmd.Start`, écritures réseau, copies bidirectionnelles et rollbacks transactionnels sont désormais traités explicitement; le test T38 ne contient plus de branche vide. Des tests de non-régression couvrent les écritures partielles/échouées, les copies échouées et le cycle transactionnel backup.
+
+La qualification post-correctif depuis un clone neuf confirme zéro des 13 findings ciblés. Les findings Staticcheck/GolangCI-Lint non ciblés, Gosec historique, le signal cumulatif Gitleaks `APi=REDACTED`, les misconfigurations Trivy historiques et le blocage Playwright par configuration protégée restent documentés honnêtement. Cette correction ne lève aucune gate et ne constitue pas une release.

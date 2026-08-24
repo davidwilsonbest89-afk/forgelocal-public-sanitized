@@ -1,0 +1,45 @@
+started_utc=2026-08-24T21:56:15Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=e0c9352710eb3710eaf0ea5d71614f2731a7051c
+command=go test ./cmd/server ./internal/api ./internal/backup ./internal/sessiontrack 
+--- raw_output ---
+ok  	forgelocal/cmd/server	(cached)
+ok  	forgelocal/internal/api	(cached)
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/sessiontrack	(cached)
+exit_code=0
+completed_utc=2026-08-24T21:56:15Z
+check=go_test_targeted
+---
+started_utc=2026-08-24T21:56:15Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=e0c9352710eb3710eaf0ea5d71614f2731a7051c
+command=go test -race ./cmd/server ./internal/api ./internal/backup ./internal/sessiontrack 
+--- raw_output ---
+ok  	forgelocal/cmd/server	(cached)
+ok  	forgelocal/internal/api	(cached)
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/sessiontrack	(cached)
+exit_code=0
+completed_utc=2026-08-24T21:56:16Z
+check=go_test_race_targeted
+---
+started_utc=2026-08-24T21:56:16Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=e0c9352710eb3710eaf0ea5d71614f2731a7051c
+command=git diff --check 
+--- raw_output ---
+exit_code=0
+completed_utc=2026-08-24T21:56:16Z
+check=diff_check
+---
+started_utc=2026-08-24T21:56:16Z
+cwd=/home/ubuntu/forgelocal-prehuman-fresh-20260824
+head=e0c9352710eb3710eaf0ea5d71614f2731a7051c
+command=bash -c golangci-lint\ run\ --out-format\ json\ ./...\ \>\ \"\$1\"\;\ exit\ \$\? bash /home/ubuntu/forgelocal-postfix-final-check-20260824/POSTFIX_GOLANGCI_TARGETED_REGRESSION.json 
+--- raw_output ---
+exit_code=1
+completed_utc=2026-08-24T21:56:17Z
+check=targeted_golangci
+---
+final_head=e0c9352710eb3710eaf0ea5d71614f2731a7051c

@@ -38,3 +38,11 @@ Les gates demeurent `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SY
 [2]: ./PREHUMAN_FINAL_FINDINGS_CLASSIFICATION.md "Classification stricte des findings"
 [3]: ./PREHUMAN_T00_T42_MATRIX.md "Matrice exhaustive T00–T42"
 [4]: ../PREHUMAN_T00_T42/PREHUMAN_T00_T42_SUMMARY.md "Résumé du paquet préhumain gelé"
+
+## Amendement senior — correction des findings réellement défectueux
+
+Les 13 findings GolangCI-Lint ont été corrigés lorsqu’ils correspondaient à des erreurs de retour non traitées, des écritures/copies réseau non vérifiées ou une assertion T38 vide. Deux commits de code ont été créés depuis le clone neuf, puis rattachés à la branche de livraison : `6ee0840a7b264343be3840998df2a8903b511722` et `e0c9352710eb3710eaf0ea5d71614f2731a7051c`. Un test de non-régression couvre les écritures partielles/échouées, les copies échouées et le cycle transactionnel de backup; le test T38 vérifie désormais explicitement l’acceptation d’une clé valide.
+
+La vérification ciblée confirme zéro des 13 findings restants. La qualification globale applicable a été rejouée depuis le clone neuf corrigé; les tests Go, vet, build, Dashboard, vulnérabilités, SBOM et inventaire restent conservés dans les fichiers `POSTFIX_*`. GolangCI-Lint et Staticcheck conservent des findings historiques non ciblés, Gitleaks conserve `SCAN_BLOCKED_UNKNOWN`, et Playwright reste `NOT_APPLICABLE_UNDER_CURRENT_GATES` faute de configuration Core/token autorisée.
+
+La décision devient `T00_T42_PREHUMAN_VALIDATION_FINALIZED_PENDING_INDEPENDENT_REVIEW_WITH_CODE_FIXES`. Elle ne constitue pas une release et ne lève aucune gate. Le ZIP préhumain historique reste inchangé.

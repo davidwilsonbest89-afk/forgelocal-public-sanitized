@@ -1,0 +1,6 @@
+baseline_count=194
+head_count=182
+new_count=0
+resolved_count=2
+new_findings=[]
+resolved_findings=[["G104", "internal/api/sessions.go", "Errors unhandled"], ["G705", "internal/api/sessions.go", "XSS via taint analysis"]]

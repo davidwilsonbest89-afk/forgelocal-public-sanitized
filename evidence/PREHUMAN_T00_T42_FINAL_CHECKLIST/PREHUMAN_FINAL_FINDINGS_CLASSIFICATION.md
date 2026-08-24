@@ -126,3 +126,13 @@ Cette sortie prépare la revue humaine et ne constitue ni une approbation compl�
 [5]: ./PREHUMAN_FINAL_LICENSE_INVENTORY.json "Inventaire de licences production"
 [6]: ./PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log "Journal brut final et preuve Playwright"
 [7]: ./PREHUMAN_FINAL_PLAYWRIGHT_NOT_APPLICABLE.md "Preuve Playwright NOT_APPLICABLE dédiée"
+
+## Amendement post-correctif — 2026-08-24
+
+À la suite de la consigne senior, les 13 findings GolangCI-Lint précédemment classés comme exceptions ont été réanalysés et corrigés lorsqu’ils correspondaient à un retour d’erreur ou à une assertion de test manquante. Les commits de correction sont `6ee0840a7b264343be3840998df2a8903b511722` et `e0c9352710eb3710eaf0ea5d71614f2731a7051c`, rattachés à la branche de livraison par les commits cherry-pick `db0dd08` et `57d21b0`.
+
+Le rapport `POSTFIX_CODE_CORRECTION_FINALIZATION.md` fournit le mapping exhaustif des 13 entrées vers les fichiers et les tests. `POSTFIX_TARGETED_FINDINGS_VERIFICATION.log` confirme `original_targeted_count=13`, `postfix_targeted_remaining_count=0` et `decision=ALL_13_TARGETED_FINDINGS_CLOSED`. Les tests ciblés et race sont à `0`; la qualification globale post-correctif est également à `0` pour `go test -count=1 -race ./...`, `go vet ./...` et `go build ./...`.
+
+GolangCI-Lint retourne encore 82 findings non ciblés historiques; le finding SA9003 T38 ciblé a disparu. Staticcheck conserve 36 findings historiques, sans SA9003 ciblé. Gosec a `new_count=0` après comparaison normalisée par règle, fichier et détail, les variations de comptage ligne-sensible étant dues aux corrections et décalages de ligne. Les findings historiques ne sont ni masqués ni exclus.
+
+Cette correction ne lève aucune gate. Gitleaks conserve `APi=REDACTED` et `SCAN_BLOCKED_UNKNOWN`; Playwright/T10 reste bloqué par `FORGELOCAL_CORE_BASE_URL`, token protégé et `FORGELOCAL_BINARY` absents; aucun runtime réel ou secret n’a été créé. Le clone de qualification a `git fsck --full=0`; son `git lfs fsck=1` est classé comme manque d’objets LFS historiques non réhydratés globalement, conformément à la discipline de récupération ciblée.
