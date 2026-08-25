@@ -1,0 +1,6 @@
+evidence/t30-remote-evidence-reconciliation-v6.delta.bundle is okay
+The bundle contains this ref:
+ec28f1d6ada270f572b484b1eba6f81584363c05 refs/heads/audit/t00-t42-t30-remote-evidence-reconciliation-v6
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
