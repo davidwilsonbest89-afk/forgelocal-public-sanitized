@@ -1,6 +1,6 @@
 evidence/post-v6-revalidation-final-matrix-v6.delta.bundle is okay
 The bundle contains this ref:
-553824477d1f28a9efc73008cdde1c546a79614b refs/heads/audit/t00-t42-post-v6-revalidation-final-matrix
+5ac87bee6987217181ec29c1f50f67b8295fe6e3 refs/heads/audit/t00-t42-post-v6-revalidation-final-matrix
 The bundle requires this ref:
-999374d99b7996504ba91e421850a2fe84afb78d
+999374d99b7996504ba91e421850a2fe84afb78d 
 The bundle uses this hash algorithm: sha1
