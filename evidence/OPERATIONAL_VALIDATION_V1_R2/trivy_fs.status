@@ -1,0 +1,5 @@
+utc=2026-08-25T19:08:00Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+repo_head=1e128bd3b2f1cb9b668afff25c7c155316fd0267
+/home/ubuntu/bin/trivy
+trivy_fs_exit=0

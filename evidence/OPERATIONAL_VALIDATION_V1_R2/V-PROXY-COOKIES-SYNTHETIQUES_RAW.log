@@ -1,0 +1,35 @@
+utc=2026-08-25T18:57:14Z
+cwd=/home/ubuntu
+phase=V-PROXY-COOKIES-SYNTHETIQUES
+repo_head=1e128bd3b2f1cb9b668afff25c7c155316fd0267
+scope=local target, local authenticated proxy, synthetic API fixtures; no real account/proxy/cookie
+## local target and proxy
+proxy_ready_attempt=2
+proxy_ready=PASS
+proxy_noauth_http=407
+proxy_noauth_exit=0
+proxy_auth_http=200
+proxy_auth_exit=0
+proxy_target_body=0
+proxy_unavailable_exit=7
+proxy_unavailable_expected=closed_fail
+proxy_request_count=2
+## Core proxy registry and cookie fixture API
+build_exit=0
+init_exit=0
+token=value omitted
+create_profile=201
+profile_id=value omitted
+create_proxy=201
+proxy_id=value omitted
+assign_proxy=200
+get_profile_with_proxy=200
+profile_proxy_assignment=PASS
+cookie_import=200
+cookie_export=200
+cookie_value_leak=PASS
+cookie_export_digest=PASS
+cookie_invalid=400
+## redaction
+redaction=PASS
+cleanup=PASS

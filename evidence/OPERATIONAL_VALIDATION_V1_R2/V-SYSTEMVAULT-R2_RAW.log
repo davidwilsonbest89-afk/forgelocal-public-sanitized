@@ -1,0 +1,15 @@
+utc=2026-08-25T18:57:32Z
+phase=V-SYSTEMVAULT
+repo_head=1e128bd3b2f1cb9b668afff25c7c155316fd0267
+native_status=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+## MemoryVault local double
+memory_vault_initial_recovery=PASS
+memory_vault_missing_refusal=PASS
+memory_vault_rotation=PASS
+memory_vault_delete=PASS
+memory_vault_secret_recovery_delete=PASS
+memory_vault_concurrency=PASS
+memory_vault_plaintext_persistence=NOT_APPLICABLE_IN_MEMORY
+memoryvault_exit=0
+native_systemvault=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+no_real_secret_or_native_store_used=yes

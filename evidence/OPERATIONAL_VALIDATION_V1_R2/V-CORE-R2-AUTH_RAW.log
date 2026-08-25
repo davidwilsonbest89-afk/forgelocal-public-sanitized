@@ -1,0 +1,37 @@
+utc=2026-08-25T19:02:16Z
+phase=V-CORE-R2-AUTH
+repo_head=1e128bd3b2f1cb9b668afff25c7c155316fd0267
+build_exit=0
+init_revoke_exit=0
+health_port=19290 attempt=7
+start_revoke_exit=0
+valid status=200 reason=
+valid_admin_assert=0
+missing status=401 reason=missing
+missing_assert=0
+malformed status=401 reason=malformed
+malformed_assert=0
+invalid status=401 reason=invalid
+invalid_assert=0
+legacy_alias_refusal status=401 reason=invalid
+alias_refusal_assert=0
+revoke_http_status=204
+revoked_immediate status=401 reason=revoked
+revoked_immediate_assert=0
+health_port=19290 attempt=7
+restart_revoked_exit=0
+revoked_restart status=401 reason=revoked
+revoked_restart_assert=0
+init_expire_exit=0
+health_port=19291 attempt=7
+start_expire_seed_exit=0
+valid_expire_seed status=200 reason=
+expire_seed_valid_assert=0
+metadata_expired_written=yes
+health_port=19291 attempt=7
+start_expired_exit=0
+expired_restart status=401 reason=expired
+expired_restart_assert=0
+process_cleanup=PASS
+token_redaction=PASS
+cleanup=0

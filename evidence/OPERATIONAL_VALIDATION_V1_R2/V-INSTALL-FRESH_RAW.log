@@ -1,0 +1,42 @@
+utc=2026-08-25T18:59:48Z
+cwd=/home/ubuntu
+phase=V-INSTALL-FRESH
+repo_head=1e128bd3b2f1cb9b668afff25c7c155316fd0267
+scope=clean temporary install; synthetic metadata only; no user data
+## build and first init
+build_exit=0
+init1_exit=0
+init1_json=stored_not_printed_for_token_safety
+## generated filesystem inventory (names/modes only)
+-rw-r--r-- config.json
+drwx------ browsers
+drwx------ data
+drwx------ logs
+drwx------ profiles
+drwxr-xr-x
+## idempotent second init
+init2_force_exit=0
+config_hash_stable=0
+## permissions
+base_mode=755 data_mode=755
+base_mode=700 data_mode=700
+api_token_file=missing
+## no cookie/profile payloads created
+unexpected_sensitive_payload_files=0
+## top-level directory security
+profiles_mode=700 data_mode=700 logs_mode=700 browsers_mode=700
+profiles_mode=700 data_mode=700 logs_mode=700 browsers_mode=700
+profiles_mode=700 data_mode=700 logs_mode=700 browsers_mode=700
+profiles_mode=700 data_mode=700 logs_mode=700 browsers_mode=700
+top_level_dirs_expected_owner_only=0700
+top_level_dir_permissions=PASS
+## startup and shutdown
+health_ready_attempt=7
+{"status":"ok"}
+health_exit=0
+api_token_after_start=present_owner_only
+api_token_mode=600
+shutdown_cleanup=PASS
+## redaction
+redaction=PASS
+cleanup=PASS

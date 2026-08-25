@@ -1,0 +1,30 @@
+2026-08-25T19:06:56Z	INFO	[vulndb] Need to update DB
+2026-08-25T19:06:56Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-25T19:06:56Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+39.59 MiB / 108.98 MiB [-------------->_________________________] 36.32% ? p/s ?82.88 MiB / 108.98 MiB [------------------------------>_________] 76.05% ? p/s ?108.98 MiB / 108.98 MiB [------------------------------------->] 100.00% ? p/s ?108.98 MiB / 108.98 MiB [----------------------->] 100.00% 115.61 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 115.61 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 115.61 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 108.15 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 108.15 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 108.15 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 101.18 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 101.18 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [----------------------->] 100.00% 101.18 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 94.65 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 94.65 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 94.65 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 88.54 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 88.54 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 88.54 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 82.83 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [------------------------>] 100.00% 82.83 MiB p/s ETA 0s108.98 MiB / 108.98 MiB [---------------------------] 100.00% 28.58 MiB p/s 4.0s2026-08-25T19:07:01Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-25T19:07:01Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-25T19:07:01Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-25T19:07:01Z	INFO	[checks-client] Need to update the checks bundle
+2026-08-25T19:07:01Z	INFO	[checks-client] Downloading the checks bundle...
+234.65 KiB / 234.65 KiB [-------------------------------------] 100.00% ? p/s 0s2026-08-25T19:07:02Z	INFO	[secret] Secret scanning is enabled
+2026-08-25T19:07:02Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-25T19:07:02Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-25T19:07:02Z	WARN	[secret] The size of the scanned file is too large. It is recommended to use `--skip-files` for this file to avoid high memory consumption.	file_path="continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle" size (MB)=146
+2026-08-25T19:07:17Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-25T19:07:17Z	INFO	Number of language-specific files	num=2
+2026-08-25T19:07:17Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-25T19:07:17Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-25T19:07:17Z	INFO	Detected config files	num=0
+
+Report Summary
+
+┌────────────────────────────────┬───────┬─────────────────┬───────────────────┬─────────┐
+│             Target             │ Type  │ Vulnerabilities │ Misconfigurations │ Secrets │
+├────────────────────────────────┼───────┼─────────────────┼───────────────────┼─────────┤
+│ forge-dashboard/pnpm-lock.yaml │ pnpm  │        0        │         -         │    -    │
+├────────────────────────────────┼───────┼─────────────────┼───────────────────┼─────────┤
+│ go.mod                         │ gomod │        0        │         -         │    -    │
+└────────────────────────────────┴───────┴─────────────────┴───────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
