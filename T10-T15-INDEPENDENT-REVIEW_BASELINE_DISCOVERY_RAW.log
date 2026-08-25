@@ -1,0 +1,14 @@
+utc=2026-08-25T13:20:00Z
+lot=T10-T15-INDEPENDENT-REVIEW
+source_branch=audit/t00-t42-t10-t15-e2e-validation-v6
+source_commit=8c38830b155f293c8b05b2789e60f7de4c45f565
+review_branch=audit/t00-t42-t10-t15-independent-review-v6
+
+--- required physical checks
+Verify from a fresh public clone: ZIP SHA-256 from a neutral directory, portable sidecar, unzip -t, non-self-referential manifest, fresh extraction, internal sha256sum; bundle verify, fresh clone checkout of exact commit, git fsck --full and clean worktree; raw UTC/CWD/commands/tool versions/HEAD/exit codes; seven tests and duration; assertions and cleanup; Gitleaks on extracted kit and Git range.
+
+--- strict policy
+No source modification, no rerun of product behavior unless specifically needed to reproduce a missing assertion, no Camoufox, real proxy, real cookie, user data, SystemVault, migration, production runtime or release. A zero-commit scan is invalid, never PASS.
+
+--- target decision
+If every required physical check is green, use exactly `T10_T15_SYNTHETIC_E2E_APPROVED_VERIFIABLE_LOCAL`; otherwise record the precise defect and keep the prior status.

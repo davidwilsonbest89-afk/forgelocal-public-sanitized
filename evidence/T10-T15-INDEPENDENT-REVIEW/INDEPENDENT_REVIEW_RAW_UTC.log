@@ -1,0 +1,95 @@
+utc=2026-08-25T13:20:48Z
+cwd=/home/ubuntu
+command=/home/ubuntu/forgelocal_self_validation_v6/t10_t15_independent_review/verify_t10_t15_independent.sh
+branch=audit/t00-t42-t10-t15-e2e-validation-v6
+expected_head=8c38830b155f293c8b05b2789e60f7de4c45f565
+source_base=999374d99b7996504ba91e421850a2fe84afb78d
+go_version=go version go1.25.13 linux/amd64
+node_version=v22.13.0
+pnpm_version=11.20.0
+playwright_version=Version 1.55.1
+gitleaks_version=8.18.4
+git_version=git version 2.43.0
+disk=/dev/root        48G   47G  829M  99% /
+remote_head_api_exit=0
+remote_head=8c38830b155f293c8b05b2789e60f7de4c45f565
+Cloning into '/tmp/t10-t15-independent-review.xryEWL/clone'...
+fresh_clone_exit=0
+clone_fsck_exit=0
+clone_head=8c38830b155f293c8b05b2789e60f7de4c45f565
+HEAD is now at 8c38830 Package T10 T15 E2E validation
+exact_checkout_exit=0
+targeted_lfs_exit=0
+neutral_zip_copy_exit=0
+neutral_sidecar_copy_exit=0
+t10-t15-e2e-validation-v6.zip: OK
+neutral_zip_sidecar_exit=0
+Archive:  /tmp/t10-t15-independent-review.xryEWL/neutral/t10-t15-e2e-validation-v6.zip
+    testing: T10-T15-E2E-VALIDATION/   OK
+    testing: T10-T15-E2E-VALIDATION/CORE_BUILD.log   OK
+    testing: T10-T15-E2E-VALIDATION/EXECUTION_RESULT.log   OK
+    testing: T10-T15-E2E-VALIDATION/CORE_LOOPBACK_REDACTED.log   OK
+    testing: T10-T15-E2E-VALIDATION/CLEANUP_RESULT.log   OK
+    testing: T10-T15-E2E-VALIDATION/DASHBOARD_LOOPBACK_REDACTED.log   OK
+    testing: T10-T15-E2E-VALIDATION/PLAYWRIGHT_T10_T15_SEQUENTIAL.log   OK
+    testing: T10-T15-E2E-VALIDATION/REGISTER.md   OK
+    testing: T10-T15-E2E-VALIDATION/CHANGELOG.md   OK
+    testing: T10-T15-E2E-VALIDATION/todo.md   OK
+    testing: T10-T15-E2E-VALIDATION/ATTEMPT_HISTORY_REDACTED.log   OK
+    testing: T10-T15-E2E-VALIDATION/BUNDLE_VERIFY.log   OK
+    testing: T10-T15-E2E-VALIDATION/t10-t15-e2e-validation-v6.delta.bundle   OK
+    testing: T10-T15-E2E-VALIDATION/t10-t15-e2e-validation-v6.delta.bundle.portable.sha256   OK
+    testing: T10-T15-E2E-VALIDATION/MANIFEST.md   OK
+    testing: T10-T15-E2E-VALIDATION/SHA256SUMS   OK
+No errors detected in compressed data of /tmp/t10-t15-independent-review.xryEWL/neutral/t10-t15-e2e-validation-v6.zip.
+unzip_test_exit=0
+fresh_extract_exit=0
+ATTEMPT_HISTORY_REDACTED.log: OK
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+CLEANUP_RESULT.log: OK
+CORE_BUILD.log: OK
+CORE_LOOPBACK_REDACTED.log: OK
+DASHBOARD_LOOPBACK_REDACTED.log: OK
+EXECUTION_RESULT.log: OK
+PLAYWRIGHT_T10_T15_SEQUENTIAL.log: OK
+REGISTER.md: OK
+t10-t15-e2e-validation-v6.delta.bundle: OK
+t10-t15-e2e-validation-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+fresh_internal_sha_exit=0
+manifest_non_self_referential_exit=0
+neutral_bundle_copy_exit=0
+neutral_bundle_sidecar_copy_exit=0
+t10-t15-e2e-validation-v6.delta.bundle: OK
+neutral_bundle_sidecar_exit=0
+evidence/t10-t15-e2e-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+a77f2e902ef423b6f94d1d2a646bd120464f58c9 refs/heads/audit/t00-t42-t10-t15-e2e-validation-v6
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+checkout_status_exit=0
+seven_tests_log_assertion_exit=0
+assertion_source_fail-closed_local-only_navigation_policy_exit=0
+assertion_source_content_projection_redacted_exit=0
+assertion_source_session_close_and_refusal_after_close_exit=0
+assertion_source_dashboard_automation_panel_mounts_exit=0
+cleanup_token_file_removed_exit=0
+cleanup_base_dir_removed_exit=0
+cleanup_port_19280_after_cleanup_exit=0
+cleanup_port_3000_after_cleanup_exit=0
+cleanup_run_root_removed_exit=0
+no_temporary_token_in_kit_exit=0
+[90m1:21PM[0m [32mINF[0m scan completed in 18ms
+[90m1:21PM[0m [32mINF[0m no leaks found
+gitleaks_extracted_exit=0
+From https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized
+ * tag               t00-t42-v6-local-qualified-2026-08-25 -> FETCH_HEAD
+base_tag_fetch_exit=0
+git_range_count=1 range_count_exit=0
+[90m1:21PM[0m [32mINF[0m 0 commits scanned.
+[90m1:21PM[0m [32mINF[0m scan completed in 1.45s
+[90m1:21PM[0m [32mINF[0m no leaks found
+gitleaks_git_range_exit=0 range=999374d99b7996504ba91e421850a2fe84afb78d..8c38830b155f293c8b05b2789e60f7de4c45f565
