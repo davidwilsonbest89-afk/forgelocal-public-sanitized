@@ -10,3 +10,4 @@ Manifeste non auto-référentiel : MANIFEST.md et SHA256SUMS sont exclus de leur
 | `T10-T15-INDEPENDENT-REVIEW_BASELINE_DISCOVERY_RAW.log` | preuve de revue indépendante T10/T15 |
 | `run_t10_t15_e2e.sh` | preuve de revue indépendante T10/T15 |
 | `verify_t10_t15_independent.sh` | preuve de revue indépendante T10/T15 |
+| `verify_t10_t15_independent_public.sh` | preuve de revue indépendante T10/T15 |
