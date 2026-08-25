@@ -132,6 +132,69 @@ export type CoreRuntimeClient = {
   listQualified(signal?: AbortSignal): Promise<CoreWriteResult<CoreRuntimeRecord[]>>;
 };
 
+// T28 — Extension registry contract. The dashboard receives only manifest,
+// digest-preview, risk and lifecycle projections; package bytes remain in Core.
+export type CoreExtensionManifest = {
+  name?: string;
+  version?: string;
+  manifest_version?: number;
+  permissions?: string[];
+  optional_permissions?: string[];
+  host_permissions?: string[];
+  optional_host_permissions?: string[];
+  content_script_matches?: string[];
+};
+
+export type CoreExtensionVersion = {
+  id: string;
+  series_id: string;
+  number: number;
+  state: string;
+  digest_preview: string;
+  size: number;
+  format: string;
+  manifest: CoreExtensionManifest;
+  risk_state: string;
+  risk_categories?: string[];
+  created_at: string;
+  approved_at?: string;
+};
+
+export type CoreExtensionAssignment = {
+  id: string;
+  version_id: string;
+  profile_id: string;
+  state: string;
+  created_at: string;
+};
+
+export type CoreExtensionSeries = {
+  id: string;
+  active_version_id?: string;
+  created_at: string;
+  versions: CoreExtensionVersion[];
+  assignments?: CoreExtensionAssignment[];
+};
+
+export type CoreExtensionListResult = {
+  data: CoreExtensionSeries[];
+  total: number;
+  limit: number;
+  offset: number;
+};
+
+export type CoreExtensionClient = {
+  list(signal?: AbortSignal): Promise<CoreWriteResult<CoreExtensionListResult>>;
+  getSeries(seriesId: string, signal?: AbortSignal): Promise<CoreWriteResult<CoreExtensionSeries>>;
+  importPackage(file: File, seriesId?: string, signal?: AbortSignal): Promise<CoreWriteResult<CoreExtensionVersion>>;
+  updatePackage(seriesId: string, file: File, signal?: AbortSignal): Promise<CoreWriteResult<CoreExtensionVersion>>;
+  approve(versionId: string, permissionsAcknowledged: string[], acceptHighRisk: boolean, signal?: AbortSignal): Promise<CoreWriteResult<CoreExtensionVersion>>;
+  assign(versionId: string, profileId: string, signal?: AbortSignal): Promise<CoreWriteResult<CoreExtensionAssignment>>;
+  rollback(seriesId: string, targetVersionId: string, signal?: AbortSignal): Promise<CoreWriteResult<{ state: string }>>;
+  revoke(versionId: string, signal?: AbortSignal): Promise<CoreWriteResult<{ state: string }>>;
+  purge(versionId: string, signal?: AbortSignal): Promise<CoreWriteResult<{ state: string }>>;
+};
+
 // T13 — Environment consistency diagnostic contract (read-only projection of a
 // Core-owned diagnostic catalog; no raw observables — UA strings, coordinates,
 // raw canvas/audio hashes — are ever exposed to the dashboard).
@@ -194,6 +257,10 @@ export type CoreWriteClient = {
   sessions: CoreSessionClient;
   createProfile(spec: CoreWriteCreateSpec, signal?: AbortSignal): Promise<CoreWriteResult<CoreWriteProfile>>;
   getProfile(id: string, signal?: AbortSignal): Promise<CoreWriteResult<CoreWriteProfile>>;
+  duplicateProfile(id: string, signal?: AbortSignal): Promise<CoreWriteResult<CoreWriteProfile>>;
+  deleteProfile(id: string, signal?: AbortSignal): Promise<CoreWriteResult<string>>;
+  exportProfile(id: string, signal?: AbortSignal): Promise<Blob>;
+  importProfile(file: File, signal?: AbortSignal): Promise<CoreWriteResult<CoreWriteProfile>>;
   updateProfile(id: string, patch: Record<string, unknown>, signal?: AbortSignal): Promise<CoreWriteResult<CoreWriteProfile>>;
   archiveProfile(id: string, signal?: AbortSignal): Promise<CoreWriteResult<{ id: string }>>;
   reopenProfile(id: string, signal?: AbortSignal): Promise<CoreWriteResult<{ id: string }>>;
@@ -201,6 +268,7 @@ export type CoreWriteClient = {
   removeProfileTag(id: string, tag: string, signal?: AbortSignal): Promise<CoreWriteResult<CoreWriteProfile>>;
   proxies: CoreProxyClient;
   backups: CoreBackupClient;
+  extensions: CoreExtensionClient;
 };
 
 const CORRELATION_HEADER = "x-correlation-id";
@@ -317,6 +385,32 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
     return { data: data.data as T, correlationId };
   }
 
+  async function uploadMultipart<T>(path: string, file: File, field = "package", extra?: Record<string, string>, signal?: AbortSignal): Promise<CoreWriteResult<T>> {
+    if (!token) throw new Error("CORE_ADMIN_NOT_CONNECTED");
+    if (!configuredURL) throw new Error("CORE_NOT_LOOPBACK");
+    const form = new FormData();
+    form.append(field, file, file.name);
+    for (const [key, value] of Object.entries(extra ?? {})) form.append(key, value);
+    const response = await fetch(`${configuredURL}${path}`, {
+      method: "POST",
+      signal,
+      headers: { Authorization: `Bearer ${token}`, "X-Request-ID": `ui-${crypto.randomUUID()}` },
+      body: form,
+      credentials: "omit",
+      cache: "no-store",
+    });
+    const correlationId = readCorrelationId(response);
+    if (response.status === 401 || response.status === 403) token = undefined;
+    if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
+    if (!response.ok) {
+      let detail: CoreWriteError | undefined;
+      try { detail = (await response.json() as { error?: CoreWriteError }).error; } catch { /* status fallback */ }
+      throw new Error(detail?.code ? `CORE_ERROR_${detail.code}` : `CORE_HTTP_${response.status}`);
+    }
+    const payload = await response.json() as { data?: T };
+    return { data: payload.data as T, correlationId };
+  }
+
   const clientRef: CoreWriteClient = {
     bind(nextToken) {
       if (!nextToken.trim()) throw new Error("CORE_ADMIN_TOKEN_EMPTY");
@@ -334,6 +428,24 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
     },
     getProfile(id, signal) {
       return mutate<CoreWriteProfile>("GET", `/api/profiles/${encodeURIComponent(id)}`, undefined, signal);
+    },
+    duplicateProfile(id, signal) {
+      return mutate<CoreWriteProfile>("POST", `/api/profiles/${encodeURIComponent(id)}/duplicate`, undefined, signal);
+    },
+    deleteProfile(id, signal) {
+      return mutate<string>("DELETE", `/api/profiles/${encodeURIComponent(id)}`, undefined, signal);
+    },
+    async exportProfile(id, signal) {
+      if (!token) throw new Error("CORE_ADMIN_NOT_CONNECTED");
+      if (!configuredURL) throw new Error("CORE_NOT_LOOPBACK");
+      const response = await fetch(`${configuredURL}/api/profiles/${encodeURIComponent(id)}/export`, { method: "POST", signal, headers: { Authorization: `Bearer ${token}`, "X-Request-ID": `ui-${crypto.randomUUID()}` }, credentials: "omit", cache: "no-store" });
+      if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
+      if (response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
+      if (!response.ok) throw new Error(`CORE_HTTP_${response.status}`);
+      return response.blob();
+    },
+    importProfile(file, signal) {
+      return uploadMultipart<CoreWriteProfile>("/api/profiles/import", file, "file", undefined, signal);
     },
     updateProfile(id, patch, signal) {
       return mutate<CoreWriteProfile>("PUT", `/api/profiles/${encodeURIComponent(id)}`, patch, signal);
@@ -482,6 +594,44 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
       unassignProxy(id, profileId, signal) {
         if (!profileId) throw new Error("MISSING_PROFILE_ID");
         return mutate<{ proxy_id: string; profile_id: string }>("DELETE", `/api/proxies/${encodeURIComponent(id)}/assign?profile_id=${encodeURIComponent(profileId)}`, undefined, signal);
+      },
+    },
+    extensions: {
+      list(signal) {
+        if (!token) throw new Error("CORE_ADMIN_NOT_CONNECTED");
+        if (!configuredURL) throw new Error("CORE_NOT_LOOPBACK");
+        return fetch(`${configuredURL}/api/v1/extensions?limit=100`, { signal, headers: { Authorization: `Bearer ${token}`, "X-Request-ID": `ui-${crypto.randomUUID()}` }, credentials: "omit", cache: "no-store" }).then(async response => {
+          if (response.status === 401 || response.status === 403) token = undefined;
+          if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
+          if (!response.ok) throw new Error(`CORE_HTTP_${response.status}`);
+          return { data: await response.json() as CoreExtensionListResult, correlationId: readCorrelationId(response) };
+        });
+      },
+      getSeries(seriesId, signal) {
+        return mutate<CoreExtensionSeries>("GET", `/api/v1/extensions/${encodeURIComponent(seriesId)}`, undefined, signal);
+      },
+      importPackage(file, seriesId, signal) {
+        if (file.size === 0) throw new Error("CORE_ERROR_INVALID_ARCHIVE");
+        return uploadMultipart<CoreExtensionVersion>("/api/v1/extensions/import", file, "package", seriesId ? { series_id: seriesId } : undefined, signal);
+      },
+      updatePackage(seriesId, file, signal) {
+        if (!seriesId) throw new Error("CORE_ERROR_INVALID_EXTENSION_ID");
+        return uploadMultipart<CoreExtensionVersion>(`/api/v1/extensions/${encodeURIComponent(seriesId)}/update`, file, "package", undefined, signal);
+      },
+      approve(versionId, permissionsAcknowledged, acceptHighRisk, signal) {
+        return mutate<CoreExtensionVersion>("POST", `/api/v1/extensions/${encodeURIComponent(versionId)}/approve`, { permissions_acknowledged: permissionsAcknowledged, accept_high_risk: acceptHighRisk }, signal);
+      },
+      assign(versionId, profileId, signal) {
+        return mutate<CoreExtensionAssignment>("POST", `/api/v1/extensions/${encodeURIComponent(versionId)}/assign`, { profile_id: profileId }, signal);
+      },
+      rollback(seriesId, targetVersionId, signal) {
+        return mutate<{ state: string }>("POST", `/api/v1/extensions/${encodeURIComponent(seriesId)}/rollback`, { target_version_id: targetVersionId }, signal);
+      },
+      revoke(versionId, signal) {
+        return mutate<{ state: string }>("POST", `/api/v1/extensions/${encodeURIComponent(versionId)}/revoke`, undefined, signal);
+      },
+      purge(versionId, signal) {
+        return mutate<{ state: string }>("DELETE", `/api/v1/extensions/${encodeURIComponent(versionId)}`, undefined, signal);
       },
     },
     backups: {

@@ -1,0 +1,51 @@
+utc=2026-08-25T20:44:16Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+branch=validation/operational-v1
+head=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+worktree_status=clean_at_baseline
+
+Scope baseline:
+- Dashboard: forge-dashboard/client React/Vite interface.
+- Core: internal/api routes and existing local synthetic harnesses.
+- User constraints: T28 historical code and artifacts untouched; T29 not started; no claim of Camoufox, native SystemVault, or Docker validation when unavailable.
+
+Available tooling at baseline:
+- Chromium: /usr/bin/chromium
+- Camoufox: unavailable
+- Docker: unavailable
+- Secret Service / secret-tool: unavailable
+- Gitleaks: /home/ubuntu/bin/gitleaks
+- Gosec: /home/ubuntu/bin/gosec
+- OSV scanner: /home/ubuntu/bin/osv-scanner
+
+Dashboard package scripts:
+- dev: vite --host
+- build: vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+- start: NODE_ENV=production node dist/index.js
+- preview: vite preview --host
+- check: tsc --noEmit
+- format: prettier --write .
+
+Existing Playwright specs:
+automation-t15.spec.ts
+backups-t11.spec.ts
+bootstrap-ro.spec.ts
+cr03-debug-collector-sentinel.mjs
+environment-t13.spec.ts
+profile-writes-t09.spec.ts
+proxies-t10.spec.ts
+r2-auth-ui.spec.ts
+runtime-t14.spec.ts
+t06-groups-runtimes.spec.ts
+t10-standalone.spec.ts
+
+Core API route files inventoried:
+admin_token.go, artifacts.go, audit.go, backup.go, backup_v1.go, cookie_fixtures.go, dashboard.go, extensions.go, groups.go, localsession.go, openapi.go, profile_history.go, profiles_bulk.go, profiles_metadata.go, profiles_write.go, proxies.go, proxy_providers.go, readonly.go, readonly_session.go, router.go, sessions.go, templates.go, workflow.go.
+
+Baseline placeholder/partial UI observations:
+- Home.tsx routes workspace, audit, settings, help, notifications and advanced filters through unavailable() feedback.
+- Home.tsx row actions call unavailable() when no Core snapshot is connected.
+- Some feature panels exist and are wired to Core clients, but coverage is not equivalent to a final Dashboard workflow.
+- T28 UI workflows for import, inspection, provenance, signature, allowlist, permissions, rollback and extension lifecycle are not represented as a complete final Dashboard flow at baseline.
+
+Baseline evidence was captured before code changes. Full command output and source inventory are retained in the task workspace; this redacted log intentionally contains no token, cookie, account, proxy, or user data.

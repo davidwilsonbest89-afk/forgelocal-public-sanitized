@@ -8,6 +8,7 @@ import {
   Activity,
   Archive,
   Bell,
+  FileArchive,
   Boxes,
   Check,
   ChevronDown,
@@ -47,6 +48,7 @@ import { EnvironmentPanel } from "@/components/EnvironmentPanel";
 import { RuntimePanel } from "@/components/RuntimePanel";
 import { createCoreReadOnlyClient } from "@/lib/coreReadOnly";
 import { CoreProxy, createCoreWriteClient, type CoreWriteClient } from "@/lib/coreWrite";
+import { AdvancedFiltersPanel, AuditPanel, ExtensionsPanel, HelpPanel, LocalWorkspacePanel, NotificationsPanel, SettingsPanel, type AdvancedFilterState, type AuditEntry } from "@/components/DashboardControlPanels";
 
 type ProfileStatus = "Prêt" | "Actif" | "À vérifier" | "Lecture seule";
 
@@ -138,6 +140,7 @@ const navSections = [
       { icon: Fingerprint, label: "Identité navigateur" },
       { icon: Cpu, label: "Runtime qualifié" },
       { icon: TerminalSquare, label: "Automation locale" },
+      { icon: FileArchive, label: "Extensions locales" },
     ],
   },
 ];
@@ -177,6 +180,14 @@ export default function Home() {
   const [assignedProxyIds, setAssignedProxyIds] = useState<Record<string, string>>({});
   const [profileIds, setProfileIds] = useState<string[]>([]);
   const [createBackupPending, setCreateBackupPending] = useState<string | null>(null);
+  const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
+  const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilterState>({ lifecycle: "all", proxy: "all", candidateOnly: false, tag: "" });
+  const [rowActionsProfileId, setRowActionsProfileId] = useState<string | null>(null);
+  const [auditEntries, setAuditEntries] = useState<AuditEntry[]>([]);
+  const [notifications, setNotifications] = useState([
+    { id: "local-core", title: "Core local prêt", detail: "Les actions restent bornées au loopback.", read: false },
+    { id: "policy", title: "Politique fail-closed", detail: "Les runtimes candidats restent non lançables.", read: true },
+  ]);
   /**
    * Formulaire de création proxy persistant : le contenu saisi survit aux
    * démontages du panneau ProxyRegistry (expiration de la session lecture
@@ -191,6 +202,9 @@ export default function Home() {
   // chargements (connexion perdue en cours de requête) et multiplierait les
   // requêtes fantômes vers le Core local.
   const writeClient = useMemo(() => createCoreWriteClient(resolveLocalCoreBaseURL()), []);
+  const recordAudit = (action: string, result: AuditEntry["result"], detail: string) => {
+    setAuditEntries((entries) => [{ id: `${Date.now()}-${Math.random()}`, action, result, detail, at: new Date().toLocaleTimeString("fr-FR") }, ...entries].slice(0, 80));
+  };
   useEffect(() => {
     if (!coreWrite || !coreSnapshot) return;
     const client = writeClient;
@@ -254,8 +268,10 @@ export default function Home() {
     try {
       await action();
       await refreshCoreSnapshot();
+      recordAudit(`profile.${label}`, "success", "Core Go local a confirmé la mutation");
       toast.success("Action appliquée au Core", { description: `Opération ${label} validée par le Core Go local.` });
     } catch (error) {
+      recordAudit(`profile.${label}`, "error", String(error));
       const message = String(error);
       if (message.includes("CORE_ADMIN_EXPIRED")) {
         setCoreWrite(null);
@@ -299,9 +315,15 @@ export default function Home() {
         .includes(normalizedQuery);
       const matchesGroup = group === "Tous les groupes" || profile.group === group;
       const matchesStatus = status === "Tous" || profile.status === status;
-      return matchesQuery && matchesGroup && matchesStatus;
+      const lifecycle = selectedLifecycle[profile.id] ?? "active";
+      const matchesLifecycle = advancedFilters.lifecycle === "all" || lifecycle === advancedFilters.lifecycle;
+      const matchesProxy = advancedFilters.proxy === "all" || (advancedFilters.proxy === "configured" ? profile.proxy !== "Non configuré" : profile.proxy === "Non configuré");
+      const matchesCandidate = !advancedFilters.candidateOnly || profile.runtime.includes("candidat");
+      const normalizedTag = advancedFilters.tag.trim().toLocaleLowerCase("fr-FR");
+      const matchesTag = !normalizedTag || profile.tags.some((tag) => tag.toLocaleLowerCase("fr-FR").includes(normalizedTag));
+      return matchesQuery && matchesGroup && matchesStatus && matchesLifecycle && matchesProxy && matchesCandidate && matchesTag;
     });
-  }, [displayedProfiles, group, query, status]);
+  }, [advancedFilters, displayedProfiles, group, query, selectedLifecycle, status]);
 
   const selectedProfile = displayedProfiles.find((profile) => profile.id === activeId) ?? displayedProfiles[0] ?? profiles[0];
   const coreGroups = coreSnapshot?.groups ?? [];
@@ -310,9 +332,45 @@ export default function Home() {
 
   const unavailable = (label: string) => {
     setNavLabel(label);
-    toast.info(`${label} est prêt pour l’intégration au Core`, {
-      description: "Cette maquette locale ne déclenche aucune écriture ni lancement de runtime.",
+    toast.info(`${label} est disponible dans le panneau actif`, {
+      description: "Cette action reste bornée à la session locale ou au Core loopback selon le panneau.",
     });
+  };
+
+  const runProfileMenuAction = async (profile: Profile, action: "archive" | "reopen" | "duplicate" | "delete" | "export") => {
+    setRowActionsProfileId(null);
+    if (action === "archive" || action === "reopen") {
+      if (!window.confirm(action === "archive" ? `Archiver ${profile.name} côté Core ?` : `Réouvrir ${profile.name} côté Core ?`)) return;
+      await runWrite(action === "archive" ? "archivage" : "réouverture", profile.id, () => action === "archive" ? writeClientRef.current!.archiveProfile(profile.id) : writeClientRef.current!.reopenProfile(profile.id));
+      setSelectedLifecycle((previous) => ({ ...previous, [profile.id]: action === "archive" ? "archived" : "active" }));
+      return;
+    }
+    if (action === "duplicate") {
+      await runWrite("duplication", profile.id, () => writeClientRef.current!.duplicateProfile(profile.id));
+      return;
+    }
+    if (action === "delete") {
+      if (!window.confirm(`Supprimer ${profile.name} du Core ? Cette opération est définitive.`)) return;
+      await runWrite("suppression", profile.id, () => writeClientRef.current!.deleteProfile(profile.id));
+      if (activeId === profile.id) setActiveId(displayedProfiles.find((candidate) => candidate.id !== profile.id)?.id ?? profiles[0].id);
+      return;
+    }
+    const client = writeClientRef.current;
+    if (!client?.isConnected()) { toast.error("Contrôle local requis"); return; }
+    try {
+      const blob = await client.exportProfile(profile.id);
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${profile.id}.zip`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      recordAudit("profile.export", "success", `${profile.id} · ZIP sans coffre`);
+      toast.success("Export profil préparé", { description: "Le ZIP ne contient ni cookie ni secret." });
+    } catch (error) {
+      recordAudit("profile.export", "error", String(error));
+      toast.error("Export profil refusé", { description: String(error) });
+    }
   };
 
   return (
@@ -326,11 +384,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="workspace-select" role="button" tabIndex={0} onClick={() => unavailable("Espaces de travail")} onKeyDown={(event) => event.key === "Enter" && unavailable("Espaces de travail")}>
+        <button className="workspace-select" type="button" onClick={() => setNavLabel("Espaces de travail")} data-testid="workspace-nav">
           <span className="workspace-orb"><HardDrive size={15} /></span>
           <span><strong>Cette machine</strong><small>atelier-local</small></span>
           <ChevronDown size={16} aria-hidden="true" />
-        </div>
+        </button>
 
         <nav className="sidebar-nav">
           {navSections.map((section) => (
@@ -343,7 +401,7 @@ export default function Home() {
                   <button
                     className={`nav-item ${isCurrent ? "nav-item-active" : ""}`}
                     key={item.label}
-                    onClick={() => ("active" in item && item.active) || item.label === "Groupes" || item.label === "Runtimes" || item.label === "Sauvegardes" || item.label === "Proxys" || item.label === "Identité navigateur" || item.label === "Runtime qualifié" || item.label === "Automation locale" ? setNavLabel(item.label) : unavailable(item.label)}
+                    onClick={() => setNavLabel(item.label)}
                     type="button"
                   >
                     <Icon size={17} strokeWidth={1.8} />
@@ -357,8 +415,8 @@ export default function Home() {
         </nav>
 
         <div className="sidebar-bottom">
-          <button className="nav-item" type="button" onClick={() => unavailable("Journal d’audit")}><TerminalSquare size={17} /><span>Journal d’audit</span></button>
-          <button className="nav-item" type="button" onClick={() => unavailable("Réglages")}><Settings2 size={17} /><span>Réglages</span></button>
+          <button className={`nav-item ${navLabel === "Journal d’audit" ? "nav-item-active" : ""}`} type="button" onClick={() => setNavLabel("Journal d’audit")}><TerminalSquare size={17} /><span>Journal d’audit</span></button>
+          <button className={`nav-item ${navLabel === "Réglages" ? "nav-item-active" : ""}`} type="button" onClick={() => setNavLabel("Réglages")}><Settings2 size={17} /><span>Réglages</span></button>
           <div className="local-proof">
             <span className="proof-icon"><ShieldCheck size={15} /></span>
             <p><strong>Local-first</strong><span>{coreSnapshot ? "Lecture Core active" : "Core non connecté"}</span></p>
@@ -370,8 +428,8 @@ export default function Home() {
         <header className="topbar">
           <div className="topbar-crumb"><Command size={15} /><span>ForgeLocal</span><span className="crumb-slash">/</span><strong>{navLabel}</strong><span className={`demo-badge ${coreSnapshot ? "core-live-badge" : ""}`} aria-live="polite"><i /> {coreSnapshot ? "Lecture Core locale" : "Démonstration locale"} <b>·</b> {coreSnapshot ? (writeClientRef.current?.isConnected() ? "écritures locales" : "aucune écriture") : "Core non connecté"}</span></div>
           <div className="topbar-actions">
-            <button className="icon-button" aria-label="Aide" onClick={() => unavailable("Aide")} type="button"><CircleHelp size={18} /></button>
-            <button className="icon-button notification" aria-label="Notifications" onClick={() => unavailable("Notifications")} type="button"><Bell size={18} /><i /></button>
+            <button className="icon-button" aria-label="Aide" onClick={() => setNavLabel("Aide")} type="button"><CircleHelp size={18} /></button>
+            <button className="icon-button notification" aria-label="Notifications" onClick={() => setNavLabel("Notifications")} type="button"><Bell size={18} /><i /></button>
             <div className="operator"><span className="operator-avatar">MA</span><span><strong>Mainteneur</strong><small>local</small></span></div>
           </div>
         </header>
@@ -394,6 +452,7 @@ export default function Home() {
                 onDisconnected={() => { setCoreSnapshot(null); setCoreWrite(null); }}
                 onWriteConnected={(token) => setCoreWrite({ token, version: Date.now() })}
                 onWriteDisconnected={() => { setCoreWrite(null); setSelectedLifecycle({}); setRegistryProxies([]); setAssignedProxyIds({}); setProfileIds([]); }}
+                writeConnected={Boolean(coreWrite)}
               />
             </div>
           </section>
@@ -422,8 +481,9 @@ export default function Home() {
               <div className="status-filters" aria-label="Filtrer par statut">
                 {(["Tous", "Prêt", "Actif", "À vérifier"] as const).map((filter) => <button type="button" key={filter} onClick={() => setStatus(filter)} className={status === filter ? "filter-active" : ""}>{filter}</button>)}
               </div>
-              <button className="filter-icon" type="button" aria-label="Plus de filtres" onClick={() => unavailable("Filtres avancés")}><SlidersHorizontal size={17} /></button>
+              <button className="filter-icon" type="button" aria-label="Plus de filtres" aria-expanded={advancedFiltersOpen} onClick={() => setAdvancedFiltersOpen((value) => !value)} data-testid="advanced-filters-toggle"><SlidersHorizontal size={17} /></button>
             </div>
+            {advancedFiltersOpen && <AdvancedFiltersPanel filters={advancedFilters} onChange={setAdvancedFilters} />}
 
             <div className="profile-table-wrap instrument-plate"><span className="plate-code">REG / PFL / 01</span>
               <div className="profile-table-head"><span>Profil</span><span>Runtime</span><span>Proxy</span><span>Dernière activité</span><span>État</span><span /></div>
@@ -440,25 +500,21 @@ export default function Home() {
                       void runWrite("sauvegarde", profile.id, () => writeClientRef.current!.backups.createBackup(profile.id)).finally(() => setCreateBackupPending(null));
                     }} />}
                     <div><span className={`status-pill ${statusClasses[profile.status]}`}><i />{profile.status}</span></div>
-                    <button className="row-menu row-menu-primary" aria-label={`Actions pour ${profile.name}`} type="button" data-testid={`row-menu-${profile.id}`} onClick={(event) => {
-                      event.stopPropagation();
-                      if (!coreSnapshot) {
-                        unavailable(`Actions de ${profile.name}`);
-                        return;
-                      }
-                      const lifecycle = selectedLifecycle[profile.id] ?? "active";
-                      const isArchived = lifecycle === "archived";
-                      if (window.confirm(isArchived ? `Réouvrir ${profile.name} côté Core ?` : `Archiver ${profile.name} côté Core ?`)) {
-                        void runWrite(isArchived ? "réouverture" : "archivage", profile.id, () => (isArchived ? writeClientRef.current!.reopenProfile(profile.id) : writeClientRef.current!.archiveProfile(profile.id)));
-                        setSelectedLifecycle((previous) => ({ ...previous, [profile.id]: isArchived ? "active" : "archived" }));
-                      }
-                    }} aria-description={lifecycleTooltip(selectedLifecycle[profile.id] ?? "active")}><MoreHorizontal size={18} /></button>
+                    <div className="row-actions-wrap"><button className="row-menu row-menu-primary" aria-label={`Actions pour ${profile.name}`} aria-expanded={rowActionsProfileId === profile.id} type="button" data-testid={`row-menu-${profile.id}`} onClick={(event) => { event.stopPropagation(); if (!coreSnapshot || !writeClientRef.current?.isConnected()) { unavailable(`Actions de ${profile.name}`); return; } setRowActionsProfileId((current) => current === profile.id ? null : profile.id); }}><MoreHorizontal size={18} /></button>{rowActionsProfileId === profile.id && coreSnapshot && writeClientRef.current?.isConnected() && <div className="row-actions-menu" role="menu" data-testid={`row-actions-${profile.id}`}><button type="button" role="menuitem" onClick={() => void runProfileMenuAction(profile, selectedLifecycle[profile.id] === "archived" ? "reopen" : "archive")} data-testid={`row-action-lifecycle-${profile.id}`}>{selectedLifecycle[profile.id] === "archived" ? "Réouvrir" : "Archiver"}</button><button type="button" role="menuitem" onClick={() => void runProfileMenuAction(profile, "duplicate")} data-testid={`row-action-duplicate-${profile.id}`}>Dupliquer</button><button type="button" role="menuitem" onClick={() => void runProfileMenuAction(profile, "export")} data-testid={`row-action-export-${profile.id}`}>Exporter sans coffre</button><button type="button" role="menuitem" className="danger-action" onClick={() => void runProfileMenuAction(profile, "delete")} data-testid={`row-action-delete-${profile.id}`}>Supprimer</button></div>}</div>
                   </article>
                 ))}
                 {visibleProfiles.length === 0 && <div className="empty-profiles"><Search size={22} /><strong>Aucun profil ne correspond aux filtres</strong><span>Essayez de retirer un filtre ou de rechercher un autre terme.</span></div>}
               </div>
             </div>
           </section>
+
+          {navLabel === "Espaces de travail" && <LocalWorkspacePanel onAudit={recordAudit} />}
+          {navLabel === "Journal d’audit" && <AuditPanel entries={auditEntries} onClear={() => setAuditEntries([])} />}
+          {navLabel === "Réglages" && <SettingsPanel onAudit={recordAudit} />}
+          {navLabel === "Aide" && <HelpPanel />}
+          {navLabel === "Notifications" && <NotificationsPanel notifications={notifications} onReadAll={() => { setNotifications((items) => items.map((item) => ({ ...item, read: true }))); recordAudit("notifications.read_all", "success", "notifications locales marquées lues"); }} />}
+          {navLabel === "Extensions locales" && coreWrite && <ExtensionsPanel client={writeClientRef.current!} profiles={displayedProfiles.map((profile) => ({ id: profile.id, name: profile.name }))} onAudit={recordAudit} onAuthLost={() => { setCoreWrite(null); recordAudit("core.auth_lost", "error", "Le Core a retiré le contrôle d’écriture"); }} />}
+          {navLabel === "Extensions locales" && !coreWrite && <section className="dashboard-control-panel instrument-plate" data-testid="extensions-disconnected"><span className="plate-code">T28 / EXT / WAIT</span><div className="control-panel-heading"><div><FileArchive size={17} /><h2>Extensions locales</h2></div></div><p className="control-panel-copy">Reliez d’abord le Core et le contrôle d’écriture local pour importer ou inspecter une extension.</p></section>}
 
           <section className="catalog-zone" aria-label="Catalogues Core lecture seule">
             <div className="catalog-zone-header">

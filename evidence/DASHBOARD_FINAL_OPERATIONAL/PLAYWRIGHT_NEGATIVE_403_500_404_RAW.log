@@ -1,0 +1,5 @@
+
+Running 1 test using 1 worker
+
+[1A[2K[1/1] tests/dashboard-final-controls.spec.ts:145:1 › Dashboard final — erreurs Core 403 affectation, 500 rollback et 404 purge
+[1A[2K  1 passed (4.8s)

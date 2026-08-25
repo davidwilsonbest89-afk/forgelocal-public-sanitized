@@ -1,0 +1,40 @@
+utc=2026-08-25T21:54:34Z
+cwd=/home/ubuntu
+repo_head=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+## go test race
+ok  	forgelocal/internal/api	4.352s
+ok  	forgelocal/cmd/server	1.053s
+go_test_race_exit=0
+## go vet
+go_vet_exit=0
+## go build
+go_build_exit=0
+## dashboard check
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard
+> tsc --noEmit
+
+dashboard_check_exit=0
+## dashboard build
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1629 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.70 kB │ gzip: 105.61 kB
+../dist/public/assets/index-CmkDj0A3.css  140.59 kB │ gzip:  25.20 kB
+../dist/public/assets/index-CRJ1ZKtM.js   446.80 kB │ gzip: 122.45 kB
+✓ built in 3.00s
+
+  dist/index.js  788b
+
+⚡ Done in 4ms
+dashboard_build_exit=0
+## git diff check
+git_diff_check_exit=0
+## internal diff names
+## temp harness

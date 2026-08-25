@@ -1,0 +1,103 @@
+utc=2026-08-25T21:22:54Z
+cwd=/home/ubuntu
+repo_head=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+## go test race
+ok  	forgelocal/internal/api	4.290s
+ok  	forgelocal/cmd/server	1.055s
+go_test_race_exit=0
+## go vet
+go_vet_exit=0
+## go build
+go_build_exit=0
+## git diff check
+git_diff_check_exit=0
+## pnpm audit production
+pnpm_audit_exit=0
+## gitleaks
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m9:23PM[0m [32mINF[0m scan completed in 11.6s
+[90m9:23PM[0m [31mWRN[0m leaks found: 10
+gitleaks_exit=1
+## gosec
+[gosec] 2026/08/25 21:23:18 Including rules: default
+[gosec] 2026/08/25 21:23:18 Excluding rules: default
+[gosec] 2026/08/25 21:23:18 Including analyzers: default
+[gosec] 2026/08/25 21:23:18 Excluding analyzers: default
+[gosec] 2026/08/25 21:23:18 No packages found
+gosec_exit=1
+## osv
+osv_exit=1
+| https://osv.dev/GO-2025-4007 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4008 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4009 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4010 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4011 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4012 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4013 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4014 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4155 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4175 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4337 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4340 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4341 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4601 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4602 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4869 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4870 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4918 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4946 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4947 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4970 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4971 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5026 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5037 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5039 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5856 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5972 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6089 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6090 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6218 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+| Uncalled vulnerabilities     |      |           |         |         |                                                                     |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+| https://osv.dev/GO-2025-3955 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4006 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4015 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4342 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4603 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4864 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4865 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4976 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4977 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4980 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4981 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4982 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4986 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5038 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6088 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6091 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+## trivy fs
+2026-08-25T21:23:34Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-25T21:23:34Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-25T21:23:34Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-25T21:23:35Z	INFO	[secret] Secret scanning is enabled
+2026-08-25T21:23:35Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-25T21:23:35Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-25T21:23:35Z	WARN	[secret] The size of the scanned file is too large. It is recommended to use `--skip-files` for this file to avoid high memory consumption.	file_path="continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle" size (MB)=146
+2026-08-25T21:23:49Z	INFO	[pnpm] Run "pnpm install" to collect the license information of packages	dir="forge-dashboard/node_modules"
+2026-08-25T21:23:49Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-25T21:23:49Z	INFO	Number of language-specific files	num=2
+2026-08-25T21:23:49Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-25T21:23:49Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-25T21:23:49Z	INFO	Detected config files	num=0
+trivy_exit=0
+## syft
+[0;90m[0001][0m [0;33m WARN[0m no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+syft_exit=0

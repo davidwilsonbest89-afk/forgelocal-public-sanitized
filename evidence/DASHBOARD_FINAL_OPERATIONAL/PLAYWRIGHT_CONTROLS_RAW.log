@@ -1,0 +1,9 @@
+
+Running 5 tests using 1 worker
+
+[1A[2K[1/5] tests/dashboard-final-controls.spec.ts:57:1 › Dashboard final — surfaces locales, clics réels, filtres, clavier et responsive
+[1A[2K[2/5] tests/dashboard-final-controls.spec.ts:84:1 › Dashboard final — actions de ligne archive, duplicate et export via Core
+[1A[2K[3/5] tests/dashboard-final-controls.spec.ts:101:1 › Dashboard final — import, inspection, allowlist HIGH_RISK, approbation, affectation, révocation, rollback et purge T28
+[1A[2K[4/5] tests/dashboard-final-controls.spec.ts:127:1 › Dashboard final — erreurs Core 403/404/409/500 visibles sans console error
+[1A[2K[5/5] tests/dashboard-final-controls.spec.ts:145:1 › Dashboard final — erreurs Core 403 affectation, 500 rollback et 404 purge
+[1A[2K  5 passed (14.0s)

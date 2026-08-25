@@ -1,0 +1,27 @@
+utc=2026-08-25T21:52:05Z
+cwd=/home/ubuntu
+phase=V-DASHBOARD-API-A11Y-CONSOLE
+repo_head=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+core_build_exit=0
+core_init_exit=0
+core_ready_attempt=7
+dashboard_ready_attempt=9
+{
+  "url": "http://127.0.0.1:3002/",
+  "axe_violation_count": 0,
+  "axe_serious_critical_count": 0,
+  "axe_mobile_violation_count": 0,
+  "console_error_count": 0,
+  "console_warning_count": 0,
+  "page_error_count": 0,
+  "failed_request_count": 0,
+  "bad_response_count": 0,
+  "keyboard_focus_pass": true,
+  "console_entries": [],
+  "page_errors": [],
+  "failed_requests": [],
+  "bad_responses": []
+}
+a11y_console_exit=0
+process_cleanup=PASS
+cleanup=PASS

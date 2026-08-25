@@ -1,0 +1,54 @@
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod file and found 24 packages
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+| OSV URL                      | CVSS | ECOSYSTEM | PACKAGE | VERSION | SOURCE                                                              |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+| https://osv.dev/GO-2025-4007 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4008 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4009 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4010 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4011 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4012 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4013 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4014 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4155 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4175 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4337 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4340 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4341 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4601 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4602 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4869 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4870 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4918 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4946 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4947 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4970 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4971 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5026 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5037 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5039 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5856 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5972 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6089 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6090 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6218 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+| Uncalled vulnerabilities     |      |           |         |         |                                                                     |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+
+| https://osv.dev/GO-2025-3955 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4006 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2025-4015 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4342 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4603 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4864 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4865 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4976 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4977 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4980 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4981 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4982 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-4986 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-5038 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6088 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
+| https://osv.dev/GO-2026-6091 |      | Go        | stdlib  | 1.25.0  | forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod |
++------------------------------+------+-----------+---------+---------+---------------------------------------------------------------------+

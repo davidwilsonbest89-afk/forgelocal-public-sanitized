@@ -26,6 +26,7 @@ type LocalCoreConnectionProps = {
   onDisconnected: () => void;
   onWriteConnected?: (adminToken: string) => void;
   onWriteDisconnected?: () => void;
+  writeConnected?: boolean;
 };
 
 function isLoopbackHostname(hostname: string) {
@@ -47,7 +48,7 @@ export function resolveLocalCoreBaseURL() {
 	return `http://${window.location.hostname === "[::1]" ? "[::1]" : window.location.hostname}:19280`;
 }
 
-export function LocalCoreConnection({ onConnected, onDisconnected, onWriteConnected, onWriteDisconnected }: LocalCoreConnectionProps) {
+export function LocalCoreConnection({ onConnected, onDisconnected, onWriteConnected, onWriteDisconnected, writeConnected }: LocalCoreConnectionProps) {
 	const clientRef = useRef(createCoreReadOnlyClient(resolveLocalCoreBaseURL()));
   const isLoopback = isLoopbackHostname(window.location.hostname);
   const [code, setCode] = useState("");
@@ -173,7 +174,7 @@ export function LocalCoreConnection({ onConnected, onDisconnected, onWriteConnec
         <small>Expire à {new Date(expiresAt).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })}</small>
         <LocalCoreAdminPanel
           isLoopback={isLoopback}
-          linked={adminState === "linked"}
+          linked={Boolean(writeConnected) && adminState === "linked"}
           linking={adminState === "linking"}
           message={adminMessage}
           token={adminToken}
