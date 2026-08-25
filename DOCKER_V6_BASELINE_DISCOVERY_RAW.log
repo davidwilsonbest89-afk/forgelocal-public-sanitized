@@ -1,0 +1,33 @@
+utc=2026-08-25T13:44:41Z
+cwd=/home/ubuntu
+worktree=/home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation
+branch=audit/t00-t42-docker-v6-independent-image-validation
+head=1d585abea8f3081d9b7890400551e4318e1a4753
+base=docker-hardening-published-1d585abea8f3081d9b7890400551e4318e1a4753
+--- disk
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   47G  1.4G  98% /
+--- commands and exit codes
+command_v_docker_exit=1
+docker_version_exit=127
+command_v_dockerd_exit=1
+command_v_buildx_exit=1
+docker_buildx_version_exit=127
+command_v_podman_exit=1
+command_v_buildah_exit=1
+command_v_nerdctl_exit=1
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+  UpdatedAt: 2026-08-24 19:00:50.305892687 +0000 UTC
+  NextUpdate: 2026-08-25 19:00:50.305892307 +0000 UTC
+  DownloadedAt: 2026-08-24 22:53:25.450675685 +0000 UTC
+Check Bundle:
+  Digest: sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c
+  DownloadedAt: 2026-08-24 22:53:26.26809121 +0000 UTC
+trivy_version_exit=0
+[31m??[m DOCKER_V6_BASELINE_DISCOVERY_RAW.log
+git_status_exit=0
+git_diff_check_exit=0
+--- policy
+No docker build, image inspect, container start, browser, production workflow or release may occur unless Engine and Buildx are present.
