@@ -237,7 +237,7 @@ func runMCPConfigCommand(args []string, global cliGlobal, stdout, stderr io.Writ
 		fmt.Fprintf(stderr, "mcp-config %s does not accept positional arguments: %s\n", mode, strings.Join(fs.Args(), " "))
 		return 2
 	}
-	cfg := map[string]any{}
+	var cfg map[string]any
 	switch mode {
 	case "stdio":
 		exe, err := os.Executable()

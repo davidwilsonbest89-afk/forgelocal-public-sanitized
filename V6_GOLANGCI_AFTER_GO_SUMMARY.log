@@ -1,0 +1,13 @@
+issue_count 89
+linters {'errcheck': 50, 'staticcheck': 22, 'unused': 17}
+staticcheck internal/fingerprint/local.go 180 SA1019: (net/http.Transport).Dial has been deprecated since Go 1.7: Use DialContext instead, which allows the transport to cancel dials as soon as they are no longer needed. If both are set, DialContext takes priority.
+staticcheck internal/humanize/keyboard.go 27 SA1019: (github.com/mxschmitt/playwright-go.Page).Fill is deprecated: Use locator-based [Locator.Fill] instead. Read more about [locators].
+staticcheck internal/humanize/mouse.go 21 SA1019: (github.com/mxschmitt/playwright-go.Page).Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators].
+staticcheck internal/humanize/mouse.go 56 SA1019: (github.com/mxschmitt/playwright-go.Page).Click is deprecated: Use locator-based [Locator.Click] instead. Read more about [locators].
+staticcheck internal/mcp/advanced_tools.go 155 SA1019: (github.com/mxschmitt/playwright-go.Page).WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators].
+staticcheck internal/mcp/advanced_tools.go 326 SA1019: (github.com/mxschmitt/playwright-go.Page).SelectOption is deprecated: Use locator-based [Locator.SelectOption] instead. Read more about [locators].
+staticcheck internal/mcp/advanced_tools.go 356 SA1019: (github.com/mxschmitt/playwright-go.Page).Check is deprecated: Use locator-based [Locator.Check] instead. Read more about [locators].
+staticcheck internal/mcp/advanced_tools.go 360 SA1019: (github.com/mxschmitt/playwright-go.Page).Uncheck is deprecated: Use locator-based [Locator.Uncheck] instead. Read more about [locators].
+staticcheck internal/mcp/search_provider.go 66 SA1019: (github.com/mxschmitt/playwright-go.Page).WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators].
+staticcheck internal/mcp/search_provider.go 163 SA1019: (github.com/mxschmitt/playwright-go.Page).WaitForSelector is deprecated: Use web assertions that assert visibility or a locator-based [Locator.WaitFor] instead. Read more about [locators].
+staticcheck internal/profile/backup_snapshot.go 229 SA1019: archive/tar.TypeRegA has been deprecated since Go 1.11 and an alternative has been available since Go 1.1: Use TypeReg instead.

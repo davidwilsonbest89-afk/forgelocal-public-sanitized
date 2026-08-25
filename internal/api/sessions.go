@@ -302,12 +302,12 @@ func (h *handler) waitFor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	opts := playwright.PageWaitForSelectorOptions{}
+	opts := playwright.LocatorWaitForOptions{}
 	if req.Timeout > 0 {
 		opts.Timeout = playwright.Float(req.Timeout)
 	}
 
-	_, err = page.WaitForSelector(req.Selector, opts)
+	err = page.Locator(req.Selector).WaitFor(opts)
 	if err != nil {
 		writeError(w, 408, "TIMEOUT", err.Error())
 		return
