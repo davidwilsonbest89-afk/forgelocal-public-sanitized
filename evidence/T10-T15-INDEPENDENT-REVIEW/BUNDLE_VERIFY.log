@@ -1,0 +1,6 @@
+evidence/t10-t15-independent-review-v6.delta.bundle is okay
+The bundle contains this ref:
+453c879ce39cef89e485fa1cf5a4eb171507d62a refs/heads/audit/t00-t42-t10-t15-independent-review-v6
+The bundle requires this ref:
+8c38830b155f293c8b05b2789e60f7de4c45f565
+The bundle uses this hash algorithm: sha1
