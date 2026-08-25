@@ -1,0 +1,45 @@
+remote_sha=2337196ec950558cf4ffe1e045277c3b691af7e2
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_retake_final_v2'...
+fresh_clone_exit=0
+fresh_clone_fsck_exit=0
+fresh_clone_head=2337196ec950558cf4ffe1e045277c3b691af7e2 head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-post-v6-revalidation-final-matrix'.
+sparse_checkout_exit=0
+raw_zip_download_exit=0
+raw_bundle_download_exit=0
+zip_expected=d3c8982adfa4d22c38875ab0500f9b0631e84e4f62f32e46626e964cd9fee31b zip_actual=d3c8982adfa4d22c38875ab0500f9b0631e84e4f62f32e46626e964cd9fee31b zip_sha_exit=0
+bundle_expected=79d560179aa03b4c4dd61e76591c92d5f733d427af47d4a2c7ca4ba5b70e6794 bundle_actual=79d560179aa03b4c4dd61e76591c92d5f733d427af47d4a2c7ca4ba5b70e6794 bundle_sha_exit=0
+Archive:  /tmp/post-v6-revalidation-final-matrix-v6-v2.zip
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/CHANGELOG.md   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/todo.md   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/BUNDLE_VERIFY.log   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/post-v6-revalidation-final-matrix-v6.delta.bundle   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/post-v6-revalidation-final-matrix-v6.delta.bundle.portable.sha256   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/MANIFEST.md   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/SHA256SUMS   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/POST_V6_RETAKE_FINAL_PUBLIC_VERIFY_DIRECT.log   OK
+No errors detected in compressed data of /tmp/post-v6-revalidation-final-matrix-v6-v2.zip.
+unzip_exit=0
+extract_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+POST_V6_RETAKE_FINAL_PUBLIC_VERIFY_DIRECT.log: OK
+post-v6-revalidation-final-matrix-v6.delta.bundle: OK
+post-v6-revalidation-final-matrix-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+internal_sha_exit=0
+/tmp/post-v6-revalidation-final-matrix-v6-v2.delta.bundle is okay
+The bundle contains this ref:
+eea888b949ec17a5b5e1c5fac18f13590c1b28f6 refs/heads/audit/t00-t42-post-v6-revalidation-final-matrix
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+[90m1:11PM[0m [32mINF[0m scan completed in 8.88ms
+[90m1:11PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+dangling blob c299ce9b2a1ca95ed6a89a1dd6660cc46f817c70
+dangling blob 7afc5a17adf90919b9e21c1f380ba8322d85a281
+reference_fsck_exit=0
+package_clone_lfs_checkout=not_attempted_to_avoid_global_or_heavy_lfs_hydration; raw_targeted_artifacts_verified_from_raw_github_with_cachebust
