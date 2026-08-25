@@ -1,0 +1,6 @@
+evidence/osv-toolchain-reconciliation-v6.delta.bundle is okay
+The bundle contains this ref:
+c6a137fe115e72eb603cd6821ef4ddb41c91eda6 refs/heads/audit/t00-t42-osv-toolchain-reconciliation
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
