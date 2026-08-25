@@ -1,0 +1,13 @@
+utc_cleanup_start=2026-08-25T23:24:14Z
+cwd=/home/ubuntu
+command=kill known Core/Dashboard pids; verify loopback ports and smoke processes
+PORT_3001=FREE
+PORT_19281=FREE
+PORT_19282=FREE
+PORT_19283=FREE
+PORT_19284=FREE
+PORT_19285=FREE
+PORT_19286=FREE
+PORT_19287=FREE
+SMOKE_PROCESS_CHECK=NONE
+utc_cleanup_end=2026-08-25T23:24:15Z

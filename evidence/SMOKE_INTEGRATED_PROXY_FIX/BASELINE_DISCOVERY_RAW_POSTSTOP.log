@@ -1,0 +1,35 @@
+utc_start=2026-08-25T23:02:19Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+repo_head=1aa5c768eab16c9194b7b7e7c7c245b79f74052d
+branch=validation/operational-v1
+remote_head=1aa5c768eab16c9194b7b7e7c7c245b79f74052d
+## status_before
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY_FIX/
+## source_commit
+[33m1aa5c76[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvalidation/operational-v1[m[33m)[m fix: apply assigned proxy to session launches
+ internal/api/sessions.go            |  65 [32m++++++++++++++[m[31m-[m
+ internal/api/sessions_proxy_test.go | 153 [32m++++++++++++++++++++++++++++++++++++[m
+ internal/browser/launch_chromium.go |   2 [32m+[m[31m-[m
+ internal/groups/store.go            |   5 [32m++[m
+ internal/profile/store.go           |  38 [32m++++++++[m[31m-[m
+ internal/proxies/store.go           |  38 [32m+++++++[m[31m--[m
+ 6 files changed, 290 insertions(+), 11 deletions(-)
+## relevant_files
+internal/api/sessions.go
+internal/api/sessions_proxy_test.go
+internal/browser/launch_chromium.go
+internal/groups/store.go
+internal/profile/store.go
+internal/proxies/store.go
+## constraints
+scope=profile-to-session-to-proxy only
+T28_historical=untouched
+T29=not_started
+T31_T38=untouched
+network=loopback synthetic only
+camoufox_docker_systemvault_native=do_not_install_or_execute
+## prior_interrupted_smoke
+dashboard_bootstrap_wait_timeout_before_core_session
+final_verdict=NOT_QUALIFIED_INTERRUPTED
+utc_end=2026-08-25T23:02:19Z

@@ -1,0 +1,1469 @@
+utc_start=2026-08-25T23:24:41Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+head_before=1aa5c768eab16c9194b7b7e7c7c245b79f74052d
+## go_test_all
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	0.031s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	(cached)
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/browser	(cached)
+ok  	forgelocal/internal/config	(cached)
+ok  	forgelocal/internal/cookies	(cached)
+ok  	forgelocal/internal/drift	(cached)
+ok  	forgelocal/internal/environment	(cached)
+ok  	forgelocal/internal/extensions	(cached)
+ok  	forgelocal/internal/fingerprint	(cached)
+ok  	forgelocal/internal/fonts	(cached)
+ok  	forgelocal/internal/geolocation	(cached)
+ok  	forgelocal/internal/groups	(cached)
+ok  	forgelocal/internal/hardware	(cached)
+ok  	forgelocal/internal/history	(cached)
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	(cached)
+ok  	forgelocal/internal/localvault	(cached)
+ok  	forgelocal/internal/mcp	0.013s
+ok  	forgelocal/internal/productschema	(cached)
+ok  	forgelocal/internal/profile	(cached)
+ok  	forgelocal/internal/profilehealth	(cached)
+ok  	forgelocal/internal/profilemigration	(cached)
+ok  	forgelocal/internal/proxies	(cached)
+ok  	forgelocal/internal/proxyprovider	(cached)
+ok  	forgelocal/internal/runtime	(cached)
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	(cached)
+ok  	forgelocal/internal/spike	(cached)
+ok  	forgelocal/internal/templates	(cached)
+ok  	forgelocal/internal/workflow	(cached)
+exit_code=0
+## go_vet_all
+exit_code=0
+## go_build_all
+exit_code=0
+## git_diff_check
+exit_code=0
+## gitleaks_available_and_run
+[90m11:24PM[0m [32mINF[0m 0 commits scanned.
+[90m11:24PM[0m [32mINF[0m scan completed in 2.47s
+[90m11:24PM[0m [32mINF[0m no leaks found
+exit_code=0
+## gosec_available_and_run
+[gosec] 2026/08/25 23:24:48 Including rules: default
+[gosec] 2026/08/25 23:24:48 Excluding rules: default
+[gosec] 2026/08/25 23:24:48 Including analyzers: default
+[gosec] 2026/08/25 23:24:48 Excluding analyzers: default
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config
+[gosec] 2026/08/25 23:24:48 Checking package: config
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go
+[gosec] 2026/08/25 23:24:48 Checking package: proxyprovider
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider/store.go
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies
+[gosec] 2026/08/25 23:24:48 Checking package: launch
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/journal.go
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/journal_sqlite.go
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/launch.go
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware
+[gosec] 2026/08/25 23:24:48 Checking package: workflow
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/manager.go
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/redact.go
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core
+[gosec] 2026/08/25 23:24:48 Checking package: groups
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go
+[gosec] 2026/08/25 23:24:48 Checking package: hardware
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts
+[gosec] 2026/08/25 23:24:48 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware/diagnostic.go
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize
+[gosec] 2026/08/25 23:24:48 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets
+[gosec] 2026/08/25 23:24:49 Checking package: runtime
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime/qualification.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime/runtime.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation
+[gosec] 2026/08/25 23:24:49 Checking package: cookies
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies/fixtures.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server
+[gosec] 2026/08/25 23:24:49 Checking package: fonts
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts/inventory.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup
+[gosec] 2026/08/25 23:24:49 Checking package: secrets
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/productschema
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint
+[gosec] 2026/08/25 23:24:49 Checking package: geolocation
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation/qa.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile
+[gosec] 2026/08/25 23:24:49 Checking package: humanize
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/config.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/scroll.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack
+[gosec] 2026/08/25 23:24:49 Checking package: main
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core/main.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/spike
+[gosec] 2026/08/25 23:24:49 Checking package: backup
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/bootstrap.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/migrations.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/service.go
+[gosec] 2026/08/25 23:24:49 Checking package: sessiontrack
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack/tracker.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/store.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions
+[gosec] 2026/08/25 23:24:49 Checking package: fingerprint
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/geoip.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/local.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault
+[gosec] 2026/08/25 23:24:49 Checking package: drift
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift/detect.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth
+[gosec] 2026/08/25 23:24:49 Checking package: profile
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/backup_snapshot.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/errors.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/store.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration
+[gosec] 2026/08/25 23:24:49 Checking package: profilehealth
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth/health.go
+[gosec] 2026/08/25 23:24:49 Checking package: localvault
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault/localvault.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor
+[gosec] 2026/08/25 23:24:49 Checking package: extensions
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies
+[gosec] 2026/08/25 23:24:49 Checking package: templates
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates/errors.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates/store.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser
+[gosec] 2026/08/25 23:24:49 Checking package: main
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor/main.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment
+[gosec] 2026/08/25 23:24:49 Checking package: proxies
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies/errors.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies/store.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history
+[gosec] 2026/08/25 23:24:49 Checking package: main
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go
+[gosec] 2026/08/25 23:24:49 Checking package: environment
+[gosec] 2026/08/25 23:24:49 Checking package: profilemigration
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment/environment.go
+[gosec] 2026/08/25 23:24:49 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration/migrator.go
+[gosec] 2026/08/25 23:24:49 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp
+[gosec] 2026/08/25 23:24:50 Checking package: history
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history/errors.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history/store.go
+[gosec] 2026/08/25 23:24:50 Checking package: browser
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_helpers.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go
+[gosec] 2026/08/25 23:24:50 Checking package: api
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/audit.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup_v1.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/cookie_fixtures.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/correlation.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/dashboard.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/groups.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/localsession.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/openapi.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profile_history.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profiles_bulk.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profiles_write.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/proxies.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/proxy_providers.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/readonly.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/readonly_session.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/templates.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/workflow.go
+[gosec] 2026/08/25 23:24:50 Checking package: mcp
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/protocol.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/results.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/screenshot_artifacts.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/search_provider.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/stdio.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/tool_schema.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_search.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_session_pool.go
+[gosec] 2026/08/25 23:24:50 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_tools.go
+Results:
+
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go:56[0m] - G115 (CWE-190): integer overflow conversion uint64 -> byte (Confidence: MEDIUM, Severity: HIGH)
+    55: 	buf[0] ^= byte(seq)
+  > 56: 	buf[1] ^= byte(seq >> 8)
+    57: 	return "sess-" + hex.EncodeToString(buf)[:32]
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go:55[0m] - G115 (CWE-190): integer overflow conversion uint64 -> byte (Confidence: MEDIUM, Severity: HIGH)
+    54: 	}
+  > 55: 	buf[0] ^= byte(seq)
+    56: 	buf[1] ^= byte(seq >> 8)
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go:53[0m] - G115 (CWE-190): integer overflow conversion uint64 -> byte (Confidence: MEDIUM, Severity: HIGH)
+    52: 	for i := 8; i < 16; i++ {
+  > 53: 		buf[i] = byte(now >> (120 - 8*i))
+    54: 	}
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go:50[0m] - G115 (CWE-190): integer overflow conversion uint64 -> byte (Confidence: MEDIUM, Severity: HIGH)
+    49: 	for i := 0; i < 8; i++ {
+  > 50: 		buf[i] = byte(v >> (56 - 8*i))
+    51: 	}
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:1015[0m] - G115 (CWE-190): integer overflow conversion int64 -> uint64 (Confidence: MEDIUM, Severity: HIGH)
+    1014: 	if seed, ok := fingerprintInt(p.Fingerprint, "canvas:seed"); ok {
+  > 1015: 		return uint64(seed)
+    1016: 	}
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:628[0m] - G115 (CWE-190): integer overflow conversion int64 -> uint32 (Confidence: MEDIUM, Severity: HIGH)
+    627: 			os.MkdirAll(filepath.Dir(target), 0755)
+  > 628: 			mode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows
+    629: 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:694[0m] - G115 (CWE-190): integer overflow conversion int64 -> uint32 (Confidence: MEDIUM, Severity: HIGH)
+    693: 			}
+  > 694: 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))
+    695: 			if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:687[0m] - G115 (CWE-190): integer overflow conversion int64 -> uint32 (Confidence: MEDIUM, Severity: HIGH)
+    686: 		case tar.TypeDir:
+  > 687: 			if err := os.MkdirAll(target, os.FileMode(header.Mode)); err != nil {
+    688: 				return err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go:89[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    88:
+  > 89: 		if rand.Float64() < microPauseProb {
+    90: 			time.Sleep(time.Duration(randRangeInt(pauseMs[0], pauseMs[1])) * time.Millisecond)
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go:37[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    36: 		X: box.X + rand.Float64()*box.Width,
+  > 37: 		Y: box.Y + rand.Float64()*box.Height,
+    38: 	}
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go:36[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    35: 	target := vec2{
+  > 36: 		X: box.X + rand.Float64()*box.Width,
+    37: 		Y: box.Y + rand.Float64()*box.Height,
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:128[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    127: 	}
+  > 128: 	return lo + rand.IntN(hi-lo+1)
+    129: }
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:120[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    119: func randRange(lo, hi float64) float64 {
+  > 120: 	return lo + rand.Float64()*(hi-lo)
+    121: }
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:115[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    114: func logNormalDelay(mu, sigma float64) float64 {
+  > 115: 	return math.Exp(mu + sigma*rand.NormFloat64())
+    116: }
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:108[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    107: 	id := math.Log2(dist/targetWidth + 1)
+  > 108: 	base := rand.Float64() * float64(minSteps)
+    109: 	steps := int(math.Ceil((math.Log2(2*id+1) + base) * 3))
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:98[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    97: 	angle := rand.Float64() * 2 * math.Pi
+  > 98: 	r := radius * math.Sqrt(rand.Float64())
+    99: 	return target.add(vec2{r * math.Cos(angle), r * math.Sin(angle)})
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:97[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    96: func overshootPoint(target vec2, radius float64) vec2 {
+  > 97: 	angle := rand.Float64() * 2 * math.Pi
+    98: 	r := radius * math.Sqrt(rand.Float64())
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:77[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    76: 		pt.X += rand.NormFloat64()
+  > 77: 		pt.Y += rand.NormFloat64()
+    78: 		pts[i] = pt
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:76[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    75: 		// Add micro-jitter (Gaussian, σ=1px)
+  > 76: 		pt.X += rand.NormFloat64()
+    77: 		pt.Y += rand.NormFloat64()
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:59[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    58: 		perpDir := dir.normalize().perp().scale(spread * side)
+  > 59: 		return mid.add(perpDir.scale(rand.Float64()))
+    60: 	}
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:55[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    54: 		// Random point along the line segment
+  > 55: 		t := rand.Float64()
+    56: 		mid := start.add(dir.scale(t))
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go:49[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    48: 	side := 1.0
+  > 49: 	if rand.Float64() < 0.5 {
+    50: 		side = -1
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go:84[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    83: 	}
+  > 84: 	return adj[rand.IntN(len(adj))]
+    85: }
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go:56[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    55: 		// Typo simulation
+  > 56: 		if cfg.TypoRate > 0 && rand.Float64() < cfg.TypoRate {
+    57: 			if typo := pickTypo(ch); typo != 0 {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go:64[0m] - G404 (CWE-338): Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand) (Confidence: MEDIUM, Severity: HIGH)
+    63: 	for i := 0; i < len(fps); i++ {
+  > 64: 		idx := rand.Intn(len(fps))
+    65: 		fp := fps[idx]
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go:477[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    476: 	// Dial internal Playwright WebSocket
+  > 477: 	backendConn, err := net.Dial("tcp", internalAddr)
+    478: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:794[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    793: 	}
+  > 794: 	req, err := http.NewRequest(http.MethodPost, resolvedBase+"/api/restore", &body)
+    795: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:745[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    744: 	req.Header.Set("Authorization", "Bearer "+resolvedToken)
+  > 745: 	resp, err := (&http.Client{Timeout: 60 * time.Second}).Do(req)
+    746: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:740[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    739: 	}
+  > 740: 	req, err := http.NewRequest(http.MethodPost, resolvedBase+"/api/backup", nil)
+    741: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:1042[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    1041: 	client := &http.Client{Timeout: 10 * time.Second}
+  > 1042: 	resp, err := client.Do(req)
+    1043: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:998[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    997: 	}
+  > 998: 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))
+    999: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:982[0m] - G704 (CWE-918): SSRF via taint analysis (Confidence: HIGH, Severity: HIGH)
+    981: func apiGET(url, token string) (map[string]any, error) {
+  > 982: 	req, err := http.NewRequest(http.MethodGet, url, nil)
+    983: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go:22[0m] - G101 (CWE-798): Potential hardcoded credentials (Confidence: LOW, Severity: HIGH)
+    21: 	adminTokenLifetime        = 15 * time.Minute
+  > 22: 	adminTokenMetadataName    = ".api-token.meta"
+    23: )
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:645[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    644: 				if data, readErr := os.ReadFile(src); readErr == nil {
+  > 645: 					os.WriteFile(target, data, 0755)
+    646: 				}
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:784[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    783: 	}
+  > 784: 	data, err := os.ReadFile(path)
+    785: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:756[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    755: 	}
+  > 756: 	out, err := os.Create(output)
+    757: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:753[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    752: 	}
+  > 753: 	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+    754: 		return err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:710[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    709: 			}
+  > 710: 			_ = os.Remove(target)
+    711: 			if err := os.Symlink(header.Linkname, target); err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:707[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    706: 			}
+  > 707: 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+    708: 				return err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:694[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    693: 			}
+  > 694: 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))
+    695: 			if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:691[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    690: 		case tar.TypeReg:
+  > 691: 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+    692: 				return err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:687[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    686: 		case tar.TypeDir:
+  > 687: 			if err := os.MkdirAll(target, os.FileMode(header.Mode)); err != nil {
+    688: 				return err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:656[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    655: func restoreFullBackup(baseDir, path string) error {
+  > 656: 	in, err := os.Open(path)
+    657: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:590[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    589: 	}
+  > 590: 	out, err := os.Create(output)
+    591: 	if err != nil {
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:587[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    586: func createFullBackup(baseDir, output string) error {
+  > 587: 	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+    588: 		return err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:577[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    576: 	}
+  > 577: 	if info, err := os.Stat(output); err == nil && info.IsDir() {
+    578: 		return filepath.Join(output, name)
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:453[0m] - G703 (CWE-22): Path traversal via taint analysis (Confidence: HIGH, Severity: HIGH)
+    452: func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {
+  > 453: 	if err := os.MkdirAll(filepath.Join(baseDir, "browsers"), 0755); err != nil {
+    454: 		return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/launch.go:192[0m] - G118 (CWE-400): Goroutine uses context.Background/TODO while request-scoped context is available (Confidence: MEDIUM, Severity: HIGH)
+    191:
+  > 192: 	go func() {
+    193: 		defer close(done)
+
+Autofix:
+
+[[97;41m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:645[0m] - G122 (CWE-367): Filesystem operation in filepath.Walk/WalkDir callback uses race-prone path; consider root-scoped APIs (e.g. os.Root) to prevent symlink TOCTOU traversal (Confidence: MEDIUM, Severity: HIGH)
+    644: 		}
+  > 645: 		in, err := os.Open(path)
+    646: 		if err != nil {
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:453[0m] - G204 (CWE-78): Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+    452: 	if osName == "darwin" {
+  > 453: 		exec.Command("xattr", "-cr", destDir).Run()
+    454: 	}
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:374[0m] - G204 (CWE-78): Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+    373: 	if runtime.GOOS == "darwin" {
+  > 374: 		exec.Command("xattr", "-cr", destDir).Run()
+    375: 	}
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:334[0m] - G204 (CWE-78): Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+    333: 	if runtime.GOOS == "darwin" {
+  > 334: 		exec.Command("xattr", "-cr", destDir).Run()
+    335: 	}
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go:559[0m] - G204 (CWE-78): Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+    558: 	case "windows":
+  > 559: 		cmd = exec.Command("rundll32", "url.dll,FileProtocolHandler", url)
+    560: 	}
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go:557[0m] - G204 (CWE-78): Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+    556: 	case "linux":
+  > 557: 		cmd = exec.Command("xdg-open", url)
+    558: 	case "windows":
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go:555[0m] - G204 (CWE-78): Subprocess launched with variable (Confidence: HIGH, Severity: MEDIUM)
+    554: 	case "darwin":
+  > 555: 		cmd = exec.Command("open", url)
+    556: 	case "linux":
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go:52[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    51: func (e *Engine) LoadFile(path string) (*Workflow, error) {
+  > 52: 	data, err := os.ReadFile(path)
+    53: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go:481[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    480: 	}
+  > 481: 	data, err := os.ReadFile(path)
+    482: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go:25[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    24: 	for _, f := range files {
+  > 25: 		raw, err := os.ReadFile(f)
+    26: 		if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go:169[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    168: 	os.MkdirAll("logs", 0755)
+  > 169: 	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+    170: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go:90[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    89:
+  > 90: 	f, err := os.Open(path)
+    91: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:201[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    200: 	prefs := map[string]any{}
+  > 201: 	if data, err := os.ReadFile(prefsPath); err == nil {
+    202: 		if err := json.Unmarshal(data, &prefs); err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:644[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    643: 				src := filepath.Join(filepath.Dir(target), hdr.Linkname)
+  > 644: 				if data, readErr := os.ReadFile(src); readErr == nil {
+    645: 					os.WriteFile(target, data, 0755)
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:629[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    628: 			mode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows
+  > 629: 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
+    630: 			if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:598[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    597: func extractTarGz(tarFile, destDir string) error {
+  > 598: 	f, err := os.Open(tarFile)
+    599: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:578[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    577: 		mode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)
+  > 578: 		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
+    579: 		if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:519[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    518:
+  > 519: 	out, err := os.Create(dest)
+    520: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:137[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    136: func InstalledVersion(baseDir, browserName string) string {
+  > 137: 	data, err := os.ReadFile(filepath.Join(baseDir, "browsers", browserName, ".version"))
+    138: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go:831[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    830: 	path := dataDir + "/.api-token"
+  > 831: 	if data, err := os.ReadFile(path); err == nil {
+    832: 		token := strings.TrimSpace(string(data))
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts.go:31[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    30: 	}
+  > 31: 	file, err := os.Open(path)
+    32: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:784[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    783: 	}
+  > 784: 	data, err := os.ReadFile(path)
+    785: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:756[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    755: 	}
+  > 756: 	out, err := os.Create(output)
+    757: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:694[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    693: 			}
+  > 694: 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))
+    695: 			if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:656[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    655: func restoreFullBackup(baseDir, path string) error {
+  > 656: 	in, err := os.Open(path)
+    657: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:645[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    644: 		}
+  > 645: 		in, err := os.Open(path)
+    646: 		if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:590[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    589: 	}
+  > 590: 	out, err := os.Create(output)
+    591: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:856[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    855: 	tokenPath := filepath.Join(resolvePath(baseDir, cfg.DataDir), ".api-token")
+  > 856: 	data, err := os.ReadFile(tokenPath)
+    857: 	if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:572[0m] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)
+    571: 		path := filepath.Join(profilesDir, entry.Name(), "profile.json")
+  > 572: 		data, err := os.ReadFile(path)
+    573: 		if err != nil {
+
+Autofix: Consider using os.Root to scope file access under a fixed root (Go >=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal.
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go:414[0m] - G112 (CWE-400): Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server (Confidence: LOW, Severity: MEDIUM)
+    413: 	// HTTP Server with error channel (no os.Exit in goroutine)
+  > 414: 	srv := &http.Server{Addr: net.JoinHostPort(cfg.Host, cfg.Port), Handler: router}
+    415: 	serverErr := make(chan error, 1)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:510[0m] - G107 (CWE-88): Potential HTTP request made with variable url (Confidence: MEDIUM, Severity: MEDIUM)
+    509: func download(dlURL, dest string) error {
+  > 510: 	resp, err := http.Get(dlURL)
+    511: 	if err != nil {
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:633[0m] - G110 (CWE-409): Potential DoS vulnerability via decompression bomb (Confidence: MEDIUM, Severity: MEDIUM)
+    632: 			}
+  > 633: 			_, err = io.Copy(out, tr)
+    634: 			out.Close()
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:587[0m] - G110 (CWE-409): Potential DoS vulnerability via decompression bomb (Confidence: MEDIUM, Severity: MEDIUM)
+    586: 		}
+  > 587: 		_, err = io.Copy(out, rc)
+    588: 		rc.Close()
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:698[0m] - G110 (CWE-409): Potential DoS vulnerability via decompression bomb (Confidence: MEDIUM, Severity: MEDIUM)
+    697: 			}
+  > 698: 			if _, err := io.Copy(out, tr); err != nil {
+    699: 				out.Close()
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:643[0m] - G305 (CWE-22): File traversal when extracting zip/tar archive (Confidence: HIGH, Severity: MEDIUM)
+    642: 				// Windows: symlink needs admin/dev-mode — copy the target instead
+  > 643: 				src := filepath.Join(filepath.Dir(target), hdr.Linkname)
+    644: 				if data, readErr := os.ReadFile(src); readErr == nil {
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:619[0m] - G305 (CWE-22): File traversal when extracting zip/tar archive (Confidence: HIGH, Severity: MEDIUM)
+    618: 		}
+  > 619: 		target := filepath.Join(destDir, hdr.Name)
+    620: 		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:568[0m] - G305 (CWE-22): File traversal when extracting zip/tar archive (Confidence: HIGH, Severity: MEDIUM)
+    567: 	for _, f := range r.File {
+  > 568: 		target := filepath.Join(destDir, f.Name)
+    569: 		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go:169[0m] - G302 (CWE-276): Expect file permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    168: 	os.MkdirAll("logs", 0755)
+  > 169: 	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+    170: 	if err != nil {
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:460[0m] - G302 (CWE-276): Expect file permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    459: 	}
+  > 460: 	os.Chmod(binPath, 0755)
+    461:
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:381[0m] - G302 (CWE-276): Expect file permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    380: 	}
+  > 381: 	os.Chmod(binPath, 0755)
+    382:
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:341[0m] - G302 (CWE-276): Expect file permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    340: 	}
+  > 341: 	os.Chmod(binPath, 0755)
+    342:
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:763[0m] - G302 (CWE-276): Expect file permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    762: 		// rather than relying on MkdirAll's mode for existing paths.
+  > 763: 		if err := os.Chmod(path, 0700); err != nil {
+    764: 			return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go:251[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    250: 	}
+  > 251: 	if err := os.MkdirAll(filepath.Dir(clean), 0755); err != nil {
+    252: 		return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go:724[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    723: 		}
+  > 724: 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+    725: 			return nil, newError(-32000, err.Error())
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go:45[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    44: 	}
+  > 45: 	if err := os.MkdirAll(dataDir, 0755); err != nil {
+    46: 		return nil, err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go:168[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    167: func SetupLogger(logFile string) *slog.Logger {
+  > 168: 	os.MkdirAll("logs", 0755)
+    169: 	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go:80[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    79: 	}
+  > 80: 	if err := os.MkdirAll(downloadsDir, 0755); err != nil {
+    81: 		return nil, fmt.Errorf("create downloads dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go:66[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    65: 	}
+  > 66: 	if err := os.MkdirAll(userDataDir, 0755); err != nil {
+    67: 		return nil, fmt.Errorf("create browser data dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:1913[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    1912: 		cacheDir := filepath.Join(userDataDir, "BrowseForgeRuntimeCache", fmt.Sprintf("cache-%d-%d", os.Getpid(), time.Now().UnixNano()))
+  > 1913: 		if err := os.MkdirAll(cacheDir, 0755); err != nil {
+    1914: 			return nil, fmt.Errorf("create chromium runtime cache dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:949[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    948: 	configDir := filepath.Join(userDataDir, "BrowseForgeNative")
+  > 949: 	if err := os.MkdirAll(configDir, 0755); err != nil {
+    950: 		return "", fmt.Errorf("create BrowseForge native config dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:196[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    195: 	prefsDir := filepath.Join(userDataDir, "Default")
+  > 196: 	if err := os.MkdirAll(prefsDir, 0755); err != nil {
+    197: 		return nil, fmt.Errorf("create chromium prefs dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:191[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    190: 	}
+  > 191: 	if err := os.MkdirAll(downloadsDir, 0755); err != nil {
+    192: 		return nil, fmt.Errorf("create downloads dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:64[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    63: 	}
+  > 64: 	if err := os.MkdirAll(userDataDir, 0755); err != nil {
+    65: 		return nil, fmt.Errorf("create browser data dir: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:639[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    638: 		case tar.TypeSymlink:
+  > 639: 			os.MkdirAll(filepath.Dir(target), 0755)
+    640: 			os.Remove(target)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:627[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    626: 		case tar.TypeReg:
+  > 627: 			os.MkdirAll(filepath.Dir(target), 0755)
+    628: 			mode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:625[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    624: 		case tar.TypeDir:
+  > 625: 			os.MkdirAll(target, 0755)
+    626: 		case tar.TypeReg:
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:576[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    575: 		}
+  > 576: 		os.MkdirAll(filepath.Dir(target), 0755)
+    577: 		mode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:573[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    572: 		if f.FileInfo().IsDir() {
+  > 573: 			os.MkdirAll(target, 0755)
+    574: 			continue
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:436[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    435: 	destDir := filepath.Join(baseDir, "browsers", "cloakbrowser")
+  > 436: 	os.MkdirAll(destDir, 0755)
+    437:
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:357[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    356: 	destDir := filepath.Join(baseDir, "browsers", "camoufox")
+  > 357: 	os.MkdirAll(destDir, 0755)
+    358:
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:308[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    307: 	destDir := filepath.Join(baseDir, "browsers", BrowseForgeChromiumRuntimeID)
+  > 308: 	if err := os.MkdirAll(destDir, 0755); err != nil {
+    309: 		return "", err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:753[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    752: 	}
+  > 753: 	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+    754: 		return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:707[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    706: 			}
+  > 707: 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+    708: 				return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:691[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    690: 		case tar.TypeReg:
+  > 691: 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+    692: 				return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:587[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    586: func createFullBackup(baseDir, output string) error {
+  > 587: 	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+    588: 		return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:453[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    452: func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {
+  > 453: 	if err := os.MkdirAll(filepath.Join(baseDir, "browsers"), 0755); err != nil {
+    454: 		return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:778[0m] - G301 (CWE-276): Expect directory permissions to be 0750 or less (Confidence: HIGH, Severity: MEDIUM)
+    777: 	}
+  > 778: 	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+    779: 		return err
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go:727[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    726: 		}
+  > 727: 		if err := os.WriteFile(path, data, 0644); err != nil {
+    728: 			return nil, newError(-32000, err.Error())
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:957[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    956: 	}
+  > 957: 	if err := os.WriteFile(configPath, append(data, '\n'), 0644); err != nil {
+    958: 		return "", fmt.Errorf("write BrowseForge native config: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:217[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    216: 	}
+  > 217: 	if err := os.WriteFile(prefsPath, out, 0644); err != nil {
+    218: 		return nil, fmt.Errorf("write chromium preferences: %w", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:645[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    644: 				if data, readErr := os.ReadFile(src); readErr == nil {
+  > 645: 					os.WriteFile(target, data, 0755)
+    646: 				}
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:145[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    144: func writeVersionMarker(dir, version string) {
+  > 145: 	os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0644)
+    146: }
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go:325[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    324: 		}
+  > 325: 		if err := os.WriteFile(flags.configPath, cfgJSON, 0644); err != nil {
+    326: 			slog.Error("config write", "error", err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:787[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    786: 	data = append(data, '\n')
+  > 787: 	return os.WriteFile(path, data, 0644)
+    788: }
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:625[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    624: 			}
+  > 625: 			if err := os.WriteFile(plan.path, plan.out, 0644); err != nil {
+    626: 				fmt.Fprintf(stderr, "migrate write %s failed: %v\n", plan.path, err)
+
+Autofix:
+
+[[30;43m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go:620[0m] - G306 (CWE-276): Expect WriteFile permissions to be 0600 or less (Confidence: HIGH, Severity: MEDIUM)
+    619: 			if _, err := os.Stat(backup); os.IsNotExist(err) {
+  > 620: 				if err := os.WriteFile(backup, plan.data, 0644); err != nil {
+    621: 					fmt.Fprintf(stderr, "migrate backup %s failed: %v\n", plan.path, err)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go:281[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    280: 	var result map[string]any
+  > 281: 	json.NewDecoder(resp.Body).Decode(&result)
+    282:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/stdio.go:56[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    55: 	fmt.Fprintf(os.Stdout, "%s\n", data)
+  > 56: 	os.Stdout.Sync()
+    57: }
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go:818[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    817: 	}
+  > 818: 	pages[index].Close()
+    819: 	if pages[index] == sess.Page {
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go:667[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    666: 	if clear, _ := args["clear"].(bool); clear {
+  > 667: 		sess.Page.Locator(selector).Clear()
+    668: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/protocol.go:40[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    39: 	}
+  > 40: 	json.NewEncoder(w).Encode(resp)
+    41: }
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go:73-75[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    72: 	delay := randRange(80, 140)
+  > 73: 	kb.Press(string(ch), playwright.KeyboardPressOptions{
+  > 74: 		Delay: playwright.Float(delay),
+  > 75: 	})
+    76: }
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go:60[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    59: 				time.Sleep(time.Duration(randRangeInt(100, 300)) * time.Millisecond)
+  > 60: 				kb.Press("Backspace")
+    61: 				time.Sleep(time.Duration(randRangeInt(50, 120)) * time.Millisecond)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go:33[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    32: 		// Fallback: use Playwright's click to focus, then still type humanly
+  > 33: 		page.Click(selector)
+    34: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go:72[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    71: 			var copy map[string]any
+  > 72: 			json.Unmarshal(data, &copy)
+    73: 			delete(copy, "_meta")
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go:168[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    167: func SetupLogger(logFile string) *slog.Logger {
+  > 168: 	os.MkdirAll("logs", 0755)
+    169: 	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:144[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    143: 		if tc, ok := dst.(*net.TCPConn); ok {
+  > 144: 			tc.CloseWrite()
+    145: 		}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:142[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    141: 		defer wg.Done()
+  > 142: 		io.Copy(dst, src)
+    143: 		if tc, ok := dst.(*net.TCPConn); ok {
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:135[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    134: 	// Success reply
+  > 135: 	conn.Write([]byte{0x05, 0x00, 0x00, 0x01, 127, 0, 0, 1, 0, 0})
+    136:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:129[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    128: 	if err != nil {
+  > 129: 		conn.Write([]byte{0x05, 0x05, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+    130: 		return
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:122[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    121: 	default:
+  > 122: 		conn.Write([]byte{0x05, 0x08, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+    123: 		return
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:95[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    94: 	if buf[1] != 0x01 { // only CONNECT
+  > 95: 		conn.Write([]byte{0x05, 0x07, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+    96: 		return
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:87[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    86: 	// reply: no auth required
+  > 87: 	conn.Write([]byte{0x05, 0x00})
+    88:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go:49[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    48: 	close(r.done)
+  > 49: 	r.ln.Close()
+    50: 	r.wg.Wait()
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go:399[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    398: 	if m.pw != nil {
+  > 399: 		m.pw.Stop()
+    400: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go:391[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    390: 		if s.Context != nil {
+  > 391: 			s.Context.Close()
+    392: 		}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go:376[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    375: 	if s.Browser != nil {
+  > 376: 		s.Browser.Close()
+    377: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go:373[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    372: 	if s.Context != nil {
+  > 373: 		s.Context.Close()
+    374: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go:153[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    152: 			}
+  > 153: 			ctx.Close()
+    154: 			return nil, fmt.Errorf("new page: %w", err)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:333[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    332: 			}
+  > 333: 			ctx.Close()
+    334: 			return nil, fmt.Errorf("new page: %w", err)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go:312[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    311: 		}
+  > 312: 		ctx.Close()
+    313: 		return nil, fmt.Errorf("install chromium automation mitigations: %w", err)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:645[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    644: 				if data, readErr := os.ReadFile(src); readErr == nil {
+  > 645: 					os.WriteFile(target, data, 0755)
+    646: 				}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:640[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    639: 			os.MkdirAll(filepath.Dir(target), 0755)
+  > 640: 			os.Remove(target)
+    641: 			if err := os.Symlink(hdr.Linkname, target); err != nil {
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:639[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    638: 		case tar.TypeSymlink:
+  > 639: 			os.MkdirAll(filepath.Dir(target), 0755)
+    640: 			os.Remove(target)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:634[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    633: 			_, err = io.Copy(out, tr)
+  > 634: 			out.Close()
+    635: 			if err != nil {
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:627[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    626: 		case tar.TypeReg:
+  > 627: 			os.MkdirAll(filepath.Dir(target), 0755)
+    628: 			mode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:625[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    624: 		case tar.TypeDir:
+  > 625: 			os.MkdirAll(target, 0755)
+    626: 		case tar.TypeReg:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:589[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    588: 		rc.Close()
+  > 589: 		out.Close()
+    590: 		if err != nil {
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:588[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    587: 		_, err = io.Copy(out, rc)
+  > 588: 		rc.Close()
+    589: 		out.Close()
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:584[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    583: 		if err != nil {
+  > 584: 			out.Close()
+    585: 			return err
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:576[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    575: 		}
+  > 576: 		os.MkdirAll(filepath.Dir(target), 0755)
+    577: 		mode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:573[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    572: 		if f.FileInfo().IsDir() {
+  > 573: 			os.MkdirAll(target, 0755)
+    574: 			continue
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:460[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    459: 	}
+  > 460: 	os.Chmod(binPath, 0755)
+    461:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:453[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    452: 	if osName == "darwin" {
+  > 453: 		exec.Command("xattr", "-cr", destDir).Run()
+    454: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:450[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    449: 	}
+  > 450: 	os.Remove(tmpFile)
+    451:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:436[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    435: 	destDir := filepath.Join(baseDir, "browsers", "cloakbrowser")
+  > 436: 	os.MkdirAll(destDir, 0755)
+    437:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:381[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    380: 	}
+  > 381: 	os.Chmod(binPath, 0755)
+    382:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:374[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    373: 	if runtime.GOOS == "darwin" {
+  > 374: 		exec.Command("xattr", "-cr", destDir).Run()
+    375: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:371[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    370: 	}
+  > 371: 	os.Remove(tmpFile)
+    372:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:357[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    356: 	destDir := filepath.Join(baseDir, "browsers", "camoufox")
+  > 357: 	os.MkdirAll(destDir, 0755)
+    358:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:341[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    340: 	}
+  > 341: 	os.Chmod(binPath, 0755)
+    342:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:334[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    333: 	if runtime.GOOS == "darwin" {
+  > 334: 		exec.Command("xattr", "-cr", destDir).Run()
+    335: 	}
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:324[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    323: 	}
+  > 324: 	os.Remove(tmpFile)
+    325:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go:145[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    144: func writeVersionMarker(dir, version string) {
+  > 145: 	os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0644)
+    146: }
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go:707[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    706: 	w.WriteHeader(status)
+  > 707: 	json.NewEncoder(w).Encode(v)
+    708: }
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/dashboard.go:13[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    12: 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+  > 13: 	w.Write(dashboardHTML)
+    14: }
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go:429[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    428: 			if err == nil && resp.StatusCode == 200 {
+  > 429: 				resp.Body.Close()
+    430: 				fmt.Println("╔══════════════════════════════════════════╗")
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:702[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    701: 			}
+  > 702: 			out.Close()
+    703: 		case tar.TypeSymlink:
+
+Autofix:
+
+[[37;40m/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go:699[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    698: 			if _, err := io.Copy(out, tr); err != nil {
+  > 699: 				out.Close()
+    700: 				return err
+
+Autofix:
+
+[1;36mSummary:[0m
+  Gosec  : dev
+  Files  : 90
+  Lines  : 26329
+  Nosec  : 22
+  Issues : [1;31m177[0m
+
+exit_code=1
+## govulncheck_available_and_run
+No vulnerabilities found.
+exit_code=0
+## changed_files
+ [31mM[m internal/browser/launch_chromium.go
+ [31mM[m internal/browser/proxy_test.go
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY_FIX/
+utc_end=2026-08-25T23:25:06Z

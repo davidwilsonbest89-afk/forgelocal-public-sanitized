@@ -1,0 +1,32 @@
+utc=2026-08-25T22:42:45Z
+cwd=/home/ubuntu
+repo_head=3957d300299e7142d545ce2a927d731aa4ad9f21
+branch=validation/operational-v1
+## status_before
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY_FIX/
+## target_files
+internal/api/sessions.go
+internal/api/router.go
+internal/browser/manager.go
+internal/browser/launch_chromium.go
+internal/proxies/store.go
+internal/profile/store.go
+## constraints
+scope=profile-to-session-to-proxy junction only
+T28_historical=untouched
+T29=not_started
+T31_T38=untouched
+network=loopback synthetic only
+camoufox_docker_systemvault=do_not_install_or_execute
+## baseline_failure
+SMOKE_INTEGRATED_PROXY_FAIL_PROFILE_ASSIGNMENT_NOT_APPLIED_TO_CORE_LAUNCH
+observed=create_status=201 navigate_status=200 destination_via_proxy=0
+## available_tools
+/usr/local/go1.25.13/bin/go
+/home/ubuntu/.nvm/versions/node/v22.13.0/bin/node
+/usr/bin/chromium
+/home/ubuntu/bin/gitleaks
+/home/ubuntu/bin/trivy
+/home/ubuntu/bin/syft
+/home/ubuntu/bin/govulncheck

@@ -1,0 +1,6 @@
+repository=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=validation/operational-v1
+source_commit=9031f8324deeb4d6c171e01a244eeba778cf137c
+scope=profile-to-session-to-proxy only
+historical_T28=untouched
+T29=not_started

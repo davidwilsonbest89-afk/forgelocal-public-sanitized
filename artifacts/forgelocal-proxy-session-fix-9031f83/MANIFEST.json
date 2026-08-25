@@ -1,0 +1,17 @@
+{
+  "bundle": "forgelocal-proxy-session-fix-9031f83",
+  "source_commit": "9031f8324deeb4d6c171e01a244eeba778cf137c",
+  "verdict": "SMOKE_INTEGRATED_PROXY_PASS",
+  "files": [
+    {"sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "path": "./MANIFEST.checksums"},
+    {"sha256": "5f5560dc176518eb9561901ac471221caa343ede602589842e977e81ef7442a8", "path": "./README.md"},
+    {"sha256": "abdb5c097f6334dadeb5d23e0d5d428279219fe55110df387a2da14dba76ed3f", "path": "./evidence/BASELINE_DISCOVERY_RAW_POSTSTOP.log"},
+    {"sha256": "c8f5ddd95651f422d8a9ee679119eed4a29a67085531448abe9d475bf7d11402", "path": "./evidence/CLEANUP_V5_RAW.log"},
+    {"sha256": "1e1c5e22e6c6a77c89894d95bf0fa25f6cefb349fd49fb23e68dc8110245408b", "path": "./evidence/CORE_V5_HTTP_RAW_REDACTED.log"},
+    {"sha256": "a19ea49f075b0df448e66eea5edb022ace65a7442e7c80ff929209bae8cac157", "path": "./evidence/GATES_POST_SMOKE_RAW.log"},
+    {"sha256": "92cf7b71c1b9c831aca7cebd233d2331f5ee9017a4907599f9a52f91b2384bbd", "path": "./evidence/SMOKE_INTEGRATED_PROXY_FIX_AUTHORITATIVE_RAW.log"},
+    {"sha256": "1b8fcbbac4618385e65ddcab9c56ac1f74757d5e69cb13d1bdb4be3aec2ce36f", "path": "./evidence/SMOKE_INTEGRATED_PROXY_FIX_REPORT.md"},
+    {"sha256": "98a7fdd296b713ae97b60ca9b28f55e07a69cb00fb8c0f600046f40c02a5c65d", "path": "./evidence/STATUS_REGISTER.md"},
+    {"sha256": "af6518ca7cb4ca81790cc2262c15d49f2515365099e588b2fd7c6b63078097bf", "path": "./source/SOURCE_REFERENCE.txt"}
+  ]
+}

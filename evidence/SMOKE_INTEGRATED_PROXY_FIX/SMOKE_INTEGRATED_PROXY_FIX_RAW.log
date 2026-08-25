@@ -1,0 +1,74 @@
+utc_start=2026-08-25T22:55:05Z
+cwd=/home/ubuntu
+repo_head=3957d300299e7142d545ce2a927d731aa4ad9f21
+command=node /home/ubuntu/forgelocal_self_validation_v6/integrated_smoke_runner.js
+{
+  "status": "SMOKE_INTEGRATED_PROXY_FAIL_DASHBOARD_RUNTIME_CATALOG_EMPTY",
+  "dashboard_profile_create_path": "NOT_EXECUTED_BLOCKED_EMPTY_READONLY_RUNTIME_CATALOGUE",
+  "core_session_proxy_pass": false,
+  "explicit_direct_no_proxy": false,
+  "direct_browser_nominal_pass": false,
+  "proxy_stopped_fail_closed": false,
+  "proxy_bad_auth_rejected": false,
+  "profile_isolation_pass": false,
+  "core_profile_assignments_persisted": false,
+  "destinations": {
+    "alpha": {
+      "total": 0,
+      "viaProxy": 0
+    },
+    "beta": {
+      "total": 0,
+      "viaProxy": 0
+    }
+  },
+  "proxies": {
+    "alpha": {
+      "total": 0,
+      "accepted": 0,
+      "rejected": 0
+    },
+    "beta": {
+      "total": 0,
+      "accepted": 0,
+      "rejected": 0
+    },
+    "bad_auth": {
+      "total": 0,
+      "accepted": 0,
+      "rejected": 0
+    }
+  },
+  "core_session_status": null,
+  "core_session_navigate_status": null,
+  "events": [
+    {
+      "kind": "local_services_ready",
+      "at": "2026-08-25T22:55:06.648Z",
+      "destination_ports": [
+        19283,
+        19285,
+        19287
+      ],
+      "proxy_ports": [
+        19282,
+        19284,
+        19286
+      ]
+    },
+    {
+      "kind": "profile_precreated_core",
+      "at": "2026-08-25T22:55:06.679Z",
+      "dashboard_profile_create": "blocked_by_empty_readonly_runtime_catalogue",
+      "profile_values_logged": false
+    },
+    {
+      "kind": "smoke_error",
+      "at": "2026-08-25T22:55:37.949Z",
+      "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Lecture Core sécurisée') to be visible\u001b[22m\n"
+    }
+  ]
+}
+exit_code=0
+utc_end=2026-08-25T22:55:38Z
+exit
