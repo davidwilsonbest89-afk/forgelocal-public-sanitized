@@ -257,3 +257,95 @@ func TestT28StoreUsesManagedObjectPath(t *testing.T) {
 		t.Fatalf("managed blob missing: %v", err)
 	}
 }
+
+func TestT28RejectsCorruptAndOversizedArchives(t *testing.T) {
+	r := openTestRepository(t)
+	if _, err := r.Import(context.Background(), bytes.NewReader([]byte("not a zip")), "", "corr-corrupt"); !errors.Is(err, ErrInvalidArchive) {
+		t.Fatalf("corrupt ZIP was not rejected: %v", err)
+	}
+	oversized := make([]byte, MaxZIPBytes+1)
+	if _, err := r.Import(context.Background(), bytes.NewReader(oversized), "", "corr-oversized"); !errors.Is(err, ErrArchiveLimit) {
+		t.Fatalf("oversized archive was not rejected: %v", err)
+	}
+}
+
+func TestT28PreservesAllAuthorizedPermissionsAndIgnoresUpdateURL(t *testing.T) {
+	r := openTestRepository(t)
+	manifest := `{"name":"All permissions","version":"1","permissions":["cookies","webRequest","webRequestBlocking","debugger","nativeMessaging","management","proxy","downloads","clipboardRead"],"host_permissions":["<all_urls>","*://*/*","file:///*"],"update_url":"https://updates.example.invalid/manifest.xml"}`
+	v, err := r.Import(context.Background(), bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": manifest})), "", "corr-update-url")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if v.RiskState != "HIGH_RISK" {
+		t.Fatalf("authorized sensitive permissions were not marked high-risk: %+v", v)
+	}
+	if len(v.Manifest.Permissions) != 9 || len(v.Manifest.HostPermissions) != 3 {
+		t.Fatalf("permissions were not preserved: %+v", v.Manifest)
+	}
+	for _, permission := range []string{"cookies", "webRequest", "webRequestBlocking", "debugger", "nativeMessaging", "management", "proxy", "downloads", "clipboardRead"} {
+		if !contains(v.Manifest.Permissions, permission) {
+			t.Fatalf("permission %q was lost", permission)
+		}
+	}
+	for _, host := range []string{"<all_urls>", "*://*/*", "file:///*"} {
+		if !contains(v.Manifest.HostPermissions, host) {
+			t.Fatalf("host pattern %q was lost", host)
+		}
+	}
+}
+
+func TestT28PurgeRequiresSafeLifecycleState(t *testing.T) {
+	r := openTestRepository(t)
+	ctx := context.Background()
+	v, err := r.Import(ctx, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{}`})), "", "corr-purge")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !errors.Is(r.Purge(ctx, v.ID, "corr-purge-imported"), ErrPurgeNotAllowed) {
+		t.Fatal("imported version was purged")
+	}
+	if _, err := r.Approve(ctx, v.ID, nil, false, "corr-purge-approve"); err != nil {
+		t.Fatal(err)
+	}
+	if !errors.Is(r.Purge(ctx, v.ID, "corr-purge-approved"), ErrPurgeNotAllowed) {
+		t.Fatal("active approved version was purged")
+	}
+	if err := r.Revoke(ctx, v.ID, "corr-purge-revoke"); err != nil {
+		t.Fatal(err)
+	}
+	if err := r.Purge(ctx, v.ID, "corr-purge-final"); err != nil {
+		t.Fatalf("revoked unassigned version was not purgeable: %v", err)
+	}
+	var count int
+	if err := r.DB().QueryRow(`SELECT COUNT(*) FROM extension_versions WHERE id=?`, v.ID).Scan(&count); err != nil || count != 0 {
+		t.Fatalf("purge left version metadata: count=%d err=%v", count, err)
+	}
+}
+
+func TestT28RejectsPackageModifiedAfterImport(t *testing.T) {
+	r := openTestRepository(t)
+	ctx := context.Background()
+	v, err := r.Import(ctx, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{}`})), "", "corr-tamper")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var rel string
+	if err := r.DB().QueryRow(`SELECT blob_relpath FROM extension_versions WHERE id=?`, v.ID).Scan(&rel); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(r.baseDir, rel), []byte("tampered after import"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := r.Approve(ctx, v.ID, nil, false, "corr-tamper-approve"); !errors.Is(err, ErrIntegrity) {
+		t.Fatalf("tampered package was approved: %v", err)
+	}
+}
+
+func contains(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
+}

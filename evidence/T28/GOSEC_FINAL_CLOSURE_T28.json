@@ -1,0 +1,110 @@
+{
+	"Golang errors": {},
+	"Issues": [
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/sessions.go",
+			"code": "415: \t// Dial internal Playwright WebSocket\n416: \tbackendConn, err := net.Dial(\"tcp\", internalAddr)\n417: \tif err != nil {\n",
+			"line": "416",
+			"column": "30",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/router.go",
+			"code": "819: \tpath := dataDir + \"/.api-token\"\n820: \tif data, err := os.ReadFile(path); err == nil {\n821: \t\ttoken := strings.TrimSpace(string(data))\n",
+			"line": "820",
+			"column": "18",
+			"nosec": false,
+			"suppressions": null,
+			"autofix": "Consider using os.Root to scope file access under a fixed root (Go \u003e=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal."
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G304",
+			"details": "Potential file inclusion via variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/artifacts.go",
+			"code": "30: \t}\n31: \tfile, err := os.Open(path)\n32: \tif err != nil {\n",
+			"line": "31",
+			"column": "15",
+			"nosec": false,
+			"suppressions": null,
+			"autofix": "Consider using os.Root to scope file access under a fixed root (Go \u003e=1.24). Prefer root.Open/root.Stat over os.Open/os.Stat to prevent directory traversal."
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G301",
+			"details": "Expect directory permissions to be 0750 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/router.go",
+			"code": "815: \t}\n816: \tif err := os.MkdirAll(dataDir, 0755); err != nil {\n817: \t\treturn \"\", fmt.Errorf(\"create token directory: %w\", err)\n",
+			"line": "816",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/router.go",
+			"code": "695: \tw.WriteHeader(status)\n696: \tjson.NewEncoder(w).Encode(v)\n697: }\n",
+			"line": "696",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "LOW",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "703",
+				"url": "https://cwe.mitre.org/data/definitions/703.html"
+			},
+			"rule_id": "G104",
+			"details": "Errors unhandled",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/dashboard.go",
+			"code": "12: \tw.Header().Set(\"Content-Type\", \"text/html; charset=utf-8\")\n13: \tw.Write(dashboardHTML)\n14: }\n",
+			"line": "13",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		}
+	],
+	"Stats": {
+		"files": 23,
+		"lines": 5087,
+		"nosec": 4,
+		"found": 6
+	},
+	"GosecVersion": "dev"
+}

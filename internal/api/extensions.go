@@ -197,6 +197,8 @@ func writeExtensionError(w http.ResponseWriter, err error) {
 		status, code, message = http.StatusConflict, "CONCURRENT_MUTATION", "concurrent mutation refused"
 	case errors.Is(err, extensions.ErrPurgeNotAllowed):
 		code, message = "PURGE_NOT_ALLOWED", "version is still referenced"
+	case errors.Is(err, extensions.ErrIntegrity):
+		status, code, message = http.StatusInternalServerError, "INTEGRITY_MISMATCH", "managed extension package integrity check failed"
 	case errors.Is(err, extensions.ErrInvalidID):
 		code, message = "INVALID_EXTENSION_ID", "extension identifier is invalid"
 	default:

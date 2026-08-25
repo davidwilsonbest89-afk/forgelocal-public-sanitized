@@ -1,0 +1,38 @@
+utc=2026-08-25T16:00:09Z
+cwd=/home/ubuntu
+head=b5b4e1be6c82e2e659ba7038ce3f2c36f9f69bd6
+command=gosec -fmt json -out evidence/T28/GOSEC_FINAL_CLOSURE_T28.json ./internal/extensions ./internal/api
+[gosec] 2026/08/25 16:00:09 Including rules: default
+[gosec] 2026/08/25 16:00:09 Excluding rules: default
+[gosec] 2026/08/25 16:00:09 Including analyzers: default
+[gosec] 2026/08/25 16:00:09 Excluding analyzers: default
+[gosec] 2026/08/25 16:00:09 Import directory: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/extensions
+[gosec] 2026/08/25 16:00:09 Import directory: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api
+[gosec] 2026/08/25 16:00:09 Checking package: extensions
+[gosec] 2026/08/25 16:00:09 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/extensions/store.go
+[gosec] 2026/08/25 16:00:10 Checking package: api
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/artifacts.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/audit.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/backup.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/backup_v1.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/cookie_fixtures.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/correlation.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/dashboard.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/extensions.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/groups.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/localsession.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/openapi.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/profile_history.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/profiles_bulk.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/profiles_write.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/proxies.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/proxy_providers.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/readonly.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/readonly_session.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/router.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/sessions.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/templates.go
+[gosec] 2026/08/25 16:00:10 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/api/workflow.go
+gosec_exit=1
+command=git diff --check
+diff_check_exit=0

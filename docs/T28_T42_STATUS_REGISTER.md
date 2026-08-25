@@ -144,3 +144,14 @@ Le finding runtime historique `TestNewRegistryLoadsBrowseForgeChromiumFromDefaul
 La valeur exacte maintenue est `camoflox_execution_authorized=false`. Un éventuel `update_url`/`updateURL` du manifest est ignoré, non suivi et non exécuté. T28 ne lance ni navigateur, ni extension, ni proxy, ni processus externe.
 
 **Gates inchangées :** `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`. T29, T39, T40, T41 et T42 restent bloqués et ne sont pas démarrés. T30 conserve son statut antérieur.
+
+
+## 2026-08-25 — T28-FINAL-CLOSURE-PASS
+
+La dernière passe ciblée a démontré puis corrigé un défaut concret d’intégrité : un blob ZIP modifié après import n’était pas revérifié avant approbation. Le repository vérifie désormais taille et SHA-256 avant `Approve`, `Assign` et `Rollback`, et l’API expose `INTEGRITY_MISMATCH` de façon stable. Les tests T28 supplémentaires couvrent ZIP corrompu, limites, toutes permissions sensibles/host patterns, `update_url` ignoré, purge lifecycle et package altéré ; tests ciblés sous race, vet ciblé, build et diff check retournent `0`.
+
+**Statut proposé à l’acceptation propriétaire :** `T28_APPROVED_VERIFIABLE_LOCAL`.
+
+Cette valeur signifie uniquement que T28 est implémenté et vérifiable localement, que son périmètre Core local est clôturé et que ses artefacts de conservation R1 sont acceptés. Elle ne signifie pas runtime navigateur approuvé, extension chargée/exécutée, SystemVault natif validé, proxy/cookies réels validés ou release publique autorisée.
+
+Les gates restent strictement inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`. T29, T39, T40, T41 et T42 ne sont pas démarrés.

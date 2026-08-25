@@ -1,0 +1,7 @@
+utc=2026-08-25T15:56:19Z
+cwd=/home/ubuntu
+head=b5b4e1be6c82e2e659ba7038ce3f2c36f9f69bd6
+command=go test -count=1 -race ./internal/extensions ./internal/api -run '^TestT28'
+ok  	forgelocal/internal/extensions	1.413s
+ok  	forgelocal/internal/api	1.223s
+test_exit=0

@@ -62,7 +62,7 @@ Les mutations d’une même série ou d’un même profil sont sérialisées sou
 
 ## 7. API Core proposée
 
-Les routes sont loopback-only, authentifiées par le mécanisme existant du Core et protégées par la validation d’origine existante. Les mutations refusent toute requête non loopback, sans bearer ou avec origine non autorisée. Les réponses utilisent les erreurs stables existantes et les codes T28 suivants : `INVALID_ARCHIVE`, `ARCHIVE_LIMIT_EXCEEDED`, `MANIFEST_INVALID`, `PERMISSION_ACK_REQUIRED`, `HIGH_RISK_ACK_REQUIRED`, `VERSION_NOT_APPROVED`, `PROFILE_NOT_FOUND`, `VERSION_REVOKED`, `SERIES_NOT_FOUND`, `CONCURRENT_MUTATION`, `STORAGE_FAILED`, `DATABASE_FAILED`, `PURGE_NOT_ALLOWED`.
+Les routes sont loopback-only, authentifiées par le mécanisme existant du Core et protégées par la validation d’origine existante. Les mutations refusent toute requête non loopback, sans bearer ou avec origine non autorisée. Les réponses utilisent les erreurs stables existantes et les codes T28 suivants : `INVALID_ARCHIVE`, `ARCHIVE_LIMIT_EXCEEDED`, `MANIFEST_INVALID`, `PERMISSION_ACK_REQUIRED`, `HIGH_RISK_ACK_REQUIRED`, `VERSION_NOT_APPROVED`, `PROFILE_NOT_FOUND`, `VERSION_REVOKED`, `SERIES_NOT_FOUND`, `CONCURRENT_MUTATION`, `STORAGE_FAILED`, `DATABASE_FAILED`, `PURGE_NOT_ALLOWED`, `INTEGRITY_MISMATCH`.
 
 | Méthode | Route | Résultat |
 |---|---|---|

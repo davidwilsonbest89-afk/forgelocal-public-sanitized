@@ -1,0 +1,28 @@
+utc=2026-08-25T15:59:49Z
+cwd=/home/ubuntu
+head=b5b4e1be6c82e2e659ba7038ce3f2c36f9f69bd6
+command=go test -count=1 -race ./internal/extensions ./internal/api -run '^TestT28'
+ok  	forgelocal/internal/extensions	2.079s
+ok  	forgelocal/internal/api	1.197s
+targeted_test_exit=0
+command=go vet ./internal/extensions ./internal/api
+vet_exit=0
+command=go build ./...
+build_exit=0
+command=git diff --check
+diff_check_exit=0
+test_inventory=
+internal/extensions/store_test.go:47:func TestT28ImportPreservesPermissionsAndRequiresExactHighRiskAcknowledgement(t *testing.T) {
+internal/extensions/store_test.go:75:func TestT28LifecycleAssignmentUpdateRollbackRevokeAndPersistence(t *testing.T) {
+internal/extensions/store_test.go:139:func TestT28RejectsUnsafeArchivesAndCompensatesDatabaseFailure(t *testing.T) {
+internal/extensions/store_test.go:175:func TestT28ConcurrentAssignmentCannotDoubleCreateRelation(t *testing.T) {
+internal/extensions/store_test.go:215:func TestT28RejectsSymlinkArchiveEntry(t *testing.T) {
+internal/extensions/store_test.go:243:func TestT28StoreUsesManagedObjectPath(t *testing.T) {
+internal/extensions/store_test.go:261:func TestT28RejectsCorruptAndOversizedArchives(t *testing.T) {
+internal/extensions/store_test.go:272:func TestT28PreservesAllAuthorizedPermissionsAndIgnoresUpdateURL(t *testing.T) {
+internal/extensions/store_test.go:297:func TestT28PurgeRequiresSafeLifecycleState(t *testing.T) {
+internal/extensions/store_test.go:325:func TestT28RejectsPackageModifiedAfterImport(t *testing.T) {
+internal/api/extensions_t28_test.go:107:func TestT28APIRejectsMissingAuthAndForeignOrigin(t *testing.T) {
+internal/api/extensions_t28_test.go:128:func TestT28APIOffLoopbackRefused(t *testing.T) {
+internal/api/extensions_t28_test.go:141:func TestT28APIImportApproveListAndRedaction(t *testing.T) {
+internal/api/extensions_t28_test.go:215:func TestT28APIAssignmentRequiresApprovedVersionAndExistingProfile(t *testing.T) {

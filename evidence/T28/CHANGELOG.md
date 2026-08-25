@@ -30,3 +30,11 @@ Aucun téléchargement de package d’extension, chargement/exécution, Camoufox
 6. Gosec R1 a trouvé six findings de chaque côté ; la comparaison normalisée par règle/fichier/détail donne `new_findings=0` et `resolved_findings=0`. Aucun finding T28 n’est masqué par allowlist globale.
 7. Documentation corrigée uniquement : `update_url`/`updateURL` explicitement ignoré, non suivi et non exécuté ; gate exact `camoflox_execution_authorized=false` maintenu ; absence de navigateur/extension/proxy/processus externe rappelée.
 8. Verdict probatoire : `T28_EVIDENCE_QUALIFICATION_R1_READY_FOR_INDEPENDENT_REVIEW`.
+
+
+## 2026-08-25 — T28-FINAL-CLOSURE-PASS
+
+1. La passe ciblée a découvert un défaut concret et reproductible : après modification du blob ZIP géré, `Approve` ne revérifiait pas le digest stocké et pouvait accepter un package altéré.
+2. Correction minimale appliquée : `verifyBlobIntegrity` compare taille et SHA-256 avant `Approve`, `Assign` et `Rollback`; l’API mappe l’échec vers `INTEGRITY_MISMATCH`. Aucun navigateur, runtime, réseau de package ou processus externe n’est impliqué.
+3. Tests ciblés ajoutés pour ZIP corrompu, ZIP dépassant la limite, conservation de toutes les permissions sensibles et host patterns, ignorance de `update_url`, purge lifecycle et package modifié après import. Les tests T28 sous race, vet ciblé, build et diff check corrigés ont tous retourné code 0.
+4. La clôture T28 est proposée comme `T28_APPROVED_VERIFIABLE_LOCAL`, limitée au Core local et aux artefacts de conservation. Cette approbation ne couvre aucun runtime navigateur, extension chargée/exécutée, SystemVault natif, proxy/cookies réels ou release.

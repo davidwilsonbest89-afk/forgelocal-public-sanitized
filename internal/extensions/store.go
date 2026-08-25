@@ -44,6 +44,7 @@ var (
 	ErrRevoked            = errors.New("extension version is revoked or quarantined")
 	ErrConcurrentMutation = errors.New("concurrent mutation")
 	ErrPurgeNotAllowed    = errors.New("purge not allowed")
+	ErrIntegrity          = errors.New("extension package integrity mismatch")
 	ErrInvalidID          = errors.New("invalid extension id")
 )
 
@@ -575,11 +576,11 @@ func (r *Repository) Approve(ctx context.Context, versionID string, acknowledged
 		return nil, err
 	}
 	defer tx.Rollback()
-	var seriesID, state, manifestJSON, riskState, riskJSON, digestPreview, created, approved string
+	var seriesID, state, manifestJSON, riskState, riskJSON, digest, digestPreview, blobRel, created, approved string
 	var number int
 	var size int64
 	var format string
-	err = tx.QueryRowContext(ctx, `SELECT series_id,version_number,state,manifest_json,risk_state,risk_categories_json,digest_preview,size_bytes,format,created_at,COALESCE(approved_at,'') FROM extension_versions WHERE id=?`, versionID).Scan(&seriesID, &number, &state, &manifestJSON, &riskState, &riskJSON, &digestPreview, &size, &format, &created, &approved)
+	err = tx.QueryRowContext(ctx, `SELECT series_id,version_number,state,manifest_json,risk_state,risk_categories_json,digest,digest_preview,size_bytes,format,blob_relpath,created_at,COALESCE(approved_at,'') FROM extension_versions WHERE id=?`, versionID).Scan(&seriesID, &number, &state, &manifestJSON, &riskState, &riskJSON, &digest, &digestPreview, &size, &format, &blobRel, &created, &approved)
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, ErrVersionNotFound
 	}
@@ -588,6 +589,9 @@ func (r *Repository) Approve(ctx context.Context, versionID string, acknowledged
 	}
 	if state == "revoked" || state == "quarantined" {
 		return nil, ErrRevoked
+	}
+	if err := verifyBlobIntegrity(filepath.Join(r.baseDir, blobRel), digest, size); err != nil {
+		return nil, err
 	}
 	if state != "imported" {
 		return nil, ErrPermissionAck
@@ -643,9 +647,10 @@ func (r *Repository) Assign(ctx context.Context, versionID, profileID, correlati
 		return nil, err
 	}
 	defer tx.Rollback()
-	var seriesID, state, current string
-	var riskJSON, digestPreview string
-	err = tx.QueryRowContext(ctx, `SELECT series_id,state,risk_categories_json,digest_preview FROM extension_versions WHERE id=?`, versionID).Scan(&seriesID, &state, &riskJSON, &digestPreview)
+	var seriesID, state, current, digest, digestPreview, blobRel string
+	var riskJSON string
+	var size int64
+	err = tx.QueryRowContext(ctx, `SELECT series_id,state,risk_categories_json,digest,digest_preview,size_bytes,blob_relpath FROM extension_versions WHERE id=?`, versionID).Scan(&seriesID, &state, &riskJSON, &digest, &digestPreview, &size, &blobRel)
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, ErrVersionNotFound
 	}
@@ -657,6 +662,9 @@ func (r *Repository) Assign(ctx context.Context, versionID, profileID, correlati
 	}
 	if state != "approved" {
 		return nil, ErrNotApproved
+	}
+	if err := verifyBlobIntegrity(filepath.Join(r.baseDir, blobRel), digest, size); err != nil {
+		return nil, err
 	}
 	if err = tx.QueryRowContext(ctx, `SELECT COALESCE(active_version_id,'') FROM extension_series WHERE id=?`, seriesID).Scan(&current); err != nil {
 		return nil, err
@@ -708,8 +716,9 @@ func (r *Repository) Rollback(ctx context.Context, seriesID, targetVersionID, co
 		return err
 	}
 	defer tx.Rollback()
-	var targetState, digestPreview, riskJSON, current string
-	err = tx.QueryRowContext(ctx, `SELECT state,digest_preview,risk_categories_json FROM extension_versions WHERE id=? AND series_id=?`, targetVersionID, seriesID).Scan(&targetState, &digestPreview, &riskJSON)
+	var targetState, digest, digestPreview, blobRel, riskJSON, current string
+	var size int64
+	err = tx.QueryRowContext(ctx, `SELECT state,digest,digest_preview,size_bytes,blob_relpath,risk_categories_json FROM extension_versions WHERE id=? AND series_id=?`, targetVersionID, seriesID).Scan(&targetState, &digest, &digestPreview, &size, &blobRel, &riskJSON)
 	if errors.Is(err, sql.ErrNoRows) {
 		return ErrVersionNotFound
 	}
@@ -721,6 +730,9 @@ func (r *Repository) Rollback(ctx context.Context, seriesID, targetVersionID, co
 	}
 	if targetState != "approved" && targetState != "archived" {
 		return ErrNotApproved
+	}
+	if err := verifyBlobIntegrity(filepath.Join(r.baseDir, blobRel), digest, size); err != nil {
+		return err
 	}
 	if err = tx.QueryRowContext(ctx, `SELECT COALESCE(active_version_id,'') FROM extension_series WHERE id=?`, seriesID).Scan(&current); err != nil {
 		return err
@@ -846,6 +858,27 @@ func (r *Repository) audit(ctx context.Context, tx *sql.Tx, seriesID, versionID,
 	_, err := tx.ExecContext(ctx, `INSERT INTO extension_audit_events(series_id,version_id,action,result,digest_preview,permission_categories_json,profile_pseudonym,error_code,correlation_id,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)`, seriesID, versionID, action, result, digest, string(payload), profile, errorCode, correlation, now())
 	return err
 }
+func verifyBlobIntegrity(path, expectedDigest string, expectedSize int64) error {
+	// #nosec G304 -- blob_relpath is repository-owned metadata under the managed T28 base directory.
+	f, err := os.Open(path)
+	if err != nil {
+		return ErrIntegrity
+	}
+	defer f.Close()
+	info, err := f.Stat()
+	if err != nil || info.Size() != expectedSize {
+		return ErrIntegrity
+	}
+	h := sha256.New()
+	if _, err := io.Copy(h, f); err != nil {
+		return ErrIntegrity
+	}
+	if hex.EncodeToString(h.Sum(nil)) != expectedDigest {
+		return ErrIntegrity
+	}
+	return nil
+}
+
 func (r *Repository) beforeCommitHook() error {
 	if r.beforeCommit != nil {
 		return r.beforeCommit()
