@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"hash/fnv"
 	"log/slog"
+	"net"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -100,11 +101,16 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		} else {
 			proxyRegion = strings.TrimSpace(proxy.Region)
 		}
-		geoResult = fingerprint.DetectProxyGeo(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
-		tz, locale = geoResult.Values()
-		if tz == "" {
+		if isLoopbackProxyHost(proxy.Host) {
 			tz, locale = fallbackGeoForProxyRegion(proxyRegion)
 			geoResult = fingerprint.GeoDetectionResult{Timezone: tz, Locale: locale, Source: "proxy_region_fallback", Status: "geo_provider_unavailable"}
+		} else {
+			geoResult = fingerprint.DetectProxyGeo(proxy.Type, proxy.Host, proxy.Port, proxy.Username, proxy.Password)
+			tz, locale = geoResult.Values()
+			if tz == "" {
+				tz, locale = fallbackGeoForProxyRegion(proxyRegion)
+				geoResult = fingerprint.GeoDetectionResult{Timezone: tz, Locale: locale, Source: "proxy_region_fallback", Status: "geo_provider_unavailable"}
+			}
 		}
 		args = append(args, "--fingerprint-webrtc-ip=auto", "--proxy-bypass-list=<-loopback>")
 	} else {
@@ -1800,6 +1806,15 @@ func clampScreenAvail(avail, size int) int {
 	}
 	return avail
 }
+func isLoopbackProxyHost(host string) bool {
+	host = strings.TrimSpace(strings.Trim(host, "[]"))
+	if strings.EqualFold(host, "localhost") {
+		return true
+	}
+	ip := net.ParseIP(host)
+	return ip != nil && ip.IsLoopback()
+}
+
 func fallbackGeoForProxyRegion(region string) (timezone, locale string) {
 	region = strings.ToLower(strings.TrimSpace(region))
 	switch {

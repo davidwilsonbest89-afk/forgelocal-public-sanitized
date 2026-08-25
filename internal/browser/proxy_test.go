@@ -25,3 +25,16 @@ func TestManagerEffectiveProxyUsesGroupStore(t *testing.T) {
 		t.Fatalf("effective proxy = %+v", effective)
 	}
 }
+
+func TestIsLoopbackProxyHost(t *testing.T) {
+	for _, host := range []string{"localhost", "127.0.0.1", "127.0.0.9", "[::1]"} {
+		if !isLoopbackProxyHost(host) {
+			t.Errorf("isLoopbackProxyHost(%q) = false", host)
+		}
+	}
+	for _, host := range []string{"proxy.example", "192.0.2.10"} {
+		if isLoopbackProxyHost(host) {
+			t.Errorf("isLoopbackProxyHost(%q) = true", host)
+		}
+	}
+}
