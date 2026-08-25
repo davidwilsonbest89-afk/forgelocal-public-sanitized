@@ -1,0 +1,7 @@
+source_head=b594f236a28483cc975dd054575d6cfb171d4f86
+base=053fd8f9612eb028c04983e0a23d311a6a099e29
+zip=forgelocal-operational-validation-v1.zip
+zip_sha256=664fba54efe36a20269e60bba007082458a5d90c45ca10e9728cdf15fc7fedf5
+bundle=forgelocal-operational-validation-v1.delta.bundle
+bundle_sha256=67cce18e08f51540fceea71ba8e2dcb3c71344c24d10c4990e5e5e6460efb46f
+manifest=PACKAGE_MANIFEST.txt (non-self-referential)
