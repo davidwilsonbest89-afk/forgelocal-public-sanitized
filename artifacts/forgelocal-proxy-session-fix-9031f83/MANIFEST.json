@@ -1,7 +1,7 @@
 {
   "bundle": "forgelocal-proxy-session-fix-9031f83",
   "source_commit": "9031f8324deeb4d6c171e01a244eeba778cf137c",
-  "proof_commit": "08ef9393ded99e2d4e272d08134a820cd27ae418",
+  "latest_public_proof_commit": "269ba87b9aed54f1569060e66bb3acaaa5abf687",
   "verdict": "SMOKE_INTEGRATED_PROXY_PASS",
   "files": [
     {"sha256": "e8ace45309d2b3bb1cc9b8fd3fe50731a2934e929c9f098033029f50ce1d82b9", "path": "./README.md"},
@@ -13,6 +13,6 @@
     {"sha256": "92cf7b71c1b9c831aca7cebd233d2331f5ee9017a4907599f9a52f91b2384bbd", "path": "./evidence/SMOKE_INTEGRATED_PROXY_FIX_AUTHORITATIVE_RAW.log"},
     {"sha256": "1b8fcbbac4618385e65ddcab9c56ac1f74757d5e69cb13d1bdb4be3aec2ce36f", "path": "./evidence/SMOKE_INTEGRATED_PROXY_FIX_REPORT.md"},
     {"sha256": "98a7fdd296b713ae97b60ca9b28f55e07a69cb00fb8c0f600046f40c02a5c65d", "path": "./evidence/STATUS_REGISTER.md"},
-    {"sha256": "55daacfc4a1303ffe30988cd067718d6fcff7ae055751b96d97b07afd7850584", "path": "./source/SOURCE_REFERENCE.txt"}
+    {"sha256": "454d8c463d5340e2bac468a9dd9e0474e9385560e8709f7e6f5d0c3f4e73ddf3", "path": "./source/SOURCE_REFERENCE.txt"}
   ]
 }
