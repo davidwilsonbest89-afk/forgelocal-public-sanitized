@@ -1,0 +1,6 @@
+evidence/static-debt-prioritization-v6.delta.bundle is okay
+The bundle contains this ref:
+1565c18be2c55918d429bd9bdf81c787e303ee82 refs/heads/audit/t00-t42-static-debt-prioritization-v6
+The bundle requires this ref:
+fb9d20c7ffb241104eede582eee9cbd7a3bbc267 
+The bundle uses this hash algorithm: sha1
