@@ -34,4 +34,6 @@ La preuve de cleanup contient `token_file_removed=yes`, `base_dir_removed=yes`, 
 | ZIP `t10-t15-e2e-validation-v6.zip` | `93c0224f01fbde6be0d1e5cb9a11c9a20362647116023a0d2e2ff244c1260081` |
 | Bundle `t10-t15-e2e-validation-v6.delta.bundle` | `28872679155097942f620e31144f84f83f98bb93b7a21871d04b12a16b51611a` |
 
+**Vérification publique finale :** la branche de revue `audit/t00-t42-t10-t15-independent-review-v6` a été contrôlée depuis un clone neuf sparse au commit `8b2b5f567b4bf19ca1172c3331b84a697e7059c3` ; clone, fsck, checkout exact, fetch LFS ciblé, sidecars en répertoire neutre, `unzip -t`, extraction, checksums internes, manifeste, bundle, worktree propre, plage Git non vide et Gitleaks ont tous retourné zéro.
+
 **Owner suivant :** revue indépendante de gouvernance qualité. **Gate produit :** aucune gate V6 n’est levée par cette décision.
