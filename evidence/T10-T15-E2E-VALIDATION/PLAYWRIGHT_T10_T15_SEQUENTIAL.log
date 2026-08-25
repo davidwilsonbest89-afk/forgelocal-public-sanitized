@@ -1,0 +1,31 @@
+
+Running 7 tests using 1 worker
+
+[1A[2K[1/7] tests/automation-t15.spec.ts:146:3 › T15 local CDP automation › W1: session opens and lists without port/path leakage
+[1A[2K[2/7] tests/automation-t15.spec.ts:161:3 › T15 local CDP automation › W2: fail-closed local-only navigation policy
+[1A[2K[3/7] tests/automation-t15.spec.ts:183:3 › T15 local CDP automation › W3: content projection redacted and screenshot available for client-side hashing
+[1A[2K[4/7] tests/automation-t15.spec.ts:201:3 › T15 local CDP automation › W4: session close and refusal after close
+[1A[2K[5/7] tests/automation-t15.spec.ts:216:3 › T15 local CDP automation › W5: dashboard automation panel mounts and projects digests only
+[1A[2K[6/7] tests/proxies-t10.spec.ts:97:1 › T10 — référentiel proxy du dashboard vers le Core local
+[1A[2Ktests/proxies-t10.spec.ts:97:1 › T10 — référentiel proxy du dashboard vers le Core local
+T10_ADMIN_LINK: PASS memory_only
+
+[1A[2KT10_LISTING_REDACTED_PRE: PASS count=0 secret_ref_only
+
+[1A[2KT10_VALID_PROXY_CREATED: PASS server_validated
+
+[1A[2KT10_LISTING_REDACTED: PASS no_credential_value_in_ui
+
+[1A[2KT10_INVALID_PORT_REFUSED: PASS no_write_on_rejection
+
+[1A[2KT10_ASSIGN_REQUIRES_CORE_PROFILE: PASS explicit_refusal_no_ghost_binding correlated
+
+[1A[2KT10_ADMIN_UNLINKED: PASS memory_only unlink_clean
+
+[1A[2KT10_PROXY_REGISTRY: PASS create_refuse_assign_unassign_redacted
+
+[1A[2K[7/7] tests/proxies-t10.spec.ts:213:1 › T10 — refus des écritures hors boucle locale
+[1A[2Ktests/proxies-t10.spec.ts:213:1 › T10 — refus des écritures hors boucle locale
+T10_OFFLOOPBACK_REFUSED: PASS no_write_path_origin_offloopback
+
+[1A[2K  7 passed (15.6s)

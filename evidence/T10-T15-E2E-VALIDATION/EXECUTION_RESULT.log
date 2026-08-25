@@ -1,0 +1,8 @@
+test_exit=0
+core_health=200
+dashboard_health=200
+playwright_workers=1
+camoufox_started=no
+real_proxy_started=no
+real_cookie_or_user_data=no
+production_runtime=no

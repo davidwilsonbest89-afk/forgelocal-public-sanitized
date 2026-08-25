@@ -1,0 +1,21 @@
+# Attempt history — redacted
+
+attempt=1
+result=FAILED_BEFORE_PLAYWRIGHT
+cause=go_build_invoked_outside_module; CORE_BUILD reported go.mod file not found
+impact=no Core health; no Dashboard; no test qualification
+
+attempt=2
+result=FAILED_BEFORE_PLAYWRIGHT
+cause=initial server config triggered BrowseForge Chromium download; run was stopped before tests because the runtime download was outside the authorized synthetic scope and filled temporary storage
+impact=no test qualification; temporary processes and directories subsequently cleaned
+
+attempt=3
+result=TESTS_PASS_CLEANUP_ORCHESTRATION_BUG
+result_detail=7 tests passed, but initial PID capture left a Vite descendant and port 3000 open; process was manually terminated and the orchestrator was corrected
+
+attempt=4
+result=PASS_PENDING_INDEPENDENT_REVIEW
+result_detail=7 tests passed sequentially; Core/Dashboard health 200; token/base/run root removed; ports 19280 and 3000 closed; no residual temporary process
+
+No token value, cookie, user data, real proxy, Camoufox artifact or production runtime is recorded in this history.

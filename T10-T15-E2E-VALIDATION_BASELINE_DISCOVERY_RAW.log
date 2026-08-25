@@ -1,0 +1,14 @@
+utc=2026-08-25T12:30:00Z
+lot=T10-T15-E2E-VALIDATION
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+branch=audit/t00-t42-t10-t15-e2e-validation-v6
+
+--- allowed scope
+Run the complete Dashboard T10 and T15 Playwright suites against a Core compiled from this checkout and a Dashboard served on loopback. Use a fresh temporary base directory, synthetic fixtures, a temporary token held in a 0600 file and never printed, sequential Playwright execution, and cleanup assertions.
+
+--- forbidden scope
+No Camoufox, browser runtime, proxy, cookies, user data, native SystemVault, migration, production runtime, release, T28, T29, T39, T40, T41 or T42. The Core must use --no-runtime and tests must use only synthetic loopback data.
+
+--- required output
+Capture command exit codes, redacted logs, cleanup proof, bundle, ZIP, portable sidecars, non-self-referential manifest, fresh extraction and a fresh public clone.

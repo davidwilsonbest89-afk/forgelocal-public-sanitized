@@ -1,0 +1,7 @@
+test_exit=0
+core_pid=215432 dashboard_pid=215489
+token_file_removed=yes
+base_dir_removed=yes
+port_19280_after_cleanup=closed
+port_3000_after_cleanup=closed
+run_root_removed=yes
