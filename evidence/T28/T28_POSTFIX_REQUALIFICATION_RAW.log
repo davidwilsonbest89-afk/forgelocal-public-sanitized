@@ -1,0 +1,42 @@
+utc=2026-08-25T16:06:34Z
+cwd=/home/ubuntu
+head=e806d4e915d1b702362389411d8ac823551df044
+command=go test -count=1 -race ./internal/extensions ./internal/api -run ^TestT28
+ok  	forgelocal/internal/extensions	2.187s
+ok  	forgelocal/internal/api	1.185s
+targeted_test_exit=0
+command=go vet ./internal/extensions ./internal/api
+vet_exit=0
+command=go build ./...
+build_exit=0
+command=git diff --check
+diff_check_exit=0
+command=git show --format=fuller --stat f0701da
+[33mcommit f0701da849ce0f9073397bb42ded5e2e76b29ef1[m
+Author:     davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+AuthorDate: Tue Aug 25 16:01:41 2026 +0000
+Commit:     davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+CommitDate: Tue Aug 25 16:01:41 2026 +0000
+
+    Close T28 with package integrity validation
+
+ T28_FINAL_CLOSURE.md                               |   57 [32m+[m
+ docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md    |    2 [32m+[m[31m-[m
+ docs/T28_T42_STATUS_REGISTER.md                    |   11 [32m+[m
+ evidence/T28/CHANGELOG.md                          |    8 [32m+[m
+ evidence/T28/GOSEC_FINAL_CLOSURE_T28.json          |  110 [32m++[m
+ evidence/T28/T28_FINAL_CLOSURE_DISCOVERY_RAW.log   | 1643 [32m++++++++++++++++++++[m
+ .../T28/T28_FINAL_CLOSURE_FIXED_VALIDATION_RAW.log |   28 [32m+[m
+ evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log       |   38 [32m+[m
+ .../T28/T28_FINAL_CLOSURE_TARGETED_TESTS_RAW.log   |    7 [32m+[m
+ evidence/T28/todo.md                               |   15 [32m+[m
+ internal/api/extensions.go                         |    2 [32m+[m
+ internal/extensions/store.go                       |   47 [32m+[m[31m-[m
+ internal/extensions/store_test.go                  |   92 [32m++[m
+ 13 files changed, 2052 insertions(+), 8 deletions(-)
+show_fix_exit=0
+command=git diff 4f0f620..HEAD -- internal
+M	internal/api/extensions.go
+M	internal/extensions/store.go
+M	internal/extensions/store_test.go
+post_impl_internal_diff_exit=0
