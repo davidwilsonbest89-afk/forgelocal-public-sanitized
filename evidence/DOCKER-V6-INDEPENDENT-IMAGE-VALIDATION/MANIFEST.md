@@ -1,13 +1,13 @@
 # DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION — manifeste interne
 
-Manifeste non auto-référentiel : MANIFEST.md et SHA256SUMS sont exclus de leur propre liste.
+Manifeste non auto-référentiel : les fichiers de contrôle du manifeste et des checksums sont exclus de leur propre liste.
 
 | Fichier | Rôle |
 |---|---|
-| `.git` | Docker V6 validation evidence |
-| `.gitattributes` | Docker V6 validation evidence |
-| `DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION-v6.md` | Docker V6 validation evidence |
-| `DOCKER_HARDENING_README.md` | Docker V6 validation evidence |
-| `DOCKER_V6_BASELINE_DISCOVERY_RAW.log` | Docker V6 validation evidence |
-| `Dockerfile` | Docker V6 validation evidence |
-| `V6_DOCKER_DISCOVERY.md` | Docker V6 validation evidence |
+| `BUNDLE_VERIFY.log` | vérification du bundle Git |
+| `CHANGELOG.md` | historique du lot |
+| `DOCKER_V6_STATIC_CHECKS.log` | journal brut des contrôles statiques |
+| `REGISTER.md` | registre du lot |
+| `docker-v6-independent-image-validation-v6.delta.bundle` | bundle Git portable |
+| `docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256` | sidecar portable du bundle |
+| `todo.md` | validations restantes conditionnées à Engine/Buildx |

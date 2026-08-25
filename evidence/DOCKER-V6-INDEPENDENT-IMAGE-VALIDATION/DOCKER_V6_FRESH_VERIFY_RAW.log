@@ -1,0 +1,83 @@
+utc=2026-08-25T13:48:40Z
+cwd=/home/ubuntu
+source_head=7da28bbe0bda5f6ef480822eb015ae2376cf95a6
+## git -C /home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation bundle verify evidence/docker-v6-independent-image-validation-v6.delta.bundle
+evidence/docker-v6-independent-image-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+a75c6c222a0da5bb5ffffcfc7a6d6b7feb1a12c3 refs/heads/audit/t00-t42-docker-v6-independent-image-validation
+The bundle requires this ref:
+1d585abea8f3081d9b7890400551e4318e1a4753 
+The bundle uses this hash algorithm: sha1
+exit=0
+## unzip -t /home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation/evidence/docker-v6-independent-image-validation-v6.zip
+Archive:  /home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation/evidence/docker-v6-independent-image-validation-v6.zip
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/DOCKER_V6_STATIC_CHECKS.log   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/REGISTER.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/CHANGELOG.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/todo.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/BUNDLE_VERIFY.log   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/docker-v6-independent-image-validation-v6.delta.bundle   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/MANIFEST.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/SHA256SUMS   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation/evidence/docker-v6-independent-image-validation-v6.zip.
+exit=0
+## mkdir -p /tmp/docker_v6_public_verify_7da28bb/extract
+exit=0
+## unzip -q /home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation/evidence/docker-v6-independent-image-validation-v6.zip -d /tmp/docker_v6_public_verify_7da28bb/extract
+exit=0
+## bash -c cd '/tmp/docker_v6_public_verify_7da28bb/extract/evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION' && sha256sum -c SHA256SUMS
+bash: line 1: cd: /tmp/docker_v6_public_verify_7da28bb/extract/evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION: No such file or directory
+exit=1
+## grep -R -n MANIFEST.md\|SHA256SUMS /tmp/docker_v6_public_verify_7da28bb/extract/evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/MANIFEST.md
+grep: /tmp/docker_v6_public_verify_7da28bb/extract/evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/MANIFEST.md: No such file or directory
+exit=2
+## bash -c cd '/tmp/docker_v6_public_verify_7da28bb/extract/evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION' && test "$(grep -c 'MANIFEST.md' MANIFEST.md)" -eq 0 && test "$(grep -c 'SHA256SUMS' MANIFEST.md)" -eq 0
+bash: line 1: cd: /tmp/docker_v6_public_verify_7da28bb/extract/evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION: No such file or directory
+exit=1
+## git clone --no-checkout --depth=1 --filter=blob:none --branch audit/t00-t42-docker-v6-independent-image-validation https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git /tmp/docker_v6_public_verify_7da28bb/clone
+Cloning into '/tmp/docker_v6_public_verify_7da28bb/clone'...
+exit=0
+## git -C /tmp/docker_v6_public_verify_7da28bb/clone sparse-checkout init --no-cone
+exit=0
+## git -C /tmp/docker_v6_public_verify_7da28bb/clone sparse-checkout set Dockerfile docker/Dockerfile.run docker/entrypoint.sh DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION-v6.md DOCKER_V6_BASELINE_DISCOVERY_RAW.log evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION
+exit=0
+## git -C /tmp/docker_v6_public_verify_7da28bb/clone checkout --detach 7da28bbe0bda5f6ef480822eb015ae2376cf95a6
+HEAD is now at 7da28bb Package Docker V6 blocked validation evidence
+exit=0
+## git -C /tmp/docker_v6_public_verify_7da28bb/clone status --short
+exit=0
+## git -C /tmp/docker_v6_public_verify_7da28bb/clone fsck --full
+exit=0
+## git -C /tmp/docker_v6_public_verify_7da28bb/clone bundle verify /home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation/evidence/docker-v6-independent-image-validation-v6.delta.bundle
+/home/ubuntu/forgelocal_self_validation_v6/docker_v6_independent_validation/evidence/docker-v6-independent-image-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+a75c6c222a0da5bb5ffffcfc7a6d6b7feb1a12c3 refs/heads/audit/t00-t42-docker-v6-independent-image-validation
+The bundle requires this ref:
+1d585abea8f3081d9b7890400551e4318e1a4753 
+The bundle uses this hash algorithm: sha1
+exit=0
+--- summary ---
+
+## corrected fresh ZIP extraction paths
+utc=2026-08-25T13:48:52Z
+unzip_corrected_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+DOCKER_V6_STATIC_CHECKS.log: OK
+REGISTER.md: OK
+docker-v6-independent-image-validation-v6.delta.bundle: OK
+docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+sha256sum_corrected_exit=0
+manifest_non_self_ref_exit=1
+BUNDLE_VERIFY.log
+CHANGELOG.md
+DOCKER_V6_STATIC_CHECKS.log
+MANIFEST.md
+REGISTER.md
+SHA256SUMS
+docker-v6-independent-image-validation-v6.delta.bundle
+docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256
+todo.md
