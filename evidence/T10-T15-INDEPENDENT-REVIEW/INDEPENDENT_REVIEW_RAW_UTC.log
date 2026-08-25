@@ -67,7 +67,7 @@ evidence/t10-t15-e2e-validation-v6.delta.bundle is okay
 The bundle contains this ref:
 a77f2e902ef423b6f94d1d2a646bd120464f58c9 refs/heads/audit/t00-t42-t10-t15-e2e-validation-v6
 The bundle requires this ref:
-999374d99b7996504ba91e421850a2fe84afb78d 
+999374d99b7996504ba91e421850a2fe84afb78d
 The bundle uses this hash algorithm: sha1
 bundle_verify_exit=0
 checkout_status_exit=0
