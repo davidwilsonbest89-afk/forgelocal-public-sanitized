@@ -1,0 +1,15 @@
+2026-08-25T12:37:23Z
+docker=NOT_FOUND
+timeout: failed to run command ‘docker’: No such file or directory
+buildx=NOT_FOUND
+timeout: failed to run command ‘docker’: No such file or directory
+dockerd=NOT_FOUND
+podman=NOT_FOUND
+--- static
+bash_n_exit=0
+/home/ubuntu/bin/trivy
+2026-08-25T12:37:26Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-25T12:37:26Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-25T12:37:27Z	INFO	Detected config files	num=2
+trivy_config_exit=0
+diff_check_exit=0

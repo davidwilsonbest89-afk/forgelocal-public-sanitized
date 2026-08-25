@@ -1,0 +1,20 @@
+utc=2026-08-25T12:40:00Z
+lot=DOCKER-IMAGE-VALIDATION
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+branch=audit/t00-t42-docker-image-validation-v6
+
+--- environment
+Docker CLI=NOT_FOUND
+Docker daemon socket=NOT_FOUND
+Buildx=NOT_FOUND
+Podman/Buildah/nerdctl=NOT_FOUND
+
+--- allowed scope
+Inspect the already hardenend Dockerfiles and run non-container static checks. Build/inspect images only when a real Docker/Buildx environment is available. No browser, Camoufox, proxy, cookie, user data or production workflow may run.
+
+--- strict limitation
+No Docker/Buildx installation or replacement engine is assumed in this sandbox. No image build, image history inspection, image Trivy scan, container permission check or HEALTHCHECK execution may be marked DONE until executed in a real engine.
+
+--- forbidden scope
+No production runtime, release, migration, native SystemVault, T28/T29/T39/T40/T41/T42 or changes to V6 Core/Dashboard business code.
