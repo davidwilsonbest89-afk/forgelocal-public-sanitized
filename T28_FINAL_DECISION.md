@@ -12,11 +12,11 @@ Le lot T28 est implémenté et vérifiable localement, mais **non approuvé** : 
 |---|---|
 | Branche | `feature/t28-local-extensions-controlled` |
 | Baseline V6 | tag `t00-t42-v6-local-qualified-2026-08-25`, commit `999374d99b7996504ba91e421850a2fe84afb78d` |
-| Commit de contenu du package | `df9784ca8c06eddcbcd190163a13729a4be09748` |
+| Commit de contenu du package | `a8a014d361c8b364a8baf51b20f0e566231a138a` |
 | ZIP | `evidence/T28/t28-local-extensions-controlled-v1.zip` |
-| SHA-256 ZIP | `82e1925fdf1971fe1ccd7d5ceb6bafd05c07248a5fddd9a18c583e93a11231a6` |
+| SHA-256 ZIP | `072eb921af83f51a10ba620a8dd8c6c089758ff227bbd1eeabd19ab0f3723b20` |
 | Bundle delta | `evidence/T28/t28-local-extensions-controlled.delta.bundle` |
-| SHA-256 bundle | `c49eff79e1b196bafbb007f9f1720e5627547cc2ea24a5a43afe596a1252b794` |
+| SHA-256 bundle | `60c78affc239fa12f81205c533c83aa2341393c871c537c5df193f0d0b4adbdb` |
 | Sidecars | `*.zip.portable.sha256` et `*.bundle.portable.sha256` |
 
 Le bundle est un bundle v2 manuel qui requiert explicitement la baseline ; `git bundle verify` reconnaît la ref T28 et le prerequisite. Le ZIP a passé `unzip -t`, extraction fraîche et 43 contrôles checksum. Le manifeste ne s’auto-référence pas.
