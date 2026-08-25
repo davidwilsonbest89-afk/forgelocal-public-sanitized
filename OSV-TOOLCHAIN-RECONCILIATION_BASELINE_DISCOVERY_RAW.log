@@ -1,64 +1,26 @@
-utc=2026-08-25T02:54:19Z
-cwd=/home/ubuntu/forgelocal_self_validation_v6/osv_audit
-branch=audit/t00-t42-osv-toolchain-reconciliation
-head=999374d99b7996504ba91e421850a2fe84afb78d
---- git status --short
-[31m??[m OSV-TOOLCHAIN-RECONCILIATION.md
-[31m??[m OSV-TOOLCHAIN-RECONCILIATION_BASELINE_DISCOVERY_RAW.log
-[31m??[m V6_OSV_RECONCILIATION_MATRIX.md
-status_exit_code=0
---- versions
-+ git --version
-git version 2.43.0
-exit_code=0
-+ git-lfs --version
-git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
-exit_code=0
-+ /usr/local/go1.25.13/bin/go version
-go version go1.25.13 linux/amd64
-exit_code=0
-+ /home/ubuntu/go/bin/osv-scanner --version
-osv-scanner version: 1.9.2
-commit: n/a
-built at: n/a
-exit_code=0
-+ govulncheck -version
-Scanner: govulncheck@v1.1.4
-DB: https://vuln.go.dev
-DB updated: 2026-08-21 20:38:00 +0000 UTC
+utc=2026-08-25T04:00Z
+lot=OSV-TOOLCHAIN-RECONCILIATION
+base_commit=89dea8888fefd50422d1bd509f88079833fafbdc
+base_branch=audit/t00-t42-osv-toolchain-reconciliation
+V6_frozen_commit=999374d99b7996504ba91e421850a2fe84afb78d
+working_tree_before_lot=clean
 
-No vulnerabilities found.
-exit_code=0
-+ /home/ubuntu/bin/grype-0.117.0 version
-Application:         grype
-Version:             0.117.0
-BuildDate:           2026-08-10T16:48:30Z
-GitCommit:           b5fa92bbcbef655497e3be840a2f718380e2cdd3
-GitDescription:      v0.117.0
-Platform:            linux/amd64
-GoVersion:           go1.26.3
-Compiler:            gc
-Syft Version:        v1.51.0
-Supported DB Schema: 6
-exit_code=0
-+ /home/ubuntu/bin/syft version
-Application:   syft
-Version:       1.51.0
-BuildDate:     2026-08-10T14:48:50Z
-GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
-GitDescription: v1.51.0
-Platform:      linux/amd64
-GoVersion:     go1.26.3
-Compiler:      gc
-SchemaVersion: 16.1.10
-exit_code=0
---- df -h
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/root        48G   42G  6.4G  87% /
-df_exit_code=0
---- source command
-Scanning dir source
-Unable to parse git ignores: stat source: no such file or directory
-Failed to walk source: lstat source: no such file or directory
-lstat source: no such file or directory
-osv_source_repeat_exit=127
+--- observed versions
+effective_toolchain=go1.25.13
+module_directive=go 1.25.0
+osv_scanner=1.9.2
+govulncheck=v1.1.4
+grype=0.117.0
+syft=1.51.0
+
+--- observed results
+OSV individual results=46; package=stdlib; detected version=1.25.0 from module directive.
+Govulncheck against effective toolchain=0 findings.
+Grype on clean CycloneDX/SPDX SBOMs=0 matches.
+No global OSV disable and no advisory removed.
+
+--- policy
+Compare every advisory individually by advisory/alias/CVE, package, detected version, fix, import/surface and exposure. Do not modify V6 frozen code or dependency files. Do not start T28/T29/T39/T40/T41/T42, Camoufox, real proxy, cookies, user data, native SystemVault, migration, production runtime or release.
+
+--- required decision
+Keep one reproducible exception per advisory unless a CVE is proven applicable to the effective binary. A compatible OSV patch-toolchain proof or effective stdlib proof is the closure condition.
