@@ -1,0 +1,7 @@
+source_head=b56d7f84db9475f980e1c712cdf4dfc371651e41
+base=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+zip=forgelocal-dashboard-final-operational.zip
+zip_sha256=e7b326f8d9a10a6b3c60a9f1b746501f522c14adcc9e29b8ec2da14f310a3e63
+bundle=forgelocal-dashboard-final-operational.delta.bundle
+bundle_sha256=da2dce19d31f389147f27a6b016f94c973de0924bf2f4b74abdb7bbd69002228
+manifest=PACKAGE_MANIFEST.txt (non-self-referential)

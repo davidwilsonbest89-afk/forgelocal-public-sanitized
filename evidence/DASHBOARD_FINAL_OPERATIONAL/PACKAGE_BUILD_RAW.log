@@ -1,0 +1,27 @@
+utc=2026-08-25T22:02:03Z
+cwd=/home/ubuntu
+source_head=b56d7f84db9475f980e1c712cdf4dfc371651e41
+base=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+## sidecar values
+e7b326f8d9a10a6b3c60a9f1b746501f522c14adcc9e29b8ec2da14f310a3e63  forgelocal-dashboard-final-operational.zip
+da2dce19d31f389147f27a6b016f94c973de0924bf2f4b74abdb7bbd69002228  forgelocal-dashboard-final-operational.delta.bundle
+## sidecar checks
+forgelocal-dashboard-final-operational.zip: OK
+zip_sidecar_check_exit=0
+forgelocal-dashboard-final-operational.delta.bundle: OK
+bundle_sidecar_check_exit=0
+## zip test
+zip_test=PASS
+extraction_manifest=PASS
+manifest_self_reference=PASS
+## bundle verify
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/artifacts_dashboard_final/forgelocal-dashboard-final-operational.delta.bundle is okay
+The bundle contains this ref:
+b56d7f84db9475f980e1c712cdf4dfc371651e41 refs/heads/validation/operational-v1
+The bundle requires this ref:
+a0913cfb98bdf3cc8278a2731890a69ac32423cd
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+## local seed
+seed_clone_local=NOT_COMPLETED_LOCAL_CLONE_TIMEOUT_300S
+seed_clone_public_required=TRUE
