@@ -33,7 +33,7 @@ internal_sha_exit=0
 The bundle contains this ref:
 eea888b949ec17a5b5e1c5fac18f13590c1b28f6 refs/heads/audit/t00-t42-post-v6-revalidation-final-matrix
 The bundle requires this ref:
-999374d99b7996504ba91e421850a2fe84afb78d 
+999374d99b7996504ba91e421850a2fe84afb78d
 The bundle uses this hash algorithm: sha1
 bundle_verify_exit=0
 [90m1:11PM[0m [32mINF[0m scan completed in 8.88ms
