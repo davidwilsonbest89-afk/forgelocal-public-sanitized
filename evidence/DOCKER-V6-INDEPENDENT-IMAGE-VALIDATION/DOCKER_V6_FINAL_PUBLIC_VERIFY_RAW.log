@@ -1,0 +1,95 @@
+utc=2026-08-25T13:50:20Z
+cwd=/home/ubuntu
+expected_head=804962d7a6a36a92d589b09b7bb5817eb5d5659b
+## git clone --no-checkout --depth=1 --filter=blob:none --branch audit/t00-t42-docker-v6-independent-image-validation https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git /tmp/docker_v6_final_public_verify_804962d
+Cloning into '/tmp/docker_v6_final_public_verify_804962d'...
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d sparse-checkout init --no-cone
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d sparse-checkout set Dockerfile docker/Dockerfile.run docker/entrypoint.sh DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION-v6.md DOCKER_V6_BASELINE_DISCOVERY_RAW.log evidence/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION evidence/docker-v6-independent-image-validation-v6.delta.bundle evidence/docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256 evidence/docker-v6-independent-image-validation-v6.zip evidence/docker-v6-independent-image-validation-v6.zip.portable.sha256
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d checkout --detach 804962d7a6a36a92d589b09b7bb5817eb5d5659b
+HEAD is now at 804962d Regenerate Docker V6 portable package
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d rev-parse HEAD
+804962d7a6a36a92d589b09b7bb5817eb5d5659b
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d status --short
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d diff --check
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d fsck --full
+exit=0
+## git -C /tmp/docker_v6_final_public_verify_804962d bundle verify /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.delta.bundle
+/tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+1abd2d628b60effd1914febcf90dbd93d9b5d505 refs/heads/audit/t00-t42-docker-v6-independent-image-validation
+The bundle requires this ref:
+1d585abea8f3081d9b7890400551e4318e1a4753 
+The bundle uses this hash algorithm: sha1
+exit=0
+## sha256sum -c /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256
+sha256sum: evidence/docker-v6-independent-image-validation-v6.delta.bundle: No such file or directory
+evidence/docker-v6-independent-image-validation-v6.delta.bundle: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+exit=1
+## sha256sum -c /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.zip.portable.sha256
+sha256sum: evidence/docker-v6-independent-image-validation-v6.zip: No such file or directory
+evidence/docker-v6-independent-image-validation-v6.zip: FAILED open or read
+sha256sum: WARNING: 1 listed file could not be read
+exit=1
+## unzip -t /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.zip
+Archive:  /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.zip
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/DOCKER_V6_STATIC_CHECKS.log   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/REGISTER.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/CHANGELOG.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/todo.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/BUNDLE_VERIFY.log   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/docker-v6-independent-image-validation-v6.delta.bundle   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/MANIFEST.md   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/SHA256SUMS   OK
+    testing: DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/DOCKER_V6_FRESH_VERIFY_RAW.log   OK
+No errors detected in compressed data of /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.zip.
+exit=0
+## mkdir -p /tmp/docker_v6_final_public_verify_804962d/extract
+exit=0
+## unzip -q /tmp/docker_v6_final_public_verify_804962d/evidence/docker-v6-independent-image-validation-v6.zip -d /tmp/docker_v6_final_public_verify_804962d/extract
+exit=0
+## bash -c cd '/tmp/docker_v6_final_public_verify_804962d/extract/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION' && sha256sum -c SHA256SUMS
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+DOCKER_V6_FRESH_VERIFY_RAW.log: OK
+DOCKER_V6_STATIC_CHECKS.log: OK
+REGISTER.md: OK
+docker-v6-independent-image-validation-v6.delta.bundle: OK
+docker-v6-independent-image-validation-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+exit=0
+## bash -c ! grep -q 'MANIFEST.md\|SHA256SUMS' '/tmp/docker_v6_final_public_verify_804962d/extract/DOCKER-V6-INDEPENDENT-IMAGE-VALIDATION/MANIFEST.md'
+exit=0
+## grep -E docker_build_exit=127|docker_buildx_version_exit=127|docker_image_inspect_exit=NOT_RUN|trivy_image_exit=NOT_RUN|container_cleanup_exit=NOT_RUN /tmp/docker_v6_final_public_verify_804962d/DOCKER_V6_BASELINE_DISCOVERY_RAW.log
+docker_buildx_version_exit=127
+exit=0
+
+## corrected final sidecar and baseline checks
+utc=2026-08-25T13:50:42Z
+Cloning into '/tmp/docker_v6_final_public_verify_corrected'...
+clone_corrected_exit=0
+sparse_init_corrected_exit=0
+sparse_set_corrected_exit=0
+HEAD is now at 804962d Regenerate Docker V6 portable package
+checkout_corrected_exit=0
+evidence/docker-v6-independent-image-validation-v6.delta.bundle: OK
+bundle_sidecar_corrected_exit=0
+evidence/docker-v6-independent-image-validation-v6.zip: OK
+zip_sidecar_corrected_exit=0
+command_v_docker_exit=1
+docker_version_exit=127
+command_v_buildx_exit=1
+docker_buildx_version_exit=127
+command_v_podman_exit=1
+command_v_buildah_exit=1
+command_v_nerdctl_exit=1
+baseline_absence_grep_corrected_exit=0
