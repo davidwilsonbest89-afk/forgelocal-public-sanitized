@@ -1,0 +1,11 @@
+utc=2026-08-25T17:12:00Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+phase=V-DOCKER
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+command -v docker: absent
+command -v buildx: absent
+docker version: NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE (Docker Engine absent)
+docker buildx version: NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE (Buildx absent)
+V-DOCKER=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+Aucune image n’a été construite, inspectée ou démarrée ; aucune tentative de téléchargement d’image ou de service Docker n’a été effectuée.
+Aucune donnée utilisateur, secret, token, cookie réel, proxy réel, navigateur ou runtime d’extension n’a été utilisé.

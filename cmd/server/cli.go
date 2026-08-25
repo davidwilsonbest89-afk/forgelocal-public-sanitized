@@ -754,7 +754,13 @@ func runAPIListCommand(resource string, args []string, global cliGlobal, stdout,
 
 func ensureRuntimeDirs(baseDir string) error {
 	for _, name := range []string{"profiles", "data", "logs", "browsers"} {
-		if err := os.MkdirAll(filepath.Join(baseDir, name), 0755); err != nil {
+		path := filepath.Join(baseDir, name)
+		if err := os.MkdirAll(path, 0700); err != nil {
+			return err
+		}
+		// Runtime directories can predate the current process; repair their mode
+		// rather than relying on MkdirAll's mode for existing paths.
+		if err := os.Chmod(path, 0700); err != nil {
 			return err
 		}
 	}

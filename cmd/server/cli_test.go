@@ -659,3 +659,25 @@ type listenErrorString struct {
 func (e *listenErrorString) Error() string {
 	return e.message
 }
+
+func TestEnsureRuntimeDirsOwnerOnly(t *testing.T) {
+	baseDir := t.TempDir()
+	for _, name := range []string{"profiles", "data", "logs", "browsers"} {
+		path := filepath.Join(baseDir, name)
+		if err := os.MkdirAll(path, 0755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := ensureRuntimeDirs(baseDir); err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"profiles", "data", "logs", "browsers"} {
+		info, err := os.Stat(filepath.Join(baseDir, name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got := info.Mode().Perm(); got != 0700 {
+			t.Fatalf("%s mode = %o, want 0700", name, got)
+		}
+	}
+}

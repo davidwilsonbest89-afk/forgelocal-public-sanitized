@@ -1,0 +1,34 @@
+utc=2026-08-25T17:10:55Z
+cwd=/home/ubuntu
+phase=V-SYSTEMVAULT
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+## local double
+memory_vault_initial_recovery=PASS
+memory_vault_missing_refusal=PASS
+memory_vault_rotation=PASS
+memory_vault_delete=PASS
+memory_vault_secret_recovery_delete=PASS
+memory_vault_concurrency=PASS
+memory_vault_plaintext_persistence=NOT_APPLICABLE_IN_MEMORY
+memory_vault_harness_exit=0
+## native availability
+native_systemvault_probe=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+native_systemvault_test=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+## no plaintext fallback
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:11:	keyring "github.com/zalando/go-keyring"
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:55:// SystemVault uses Keychain, Credential Manager or Secret Service through go-keyring.
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:58:func NewSystemVault(service string) *SystemVault {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:123:// MemoryVault is restricted to tests and is never selected by production wiring.
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:124:type MemoryVault struct {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:130:func NewMemoryVault() *MemoryVault {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:131:	return &MemoryVault{keys: map[string][]byte{}, secrets: map[string][]byte{}}
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:134:func (v *MemoryVault) Put(id string, key []byte) error {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:144:func (v *MemoryVault) Get(id string) ([]byte, error) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:154:func (v *MemoryVault) Delete(id string) error {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:161:func (v *MemoryVault) PutSecret(id string, value []byte) error {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:171:func (v *MemoryVault) GetSecret(id string) ([]byte, error) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go:181:func (v *MemoryVault) DeleteSecret(id string) error {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/backup_snapshot_test.go:14:	store, err := NewStore(t.TempDir(), secrets.NewMemoryVault())
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/store_secrets_test.go:14:	vault := secrets.NewMemoryVault()
+## safety
+No native secret was written; all values were synthetic and memory-only.

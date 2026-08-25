@@ -1,0 +1,87 @@
+utc=2026-08-25T16:45:44Z
+cwd=/home/ubuntu
+user=ubuntu
+os=Ubuntu 24.04.4 LTS 24.04
+kernel=Linux 6.18.38+ #1 SMP PREEMPT_DYNAMIC Thu Aug  6 06:48:14 UTC 2026 x86_64
+architecture=x86_64
+disk=/dev/root        48G   46G  1.7G  97% /
+## tool versions
+command_go=command_node=/home/ubuntu/.nvm/versions/node/v22.13.0/bin/node
+command_pnpm=/home/ubuntu/.nvm/versions/node/v22.13.0/bin/pnpm
+command_git=/usr/bin/git
+command_git-lfs=/usr/bin/git-lfs
+command_docker=command_buildx=command_osv-scanner=/home/ubuntu/bin/osv-scanner
+command_gitleaks=/home/ubuntu/bin/gitleaks
+command_gosec=/home/ubuntu/bin/gosec
+command_govulncheck=/home/ubuntu/bin/govulncheck
+command_semgrep=command_trivy=/home/ubuntu/bin/trivy
+command_syft=/home/ubuntu/bin/syft
+command_grype=command_shellcheck=command_yamllint=version_go=/home/ubuntu/forgelocal_self_validation_v6/operational_phase0_baseline.sh: line 26: go: command not found
+version_node=v22.13.0
+version_pnpm=11.20.0
+version_git=git version 2.43.0
+version_git-lfs=git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+version_docker=/home/ubuntu/forgelocal_self_validation_v6/operational_phase0_baseline.sh: line 26: docker: command not found
+version_docker_engine=
+/home/ubuntu/forgelocal_self_validation_v6/operational_phase0_baseline.sh: line 28: docker: command not found
+version_docker_buildx=
+/home/ubuntu/forgelocal_self_validation_v6/operational_phase0_baseline.sh: line 29: docker: command not found
+## browser availability
+browser_chromium=/usr/bin/chromium
+Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS
+browser_chromium-browser=ABSENT
+browser_google-chrome=ABSENT
+browser_google-chrome-stable=ABSENT
+browser_firefox=ABSENT
+browser_camoufox=ABSENT
+## scanner availability
+osv-scanner version: 1.9.2
+commit: n/a
+built at: n/a
+Error: unknown flag: --version
+Usage:
+  gitleaks [command]
+Version: dev
+Git tag: 
+Build date: 
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-25 15:00:08 +0000 UTC
+semgrep=ABSENT
+Version: 0.74.0
+syft 1.51.0
+grype=ABSENT
+shellcheck=ABSENT
+yamllint=ABSENT
+## configuration variable names only (values omitted)
+GH_TOKEN
+GIT_CONFIG_KEY_0
+GOOGLE_DRIVE_TOKEN
+GOOGLE_WORKSPACE_CLI_TOKEN
+OPENAI_API_KEY
+## T28 GitHub discovery before campaign
+t28_branch=feature/t28-local-extensions-controlled
+t28_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+t28_head_discovery_exit=0
+## fresh sparse clone
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo'...
+clone_exit=0
+HEAD is now at 053fd8f Sync T28 closure metadata with current head
+checkout_t28_exit=0
+Switched to a new branch 'validation/operational-v1'
+branch_create_exit=0
+sparse_set_exit=0
+## [32mvalidation/operational-v1[m
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+op_branch=validation/operational-v1
+## branch publication
+remote: 
+remote: Create a pull request for 'validation/operational-v1' on GitHub by visiting:        
+remote:      https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/pull/new/validation/operational-v1        
+remote: 
+To https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+ * [new branch]      validation/operational-v1 -> validation/operational-v1
+branch 'validation/operational-v1' set up to track 'origin/validation/operational-v1'.
+branch_push_exit=0
+## safety statement
+No browser, extension runtime, proxy, SystemVault, Docker service, release, or user data operation was started in Phase 0.

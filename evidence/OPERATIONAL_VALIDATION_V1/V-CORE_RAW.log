@@ -1,0 +1,72 @@
+utc=2026-08-25T17:00:21Z
+cwd=/home/ubuntu
+phase=V-CORE
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+base=/tmp/forgelocal-vcore-operational/base
+port=19281
+token_policy=synthetic bearer stored in shell only; token value omitted
+## build
+build_exit=0
+PASS | build_core | 
+## init
+init_exit=0
+PASS | init_temp_base | 
+runtime_test_config=browseforge-chromium -> /usr/bin/chromium; auto_update=disabled; no browser session created in V-CORE
+## start
+pid_started=481812
+PASS | health_after_start | GET /api/health 200
+PASS | generated_token_available | value omitted
+status_http=200
+PASS | status_public | 
+## auth and guards
+noauth_profiles_http=401
+PASS | bearer_required | 
+badauth_profiles_http=401
+PASS | bad_bearer_refused | 
+wrongorigin_profiles_http=403
+PASS | origin_guard | 
+wrongloopback_profiles_http=403
+PASS | loopback_guard | 
+## profile CRUD and errors
+HTTP name=invalid_create method=POST path=/api/profiles status=400 bytes=111 body={"error":{"code":"INVALID_BODY","message":"invalid character 'b' looking for beginning of object key string"}}
+PASS | invalid_body_4xx | 
+HTTP name=create_profile method=POST path=/api/profiles status=201 bytes=517 body={"data":{"id":"prof_47bc078e88ff","name":"operational-synthetic-profile","runtime_id":"browseforge-chromium","lifecycle_state":"active","created_at":"2026-08-25T17:00:23.657671092Z","last_used":"2026-08-25T17:00:23.657671092Z","fingerprint_seed":971243242,"profile_dir":"profiles/prof_47bc078e88ff","history_pending":{"operation_id":"fe7477a2c1c2cf054d609f13c99cb267","action":"create","created_at":"2026-08-25T17:00:23.657819Z","snapshot_digest":"b0537cc8443bb44350684fc09d50a31f3acd5dbbd3799f1a9f39
+PASS | create_profile | 201
+profile_id=<REDACTED_SYNTHETIC_ID>
+HTTP name=get_profile method=GET path=/api/profiles/prof_47bc078e88ff status=200 bytes=301 body={"data":{"id":"prof_47bc078e88ff","name":"operational-synthetic-profile","runtime_id":"browseforge-chromium","lifecycle_state":"active","created_at":"2026-08-25T17:00:23.657671092Z","last_used":"2026-08-25T17:00:23.657671092Z","fingerprint_seed":971243242,"profile_dir":"profiles/prof_47bc078e88ff"}}
+PASS | read_profile | 
+HTTP name=list_profile_first method=GET path=/api/profiles status=200 bytes=313 body={"data":[{"id":"prof_47bc078e88ff","name":"operational-synthetic-profile","runtime_id":"browseforge-chromium","lifecycle_state":"active","created_at":"2026-08-25T17:00:23.657671092Z","last_used":"2026-08-25T17:00:23.657671092Z","fingerprint_seed":971243242,"profile_dir":"profiles/prof_47bc078e88ff"}],"total":1}
+PASS | list_profiles | 
+HTTP name=update_profile method=PUT path=/api/profiles/prof_47bc078e88ff status=200 bytes=525 body={"data":{"id":"prof_47bc078e88ff","name":"operational-synthetic-profile-updated","runtime_id":"browseforge-chromium","lifecycle_state":"active","created_at":"2026-08-25T17:00:23.657671092Z","last_used":"2026-08-25T17:00:23.657671092Z","fingerprint_seed":971243242,"profile_dir":"profiles/prof_47bc078e88ff","history_pending":{"operation_id":"e1ab15e7e11ea17c2d37e6561723be1a","action":"update","created_at":"2026-08-25T17:00:23.706102Z","snapshot_digest":"e0fe5658eaa41ab9241cdcf8d847bbe80ea5cf3960c6
+PASS | update_profile | 
+HTTP name=read_updated method=GET path=/api/profiles/prof_47bc078e88ff status=200 bytes=309 body={"data":{"id":"prof_47bc078e88ff","name":"operational-synthetic-profile-updated","runtime_id":"browseforge-chromium","lifecycle_state":"active","created_at":"2026-08-25T17:00:23.657671092Z","last_used":"2026-08-25T17:00:23.657671092Z","fingerprint_seed":971243242,"profile_dir":"profiles/prof_47bc078e88ff"}}
+PASS | update_persisted | 
+HTTP name=duplicate_profile method=POST path=/api/profiles status=409 bytes=91 body={"error":{"code":"DUPLICATE_PROFILE","message":"a profile with this name already exists"}}
+PASS | duplicate_refused | 
+HTTP name=missing_profile method=GET path=/api/profiles/not-a-real-profile status=404 bytes=81 body={"error":{"code":"NOT_FOUND","message":"profile not found: not-a-real-profile"}}
+PASS | missing_profile_4xx | 
+HTTP name=delete_profile method=DELETE path=/api/profiles/prof_47bc078e88ff status=200 bytes=19 body={"data":"deleted"}
+PASS | delete_profile | 
+HTTP name=delete_profile_again method=DELETE path=/api/profiles/prof_47bc078e88ff status=404 bytes=80 body={"error":{"code":"NOT_FOUND","message":"profile not found: prof_47bc078e88ff"}}
+PASS | delete_idempotence | 
+## repeated requests and redaction
+HTTP name=repeated_list_1 method=GET path=/api/profiles status=200 bytes=24 body={"data":null,"total":0}
+HTTP name=repeated_list_2 method=GET path=/api/profiles status=200 bytes=24 body={"data":null,"total":0}
+HTTP name=repeated_list_3 method=GET path=/api/profiles status=200 bytes=24 body={"data":null,"total":0}
+HTTP name=repeated_list_4 method=GET path=/api/profiles status=200 bytes=24 body={"data":null,"total":0}
+HTTP name=repeated_list_5 method=GET path=/api/profiles status=200 bytes=24 body={"data":null,"total":0}
+PASS | redaction | credential value not found in captured bodies/log
+## token expiration/revocation capability
+FAIL | token_expiry_revocation | no Core token expiration/revocation endpoint or expiry claim is implemented; capability is absent, not an environment issue
+## stop, crash, restart
+graceful_stop_wait_exit=0
+PASS | graceful_stop | process stopped
+PASS | health_after_restart | GET /api/health 200
+sigkill_exit=137
+PASS | health_after_sigkill_restart | GET /api/health 200
+## redacted server logs
+PASS_COUNT=23
+FAIL_COUNT=1
+V-CORE=FAIL
+## cleanup
+cleanup=PASS

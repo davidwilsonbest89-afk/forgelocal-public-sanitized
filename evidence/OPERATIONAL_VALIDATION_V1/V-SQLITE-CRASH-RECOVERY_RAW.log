@@ -1,0 +1,48 @@
+utc=2026-08-25T17:02:40Z
+cwd=/home/ubuntu
+phase=V-SQLITE-CRASH-RECOVERY
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+db_scope=temporary copies only; no user database
+disk_before=/dev/root        48G   48G  104M 100% /
+## application store tests
+ok  	forgelocal/internal/history	1.345s
+ok  	forgelocal/internal/templates	1.481s
+ok  	forgelocal/internal/groups	1.073s
+go_store_tests_exit=0
+## SQLite operational harness
+wal_mode=wal
+initial_integrity=ok
+concurrent_writes_count=2
+concurrent_writes_errors=0
+post_concurrent_integrity=ok
+lock_contender_error=database is locked
+lock_fail_closed=True
+interrupted_child_exit=-9
+interrupted_uncommitted_rows_after_reopen=0
+interrupted_recovery_integrity=ok
+absent_db_recreated=True
+permission_copy_refused=True
+corrupt_copy_refused=True
+near_full_small_write_ok=True
+PYTHON_SQLITE_STATUS=PASS
+python_sqlite_harness_exit=0
+## results
+wal_mode=wal
+initial_integrity=ok
+concurrent_writes_count=2
+concurrent_writes_errors=0
+post_concurrent_integrity=ok
+lock_contender_error=database is locked
+lock_fail_closed=True
+interrupted_child_exit=-9
+interrupted_uncommitted_rows_after_reopen=0
+interrupted_recovery_integrity=ok
+absent_db_recreated=True
+permission_copy_refused=True
+corrupt_copy_refused=True
+near_full_small_write_ok=True
+PYTHON_SQLITE_STATUS=PASS
+disk_after=/dev/root        48G   48G  101M 100% /
+## safety
+No user database, secret, browser, extension runtime, proxy, SystemVault, Docker service, or release operation was used.
+cleanup=PASS

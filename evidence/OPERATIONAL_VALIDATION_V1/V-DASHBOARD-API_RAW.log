@@ -1,0 +1,87 @@
+utc=2026-08-25T17:19:25Z
+cwd=/home/ubuntu
+phase=V-DASHBOARD-API
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+dashboard_dependencies=node_modules already installed from frozen lockfile
+## Core build/init/start
+core_build_exit=0
+core_init_exit=0
+core_health_ready_attempt=7
+{"status":"ok"}
+core_health_exit=0
+## Dashboard build/check
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard
+> tsc --noEmit
+
+dashboard_check_exit=0
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+(!) %VITE_ANALYTICS_ENDPOINT% is not defined in env variables found in /index.html. Is the variable mistyped?
+(!) %VITE_ANALYTICS_WEBSITE_ID% is not defined in env variables found in /index.html. Is the variable mistyped?
+<script src="%VITE_ANALYTICS_ENDPOINT%/umami"> in "/index.html" can't be bundled without type="module" attribute
+transforming...
+
+/manus-storage/forgelocal-control-room_fbd8004c.jpg referenced in /manus-storage/forgelocal-control-room_fbd8004c.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+✓ 1627 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.57 kB │ gzip: 105.52 kB
+../dist/public/assets/index-BIeqyB7B.css  132.29 kB │ gzip:  23.60 kB
+../dist/public/assets/index-DcOPAphq.js   402.25 kB │ gzip: 114.21 kB
+✓ built in 2.67s
+
+  dist/index.js  788b 
+
+⚡ Done in 3ms
+dashboard_build_exit=0
+## Dashboard start
+dashboard_ready_attempt=9
+dashboard_http_exit=0
+## Playwright sequential UI/API specs
+playwright_exit=0
+
+Running 5 tests using 1 worker
+
+[1A[2K[1/5] tests/proxies-t10.spec.ts:97:1 › T10 — référentiel proxy du dashboard vers le Core local
+[1A[2Ktests/proxies-t10.spec.ts:97:1 › T10 — référentiel proxy du dashboard vers le Core local
+T10_ADMIN_LINK: PASS memory_only
+
+[1A[2KT10_LISTING_REDACTED_PRE: PASS count=0 secret_ref_only
+
+[1A[2KT10_VALID_PROXY_CREATED: PASS server_validated
+
+[1A[2KT10_LISTING_REDACTED: PASS no_credential_value_in_ui
+
+[1A[2KT10_INVALID_PORT_REFUSED: PASS no_write_on_rejection
+
+[1A[2KT10_ASSIGN_REQUIRES_CORE_PROFILE: PASS explicit_refusal_no_ghost_binding correlated
+
+[1A[2KT10_ADMIN_UNLINKED: PASS memory_only unlink_clean
+
+[1A[2KT10_PROXY_REGISTRY: PASS create_refuse_assign_unassign_redacted
+
+[1A[2K[2/5] tests/proxies-t10.spec.ts:213:1 › T10 — refus des écritures hors boucle locale
+[1A[2Ktests/proxies-t10.spec.ts:213:1 › T10 — refus des écritures hors boucle locale
+T10_OFFLOOPBACK_REFUSED: PASS no_write_path_origin_offloopback
+
+[1A[2K[3/5] tests/t06-groups-runtimes.spec.ts:129:1 › T06-3 — affiche les catalogues Core redacted sans mutation ni sentinelle
+[1A[2Ktests/t06-groups-runtimes.spec.ts:129:1 › T06-3 — affiche les catalogues Core redacted sans mutation ni sentinelle
+T06_CATALOGS: PASS groups=1 runtimes=1 sentinels=absent mutations=0
+
+[1A[2K[4/5] tests/t06-groups-runtimes.spec.ts:149:1 › T06-3 — rend les inventaires vides explicitement
+[1A[2Ktests/t06-groups-runtimes.spec.ts:149:1 › T06-3 — rend les inventaires vides explicitement
+T06_EMPTY_CATALOGS: PASS groups=0 runtimes=0
+
+[1A[2K[5/5] tests/t06-groups-runtimes.spec.ts:162:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
+[1A[2Ktests/t06-groups-runtimes.spec.ts:162:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
+T06_FORCED_401: PASS token=cleared ui=Core_non_connecte
+
+[1A[2K  5 passed (9.4s)
+## console/log redaction
+redaction=PASS
+process_cleanup=PASS
+cleanup=PASS

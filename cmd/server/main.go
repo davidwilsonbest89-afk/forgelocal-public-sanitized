@@ -65,12 +65,8 @@ func runMCPStdio(opts mcpStdioOptions) {
 		fmt.Fprintf(os.Stderr, "Chdir error: %v\n", err)
 		os.Exit(1)
 	}
-	if err := os.MkdirAll("profiles", 0755); err != nil {
-		fmt.Fprintf(os.Stderr, "Create profiles dir error: %v\n", err)
-		os.Exit(1)
-	}
-	if err := os.MkdirAll("data", 0755); err != nil {
-		fmt.Fprintf(os.Stderr, "Create data dir error: %v\n", err)
+	if err := ensureRuntimeDirs(baseDir); err != nil {
+		fmt.Fprintf(os.Stderr, "Create runtime directories error: %v\n", err)
 		os.Exit(1)
 	}
 
@@ -136,14 +132,8 @@ func runServer(flags *serveFlags) {
 	}
 
 	// Auto-create directories
-	if err := os.MkdirAll("profiles", 0755); err != nil {
-		exitServerError(flags, "Create profiles dir error: %v", err)
-	}
-	if err := os.MkdirAll("data", 0755); err != nil {
-		exitServerError(flags, "Create data dir error: %v", err)
-	}
-	if err := os.MkdirAll("logs", 0755); err != nil {
-		exitServerError(flags, "Create logs dir error: %v", err)
+	if err := ensureRuntimeDirs(baseDir); err != nil {
+		exitServerError(flags, "Create runtime directories error: %v", err)
 	}
 
 	// Load config once

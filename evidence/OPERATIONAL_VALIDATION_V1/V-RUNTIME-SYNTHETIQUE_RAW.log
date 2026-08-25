@@ -1,0 +1,32 @@
+utc=2026-08-25T17:06:31Z
+cwd=/home/ubuntu
+phase=V-RUNTIME-SYNTHETIQUE
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+chromium=Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS
+camoufox_status=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+## local page server
+page_server_curl_exit=0
+## chromium lifecycle and page
+chromium_first_exit=0
+profile_a_initial_isolated=0
+profile_a_cookie_set=0
+chromium_second_exit=0
+profile_a_persistence_expected=0
+chromium_profile_b_exit=0
+profile_b_isolated=0
+## extension load attempt
+chromium_extension_attempt_exit=0
+chromium_extension_diagnostic=SEE_RAW
+[484413:484413:0825/170633.253742:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+## crash and cleanup
+chromium_crash_started=0
+chromium_process_group_kill=0
+/home/ubuntu/forgelocal_self_validation_v6/operational_runtime_synthetic_run.sh: line 49: 484539 Killed                  setsid chromium --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --user-data-dir="$ROOT/profile-crash" --remote-debugging-port=19283 about:blank > "$ROOT/chromium-crash.out" 2> "$ROOT/chromium-crash.err"
+residual_process_grep_exit=1
+residual_processes=0
+## status matrix
+V-RUNTIME-SYNTHETIQUE-CHROMIUM=PASS if lifecycle/page/isolation assertions are all zero
+V-RUNTIME-SYNTHETIQUE-CAMOUFOX=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+## log redaction
+redaction=PASS
+cleanup=PASS

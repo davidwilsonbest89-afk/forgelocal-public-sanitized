@@ -1,0 +1,66 @@
+utc=2026-08-25T17:04:37Z
+cwd=/home/ubuntu
+phase=V-T28-RUNTIME-CONTRACT
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+scope=local synthetic controlled packages; no browser runtime
+## targeted T28 tests
+ok  	forgelocal/internal/extensions	2.380s
+ok  	forgelocal/internal/api	1.173s
+t28_targeted_race_exit=0
+## targeted package API tests
+ok  	forgelocal/internal/api	1.188s
+api_extension_targeted_exit=0
+## static package checks
+vet_exit=0
+build_exit=0
+diff_check_exit=0
+## explicit contract assertions from published tests
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:46:	ErrPurgeNotAllowed    = errors.New("purge not allowed")
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:47:	ErrIntegrity          = errors.New("extension package integrity mismatch")
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:318:		if f.FileInfo().Mode()&os.ModeSymlink != 0 {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:807:func (r *Repository) Purge(ctx context.Context, versionID, correlation string) error {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:825:		return ErrPurgeNotAllowed
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:832:		return ErrPurgeNotAllowed
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:835:		return ErrPurgeNotAllowed
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:843:	if err = r.audit(ctx, tx, seriesID, versionID, "extension.purged", "success", "", nil, "", "", correlation); err != nil {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:865:		return ErrIntegrity
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:870:		return ErrIntegrity
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:874:		return ErrIntegrity
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go:877:		return ErrIntegrity
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:215:func TestT28RejectsSymlinkArchiveEntry(t *testing.T) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:226:	h.SetMode(os.ModeSymlink | 0777)
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:238:	if _, err := r.Import(context.Background(), bytes.NewReader(buf.Bytes()), "", "corr-symlink"); !errors.Is(err, ErrInvalidArchive) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:239:		t.Fatalf("symlink entry was accepted: %v", err)
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:274:	manifest := `{"name":"All permissions","version":"1","permissions":["cookies","webRequest","webRequestBlocking","debugger","nativeMessaging","management","proxy","downloads","clipboardRead"],"host_permissions":["<all_urls>","*://*/*","file:///*"],"update_url":"https://updates.example.invalid/manifest.xml"}`
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:297:func TestT28PurgeRequiresSafeLifecycleState(t *testing.T) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:300:	v, err := r.Import(ctx, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{}`})), "", "corr-purge")
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:304:	if !errors.Is(r.Purge(ctx, v.ID, "corr-purge-imported"), ErrPurgeNotAllowed) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:305:		t.Fatal("imported version was purged")
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:307:	if _, err := r.Approve(ctx, v.ID, nil, false, "corr-purge-approve"); err != nil {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:310:	if !errors.Is(r.Purge(ctx, v.ID, "corr-purge-approved"), ErrPurgeNotAllowed) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:311:		t.Fatal("active approved version was purged")
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:313:	if err := r.Revoke(ctx, v.ID, "corr-purge-revoke"); err != nil {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:316:	if err := r.Purge(ctx, v.ID, "corr-purge-final"); err != nil {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:317:		t.Fatalf("revoked unassigned version was not purgeable: %v", err)
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:321:		t.Fatalf("purge left version metadata: count=%d err=%v", count, err)
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:339:	if _, err := r.Approve(ctx, v.ID, nil, false, "corr-tamper-approve"); !errors.Is(err, ErrIntegrity) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:353:func TestT28RejectsModifiedPackageBeforeApproveAssignAndRollback(t *testing.T) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:362:		if _, err := r.Approve(ctx, v.ID, nil, false, "corr-integrity-approve-refused"); !errors.Is(err, ErrIntegrity) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:382:		if _, err := r.Assign(ctx, v.ID, "profile-integrity", "corr-integrity-assign-refused", func(context.Context, string) (bool, error) { return true, nil }); !errors.Is(err, ErrIntegrity) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store_test.go:418:		if err := r.Rollback(ctx, v1.SeriesID, v1.ID, "corr-integrity-rollback-refused"); !errors.Is(err, ErrIntegrity) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts_test.go:51:func TestResolveProfileArtifactPathRejectsTraversal(t *testing.T) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts_test.go:53:		t.Fatal("expected traversal error")
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup_v1.go:121:		if errors.Is(err, backup.ErrIntegrity) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:16:	AcceptHighRisk          bool     `json:"accept_high_risk"`
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:165:func (h *handler) purgeExtension(w http.ResponseWriter, r *http.Request) {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:166:	if err := h.extensionStore.Purge(r.Context(), chi.URLParam(r, "versionID"), correlationIDFrom(r.Context())); err != nil {
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:170:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]string{"state": "purged"}})
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:198:	case errors.Is(err, extensions.ErrPurgeNotAllowed):
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:199:		code, message = "PURGE_NOT_ALLOWED", "version is still referenced"
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:200:	case errors.Is(err, extensions.ErrIntegrity):
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go:201:		status, code, message = http.StatusInternalServerError, "INTEGRITY_MISMATCH", "managed extension package integrity check failed"
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions_t28_test.go:167:	body, _ = json.Marshal(map[string]any{"permissions_acknowledged": []string{"cookies", "storage", "*://*/*"}, "accept_high_risk": true})
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/openapi.go:74:			"/api/v1/extensions/{id}":                map[string]any{"get": map[string]any{"summary": "Get a redacted extension series"}, "delete": map[string]any{"summary": "Explicitly purge an unreferenced version"}},
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go:204:		r.Delete("/api/v1/extensions/{versionID}", h.purgeExtension)
+## safety
+No browser, extension runtime, proxy, SystemVault, package download, user data, or release operation was used.
