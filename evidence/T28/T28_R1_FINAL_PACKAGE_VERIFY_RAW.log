@@ -1,0 +1,208 @@
+utc=2026-08-25T15:34:44Z
+cwd=/home/ubuntu
+worktree=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+branch=feature/t28-local-extensions-controlled
+branch_head=2099ec17a5ae99c59afe31f467d437319639782e
+package_source_head=2099ec17a5ae99c59afe31f467d437319639782e
+## sidecars distributed directory
+t28-evidence-qualification-r1.zip: OK
+zip_sidecar_distributed_exit=0
+t28-evidence-qualification-r1.delta.bundle: OK
+bundle_sidecar_distributed_exit=0
+## sidecars neutral directory
+t28-evidence-qualification-r1.zip: OK
+zip_sidecar_neutral_exit=0
+t28-evidence-qualification-r1.delta.bundle: OK
+bundle_sidecar_neutral_exit=0
+## ZIP
+Archive:  /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/t28-evidence-qualification-r1.zip
+    testing: T28_EVIDENCE_QUALIFICATION_R1/   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/T28_EVIDENCE_QUALIFICATION_R1.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/docs/   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/docs/T28_EXTENSIONS_THREAT_MODEL.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/docs/T28_IMPLEMENTATION_HANDOVER.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/BASELINE_DISCOVERY_R1_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/BASELINE_DISCOVERY_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/CHANGELOG.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/FINAL_VALIDATION_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_DIFF_CORRECTED.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_DIFF_POST.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_EXTRACTION.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_EXTRACTION_POST.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_FINAL_DIFF.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_FINAL_EXTRACTION.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_PROTECT_DIFF.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_R1_RANGE_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_1_ff38dc2.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_2_9a15cc0.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_3_4f0f620.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_4_a9c47fd.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_5_df9784c.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_6_a8a014d.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_7_6476a21.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GITLEAKS_TREE_8_8b96981.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_BASELINE.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_HEAD.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_HEAD_CORRECTED.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_R1_BASELINE.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_R1_HEAD.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_API.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_API_PACKAGE.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_API_POST.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_EXTENSIONS.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GOSEC_T28_EXTENSIONS_POST.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GO_GLOBAL_VALIDATION_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GO_TEST_BASELINE_HEAD_COMPARISON_R1.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GO_TEST_BASELINE_R1_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GO_TEST_HEAD_R1_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/GO_TEST_T28_TARGETED_R1_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/LINEAGE_R1.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/LINEAGE_R1_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_BASELINE_GOMOD.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_GOMOD_COMPARE_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_HEAD.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_HEAD_GOMOD.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_HEAD_IDS.txt   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_HEAD_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/OSV_R1_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/REGISTER.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/SBOM_FINAL.spdx.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/SBOM_HEAD.spdx.json   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/SCANS_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/SCAN_DECISION.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/T28_PUBLIC_VERIFY_RAW.log   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/evidence/T28/todo.md   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/PACKAGE_METADATA.txt   OK
+    testing: T28_EVIDENCE_QUALIFICATION_R1/MANIFEST.md   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/t28-evidence-qualification-r1.zip.
+zip_test_exit=0
+zip_extract_exit=0
+manifest_self_reference=NOT_FOUND
+manifest_self_reference_exit=0
+PACKAGE_METADATA.txt: OK
+T28_EVIDENCE_QUALIFICATION_R1.md: OK
+docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: OK
+docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md: OK
+docs/T28_EXTENSIONS_THREAT_MODEL.md: OK
+docs/T28_IMPLEMENTATION_HANDOVER.md: OK
+evidence/T28/BASELINE_DISCOVERY_R1_RAW.log: OK
+evidence/T28/BASELINE_DISCOVERY_RAW.log: OK
+evidence/T28/CHANGELOG.md: OK
+evidence/T28/FINAL_VALIDATION_RAW.log: OK
+evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_DIFF_CORRECTED.json: OK
+evidence/T28/GITLEAKS_DIFF_POST.json: OK
+evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json: OK
+evidence/T28/GITLEAKS_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_EXTRACTION_POST.json: OK
+evidence/T28/GITLEAKS_FINAL_DIFF.json: OK
+evidence/T28/GITLEAKS_FINAL_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_PROTECT_DIFF.json: OK
+evidence/T28/GITLEAKS_R1_RANGE_RAW.log: OK
+evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION_RAW.log: OK
+evidence/T28/GITLEAKS_TREE_1_ff38dc2.json: OK
+evidence/T28/GITLEAKS_TREE_2_9a15cc0.json: OK
+evidence/T28/GITLEAKS_TREE_3_4f0f620.json: OK
+evidence/T28/GITLEAKS_TREE_4_a9c47fd.json: OK
+evidence/T28/GITLEAKS_TREE_5_df9784c.json: OK
+evidence/T28/GITLEAKS_TREE_6_a8a014d.json: OK
+evidence/T28/GITLEAKS_TREE_7_6476a21.json: OK
+evidence/T28/GITLEAKS_TREE_8_8b96981.json: OK
+evidence/T28/GOSEC_BASELINE.json: OK
+evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json: OK
+evidence/T28/GOSEC_HEAD.json: OK
+evidence/T28/GOSEC_HEAD_CORRECTED.json: OK
+evidence/T28/GOSEC_R1_BASELINE.json: OK
+evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log: OK
+evidence/T28/GOSEC_R1_HEAD.json: OK
+evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json: OK
+evidence/T28/GOSEC_T28_API.json: OK
+evidence/T28/GOSEC_T28_API_PACKAGE.json: OK
+evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json: OK
+evidence/T28/GOSEC_T28_API_POST.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS_POST.json: OK
+evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log: OK
+evidence/T28/GO_GLOBAL_VALIDATION_RAW.log: OK
+evidence/T28/GO_TEST_BASELINE_HEAD_COMPARISON_R1.log: OK
+evidence/T28/GO_TEST_BASELINE_R1_RAW.log: OK
+evidence/T28/GO_TEST_HEAD_R1_RAW.log: OK
+evidence/T28/GO_TEST_T28_TARGETED_R1_RAW.log: OK
+evidence/T28/LINEAGE_R1.md: OK
+evidence/T28/LINEAGE_R1_RAW.log: OK
+evidence/T28/OSV_R1_BASELINE_GOMOD.json: OK
+evidence/T28/OSV_R1_GOMOD_COMPARE_RAW.log: OK
+evidence/T28/OSV_R1_HEAD.json: OK
+evidence/T28/OSV_R1_HEAD_GOMOD.json: OK
+evidence/T28/OSV_R1_HEAD_IDS.txt: OK
+evidence/T28/OSV_R1_HEAD_RAW.log: OK
+evidence/T28/OSV_R1_RAW.log: OK
+evidence/T28/REGISTER.md: OK
+evidence/T28/SBOM_FINAL.spdx.json: OK
+evidence/T28/SBOM_HEAD.spdx.json: OK
+evidence/T28/SCANS_RAW.log: OK
+evidence/T28/SCAN_DECISION.md: OK
+evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log: OK
+evidence/T28/T28_PUBLIC_VERIFY_RAW.log: OK
+evidence/T28/todo.md: OK
+manifest_checksums_exit=0
+## forbidden paths and payload patterns
+forbidden_dir_count=0
+forbidden_filename_count=0
+forbidden_payloads=NOT_FOUND
+forbidden_payload_pattern_exit=0
+## Gitleaks extraction
+version=8.18.4
+command=gitleaks detect --source /tmp/t28_r1_final_verify/extract/T28_EVIDENCE_QUALIFICATION_R1 --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_R1_FINAL_PACKAGE.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:34PM[0m [32mINF[0m scan completed in 508ms
+[90m3:34PM[0m [32mINF[0m no leaks found
+gitleaks_final_package_exit=0
+## bundle verify in distributed directory
+/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/t28-evidence-qualification-r1.delta.bundle is okay
+The bundle contains this ref:
+2099ec17a5ae99c59afe31f467d437319639782e refs/heads/feature/t28-local-extensions-controlled
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+## bundle clone alone (expected prerequisite failure if baseline absent)
+Cloning into '/tmp/t28_r1_final_verify/bundle-alone'...
+error: Repository lacks these prerequisite commits:
+error: 999374d99b7996504ba91e421850a2fe84afb78d 
+fatal: remote transport reported error
+bundle_clone_alone_exit=128
+## fresh seeded clone + bundle fetch
+Cloning into '/tmp/t28_r1_final_verify/seed'...
+seed_clone_exit=0
+From /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/t28-evidence-qualification-r1.delta.bundle
+ * [new branch]      feature/t28-local-extensions-controlled -> bundle/feature/t28-local-extensions-controlled
+bundle_fetch_into_seed_exit=0
+HEAD is now at 2099ec1 Qualify T28 evidence R1 and document lineage scans
+explicit_bundle_ref_checkout_exit=0
+seed_checked_head=2099ec17a5ae99c59afe31f467d437319639782e
+seed_fsck_exit=0
+seed_clean_exit=0
