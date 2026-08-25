@@ -1,0 +1,62 @@
+[1/12] path=continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00"
+fsck_path_exit=2
+[2/12] path=continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01"
+fsck_path_exit=2
+[3/12] path=continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip"
+fsck_path_exit=2
+[4/12] path=continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip"
+fsck_path_exit=2
+[5/12] path=continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip"
+fsck_path_exit=2
+[6/12] path=continuation/T00-T27/archive-packages/forgelocal-t27-r1-local-continuation-full.tar.gz
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T00-T27/archive-packages/forgelocal-t27-r1-local-continuation-full.tar.gz"
+fsck_path_exit=2
+[7/12] path=continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle"
+fsck_path_exit=2
+[8/12] path=continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip"
+fsck_path_exit=2
+[9/12] path=evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle"
+fsck_path_exit=2
+[10/12] path=evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip"
+fsck_path_exit=2
+[11/12] path=evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip"
+fsck_path_exit=2
+[12/12] path=evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle
+fetch: Fetching reference refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+fetch_exit=0
+Git can't resolve ref: "evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle"
+fsck_path_exit=2
+final_lfs_fsck_exit=0
+Git LFS fsck OK
