@@ -1,0 +1,77 @@
+utc=2026-08-25T22:03:26Z
+cwd=/home/ubuntu
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=validation/operational-v1
+expected_public_head=4bc3d78824c14abd37d089b4e8f6e5e5806f37ea
+package_source_head=b56d7f84db9475f980e1c712cdf4dfc371651e41
+bundle_base=a0913cfb98bdf3cc8278a2731890a69ac32423cd
+## public HEAD
+public_head=4bc3d78824c14abd37d089b4e8f6e5e5806f37ea
+public_head_match=0
+public_api_exit=0
+## fresh public clone
+Cloning into '/tmp/verify-dashboard-final-public/public-clone'...
+clone_exit=0
+branch_fetch_exit=0
+HEAD is now at 4bc3d78 Add final dashboard operational package
+checkout_public_exit=0
+public_clone_head=4bc3d78824c14abd37d089b4e8f6e5e5806f37ea
+public_clone_head_match=0
+## distributed and neutral sidecars
+forgelocal-dashboard-final-operational.zip: OK
+forgelocal-dashboard-final-operational.delta.bundle: OK
+distributed_zip_sidecar_exit=0
+distributed_bundle_sidecar_exit=0
+forgelocal-dashboard-final-operational.zip: OK
+forgelocal-dashboard-final-operational.delta.bundle: OK
+neutral_zip_sidecar_exit=0
+neutral_bundle_sidecar_exit=0
+e7b326f8d9a10a6b3c60a9f1b746501f522c14adcc9e29b8ec2da14f310a3e63  /tmp/verify-dashboard-final-public/public-clone/artifacts/DASHBOARD_FINAL_OPERATIONAL/forgelocal-dashboard-final-operational.zip
+da2dce19d31f389147f27a6b016f94c973de0924bf2f4b74abdb7bbd69002228  /tmp/verify-dashboard-final-public/public-clone/artifacts/DASHBOARD_FINAL_OPERATIONAL/forgelocal-dashboard-final-operational.delta.bundle
+## ZIP extraction and manifest
+zip_test_exit=0
+zip_extract_exit=0
+manifest_checksums_exit=0
+manifest_self_reference_count=0
+package_source_head=b56d7f84db9475f980e1c712cdf4dfc371651e41
+package_source_head_match=0
+## Gitleaks extraction
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:03PM[0m [32mINF[0m scan completed in 397ms
+[90m10:03PM[0m [32mINF[0m no leaks found
+gitleaks_extraction_exit=0
+gitleaks_extraction_findings=0
+## forbidden content audit
+forbidden_secret_value_audit=PASS
+sensitive_payload_filename_audit=PASS
+## bundle verify in public clone
+/tmp/verify-dashboard-final-public/public.bundle is okay
+The bundle contains this ref:
+b56d7f84db9475f980e1c712cdf4dfc371651e41 refs/heads/validation/operational-v1
+The bundle requires this ref:
+a0913cfb98bdf3cc8278a2731890a69ac32423cd
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+## expected standalone prerequisite failure
+standalone_fetch_exit=1
+error: Repository lacks these prerequisite commits:
+error: a0913cfb98bdf3cc8278a2731890a69ac32423cd
+standalone_prerequisite_refusal=EXPECTED
+## seeded clone import
+seed_clone_exit=0
+seed_baseline_checkout_exit=0
+seed_bundle_fetch_exit=0
+seed_bundle_ref=b56d7f84db9475f980e1c712cdf4dfc371651e41
+seed_bundle_ref_expected=b56d7f84db9475f980e1c712cdf4dfc371651e41
+seed_bundle_ref_match=0
+seed_source_checkout_exit=0
+git_fsck_full_exit=0
+seed_worktree_clean=0
+## cleanup
+cleanup=PASS
