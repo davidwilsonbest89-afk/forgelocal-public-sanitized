@@ -3,8 +3,10 @@
  * Ce test ne journalise ni le code à usage unique, ni le Bearer court. Les
  * valeurs transitent uniquement en mémoire du processus de test et du navigateur.
  */
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { execFile as execFileCallback } from "node:child_process";
+import { writeFile } from "node:fs/promises";
 import { promisify } from "node:util";
 
 const execFile = promisify(execFileCallback);
@@ -41,7 +43,8 @@ test.describe.configure({ mode: "serial" });
 
 test("T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance", async ({ browser }) => {
   const observed: Array<{ url: string; method: string; authorization: boolean }> = [];
-  const page = await browser.newPage();
+  const context = await browser.newContext();
+  const page = await context.newPage();
   // Le dashboard résout le Core depuis window.location.hostname (localhost), tandis que
   // coreBaseURL pointe vers 127.0.0.1 ; les deux hôtes loopback atteignent le même Core.
   const coreHosts = [coreBaseURL, coreBaseURL.replace("127.0.0.1", "localhost")];
@@ -60,6 +63,13 @@ test("T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance", as
   await expect(page.getByText("Lecture Core sécurisée")).toBeVisible();
   await expect(page.getByText("Lecture Core active — session limitée et non persistée.")).toBeVisible();
   await expect(page.getByText(/affiché.*depuis le Core, en lecture seule/)).toBeVisible();
+  const axeResults = await new AxeBuilder({ page }).analyze();
+  const axeResultsPath = process.env.FORGELOCAL_AXE_RESULTS_PATH;
+  if (axeResultsPath) {
+    await writeFile(axeResultsPath, JSON.stringify(axeResults, null, 2));
+  }
+  const blockingAxeViolations = axeResults.violations.filter((violation) => violation.impact === "serious" || violation.impact === "critical");
+  expect(blockingAxeViolations, "Axe serious/critical violations").toEqual([]);
   await expect.poll(() => observed.length).toBeGreaterThanOrEqual(3);
   expect(observed.some((request) => request.method === "POST" && request.url.endsWith("/api/v1/readonly/session/bootstrap") && !request.authorization)).toBeTruthy();
   expect(observed.filter((request) => request.method === "GET").every((request) => request.authorization)).toBeTruthy();
@@ -79,7 +89,7 @@ test("T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance", as
   expect(browserStorage.cacheNames).toEqual([]);
   process.stdout.write("T05_BROWSER_STORAGE: PASS url=clean localStorage=0 sessionStorage=0 indexedDB=0 caches=0\n");
 
-  const replayPage = await browser.newPage();
+  const replayPage = await context.newPage();
   await connect(replayPage, firstCode);
   await expect(replayPage.getByText("Code refusé, expiré ou déjà utilisé. Générez-en un nouveau localement.")).toBeVisible();
   await expect(replayPage.getByText("Lecture Core sécurisée")).toHaveCount(0);
@@ -87,12 +97,12 @@ test("T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance", as
 
   const expirationCode = await issueCode();
   await page.waitForTimeout(605_000);
-  const expirationPage = await browser.newPage();
+  const expirationPage = await context.newPage();
   await connect(expirationPage, expirationCode);
   await expect(expirationPage.getByText("Code refusé, expiré ou déjà utilisé. Générez-en un nouveau localement.")).toBeVisible();
   process.stdout.write("T05_EXPIRY: PASS status=401 ui=disconnected\n");
 
-  const unauthorizedPage = await browser.newPage();
+  const unauthorizedPage = await context.newPage();
   await unauthorizedPage.route("**/api/v1/readonly/summary", (route) => route.fulfill({
     status: 401,
     contentType: "application/json",
@@ -106,11 +116,12 @@ test("T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance", as
   process.stdout.write("T05_FORCED_401: PASS token=cleared ui=Core_non_connecte\n");
 
   if (hostedDashboardURL) {
-    const hostedPage = await browser.newPage();
+    const hostedPage = await context.newPage();
     await hostedPage.goto(hostedDashboardURL, { waitUntil: "domcontentloaded" });
     await expect(hostedPage.getByText("Cette prévisualisation hébergée ne peut pas recevoir un code local.")).toBeVisible();
     await expect(hostedPage.getByLabel("Code local à usage unique")).toHaveCount(0);
     process.stdout.write("T05_HOSTED_ORIGIN: PASS local_code_input=absent\n");
   }
   process.stdout.write("T05_BOOTSTRAP_LOOPBACK: PASS exchange=accepted reads=redacted\n");
+  await context.close();
 });

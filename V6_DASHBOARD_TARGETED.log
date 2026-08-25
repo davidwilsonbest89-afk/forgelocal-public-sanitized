@@ -1,0 +1,8 @@
+utc=2026-08-25T01:48:04Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo/forge-dashboard
+command=pnpm install --frozen-lockfile
+exit_code=0
+command=pnpm exec tsc --noEmit
+exit_code=0
+command=pnpm run build
+exit_code=0
