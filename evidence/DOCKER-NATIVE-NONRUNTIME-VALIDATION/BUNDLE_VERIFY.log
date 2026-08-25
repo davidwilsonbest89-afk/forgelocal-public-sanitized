@@ -1,0 +1,6 @@
+evidence/docker-native-nonruntime-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+4a252dc00f243758c55cf8e38f155fd271d4a008 refs/heads/audit/t00-t42-docker-native-nonruntime-validation
+The bundle requires this ref:
+1d585abea8f3081d9b7890400551e4318e1a4753 
+The bundle uses this hash algorithm: sha1
