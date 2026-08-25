@@ -1,0 +1,12 @@
+title = "ForgeLocal V6 wrapper redacted-marker verification policy"
+
+[allowlist]
+description = "The exact REDACTED marker emitted by prior Gitleaks reports; only applies to the two report JSON paths in SELF_VALIDATION_V6. This does not allowlist any secret value."
+regexTarget = "match"
+regexes = [
+  '''REDACTED'''
+]
+paths = [
+  '''^SELF_VALIDATION_V6/V6_GITLEAKS_FRESH\\.json$''',
+  '''^SELF_VALIDATION_V6/V6_GITLEAKS_CHECKOUT\\.json$'''
+]

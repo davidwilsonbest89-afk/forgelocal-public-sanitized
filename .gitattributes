@@ -10,3 +10,15 @@ evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip filter=lfs diff
 evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip filter=lfs diff=lfs merge=lfs -text
 evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip filter=lfs diff=lfs merge=lfs -text
 evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle filter=lfs diff=lfs merge=lfs -text
+
+# V5/V6 append-only delivery artifacts and nested historical copies.
+evidence/forgelocal-t00-t42-self-validation-v5-enhanced.zip filter=lfs diff=lfs merge=lfs -text
+evidence/forgelocal-t00-t42-self-validation-v5.delta.bundle filter=lfs diff=lfs merge=lfs -text
+evidence/forgelocal-t00-t42-self-validation-v6-findings-remediation.zip filter=lfs diff=lfs merge=lfs -text
+evidence/forgelocal-t00-t42-self-validation-v6.delta.bundle filter=lfs diff=lfs merge=lfs -text
+evidence/V6_HISTORY/*.zip filter=lfs diff=lfs merge=lfs -text
+evidence/V6_HISTORY/*.bundle filter=lfs diff=lfs merge=lfs -text
+evidence/V6_HISTORY/**/*.zip filter=lfs diff=lfs merge=lfs -text
+evidence/V6_HISTORY/**/*.bundle filter=lfs diff=lfs merge=lfs -text
+evidence/SELF_VALIDATION_V6/*.zip filter=lfs diff=lfs merge=lfs -text
+evidence/SELF_VALIDATION_V6/*.bundle filter=lfs diff=lfs merge=lfs -text

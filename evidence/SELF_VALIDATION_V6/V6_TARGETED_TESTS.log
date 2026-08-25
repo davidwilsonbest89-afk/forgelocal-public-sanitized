@@ -1,0 +1,12 @@
+--- go test cmd/server
+ok  	forgelocal/cmd/server	0.014s
+exit_code=0
+--- go test race cmd/server
+ok  	forgelocal/cmd/server	1.046s
+exit_code=0
+--- go test internal/api
+ok  	forgelocal/internal/api	1.328s
+exit_code=0
+--- go test race internal/api
+ok  	forgelocal/internal/api	2.802s
+exit_code=0

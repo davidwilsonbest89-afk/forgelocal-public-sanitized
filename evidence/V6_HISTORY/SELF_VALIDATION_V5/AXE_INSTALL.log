@@ -1,0 +1,20 @@
+? Verifying lockfile at forge-dashboard/pnpm-lock.yaml against supply-chain policies (696 entries)...
+forge-dashboard                          | Progress: resolved 1, reused 0, downloaded 0, added 0
+forge-dashboard                          | [WARN] deprecated recharts@2.15.4
+forge-dashboard                          | Progress: resolved 57, reused 4, downloaded 25, added 0
+forge-dashboard                          | Progress: resolved 63, reused 5, downloaded 58, added 0
+forge-dashboard                          | Progress: resolved 71, reused 7, downloaded 63, added 0
+forge-dashboard                          | Progress: resolved 135, reused 10, downloaded 95, added 0
+✓ Lockfile at forge-dashboard/pnpm-lock.yaml passes supply-chain policies (696 entries in 5.1s)
+forge-dashboard                          | Progress: resolved 253, reused 21, downloaded 205, added 0
+forge-dashboard                          | Progress: resolved 472, reused 61, downloaded 330, added 0
+[WARN] 1 deprecated subdependencies found: hast@1.0.0
+forge-dashboard                          | +600 ++++++++++++++++++++++++++++++++
+forge-dashboard                          | Progress: resolved 698, reused 161, downloaded 439, added 0
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/ubuntu/.local/share/pnpm/store/v11
+  Virtual store is at:             forge-dashboard/node_modules/.pnpm
+forge-dashboard                          | Progress: resolved 698, reused 161, downloaded 439, added 600, done
+[WARN] Issues with peer dependencies found. Run "pnpm peers check" to list them.
+Done in 8.4s using pnpm v11.20.0
+axe_install_exit_code=0

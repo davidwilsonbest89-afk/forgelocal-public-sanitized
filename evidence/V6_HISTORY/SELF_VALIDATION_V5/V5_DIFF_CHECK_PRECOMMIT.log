@@ -1,0 +1,23 @@
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:2: trailing whitespace.
+[32m+[m[41m               [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:3: trailing whitespace.
+[32m+[m[41m               [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:8: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:9: trailing whitespace.
+[32m+[m[32m  Language   Rules   Files          Origin   Rules[m[41m                                                                      [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:10: trailing whitespace.
+[32m+[m[32m ──────────────────────────        ────────────────[m[41m                                                                     [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:11: trailing whitespace.
+[32m+[m[32m  go             2      87          Custom       4[m[41m                                                                      [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:12: trailing whitespace.
+[32m+[m[32m  ts             2      74[m[41m                                                                                              [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:13: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:14: trailing whitespace.
+[32m+[m[41m                [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:15: trailing whitespace.
+[32m+[m[41m                [m
+evidence/SELF_VALIDATION_V5/SEMGREP_FINAL.log:24: trailing whitespace.
+[32m+[m[32m • Scan skipped:[m[41m [m
+diff_check_exit_code=2

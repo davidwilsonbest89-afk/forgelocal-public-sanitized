@@ -1,0 +1,2 @@
+fetch: Fetching reference refs/heads/audit/t00-t42-self-validation-synthetic-e2e
+fetch_exit_code=0 checkout_exit_code=0 fsck_exit_code=1

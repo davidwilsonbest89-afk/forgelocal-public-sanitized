@@ -1,0 +1,38 @@
+started_utc=2026-08-25T01:49:27Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
+head=d3bb8940a462f66cc816ba0a3eec64468f69a5fc
+core_port=19280 dashboard_port=4173
+policy=127.0.0.1-only synthetic data no-runtime
+token_policy=temporary 0600 never logged never archived
+axe_results=temporary run root copied after test
+command=pnpm install --frozen-lockfile
+go_build_exit_code=0
+core_ready_exit_code=0
+external_fonts_import=temporarily_removed_for_loopback_policy
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮│                                                                              ││   Ignored build scripts: esbuild.                                            ││   Run "pnpm approve-builds" to pick which dependencies should be allowed     ││   to run scripts.                                                            ││                                                                              │╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 810ms using pnpm v10.4.1
+dashboard_install_exit_code=0
+dashboard_ready_exit_code=0
+
+Running 1 test using 1 worker
+
+[1A[2K[1/1] tests/bootstrap-ro.spec.ts:44:1 › T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance
+[1A[2Ktests/bootstrap-ro.spec.ts:44:1 › T05 — bootstrap loopback, rejeu, expiration, 401 et non-persistance
+T05_BROWSER_STORAGE: PASS url=clean localStorage=0 sessionStorage=0 indexedDB=0 caches=0
+
+[1A[2KT05_REPLAY: PASS status=401 ui=disconnected
+
+[1A[2KT05_EXPIRY: PASS status=401 ui=disconnected
+
+[1A[2KT05_FORCED_401: PASS token=cleared ui=Core_non_connecte
+
+[1A[2KT05_BOOTSTRAP_LOOPBACK: PASS exchange=accepted reads=redacted
+
+[1A[2K  Slow test file: tests/bootstrap-ro.spec.ts (10.2m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 passed (10.2m)
+playwright_exit_code=0

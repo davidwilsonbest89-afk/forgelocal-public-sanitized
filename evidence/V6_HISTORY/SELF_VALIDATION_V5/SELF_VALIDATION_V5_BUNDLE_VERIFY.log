@@ -1,0 +1,6 @@
+evidence/forgelocal-t00-t42-self-validation-v5.delta.bundle is okay
+The bundle contains this ref:
+56126208fed288fff216de8945579ee93c385cc3 refs/heads/audit/t00-t42-self-validation-enhanced-v5
+The bundle requires this ref:
+b34fa5c02ff20144abfb5d240db1c67ad1f038f9 
+The bundle uses this hash algorithm: sha1

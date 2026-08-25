@@ -1,0 +1,4 @@
+89 issues:
+* errcheck: 50
+* staticcheck: 22
+* unused: 17

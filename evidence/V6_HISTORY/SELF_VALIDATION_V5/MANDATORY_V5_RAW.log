@@ -1,0 +1,11 @@
+utc=2026-08-25T00:46:35Z
+cwd=/home/ubuntu/forgelocal_self_validation_v5/repo
+head=b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+go=go version go1.25.13 linux/amd64
+golangci=golangci-lint has version 2.13.1 built with go1.27.0 from 6d2288e0 on 2026-08-20T14:28:34Z
+--- golangci-lint
+golangci_exit_code=1
+--- go test shuffle count=3
+go_test_shuffle_exit_code=0
+--- go test shuffle race count=3
+go_test_shuffle_race_exit_code=0

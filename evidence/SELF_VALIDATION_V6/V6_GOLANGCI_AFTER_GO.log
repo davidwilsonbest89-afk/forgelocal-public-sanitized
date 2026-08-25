@@ -1,0 +1,8 @@
+utc=2026-08-25T01:47:07Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
+command=golangci-lint-2.13.1 run --timeout 10m --output.json.path V6_GOLANGCI_AFTER_GO.json
+89 issues:
+* errcheck: 50
+* staticcheck: 22
+* unused: 17
+exit_code=1

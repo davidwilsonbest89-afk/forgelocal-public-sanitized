@@ -1,0 +1,6 @@
+utc=2026-08-25T02:16:39Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
+syft_cyclonedx_exit=0
+syft_spdx_exit=0
+grype_cyclonedx_exit=0
+grype_spdx_exit=0

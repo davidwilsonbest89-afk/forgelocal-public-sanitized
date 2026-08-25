@@ -783,3 +783,18 @@ Reste à faire :
 # HEAD publié v4 — 2026-08-24
 - [x] Enregistrer le HEAD final publié b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5 après synchronisation des preuves.
 - [ ] Obtenir la revue humaine indépendante ; maintenir toutes les gates.
+
+# T00–T42-V6-FINDINGS-REMEDIATION — 2026-08-25
+- [x] Créer un clone neuf de la branche V4 et produire `V6_BASELINE_DISCOVERY_RAW.log` avant correction.
+- [x] Individualiser les 348 findings Gitleaks redacted sur 58 arbres et les 6 findings du checkout frais.
+- [x] Corriger `ineffassign` dans `cmd/server/cli_runtime.go` et `SA1019` ciblé dans `internal/api/sessions.go`, avec tests normaux/race et linter post-correction.
+- [x] Corriger les deux violations Axe, ajouter le test Axe au scénario E2E et obtenir 0 violation après correction.
+- [x] Mettre à jour `golang.org/x/mod` au minimum corrigé `v0.40.0`, puis exécuter tidy, verify, race, vet, build, govulncheck et Grype SBOM.
+- [x] Trier individuellement les 18 findings Semgrep et confirmer l’usage réel de `crypto/rand`.
+- [x] Rejouer shuffle normal/race, staticcheck, GolangCI-Lint compatible Go 1.25, OSV, Trivy, SBOM CycloneDX/SPDX et inventaire de licences.
+- [x] Documenter les exceptions résiduelles avec propriétaire, condition de levée et date de revue dans `V6_REMAINING_FINDINGS.md`.
+- [ ] Corriger les diagnostics Staticcheck/GolangCI-Lint historiques restants après attribution et revue des propriétaires.
+- [ ] Réconcilier les 46 résultats OSV de version stdlib/directed-toolchain avec un scanner compatible `go1.25.13`.
+- [ ] Revoir les six misconfigurations Docker et les 741 licences `UNKNOWN` avec les propriétaires images/OSS.
+- [ ] Restaurer les 14 objets LFS historiques nécessaires à un `git lfs fsck` complet.
+- [ ] Obtenir la revue indépendante ; ne lever aucune gate et ne pas déclarer de release.

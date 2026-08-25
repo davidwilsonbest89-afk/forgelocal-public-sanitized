@@ -293,3 +293,10 @@ La branche audit/t00-t42-self-validation-synthetic-e2e est publiée au HEAD 5e17
 ## 2026-08-24 — HEAD publié v4 synchronisé
 
 Le HEAD publié final de la branche audit/t00-t42-self-validation-synthetic-e2e est b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5. Les preuves et hashes sont synchronisés ; le statut de self-validation reste en attente de revue indépendante et aucune release n’est autorisée.
+
+
+## 2026-08-25 — T00–T42 V6 findings remediation
+
+La qualification V6 append-only part du HEAD V5 `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`. Elle corrige les deux findings GolangCI-Lint obligatoires, les violations Axe `color-contrast`/`meta-viewport` et les deux advisories `golang.org/x/mod` avec tests ciblés et commits séparés. Les 18 findings Semgrep sont qualifiés individuellement comme usages `crypto/rand`, et les findings Gitleaks historiques restent redacted et classés sans réécriture d’historique.
+
+Les tests Go shuffle/race, vet, build, govulncheck, Grype sur SBOM CycloneDX/SPDX propres et l’E2E Playwright/Axe loopback passent. Les diagnostics Staticcheck/GolangCI-Lint historiques, les résultats OSV liés à la limite de détection de patch toolchain, les misconfigurations Docker Trivy, les licences inconnues, la limite Gitleaks de plage et les objets LFS historiques indisponibles restent ouverts et documentés. La sortie est `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`; aucune gate n’est levée et aucune release n’est autorisée.

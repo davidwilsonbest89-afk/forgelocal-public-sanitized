@@ -1,0 +1,4 @@
+Scanning dir source
+Unable to parse git ignores: stat source: no such file or directory
+Failed to walk source: lstat source: no such file or directory
+lstat source: no such file or directory

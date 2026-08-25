@@ -1,0 +1,102 @@
++ go.mod go directive
+go 1.25.0
++ go mod download -json golang.org/x/mod@v0.40.0
+{
+	"Path": "golang.org/x/mod",
+	"Version": "v0.40.0",
+	"Info": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/mod/@v/v0.40.0.info",
+	"GoMod": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/mod/@v/v0.40.0.mod",
+	"Zip": "/home/ubuntu/go/pkg/mod/cache/download/golang.org/x/mod/@v/v0.40.0.zip",
+	"Dir": "/home/ubuntu/go/pkg/mod/golang.org/x/mod@v0.40.0",
+	"Sum": "h1:hUv+3cXcdRHz08UmSiOob7sadHig73uo5bkXxQ/tvUs=",
+	"GoModSum": "h1:0/weTWkPWGBikyTWAX3dkjVztMmBA5hM0DH6BElSupE=",
+	"Origin": {
+		"VCS": "git",
+		"URL": "https://go.googlesource.com/mod",
+		"Hash": "d3398d06de5fa5c71083d3d1c26f2cda73508e0f",
+		"Ref": "refs/tags/v0.40.0"
+	}
+}
+exit_code=0
++ go mod edit -json module requirements
+{
+	"Module": {
+		"Path": "forgelocal"
+	},
+	"Go": "1.25.0",
+	"Toolchain": "go1.25.13",
+	"Require": [
+		{
+			"Path": "github.com/go-chi/chi/v5",
+			"Version": "v5.3.1"
+		},
+		{
+			"Path": "github.com/mxschmitt/playwright-go",
+			"Version": "v0.6100.0"
+		},
+		{
+			"Path": "github.com/zalando/go-keyring",
+			"Version": "v0.2.8"
+		},
+		{
+			"Path": "golang.org/x/net",
+			"Version": "v0.58.0"
+		},
+		{
+			"Path": "gopkg.in/yaml.v3",
+			"Version": "v3.0.1"
+		},
+		{
+			"Path": "modernc.org/sqlite",
+			"Version": "v1.56.0"
+		},
+		{
+			"Path": "github.com/danieljoos/wincred",
+			"Version": "v1.2.3",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/deckarep/golang-set/v2",
+			"Version": "v2.8.0",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/dustin/go-humanize",
+			"Version": "v1.0.1",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/go-jose/go-jose/v3",
+			"Version": "v3.0.5",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/go-stack/stack",
+			"Version": "v1.8.1",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/godbus/dbus/v5",
+			"Version": "v5.2.2",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/google/uuid",
+			"Version": "v1.6.0",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/kr/text",
+			"Version": "v0.2.0",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/mattn/go-isatty",
+			"Version": "v0.0.24",
+			"Indirect": true
+		},
+		{
+			"Path": "github.com/ncruces/go-strftime",
+			"Version": "v1.0.0",
+			"Indirect": true
+exit_code=0

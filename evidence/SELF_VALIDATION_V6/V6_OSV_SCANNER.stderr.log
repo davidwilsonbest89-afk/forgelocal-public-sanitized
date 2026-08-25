@@ -1,0 +1,4 @@
+Scanning dir .
+Scanning /home/ubuntu/forgelocal_self_validation_v6/repo/ at commit fc080456711dd7f2266911aaec55041fdb1b424c
+Scanned /home/ubuntu/forgelocal_self_validation_v6/repo/go.mod file and found 24 packages
+Skipping call analysis on Go code since Go is not installed.

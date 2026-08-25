@@ -1,0 +1,8 @@
+utc=2026-08-25T02:11:16Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
+command=grype sbom:V6_SBOM_CYCLONEDX.json -o json
+cyclonedx_exit_code=0
+command=grype sbom:V6_SBOM_SPDX.json -o json
+spdx_exit_code=0
+command=osv-scanner scan source -r .
+osv_exit_code=127

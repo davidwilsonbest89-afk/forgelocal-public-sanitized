@@ -1,0 +1,47 @@
+utc=2026-08-25T02:05:05Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
++ go get golang.org/x/mod@v0.40.0
+exit_code=0
++ go mod tidy
+exit_code=0
++ go mod verify
+all modules verified
+exit_code=0
++ go test -count=1 -race ./...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.043s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.025s
+ok  	forgelocal/internal/backup	2.643s
+ok  	forgelocal/internal/browser	7.741s
+ok  	forgelocal/internal/config	1.011s
+ok  	forgelocal/internal/cookies	1.011s
+ok  	forgelocal/internal/drift	1.010s
+ok  	forgelocal/internal/environment	1.011s
+ok  	forgelocal/internal/fingerprint	1.013s
+ok  	forgelocal/internal/fonts	1.011s
+ok  	forgelocal/internal/geolocation	1.015s
+ok  	forgelocal/internal/groups	1.016s
+ok  	forgelocal/internal/hardware	1.010s
+ok  	forgelocal/internal/history	1.161s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.729s
+ok  	forgelocal/internal/localvault	1.069s
+ok  	forgelocal/internal/mcp	1.034s
+ok  	forgelocal/internal/productschema	1.695s
+ok  	forgelocal/internal/profile	1.097s
+ok  	forgelocal/internal/profilehealth	1.010s
+ok  	forgelocal/internal/profilemigration	2.401s
+ok  	forgelocal/internal/proxies	1.083s
+ok  	forgelocal/internal/proxyprovider	1.012s
+ok  	forgelocal/internal/runtime	1.215s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.011s
+ok  	forgelocal/internal/spike	2.867s
+ok  	forgelocal/internal/templates	1.289s
+ok  	forgelocal/internal/workflow	1.014s
+exit_code=0
++ go vet ./...
+exit_code=0
++ go build ./...
+exit_code=0

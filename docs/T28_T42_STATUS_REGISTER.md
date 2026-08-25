@@ -105,3 +105,12 @@ Un clone neuf de cette branche retourne git fsck --full avec code 0. Le statut e
 ## 2026-08-24 — HEAD publié après synchronisation des preuves
 
 La branche audit/t00-t42-self-validation-synthetic-e2e est maintenant au HEAD b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5. Ce commit synchronise les preuves de bundle final, manifestes et hashes avec le contenu publié. Le wrapper V4 et le bundle delta restent vérifiés par leurs sidecars ; aucun code produit, gate ou statut de release n’a été modifié.
+
+
+## 2026-08-25 — Remédiation des findings réels et qualification V6
+
+La branche dédiée `audit/t00-t42-v6-findings-remediation` part du HEAD V5 `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`. Les deux findings GolangCI-Lint obligatoires ont été corrigés dans un commit séparé, les deux violations Axe ont été corrigées avec un test E2E non-régressif, et `golang.org/x/mod` a été mis à jour de `v0.37.0` à `v0.40.0` pour éliminer les deux advisories High Grype. Les 18 findings Semgrep ont été individualisés et qualifiés comme usages `crypto/rand`. Les 348 findings Gitleaks historiques et les 6 du checkout frais restent redacted, individualisés et classés comme empreinte publique PPA dans six chemins de provenance ; aucune allowlist globale n’est utilisée.
+
+La requalification V6 confirme `go test -shuffle=on -count=3 ./...`, la variante race, `go vet`, `go build`, `govulncheck`, les deux Grype sur SBOM propres et l’E2E Axe loopback à zéro. Restent explicitement ouverts : 34 diagnostics Staticcheck historiques, 89 findings GolangCI-Lint historiques, 46 résultats OSV liés à la lecture `go 1.25.0` de la directive par OSV Scanner v1.9.2 malgré le toolchain effectif `go1.25.13`, six misconfigurations Docker Trivy, 741 licences `UNKNOWN`, la limite Gitleaks `0 commits scanned` sur `--log-opts` et 14 objets LFS historiques indisponibles pour `git lfs fsck`. Ces résultats sont conservés dans `V6_REMAINING_FINDINGS.md` et ne sont pas présentés comme un PASS global.
+
+**Statut exact :** `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`. Les statuts T28, T29, T39, T40, T41 et T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`. Les gates `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false` restent inchangées.

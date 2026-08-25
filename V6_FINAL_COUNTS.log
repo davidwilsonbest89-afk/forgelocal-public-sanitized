@@ -1,0 +1,10 @@
+V6_GOLANGCI_FINAL.json issues 89
+V6_GOLANGCI_AFTER_GO.json issues 89
+V6_SEMGREP_AFTER.json results 18
+V6_GRYPE_CYCLONEDX.json matches 46
+V6_GRYPE_SPDX.json matches 46
+V6_GRYPE_CYCLONEDX_CLEAN.json matches 0
+V6_GRYPE_SPDX_CLEAN.json matches 0
+V6_OSV_SCANNER_FINAL.json osv_vulnerabilities 46 packages 1
+V6_TRIVY_FS_FINAL.json trivy_vulns 0 secrets 0 misconfigs 6
+V6_AXE_RESULTS_AFTER.json violations 0 passes 40 incomplete 2

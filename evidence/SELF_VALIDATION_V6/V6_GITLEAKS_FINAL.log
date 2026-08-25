@@ -1,0 +1,13 @@
+utc=2026-08-25T02:17:47Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
+base=b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+head=fc080456711dd7f2266911aaec55041fdb1b424c
+command= gitleaks detect --source . --log-opts=BASE..HEAD --config .gitleaks.toml
+range_exit_code=0
+[90m2:17AM[0m [32mINF[0m 0 commits scanned.
+[90m2:17AM[0m [32mINF[0m scan completed in 30.7ms
+[90m2:17AM[0m [32mINF[0m no leaks found
+command= gitleaks detect --no-git --source . --config .gitleaks.toml
+checkout_exit_code=0
+[90m2:17AM[0m [32mINF[0m scan completed in 4.31s
+[90m2:17AM[0m [32mINF[0m no leaks found
