@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#141a20" />
     <meta name="description" content="ForgeLocal — poste de contrôle local pour profils navigateur." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23b7f54a'/%3E%3Cpath d='M8 22 16 7l8 15h-5l-3-6-3 6z' fill='%23172018'/%3E%3C/svg%3E" />
     <title>ForgeLocal — Control desk</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script defer src="%VITE_ANALYTICS_ENDPOINT%/umami" data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+    <script type="module">
+      const analyticsEndpoint = import.meta.env.VITE_ANALYTICS_ENDPOINT ?? "";
+      const analyticsWebsiteId = import.meta.env.VITE_ANALYTICS_WEBSITE_ID ?? "";
+      if (/^https?:\/\//.test(analyticsEndpoint) && analyticsWebsiteId && !analyticsWebsiteId.startsWith("%")) {
+        const analytics = document.createElement("script");
+        analytics.defer = true;
+        analytics.src = `${analyticsEndpoint.replace(/\/$/, "")}/umami`;
+        analytics.dataset.websiteId = analyticsWebsiteId;
+        document.head.appendChild(analytics);
+      }
+    </script>
   </body>
 </html>

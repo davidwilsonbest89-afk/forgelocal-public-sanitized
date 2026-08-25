@@ -257,7 +257,13 @@ export default function Home() {
       toast.success("Action appliquée au Core", { description: `Opération ${label} validée par le Core Go local.` });
     } catch (error) {
       const message = String(error);
-      if (message.includes("CORE_ADMIN_UNAUTHORIZED") || message.includes("CORE_ERROR_LOOPBACK")) {
+      if (message.includes("CORE_ADMIN_EXPIRED")) {
+        setCoreWrite(null);
+        toast.error("Le contrôle local a expiré", { description: "Le jeton d’administration a dépassé sa durée de vie ; reliez un nouveau jeton." });
+      } else if (message.includes("CORE_ADMIN_REVOKED")) {
+        setCoreWrite(null);
+        toast.error("Le contrôle local a été révoqué", { description: "Le Core a invalidé ce jeton d’administration." });
+      } else if (message.includes("CORE_ADMIN_UNAUTHORIZED") || message.includes("CORE_ERROR_LOOPBACK")) {
         setCoreWrite(null);
         toast.error("Le contrôle local a été retiré", { description: "Le jeton d’administration n’est plus accepté par le Core." });
       } else if (message.includes("CORE_ERROR_")) {
@@ -313,11 +319,7 @@ export default function Home() {
     <main className="forgelocal-shell">
       <aside className="sidebar" aria-label="Navigation principale">
         <div className="brand-lockup">
-          <span className="brand-stamp" aria-hidden="true"><img
-            className="brand-mark"
-            src="/manus-storage/forgelocal-forge-mark_f55f45ec.png"
-            alt=""
-          /></span>
+          <span className="brand-stamp" aria-hidden="true"><span className="brand-mark brand-mark-fallback">FL</span></span>
           <div>
             <span className="brand-name">ForgeLocal</span>
             <span className="brand-subtitle">Control desk</span>
@@ -501,7 +503,7 @@ export default function Home() {
 
         <div className="detail-list"><div><span>Runtime</span><strong>{selectedProfile.runtime}</strong></div>{selectedProfile.runtime.includes("candidat") && <p className="candidate-note"><LockKeyhole size={12} /> Runtime candidat non lançable avant qualification indépendante.</p>}<div><span>Proxy</span><strong>{selectedProfile.proxy}</strong></div><div><span>Empreinte</span><strong>{selectedProfile.fingerprint}</strong></div><div><span>Chemin</span><strong>non chargé</strong></div></div>
 
-        <section className="vault-card instrument-plate"><span className="plate-code">VLT / SEALED</span><img src="/manus-storage/forgelocal-vault-detail_a69fc61e.jpg" alt="Détail abstrait d’un coffre local" /><div className="vault-overlay" /><div className="vault-copy"><span><LockKeyhole size={14} /> Coffre système</span><strong>Références, jamais secrets.</strong><p>La connexion au coffre sera vérifiée par le Core.</p></div></section>
+        <section className="vault-card instrument-plate"><span className="plate-code">VLT / SEALED</span><div className="vault-art-fallback" aria-hidden="true" /><div className="vault-overlay" /><div className="vault-copy"><span><LockKeyhole size={14} /> Coffre système</span><strong>Références, jamais secrets.</strong><p>La connexion au coffre sera vérifiée par le Core.</p></div></section>
 
         <section className="activity-card instrument-plate"><span className="plate-code">LOG / LOCAL</span><div className="activity-heading"><div><p className="rail-eyebrow">Trace locale</p><h3>Derniers repères</h3></div><Activity size={18} /></div><ol><li><span className="timeline-mark good" /><div><strong>Préimage vérifiée</strong><small>import · 14:22</small></div></li><li><span className="timeline-mark neutral" /><div><strong>Runtime candidat catalogué</strong><small>runtime · 12:10</small></div></li><li><span className="timeline-mark neutral" /><div><strong>Maquette API initialisée</strong><small>ui · maintenant</small></div></li></ol></section>
 

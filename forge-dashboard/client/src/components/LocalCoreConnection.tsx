@@ -69,19 +69,33 @@ export function LocalCoreConnection({ onConnected, onDisconnected, onWriteConnec
     }
     setAdminState("linking");
     try {
-      const probe = await fetch(`${resolveLocalCoreBaseURL()}/api/health`, {
+      const probe = await fetch(`${resolveLocalCoreBaseURL()}/api/profiles?limit=1`, {
         headers: { Authorization: `Bearer ${trimmed}`, "X-Request-ID": `ui-${crypto.randomUUID()}` },
         credentials: "omit",
         cache: "no-store",
       });
       if (probe.status === 401 || probe.status === 403) {
+        let reason = "invalid";
+        try {
+          const payload = await probe.json() as { error?: { reason?: string } };
+          reason = payload.error?.reason ?? reason;
+        } catch {
+          // Keep the generic safe message for non-JSON responses.
+        }
+        const messages: Record<string, string> = {
+          missing: "Jeton d’administration manquant.",
+          malformed: "Format de jeton d’administration incorrect.",
+          invalid: "Jeton d’administration invalide.",
+          expired: "Jeton d’administration expiré. Redémarrez le Core pour obtenir un nouveau cycle.",
+          revoked: "Jeton d’administration révoqué par le Core.",
+        };
         setAdminState("error");
-        setAdminMessage("Jeton refusé par le Core. Vérifiez la valeur exacte de .api-token.");
+        setAdminMessage(messages[reason] ?? "Jeton refusé par le Core.");
         return;
       }
       if (!probe.ok) {
         setAdminState("error");
-        setAdminMessage("Le Core local ne répond pas à ce jeton.");
+        setAdminMessage(`Le Core local a répondu avec HTTP ${probe.status}.`);
         return;
       }
       setAdminToken("");

@@ -102,6 +102,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if err != nil {
 		return nil, err
 	}
+	adminToken, err := newAdminTokenState(cfg.DataDir, token)
+	if err != nil {
+		return nil, err
+	}
 	cfg.APIToken = token
 
 	hcfg := humanize.DefaultConfig()
@@ -109,7 +113,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore, proxyProviderStore: proxyProviderStore, extensionStore: extensionStore}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, adminToken: adminToken, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore, proxyProviderStore: proxyProviderStore, extensionStore: extensionStore}
 	if err := h.recoverPendingProfileHistory(context.Background()); err != nil {
 		return nil, fmt.Errorf("recover pending profile history: %w", err)
 	}
@@ -123,6 +127,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Use(h.authMiddleware)
 		r.Use(h.requireLoopbackMiddleware)
 
+		r.Post("/api/auth/revoke", h.revokeAdminToken)
 		r.Post("/api/profiles", h.createProfile)
 		r.Get("/api/runtimes", h.listRuntimes)
 		r.Get("/api/profiles", h.listProfiles)
@@ -252,6 +257,7 @@ type handler struct {
 	fpPool             *fingerprint.Pool
 	hcfg               humanize.Config
 	token              string
+	adminToken         *adminTokenState
 	backupSvc          *backup.Service
 	readonlyCatalog    backup.ReadOnlyCatalog
 	auditSink          *writeAuditSink
@@ -342,8 +348,8 @@ func (h *handler) getEnvironmentDiagnostic(w http.ResponseWriter, r *http.Reques
 
 func (h *handler) authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !validBearerToken(r.Header.Get("Authorization"), h.token) {
-			writeError(w, http.StatusUnauthorized, "UNAUTHORIZED", "invalid or missing token")
+		if err := h.validateAdminAuthorization(r.Header.Get("Authorization")); err != nil {
+			writeAdminAuthError(w, err)
 			return
 		}
 		next.ServeHTTP(w, r)
@@ -352,8 +358,13 @@ func (h *handler) authMiddleware(next http.Handler) http.Handler {
 
 func (h *handler) readonlyAuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if validBearerToken(r.Header.Get("Authorization"), h.token) || h.readonlySessions.validateToken(bearerToken(r.Header.Get("Authorization"))) {
+		adminErr := h.validateAdminAuthorization(r.Header.Get("Authorization"))
+		if adminErr == nil || h.readonlySessions.validateToken(bearerToken(r.Header.Get("Authorization"))) {
 			next.ServeHTTP(w, r)
+			return
+		}
+		if h.adminToken != nil && h.adminToken.presentedTokenMatches(r.Header.Get("Authorization")) {
+			writeAdminAuthError(w, adminErr)
 			return
 		}
 		writeError(w, http.StatusUnauthorized, "UNAUTHORIZED", "invalid, expired, or missing read-only session")
@@ -813,7 +824,7 @@ func loadOrCreateToken(dataDir string) (string, error) {
 	if envToken := os.Getenv("BROWSEFORGE_TOKEN"); envToken != "" {
 		return envToken, nil
 	}
-	if err := os.MkdirAll(dataDir, 0755); err != nil {
+	if err := os.MkdirAll(dataDir, 0700); err != nil {
 		return "", fmt.Errorf("create token directory: %w", err)
 	}
 	path := dataDir + "/.api-token"

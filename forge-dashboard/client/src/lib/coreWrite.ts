@@ -22,6 +22,7 @@ export type CoreWriteProfile = {
 export type CoreWriteError = {
   code: string;
   message: string;
+  reason?: string;
 };
 
 export type CoreWriteResult<T> = {
@@ -208,6 +209,23 @@ function readCorrelationId(response: Response): string | undefined {
   return response.headers.get(CORRELATION_HEADER) || response.headers.get(CORRELATION_HEADER.replace(/^x-/, "X-")) || undefined;
 }
 
+async function readAdminAuthReason(response: Response): Promise<string | undefined> {
+  try {
+    const payload = await response.clone().json() as { error?: CoreWriteError };
+    return payload.error?.reason;
+  } catch {
+    return undefined;
+  }
+}
+
+function adminAuthError(reason?: string): Error {
+  const normalized = reason?.trim().toLowerCase();
+  if (normalized === "expired" || normalized === "revoked" || normalized === "malformed" || normalized === "missing" || normalized === "invalid") {
+    return new Error(`CORE_ADMIN_${normalized.toUpperCase()}`);
+  }
+  return new Error("CORE_ADMIN_UNAUTHORIZED");
+}
+
 function isLoopback(hostname: string): boolean {
   const normalized = hostname.replace(/^\[|\]$/g, "");
   return normalized === "127.0.0.1" || normalized === "::1" || normalized === "localhost" || normalized === "0.0.0.0";
@@ -224,7 +242,8 @@ async function fetchBlobProjection(url: string, authToken: string, signal?: Abor
     credentials: "omit",
     cache: "no-store",
   });
-  if (response.status === 401 || response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
+  if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
+  if (response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
   if (!response.ok) throw new Error(`CORE_HTTP_${response.status}`);
   const bytes = await response.arrayBuffer();
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -255,7 +274,8 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
       credentials: "omit",
       cache: "no-store",
     }).then(async response => {
-      if (response.status === 401 || response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
+      if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
+      if (response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
       if (!response.ok) throw new Error(`CORE_HTTP_${response.status}`);
       const payload = (await response.json()) as { data?: string };
       const bytes = new TextEncoder().encode(payload.data ?? "");
@@ -282,7 +302,7 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
     });
     const correlationId = readCorrelationId(response);
     if (response.status === 401 || response.status === 403) token = undefined;
-    if (response.status === 401) throw new Error("CORE_ADMIN_UNAUTHORIZED");
+    if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
     if (!response.ok) {
       let detail: CoreWriteError | undefined;
       try {
@@ -354,7 +374,7 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
           cache: "no-store",
         }).then(async response => {
           if (response.status === 401 || response.status === 403) token = undefined;
-          if (response.status === 401) throw new Error("CORE_ADMIN_UNAUTHORIZED");
+          if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
           if (!response.ok) throw new Error(`CORE_HTTP_${response.status}`);
           const payload = (await response.json()) as { runtimes?: CoreRuntimeRecord[] };
           return { data: payload.runtimes ?? [], correlationId: readCorrelationId(response) };
@@ -422,7 +442,8 @@ export function createCoreWriteClient(baseURL: string): CoreWriteClient {
           credentials: "omit",
           cache: "no-store",
         });
-        if (response.status === 401 || response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
+        if (response.status === 401) throw adminAuthError(await readAdminAuthReason(response));
+        if (response.status === 403) throw new Error("CORE_ADMIN_UNAUTHORIZED");
         if (!response.ok) throw new Error(`CORE_HTTP_${response.status}`);
         const bytes = await response.arrayBuffer();
         const digest = await crypto.subtle.digest("SHA-256", bytes);
