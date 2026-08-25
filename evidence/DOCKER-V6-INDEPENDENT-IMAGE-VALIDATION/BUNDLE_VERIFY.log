@@ -1,6 +1,6 @@
 evidence/docker-v6-independent-image-validation-v6.delta.bundle is okay
 The bundle contains this ref:
-1abd2d628b60effd1914febcf90dbd93d9b5d505 refs/heads/audit/t00-t42-docker-v6-independent-image-validation
+8e477450d08d5bdff5f5a4aac2a6a2e613b19487 refs/heads/audit/t00-t42-docker-v6-independent-image-validation
 The bundle requires this ref:
 1d585abea8f3081d9b7890400551e4318e1a4753
 The bundle uses this hash algorithm: sha1

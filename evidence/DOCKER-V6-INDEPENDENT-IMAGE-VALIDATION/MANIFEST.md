@@ -6,6 +6,7 @@ Manifeste non auto-référentiel : les fichiers de contrôle du manifeste et des
 |---|---|
 | `BUNDLE_VERIFY.log` | Docker V6 validation evidence |
 | `CHANGELOG.md` | Docker V6 validation evidence |
+| `DOCKER_V6_FINAL_PUBLIC_VERIFY_RAW.log` | Docker V6 validation evidence |
 | `DOCKER_V6_FRESH_VERIFY_RAW.log` | Docker V6 validation evidence |
 | `DOCKER_V6_STATIC_CHECKS.log` | Docker V6 validation evidence |
 | `REGISTER.md` | Docker V6 validation evidence |
