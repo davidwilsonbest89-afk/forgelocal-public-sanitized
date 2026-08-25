@@ -1,0 +1,90 @@
+utc=2026-08-25T15:26:58Z
+baseline=999374d99b7996504ba91e421850a2fe84afb78d
+head=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+Version: dev
+Git tag: 
+Build date: 
+
+## BASELINE UTC=2026-08-25T15:26:58Z CWD=/home/ubuntu commit=999374d99b7996504ba91e421850a2fe84afb78d
+archive_command=git archive 999374d99b7996504ba91e421850a2fe84afb78d | tar -xf - -C /tmp/t28_r1_gosec/BASELINE
+archive_exit=0
+normalized_paths=./internal/extensions ./internal/api (includes extensions.go and extensions_t28_test.go)
+gosec_command=gosec -fmt json -out /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GOSEC_R1_BASELINE.json ./internal/extensions ./internal/api
+[gosec] 2026/08/25 15:27:00 Including rules: default
+[gosec] 2026/08/25 15:27:00 Excluding rules: default
+[gosec] 2026/08/25 15:27:00 Including analyzers: default
+[gosec] 2026/08/25 15:27:00 Excluding analyzers: default
+[gosec] 2026/08/25 15:27:00 Skipping: . Path doesn't exist.
+[gosec] 2026/08/25 15:27:00 Import directory: /tmp/t28_r1_gosec/BASELINE/internal/api
+[gosec] 2026/08/25 15:27:12 Checking package: api
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/artifacts.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/audit.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/backup.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/backup_v1.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/cookie_fixtures.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/correlation.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/dashboard.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/groups.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/localsession.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/openapi.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/profile_history.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/profiles_bulk.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/profiles_write.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/proxies.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/proxy_providers.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/readonly.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/readonly_session.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/router.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/sessions.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/templates.go
+[gosec] 2026/08/25 15:27:12 Checking file: /tmp/t28_r1_gosec/BASELINE/internal/api/workflow.go
+gosec_exit=1
+
+## HEAD UTC=2026-08-25T15:27:12Z CWD=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled commit=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+archive_command=git archive 8b96981e9ffae245307d2b5cb279d6013c6dc11e | tar -xf - -C /tmp/t28_r1_gosec/HEAD
+archive_exit=0
+normalized_paths=./internal/extensions ./internal/api (includes extensions.go and extensions_t28_test.go)
+gosec_command=gosec -fmt json -out /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GOSEC_R1_HEAD.json ./internal/extensions ./internal/api
+[gosec] 2026/08/25 15:27:14 Including rules: default
+[gosec] 2026/08/25 15:27:14 Excluding rules: default
+[gosec] 2026/08/25 15:27:14 Including analyzers: default
+[gosec] 2026/08/25 15:27:14 Excluding analyzers: default
+[gosec] 2026/08/25 15:27:14 Import directory: /tmp/t28_r1_gosec/HEAD/internal/extensions
+[gosec] 2026/08/25 15:27:14 Import directory: /tmp/t28_r1_gosec/HEAD/internal/api
+[gosec] 2026/08/25 15:27:14 Checking package: extensions
+[gosec] 2026/08/25 15:27:14 Checking file: /tmp/t28_r1_gosec/HEAD/internal/extensions/store.go
+[gosec] 2026/08/25 15:27:15 Checking package: api
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/artifacts.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/audit.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/backup.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/backup_v1.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/cookie_fixtures.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/correlation.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/dashboard.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/extensions.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/groups.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/localsession.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/openapi.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/profile_history.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/profiles_bulk.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/profiles_write.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/proxies.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/proxy_providers.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/readonly.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/readonly_session.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/router.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/sessions.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/templates.go
+[gosec] 2026/08/25 15:27:15 Checking file: /tmp/t28_r1_gosec/HEAD/internal/api/workflow.go
+gosec_exit=1
+## counts and normalized comparison
+baseline_findings=6
+head_findings=6
+new_findings=3
+resolved_findings=3
+NEW ('G104', 'internal/api/router.go', '696', 'Errors unhandled')
+NEW ('G301', 'internal/api/router.go', '816', 'Expect directory permissions to be 0750 or less')
+NEW ('G304', 'internal/api/router.go', '820', 'Potential file inclusion via variable')
+RESOLVED ('G104', 'internal/api/router.go', '680', 'Errors unhandled')
+RESOLVED ('G301', 'internal/api/router.go', '800', 'Expect directory permissions to be 0750 or less')
+RESOLVED ('G304', 'internal/api/router.go', '804', 'Potential file inclusion via variable')

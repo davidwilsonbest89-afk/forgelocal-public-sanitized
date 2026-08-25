@@ -1,0 +1,17 @@
+utc=2026-08-25T15:29:41Z
+cwd=/home/ubuntu
+zip=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/t28-local-extensions-controlled-v1.zip
+zip_sha256=072eb921af83f51a10ba620a8dd8c6c089758ff227bbd1eeabd19ab0f3723b20
+command=unzip -q t28-local-extensions-controlled-v1.zip -d /tmp/t28_r1_zip_extract
+unzip_exit=0
+command=gitleaks detect --source /tmp/t28_r1_zip_extract/T28_LOCAL_EXTENSIONS_CONTROLLED --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:29PM[0m [32mINF[0m scan completed in 465ms
+[90m3:29PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0

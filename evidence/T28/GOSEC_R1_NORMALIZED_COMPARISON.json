@@ -1,0 +1,95 @@
+{
+  "baseline": [
+    {
+      "confidence": "HIGH",
+      "details": "Errors unhandled",
+      "file": "internal/api/dashboard.go",
+      "rule_id": "G104",
+      "severity": "LOW"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Errors unhandled",
+      "file": "internal/api/router.go",
+      "rule_id": "G104",
+      "severity": "LOW"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Expect directory permissions to be 0750 or less",
+      "file": "internal/api/router.go",
+      "rule_id": "G301",
+      "severity": "MEDIUM"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Potential file inclusion via variable",
+      "file": "internal/api/artifacts.go",
+      "rule_id": "G304",
+      "severity": "MEDIUM"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Potential file inclusion via variable",
+      "file": "internal/api/router.go",
+      "rule_id": "G304",
+      "severity": "MEDIUM"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "SSRF via taint analysis",
+      "file": "internal/api/sessions.go",
+      "rule_id": "G704",
+      "severity": "HIGH"
+    }
+  ],
+  "baseline_findings": 6,
+  "head": [
+    {
+      "confidence": "HIGH",
+      "details": "Errors unhandled",
+      "file": "internal/api/dashboard.go",
+      "rule_id": "G104",
+      "severity": "LOW"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Errors unhandled",
+      "file": "internal/api/router.go",
+      "rule_id": "G104",
+      "severity": "LOW"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Expect directory permissions to be 0750 or less",
+      "file": "internal/api/router.go",
+      "rule_id": "G301",
+      "severity": "MEDIUM"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Potential file inclusion via variable",
+      "file": "internal/api/artifacts.go",
+      "rule_id": "G304",
+      "severity": "MEDIUM"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "Potential file inclusion via variable",
+      "file": "internal/api/router.go",
+      "rule_id": "G304",
+      "severity": "MEDIUM"
+    },
+    {
+      "confidence": "HIGH",
+      "details": "SSRF via taint analysis",
+      "file": "internal/api/sessions.go",
+      "rule_id": "G704",
+      "severity": "HIGH"
+    }
+  ],
+  "head_findings": 6,
+  "new_findings": [],
+  "normalization": "relative file path; rule_id, details, confidence, severity; line/column intentionally excluded",
+  "resolved_findings": []
+}

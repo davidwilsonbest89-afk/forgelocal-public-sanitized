@@ -1,0 +1,8 @@
+utc=2026-08-25T15:10:57Z
+cwd_before=/home/ubuntu
+worktree=/tmp/t28_r1_go_head
+head=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+command=go test -count=1 -race ./internal/extensions ./internal/api -run ^TestT28
+ok  	forgelocal/internal/extensions	1.334s
+ok  	forgelocal/internal/api	1.168s
+exit=0

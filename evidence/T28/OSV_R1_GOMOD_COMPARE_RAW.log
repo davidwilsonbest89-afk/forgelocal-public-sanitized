@@ -1,0 +1,16 @@
+utc=2026-08-25T15:20:01Z
+cwd=/home/ubuntu
+baseline_head=999374d99b7996504ba91e421850a2fe84afb78d
+t28_head=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+## version
+osv-scanner version: 1.9.2
+commit: n/a
+built at: n/a
+## baseline
+command=osv-scanner scan --format json --output /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/OSV_R1_BASELINE_GOMOD.json --lockfile /tmp/t28_r1_go_baseline/go.mod
+Scanned /tmp/t28_r1_go_baseline/go.mod file and found 24 packages
+baseline_exit=1
+## HEAD
+command=osv-scanner scan --format json --output /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/OSV_R1_HEAD_GOMOD.json --lockfile /tmp/t28_r1_go_head/go.mod
+Scanned /tmp/t28_r1_go_head/go.mod file and found 24 packages
+head_exit=1

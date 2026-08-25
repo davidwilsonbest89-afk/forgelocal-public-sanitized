@@ -44,7 +44,7 @@ Lorsqu’un blob est copié avant un échec SQLite, il ne doit pas être supprim
 
 ## 7. Preuve de non-exécution
 
-Les packages ne sont jamais extraits intégralement pour exécution. Le package T28 ne doit importer aucun module de lancement navigateur, Camoufox, proxy ou processus externe. Les handlers appellent uniquement le parser, le repository, le Profile Store de vérification et l’audit redacted. Les tests doivent rechercher et instrumenter les frontières de lancement pour démontrer qu’aucun scénario T28 ne les atteint.
+Les packages ne sont jamais extraits intégralement pour exécution. Un éventuel champ `update_url` ou `updateURL` du manifest est ignoré, non suivi et non exécuté ; il ne constitue ni une source ni une instruction. Le package T28 ne doit importer aucun module de lancement navigateur, Camoufox, proxy ou processus externe. Les handlers appellent uniquement le parser, le repository, le Profile Store de vérification et l’audit redacted. Les tests doivent rechercher et instrumenter les frontières de lancement pour démontrer qu’aucun scénario T28 ne les atteint.
 
 ## 8. Critères d’échec
 

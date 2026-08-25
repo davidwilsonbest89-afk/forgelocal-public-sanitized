@@ -1,0 +1,13 @@
+utc=2026-08-25T15:16:26Z
+cwd=/home/ubuntu
+## discovery
+command_v_osv_exit=1
+## version query
+go_list_versions_exit=127
+## attempted install
+command=GOBIN=/home/ubuntu/bin go install github.com/google/osv-scanner/v2/cmd/osv-scanner@v2.5.1
+recorded_result=link mapping output file failed: no space left on device
+go_install_osv_exit=1
+## decision
+OSV_NOT_EXECUTED_TOOL_UNAVAILABLE
+No OSV result is fabricated or treated as PASS.

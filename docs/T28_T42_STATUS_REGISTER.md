@@ -131,3 +131,16 @@ Le verdict strict est `T28_IMPLEMENTED_VERIFIABLE_LOCAL_PENDING_INDEPENDENT_REVI
 T28 reste strictement local-first : import ZIP explicite borné, extraction sans traversal/symlink, objet immuable, permissions 0700/0600, SQLite local, projection redacted, acknowledgement complet des permissions, high-risk explicite, affectation uniquement à un profil existant, update immuable, rollback, revoke/quarantine, purge contrôlée et audit sans package/token/chemin/secret. Aucun runtime d’extension n’est lancé.
 
 Les statuts T29/T39/T40/T41/T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION` / revue indépendante selon son registre antérieur. Les gates permanentes restent inchangées et aucune release n’est autorisée.
+
+
+## 2026-08-25 — T28-EVIDENCE-QUALIFICATION-R1
+
+**Verdict probatoire :** `T28_EVIDENCE_QUALIFICATION_R1_READY_FOR_INDEPENDENT_REVIEW`.
+
+La R1 a vérifié la baseline V6 `t00-t42-v6-local-qualified-2026-08-25` (`999374d99b7996504ba91e421850a2fe84afb78d`), la lignée historique demandée, les tests globaux exacts sur deux worktrees propres baseline/HEAD, les tests T28 ciblés sous race, OSV Scanner v1.9.2, Gitleaks sur huit commits réels et extraction ZIP, ainsi que Gosec baseline/head normalisé (`new_findings=0`, `resolved_findings=0`). Les 46 avis OSV par `go.mod` et côté baseline/head sont conservés sans faux PASS.
+
+Le finding runtime historique `TestNewRegistryLoadsBrowseForgeChromiumFromDefaultConfig` n’a pas été reproduit sur les deux worktrees R1 propres ; aucune allowlist, skip, modification de test ou modification de code n’a été utilisée. Une éventuelle divergence avec des sorties historiques est documentée, et non transformée artificiellement en échec identique.
+
+La valeur exacte maintenue est `camoflox_execution_authorized=false`. Un éventuel `update_url`/`updateURL` du manifest est ignoré, non suivi et non exécuté. T28 ne lance ni navigateur, ni extension, ni proxy, ni processus externe.
+
+**Gates inchangées :** `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`. T29, T39, T40, T41 et T42 restent bloqués et ne sont pas démarrés. T30 conserve son statut antérieur.

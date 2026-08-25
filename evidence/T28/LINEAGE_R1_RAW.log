@@ -1,0 +1,166 @@
+utc=2026-08-25T15:24:53Z
+cwd=/home/ubuntu
+repo=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+## command=git remote -v
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch) [blob:none]
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
+exit=0
+## command=git show-ref
+8b96981e9ffae245307d2b5cb279d6013c6dc11e refs/heads/feature/t28-local-extensions-controlled
+72d54110c89583beacc556bb103f881b667d8137 refs/tags/t00-t27-complete-20260820
+310c10e7541bbec7828226ce1049df56da11ce0b refs/tags/t00-t42-v6-local-qualified-2026-08-25
+exit=0
+## commit=69411e65c880d168832a65fc8475cc97d562a9ad
+hash=69411e65c880d168832a65fc8475cc97d562a9ad
+parent=
+author=davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+date=2026-08-20T19:37:22+00:00
+subject=Archive verified T00-T27 packages with LFS fragments
+show_exit=0
+files:
+files_exit=0
+## commit=999374d99b7996504ba91e421850a2fe84afb78d
+hash=999374d99b7996504ba91e421850a2fe84afb78d
+parent=
+author=davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+date=2026-08-25T02:40:15+00:00
+subject=Record V6 freeze baseline discovery
+show_exit=0
+files:
+files_exit=0
+## commit=4f0f6201e1d8f8da44d82c4245bd9b7dfee44578
+hash=4f0f6201e1d8f8da44d82c4245bd9b7dfee44578
+parent=9a15cc019a37383e8d8d8cf5fecd88f4b040e823
+author=davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+date=2026-08-25T14:47:32+00:00
+subject=Harden T28 extension validation and scans
+show_exit=0
+files:
+M	docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+M	docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md
+A	evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json
+A	evidence/T28/GITLEAKS_DIFF_CORRECTED.json
+A	evidence/T28/GITLEAKS_DIFF_POST.json
+A	evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json
+A	evidence/T28/GITLEAKS_EXTRACTION.json
+A	evidence/T28/GITLEAKS_EXTRACTION_POST.json
+A	evidence/T28/GOSEC_BASELINE.json
+A	evidence/T28/GOSEC_HEAD.json
+A	evidence/T28/GOSEC_HEAD_CORRECTED.json
+A	evidence/T28/GOSEC_T28_API.json
+A	evidence/T28/GOSEC_T28_API_PACKAGE.json
+A	evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json
+A	evidence/T28/GOSEC_T28_API_POST.json
+A	evidence/T28/GOSEC_T28_EXTENSIONS.json
+A	evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json
+A	evidence/T28/GOSEC_T28_EXTENSIONS_POST.json
+A	evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log
+A	evidence/T28/SBOM_HEAD.spdx.json
+A	evidence/T28/SCANS_RAW.log
+M	internal/api/extensions.go
+M	internal/api/extensions_t28_test.go
+M	internal/extensions/store.go
+M	internal/extensions/store_test.go
+files_exit=0
+## commit=a8a014d361c8b364a8baf51b20f0e566231a138a
+hash=a8a014d361c8b364a8baf51b20f0e566231a138a
+parent=df9784ca8c06eddcbcd190163a13729a4be09748
+author=davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+date=2026-08-25T14:55:09+00:00
+subject=Synchronize T28 package decision hashes
+show_exit=0
+files:
+M	T28_FINAL_DECISION.md
+files_exit=0
+## commit=6476a21313f14511b95e4037f782947fc5e96e83
+hash=6476a21313f14511b95e4037f782947fc5e96e83
+parent=a8a014d361c8b364a8baf51b20f0e566231a138a
+author=davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+date=2026-08-25T14:56:10+00:00
+subject=Publish T28 evidence package and final decision
+show_exit=0
+files:
+M	T28_FINAL_DECISION.md
+A	evidence/T28/PACKAGE_HASHES.txt
+A	evidence/T28/t28-local-extensions-controlled-v1.zip
+A	evidence/T28/t28-local-extensions-controlled-v1.zip.portable.sha256
+A	evidence/T28/t28-local-extensions-controlled.delta.bundle
+A	evidence/T28/t28-local-extensions-controlled.delta.bundle.portable.sha256
+files_exit=0
+## commit=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+hash=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+parent=6476a21313f14511b95e4037f782947fc5e96e83
+author=davidwilsonbest89-afk <3.17133902e+08+davidwilsonbest89-afk@users.noreply.github.com>
+date=2026-08-25T15:00:26+00:00
+subject=Record T28 public package verification
+show_exit=0
+files:
+A	evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log
+A	evidence/T28/T28_PUBLIC_VERIFY_RAW.log
+files_exit=0
+## command=git merge-base ancestry
+hist_ancestor_base_exit=1
+base_ancestor_head_exit=0
+## command=git diff qualified implementation to final head
+A	T28_FINAL_DECISION.md
+A	docs/T28_IMPLEMENTATION_HANDOVER.md
+M	docs/T28_T42_STATUS_REGISTER.md
+A	evidence/T28/CHANGELOG.md
+A	evidence/T28/FINAL_VALIDATION_RAW.log
+A	evidence/T28/GITLEAKS_FINAL_DIFF.json
+A	evidence/T28/GITLEAKS_FINAL_EXTRACTION.json
+A	evidence/T28/GITLEAKS_PROTECT_DIFF.json
+A	evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json
+A	evidence/T28/PACKAGE_HASHES.txt
+A	evidence/T28/REGISTER.md
+A	evidence/T28/SBOM_FINAL.spdx.json
+A	evidence/T28/SCAN_DECISION.md
+A	evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log
+A	evidence/T28/T28_PUBLIC_VERIFY_RAW.log
+A	evidence/T28/t28-local-extensions-controlled-v1.zip
+A	evidence/T28/t28-local-extensions-controlled-v1.zip.portable.sha256
+A	evidence/T28/t28-local-extensions-controlled.delta.bundle
+A	evidence/T28/t28-local-extensions-controlled.delta.bundle.portable.sha256
+A	evidence/T28/todo.md
+post_impl_diff_exit=0
+## command=git diff qualified implementation to package content
+A	T28_FINAL_DECISION.md
+A	docs/T28_IMPLEMENTATION_HANDOVER.md
+M	docs/T28_T42_STATUS_REGISTER.md
+A	evidence/T28/CHANGELOG.md
+A	evidence/T28/FINAL_VALIDATION_RAW.log
+A	evidence/T28/GITLEAKS_FINAL_DIFF.json
+A	evidence/T28/GITLEAKS_FINAL_EXTRACTION.json
+A	evidence/T28/GITLEAKS_PROTECT_DIFF.json
+A	evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json
+A	evidence/T28/REGISTER.md
+A	evidence/T28/SBOM_FINAL.spdx.json
+A	evidence/T28/SCAN_DECISION.md
+A	evidence/T28/todo.md
+impl_to_content_diff_exit=0
+## command=git status
+[31m??[m evidence/T28/BASELINE_DISCOVERY_R1_RAW.log
+[31m??[m evidence/T28/GITLEAKS_R1_RANGE_RAW.log
+[31m??[m evidence/T28/GITLEAKS_TREE_1_ff38dc2.json
+[31m??[m evidence/T28/GITLEAKS_TREE_2_9a15cc0.json
+[31m??[m evidence/T28/GITLEAKS_TREE_3_4f0f620.json
+[31m??[m evidence/T28/GITLEAKS_TREE_4_a9c47fd.json
+[31m??[m evidence/T28/GITLEAKS_TREE_5_df9784c.json
+[31m??[m evidence/T28/GITLEAKS_TREE_6_a8a014d.json
+[31m??[m evidence/T28/GITLEAKS_TREE_7_6476a21.json
+[31m??[m evidence/T28/GITLEAKS_TREE_8_8b96981.json
+[31m??[m evidence/T28/GO_TEST_BASELINE_HEAD_COMPARISON_R1.log
+[31m??[m evidence/T28/GO_TEST_BASELINE_R1_RAW.log
+[31m??[m evidence/T28/GO_TEST_HEAD_R1_RAW.log
+[31m??[m evidence/T28/GO_TEST_T28_TARGETED_R1_RAW.log
+[31m??[m evidence/T28/LINEAGE_R1_RAW.log
+[31m??[m evidence/T28/OSV_R1_BASELINE_GOMOD.json
+[31m??[m evidence/T28/OSV_R1_GOMOD_COMPARE_RAW.log
+[31m??[m evidence/T28/OSV_R1_HEAD.json
+[31m??[m evidence/T28/OSV_R1_HEAD_GOMOD.json
+[31m??[m evidence/T28/OSV_R1_HEAD_IDS.txt
+[31m??[m evidence/T28/OSV_R1_HEAD_RAW.log
+[31m??[m evidence/T28/OSV_R1_RAW.log
+status_exit=0
+## command=git fsck --full
+fsck_exit=0

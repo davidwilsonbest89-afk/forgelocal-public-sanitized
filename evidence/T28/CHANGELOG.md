@@ -18,3 +18,15 @@
 ## Non exécuté volontairement
 
 Aucun téléchargement de package d’extension, chargement/exécution, Camoufox, Chromium, proxy/cookie réel, SystemVault natif, migration, production runtime, release, T29, T39, T40, T41 ou T42.
+
+
+## 2026-08-25 — T28-EVIDENCE-QUALIFICATION-R1
+
+1. Baseline R1 créée depuis un clone public sparse neuf ; la première passe CWD incorrecte est conservée, puis la reprise depuis le clone a confirmé tags, objets, lignée après déshallow ciblé et `fsck=0`.
+2. `go test -count=1 -race ./...` exécuté exactement sur deux worktrees propres baseline/HEAD ; les deux runs corrigés ont retourné code 0. Aucun finding runtime historique n’a été reproduit ; aucune allowlist ou modification de test n’a été utilisée.
+3. Tests T28 ciblés sous race exécutés avec code 0.
+4. OSV Scanner v1.9.2 installé explicitement et exécuté réellement sur `go.mod` baseline/head ; 46 identifiants uniques par côté, code 1. Les tentatives v2 incompatibles avec Go 1.25.13 et le code 127 initial sont conservés comme diagnostics, sans faux PASS.
+5. Gitleaks R1 a inspecté 8 commits réels de la plage baseline→HEAD par arbres de chemins modifiés, tous code 0 sans leak. L’extraction ZIP publiée a aussi passé `--no-git --redact`, code 0. L’ancien rapport `0 commits scanned` n’est pas supprimé.
+6. Gosec R1 a trouvé six findings de chaque côté ; la comparaison normalisée par règle/fichier/détail donne `new_findings=0` et `resolved_findings=0`. Aucun finding T28 n’est masqué par allowlist globale.
+7. Documentation corrigée uniquement : `update_url`/`updateURL` explicitement ignoré, non suivi et non exécuté ; gate exact `camoflox_execution_authorized=false` maintenu ; absence de navigateur/extension/proxy/processus externe rappelée.
+8. Verdict probatoire : `T28_EVIDENCE_QUALIFICATION_R1_READY_FOR_INDEPENDENT_REVIEW`.

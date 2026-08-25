@@ -1,0 +1,10 @@
+utc=2026-08-25T15:10:57Z
+baseline_log=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GO_TEST_BASELINE_R1_RAW.log
+head_log=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GO_TEST_HEAD_R1_RAW.log
+## command=grep exact global failure signatures
+baseline signatures:
+baseline_signature_exit=0
+head signatures:
+head_signature_exit=0
+## interpretation
+Both corrected clean-worktree runs returned corrected_exit=0 and no FAIL signatures; the previously reported runtime failure was not reproduced in this R1 environment.

@@ -7,7 +7,7 @@
 
 T28 gère l’import explicite, l’inventaire, l’approbation, l’affectation, la mise à jour, le rollback, la révocation/quarantaine et la purge contrôlée de packages d’extension conservés localement. Une affectation `ready` signifie uniquement qu’une relation de configuration est validée ; elle ne déclenche aucun navigateur, proxy, processus enfant, moteur d’extension ou appel réseau.
 
-Les formats acceptés sont exclusivement des archives ZIP locales contenant un fichier `manifest.json` à la racine. Les CRX, répertoires décompressés, URLs, téléchargements de store, scripts d’auto-update et packages fournis par Internet sont refusés hors périmètre.
+Les formats acceptés sont exclusivement des archives ZIP locales contenant un fichier `manifest.json` à la racine. Les CRX, répertoires décompressés, URLs, téléchargements de store, scripts d’auto-update et packages fournis par Internet sont refusés hors périmètre. Si le manifest contient `update_url` ou `updateURL`, le champ est seulement ignoré comme donnée non opérante : T28 ne le suit pas, ne l’utilise pas pour résoudre une source, ne l’envoie pas et ne l’exécute pas.
 
 ## 2. Identités canoniques
 
@@ -76,7 +76,7 @@ Les routes sont loopback-only, authentifiées par le mécanisme existant du Core
 | `POST` | `/api/v1/extensions/{versionID}/revoke` | révocation/quarantaine et désaffectation |
 | `DELETE` | `/api/v1/extensions/{versionID}` | purge explicite si autorisée |
 
-Les OpenAPI et handlers ne documentent ni bytes de package ni chemin utilisateur complet. Aucune route T28 ne doit appeler un lanceur navigateur, Chromium, Camoufox, proxy, store d’extensions ou processus externe.
+Les OpenAPI et handlers ne documentent ni bytes de package ni chemin utilisateur complet. Aucune route T28 ne doit appeler un lanceur navigateur, Chromium, Camoufox, proxy, store d’extensions ou processus externe. L’import reste une lecture locale de métadonnées contrôlées : il ne télécharge rien, n’exécute aucun package et ne démarre aucun runtime.
 
 ## 8. Audit et redaction
 

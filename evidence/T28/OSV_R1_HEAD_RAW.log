@@ -1,0 +1,31 @@
+utc=2026-08-25T15:18:57Z
+cwd=/home/ubuntu
+head=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+version:
+osv-scanner version: 1.9.2
+commit: n/a
+built at: n/a
+command=osv-scanner scan -r /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled --format json --output /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/OSV_R1_HEAD.json
+Scanning dir /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+Scanning /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/ at commit 8b96981e9ffae245307d2b5cb279d6013c6dc11e
+Scanned /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/SBOM_FINAL.spdx.json as SPDX SBOM and found 43 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/SBOM_HEAD.spdx.json as SPDX SBOM and found 43 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/go.mod file and found 24 packages
+Scanning dir --format
+Unable to parse git ignores: stat --format: no such file or directory
+Failed to walk --format: lstat --format: no such file or directory
+lstat --format: no such file or directory
+exit=127
+
+## CORRECTED UTC=2026-08-25T15:19:11Z CWD=/home/ubuntu HEAD=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+version:
+osv-scanner version: 1.9.2
+commit: n/a
+built at: n/a
+command=osv-scanner scan --format json --output evidence/T28/OSV_R1_HEAD.json --recursive /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+Scanning dir /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+Scanning /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/ at commit 8b96981e9ffae245307d2b5cb279d6013c6dc11e
+Scanned /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/SBOM_FINAL.spdx.json as SPDX SBOM and found 43 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/SBOM_HEAD.spdx.json as SPDX SBOM and found 43 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/go.mod file and found 24 packages
+corrected_exit=1

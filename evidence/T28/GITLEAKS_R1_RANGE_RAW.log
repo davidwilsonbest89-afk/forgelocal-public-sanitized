@@ -1,0 +1,205 @@
+range_base=999374d99b7996504ba91e421850a2fe84afb78d
+range_head=8b96981e9ffae245307d2b5cb279d6013c6dc11e
+
+## UTC=2026-08-25T15:24:05Z CWD=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled COMMAND=git rev-list --count 999374d99b7996504ba91e421850a2fe84afb78d..8b96981e9ffae245307d2b5cb279d6013c6dc11e
+8
+exit=0
+
+## UTC=2026-08-25T15:24:05Z CWD=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled COMMAND=git rev-list --reverse 999374d99b7996504ba91e421850a2fe84afb78d..8b96981e9ffae245307d2b5cb279d6013c6dc11e
+ff38dc21403d6326383751b0c658dd0e83f0e38f
+9a15cc019a37383e8d8d8cf5fecd88f4b040e823
+4f0f6201e1d8f8da44d82c4245bd9b7dfee44578
+a9c47fd422d472c4a44d2703d844c25c27e766d9
+df9784ca8c06eddcbcd190163a13729a4be09748
+a8a014d361c8b364a8baf51b20f0e566231a138a
+6476a21313f14511b95e4037f782947fc5e96e83
+8b96981e9ffae245307d2b5cb279d6013c6dc11e
+exit=0
+
+## TREE 1 UTC=2026-08-25T15:24:05Z commit=ff38dc21403d6326383751b0c658dd0e83f0e38f parent=999374d99b7996504ba91e421850a2fe84afb78d subject=Define T28 local extensions contract and threat model
+changed_files:
+A	docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+A	docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md
+A	docs/T28_EXTENSIONS_THREAT_MODEL.md
+A	evidence/T28/BASELINE_DISCOVERY_RAW.log
+archive_command=git archive ff38dc21403d6326383751b0c658dd0e83f0e38f -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/1-ff38dc2
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/1-ff38dc2 --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_1_ff38dc2.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 41.8ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 2 UTC=2026-08-25T15:24:05Z commit=9a15cc019a37383e8d8d8cf5fecd88f4b040e823 parent=ff38dc21403d6326383751b0c658dd0e83f0e38f subject=Implement T28 controlled local extension repository and API
+changed_files:
+A	evidence/T28/GO_GLOBAL_VALIDATION_RAW.log
+A	internal/api/extensions.go
+A	internal/api/extensions_t28_test.go
+M	internal/api/openapi.go
+M	internal/api/router.go
+A	internal/extensions/store.go
+A	internal/extensions/store_test.go
+archive_command=git archive 9a15cc019a37383e8d8d8cf5fecd88f4b040e823 -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/2-9a15cc0
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/2-9a15cc0 --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_2_9a15cc0.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 12.4ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 3 UTC=2026-08-25T15:24:05Z commit=4f0f6201e1d8f8da44d82c4245bd9b7dfee44578 parent=9a15cc019a37383e8d8d8cf5fecd88f4b040e823 subject=Harden T28 extension validation and scans
+changed_files:
+M	docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+M	docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md
+A	evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json
+A	evidence/T28/GITLEAKS_DIFF_CORRECTED.json
+A	evidence/T28/GITLEAKS_DIFF_POST.json
+A	evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json
+A	evidence/T28/GITLEAKS_EXTRACTION.json
+A	evidence/T28/GITLEAKS_EXTRACTION_POST.json
+A	evidence/T28/GOSEC_BASELINE.json
+A	evidence/T28/GOSEC_HEAD.json
+A	evidence/T28/GOSEC_HEAD_CORRECTED.json
+A	evidence/T28/GOSEC_T28_API.json
+A	evidence/T28/GOSEC_T28_API_PACKAGE.json
+A	evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json
+A	evidence/T28/GOSEC_T28_API_POST.json
+A	evidence/T28/GOSEC_T28_EXTENSIONS.json
+A	evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json
+A	evidence/T28/GOSEC_T28_EXTENSIONS_POST.json
+A	evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log
+A	evidence/T28/SBOM_HEAD.spdx.json
+A	evidence/T28/SCANS_RAW.log
+M	internal/api/extensions.go
+M	internal/api/extensions_t28_test.go
+M	internal/extensions/store.go
+M	internal/extensions/store_test.go
+archive_command=git archive 4f0f6201e1d8f8da44d82c4245bd9b7dfee44578 -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/3-4f0f620
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/3-4f0f620 --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_3_4f0f620.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 484ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 4 UTC=2026-08-25T15:24:05Z commit=a9c47fd422d472c4a44d2703d844c25c27e766d9 parent=4f0f6201e1d8f8da44d82c4245bd9b7dfee44578 subject=Document T28 validation handover and scan decision
+changed_files:
+A	docs/T28_IMPLEMENTATION_HANDOVER.md
+M	docs/T28_T42_STATUS_REGISTER.md
+A	evidence/T28/CHANGELOG.md
+A	evidence/T28/FINAL_VALIDATION_RAW.log
+A	evidence/T28/GITLEAKS_FINAL_DIFF.json
+A	evidence/T28/GITLEAKS_FINAL_EXTRACTION.json
+A	evidence/T28/GITLEAKS_PROTECT_DIFF.json
+A	evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json
+A	evidence/T28/REGISTER.md
+A	evidence/T28/SBOM_FINAL.spdx.json
+A	evidence/T28/SCAN_DECISION.md
+A	evidence/T28/todo.md
+archive_command=git archive a9c47fd422d472c4a44d2703d844c25c27e766d9 -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/4-a9c47fd
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/4-a9c47fd --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_4_a9c47fd.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 17.7ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 5 UTC=2026-08-25T15:24:05Z commit=df9784ca8c06eddcbcd190163a13729a4be09748 parent=a9c47fd422d472c4a44d2703d844c25c27e766d9 subject=Add T28 final local decision report
+changed_files:
+A	T28_FINAL_DECISION.md
+archive_command=git archive df9784ca8c06eddcbcd190163a13729a4be09748 -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/5-df9784c
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/5-df9784c --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_5_df9784c.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 3.06ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 6 UTC=2026-08-25T15:24:05Z commit=a8a014d361c8b364a8baf51b20f0e566231a138a parent=df9784ca8c06eddcbcd190163a13729a4be09748 subject=Synchronize T28 package decision hashes
+changed_files:
+M	T28_FINAL_DECISION.md
+archive_command=git archive a8a014d361c8b364a8baf51b20f0e566231a138a -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/6-a8a014d
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/6-a8a014d --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_6_a8a014d.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 3.95ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 7 UTC=2026-08-25T15:24:05Z commit=6476a21313f14511b95e4037f782947fc5e96e83 parent=a8a014d361c8b364a8baf51b20f0e566231a138a subject=Publish T28 evidence package and final decision
+changed_files:
+M	T28_FINAL_DECISION.md
+A	evidence/T28/PACKAGE_HASHES.txt
+A	evidence/T28/t28-local-extensions-controlled-v1.zip
+A	evidence/T28/t28-local-extensions-controlled-v1.zip.portable.sha256
+A	evidence/T28/t28-local-extensions-controlled.delta.bundle
+A	evidence/T28/t28-local-extensions-controlled.delta.bundle.portable.sha256
+archive_command=git archive 6476a21313f14511b95e4037f782947fc5e96e83 -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/7-6476a21
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/7-6476a21 --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_7_6476a21.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 39.1ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+
+## TREE 8 UTC=2026-08-25T15:24:06Z commit=8b96981e9ffae245307d2b5cb279d6013c6dc11e parent=6476a21313f14511b95e4037f782947fc5e96e83 subject=Record T28 public package verification
+changed_files:
+A	evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log
+A	evidence/T28/T28_PUBLIC_VERIFY_RAW.log
+archive_command=git archive 8b96981e9ffae245307d2b5cb279d6013c6dc11e -- changed paths only | tar -xf - -C /tmp/t28_r1_gitleaks_range/8-8b96981
+archive_exit=0
+gitleaks_command=gitleaks detect --source /tmp/t28_r1_gitleaks_range/8-8b96981 --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_TREE_8_8b96981.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:24PM[0m [32mINF[0m scan completed in 5.8ms
+[90m3:24PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+inspected_commit_count=8
+old_zero_commit_method_preserved_in_prior_T28_reports=true
