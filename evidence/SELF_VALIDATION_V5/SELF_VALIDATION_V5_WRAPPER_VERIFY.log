@@ -1,4 +1,4 @@
-utc=2026-08-25T01:19:11Z
+utc=2026-08-25T01:27:29Z
 cwd=/home/ubuntu/forgelocal_self_validation_v5/repo/evidence
 wrapper=/home/ubuntu/forgelocal_self_validation_v5/repo/evidence/forgelocal-t00-t42-self-validation-v5-enhanced.zip
 --- unzip test
@@ -178,6 +178,19 @@ Archive:  /home/ubuntu/forgelocal_self_validation_v5/repo/evidence/forgelocal-t0
     testing: analyze_complements_v5.py   OK
     testing: forgelocal_self_validation_v5_explicit_gitleaks.sh   OK
     testing: forgelocal_self_validation_v5_baseline.sh   OK
+    testing: SELF_VALIDATION_V5_WRAPPER_VERIFY.log   OK
+    testing: GITLEAKS_V5_WRAPPER_FRESH_RESCAN.json   OK
+    testing: GITLEAKS_V5_WRAPPER_FRESH_RESCAN.log   OK
+    testing: v3_wrapper_lfs_pull.log   OK
+    testing: verify_wrapper_v5.sh     OK
+    testing: V5_DIFF_CHECK_PRECOMMIT.log   OK
+    testing: SELF_VALIDATION_V5_BUNDLE_VERIFY.log   OK
+    testing: forgelocal-t00-t42-self-validation-v5.delta.bundle   OK
+    testing: forgelocal-t00-t42-self-validation-v5.delta.bundle.portable.sha256   OK
+    testing: SELF_VALIDATION_V5_BUNDLE_BUILD.log   OK
+    testing: V5_DIFF_CHECK_FINAL.log   OK
+    testing: SELF_VALIDATION_V5_BUNDLE_VERIFY_FINAL.log   OK
+    testing: SELF_VALIDATION_MANIFEST.md   OK
 No errors detected in compressed data of /home/ubuntu/forgelocal_self_validation_v5/repo/evidence/forgelocal-t00-t42-self-validation-v5-enhanced.zip.
 unzip_test_exit_code=0
 --- sidecar
@@ -185,6 +198,6 @@ forgelocal-t00-t42-self-validation-v5-enhanced.zip: OK
 sidecar_verify_exit_code=0
 --- fresh extraction
 fresh_extract_exit_code=0
-fresh_file_count=175
+fresh_file_count=188
 gitleaks_wrapper_fresh_rescan_exit_code=0
 wrapper_verify_script_exit_code=0
