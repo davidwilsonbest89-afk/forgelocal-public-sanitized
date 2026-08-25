@@ -1,0 +1,6 @@
+evidence/gitleaks-historical-method-hardening-v6.delta.bundle is okay
+The bundle contains this ref:
+2420232c77acf31787f985cc09e6d9d988ca6d93 refs/heads/audit/t00-t42-gitleaks-historical-method-hardening-v6
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
