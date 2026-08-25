@@ -1,0 +1,36 @@
+utc_start=2026-08-25T23:36:08Z
+command=GIT_LFS_SKIP_SMUDGE=1 gh repo clone --depth 1 --filter=blob:none --branch validation/operational-v1
+Cloning into '/tmp/forgelocal_proxy_fix_public_clone_final_08ef939'...
+Updating files:   0% (2/1785)Updating files:   1% (18/1785)Updating files:   2% (36/1785)Updating files:   3% (54/1785)Updating files:   4% (72/1785)Updating files:   5% (90/1785)Updating files:   6% (108/1785)Updating files:   7% (125/1785)Updating files:   8% (143/1785)Updating files:   9% (161/1785)Updating files:  10% (179/1785)Updating files:  11% (197/1785)Updating files:  12% (215/1785)Updating files:  13% (233/1785)Updating files:  14% (250/1785)Updating files:  15% (268/1785)Updating files:  16% (286/1785)Updating files:  17% (304/1785)Updating files:  18% (322/1785)Updating files:  19% (340/1785)Updating files:  20% (357/1785)Updating files:  20% (360/1785)Updating files:  21% (375/1785)Updating files:  22% (393/1785)Updating files:  23% (411/1785)Updating files:  24% (429/1785)Updating files:  25% (447/1785)Updating files:  26% (465/1785)Updating files:  27% (482/1785)Updating files:  28% (500/1785)Updating files:  29% (518/1785)Updating files:  30% (536/1785)Updating files:  31% (554/1785)Updating files:  32% (572/1785)Updating files:  33% (590/1785)Updating files:  34% (607/1785)Updating files:  35% (625/1785)Updating files:  36% (643/1785)Updating files:  37% (661/1785)Updating files:  38% (679/1785)Updating files:  39% (697/1785)Updating files:  40% (714/1785)Updating files:  41% (732/1785)Updating files:  42% (750/1785)Updating files:  43% (768/1785)Updating files:  44% (786/1785)Updating files:  45% (804/1785)Updating files:  46% (822/1785)Updating files:  47% (839/1785)Updating files:  48% (857/1785)Updating files:  49% (875/1785)Updating files:  50% (893/1785)Updating files:  51% (911/1785)Updating files:  52% (929/1785)Updating files:  53% (947/1785)Updating files:  54% (964/1785)Updating files:  55% (982/1785)Updating files:  56% (1000/1785)Updating files:  57% (1018/1785)Updating files:  58% (1036/1785)Updating files:  59% (1054/1785)Updating files:  60% (1071/1785)Updating files:  61% (1089/1785)Updating files:  62% (1107/1785)Updating files:  63% (1125/1785)Updating files:  64% (1143/1785)Updating files:  65% (1161/1785)Updating files:  66% (1179/1785)Updating files:  67% (1196/1785)Updating files:  68% (1214/1785)Updating files:  69% (1232/1785)Updating files:  70% (1250/1785)Updating files:  71% (1268/1785)Updating files:  72% (1286/1785)Updating files:  73% (1304/1785)Updating files:  74% (1321/1785)Updating files:  75% (1339/1785)Updating files:  76% (1357/1785)Updating files:  77% (1375/1785)Updating files:  78% (1393/1785)Updating files:  79% (1411/1785)Updating files:  80% (1428/1785)Updating files:  81% (1446/1785)Updating files:  82% (1464/1785)Updating files:  83% (1482/1785)Updating files:  84% (1500/1785)Updating files:  85% (1518/1785)Updating files:  86% (1536/1785)Updating files:  87% (1553/1785)Updating files:  88% (1571/1785)Updating files:  89% (1589/1785)Updating files:  90% (1607/1785)Updating files:  90% (1618/1785)Updating files:  91% (1625/1785)Updating files:  92% (1643/1785)Updating files:  93% (1661/1785)Updating files:  94% (1678/1785)Updating files:  95% (1696/1785)Updating files:  96% (1714/1785)Updating files:  97% (1732/1785)Updating files:  98% (1750/1785)Updating files:  99% (1768/1785)Updating files: 100% (1785/1785)Updating files: 100% (1785/1785), done.
+clone_exit=0
+head=08ef9393ded99e2d4e272d08134a820cd27ae418
+remote_head=08ef9393ded99e2d4e272d08134a820cd27ae418
+fsck_exit=0
+09ec3007719966d08c98eb656ef1591b62ad0108ef49bb295c9e738e9e726fd0  artifacts/forgelocal-proxy-session-fix-9031f83.zip
+9e5e51e6da2e7acec22a18dd252696862bed3b93a2bd3f39dda126cf9b7c0501  artifacts/forgelocal-proxy-session-fix-9031f83.tar.gz
+public_unzip_exit=0
+public_untar_exit=0
+./README.md: OK
+./evidence/BASELINE_DISCOVERY_RAW_POSTSTOP.log: OK
+./evidence/CLEANUP_V5_RAW.log: OK
+./evidence/CORE_V5_HTTP_RAW_REDACTED.log: OK
+./evidence/GATES_POST_SMOKE_RAW.log: OK
+./evidence/SMOKE_INTEGRATED_PROXY_FIX_AUTHORITATIVE_RAW.log: OK
+./evidence/SMOKE_INTEGRATED_PROXY_FIX_REPORT.md: OK
+./evidence/STATUS_REGISTER.md: OK
+./source/SOURCE_REFERENCE.txt: OK
+manifest_verify_exit=0 root=/tmp/forgelocal_proxy_fix_public_extract_final_08ef939/zip/forgelocal-proxy-session-fix-9031f83
+./README.md: OK
+./evidence/BASELINE_DISCOVERY_RAW_POSTSTOP.log: OK
+./evidence/CLEANUP_V5_RAW.log: OK
+./evidence/CORE_V5_HTTP_RAW_REDACTED.log: OK
+./evidence/GATES_POST_SMOKE_RAW.log: OK
+./evidence/SMOKE_INTEGRATED_PROXY_FIX_AUTHORITATIVE_RAW.log: OK
+./evidence/SMOKE_INTEGRATED_PROXY_FIX_REPORT.md: OK
+./evidence/STATUS_REGISTER.md: OK
+./source/SOURCE_REFERENCE.txt: OK
+manifest_verify_exit=0 root=/tmp/forgelocal_proxy_fix_public_extract_final_08ef939/tar/forgelocal-proxy-session-fix-9031f83
+report_present_exit=0
+raw_present_exit=0
+fsck_detail=
+utc_end=2026-08-25T23:36:21Z
