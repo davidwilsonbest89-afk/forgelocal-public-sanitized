@@ -1,0 +1,15 @@
+utc=2026-08-25T16:01:31Z
+cwd=/home/ubuntu
+head=b5b4e1be6c82e2e659ba7038ce3f2c36f9f69bd6
+command=gitleaks detect --source worktree --no-git --redact --report-format json --report-path evidence/T28/GITLEAKS_FINAL_CLOSURE.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m4:01PM[0m [32mINF[0m scan completed in 590ms
+[90m4:01PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+report_bytes=3
