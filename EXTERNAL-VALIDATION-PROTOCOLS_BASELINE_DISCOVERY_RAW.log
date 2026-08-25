@@ -1,0 +1,14 @@
+utc=2026-08-25T13:00:00Z
+lot=EXTERNAL-VALIDATION-PROTOCOLS
+branch=audit/t00-t42-external-validation-protocols-v6
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+
+--- scope
+Prepare four executable protocols only: native SystemVault, Camoufox/targeted runtime, test proxy and cookies, and release. Each protocol must define environment, synthetic test data, rollback, redacted logs, success/failure criteria and gate transition.
+
+--- execution lock
+No protocol is executed in this lot. Each requires a separate written authorization naming the protocol, environment, data scope, operator and exact gates that may be considered for review. No gate is lifted by this document.
+
+--- forbidden without authorization
+No native SystemVault, Camoufox, targeted runtime, real proxy, real cookies, user data, migration, production runtime, release, T28, T29, T39, T40, T41 or T42 implementation.
