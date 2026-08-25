@@ -1,0 +1,79 @@
+utc=2026-08-25T20:36:46Z
+cwd=/home/ubuntu
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=validation/operational-v1
+expected_public_head=8006bc2236ca4a2b49f999f7ab612b89b76445a8
+package_source_head=7eb13187d79645c58cdf86d6d969db4d21d79457
+bundle_base=84f7bd2bd7c956a4766d1bd1ff2808c59f9c6eed
+## public HEAD
+public_head=8006bc2236ca4a2b49f999f7ab612b89b76445a8
+public_head_match=0
+public_api_exit=0
+## fresh public clone
+Cloning into '/tmp/verify-opv1-r2-public/public-clone'...
+clone_exit=0
+branch_fetch_exit=0
+HEAD is now at 8006bc2 Publish OPV1 R2 package artifacts
+checkout_public_exit=0
+public_clone_head=8006bc2236ca4a2b49f999f7ab612b89b76445a8
+public_clone_head_match=0
+## distributed and neutral sidecars
+forgelocal-operational-validation-v1-r2.zip: OK
+forgelocal-operational-validation-v1-r2.delta.bundle: OK
+distributed_zip_sidecar_exit=0
+distributed_bundle_sidecar_exit=0
+forgelocal-operational-validation-v1-r2.zip: OK
+forgelocal-operational-validation-v1-r2.delta.bundle: OK
+neutral_zip_sidecar_exit=0
+neutral_bundle_sidecar_exit=0
+8ec9106a3e1140cc59bbfd1f2b61c71cfdf5ab7c56fb98ec619fc9e7e2b3d451  /tmp/verify-opv1-r2-public/public-clone/artifacts/OPERATIONAL_VALIDATION_V1_R2/forgelocal-operational-validation-v1-r2.zip
+c167a6987a1df05446f61aa4afd60d85d96d0e9631b48879412f646cdf5bcf6a  /tmp/verify-opv1-r2-public/public-clone/artifacts/OPERATIONAL_VALIDATION_V1_R2/forgelocal-operational-validation-v1-r2.delta.bundle
+## ZIP extraction and manifest
+zip_test_exit=0
+zip_extract_exit=0
+manifest_checksums_exit=0
+manifest_self_reference_count=0
+package_source_head=7eb13187d79645c58cdf86d6d969db4d21d79457
+package_source_head_match=0
+## Gitleaks extraction
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m8:37PM[0m [32mINF[0m scan completed in 388ms
+[90m8:37PM[0m [32mINF[0m no leaks found
+gitleaks_extraction_exit=0
+gitleaks_extraction_findings=0
+## forbidden content audit
+forbidden_secret_value_audit=PASS
+sensitive_payload_filename_audit=PASS
+## bundle verify in public clone
+/tmp/verify-opv1-r2-public/public.bundle is okay
+The bundle contains this ref:
+7eb13187d79645c58cdf86d6d969db4d21d79457 refs/heads/validation/operational-v1
+The bundle requires this ref:
+84f7bd2bd7c956a4766d1bd1ff2808c59f9c6eed
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+## expected standalone prerequisite failure
+standalone_fetch_exit=1
+error: Repository lacks these prerequisite commits:
+error: 84f7bd2bd7c956a4766d1bd1ff2808c59f9c6eed
+standalone_prerequisite_refusal=EXPECTED
+## seeded clone import
+seed_clone_exit=0
+seed_baseline_checkout_exit=0
+seed_bundle_fetch_exit=0
+From /tmp/verify-opv1-r2-public/public.bundle
+ * [new branch]      validation/operational-v1 -> bundle/validation/operational-v1
+7eb13187d79645c58cdf86d6d969db4d21d79457
+seed_bundle_ref_expected=7eb13187d79645c58cdf86d6d969db4d21d79457
+seed_bundle_ref_match=0
+seed_source_checkout_exit=0
+git_fsck_full_exit=0
+seed_worktree_clean=0
+## cleanup
+cleanup=PASS
