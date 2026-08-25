@@ -1,0 +1,31 @@
+utc=2026-08-25T16:07:54Z
+cwd=/home/ubuntu
+head=e806d4e915d1b702362389411d8ac823551df044
+## corrective diff scan
+command=gitleaks detect --source worktree --log-opts="f0701da^..e806d4e" --redact --report-format json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m4:07PM[0m [32mINF[0m 0 commits scanned.
+[90m4:07PM[0m [32mINF[0m scan completed in 15.4ms
+[90m4:07PM[0m [32mINF[0m no leaks found
+diff_scan_exit=0
+## final ZIP extraction scan
+command=unzip -q t28-postfix-evidence-v1.zip -d /tmp/t28_postfix_gitleaks/extract && gitleaks detect --source extraction --no-git --redact --report-format json
+unzip_extract_exit=0
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m4:07PM[0m [32mINF[0m scan completed in 490ms
+[90m4:07PM[0m [32mINF[0m no leaks found
+extraction_scan_exit=0
+diff_report_bytes=3
+extraction_report_bytes=3

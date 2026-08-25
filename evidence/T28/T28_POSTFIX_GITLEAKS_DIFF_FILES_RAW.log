@@ -1,0 +1,65 @@
+utc=2026-08-25T16:08:15Z
+cwd=/home/ubuntu
+head=e806d4e915d1b702362389411d8ac823551df044
+range=f0701da849ce0f9073397bb42ded5e2e76b29ef1^..e806d4e915d1b702362389411d8ac823551df044
+## changed file list
+A	T28_FINAL_CLOSURE.md
+M	docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+M	docs/T28_T42_STATUS_REGISTER.md
+M	evidence/T28/CHANGELOG.md
+A	evidence/T28/GITLEAKS_FINAL_CLOSURE.json
+A	evidence/T28/GOSEC_FINAL_CLOSURE_T28.json
+A	evidence/T28/T28_FINAL_CLOSURE_DISCOVERY_RAW.log
+A	evidence/T28/T28_FINAL_CLOSURE_FIXED_VALIDATION_RAW.log
+A	evidence/T28/T28_FINAL_CLOSURE_GITLEAKS_RAW.log
+A	evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log
+A	evidence/T28/T28_FINAL_CLOSURE_TARGETED_TESTS_RAW.log
+M	evidence/T28/todo.md
+M	internal/api/extensions.go
+M	internal/extensions/store.go
+M	internal/extensions/store_test.go
+diff_file_list_exit=0
+extracted=T28_FINAL_CLOSURE.md exit=0
+extracted=docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md exit=0
+extracted=docs/T28_T42_STATUS_REGISTER.md exit=0
+extracted=evidence/T28/CHANGELOG.md exit=0
+extracted=evidence/T28/GITLEAKS_FINAL_CLOSURE.json exit=0
+extracted=evidence/T28/GOSEC_FINAL_CLOSURE_T28.json exit=0
+extracted=evidence/T28/T28_FINAL_CLOSURE_DISCOVERY_RAW.log exit=0
+extracted=evidence/T28/T28_FINAL_CLOSURE_FIXED_VALIDATION_RAW.log exit=0
+extracted=evidence/T28/T28_FINAL_CLOSURE_GITLEAKS_RAW.log exit=0
+extracted=evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log exit=0
+extracted=evidence/T28/T28_FINAL_CLOSURE_TARGETED_TESTS_RAW.log exit=0
+extracted=evidence/T28/todo.md exit=0
+extracted=internal/api/extensions.go exit=0
+extracted=internal/extensions/store.go exit=0
+extracted=internal/extensions/store_test.go exit=0
+## nonempty changed-file tree scan
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/T28_FINAL_CLOSURE.md
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/docs/T28_T42_STATUS_REGISTER.md
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/CHANGELOG.md
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/GITLEAKS_FINAL_CLOSURE.json
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/GOSEC_FINAL_CLOSURE_T28.json
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/T28_FINAL_CLOSURE_DISCOVERY_RAW.log
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/T28_FINAL_CLOSURE_FIXED_VALIDATION_RAW.log
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/T28_FINAL_CLOSURE_GITLEAKS_RAW.log
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/T28_FINAL_CLOSURE_TARGETED_TESTS_RAW.log
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/evidence/T28/todo.md
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/internal/api/extensions.go
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/internal/extensions/store.go
+/tmp/t28_postfix_gitleaks_diff_files/changed-files/internal/extensions/store_test.go
+changed_file_count=15
+command=gitleaks detect --source changed-file-tree --no-git --redact --report-format json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m4:08PM[0m [32mINF[0m scan completed in 27.8ms
+[90m4:08PM[0m [32mINF[0m no leaks found
+changed_file_scan_exit=0
+report_bytes=3
