@@ -1,0 +1,6 @@
+evidence/license-compliance-triage-v6.delta.bundle is okay
+The bundle contains this ref:
+eb6ecb8eef8db1eab37de48d136f4ff947e79bda refs/heads/audit/t00-t42-license-compliance-triage-v6
+The bundle requires this ref:
+fb9d20c7ffb241104eede582eee9cbd7a3bbc267 
+The bundle uses this hash algorithm: sha1
