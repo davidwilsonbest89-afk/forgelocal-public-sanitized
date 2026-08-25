@@ -1,0 +1,274 @@
+utc=2026-08-25T16:10:02Z
+cwd=/home/ubuntu
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=feature/t28-local-extensions-controlled
+## remote HEAD discovery
+remote_head=dff092cd5eeb27ddff6e331c22594a03c5b4e1a7
+remote_head_exit=0
+## fresh clone and unshallow commit graph
+Cloning into '/tmp/t28_postfix_public_verify/clone'...
+clone_exit=0
+From https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized
+ * branch            feature/t28-local-extensions-controlled -> FETCH_HEAD
+unshallow_exit=0
+HEAD is now at dff092c Publish post-corrective T28 evidence package
+checkout_exit=0
+sparse_set_exit=0
+clone_head=dff092cd5eeb27ddff6e331c22594a03c5b4e1a7
+## ZIP checksums and extraction
+4efda01771ed7af135769dfa68caa8bdc6f226ca7cad5bf894dcfce05f5c8923  t28-postfix-evidence-v1.zip
+zip_direct_exit=0
+zip_expected_exit=0
+t28-postfix-evidence-v1.zip: OK
+zip_sidecar_fresh_exit=0
+t28-postfix-evidence-v1.zip: OK
+zip_sidecar_neutral_exit=0
+Archive:  t28-postfix-evidence-v1.zip
+    testing: T28_POSTFIX_EVIDENCE/    OK
+    testing: T28_POSTFIX_EVIDENCE/T28_EVIDENCE_QUALIFICATION_R1.md   OK
+    testing: T28_POSTFIX_EVIDENCE/T28_FINAL_CLOSURE.md   OK
+    testing: T28_POSTFIX_EVIDENCE/T28_FINAL_INDEPENDENT_EVIDENCE_REVIEW.md   OK
+    testing: T28_POSTFIX_EVIDENCE/docs/   OK
+    testing: T28_POSTFIX_EVIDENCE/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md   OK
+    testing: T28_POSTFIX_EVIDENCE/docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md   OK
+    testing: T28_POSTFIX_EVIDENCE/docs/T28_EXTENSIONS_THREAT_MODEL.md   OK
+    testing: T28_POSTFIX_EVIDENCE/docs/T28_IMPLEMENTATION_HANDOVER.md   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/BASELINE_DISCOVERY_R1_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/BASELINE_DISCOVERY_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/CHANGELOG.md   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/FINAL_VALIDATION_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_DIFF_CORRECTED.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_DIFF_POST.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_EXTRACTION.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_EXTRACTION_POST.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_FINAL_CLOSURE.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_FINAL_DIFF.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_FINAL_EXTRACTION.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_POSTFIX_DIFF.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_POSTFIX_DIFF_FILES.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_POSTFIX_EXTRACTION.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_PROTECT_DIFF.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_R1_FINAL_PACKAGE.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_R1_FINAL_PACKAGE_CURRENT.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_R1_RANGE_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_1_ff38dc2.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_2_9a15cc0.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_3_4f0f620.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_4_a9c47fd.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_5_df9784c.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_6_a8a014d.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_7_6476a21.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GITLEAKS_TREE_8_8b96981.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_BASELINE.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_FINAL_CLOSURE_T28.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_HEAD.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_HEAD_CORRECTED.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_R1_BASELINE.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_R1_HEAD.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_API.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_API_PACKAGE.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_API_POST.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_EXTENSIONS.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GOSEC_T28_EXTENSIONS_POST.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GO_GLOBAL_VALIDATION_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GO_TEST_BASELINE_HEAD_COMPARISON_R1.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GO_TEST_BASELINE_R1_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GO_TEST_HEAD_R1_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/GO_TEST_T28_TARGETED_R1_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/LINEAGE_R1.md   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/LINEAGE_R1_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_BASELINE_GOMOD.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_GOMOD_COMPARE_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_HEAD.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_HEAD_GOMOD.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_HEAD_IDS.txt   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_HEAD_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/OSV_R1_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/REGISTER.md   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/SBOM_FINAL.spdx.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/SBOM_HEAD.spdx.json   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/SCANS_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/SCAN_DECISION.md   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_CLOSURE_DISCOVERY_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_CLOSURE_FIXED_VALIDATION_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_CLOSURE_GITLEAKS_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_CLOSURE_TARGETED_TESTS_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_INDEPENDENT_ARTIFACTS_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_INDEPENDENT_CODE_REPLAY_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_INDEPENDENT_LINEAGE_INITIAL_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_FINAL_INDEPENDENT_LINEAGE_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_POSTFIX_GITLEAKS_DIFF_FILES_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_POSTFIX_GITLEAKS_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_POSTFIX_REQUALIFICATION_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_PUBLIC_VERIFY_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_R1_FINAL_PACKAGE_VERIFY_CURRENT_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_R1_FINAL_PACKAGE_VERIFY_INITIAL_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/T28_R1_FINAL_PACKAGE_VERIFY_RAW.log   OK
+    testing: T28_POSTFIX_EVIDENCE/evidence/T28/todo.md   OK
+    testing: T28_POSTFIX_EVIDENCE/internal/   OK
+    testing: T28_POSTFIX_EVIDENCE/internal/api/   OK
+    testing: T28_POSTFIX_EVIDENCE/internal/api/extensions.go   OK
+    testing: T28_POSTFIX_EVIDENCE/internal/extensions/   OK
+    testing: T28_POSTFIX_EVIDENCE/internal/extensions/store.go   OK
+    testing: T28_POSTFIX_EVIDENCE/internal/extensions/store_test.go   OK
+    testing: T28_POSTFIX_EVIDENCE/PACKAGE_METADATA.txt   OK
+    testing: T28_POSTFIX_EVIDENCE/MANIFEST.md   OK
+No errors detected in compressed data of t28-postfix-evidence-v1.zip.
+unzip_test_exit=0
+unzip_extract_exit=0
+manifest_self_reference=NOT_FOUND
+manifest_self_reference_exit=0
+PACKAGE_METADATA.txt: OK
+T28_EVIDENCE_QUALIFICATION_R1.md: OK
+T28_FINAL_CLOSURE.md: OK
+T28_FINAL_INDEPENDENT_EVIDENCE_REVIEW.md: OK
+docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: OK
+docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md: OK
+docs/T28_EXTENSIONS_THREAT_MODEL.md: OK
+docs/T28_IMPLEMENTATION_HANDOVER.md: OK
+evidence/T28/BASELINE_DISCOVERY_R1_RAW.log: OK
+evidence/T28/BASELINE_DISCOVERY_RAW.log: OK
+evidence/T28/CHANGELOG.md: OK
+evidence/T28/FINAL_VALIDATION_RAW.log: OK
+evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_DIFF_CORRECTED.json: OK
+evidence/T28/GITLEAKS_DIFF_POST.json: OK
+evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json: OK
+evidence/T28/GITLEAKS_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_EXTRACTION_POST.json: OK
+evidence/T28/GITLEAKS_FINAL_CLOSURE.json: OK
+evidence/T28/GITLEAKS_FINAL_DIFF.json: OK
+evidence/T28/GITLEAKS_FINAL_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_POSTFIX_DIFF.json: OK
+evidence/T28/GITLEAKS_POSTFIX_DIFF_FILES.json: OK
+evidence/T28/GITLEAKS_POSTFIX_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_PROTECT_DIFF.json: OK
+evidence/T28/GITLEAKS_R1_FINAL_PACKAGE.json: OK
+evidence/T28/GITLEAKS_R1_FINAL_PACKAGE_CURRENT.json: OK
+evidence/T28/GITLEAKS_R1_RANGE_RAW.log: OK
+evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_R1_ZIP_EXTRACTION_RAW.log: OK
+evidence/T28/GITLEAKS_TREE_1_ff38dc2.json: OK
+evidence/T28/GITLEAKS_TREE_2_9a15cc0.json: OK
+evidence/T28/GITLEAKS_TREE_3_4f0f620.json: OK
+evidence/T28/GITLEAKS_TREE_4_a9c47fd.json: OK
+evidence/T28/GITLEAKS_TREE_5_df9784c.json: OK
+evidence/T28/GITLEAKS_TREE_6_a8a014d.json: OK
+evidence/T28/GITLEAKS_TREE_7_6476a21.json: OK
+evidence/T28/GITLEAKS_TREE_8_8b96981.json: OK
+evidence/T28/GOSEC_BASELINE.json: OK
+evidence/T28/GOSEC_FINAL_CLOSURE_T28.json: OK
+evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json: OK
+evidence/T28/GOSEC_HEAD.json: OK
+evidence/T28/GOSEC_HEAD_CORRECTED.json: OK
+evidence/T28/GOSEC_R1_BASELINE.json: OK
+evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log: OK
+evidence/T28/GOSEC_R1_HEAD.json: OK
+evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json: OK
+evidence/T28/GOSEC_T28_API.json: OK
+evidence/T28/GOSEC_T28_API_PACKAGE.json: OK
+evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json: OK
+evidence/T28/GOSEC_T28_API_POST.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS_POST.json: OK
+evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log: OK
+evidence/T28/GO_GLOBAL_VALIDATION_RAW.log: OK
+evidence/T28/GO_TEST_BASELINE_HEAD_COMPARISON_R1.log: OK
+evidence/T28/GO_TEST_BASELINE_R1_RAW.log: OK
+evidence/T28/GO_TEST_HEAD_R1_RAW.log: OK
+evidence/T28/GO_TEST_T28_TARGETED_R1_RAW.log: OK
+evidence/T28/LINEAGE_R1.md: OK
+evidence/T28/LINEAGE_R1_RAW.log: OK
+evidence/T28/OSV_R1_BASELINE_GOMOD.json: OK
+evidence/T28/OSV_R1_GOMOD_COMPARE_RAW.log: OK
+evidence/T28/OSV_R1_HEAD.json: OK
+evidence/T28/OSV_R1_HEAD_GOMOD.json: OK
+evidence/T28/OSV_R1_HEAD_IDS.txt: OK
+evidence/T28/OSV_R1_HEAD_RAW.log: OK
+evidence/T28/OSV_R1_RAW.log: OK
+evidence/T28/REGISTER.md: OK
+evidence/T28/SBOM_FINAL.spdx.json: OK
+evidence/T28/SBOM_HEAD.spdx.json: OK
+evidence/T28/SCANS_RAW.log: OK
+evidence/T28/SCAN_DECISION.md: OK
+evidence/T28/T28_FINAL_CLOSURE_DISCOVERY_RAW.log: OK
+evidence/T28/T28_FINAL_CLOSURE_FIXED_VALIDATION_RAW.log: OK
+evidence/T28/T28_FINAL_CLOSURE_GITLEAKS_RAW.log: OK
+evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log: OK
+evidence/T28/T28_FINAL_CLOSURE_TARGETED_TESTS_RAW.log: OK
+evidence/T28/T28_FINAL_INDEPENDENT_ARTIFACTS_RAW.log: OK
+evidence/T28/T28_FINAL_INDEPENDENT_CODE_REPLAY_RAW.log: OK
+evidence/T28/T28_FINAL_INDEPENDENT_LINEAGE_INITIAL_RAW.log: OK
+evidence/T28/T28_FINAL_INDEPENDENT_LINEAGE_RAW.log: OK
+evidence/T28/T28_POSTFIX_GITLEAKS_DIFF_FILES_RAW.log: OK
+evidence/T28/T28_POSTFIX_GITLEAKS_RAW.log: OK
+evidence/T28/T28_POSTFIX_REQUALIFICATION_RAW.log: OK
+evidence/T28/T28_PUBLIC_VERIFY_CORRECTED_RAW.log: OK
+evidence/T28/T28_PUBLIC_VERIFY_RAW.log: OK
+evidence/T28/T28_R1_FINAL_PACKAGE_VERIFY_CURRENT_RAW.log: OK
+evidence/T28/T28_R1_FINAL_PACKAGE_VERIFY_INITIAL_RAW.log: OK
+evidence/T28/T28_R1_FINAL_PACKAGE_VERIFY_RAW.log: OK
+evidence/T28/todo.md: OK
+internal/api/extensions.go: OK
+internal/extensions/store.go: OK
+internal/extensions/store_test.go: OK
+manifest_checksums_exit=0
+## final extraction Gitleaks
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m4:10PM[0m [32mINF[0m scan completed in 505ms
+[90m4:10PM[0m [32mINF[0m no leaks found
+gitleaks_extraction_exit=0
+gitleaks_report_bytes=3
+## bundle checksums and verification
+e9f65a5b9a734933f20ecf13b05f73136e604dc006b50dfc0d40286d91262097  t28-postfix-evidence.delta.bundle
+bundle_direct_exit=0
+bundle_expected_exit=0
+t28-postfix-evidence.delta.bundle: OK
+bundle_sidecar_fresh_exit=0
+t28-postfix-evidence.delta.bundle: OK
+bundle_sidecar_neutral_exit=0
+/tmp/t28_postfix_public_verify/clone/evidence/T28/t28-postfix-evidence.delta.bundle is okay
+The bundle contains this ref:
+66f3bf09d3139e22f1885f7336c9edd879a32ede refs/heads/feature/t28-local-extensions-controlled
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+66f3bf09d3139e22f1885f7336c9edd879a32ede refs/heads/feature/t28-local-extensions-controlled
+999374d99b7996504ba91e421850a2fe84afb78d
+baseline_object_exit=0
+package_source_to_remote_exit=0
+## seeded clone and fsck
+Cloning into '/tmp/t28_postfix_public_verify/seed'...
+seed_clone_exit=0
+From /tmp/t28_postfix_public_verify/clone/evidence/T28/t28-postfix-evidence.delta.bundle
+ * [new branch]      feature/t28-local-extensions-controlled -> bundle/feature/t28-local-extensions-controlled
+bundle_fetch_seed_exit=0
+HEAD is now at 66f3bf0 Record T28 post-fix requalification
+package_checkout_exit=0
+seed_head=66f3bf09d3139e22f1885f7336c9edd879a32ede
+seed_fsck_exit=0
+seed_status_exit=0
+clone_fsck_exit=0
+clone_status_exit=0
