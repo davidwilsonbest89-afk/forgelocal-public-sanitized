@@ -1,0 +1,18 @@
+utc=2026-08-25T01:28:29Z
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=audit/t00-t42-self-validation-enhanced-v5
+remote_sha=71fe1f56e6a262931e5e4efa6af2849f44fc12ca
+Cloning into '/home/ubuntu/forgelocal_self_validation_v5/publication_clone'...
+clone_head=71fe1f56e6a262931e5e4efa6af2849f44fc12ca
+head_match=yes
+git_fsck_exit_code=0
+--- lfs tracked pointers
+5b31ae7afc - evidence/SELF_VALIDATION_V5/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+f654409178 - evidence/SELF_VALIDATION_V5/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip
+29bed6c7b5 - evidence/SELF_VALIDATION_V5/forgelocal-t00-t42-self-validation-v5.delta.bundle
+d93ed81b87 - evidence/forgelocal-t00-t42-self-validation-v5-enhanced.zip
+29bed6c7b5 - evidence/forgelocal-t00-t42-self-validation-v5.delta.bundle
+--- bundle file type in skip-smudge clone
+evidence/forgelocal-t00-t42-self-validation-v5.delta.bundle: ASCII text
+--- status
+## [32maudit/t00-t42-self-validation-enhanced-v5[m...[31morigin/audit/t00-t42-self-validation-enhanced-v5[m
