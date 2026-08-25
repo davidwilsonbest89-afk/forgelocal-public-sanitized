@@ -806,3 +806,13 @@ Reste à faire :
 - [x] Exécuter `git fsck --full` avant et après réhydratation LFS ciblée ; code 0.
 - [x] Vérifier par hash le wrapper V6 `ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6` et le bundle `ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2`.
 - [ ] Obtenir la revue indépendante ; maintenir les gates et l’interdiction de release.
+
+# Gel local V6 — 2026-08-25
+- [x] Produire `V6_FREEZE_BASELINE_DISCOVERY_RAW.log` avant gel avec UTC, CWD, HEAD, branche, status, versions, espace et codes de sortie.
+- [x] Confirmer que `git diff --check` ne signale aucun fichier Go, TypeScript, CSS ou Dashboard modifié par V6 ; les espaces historiques restent listés séparément.
+- [x] Créer le tag annoté `t00-t42-v6-local-qualified-2026-08-25` sur `999374d`.
+- [x] Construire le bundle de gel avec prérequis b34 et cible `999374d`, sidecar portable et `git bundle verify`.
+- [x] Construire le ZIP de gel avec manifeste non auto-référentiel, sidecar portable, extraction et Gitleaks propres.
+- [x] Vérifier le clone seeded et `git fsck --full` avec la baseline requise.
+- [ ] Publier le tag de gel et le paquet de gel après le commit append-only de packaging.
+- [ ] Traiter séparément `LFS-CONSERVATION-AUDIT`, `OSV-TOOLCHAIN-RECONCILIATION`, `DOCKER-HARDENING`, `LICENSE-COMPLIANCE-TRIAGE` et `STATIC-DEBT-TRIAGE` sans modifier le gel V6.

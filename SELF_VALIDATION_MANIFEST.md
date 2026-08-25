@@ -55,3 +55,10 @@ Le wrapper V6 contient 297 entrées et son extraction passe `unzip -t`. Les hash
 - **Vérification wrapper finale :** `V6_WRAPPER_VERIFY.log`, externe au wrapper pour éviter l’auto-référence ; `unzip -t`, sidecar, extraction, checksums internes, bundle, Gitleaks d’extraction et hashes V3/V4/V5 retournent tous code 0.
 
 Le HEAD de branche qui contiendra le paquet final sera postérieur à la cible du bundle. Cette distinction est volontaire : le bundle couvre le contenu source corrigé et ne s’auto-référence pas dans les commits de packaging.
+
+
+## Gel local V6 — métadonnées finales
+
+La baseline locale qualifiée est gelée par le tag annoté `t00-t42-v6-local-qualified-2026-08-25`, qui pointe le commit `999374d99b7996504ba91e421850a2fe84afb78d`. Le ZIP de gel `evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip` a le SHA-256 `eb61ca0a42aad8afc8ba3a6088855acfd61dae0887bde339fad371e46feee264`, et son sidecar portable est `evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip.portable.sha256`. Le bundle de gel `evidence/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle` a le SHA-256 `7a324a93cffa2be2447371f92b3f3a1365d00bcc512fd606bb4bd39ea1384d9c`, exige la baseline `b34fa5c02ff20144abfb5d240db1c67ad1f038f9` et cible `999374d99b7996504ba91e421850a2fe84afb78d`.
+
+La vérification finale `V6_FREEZE_VERIFICATION.log` confirme sidecar, `unzip -t`, extraction fraîche, checksums internes, Gitleaks d’extraction, `git bundle verify`, clone seeded avec baseline et `git fsck --full`, tous avec code 0. La sortie est `V6_LOCAL_QUALIFIED_BASELINE_FROZEN`. Ce gel reste en attente de revue indépendante et ne lève aucune gate.

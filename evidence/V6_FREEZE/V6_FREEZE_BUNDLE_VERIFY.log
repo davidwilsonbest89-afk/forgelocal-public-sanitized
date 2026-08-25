@@ -1,0 +1,6 @@
+evidence/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle is okay
+The bundle contains this ref:
+999374d99b7996504ba91e421850a2fe84afb78d refs/heads/audit/t00-t42-v6-local-freeze
+The bundle requires this ref:
+b34fa5c02ff20144abfb5d240db1c67ad1f038f9 
+The bundle uses this hash algorithm: sha1

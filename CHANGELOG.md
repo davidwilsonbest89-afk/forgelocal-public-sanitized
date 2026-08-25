@@ -307,3 +307,10 @@ Les tests Go shuffle/race, vet, build, govulncheck, Grype sur SBOM CycloneDX/SPD
 La branche [audit/t00-t42-v6-findings-remediation](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/audit/t00-t42-v6-findings-remediation) est publiée au HEAD distant `8e26bfb0c8bf6e92c09d645dd84ec854320c01f9`. Un clone neuf correspond exactement à ce SHA ; `git fsck --full` retourne 0 avant et après le fetch LFS ciblé des deux artefacts V6. Le wrapper V6 est `ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6` et le bundle delta est `ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2`.
 
 Le bundle exige b34fa5c et cible le commit de contenu fc08045 ; cette distinction avec le commit de packaging est volontaire et documentée. Le statut reste `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`, sans levée de gate ni release.
+
+
+## 2026-08-25 — Gel local V6
+
+La baseline V6 est gelée par le tag annoté `t00-t42-v6-local-qualified-2026-08-25` sur le commit `999374d99b7996504ba91e421850a2fe84afb78d`. Le ZIP de gel `forgelocal-t00-t42-v6-local-qualified-freeze.zip` a le SHA-256 `eb61ca0a42aad8afc8ba3a6088855acfd61dae0887bde339fad371e46feee264`; le bundle delta de gel a le SHA-256 `7a324a93cffa2be2447371f92b3f3a1365d00bcc512fd606bb4bd39ea1384d9c` et exige b34fa5c comme baseline.
+
+Sidecars, `unzip -t`, extraction fraîche, checksums internes, Gitleaks d’extraction, bundle verify, clone seeded et `git fsck --full` passent. La décision est `V6_LOCAL_QUALIFIED_BASELINE_FROZEN`, sous le statut `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`. Aucun hardening Docker, audit LFS, réconciliation OSV, revue de licences ou dette historique n’est présenté comme traité par le gel ; ces lots restent séparés et aucune gate n’est levée.
