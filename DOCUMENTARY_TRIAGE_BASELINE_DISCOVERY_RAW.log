@@ -1,0 +1,50 @@
+utc=2026-08-25T02:58:40Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/license_static_audit
+branch=audit/t00-t42-license-static-debt-triage
+head=999374d99b7996504ba91e421850a2fe84afb78d
+--- git status --short
+[31m??[m DOCUMENTARY_TRIAGE_BASELINE_DISCOVERY_RAW.log
+[31m??[m LICENSE-COMPLIANCE-TRIAGE.md
+[31m??[m STATIC-DEBT-TRIAGE.md
+[31m??[m V6_LICENSE_COMPARE.log
+[31m??[m V6_LICENSE_COMPLIANCE_MATRIX.md
+[31m??[m V6_LICENSE_COUNT.log
+[31m??[m V6_STATIC_DEBT_MATRIX_GENERATION.log
+[31m??[m V6_STATIC_DEBT_TRIAGE.md
+status_exit_code=0
+--- versions
++ git --version
+git version 2.43.0
+exit_code=0
++ git-lfs --version
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+exit_code=0
++ /usr/local/go1.25.13/bin/go version
+go version go1.25.13 linux/amd64
+exit_code=0
++ /home/ubuntu/bin/staticcheck -version
+staticcheck 2025.1.1 (0.6.1)
+exit_code=0
++ /home/ubuntu/bin/golangci-lint-2.13.1 version
+golangci-lint has version 2.13.1 built with go1.27.0 from 6d2288e0 on 2026-08-20T14:28:34Z
+exit_code=0
++ /home/ubuntu/bin/syft version
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+exit_code=0
+--- df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   42G  6.0G  88% /
+df_exit_code=0
+--- matrix counts
+/home/ubuntu/forgelocal_self_validation_v6/V6_LICENSE_MATRIX_GENERATION.log:unknown_components 746
+/home/ubuntu/forgelocal_self_validation_v6/V6_STATIC_DEBT_MATRIX_GENERATION.log:staticcheck_rows 34
+/home/ubuntu/forgelocal_self_validation_v6/V6_STATIC_DEBT_MATRIX_GENERATION.log:golangci_rows 89
+matrix_count_exit=0
