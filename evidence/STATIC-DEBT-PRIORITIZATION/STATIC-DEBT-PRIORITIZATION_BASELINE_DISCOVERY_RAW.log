@@ -1,0 +1,21 @@
+utc=2026-08-25T04:12Z
+lot=STATIC-DEBT-PRIORITIZATION
+base_commit=fb9d20c7ffb241104eede582eee9cbd7a3bbc267
+base_branch=audit/t00-t42-license-static-debt-triage
+V6_frozen_commit=999374d99b7996504ba91e421850a2fe84afb78d
+working_tree_before_lot=clean
+
+--- observed debt
+Staticcheck historical findings=34
+GolangCI-Lint historical findings=89
+Total individually triaged findings=123
+No code correction performed in this lot.
+
+--- required fields
+Each item must retain rule, file, line, message/impact, severity, possible correction, regression test, owner and future lot.
+
+--- policy
+Correct only high-impact security/reliability defects in a future separate lot after human review and tests. Do not mix this backlog with frozen V6. Do not modify Core, Dashboard business logic, wrappers, dependencies or gates. Do not start T28/T29/T39/T40/T41/T42, Camoufox, real proxy, cookies, user data, native SystemVault, migration, production runtime or release.
+
+--- required outcome
+Backlog and ownership remain individual and reproducible. No historical finding may be presented as fixed merely because it was triaged.
