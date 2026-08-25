@@ -8,7 +8,7 @@ La requalification post-correctif T28 est terminée et cohérente. T28 est appro
 
 ## Publication et lignée
 
-La branche GitHub est [`feature/t28-local-extensions-controlled`](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/feature/t28-local-extensions-controlled). Le HEAD réellement retourné par GitHub lors de la vérification fraîche est `dff092cd5eeb27ddff6e331c22594a03c5b4e1a7`.
+La branche GitHub est [`feature/t28-local-extensions-controlled`](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/feature/t28-local-extensions-controlled). Le HEAD GitHub actuel est `da04a2feb82437f5da78cdd7bb869d4136a9fbde`. La vérification fraîche des artefacts avait été exécutée au HEAD publié intermédiaire `dff092cd5eeb27ddff6e331c22594a03c5b4e1a7` ; les deux commits ultérieurs `19ebcbaf6f95b5cf5d5c16728e59746293a1f565` et `da04a2feb82437f5da78cdd7bb869d4136a9fbde` sont des commits de rapport, conservation et preuve uniquement. Aucun fichier `internal/` T28 n’est modifié entre `dff092c` et `da04a2f`.
 
 | Référence | Rôle |
 |---|---|
@@ -17,7 +17,9 @@ La branche GitHub est [`feature/t28-local-extensions-controlled`](https://github
 | `f0701da849ce0f9073397bb42ded5e2e76b29ef1` | Commit identifiable du correctif d’intégrité taille/SHA-256 |
 | `e806d4e915d1b702362389411d8ac823551df044` | Commit des tests de régression Approve/Assign/Rollback |
 | `66f3bf09d3139e22f1885f7336c9edd879a32ede` | Commit source du nouveau package post-correctif |
-| `dff092cd5eeb27ddff6e331c22594a03c5b4e1a7` | HEAD GitHub final, incluant ZIP/bundle/sidecars |
+| `dff092cd5eeb27ddff6e331c22594a03c5b4e1a7` | HEAD publié lors de la vérification fraîche du ZIP/bundle |
+| `19ebcbaf6f95b5cf5d5c16728e59746293a1f565` | Rapport/registres finaux ; aucun fichier `internal/` T28 modifié |
+| `da04a2feb82437f5da78cdd7bb869d4136a9fbde` | HEAD GitHub actuel ; preuve finale publiée, aucun fichier `internal/` T28 modifié |
 
 Le diff post-implémentation limité à `internal/` est attendu et documenté : il contient uniquement le correctif d’intégrité dans `internal/extensions/store.go`, son mapping API dans `internal/api/extensions.go` et les régressions dans `internal/extensions/store_test.go`. Aucun autre lot produit n’a été modifié.
 
@@ -39,7 +41,17 @@ Le nouveau bundle est `evidence/T28/t28-postfix-evidence.delta.bundle`. Son SHA-
 
 `e9f65a5b9a734933f20ecf13b05f73136e604dc006b50dfc0d40286d91262097`
 
-`unzip -t`, extraction fraîche, manifeste non auto-référentiel, checksums internes, sidecars portable frais/neutre et `git bundle verify` ont retourné `0`. Le bundle exige la baseline V6, puis a été chargé dans un clone seedé, checkouté explicitement au commit source corrigé `66f3bf0`, et vérifié avec `git fsck --full=0` et worktree propre. Le clone du bundle seul n’est pas utilisé comme preuve autonome car il s’agit d’un delta exigeant sa baseline.
+`unzip -t`, extraction fraîche, manifeste non auto-référentiel, checksums internes, sidecars portable frais/neutre et `git bundle verify` ont retourné `0`. Le bundle exige la baseline V6, puis a été chargé dans un clone seedé, checkouté explicitement au commit source corrigé `66f3bf0`, et `git fsck --full` a retourné `exit_code=0`, avec worktree propre. Le clone du bundle seul n’est pas utilisé comme preuve autonome car il s’agit d’un delta exigeant sa baseline.
+
+## Gosec, Gitleaks et réserves de scans
+
+| Contrôle Gosec post-correctif | Résultat | Fichier de preuve |
+|---|---:|---|
+| Comparaison normalisée baseline/head | `baseline_findings=6`, `head_findings=6`, `new_findings=0`, `resolved_findings=0` | `evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json` et `GOSEC_R1_BASELINE_HEAD_RAW.log` |
+| Package T28 Extensions | `0` findings | `evidence/T28/GOSEC_T28_EXTENSIONS_POST.json` |
+| Package T28 API | `6` findings historiques conservés | `evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json` |
+
+La comparaison normalisée montre donc **aucun nouveau finding Gosec** (`new_findings=0`) ; les six findings API post-correctif restent une réserve historique documentée. Aucun finding n’a été masqué par suppression globale.
 
 ## Gitleaks et réserves de scans
 

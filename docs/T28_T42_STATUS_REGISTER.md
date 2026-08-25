@@ -166,3 +166,16 @@ Les artefacts post-correctif distincts sont publiés depuis `66f3bf09d3139e22f18
 **Statut exact :** `T28_APPROVED_VERIFIABLE_LOCAL`.
 
 L’approbation reste limitée au Core local et aux artefacts de conservation post-correctif. Elle ne qualifie pas de runtime navigateur, extension chargée/exécutée, SystemVault natif, proxy/cookies réels ou release publique. Gates inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`. T29, T39, T40, T41 et T42 restent non démarrés.
+
+
+## 2026-08-25 — Amendement administratif T28-POSTFIX HEAD/Gosec
+
+Le HEAD GitHub actuel de `feature/t28-local-extensions-controlled` est `da04a2feb82437f5da78cdd7bb869d4136a9fbde`. La vérification fraîche des artefacts avait été effectuée au HEAD intermédiaire `dff092cd5eeb27ddff6e331c22594a03c5b4e1a7`; les commits `19ebcbaf6f95b5cf5d5c16728e59746293a1f565` et `da04a2feb82437f5da78cdd7bb869d4136a9fbde` sont postérieurs au package et ajoutent uniquement rapport, registre, conservation et journal de preuve. Aucun fichier `internal/` T28 n’est modifié entre `dff092c` et `da04a2f`.
+
+| Contrôle Gosec post-correctif | Résultat | Preuve |
+|---|---:|---|
+| Comparaison normalisée baseline/head | `baseline_findings=6`, `head_findings=6`, `new_findings=0`, `resolved_findings=0` | `evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json` et `evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log` |
+| Package T28 Extensions | `0` findings | `evidence/T28/GOSEC_T28_EXTENSIONS_POST.json` |
+| Package T28 API | `6` findings historiques conservés | `evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json` |
+
+Dans la preuve de bundle, `git fsck --full` a retourné `exit_code=0`. Le statut exact reste `T28_APPROVED_VERIFIABLE_LOCAL`, limité au Core local ; les gates et les lots non démarrés restent inchangés.

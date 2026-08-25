@@ -48,3 +48,12 @@ Aucun téléchargement de package d’extension, chargement/exécution, Camoufox
 4. Le nouveau ZIP `t28-postfix-evidence-v1.zip` porte le SHA-256 `4efda01771ed7af135769dfa68caa8bdc6f226ca7cad5bf894dcfce05f5c8923`; le nouveau bundle `t28-postfix-evidence.delta.bundle` porte le SHA-256 `e9f65a5b9a734933f20ecf13b05f73136e604dc006b50dfc0d40286d91262097`.
 5. `unzip -t`, extraction, manifeste/checksums, sidecars neutres, bundle verify, clone seedé par baseline et fsck ont passé la vérification fraîche.
 6. Statut : `T28_APPROVED_VERIFIABLE_LOCAL`, limité au Core local et aux preuves post-correctif. Aucun runtime, navigateur, proxy/cookie réel, SystemVault natif, migration, production ou release n’a été exécuté.
+
+
+## 2026-08-25 — Amendement administratif HEAD/Gosec T28-POSTFIX
+
+Le HEAD GitHub actuel est `da04a2feb82437f5da78cdd7bb869d4136a9fbde`. Le package ZIP/bundle avait été vérifié fraîchement au HEAD intermédiaire `dff092cd5eeb27ddff6e331c22594a03c5b4e1a7`. Les commits postérieurs `19ebcbaf6f95b5cf5d5c16728e59746293a1f565` et `da04a2feb82437f5da78cdd7bb869d4136a9fbde` sont uniquement documentaires, de conservation et de preuve ; aucun fichier `internal/` T28 n’a changé entre ces références.
+
+La comparaison Gosec normalisée est exactement : `baseline_findings=6`, `head_findings=6`, `new_findings=0`, `resolved_findings=0`, selon `evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json` et `evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log`. Le ciblage post-correctif donne `0` finding pour `internal/extensions` dans `GOSEC_T28_EXTENSIONS_POST.json` et `6` findings historiques conservés pour l’API dans `GOSEC_T28_API_PACKAGE_AFTER.json`.
+
+La formulation de preuve est corrigée : `git fsck --full` a retourné `exit_code=0`. Le statut reste `T28_APPROVED_VERIFIABLE_LOCAL`, sans modification de code, de ZIP/bundle, de runtime ou de lot suivant.

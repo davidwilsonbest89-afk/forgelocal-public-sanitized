@@ -60,3 +60,15 @@ Le statut T28 reste `T28_EVIDENCE_QUALIFICATION_R1_READY_FOR_INDEPENDENT_REVIEW`
 | Statut T28 | `T28_APPROVED_VERIFIABLE_LOCAL` | DONE — Core local seulement |
 | Runtime navigateur, extension, proxy/cookies, SystemVault, migration, production, release | non exécutés et non autorisés | NOT_AUTHORIZED |
 | T29/T39/T40/T41/T42 | ne pas démarrer dans cette mission | BLOCKED |
+
+
+## Amendement administratif HEAD/Gosec — 2026-08-25
+
+| Action | Résultat | Statut |
+|---|---|---|
+| Synchroniser le HEAD documentaire | HEAD GitHub actuel `da04a2feb82437f5da78cdd7bb869d4136a9fbde` ; `19ebcbaf6f95b5cf5d5c16728e59746293a1f565` et `da04a2feb82437f5da78cdd7bb869d4136a9fbde` sont proof-only/documentation-only, sans changement `internal/` T28 depuis `dff092c` | DONE |
+| Gosec baseline/head normalisé | `baseline_findings=6`, `head_findings=6`, `new_findings=0`, `resolved_findings=0` ; `GOSEC_R1_NORMALIZED_COMPARISON.json` et `GOSEC_R1_BASELINE_HEAD_RAW.log` | DONE |
+| Gosec ciblé post-correctif | Extensions `0` (`GOSEC_T28_EXTENSIONS_POST.json`) ; API `6` findings historiques (`GOSEC_T28_API_PACKAGE_AFTER.json`) | DONE — réserve documentée |
+| Formulation fsck | `git fsck --full` a retourné `exit_code=0` | DONE |
+| Code métier, ZIP/bundle et runtime | aucune modification ni recréation ni exécution | INCHANGÉ |
+| Statut T28 | `T28_APPROVED_VERIFIABLE_LOCAL`, Core local seulement | FINAL |
