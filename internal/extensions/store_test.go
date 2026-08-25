@@ -349,3 +349,89 @@ func contains(values []string, want string) bool {
 	}
 	return false
 }
+
+func TestT28RejectsModifiedPackageBeforeApproveAssignAndRollback(t *testing.T) {
+	t.Run("approve", func(t *testing.T) {
+		r := openTestRepository(t)
+		ctx := context.Background()
+		v, err := r.Import(ctx, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{}`})), "", "corr-integrity-approve")
+		if err != nil {
+			t.Fatal(err)
+		}
+		tamperStoredVersion(t, r, v.ID)
+		if _, err := r.Approve(ctx, v.ID, nil, false, "corr-integrity-approve-refused"); !errors.Is(err, ErrIntegrity) {
+			t.Fatalf("tampered version was approved: %v", err)
+		}
+		var state string
+		if err := r.DB().QueryRow(`SELECT state FROM extension_versions WHERE id=?`, v.ID).Scan(&state); err != nil || state != "imported" {
+			t.Fatalf("approval changed state after integrity refusal: state=%q err=%v", state, err)
+		}
+	})
+
+	t.Run("assign", func(t *testing.T) {
+		r := openTestRepository(t)
+		ctx := context.Background()
+		v, err := r.Import(ctx, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{}`})), "", "corr-integrity-assign")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := r.Approve(ctx, v.ID, nil, false, "corr-integrity-assign-approve"); err != nil {
+			t.Fatal(err)
+		}
+		tamperStoredVersion(t, r, v.ID)
+		if _, err := r.Assign(ctx, v.ID, "profile-integrity", "corr-integrity-assign-refused", func(context.Context, string) (bool, error) { return true, nil }); !errors.Is(err, ErrIntegrity) {
+			t.Fatalf("tampered version was assigned: %v", err)
+		}
+		var assignments, active int
+		if err := r.DB().QueryRow(`SELECT COUNT(*) FROM extension_assignments WHERE version_id=?`, v.ID).Scan(&assignments); err != nil {
+			t.Fatal(err)
+		}
+		if err := r.DB().QueryRow(`SELECT COUNT(*) FROM extension_series WHERE active_version_id=?`, v.ID).Scan(&active); err != nil {
+			t.Fatal(err)
+		}
+		if assignments != 0 || active != 0 {
+			t.Fatalf("assignment state changed after integrity refusal: assignments=%d active=%d", assignments, active)
+		}
+	})
+
+	t.Run("rollback", func(t *testing.T) {
+		r := openTestRepository(t)
+		ctx := context.Background()
+		v1, err := r.Import(ctx, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{"version":"1"}`})), "", "corr-integrity-rollback-1")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := r.Approve(ctx, v1.ID, nil, false, "corr-integrity-rollback-1-approve"); err != nil {
+			t.Fatal(err)
+		}
+		v2, err := r.Update(ctx, v1.SeriesID, bytes.NewReader(syntheticZIP(t, map[string]string{"manifest.json": `{"version":"2"}`})), "corr-integrity-rollback-2")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := r.Approve(ctx, v2.ID, nil, false, "corr-integrity-rollback-2-approve"); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := r.Assign(ctx, v2.ID, "profile-integrity", "corr-integrity-rollback-2-assign", func(context.Context, string) (bool, error) { return true, nil }); err != nil {
+			t.Fatal(err)
+		}
+		tamperStoredVersion(t, r, v1.ID)
+		if err := r.Rollback(ctx, v1.SeriesID, v1.ID, "corr-integrity-rollback-refused"); !errors.Is(err, ErrIntegrity) {
+			t.Fatalf("tampered rollback target was activated: %v", err)
+		}
+		var active string
+		if err := r.DB().QueryRow(`SELECT active_version_id FROM extension_series WHERE id=?`, v1.SeriesID).Scan(&active); err != nil || active != v2.ID {
+			t.Fatalf("rollback changed active version after integrity refusal: active=%q err=%v", active, err)
+		}
+	})
+}
+
+func tamperStoredVersion(t *testing.T, r *Repository, versionID string) {
+	t.Helper()
+	var rel string
+	if err := r.DB().QueryRow(`SELECT blob_relpath FROM extension_versions WHERE id=?`, versionID).Scan(&rel); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(r.baseDir, rel), []byte("tampered after import"), 0600); err != nil {
+		t.Fatal(err)
+	}
+}
