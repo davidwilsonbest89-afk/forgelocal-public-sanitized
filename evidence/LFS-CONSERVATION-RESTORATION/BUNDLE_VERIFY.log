@@ -1,0 +1,6 @@
+evidence/lfs-conservation-restoration-v6.delta.bundle is okay
+The bundle contains this ref:
+36ca016c059f8c2f7e1189e77d23851a93985fbf refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+The bundle requires this ref:
+a236291262bd11513e4c82474cce41d3f7c7a726 
+The bundle uses this hash algorithm: sha1
