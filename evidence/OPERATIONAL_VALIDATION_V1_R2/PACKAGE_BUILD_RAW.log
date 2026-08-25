@@ -1,0 +1,21 @@
+utc=2026-08-25T19:31:00Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+command=/home/ubuntu/forgelocal_self_validation_v6/package_operational_validation_v1_r2.sh
+source_head=7eb13187d79645c58cdf86d6d969db4d21d79457
+base=84f7bd2bd7c956a4766d1bd1ff2808c59f9c6eed
+bundle_header=# v2 git bundle
+bundle_header=PASS pack_nonempty
+bundle_verify=PASS
+seed_clone=PASS (no-local, no-checkout, no-tags, sparse-checkout before checkout)
+seed_checkout_base=PASS
+seed_fetch_bundle=PASS
+seed_checkout_head=PASS
+seed_fsck=PASS (git fsck --full exit_code=0)
+seed_worktree=clean
+zip_test=PASS
+extraction_manifest=PASS
+zip=forgelocal-operational-validation-v1-r2.zip
+zip_sha256=8ec9106a3e1140cc59bbfd1f2b61c71cfdf5ab7c56fb98ec619fc9e7e2b3d451
+bundle=forgelocal-operational-validation-v1-r2.delta.bundle
+bundle_sha256=c167a6987a1df05446f61aa4afd60d85d96d0e9631b48879412f646cdf5bcf6a
+manifest=PACKAGE_MANIFEST.txt (non-self-referential)
