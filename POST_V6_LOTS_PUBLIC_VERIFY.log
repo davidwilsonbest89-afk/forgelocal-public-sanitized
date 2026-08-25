@@ -1,0 +1,2857 @@
+[DOCKER_NATIVE] branch=audit/t00-t42-docker-native-nonruntime-validation
+[DOCKER_NATIVE] remote_sha=38a273de9e9ba239338d4661119cdd53abd9ad28
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_DOCKER_NATIVE'...
+[DOCKER_NATIVE] clone_exit=0
+[DOCKER_NATIVE] fsck_before_exit=0
+[DOCKER_NATIVE] local_head=38a273de9e9ba239338d4661119cdd53abd9ad28 head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-docker-native-nonruntime-validation'.
+[DOCKER_NATIVE] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_PoJCSv' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_PoJCSv' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_PoJCSv' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_PoJCSv' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_PoJCSv' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+fatal: write error: No space left on device
+fatal: index-pack failed
+fatal: could not fetch dfc4a1e553831863f36204a7a7e91f5333aac29f from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_DOCKER_NATIVE/.git/lfs/logs/20260825T041942.900015573.log'.
+Use `git lfs logs last` to view the log.
+[DOCKER_NATIVE] lfs_targeted_exit=0
+[DOCKER_NATIVE] zip_expected=3e989a014a8cd9950174e1c986ce94a9bcb44f357a89c84c41de0a1741067851 zip_actual=3e989a014a8cd9950174e1c986ce94a9bcb44f357a89c84c41de0a1741067851 zip_sha_exit=0
+[DOCKER_NATIVE] bundle_expected=929b9681ce32ef8f73e81399b84a36e80cacbae6e221ad439495548a3291d457 bundle_actual=929b9681ce32ef8f73e81399b84a36e80cacbae6e221ad439495548a3291d457 bundle_sha_exit=0
+Archive:  evidence/docker-native-nonruntime-validation-v6.zip
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/REGISTER.md   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/CHANGELOG.md   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/todo.md   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/DOCKER-NATIVE-NONRUNTIME-VALIDATION_BASELINE_DISCOVERY_RAW.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/Dockerfile.snapshot   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/Dockerfile.run.snapshot   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/entrypoint.sh.snapshot   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/DOCKER_BUILD_BLOCKED.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/BASH_SYNTAX.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/TRIVY_CONFIG.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/TRIVY_CONFIG.json   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/GIT_DIFF_CHECK.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/STATIC_INSPECTION.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/BUNDLE_VERIFY.log   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/docker-native-nonruntime-validation-v6.delta.bundle   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/docker-native-nonruntime-validation-v6.delta.bundle.portable.sha256   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/MANIFEST.md   OK
+    testing: DOCKER-NATIVE-NONRUNTIME-VALIDATION/SHA256SUMS   OK
+No errors detected in compressed data of evidence/docker-native-nonruntime-validation-v6.zip.
+[DOCKER_NATIVE] unzip_exit=0
+BASH_SYNTAX.log: OK
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+DOCKER-NATIVE-NONRUNTIME-VALIDATION_BASELINE_DISCOVERY_RAW.log: OK
+DOCKER_BUILD_BLOCKED.log: OK
+Dockerfile.run.snapshot: OK
+Dockerfile.snapshot: OK
+GIT_DIFF_CHECK.log: OK
+REGISTER.md: OK
+STATIC_INSPECTION.log: OK
+TRIVY_CONFIG.json: OK
+TRIVY_CONFIG.log: OK
+docker-native-nonruntime-validation-v6.delta.bundle: OK
+docker-native-nonruntime-validation-v6.delta.bundle.portable.sha256: OK
+entrypoint.sh.snapshot: OK
+todo.md: OK
+[DOCKER_NATIVE] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_PoJCSv' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/docker-native-nonruntime-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+4a252dc00f243758c55cf8e38f155fd271d4a008 refs/heads/audit/t00-t42-docker-native-nonruntime-validation
+The bundle requires this ref:
+1d585abea8f3081d9b7890400551e4318e1a4753 
+The bundle uses this hash algorithm: sha1
+[DOCKER_NATIVE] bundle_verify_exit=0
+[90m4:19AM[0m [32mINF[0m scan completed in 3.73ms
+[90m4:19AM[0m [32mINF[0m no leaks found
+[DOCKER_NATIVE] gitleaks_exit=0
+dangling commit 1d585abea8f3081d9b7890400551e4318e1a4753
+[DOCKER_NATIVE] final_fsck_exit=0
+[LFS_RESTORATION] branch=audit/t00-t42-lfs-conservation-restoration-v6
+[LFS_RESTORATION] remote_sha=1fa32f68dae6a745cd7f8fec2e883f13b2398aca
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_LFS_RESTORATION'...
+[LFS_RESTORATION] clone_exit=0
+[LFS_RESTORATION] fsck_before_exit=0
+[LFS_RESTORATION] local_head=1fa32f68dae6a745cd7f8fec2e883f13b2398aca head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-lfs-conservation-restoration-v6'.
+[LFS_RESTORATION] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+fatal: sha1 file '.git/objects/pack/tmp_idx_znrBgh' write error. Out of diskspace
+fatal: index-pack failed
+fatal: could not fetch d577667775e14849088accb9b0611397aac1070c from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_LFS_RESTORATION/.git/lfs/logs/20260825T042518.899610552.log'.
+Use `git lfs logs last` to view the log.
+[LFS_RESTORATION] lfs_targeted_exit=0
+[LFS_RESTORATION] zip_expected=344e1d7d6a03cddde1136d7e47c2e9c5e3db44cf6dd1b0e76df4a30317b02fa1 zip_actual=344e1d7d6a03cddde1136d7e47c2e9c5e3db44cf6dd1b0e76df4a30317b02fa1 zip_sha_exit=0
+[LFS_RESTORATION] bundle_expected=26c4d13f8d46b414f8e84af889b766076d4744c785370f21fedfde4742b59ced bundle_actual=26c4d13f8d46b414f8e84af889b766076d4744c785370f21fedfde4742b59ced bundle_sha_exit=0
+Archive:  evidence/lfs-conservation-restoration-v6.zip
+    testing: LFS-CONSERVATION-RESTORATION/   OK
+    testing: LFS-CONSERVATION-RESTORATION/REGISTER.md   OK
+    testing: LFS-CONSERVATION-RESTORATION/CHANGELOG.md   OK
+    testing: LFS-CONSERVATION-RESTORATION/todo.md   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS-CONSERVATION-RESTORATION_BASELINE_DISCOVERY_RAW.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS_TARGETED_RESTORATION_ATTEMPTS.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS_RESTORATION_OBJECT_CHECK.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS_FSCK_AFTER_RESTORATION.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS_FSCK_FULL_AFTER_RESTORATION.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS_FSCK_DEFAULT_AFTER_RESTORATION.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/LFS_POINTERS_FULL.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/V6_LFS_MATRIX.md   OK
+    testing: LFS-CONSERVATION-RESTORATION/BUNDLE_VERIFY.log   OK
+    testing: LFS-CONSERVATION-RESTORATION/lfs-conservation-restoration-v6.delta.bundle   OK
+    testing: LFS-CONSERVATION-RESTORATION/lfs-conservation-restoration-v6.delta.bundle.portable.sha256   OK
+    testing: LFS-CONSERVATION-RESTORATION/MANIFEST.md   OK
+    testing: LFS-CONSERVATION-RESTORATION/SHA256SUMS   OK
+No errors detected in compressed data of evidence/lfs-conservation-restoration-v6.zip.
+[LFS_RESTORATION] unzip_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+LFS-CONSERVATION-RESTORATION_BASELINE_DISCOVERY_RAW.log: OK
+LFS_FSCK_AFTER_RESTORATION.log: OK
+LFS_FSCK_DEFAULT_AFTER_RESTORATION.log: OK
+LFS_FSCK_FULL_AFTER_RESTORATION.log: OK
+LFS_POINTERS_FULL.log: OK
+LFS_RESTORATION_OBJECT_CHECK.log: OK
+LFS_TARGETED_RESTORATION_ATTEMPTS.log: OK
+REGISTER.md: OK
+V6_LFS_MATRIX.md: OK
+lfs-conservation-restoration-v6.delta.bundle: OK
+lfs-conservation-restoration-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+[LFS_RESTORATION] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_lySJR6' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/lfs-conservation-restoration-v6.delta.bundle is okay
+The bundle contains this ref:
+36ca016c059f8c2f7e1189e77d23851a93985fbf refs/heads/audit/t00-t42-lfs-conservation-restoration-v6
+The bundle requires this ref:
+a236291262bd11513e4c82474cce41d3f7c7a726 
+The bundle uses this hash algorithm: sha1
+[LFS_RESTORATION] bundle_verify_exit=0
+[90m4:25AM[0m [32mINF[0m scan completed in 3.88ms
+[90m4:25AM[0m [32mINF[0m no leaks found
+[LFS_RESTORATION] gitleaks_exit=0
+dangling commit a236291262bd11513e4c82474cce41d3f7c7a726
+[LFS_RESTORATION] final_fsck_exit=0
+[OSV_RECONCILIATION] branch=audit/t00-t42-osv-toolchain-reconciliation-v6
+[OSV_RECONCILIATION] remote_sha=0f055e7fff5ac2f70885c937b2a036ffc45b5526
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_OSV_RECONCILIATION'...
+[OSV_RECONCILIATION] clone_exit=0
+[OSV_RECONCILIATION] fsck_before_exit=0
+[OSV_RECONCILIATION] local_head=0f055e7fff5ac2f70885c937b2a036ffc45b5526 head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-osv-toolchain-reconciliation-v6'.
+[OSV_RECONCILIATION] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_IxQBNJ' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+fatal: write error: No space left on device
+fatal: index-pack failed
+fatal: could not fetch 255bdee143c63b2d36f1be367a1ee6bc59d5af0e from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_OSV_RECONCILIATION/.git/lfs/logs/20260825T043132.15424272.log'.
+Use `git lfs logs last` to view the log.
+[OSV_RECONCILIATION] lfs_targeted_exit=0
+[OSV_RECONCILIATION] zip_expected=08321e9dfd91587d0178a5fa40a55e5c5081f5eaf8510af4b11f3e12cf67d4d5 zip_actual=08321e9dfd91587d0178a5fa40a55e5c5081f5eaf8510af4b11f3e12cf67d4d5 zip_sha_exit=0
+[OSV_RECONCILIATION] bundle_expected=8fecaaa71b5109f06f7c148e5beba0f35450113dc2ac80136b3e3c13d48f2c2f bundle_actual=8fecaaa71b5109f06f7c148e5beba0f35450113dc2ac80136b3e3c13d48f2c2f bundle_sha_exit=0
+Archive:  evidence/osv-toolchain-reconciliation-v6.zip
+    testing: OSV-TOOLCHAIN-RECONCILIATION/   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/MANIFEST.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/OSV-TOOLCHAIN-RECONCILIATION.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/OSV-TOOLCHAIN-RECONCILIATION_BASELINE_DISCOVERY_RAW.log   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/OSV-TOOLCHAIN-RECONCILIATION_BUNDLE_VERIFY.log   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/SHA256SUMS   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/V6_OSV_RECONCILIATION_MATRIX.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/V6_OSV_SCANNER.json   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/osv-toolchain-reconciliation-v6.delta.bundle   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/osv-toolchain-reconciliation-v6.delta.bundle.portable.sha256   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/REGISTER.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/CHANGELOG.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/todo.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/V6_OSV_SCANNER_FINAL.json   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/V6_OSV_SCANNER_RUN.log   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/previous-audit-report.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/OSV-TOOLCHAIN-RECONCILIATION-v6.md   OK
+    testing: OSV-TOOLCHAIN-RECONCILIATION/BUNDLE_VERIFY.log   OK
+No errors detected in compressed data of evidence/osv-toolchain-reconciliation-v6.zip.
+[OSV_RECONCILIATION] unzip_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+OSV-TOOLCHAIN-RECONCILIATION-v6.md: OK
+OSV-TOOLCHAIN-RECONCILIATION.md: OK
+OSV-TOOLCHAIN-RECONCILIATION_BASELINE_DISCOVERY_RAW.log: OK
+OSV-TOOLCHAIN-RECONCILIATION_BUNDLE_VERIFY.log: OK
+REGISTER.md: OK
+V6_OSV_RECONCILIATION_MATRIX.md: OK
+V6_OSV_SCANNER.json: OK
+V6_OSV_SCANNER_FINAL.json: OK
+V6_OSV_SCANNER_RUN.log: OK
+osv-toolchain-reconciliation-v6.delta.bundle: OK
+osv-toolchain-reconciliation-v6.delta.bundle.portable.sha256: OK
+previous-audit-report.md: OK
+todo.md: OK
+[OSV_RECONCILIATION] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_IxQBNJ' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/osv-toolchain-reconciliation-v6.delta.bundle is okay
+The bundle contains this ref:
+6eaec2898be8030694f5430f1ca8a21ee62202bd refs/heads/audit/t00-t42-osv-toolchain-reconciliation-v6
+The bundle requires this ref:
+89dea8888fefd50422d1bd509f88079833fafbdc 
+The bundle uses this hash algorithm: sha1
+[OSV_RECONCILIATION] bundle_verify_exit=0
+[90m4:31AM[0m [32mINF[0m scan completed in 36.7ms
+[90m4:31AM[0m [32mINF[0m no leaks found
+[OSV_RECONCILIATION] gitleaks_exit=0
+dangling commit 89dea8888fefd50422d1bd509f88079833fafbdc
+[OSV_RECONCILIATION] final_fsck_exit=0
+[LICENSE_TRIAGE] branch=audit/t00-t42-license-compliance-triage-v6
+[LICENSE_TRIAGE] remote_sha=0931ec8905b4b38ce9ce1f5d195287dae02267b3
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_LICENSE_TRIAGE'...
+[LICENSE_TRIAGE] clone_exit=0
+[LICENSE_TRIAGE] fsck_before_exit=0
+[LICENSE_TRIAGE] local_head=0931ec8905b4b38ce9ce1f5d195287dae02267b3 head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-license-compliance-triage-v6'.
+[LICENSE_TRIAGE] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+fatal: write error: No space left on device
+fatal: index-pack failed
+fatal: could not fetch 3339fd4f5ef47676183e4c18e25eeb9b6a5855e1 from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_LICENSE_TRIAGE/.git/lfs/logs/20260825T043700.287596565.log'.
+Use `git lfs logs last` to view the log.
+[LICENSE_TRIAGE] lfs_targeted_exit=0
+[LICENSE_TRIAGE] zip_expected=ab86ae3be472954048267633b697cdeb2d2f2a4886539408eb23d2f242a4f307 zip_actual=ab86ae3be472954048267633b697cdeb2d2f2a4886539408eb23d2f242a4f307 zip_sha_exit=0
+[LICENSE_TRIAGE] bundle_expected=7c9b838ba5f822265f59d4a8e1cf0e114bcf4bd115e77e189cbd2b138cfc47e1 bundle_actual=7c9b838ba5f822265f59d4a8e1cf0e114bcf4bd115e77e189cbd2b138cfc47e1 bundle_sha_exit=0
+Archive:  evidence/license-compliance-triage-v6.zip
+    testing: LICENSE-COMPLIANCE-TRIAGE/   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/LICENSE-COMPLIANCE-TRIAGE.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/MANIFEST.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/SHA256SUMS   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/V6_LICENSE_COMPARE.log   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/V6_LICENSE_COMPLIANCE_MATRIX.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/V6_LICENSE_COUNT.log   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/V6_SBOM_CYCLONEDX_CLEAN.json   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/REGISTER.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/CHANGELOG.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/todo.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/LICENSE-COMPLIANCE-TRIAGE_BASELINE_DISCOVERY_RAW.log   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/LICENSE-COMPLIANCE-TRIAGE-v6.md   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/BUNDLE_VERIFY.log   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/license-compliance-triage-v6.delta.bundle   OK
+    testing: LICENSE-COMPLIANCE-TRIAGE/license-compliance-triage-v6.delta.bundle.portable.sha256   OK
+No errors detected in compressed data of evidence/license-compliance-triage-v6.zip.
+[LICENSE_TRIAGE] unzip_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+LICENSE-COMPLIANCE-TRIAGE-v6.md: OK
+LICENSE-COMPLIANCE-TRIAGE.md: OK
+LICENSE-COMPLIANCE-TRIAGE_BASELINE_DISCOVERY_RAW.log: OK
+REGISTER.md: OK
+V6_LICENSE_COMPARE.log: OK
+V6_LICENSE_COMPLIANCE_MATRIX.md: OK
+V6_LICENSE_COUNT.log: OK
+V6_SBOM_CYCLONEDX_CLEAN.json: OK
+license-compliance-triage-v6.delta.bundle: OK
+license-compliance-triage-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+[LICENSE_TRIAGE] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_OgwFTH' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/license-compliance-triage-v6.delta.bundle is okay
+The bundle contains this ref:
+eb6ecb8eef8db1eab37de48d136f4ff947e79bda refs/heads/audit/t00-t42-license-compliance-triage-v6
+The bundle requires this ref:
+fb9d20c7ffb241104eede582eee9cbd7a3bbc267 
+The bundle uses this hash algorithm: sha1
+[LICENSE_TRIAGE] bundle_verify_exit=0
+[90m4:37AM[0m [32mINF[0m scan completed in 68.8ms
+[90m4:37AM[0m [32mINF[0m no leaks found
+[LICENSE_TRIAGE] gitleaks_exit=0
+dangling commit fb9d20c7ffb241104eede582eee9cbd7a3bbc267
+[LICENSE_TRIAGE] final_fsck_exit=0
+[STATIC_DEBT] branch=audit/t00-t42-static-debt-prioritization-v6
+[STATIC_DEBT] remote_sha=78b6c49ccbe313ae4453c8ec6c042c4828faf296
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_STATIC_DEBT'...
+[STATIC_DEBT] clone_exit=0
+[STATIC_DEBT] fsck_before_exit=0
+[STATIC_DEBT] local_head=78b6c49ccbe313ae4453c8ec6c042c4828faf296 head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-static-debt-prioritization-v6'.
+[STATIC_DEBT] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_ZG7KPw' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_ZG7KPw' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_ZG7KPw' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+fatal: write error: No space left on device
+fatal: index-pack failed
+fatal: could not fetch 68096583dacc3b9f5b24e2f14ae9672913f282d4 from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_STATIC_DEBT/.git/lfs/logs/20260825T044238.736787884.log'.
+Use `git lfs logs last` to view the log.
+[STATIC_DEBT] lfs_targeted_exit=0
+[STATIC_DEBT] zip_expected=e0641cb1254ffac6085e5146251b856c8b40334a44b358864f196a7b6a447e71 zip_actual=e0641cb1254ffac6085e5146251b856c8b40334a44b358864f196a7b6a447e71 zip_sha_exit=0
+[STATIC_DEBT] bundle_expected=1e54450bea38d5aa8b0417030412cec8434eee2e37bccccca6a87560e13ff1b5 bundle_actual=1e54450bea38d5aa8b0417030412cec8434eee2e37bccccca6a87560e13ff1b5 bundle_sha_exit=0
+Archive:  evidence/static-debt-prioritization-v6.zip
+    testing: STATIC-DEBT-PRIORITIZATION/   OK
+    testing: STATIC-DEBT-PRIORITIZATION/REGISTER.md   OK
+    testing: STATIC-DEBT-PRIORITIZATION/CHANGELOG.md   OK
+    testing: STATIC-DEBT-PRIORITIZATION/todo.md   OK
+    testing: STATIC-DEBT-PRIORITIZATION/STATIC-DEBT-PRIORITIZATION_BASELINE_DISCOVERY_RAW.log   OK
+    testing: STATIC-DEBT-PRIORITIZATION/V6_STATIC_DEBT_TRIAGE.md   OK
+    testing: STATIC-DEBT-PRIORITIZATION/V6_STATIC_DEBT_MATRIX_GENERATION.log   OK
+    testing: STATIC-DEBT-PRIORITIZATION/V6_GOLANGCI_FINAL.json   OK
+    testing: STATIC-DEBT-PRIORITIZATION/V6_FULL_REQUALIFICATION_RAW.log   OK
+    testing: STATIC-DEBT-PRIORITIZATION/STATIC-DEBT-PRIORITIZATION-v6.md   OK
+    testing: STATIC-DEBT-PRIORITIZATION/BUNDLE_VERIFY.log   OK
+    testing: STATIC-DEBT-PRIORITIZATION/static-debt-prioritization-v6.delta.bundle   OK
+    testing: STATIC-DEBT-PRIORITIZATION/static-debt-prioritization-v6.delta.bundle.portable.sha256   OK
+    testing: STATIC-DEBT-PRIORITIZATION/MANIFEST.md   OK
+    testing: STATIC-DEBT-PRIORITIZATION/SHA256SUMS   OK
+No errors detected in compressed data of evidence/static-debt-prioritization-v6.zip.
+[STATIC_DEBT] unzip_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+REGISTER.md: OK
+STATIC-DEBT-PRIORITIZATION-v6.md: OK
+STATIC-DEBT-PRIORITIZATION_BASELINE_DISCOVERY_RAW.log: OK
+V6_FULL_REQUALIFICATION_RAW.log: OK
+V6_GOLANGCI_FINAL.json: OK
+V6_STATIC_DEBT_MATRIX_GENERATION.log: OK
+V6_STATIC_DEBT_TRIAGE.md: OK
+static-debt-prioritization-v6.delta.bundle: OK
+static-debt-prioritization-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+[STATIC_DEBT] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_ZG7KPw' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/static-debt-prioritization-v6.delta.bundle is okay
+The bundle contains this ref:
+1565c18be2c55918d429bd9bdf81c787e303ee82 refs/heads/audit/t00-t42-static-debt-prioritization-v6
+The bundle requires this ref:
+fb9d20c7ffb241104eede582eee9cbd7a3bbc267 
+The bundle uses this hash algorithm: sha1
+[STATIC_DEBT] bundle_verify_exit=0
+[90m4:42AM[0m [32mINF[0m scan completed in 119ms
+[90m4:42AM[0m [32mINF[0m no leaks found
+[STATIC_DEBT] gitleaks_exit=0
+dangling commit fb9d20c7ffb241104eede582eee9cbd7a3bbc267
+[STATIC_DEBT] final_fsck_exit=0
+[GITLEAKS_HISTORICAL] branch=audit/t00-t42-gitleaks-historical-method-hardening-v6
+[GITLEAKS_HISTORICAL] remote_sha=6fd0e31f1342be8c4eb067b9c72afa587ecc412e
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_GITLEAKS_HISTORICAL'...
+[GITLEAKS_HISTORICAL] clone_exit=0
+[GITLEAKS_HISTORICAL] fsck_before_exit=0
+[GITLEAKS_HISTORICAL] local_head=6fd0e31f1342be8c4eb067b9c72afa587ecc412e head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-gitleaks-historical-method-hardening-v6'.
+[GITLEAKS_HISTORICAL] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+fatal: sha1 file '.git/objects/pack/tmp_idx_o2Gjf6' write error. Out of diskspace
+fatal: index-pack failed
+fatal: could not fetch 4831e42d222ec7514504d14d01633f7914c73091 from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_GITLEAKS_HISTORICAL/.git/lfs/logs/20260825T044806.049581691.log'.
+Use `git lfs logs last` to view the log.
+[GITLEAKS_HISTORICAL] lfs_targeted_exit=0
+[GITLEAKS_HISTORICAL] zip_expected=11ea9935dd261c466007a9706c182d9174d820ad019af7a49582ee2b3b2a5eb5 zip_actual=11ea9935dd261c466007a9706c182d9174d820ad019af7a49582ee2b3b2a5eb5 zip_sha_exit=0
+[GITLEAKS_HISTORICAL] bundle_expected=67057075cf9465bca55d17f920a80eaf0780b60c878ccab2fce2eec1d5972936 bundle_actual=67057075cf9465bca55d17f920a80eaf0780b60c878ccab2fce2eec1d5972936 bundle_sha_exit=0
+Archive:  evidence/gitleaks-historical-method-hardening-v6.zip
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/REGISTER.md   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/CHANGELOG.md   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/todo.md   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/GITLEAKS-HISTORICAL-METHOD-HARDENING_BASELINE_DISCOVERY_RAW.log   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/V6_GITLEAKS_POST_V5_TREE_SCAN.log   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/GITLEAKS_TREE_V6_1_638a39f6a97e908f1b37fdffc1eecb59a3ee77b3.json   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/GITLEAKS_TREE_V6_2_d3bb8940a462f66cc816ba0a3eec64468f69a5fc.json   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/GITLEAKS_TREE_V6_3_e2fad936d49d35881760f1b15d72ee06802f7bd0.json   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/GITLEAKS_TREE_V6_4_fc080456711dd7f2266911aaec55041fdb1b424c.json   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/gitleaks.toml   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/GITLEAKS_TREE_INVENTORY.tsv   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/BUNDLE_VERIFY.log   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/gitleaks-historical-method-hardening-v6.delta.bundle   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/gitleaks-historical-method-hardening-v6.delta.bundle.portable.sha256   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/MANIFEST.md   OK
+    testing: GITLEAKS-HISTORICAL-METHOD-HARDENING/SHA256SUMS   OK
+No errors detected in compressed data of evidence/gitleaks-historical-method-hardening-v6.zip.
+[GITLEAKS_HISTORICAL] unzip_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+GITLEAKS-HISTORICAL-METHOD-HARDENING_BASELINE_DISCOVERY_RAW.log: OK
+GITLEAKS_TREE_INVENTORY.tsv: OK
+GITLEAKS_TREE_V6_1_638a39f6a97e908f1b37fdffc1eecb59a3ee77b3.json: OK
+GITLEAKS_TREE_V6_2_d3bb8940a462f66cc816ba0a3eec64468f69a5fc.json: OK
+GITLEAKS_TREE_V6_3_e2fad936d49d35881760f1b15d72ee06802f7bd0.json: OK
+GITLEAKS_TREE_V6_4_fc080456711dd7f2266911aaec55041fdb1b424c.json: OK
+REGISTER.md: OK
+V6_GITLEAKS_POST_V5_TREE_SCAN.log: OK
+gitleaks-historical-method-hardening-v6.delta.bundle: OK
+gitleaks-historical-method-hardening-v6.delta.bundle.portable.sha256: OK
+gitleaks.toml: OK
+todo.md: OK
+[GITLEAKS_HISTORICAL] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_h8TSJm' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/gitleaks-historical-method-hardening-v6.delta.bundle is okay
+The bundle contains this ref:
+2420232c77acf31787f985cc09e6d9d988ca6d93 refs/heads/audit/t00-t42-gitleaks-historical-method-hardening-v6
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+[GITLEAKS_HISTORICAL] bundle_verify_exit=0
+[90m4:48AM[0m [32mINF[0m scan completed in 4.15ms
+[90m4:48AM[0m [32mINF[0m no leaks found
+[GITLEAKS_HISTORICAL] gitleaks_exit=0
+dangling commit 999374d99b7996504ba91e421850a2fe84afb78d
+[GITLEAKS_HISTORICAL] final_fsck_exit=0
+[T30_RECONCILIATION] branch=audit/t00-t42-t30-remote-evidence-reconciliation-v6
+[T30_RECONCILIATION] remote_sha=e5241c9076814adf2b4870e4a61b2f8702f1e1fa
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/public_verify_T30_RECONCILIATION'...
+[T30_RECONCILIATION] clone_exit=0
+[T30_RECONCILIATION] fsck_before_exit=0
+[T30_RECONCILIATION] local_head=e5241c9076814adf2b4870e4a61b2f8702f1e1fa head_match=yes
+Your branch is up to date with 'origin/audit/t00-t42-t30-remote-evidence-reconciliation-v6'.
+[T30_RECONCILIATION] sparse_checkout_exit=0
+Scanner error: error in `git ls-tree`: exit status 128 Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_fd8qWY' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+fatal: sha1 file '.git/objects/pack/tmp_rev_bemfda' write error. Out of diskspace
+fatal: index-pack failed
+fatal: could not fetch ac15bb2a1fc0c881c7134aae0a82e33447e81e02 from promisor remote
+
+
+Errors logged to '/home/ubuntu/forgelocal_self_validation_v6/public_verify_T30_RECONCILIATION/.git/lfs/logs/20260825T045336.466205997.log'.
+Use `git lfs logs last` to view the log.
+[T30_RECONCILIATION] lfs_targeted_exit=0
+[T30_RECONCILIATION] zip_expected=abd5b359e4ed69719f224222d940c25b3b99635f28017b7393159ca4893abf8e zip_actual=abd5b359e4ed69719f224222d940c25b3b99635f28017b7393159ca4893abf8e zip_sha_exit=0
+[T30_RECONCILIATION] bundle_expected=f9efb212024775c45da85d0c72cb8f7c5935bd84417a56c7136dd0a633da61ba bundle_actual=f9efb212024775c45da85d0c72cb8f7c5935bd84417a56c7136dd0a633da61ba bundle_sha_exit=0
+Archive:  evidence/t30-remote-evidence-reconciliation-v6.zip
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/REGISTER.md   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/CHANGELOG.md   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/todo.md   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/T30-REMOTE-EVIDENCE-RECONCILIATION_BASELINE_DISCOVERY_RAW.log   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/V6_FINAL_PUBLICATION_VERIFY.log   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/V6_FREEZE_VERIFICATION.log   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/V6_FREEZE_BASELINE_DISCOVERY_RAW.log   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/forgelocal-t00-t42-v6-local-qualified-freeze.zip   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/forgelocal-t00-t42-v6-local-qualified-freeze.zip.portable.sha256   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle.portable.sha256   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/BUNDLE_VERIFY.log   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/t30-remote-evidence-reconciliation-v6.delta.bundle   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/t30-remote-evidence-reconciliation-v6.delta.bundle.portable.sha256   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/MANIFEST.md   OK
+    testing: T30-REMOTE-EVIDENCE-RECONCILIATION/SHA256SUMS   OK
+No errors detected in compressed data of evidence/t30-remote-evidence-reconciliation-v6.zip.
+[T30_RECONCILIATION] unzip_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+REGISTER.md: OK
+T30-REMOTE-EVIDENCE-RECONCILIATION_BASELINE_DISCOVERY_RAW.log: OK
+V6_FINAL_PUBLICATION_VERIFY.log: OK
+V6_FREEZE_BASELINE_DISCOVERY_RAW.log: OK
+V6_FREEZE_VERIFICATION.log: OK
+forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle: OK
+forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle.portable.sha256: OK
+forgelocal-t00-t42-v6-local-qualified-freeze.zip: OK
+forgelocal-t00-t42-v6-local-qualified-freeze.zip.portable.sha256: OK
+t30-remote-evidence-reconciliation-v6.delta.bundle: OK
+t30-remote-evidence-reconciliation-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+[T30_RECONCILIATION] internal_sha_exit=0
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+warning: The last gc run reported the following. Please correct the root cause
+and remove .git/gc.log
+Automatic cleanup will not be performed until the file is removed.
+
+fatal: sha1 file '.git/objects/pack/tmp_pack_fd8qWY' write error. Out of diskspace
+fatal: could not finish pack-objects to repack promisor objects
+fatal: failed to run repack
+
+evidence/t30-remote-evidence-reconciliation-v6.delta.bundle is okay
+The bundle contains this ref:
+ec28f1d6ada270f572b484b1eba6f81584363c05 refs/heads/audit/t00-t42-t30-remote-evidence-reconciliation-v6
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+[T30_RECONCILIATION] bundle_verify_exit=0
+[90m4:53AM[0m [32mINF[0m scan completed in 90.5ms
+[90m4:53AM[0m [32mINF[0m no leaks found
+[T30_RECONCILIATION] gitleaks_exit=0
+dangling commit 999374d99b7996504ba91e421850a2fe84afb78d
+[T30_RECONCILIATION] final_fsck_exit=0

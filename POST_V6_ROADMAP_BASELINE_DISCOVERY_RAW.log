@@ -1,0 +1,1470 @@
+utc=2026-08-25T03:36:44Z
+cwd=/home/ubuntu
+repo=/home/ubuntu/forgelocal_self_validation_v6/repo
+--- git
+727e94bcf2bf40bc9388ee2df82bdb241962e5b2
+audit/t00-t42-v6-findings-remediation
+0
+dangling blob c299ce9b2a1ca95ed6a89a1dd6660cc46f817c70
+dangling blob 7afc5a17adf90919b9e21c1f380ba8322d85a281
+git_fsck_exit=0
+--- remotes
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch)
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
+--- tool versions
+bash: go: command not found
+git version 2.43.0
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+docker_exit=127
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+  UpdatedAt: 2026-08-24 19:00:50.305892687 +0000 UTC
+  NextUpdate: 2026-08-25 19:00:50.305892307 +0000 UTC
+  DownloadedAt: 2026-08-24 22:53:25.450675685 +0000 UTC
+Check Bundle:
+  Digest: sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c
+  DownloadedAt: 2026-08-24 22:53:26.26809121 +0000 UTC
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+8.18.4
+--- policy
+T28 T29 T39 T40 T41 T42 MUST NOT START
+No Camoufox/proxy/cookies/user data/SystemVault/migration/production runtime/release
+V6 branch/tag immutable; all roadmap lots separate
+--- disk
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   42G  6.0G  88% /
+--- commands
+SELF_VALIDATION_BUNDLE_DELTA_VERIFY.log:5: trailing whitespace.
+[32m+[m[32m861880e56f13866346cf974110a01c8a890b86e2[m[41m [m
+SELF_VALIDATION_SUMMARY.md:3: trailing whitespace.
+[32m+[m[32m**Date :** 2026-08-24 UTC[m[41m  [m
+SELF_VALIDATION_SUMMARY.md:4: trailing whitespace.
+[32m+[m[32m**Dépôt :** [forgelocal-public-sanitized](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized)[m[41m  [m
+SELF_VALIDATION_SUMMARY.md:5: trailing whitespace.
+[32m+[m[32m**Branche source vérifiée :** `audit/t00-t42-prehuman-validation`[m[41m  [m
+SELF_VALIDATION_SUMMARY.md:6: trailing whitespace.
+[32m+[m[32m**HEAD vérifié :** `861880e56f13866346cf974110a01c8a890b86e2`[m[41m  [m
+SELF_VALIDATION_V6_REPORT.md:5: trailing whitespace.
+[32m+[m[32m**Branche de travail :** `audit/t00-t42-v6-findings-remediation`[m[41m  [m
+SELF_VALIDATION_V6_REPORT.md:6: trailing whitespace.
+[32m+[m[32m**Origine immuable :** `audit/t00-t42-self-validation-synthetic-e2e`, HEAD V5 `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`[m[41m  [m
+SELF_VALIDATION_V6_REPORT.md:7: trailing whitespace.
+[32m+[m[32m**Baseline :** tag `t00-t27-complete-20260820`, résolu à `72d54110c89583beacc556bb103f881b667d8137`[m[41m  [m
+V6_CODE_DIFF.patch:10: space before tab in indent.
+[32m+[m[41m [m		[32mfmt.Fprintf(stderr, "mcp-config %s does not accept positional arguments: %s\n", mode, strings.Join(fs.Args(), " "))[m[m
+V6_CODE_DIFF.patch:11: space before tab in indent.
+[32m+[m[41m [m		[32mreturn 2[m[m
+V6_CODE_DIFF.patch:12: space before tab in indent.
+[32m+[m[41m [m	[32m}[m[m
+V6_CODE_DIFF.patch:15: space before tab in indent.
+[32m+[m[41m [m	[32mswitch mode {[m[m
+V6_CODE_DIFF.patch:16: space before tab in indent.
+[32m+[m[41m [m	[32mcase "stdio":[m[m
+V6_CODE_DIFF.patch:17: space before tab in indent.
+[32m+[m[41m [m		[32mexe, err := os.Executable()[m[m
+V6_CODE_DIFF.patch:222: space before tab in indent.
+[32m+[m[41m [m	[32mgithub.com/mattn/go-isatty v0.0.24 // indirect[m[m
+V6_CODE_DIFF.patch:223: space before tab in indent.
+[32m+[m[41m [m	[32mgithub.com/ncruces/go-strftime v1.0.0 // indirect[m[m
+V6_CODE_DIFF.patch:224: space before tab in indent.
+[32m+[m[41m [m	[32mgithub.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect[m[m
+V6_CODE_DIFF.patch:226: space before tab in indent.
+[32m+[m[41m [m	[32mgolang.org/x/sys v0.47.0 // indirect[m[m
+V6_CODE_DIFF.patch:228: space before tab in indent.
+[32m+[m[41m [m	[32mmodernc.org/libc v1.74.4 // indirect[m[m
+V6_CODE_DIFF.patch:229: space before tab in indent.
+[32m+[m[41m [m	[32mmodernc.org/mathutil v1.7.1 // indirect[m[m
+V6_CODE_DIFF.patch:230: space before tab in indent.
+[32m+[m[41m [m	[32mmodernc.org/memory v1.11.0 // indirect[m[m
+V6_CODE_DIFF.patch:273: space before tab in indent.
+[32m+[m[41m [m		[32mreturn[m[m
+V6_CODE_DIFF.patch:274: space before tab in indent.
+[32m+[m[41m [m	[32m}[m[m
+V6_CODE_DIFF.patch:278: space before tab in indent.
+[32m+[m[41m [m	[32mif req.Timeout > 0 {[m[m
+V6_CODE_DIFF.patch:279: space before tab in indent.
+[32m+[m[41m [m		[32mopts.Timeout = playwright.Float(req.Timeout)[m[m
+V6_CODE_DIFF.patch:280: space before tab in indent.
+[32m+[m[41m [m	[32m}[m[m
+V6_CODE_DIFF.patch:284: space before tab in indent.
+[32m+[m[41m [m	[32mif err != nil {[m[m
+V6_CODE_DIFF.patch:285: space before tab in indent.
+[32m+[m[41m [m		[32mwriteError(w, 408, "TIMEOUT", err.Error())[m[m
+V6_CODE_DIFF.patch:286: space before tab in indent.
+[32m+[m[41m [m		[32mreturn[m[m
+V6_DASHBOARD_BUILD.log:20: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+V6_DASHBOARD_BUILD_AXE.log:20: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+V6_SEMGREP_AFTER.log:4: trailing whitespace.
+[32m+[m[41m               [m
+V6_SEMGREP_AFTER.log:5: trailing whitespace.
+[32m+[m[41m               [m
+V6_SEMGREP_AFTER.log:10: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+V6_SEMGREP_AFTER.log:11: trailing whitespace.
+[32m+[m[32m  Language   Rules   Files          Origin   Rules[m[41m                                                                      [m
+V6_SEMGREP_AFTER.log:12: trailing whitespace.
+[32m+[m[32m ──────────────────────────        ────────────────[m[41m                                                                     [m
+V6_SEMGREP_AFTER.log:13: trailing whitespace.
+[32m+[m[32m  go             2      87          Custom       4[m[41m                                                                      [m
+V6_SEMGREP_AFTER.log:14: trailing whitespace.
+[32m+[m[32m  ts             2      79[m[41m                                                                                              [m
+V6_SEMGREP_AFTER.log:15: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+V6_SEMGREP_AFTER.log:16: trailing whitespace.
+[32m+[m[41m                [m
+V6_SEMGREP_AFTER.log:17: trailing whitespace.
+[32m+[m[41m                [m
+V6_SEMGREP_AFTER.log:26: trailing whitespace.
+[32m+[m[32m • Scan skipped:[m[41m [m
+V6_SEMGREP_AFTER.stderr.log:1: trailing whitespace.
+[32m+[m[41m               [m
+V6_SEMGREP_AFTER.stderr.log:2: trailing whitespace.
+[32m+[m[41m               [m
+V6_SEMGREP_AFTER.stderr.log:7: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+V6_SEMGREP_AFTER.stderr.log:8: trailing whitespace.
+[32m+[m[32m  Language   Rules   Files          Origin   Rules[m[41m                                                                      [m
+V6_SEMGREP_AFTER.stderr.log:9: trailing whitespace.
+[32m+[m[32m ──────────────────────────        ────────────────[m[41m                                                                     [m
+V6_SEMGREP_AFTER.stderr.log:10: trailing whitespace.
+[32m+[m[32m  go             2      87          Custom       4[m[41m                                                                      [m
+V6_SEMGREP_AFTER.stderr.log:11: trailing whitespace.
+[32m+[m[32m  ts             2      79[m[41m                                                                                              [m
+V6_SEMGREP_AFTER.stderr.log:12: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+V6_SEMGREP_AFTER.stderr.log:13: trailing whitespace.
+[32m+[m[41m                [m
+V6_SEMGREP_AFTER.stderr.log:14: trailing whitespace.
+[32m+[m[41m                [m
+V6_SEMGREP_AFTER.stderr.log:23: trailing whitespace.
+[32m+[m[32m • Scan skipped:[m[41m [m
+V6_V5_REPORT_INHERITED.md:3: trailing whitespace.
+[32m+[m[32m**Date d’exécution :** 2026-08-25 UTC[m[41m  [m
+V6_V5_REPORT_INHERITED.md:4: trailing whitespace.
+[32m+[m[32m**Dépôt :** [forgelocal-public-sanitized][1][m[41m  [m
+V6_V5_REPORT_INHERITED.md:5: trailing whitespace.
+[32m+[m[32m**Branche source vérifiée :** `audit/t00-t42-self-validation-synthetic-e2e`[m[41m  [m
+V6_V5_REPORT_INHERITED.md:6: trailing whitespace.
+[32m+[m[32m**HEAD source vérifié :** `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`[m[41m  [m
+V6_V5_REPORT_INHERITED.md:7: trailing whitespace.
+[32m+[m[32m**Baseline demandée :** tag `t00-t27-complete-20260820`, résolu dans le clone neuf vers `72d54110c89583beacc556bb103f881b667d8137`[m[41m  [m
+V6_V5_REPORT_INHERITED.md:8: trailing whitespace.
+[32m+[m[32m**Nombre de commits baseline..HEAD :** 58[m[41m  [m
+docs/SELF_VALIDATION_V4_SUMMARY.md:3: trailing whitespace.
+[32m+[m[32m**Date :** 2026-08-24 UTC[m[41m  [m
+docs/SELF_VALIDATION_V4_SUMMARY.md:4: trailing whitespace.
+[32m+[m[32m**Dépôt :** [forgelocal-public-sanitized](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized)[m[41m  [m
+docs/SELF_VALIDATION_V4_SUMMARY.md:5: trailing whitespace.
+[32m+[m[32m**Branche source vérifiée :** `audit/t00-t42-prehuman-validation`[m[41m  [m
+docs/SELF_VALIDATION_V4_SUMMARY.md:6: trailing whitespace.
+[32m+[m[32m**HEAD vérifié :** `861880e56f13866346cf974110a01c8a890b86e2`[m[41m  [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=df -h /[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:15: trailing whitespace.
+[32m+[m[32mcommand=df -h /home/ubuntu[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:26: trailing whitespace.
+[32m+[m[32mcommand=bash -c du\ -sh\ /home/ubuntu/\*\ 2\>/dev/null\ \|\ sort\ -h\ \|\ tail\ -20[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:55: trailing whitespace.
+[32m+[m[32mcommand=git --version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:65: trailing whitespace.
+[32m+[m[32mcommand=git lfs version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:75: trailing whitespace.
+[32m+[m[32mcommand=go version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:85: trailing whitespace.
+[32m+[m[32mcommand=node --version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:95: trailing whitespace.
+[32m+[m[32mcommand=pnpm --version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:105: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/gitleaks version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:115: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/go/bin/gosec -version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:118: trailing whitespace.
+[32m+[m[32mGit tag:[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:119: trailing whitespace.
+[32m+[m[32mBuild date:[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:127: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/go/bin/staticcheck -version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:137: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/go/bin/govulncheck -version[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:152: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ golangci-lint\ \&\&\ golangci-lint\ version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:163: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ trivy\ \&\&\ trivy\ --version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:174: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ osv-scanner\ \&\&\ osv-scanner\ --version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:187: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ syft\ \&\&\ syft\ version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:206: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ shellcheck\ \&\&\ shellcheck\ --version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:220: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ yamllint\ \&\&\ yamllint\ --version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:231: trailing whitespace.
+[32m+[m[32mcommand=bash -c command\ -v\ jq\ \&\&\ jq\ --version\ \|\|\ exit\ 127[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:242: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:252: trailing whitespace.
+[32m+[m[32mcommand=git rev-parse t00-t27-complete-20260820\^\{commit\}[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:262: trailing whitespace.
+[32m+[m[32mcommand=git rev-parse t00-t27-complete-20260820\^\{tag\}[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:272: trailing whitespace.
+[32m+[m[32mcommand=git show-ref --verify refs/tags/t00-t27-complete-20260820[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BASELINE_DISCOVERY_RAW.log:282: trailing whitespace.
+[32m+[m[32mcommand=bash -c grep\ -RIn\ \"git\ lfs\ pull\"\ /home/ubuntu/run_prehuman\*\ /home/ubuntu/build_\*\ 2\>/dev/null\ \|\|\ true[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_BUNDLE_VERIFY_RAW.log:9: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=sha256sum -c forgelocal-t28-t42-prehuman-validation.zip.portable.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:14: trailing whitespace.
+[32m+[m[32mcommand=unzip -t forgelocal-t28-t42-prehuman-validation.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:45: trailing whitespace.
+[32m+[m[32mcommand=unzip -q forgelocal-t28-t42-prehuman-validation.zip -d /tmp/tmp.Exm4LUTjlN/extracted[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:54: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ SHA256SUMS bash /tmp/tmp.Exm4LUTjlN/extracted[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:81: trailing whitespace.
+[32m+[m[32mcommand=bash -c /home/ubuntu/bin/gitleaks\ detect\ --source\ \"\$1\"\ --no-git\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$2\" bash /tmp/tmp.Exm4LUTjlN/extracted /tmp/tmp.Exm4LUTjlN/EXTRACTED_GITLEAKS.json[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:92: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$2\"\ \&\&\ git\ bundle\ verify\ \"\$1\" bash /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle /home/ubuntu/t30-master-independent-validation-20260824/clone[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:98: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:107: trailing whitespace.
+[32m+[m[32mcommand=env GIT_LFS_SKIP_SMUDGE=1 git clone /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle /tmp/tmp.Exm4LUTjlN/clone-neuf[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:111: trailing whitespace.
+[32m+[m[32merror: 69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:120: trailing whitespace.
+[32m+[m[32mcommand=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline init --quiet[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:129: trailing whitespace.
+[32m+[m[32mcommand=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline fetch --quiet /home/ubuntu/t30-master-independent-validation-20260824/clone 69411e65c880d168832a65fc8475cc97d562a9ad:refs/heads/baseline[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:138: trailing whitespace.
+[32m+[m[32mcommand=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline fetch --quiet /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle HEAD[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:147: trailing whitespace.
+[32m+[m[32mcommand=env GIT_LFS_SKIP_SMUDGE=1 git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline checkout --quiet --detach 6ae02e4ceed239b9310fbf3fccb1b5170117251e[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_DELIVERY_CONSERVATION_RAW.log:156: trailing whitespace.
+[32m+[m[32mcommand=git -C /tmp/tmp.Exm4LUTjlN/clone-avec-baseline fsck --full[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=bash -c printf\ \"branch=%s\\n\"\ \"\$\(git\ branch\ --show-current\)\"\;\ printf\ \"head=%s\\n\"\ \"\$\(git\ rev-parse\ HEAD\)\"\;\ printf\ \"free_kib=%s\\n\"\ \"\$\(df\ -Pk\ .\ \|\ awk\ \"NR==2\ \{print\ \\\\\$4\}\"\)\"[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:18: trailing whitespace.
+[32m+[m[32mcommand=git status --porcelain=v1 --branch[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:29: trailing whitespace.
+[32m+[m[32mcommand=git fsck --full[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:39: trailing whitespace.
+[32m+[m[32mcommand=bash -c git\ rev-parse\ \"t00-t27-complete-20260820\^\{commit\}\"\;\ git\ rev-parse\ \"t00-t27-complete-20260820\^\{tag\}\"[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:51: trailing whitespace.
+[32m+[m[32mcommand=git diff --check t00-t27-complete-20260820..HEAD[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:61: trailing whitespace.
+[32m+[m[32mcommand=git lfs fsck[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:72: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-correction.delta.bundle.portable.sha256\" bash /tmp/tmp.qJYYdyp3FB[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:83: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-evidence-correction.zip.portable.sha256\" bash /tmp/tmp.e19U5rIDas[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:94: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-correction-v2.delta.bundle.portable.sha256\" bash /tmp/tmp.oTTIEkvwbD[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:105: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-evidence-correction-v2.zip.portable.sha256\" bash /tmp/tmp.o4gRyltkrj[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:116: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t31-canvas-webgl-audio.bundle.portable.sha256\" bash /tmp/tmp.yn2EcgAQLz[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:127: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t31-evidence.zip.portable.sha256\" bash /tmp/tmp.oVbSfpBQGN[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:138: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t32-client-rects.bundle.portable.sha256\" bash /tmp/tmp.bQ0acLBvna[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:149: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t32-evidence.zip.portable.sha256\" bash /tmp/tmp.5HAJ9SzylS[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:160: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t33-evidence.zip.portable.sha256\" bash /tmp/tmp.SqXcsYWeuJ[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:171: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t33-synthetic-geolocation.bundle.portable.sha256\" bash /tmp/tmp.xZm5F0cQ9J[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:182: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t34-evidence.zip.portable.sha256\" bash /tmp/tmp.wXDbo64O0D[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:193: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t34-hardware-diagnostics.bundle.portable.sha256\" bash /tmp/tmp.1IrWfBTH2p[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:204: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t35-evidence.zip.portable.sha256\" bash /tmp/tmp.IfWCjdNbmQ[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:215: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t35-font-bundle.bundle.portable.sha256\" bash /tmp/tmp.9YuPWLbvlc[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:226: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t36-drift-detection.bundle.portable.sha256\" bash /tmp/tmp.qCXOQQsdwn[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:237: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t36-evidence.zip.portable.sha256\" bash /tmp/tmp.XkxzU1ie35[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:248: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t37-evidence.zip.portable.sha256\" bash /tmp/tmp.KYWUNemAwN[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:259: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t37-profile-health.bundle.portable.sha256\" bash /tmp/tmp.miNB4kgvAk[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:270: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t38-evidence.zip.portable.sha256\" bash /tmp/tmp.PfeARlT5DT[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:281: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t38-session-lifecycle.bundle.portable.sha256\" bash /tmp/tmp.EPDyAmXJXv[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:292: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t42-compact.bundle.portable.sha256\" bash /tmp/tmp.aWWRuvfBjL[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:303: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t42-evidence-compact.zip.portable.sha256\" bash /tmp/tmp.kvmi8ZvI4I[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:314: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T28_T42_CORRECTION/forgelocal-t28-t42-evidence-correction.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:325: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.4JGxnyrHjv /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION/forgelocal-t28-t42-evidence-correction.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:355: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-evidence-correction-v2.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:366: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.bepwi6KSHy /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-evidence-correction-v2.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:380: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T31/forgelocal-t31-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:391: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.oxSN3kh57i /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T31/forgelocal-t31-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:404: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T32/forgelocal-t32-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:415: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.pkpIlD7GAx /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T32/forgelocal-t32-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:434: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T33/forgelocal-t33-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:445: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.9IZnFfgy6f /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T33/forgelocal-t33-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:464: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T34/forgelocal-t34-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:475: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.dTHhgWYUQV /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T34/forgelocal-t34-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:494: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T35/forgelocal-t35-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:505: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.IW8TIaim27 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T35/forgelocal-t35-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:524: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T36/forgelocal-t36-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:535: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.nYTiAwdG44 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T36/forgelocal-t36-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:554: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T37/forgelocal-t37-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:565: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.pKwpz8xInZ /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T37/forgelocal-t37-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:584: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T38/forgelocal-t38-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:595: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.ZHq4NPRJTm /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T38/forgelocal-t38-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:614: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T39/forgelocal-t39-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:625: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.iRCLyLoFcr /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T39/forgelocal-t39-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:644: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T40/forgelocal-t40-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:655: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.FAkcOWd312 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T40/forgelocal-t40-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:674: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T41/forgelocal-t41-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:685: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.OiUXQNgel6 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T41/forgelocal-t41-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:704: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T42/forgelocal-t42-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:715: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.k05YOzu9hS /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T42/forgelocal-t42-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:735: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T28_T42_CORRECTION/forgelocal-t28-t42-correction.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:741: trailing whitespace.
+[32m+[m[32m6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:751: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION/forgelocal-t28-t42-correction.delta.bundle /tmp/tmp.LjfqwNsx7D /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:762: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-correction-v2.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:768: trailing whitespace.
+[32m+[m[32m59882a9bcac8755c0fb8a294be32a6b1d1ff4598[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:778: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-correction-v2.delta.bundle /tmp/tmp.kI4FeVhmP2 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:789: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T31/forgelocal-t31-canvas-webgl-audio.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:795: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:805: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T31/forgelocal-t31-canvas-webgl-audio.bundle /tmp/tmp.RfKRH7VxaP /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:816: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T32/forgelocal-t32-client-rects.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:822: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:832: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T32/forgelocal-t32-client-rects.bundle /tmp/tmp.HlMzzb8niB /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:843: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T33/forgelocal-t33-synthetic-geolocation.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:849: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:859: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T33/forgelocal-t33-synthetic-geolocation.bundle /tmp/tmp.e1c9E2R4Be /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:870: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T34/forgelocal-t34-hardware-diagnostics.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:876: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:886: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T34/forgelocal-t34-hardware-diagnostics.bundle /tmp/tmp.ACDfLIT423 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:897: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T35/forgelocal-t35-font-bundle.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:903: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:913: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T35/forgelocal-t35-font-bundle.bundle /tmp/tmp.0t7o6m9KSN /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:924: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T36/forgelocal-t36-drift-detection.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:930: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:940: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T36/forgelocal-t36-drift-detection.bundle /tmp/tmp.AwcHcnH4xR /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:953: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ /home/ubuntu/go/bin/gosec\ -fmt=json\ -out=\"\$2/07_gosec_baseline.json\"\ ./... bash /tmp/tmp.9D77587XA1 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1058: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T37/forgelocal-t37-profile-health.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1064: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1074: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T37/forgelocal-t37-profile-health.bundle /tmp/tmp.EXNpeEceB2 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1125: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ /home/ubuntu/go/bin/gosec\ -fmt=json\ -out=\"\$2/08_gosec_head.json\"\ ./... bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1288: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/forgelocal-prehuman-validation-20260824/normalize_gosec_comparison.py /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1307: trailing whitespace.
+[32m+[m[32mcommand=bash -c test\ \"\$\(git\ rev-parse\ HEAD\)\"\ =\ \"6ae02e4ceed239b9310fbf3fccb1b5170117251e\"\;\ grep\ -Fq\ \"PENDING_REMOTE_EVIDENCE_RECONCILIATION\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"evidence/T42_DELIVERY.md\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"BASELINE_RECONSTRUCTION_POSTHOC_RAW.log\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"audit/t28-t42-evidence-correction\"\ evidence/T28_T42_CORRECTION_V2/CORRECTION_V2_DELIVERY.md[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1317: trailing whitespace.
+[32m+[m[32mcommand=bash -c grep\ -RInE\ \"PUBLIC_RELEASE_BLOCKED\|SCAN_BLOCKED_UNKNOWN\|NATIVE_SYSTEMVAULT_NOT_TESTED\|camoflox_execution_authorized=false\|t08_authorized=false\|release_authorized=false\"\ docs\ evidence/T28_T42_CORRECTION\ evidence/T28_T42_CORRECTION_V2\ \|\ head\ -80[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1345: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:866:La roadmap ne modifie pas les statuts actuels : le RC BACK-01 reste gelé, `PUBLIC_RELEASE_BLOCKED` reste actif, Camoufox reste non lançable tant que sa qualification n’est pas terminée et aucun module de contournement n’est ajouté.[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1346: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:920:| `SCAN_BLOCKED_UNKNOWN` | Bloquant | Triage indépendant de l’alerte historique de provenance du RC, distincte du triage Camoflox T07 |[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1347: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:927:> **Statuts maintenus :** `PUBLIC_RELEASE_BLOCKED`, pilote suspendu, cinq gates publics en attente. T07 ne lève aucun de ces gates.[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1387: trailing whitespace.
+[32m+[m[32mcommand=bash -c \!\ grep\ -RInE\ \"camoflox_execution_authorized=true\|t08_authorized=true\|release_authorized=true\"\ docs\ evidence\ \>/dev/null\ \&\&\ \!\ find\ evidence\ -type\ f\ \|\ grep\ -E\ \"runtime-execution\|cookie-capture\|proxy-live\|systemvault-live\|release-artifact\"\ \>/dev/null[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1403: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T38/forgelocal-t38-session-lifecycle.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1409: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1419: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T38/forgelocal-t38-session-lifecycle.bundle /tmp/tmp.2Ct4JO5oc8 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1430: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T39/forgelocal-t39-blocked.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1436: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1446: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T39/forgelocal-t39-blocked.bundle /tmp/tmp.QGviPszIKp /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1457: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T40/forgelocal-t40-integration-gated.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1463: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1473: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T40/forgelocal-t40-integration-gated.bundle /tmp/tmp.UJYUe2iX40 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1484: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T41/forgelocal-t41-delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1490: trailing whitespace.
+[32m+[m[32m077ba90b2c522415aeefdc2d651c457b8c59683d[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1500: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T41/forgelocal-t41-delta.bundle /tmp/tmp.qTTyoZ0f6j /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1511: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T42/forgelocal-t42-compact.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1517: trailing whitespace.
+[32m+[m[32m944376fd1c9d22dad44730854ce4b2d6203c743b[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1527: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T42/forgelocal-t42-compact.bundle /tmp/tmp.zKPgTqsGaa /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1538: trailing whitespace.
+[32m+[m[32mcommand=go test -count=1 -race ./...[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1580: trailing whitespace.
+[32m+[m[32mcommand=go vet ./...[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1590: trailing whitespace.
+[32m+[m[32mcommand=go build ./...[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1600: trailing whitespace.
+[32m+[m[32mcommand=bash -c syft\ dir:\"\$1\"\ -o\ cyclonedx-json\ \>\ \"\$2/PREHUMAN_T00_T42_SBOM.cdx.json\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GLOBAL_QUALIFICATION_RAW.log:1611: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -o\ pipefail\;\ git\ diff\ --binary\ \"t00-t27-complete-20260820..HEAD\"\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$1/06_gitleaks_cumulative.json\" bash /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=git lfs fsck[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:14: trailing whitespace.
+[32m+[m[32mcommand=bash -c cat\ \"\$1\"/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00\ \"\$1\"/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01\ \>\ \"\$2/forgelocal-continuation-t00-t23-20260819.zip\"\ \&\&\ sha256sum\ \"\$2/forgelocal-continuation-t00-t23-20260819.zip\"\ \&\&\ test\ \"\$\(sha256sum\ \"\$2/forgelocal-continuation-t00-t23-20260819.zip\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\"\ =\ 0046e99e22ad1498a6307f4acd43d1cebbb7c317d47edee16329fc38b59b924d bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27 /tmp/tmp.BI61relEtI[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:24: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq /tmp/tmp.BI61relEtI/forgelocal-continuation-t00-t23-20260819.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:34: trailing whitespace.
+[32m+[m[32mcommand=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t24-bulk-evidence-7f63c71.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:44: trailing whitespace.
+[32m+[m[32mcommand=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:54: trailing whitespace.
+[32m+[m[32mcommand=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t26-simulated-provider-930003c.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:64: trailing whitespace.
+[32m+[m[32mcommand=bash -c actual=\$\(sha256sum\ \"\$1/\$2\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ expected=\$\(grep\ -F\ \"\ \$2\"\ \"\$1/../T27_T00_T27_PACKAGE_MANIFEST.sha256\"\ \|\ cut\ -d\"\ \"\ -f1\)\;\ printf\ \"%s\ %s\\\\n\"\ \"\$actual\"\ \"\$2\"\;\ test\ \"\$actual\"\ =\ \"\$expected\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages forgelocal-t27-r1-local-continuation-full.tar.gz[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:74: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:84: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:94: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:104: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:114: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:124: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:150: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:156: trailing whitespace.
+[32m+[m[32mdf50a2b242f74558d2e405f099bdfe6db6437c9c[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:165: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:171: trailing whitespace.
+[32m+[m[32md993289b415ff96ed68a1fde52b50d39db63c0c4[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:180: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:186: trailing whitespace.
+[32m+[m[32ma912cd6ee77ea853a1374e94a5d21932d04e0356[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:195: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:201: trailing whitespace.
+[32m+[m[32m967d29311e7d39a9bf41cbaa9f0ec3c0e48e830a[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:210: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR01 continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:220: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR01 continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:230: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR02 continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:240: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR02 continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:250: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR03 continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:260: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR03 continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:270: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR04 continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:280: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR04 continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:290: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR05 continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:300: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$2\"\)\" bash continuation/T27-R1/evidence/CR05 continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:310: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ ../T27_T00_T27_PACKAGE_MANIFEST.sha256 bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27/archive-packages[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_HISTORICAL_AUDIT_RAW.log:326: trailing whitespace.
+[32m+[m[32mcommand=bash -c cp\ \"\$1/T00_T27_PACKAGE_CHUNKS.sha256\"\ \"\$2/\"\;\ \(cd\ \"\$2\"\ \&\&\ sha256sum\ -c\ T00_T27_PACKAGE_CHUNKS.sha256\) bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/continuation/T00-T27 /tmp/tmp.BI61relEtI[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=bash -c printf\ \"branch=%s\\n\"\ \"\$\(git\ branch\ --show-current\)\"\;\ printf\ \"head=%s\\n\"\ \"\$\(git\ rev-parse\ HEAD\)\"\;\ printf\ \"free_kib=%s\\n\"\ \"\$\(df\ -Pk\ .\ \|\ awk\ \"NR==2\ \{print\ \\\\\$4\}\"\)\"[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:18: trailing whitespace.
+[32m+[m[32mcommand=git status --porcelain=v1 --branch[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:29: trailing whitespace.
+[32m+[m[32mcommand=git fsck --full[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:39: trailing whitespace.
+[32m+[m[32mcommand=bash -c git\ rev-parse\ \"t00-t27-complete-20260820\^\{commit\}\"\;\ git\ rev-parse\ \"t00-t27-complete-20260820\^\{tag\}\"[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:51: trailing whitespace.
+[32m+[m[32mcommand=git diff --check t00-t27-complete-20260820..HEAD[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:61: trailing whitespace.
+[32m+[m[32mcommand=git lfs fsck[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:72: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-correction.delta.bundle.portable.sha256\" bash /tmp/tmp.qJYYdyp3FB[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:83: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-evidence-correction.zip.portable.sha256\" bash /tmp/tmp.e19U5rIDas[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:94: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-correction-v2.delta.bundle.portable.sha256\" bash /tmp/tmp.oTTIEkvwbD[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:105: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t28-t42-evidence-correction-v2.zip.portable.sha256\" bash /tmp/tmp.o4gRyltkrj[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:116: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t31-canvas-webgl-audio.bundle.portable.sha256\" bash /tmp/tmp.yn2EcgAQLz[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:127: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t31-evidence.zip.portable.sha256\" bash /tmp/tmp.oVbSfpBQGN[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:138: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t32-client-rects.bundle.portable.sha256\" bash /tmp/tmp.bQ0acLBvna[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:149: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t32-evidence.zip.portable.sha256\" bash /tmp/tmp.5HAJ9SzylS[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:160: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t33-evidence.zip.portable.sha256\" bash /tmp/tmp.SqXcsYWeuJ[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:171: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t33-synthetic-geolocation.bundle.portable.sha256\" bash /tmp/tmp.xZm5F0cQ9J[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:182: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t34-evidence.zip.portable.sha256\" bash /tmp/tmp.wXDbo64O0D[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:193: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t34-hardware-diagnostics.bundle.portable.sha256\" bash /tmp/tmp.1IrWfBTH2p[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:204: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t35-evidence.zip.portable.sha256\" bash /tmp/tmp.IfWCjdNbmQ[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:215: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t35-font-bundle.bundle.portable.sha256\" bash /tmp/tmp.9YuPWLbvlc[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:226: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t36-drift-detection.bundle.portable.sha256\" bash /tmp/tmp.qCXOQQsdwn[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:237: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t36-evidence.zip.portable.sha256\" bash /tmp/tmp.XkxzU1ie35[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:248: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t37-evidence.zip.portable.sha256\" bash /tmp/tmp.KYWUNemAwN[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:259: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t37-profile-health.bundle.portable.sha256\" bash /tmp/tmp.miNB4kgvAk[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:270: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t38-evidence.zip.portable.sha256\" bash /tmp/tmp.PfeARlT5DT[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:281: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t38-session-lifecycle.bundle.portable.sha256\" bash /tmp/tmp.EPDyAmXJXv[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:292: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t42-compact.bundle.portable.sha256\" bash /tmp/tmp.aWWRuvfBjL[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:303: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ \"forgelocal-t42-evidence-compact.zip.portable.sha256\" bash /tmp/tmp.kvmi8ZvI4I[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:314: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T28_T42_CORRECTION/forgelocal-t28-t42-evidence-correction.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:325: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.4JGxnyrHjv /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION/forgelocal-t28-t42-evidence-correction.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:355: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-evidence-correction-v2.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:366: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.bepwi6KSHy /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-evidence-correction-v2.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:380: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T31/forgelocal-t31-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:391: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.oxSN3kh57i /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T31/forgelocal-t31-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:404: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T32/forgelocal-t32-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:415: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.pkpIlD7GAx /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T32/forgelocal-t32-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:434: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T33/forgelocal-t33-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:445: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.9IZnFfgy6f /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T33/forgelocal-t33-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:464: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T34/forgelocal-t34-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:475: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.dTHhgWYUQV /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T34/forgelocal-t34-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:494: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T35/forgelocal-t35-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:505: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.IW8TIaim27 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T35/forgelocal-t35-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:524: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T36/forgelocal-t36-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:535: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.nYTiAwdG44 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T36/forgelocal-t36-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:554: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T37/forgelocal-t37-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:565: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.pKwpz8xInZ /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T37/forgelocal-t37-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:584: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T38/forgelocal-t38-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:595: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.ZHq4NPRJTm /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T38/forgelocal-t38-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:614: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T39/forgelocal-t39-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:625: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.iRCLyLoFcr /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T39/forgelocal-t39-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:644: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T40/forgelocal-t40-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:655: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.FAkcOWd312 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T40/forgelocal-t40-evidence.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:674: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T41/forgelocal-t41-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:685: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.OiUXQNgel6 /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T41/forgelocal-t41-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:704: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq evidence/T42/forgelocal-t42-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:715: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\;\ mkdir\ -p\ \"\$1/extracted\"\;\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\;\ manifest=\$\(find\ \"\$1/extracted\"\ -maxdepth\ 2\ -type\ f\ -name\ \"\*MANIFEST\*SHA256SUMS\"\ \|\ head\ -1\)\;\ test\ -n\ \"\$manifest\"\;\ \(cd\ \"\$\(dirname\ \"\$manifest\"\)\"\ \&\&\ sha256sum\ -c\ \"\$\(basename\ \"\$manifest\"\)\"\) bash /tmp/tmp.k05YOzu9hS /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T42/forgelocal-t42-evidence-compact.zip[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:735: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T28_T42_CORRECTION/forgelocal-t28-t42-correction.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:741: trailing whitespace.
+[32m+[m[32m6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:751: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION/forgelocal-t28-t42-correction.delta.bundle /tmp/tmp.LjfqwNsx7D /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:762: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-correction-v2.delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:768: trailing whitespace.
+[32m+[m[32m59882a9bcac8755c0fb8a294be32a6b1d1ff4598[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:778: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-correction-v2.delta.bundle /tmp/tmp.kI4FeVhmP2 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:789: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T31/forgelocal-t31-canvas-webgl-audio.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:795: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:805: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T31/forgelocal-t31-canvas-webgl-audio.bundle /tmp/tmp.RfKRH7VxaP /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:816: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T32/forgelocal-t32-client-rects.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:822: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:832: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T32/forgelocal-t32-client-rects.bundle /tmp/tmp.HlMzzb8niB /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:843: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T33/forgelocal-t33-synthetic-geolocation.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:849: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:859: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T33/forgelocal-t33-synthetic-geolocation.bundle /tmp/tmp.e1c9E2R4Be /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:870: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T34/forgelocal-t34-hardware-diagnostics.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:876: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:886: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T34/forgelocal-t34-hardware-diagnostics.bundle /tmp/tmp.ACDfLIT423 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:897: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T35/forgelocal-t35-font-bundle.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:903: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:913: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T35/forgelocal-t35-font-bundle.bundle /tmp/tmp.0t7o6m9KSN /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:924: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T36/forgelocal-t36-drift-detection.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:930: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:940: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T36/forgelocal-t36-drift-detection.bundle /tmp/tmp.AwcHcnH4xR /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:953: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ /home/ubuntu/go/bin/gosec\ -fmt=json\ -out=\"\$2/07_gosec_baseline.json\"\ ./... bash /tmp/tmp.9D77587XA1 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1058: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T37/forgelocal-t37-profile-health.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1064: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1074: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T37/forgelocal-t37-profile-health.bundle /tmp/tmp.EXNpeEceB2 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1125: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ /home/ubuntu/go/bin/gosec\ -fmt=json\ -out=\"\$2/08_gosec_head.json\"\ ./... bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1288: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/forgelocal-prehuman-validation-20260824/normalize_gosec_comparison.py /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1307: trailing whitespace.
+[32m+[m[32mcommand=bash -c test\ \"\$\(git\ rev-parse\ HEAD\)\"\ =\ \"6ae02e4ceed239b9310fbf3fccb1b5170117251e\"\;\ grep\ -Fq\ \"PENDING_REMOTE_EVIDENCE_RECONCILIATION\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"evidence/T42_DELIVERY.md\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"BASELINE_RECONSTRUCTION_POSTHOC_RAW.log\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"audit/t28-t42-evidence-correction\"\ evidence/T28_T42_CORRECTION_V2/CORRECTION_V2_DELIVERY.md[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1317: trailing whitespace.
+[32m+[m[32mcommand=bash -c grep\ -RInE\ \"PUBLIC_RELEASE_BLOCKED\|SCAN_BLOCKED_UNKNOWN\|NATIVE_SYSTEMVAULT_NOT_TESTED\|camoflox_execution_authorized=false\|t08_authorized=false\|release_authorized=false\"\ docs\ evidence/T28_T42_CORRECTION\ evidence/T28_T42_CORRECTION_V2\ \|\ head\ -80[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1345: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:866:La roadmap ne modifie pas les statuts actuels : le RC BACK-01 reste gelé, `PUBLIC_RELEASE_BLOCKED` reste actif, Camoufox reste non lançable tant que sa qualification n’est pas terminée et aucun module de contournement n’est ajouté.[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1346: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:920:| `SCAN_BLOCKED_UNKNOWN` | Bloquant | Triage indépendant de l’alerte historique de provenance du RC, distincte du triage Camoflox T07 |[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1347: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:927:> **Statuts maintenus :** `PUBLIC_RELEASE_BLOCKED`, pilote suspendu, cinq gates publics en attente. T07 ne lève aucun de ces gates.[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1387: trailing whitespace.
+[32m+[m[32mcommand=bash -c \!\ grep\ -RInE\ \"camoflox_execution_authorized=true\|t08_authorized=true\|release_authorized=true\"\ docs\ evidence\ \>/dev/null\ \&\&\ \!\ find\ evidence\ -type\ f\ \|\ grep\ -E\ \"runtime-execution\|cookie-capture\|proxy-live\|systemvault-live\|release-artifact\"\ \>/dev/null[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1403: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T38/forgelocal-t38-session-lifecycle.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1409: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1419: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T38/forgelocal-t38-session-lifecycle.bundle /tmp/tmp.2Ct4JO5oc8 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1430: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T39/forgelocal-t39-blocked.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1436: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1446: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T39/forgelocal-t39-blocked.bundle /tmp/tmp.QGviPszIKp /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1457: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T40/forgelocal-t40-integration-gated.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1463: trailing whitespace.
+[32m+[m[32m69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1473: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T40/forgelocal-t40-integration-gated.bundle /tmp/tmp.UJYUe2iX40 /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1484: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T41/forgelocal-t41-delta.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1490: trailing whitespace.
+[32m+[m[32m077ba90b2c522415aeefdc2d651c457b8c59683d[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1500: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T41/forgelocal-t41-delta.bundle /tmp/tmp.qTTyoZ0f6j /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1511: trailing whitespace.
+[32m+[m[32mcommand=git bundle verify evidence/T42/forgelocal-t42-compact.bundle[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1517: trailing whitespace.
+[32m+[m[32m944376fd1c9d22dad44730854ce4b2d6203c743b[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1527: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -e\;\ head=\$\(git\ bundle\ list-heads\ \"\$1\"\ \|\ cut\ -d\ \"\ \"\ -f1\)\;\ required=\$\(git\ bundle\ verify\ \"\$1\"\ \|\ grep\ -A1\ \"\^The\ bundle\ requires\ this\ ref:\"\ \|\ tail\ -1\ \|\ tr\ -d\ \"\[:space:\]\"\)\;\ mkdir\ -p\ \"\$2/repo\"\;\ git\ -C\ \"\$2/repo\"\ init\ --quiet\;\ if\ \[\ -n\ \"\$required\"\ \]\;\ then\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$3\"\ \"\$required:refs/heads/prerequisite\"\;\ fi\;\ git\ -C\ \"\$2/repo\"\ fetch\ --quiet\ \"\$1\"\ HEAD\;\ git\ -C\ \"\$2/repo\"\ checkout\ --quiet\ --detach\ \"\$head\"\;\ git\ -C\ \"\$2/repo\"\ fsck\ --full\;\ test\ \"\$\(git\ -C\ \"\$2/repo\"\ rev-parse\ HEAD\)\"\ =\ \"\$head\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824/evidence/T42/forgelocal-t42-compact.bundle /tmp/tmp.zKPgTqsGaa /home/ubuntu/forgelocal-prehuman-fresh-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1538: trailing whitespace.
+[32m+[m[32mcommand=go test -count=1 -race ./...[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1580: trailing whitespace.
+[32m+[m[32mcommand=go vet ./...[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1590: trailing whitespace.
+[32m+[m[32mcommand=go build ./...[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1600: trailing whitespace.
+[32m+[m[32mcommand=bash -c syft\ dir:\"\$1\"\ -o\ cyclonedx-json\ \>\ \"\$2/PREHUMAN_T00_T42_SBOM.cdx.json\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1611: trailing whitespace.
+[32m+[m[32mcommand=bash -c set\ -o\ pipefail\;\ git\ diff\ --binary\ \"t00-t27-complete-20260820..HEAD\"\ \|\ /home/ubuntu/bin/gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$1/06_gitleaks_cumulative.json\" bash /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1623: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ /home/ubuntu/go/bin/gosec\ -fmt=json\ -out=\"\$2/07_gosec_baseline.json\"\ ./... bash /tmp/tmp.RhKfQnu9Ax /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1768: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ /home/ubuntu/go/bin/gosec\ -fmt=json\ -out=\"\$2/08_gosec_head.json\"\ ./... bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1931: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/forgelocal-prehuman-validation-20260824/normalize_gosec_comparison.py /home/ubuntu/forgelocal-prehuman-validation-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1950: trailing whitespace.
+[32m+[m[32mcommand=bash -c test\ \"\$\(git\ rev-parse\ HEAD\)\"\ =\ \"6ae02e4ceed239b9310fbf3fccb1b5170117251e\"\;\ grep\ -Fq\ \"PENDING_REMOTE_EVIDENCE_RECONCILIATION\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"evidence/T42_DELIVERY.md\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"BASELINE_RECONSTRUCTION_POSTHOC_RAW.log\"\ docs/T28_T42_STATUS_REGISTER.md\;\ grep\ -Fq\ \"audit/t28-t42-evidence-correction\"\ evidence/T28_T42_CORRECTION_V2/CORRECTION_V2_DELIVERY.md[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1960: trailing whitespace.
+[32m+[m[32mcommand=bash -c grep\ -RInE\ \"PUBLIC_RELEASE_BLOCKED\|SCAN_BLOCKED_UNKNOWN\|NATIVE_SYSTEMVAULT_NOT_TESTED\|camoflox_execution_authorized=false\|t08_authorized=false\|release_authorized=false\"\ docs\ evidence/T28_T42_CORRECTION\ evidence/T28_T42_CORRECTION_V2\ \|\ head\ -80[m[41m [m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1988: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:866:La roadmap ne modifie pas les statuts actuels : le RC BACK-01 reste gelé, `PUBLIC_RELEASE_BLOCKED` reste actif, Camoufox reste non lançable tant que sa qualification n’est pas terminée et aucun module de contournement n’est ajouté.[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1989: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:920:| `SCAN_BLOCKED_UNKNOWN` | Bloquant | Triage indépendant de l’alerte historique de provenance du RC, distincte du triage Camoflox T07 |[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:1990: trailing whitespace.
+[32m+[m[32mdocs/CAHIER_DES_CHARGES_v3_9_7.md:927:> **Statuts maintenus :** `PUBLIC_RELEASE_BLOCKED`, pilote suspendu, cinq gates publics en attente. T07 ne lève aucun de ces gates.[m[41m[m
+evidence/PREHUMAN_T00_T42/PREHUMAN_VALIDATION_RAW.log:2030: trailing whitespace.
+[32m+[m[32mcommand=bash -c \!\ grep\ -RInE\ \"camoflox_execution_authorized=true\|t08_authorized=true\|release_authorized=true\"\ docs\ evidence\ \>/dev/null\ \&\&\ \!\ find\ evidence\ -type\ f\ \|\ grep\ -E\ \"runtime-execution\|cookie-capture\|proxy-live\|systemvault-live\|release-artifact\"\ \>/dev/null[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:15: trailing whitespace.
+[32m+[m[32mcommand=git rev-parse HEAD[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:26: trailing whitespace.
+[32m+[m[32mcommand=git fsck --full[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:36: trailing whitespace.
+[32m+[m[32mcommand=git lfs fsck[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:55: trailing whitespace.
+[32m+[m[32mcommand=go version[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:66: trailing whitespace.
+[32m+[m[32mcommand=go mod verify[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:77: trailing whitespace.
+[32m+[m[32mcommand=go list -m -json all[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:642: trailing whitespace.
+[32m+[m[32mcommand=go test -count=1 -race ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:684: trailing whitespace.
+[32m+[m[32mcommand=go vet ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:694: trailing whitespace.
+[32m+[m[32mcommand=go build ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:704: trailing whitespace.
+[32m+[m[32mcommand=bash -c staticcheck\ -f\ json\ ./...\ \>\ \"\$1\"\;\ exit\ \$\? bash /home/ubuntu/forgelocal-postfix-final-check-20260824/POSTFIX_STATICCHECK.jsonl[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:714: trailing whitespace.
+[32m+[m[32mcommand=bash -c golangci-lint\ run\ --out-format\ json\ ./...\ \>\ \"\$1\"\;\ exit\ \$\? bash /home/ubuntu/forgelocal-postfix-final-check-20260824/POSTFIX_GOLANGCI.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:724: trailing whitespace.
+[32m+[m[32mcommand=govulncheck ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:735: trailing whitespace.
+[32m+[m[32mcommand=osv-scanner scan source -r .[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1459: trailing whitespace.
+[32m+[m[32mcommand=trivy fs --scanners vuln\,secret\,misconfig .[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1497: trailing whitespace.
+[32m+[m[32mDS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1498: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1499: trailing whitespace.
+[32m+[m[32mRunning containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1500: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1501: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0002[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1502: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1503: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1504: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1505: trailing whitespace.
+[32m+[m[32mDS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1506: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1507: trailing whitespace.
+[32m+[m[32mYou should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1508: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1509: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0026[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1510: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1511: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1512: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1513: trailing whitespace.
+[32m+[m[32mDS-0029 (HIGH): '--no-install-recommends' flag is missed: 'curl -fsSL https://deb.nodesource.com/setup_22.x | bash - &&     apt-get install -y nodejs &&     npm install -g web-ext'[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1514: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1515: trailing whitespace.
+[32m+[m[32m'apt-get' install should use '--no-install-recommends' to minimize image size.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1516: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1517: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0029[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1518: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1519: trailing whitespace.
+[32m+[m[32m Dockerfile:7-9[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1520: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1521: trailing whitespace.
+[32m+[m[32m   7 ┌ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1522: trailing whitespace.
+[32m+[m[32m   8 │     apt-get install -y nodejs && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1523: trailing whitespace.
+[32m+[m[32m   9 └     npm install -g web-ext[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1524: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1525: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1526: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1533: trailing whitespace.
+[32m+[m[32mDS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1534: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1535: trailing whitespace.
+[32m+[m[32mRunning containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1536: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1537: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0002[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1538: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1539: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1540: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1541: trailing whitespace.
+[32m+[m[32mDS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1542: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1543: trailing whitespace.
+[32m+[m[32mYou should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1544: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1545: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0026[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1546: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1547: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1548: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1549: trailing whitespace.
+[32m+[m[32mDS-0029 (HIGH): '--no-install-recommends' flag is missed: 'target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" &&     case "$target_arch" in       amd64) KASMVNC_DEB_ARCH=amd64; KASMVNC_SHA256="$KASMVNC_SHA256_AMD64" ;;       arm64) KASMVNC_DEB_ARCH=arm64; KASMVNC_SHA256="$KASMVNC_SHA256_ARM64" ;;       *) echo "unsupported Docker target architecture for KasmVNC: ${target_arch}" >&2; exit 1 ;;     esac &&     KASMVNC_URL="https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_noble_${KASMVNC_VERSION}_${KASMVNC_DEB_ARCH}.deb" &&     echo "Downloading: $KASMVNC_URL" &&     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" &&     echo "${KASMVNC_SHA256}  /tmp/kasmvnc.deb" | sha256sum -c - &&     apt-get update && apt-get install -y /tmp/kasmvnc.deb &&     rm -f /tmp/kasmvnc.deb && rm -rf /var/lib/apt/lists/*'[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1550: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1551: trailing whitespace.
+[32m+[m[32m'apt-get' install should use '--no-install-recommends' to minimize image size.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1552: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1553: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0029[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1554: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1555: trailing whitespace.
+[32m+[m[32m docker/Dockerfile.run:30-41[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1556: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1557: trailing whitespace.
+[32m+[m[32m  30 ┌ RUN target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1558: trailing whitespace.
+[32m+[m[32m  31 │     case "$target_arch" in \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1559: trailing whitespace.
+[32m+[m[32m  32 │       amd64) KASMVNC_DEB_ARCH=amd64; KASMVNC_SHA256="$KASMVNC_SHA256_AMD64" ;; \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1560: trailing whitespace.
+[32m+[m[32m  33 │       arm64) KASMVNC_DEB_ARCH=arm64; KASMVNC_SHA256="$KASMVNC_SHA256_ARM64" ;; \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1561: trailing whitespace.
+[32m+[m[32m  34 │       *) echo "unsupported Docker target architecture for KasmVNC: ${target_arch}" >&2; exit 1 ;; \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1562: trailing whitespace.
+[32m+[m[32m  35 │     esac && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1563: trailing whitespace.
+[32m+[m[32m  36 │     KASMVNC_URL="https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_noble_${KASMVNC_VERSION}_${KASMVNC_DEB_ARCH}.deb" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1564: trailing whitespace.
+[32m+[m[32m  37 │     echo "Downloading: $KASMVNC_URL" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1565: trailing whitespace.
+[32m+[m[32m  38 └     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1566: trailing whitespace.
+[32m+[m[32m  ..[m[41m   [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1567: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1568: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1569: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1578: trailing whitespace.
+[32m+[m[32mcommand=bash -c syft\ dir:\"\$1\"\ -o\ cyclonedx-json=\"\$2\" bash /home/ubuntu/forgelocal-postfix-fresh-20260824 /home/ubuntu/forgelocal-postfix-final-check-20260824/POSTFIX_SBOM.cdx.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1589: trailing whitespace.
+[32m+[m[32mcommand=bash -c syft\ dir:\"\$1\"\ -o\ spdx-json=\"\$2\" bash /home/ubuntu/forgelocal-postfix-fresh-20260824 /home/ubuntu/forgelocal-postfix-final-check-20260824/POSTFIX_SBOM.spdx.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1600: trailing whitespace.
+[32m+[m[32mcommand=bash -c git\ diff\ --name-status\ \"t00-t27-complete-20260820..HEAD\" bash[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1849: trailing whitespace.
+[32m+[m[32mcommand=bash -c git\ diff\ --binary\ \"t00-t27-complete-20260820..HEAD\"\ \|\ gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$1/POSTFIX_GITLEAKS.json\" bash /home/ubuntu/forgelocal-postfix-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:1861: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ gosec\ -fmt=json\ -out=\"\$2/POSTFIX_GOSEC_BASELINE.json\"\ ./... bash /tmp/tmp.F9SQftvAsg /home/ubuntu/forgelocal-postfix-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2006: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ gosec\ -fmt=json\ -out=\"\$2/POSTFIX_GOSEC_HEAD.json\"\ ./... bash /home/ubuntu/forgelocal-postfix-fresh-20260824 /home/ubuntu/forgelocal-postfix-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2169: trailing whitespace.
+[32m+[m[32mcommand=bash -c python3\ /home/ubuntu/normalize_final_gosec.py\ \"\$1\"\;\ rm\ -f\ \"\$1/PREHUMAN_FINAL_GOSEC_BASELINE.json\"\ \"\$1/PREHUMAN_FINAL_GOSEC_HEAD.json\" bash /home/ubuntu/forgelocal-postfix-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2185: trailing whitespace.
+[32m+[m[32mcommand=grep -R -n -E PUBLIC_RELEASE_BLOCKED\|SCAN_BLOCKED_UNKNOWN\|NATIVE_SYSTEMVAULT_NOT_TESTED\|camoflox_execution_authorized=false\|t08_authorized=false\|release_authorized=false --exclude-dir=.git --exclude-dir=node_modules .[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2228: trailing whitespace.
+[32m+[m[32m./docs/CAHIER_DES_CHARGES_v3_9_7.md:866:La roadmap ne modifie pas les statuts actuels : le RC BACK-01 reste gelé, `PUBLIC_RELEASE_BLOCKED` reste actif, Camoufox reste non lançable tant que sa qualification n’est pas terminée et aucun module de contournement n’est ajouté.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2229: trailing whitespace.
+[32m+[m[32m./docs/CAHIER_DES_CHARGES_v3_9_7.md:920:| `SCAN_BLOCKED_UNKNOWN` | Bloquant | Triage indépendant de l’alerte historique de provenance du RC, distincte du triage Camoflox T07 |[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2230: trailing whitespace.
+[32m+[m[32m./docs/CAHIER_DES_CHARGES_v3_9_7.md:927:> **Statuts maintenus :** `PUBLIC_RELEASE_BLOCKED`, pilote suspendu, cinq gates publics en attente. T07 ne lève aucun de ces gates.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2292: trailing whitespace.
+[32m+[m[32m./release/back01-minimal/SECRET_SCAN_CLASSIFICATION_RUNBOOK.md:4:**Décision publique au départ :** `PUBLIC_RELEASE_BLOCKED`[m[41m  [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2396: trailing whitespace.
+[32m+[m[32mcommand=bash -c find\ evidence\ -type\ f\ \|\ grep\ -Ei\ \"\(\^\|/\)\(\\.env\|.\*\(cookie\|token\|secret\|sqlite\|playwright\|node_modules\|dist\|build\|\\.key\|\\.pem\)\)\"\ \|\|\ true bash[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2420: trailing whitespace.
+[32m+[m[32mcommand=pnpm install --frozen-lockfile[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2517: trailing whitespace.
+[32m+[m[32mcommand=pnpm exec tsc --noEmit[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2527: trailing whitespace.
+[32m+[m[32mcommand=pnpm run build[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2548: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2559: trailing whitespace.
+[32m+[m[32mcommand=pnpm audit --prod[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2570: trailing whitespace.
+[32m+[m[32mcommand=pnpm exec playwright test --workers=1[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_QUALIFICATION_RAW.log:2693: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_TARGETED_REGRESSION_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=go test ./cmd/server ./internal/api ./internal/backup ./internal/sessiontrack[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_TARGETED_REGRESSION_RAW.log:17: trailing whitespace.
+[32m+[m[32mcommand=go test -race ./cmd/server ./internal/api ./internal/backup ./internal/sessiontrack[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_TARGETED_REGRESSION_RAW.log:30: trailing whitespace.
+[32m+[m[32mcommand=git diff --check[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_TARGETED_REGRESSION_RAW.log:39: trailing whitespace.
+[32m+[m[32mcommand=bash -c golangci-lint\ run\ --out-format\ json\ ./...\ \>\ \"\$1\"\;\ exit\ \$\? bash /home/ubuntu/forgelocal-postfix-final-check-20260824/POSTFIX_GOLANGCI_TARGETED_REGRESSION.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_ADDENDUM_PACKAGE_CHECK_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=bash -c \!\ grep\ -Fq\ PREHUMAN_FINAL_CHECKLIST_SHA256SUMS\ \"\$1\" bash /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_CHECKLIST_SHA256SUMS[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_ADDENDUM_PACKAGE_CHECK_RAW.log:13: trailing whitespace.
+[32m+[m[32mcommand=unzip -tq /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.zip[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_ADDENDUM_PACKAGE_CHECK_RAW.log:23: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ sha256sum\ -c\ forgelocal-t00-t42-final-exit-checklist.zip.portable.sha256 bash /tmp/tmp.RSPDlsLktb[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_ADDENDUM_PACKAGE_CHECK_RAW.log:33: trailing whitespace.
+[32m+[m[32mcommand=bash -c rm\ -rf\ \"\$1/extracted\"\ \&\&\ mkdir\ \"\$1/extracted\"\ \&\&\ unzip\ -q\ \"\$2\"\ -d\ \"\$1/extracted\"\ \&\&\ cd\ \"\$1/extracted/PREHUMAN_T00_T42_FINAL_CHECKLIST\"\ \&\&\ sha256sum\ -c\ PREHUMAN_FINAL_CHECKLIST_SHA256SUMS bash /tmp/tmp.RSPDlsLktb /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/forgelocal-t00-t42-final-exit-checklist.zip[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_ADDENDUM_PACKAGE_CHECK_RAW.log:75: trailing whitespace.
+[32m+[m[32mcommand=cat /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip.portable.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_ADDENDUM_PACKAGE_CHECK_RAW.log:85: trailing whitespace.
+[32m+[m[32mcommand=cat /home/ubuntu/t30-master-independent-validation-20260824/clone/evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle.portable.sha256[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_BUNDLE_REHYDRATION_RAW.log:19: trailing whitespace.
+[32m+[m[32m631605ba136ff864d23e9674ca6adb4a8df0b740[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_BUNDLE_REHYDRATION_RAW.log:43: trailing whitespace.
+[32m+[m[32m631605ba136ff864d23e9674ca6adb4a8df0b740[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_BUNDLE_REHYDRATION_RAW.log:67: trailing whitespace.
+[32m+[m[32m631605ba136ff864d23e9674ca6adb4a8df0b740[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:15: trailing whitespace.
+[32m+[m[32mcommand=git rev-parse HEAD[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:26: trailing whitespace.
+[32m+[m[32mcommand=git fsck --full[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:36: trailing whitespace.
+[32m+[m[32mcommand=git lfs fsck[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:47: trailing whitespace.
+[32m+[m[32mcommand=go version[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:58: trailing whitespace.
+[32m+[m[32mcommand=git --version[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:69: trailing whitespace.
+[32m+[m[32mcommand=git lfs version[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:80: trailing whitespace.
+[32m+[m[32mcommand=go mod verify[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:91: trailing whitespace.
+[32m+[m[32mcommand=go list -m -json all[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:656: trailing whitespace.
+[32m+[m[32mcommand=go test -count=1 -race ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:698: trailing whitespace.
+[32m+[m[32mcommand=go vet ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:708: trailing whitespace.
+[32m+[m[32mcommand=go build ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:718: trailing whitespace.
+[32m+[m[32mcommand=staticcheck ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:764: trailing whitespace.
+[32m+[m[32mcommand=golangci-lint run[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1023: trailing whitespace.
+[32m+[m[32mcommand=govulncheck ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1034: trailing whitespace.
+[32m+[m[32mcommand=osv-scanner scan source -r .[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1758: trailing whitespace.
+[32m+[m[32mcommand=trivy fs --scanners vuln\,secret\,misconfig .[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1796: trailing whitespace.
+[32m+[m[32mDS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1797: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1798: trailing whitespace.
+[32m+[m[32mRunning containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1799: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1800: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0002[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1801: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1802: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1803: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1804: trailing whitespace.
+[32m+[m[32mDS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1805: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1806: trailing whitespace.
+[32m+[m[32mYou should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1807: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1808: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0026[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1809: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1810: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1811: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1812: trailing whitespace.
+[32m+[m[32mDS-0029 (HIGH): '--no-install-recommends' flag is missed: 'curl -fsSL https://deb.nodesource.com/setup_22.x | bash - &&     apt-get install -y nodejs &&     npm install -g web-ext'[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1813: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1814: trailing whitespace.
+[32m+[m[32m'apt-get' install should use '--no-install-recommends' to minimize image size.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1815: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1816: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0029[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1817: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1818: trailing whitespace.
+[32m+[m[32m Dockerfile:7-9[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1819: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1820: trailing whitespace.
+[32m+[m[32m   7 ┌ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1821: trailing whitespace.
+[32m+[m[32m   8 │     apt-get install -y nodejs && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1822: trailing whitespace.
+[32m+[m[32m   9 └     npm install -g web-ext[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1823: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1824: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1825: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1832: trailing whitespace.
+[32m+[m[32mDS-0002 (HIGH): Specify at least 1 USER command in Dockerfile with non-root user as argument[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1833: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1834: trailing whitespace.
+[32m+[m[32mRunning containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1835: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1836: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0002[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1837: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1838: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1839: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1840: trailing whitespace.
+[32m+[m[32mDS-0026 (LOW): Add HEALTHCHECK instruction in your Dockerfile[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1841: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1842: trailing whitespace.
+[32m+[m[32mYou should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1843: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1844: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0026[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1845: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1846: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1847: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1848: trailing whitespace.
+[32m+[m[32mDS-0029 (HIGH): '--no-install-recommends' flag is missed: 'target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" &&     case "$target_arch" in       amd64) KASMVNC_DEB_ARCH=amd64; KASMVNC_SHA256="$KASMVNC_SHA256_AMD64" ;;       arm64) KASMVNC_DEB_ARCH=arm64; KASMVNC_SHA256="$KASMVNC_SHA256_ARM64" ;;       *) echo "unsupported Docker target architecture for KasmVNC: ${target_arch}" >&2; exit 1 ;;     esac &&     KASMVNC_URL="https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_noble_${KASMVNC_VERSION}_${KASMVNC_DEB_ARCH}.deb" &&     echo "Downloading: $KASMVNC_URL" &&     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" &&     echo "${KASMVNC_SHA256}  /tmp/kasmvnc.deb" | sha256sum -c - &&     apt-get update && apt-get install -y /tmp/kasmvnc.deb &&     rm -f /tmp/kasmvnc.deb && rm -rf /var/lib/apt/lists/*'[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1849: trailing whitespace.
+[32m+[m[32m════════════════════════════════════════════════════════════════════════════════[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1850: trailing whitespace.
+[32m+[m[32m'apt-get' install should use '--no-install-recommends' to minimize image size.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1851: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1852: trailing whitespace.
+[32m+[m[32mSee https://avd.aquasec.com/misconfig/ds-0029[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1853: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1854: trailing whitespace.
+[32m+[m[32m docker/Dockerfile.run:30-41[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1855: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1856: trailing whitespace.
+[32m+[m[32m  30 ┌ RUN target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1857: trailing whitespace.
+[32m+[m[32m  31 │     case "$target_arch" in \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1858: trailing whitespace.
+[32m+[m[32m  32 │       amd64) KASMVNC_DEB_ARCH=amd64; KASMVNC_SHA256="$KASMVNC_SHA256_AMD64" ;; \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1859: trailing whitespace.
+[32m+[m[32m  33 │       arm64) KASMVNC_DEB_ARCH=arm64; KASMVNC_SHA256="$KASMVNC_SHA256_ARM64" ;; \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1860: trailing whitespace.
+[32m+[m[32m  34 │       *) echo "unsupported Docker target architecture for KasmVNC: ${target_arch}" >&2; exit 1 ;; \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1861: trailing whitespace.
+[32m+[m[32m  35 │     esac && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1862: trailing whitespace.
+[32m+[m[32m  36 │     KASMVNC_URL="https://github.com/kasmtech/KasmVNC/releases/download/v${KASMVNC_VERSION}/kasmvncserver_noble_${KASMVNC_VERSION}_${KASMVNC_DEB_ARCH}.deb" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1863: trailing whitespace.
+[32m+[m[32m  37 │     echo "Downloading: $KASMVNC_URL" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1864: trailing whitespace.
+[32m+[m[32m  38 └     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" && \[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1865: trailing whitespace.
+[32m+[m[32m  ..[m[41m   [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1866: trailing whitespace.
+[32m+[m[32m────────────────────────────────────────────────────────────────────────────────[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1867: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1868: trailing whitespace.
+[32m+[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1877: trailing whitespace.
+[32m+[m[32mcommand=bash -c syft\ dir:\"\$1\"\ -o\ cyclonedx-json=\"\$2\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_SBOM.cdx.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1888: trailing whitespace.
+[32m+[m[32mcommand=bash -c syft\ dir:\"\$1\"\ -o\ spdx-json=\"\$2\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_SBOM.spdx.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:1899: trailing whitespace.
+[32m+[m[32mcommand=bash -c git\ diff\ --name-status\ \"t00-t27-complete-20260820..HEAD\" bash[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2142: trailing whitespace.
+[32m+[m[32mcommand=bash -c git\ diff\ --binary\ \"t00-t27-complete-20260820..HEAD\"\ \|\ gitleaks\ detect\ --pipe\ --no-banner\ --redact\ --report-format\ json\ --report-path\ \"\$1/PREHUMAN_FINAL_GITLEAKS.json\" bash /home/ubuntu/forgelocal-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2154: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ gosec\ -fmt=json\ -out=\"\$2/PREHUMAN_FINAL_GOSEC_BASELINE.json\"\ ./... bash /tmp/tmp.sLPYxRNdlc /home/ubuntu/forgelocal-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2299: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ \"\$1\"\ \&\&\ gosec\ -fmt=json\ -out=\"\$2/PREHUMAN_FINAL_GOSEC_HEAD.json\"\ ./... bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2462: trailing whitespace.
+[32m+[m[32mcommand=python3 /home/ubuntu/normalize_gosec_comparison.py /home/ubuntu/forgelocal-final-check-20260824[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2480: trailing whitespace.
+[32m+[m[32mcommand=grep -R -n -E PUBLIC_RELEASE_BLOCKED\|SCAN_BLOCKED_UNKNOWN\|NATIVE_SYSTEMVAULT_NOT_TESTED\|camoflox_execution_authorized=false\|t08_authorized=false\|release_authorized=false --exclude-dir=.git --exclude-dir=node_modules .[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2525: trailing whitespace.
+[32m+[m[32m./docs/CAHIER_DES_CHARGES_v3_9_7.md:866:La roadmap ne modifie pas les statuts actuels : le RC BACK-01 reste gelé, `PUBLIC_RELEASE_BLOCKED` reste actif, Camoufox reste non lançable tant que sa qualification n’est pas terminée et aucun module de contournement n’est ajouté.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2526: trailing whitespace.
+[32m+[m[32m./docs/CAHIER_DES_CHARGES_v3_9_7.md:920:| `SCAN_BLOCKED_UNKNOWN` | Bloquant | Triage indépendant de l’alerte historique de provenance du RC, distincte du triage Camoflox T07 |[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2527: trailing whitespace.
+[32m+[m[32m./docs/CAHIER_DES_CHARGES_v3_9_7.md:927:> **Statuts maintenus :** `PUBLIC_RELEASE_BLOCKED`, pilote suspendu, cinq gates publics en attente. T07 ne lève aucun de ces gates.[m[41m[m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2589: trailing whitespace.
+[32m+[m[32m./release/back01-minimal/SECRET_SCAN_CLASSIFICATION_RUNBOOK.md:4:**Décision publique au départ :** `PUBLIC_RELEASE_BLOCKED`[m[41m  [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2693: trailing whitespace.
+[32m+[m[32mcommand=bash -c find\ evidence\ -type\ f\ \|\ grep\ -Ei\ \"\(\^\|/\)\(\\.env\|.\*\(cookie\|token\|secret\|sqlite\|playwright\|node_modules\|dist\|build\|\\.key\|\\.pem\)\)\"\ \|\|\ true bash[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2717: trailing whitespace.
+[32m+[m[32mcommand=pnpm install --frozen-lockfile[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2733: trailing whitespace.
+[32m+[m[32mcommand=pnpm exec tsc --noEmit[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2743: trailing whitespace.
+[32m+[m[32mcommand=pnpm run build[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2764: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2775: trailing whitespace.
+[32m+[m[32mcommand=pnpm audit --prod[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2786: trailing whitespace.
+[32m+[m[32mcommand=pnpm exec playwright test --workers=1[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_EXIT_CHECKLIST_RAW.log:2909: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_LINTER_JSON_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=bash -c staticcheck\ -f\ json\ ./...\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_STATICCHECK_BASELINE.jsonl[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_LINTER_JSON_RAW.log:13: trailing whitespace.
+[32m+[m[32mcommand=bash -c golangci-lint\ run\ --out-format\ json\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_GOLANGCI_BASELINE.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_LINTER_JSON_RAW.log:22: trailing whitespace.
+[32m+[m[32mcommand=bash -c staticcheck\ -f\ json\ ./...\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_STATICCHECK_HEAD.jsonl[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_LINTER_JSON_RAW.log:31: trailing whitespace.
+[32m+[m[32mcommand=bash -c golangci-lint\ run\ --out-format\ json\ \>\ \"\$1\" bash /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_GOLANGCI_HEAD.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_QUALITY_DIFFERENTIAL_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=staticcheck ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_QUALITY_DIFFERENTIAL_RAW.log:49: trailing whitespace.
+[32m+[m[32mcommand=golangci-lint run[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_QUALITY_DIFFERENTIAL_RAW.log:304: trailing whitespace.
+[32m+[m[32mcommand=staticcheck ./...[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_QUALITY_DIFFERENTIAL_RAW.log:349: trailing whitespace.
+[32m+[m[32mcommand=golangci-lint run[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_SECURITY_LICENSE_RAW.log:4: trailing whitespace.
+[32m+[m[32mcommand=bash -c trivy\ fs\ --scanners\ vuln\,secret\,misconfig\ --format\ json\ --output\ \"\$2\"\ \"\$1\" bash /tmp/tmp.7NzImKWOPk /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_TRIVY_BASELINE.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_SECURITY_LICENSE_RAW.log:25: trailing whitespace.
+[32m+[m[32mcommand=bash -c trivy\ fs\ --scanners\ vuln\,secret\,misconfig\ --format\ json\ --output\ \"\$2\"\ \"\$1\" bash /home/ubuntu/forgelocal-prehuman-fresh-20260824 /home/ubuntu/forgelocal-final-check-20260824/PREHUMAN_FINAL_TRIVY_HEAD.json[m[41m [m
+evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_SECURITY_LICENSE_RAW.log:46: trailing whitespace.
+[32m+[m[32mcommand=bash -c pnpm\ dlx\ license-checker\ --production\ --json bash[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_ARTIFACTS_RAW.log:6: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_ARTIFACTS_RAW.log:16: trailing whitespace.
+[32m+[m[32mcommand=git fsck --full[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_ARTIFACTS_RAW.log:25: trailing whitespace.
+[32m+[m[32mcommand=git lfs fsck[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_ARTIFACTS_RAW.log:43: trailing whitespace.
+[32m+[m[32mcommand=git diff --check 69411e65c880d168832a65fc8475cc97d562a9ad..HEAD[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:5: trailing whitespace.
+[32m+[m[32mcommand=df -h /[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:15: trailing whitespace.
+[32m+[m[32mcommand=df -h /home/ubuntu[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:25: trailing whitespace.
+[32m+[m[32mcommand=bash -c du\ -xhd1\ /home/ubuntu\ 2\>/dev/null\ \|\ sort\ -h\ \|\ tail\ -20[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:53: trailing whitespace.
+[32m+[m[32mcommand=bash -c printf\ \"git=\"\;\ git\ --version\;\ printf\ \"gh=\"\;\ gh\ --version\ \|\ head\ -1\;\ printf\ \"node=\"\;\ node\ --version\;\ printf\ \"pnpm=\"\;\ pnpm\ --version\;\ printf\ \"python=\"\;\ python3\ --version\;\ printf\ \"unzip=\"\;\ unzip\ -v\ \|\ head\ -1\;\ printf\ \"git-lfs=\"\;\ git\ lfs\ version[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:68: trailing whitespace.
+[32m+[m[32mcommand=gh api repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/ref/heads/audit/t00-t42-prehuman-validation[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:86: trailing whitespace.
+[32m+[m[32mcommand=gh api repos/davidwilsonbest89-afk/forgelocal-public-sanitized/git/ref/tags/t00-t27-complete-20260820[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:112: trailing whitespace.
+[32m+[m[32mcommand=git status --short --branch[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:121: trailing whitespace.
+[32m+[m[32mcommand=git rev-parse HEAD[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:130: trailing whitespace.
+[32m+[m[32mcommand=git rev-parse 69411e65c880d168832a65fc8475cc97d562a9ad[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:139: trailing whitespace.
+[32m+[m[32mcommand=git ls-remote origin refs/heads/audit/t00-t42-prehuman-validation[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BASELINE_DISCOVERY_RAW.log:148: trailing whitespace.
+[32m+[m[32mcommand=df -h .[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_BUNDLE_DELTA_VERIFY.log:5: trailing whitespace.
+[32m+[m[32m861880e56f13866346cf974110a01c8a890b86e2[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:6: trailing whitespace.
+[32m+[m[32mcommand=/usr/local/go1.25.13/bin/go mod verify[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:16: trailing whitespace.
+[32m+[m[32mcommand=env CGO_ENABLED=1 /usr/local/go1.25.13/bin/go test -count=1 -race ./...[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:57: trailing whitespace.
+[32m+[m[32mcommand=env CGO_ENABLED=1 /usr/local/go1.25.13/bin/go vet ./...[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:66: trailing whitespace.
+[32m+[m[32mcommand=env CGO_ENABLED=1 /usr/local/go1.25.13/bin/go build ./...[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:75: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/staticcheck ./...[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:120: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/golangci-lint run[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:131: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/govulncheck ./...[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:141: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/gitleaks detect --no-banner --redact --source . --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v4/SELF_VALIDATION_GITLEAKS_RANGE.json[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:153: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/trivy fs --scanners vuln\,misconfig\,secret --format json --output /home/ubuntu/forgelocal_self_validation_v4/SELF_VALIDATION_TRIVY.json .[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:174: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/syft dir:. -o cyclonedx-json=/home/ubuntu/forgelocal_self_validation_v4/SELF_VALIDATION_SBOM.cdx.json[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:184: trailing whitespace.
+[32m+[m[32mcommand=/home/ubuntu/bin/syft dir:. -o spdx-json=/home/ubuntu/forgelocal_self_validation_v4/SELF_VALIDATION_SBOM.spdx.json[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_CORE_SECURITY_RAW.log:194: trailing whitespace.
+[32m+[m[32mcommand=bash -c cd\ forge-dashboard\ \&\&\ pnpm\ dlx\ license-checker\ --production\ --json\ \>\ \"\$1\" bash /home/ubuntu/forgelocal_self_validation_v4/SELF_VALIDATION_LICENSES.json[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_DASHBOARD_QUALIFICATION_RAW.log:23: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+evidence/SELF_VALIDATION_V4/SELF_VALIDATION_LICENSES.json:7: new blank line at EOF.
+evidence/SELF_VALIDATION_V6/SELF_VALIDATION_V6_REPORT.md:5: trailing whitespace.
+[32m+[m[32m**Branche de travail :** `audit/t00-t42-v6-findings-remediation`[m[41m  [m
+evidence/SELF_VALIDATION_V6/SELF_VALIDATION_V6_REPORT.md:6: trailing whitespace.
+[32m+[m[32m**Origine immuable :** `audit/t00-t42-self-validation-synthetic-e2e`, HEAD V5 `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`[m[41m  [m
+evidence/SELF_VALIDATION_V6/SELF_VALIDATION_V6_REPORT.md:7: trailing whitespace.
+[32m+[m[32m**Baseline :** tag `t00-t27-complete-20260820`, résolu à `72d54110c89583beacc556bb103f881b667d8137`[m[41m  [m
+evidence/SELF_VALIDATION_V6/V6_BUNDLE_VERIFY.log:5: trailing whitespace.
+[32m+[m[32mb34fa5c02ff20144abfb5d240db1c67ad1f038f9[m[41m [m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:10: space before tab in indent.
+[32m+[m[41m [m		[32mfmt.Fprintf(stderr, "mcp-config %s does not accept positional arguments: %s\n", mode, strings.Join(fs.Args(), " "))[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:11: space before tab in indent.
+[32m+[m[41m [m		[32mreturn 2[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:12: space before tab in indent.
+[32m+[m[41m [m	[32m}[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:15: space before tab in indent.
+[32m+[m[41m [m	[32mswitch mode {[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:16: space before tab in indent.
+[32m+[m[41m [m	[32mcase "stdio":[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:17: space before tab in indent.
+[32m+[m[41m [m		[32mexe, err := os.Executable()[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:222: space before tab in indent.
+[32m+[m[41m [m	[32mgithub.com/mattn/go-isatty v0.0.24 // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:223: space before tab in indent.
+[32m+[m[41m [m	[32mgithub.com/ncruces/go-strftime v1.0.0 // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:224: space before tab in indent.
+[32m+[m[41m [m	[32mgithub.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:226: space before tab in indent.
+[32m+[m[41m [m	[32mgolang.org/x/sys v0.47.0 // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:228: space before tab in indent.
+[32m+[m[41m [m	[32mmodernc.org/libc v1.74.4 // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:229: space before tab in indent.
+[32m+[m[41m [m	[32mmodernc.org/mathutil v1.7.1 // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:230: space before tab in indent.
+[32m+[m[41m [m	[32mmodernc.org/memory v1.11.0 // indirect[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:273: space before tab in indent.
+[32m+[m[41m [m		[32mreturn[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:274: space before tab in indent.
+[32m+[m[41m [m	[32m}[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:278: space before tab in indent.
+[32m+[m[41m [m	[32mif req.Timeout > 0 {[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:279: space before tab in indent.
+[32m+[m[41m [m		[32mopts.Timeout = playwright.Float(req.Timeout)[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:280: space before tab in indent.
+[32m+[m[41m [m	[32m}[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:284: space before tab in indent.
+[32m+[m[41m [m	[32mif err != nil {[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:285: space before tab in indent.
+[32m+[m[41m [m		[32mwriteError(w, 408, "TIMEOUT", err.Error())[m[m
+evidence/SELF_VALIDATION_V6/V6_CODE_DIFF.patch:286: space before tab in indent.
+[32m+[m[41m [m		[32mreturn[m[m
+evidence/SELF_VALIDATION_V6/V6_DASHBOARD_BUILD.log:20: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+evidence/SELF_VALIDATION_V6/V6_DASHBOARD_BUILD_AXE.log:20: trailing whitespace.
+[32m+[m[32m  dist/index.js  788b[m[41m [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:4: trailing whitespace.
+[32m+[m[41m               [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:5: trailing whitespace.
+[32m+[m[41m               [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:10: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:11: trailing whitespace.
+[32m+[m[32m  Language   Rules   Files          Origin   Rules[m[41m                                                                      [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:12: trailing whitespace.
+[32m+[m[32m ──────────────────────────        ────────────────[m[41m                                                                     [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:13: trailing whitespace.
+[32m+[m[32m  go             2      87          Custom       4[m[41m                                                                      [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:14: trailing whitespace.
+[32m+[m[32m  ts             2      79[m[41m                                                                                              [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:15: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:16: trailing whitespace.
+[32m+[m[41m                [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:17: trailing whitespace.
+[32m+[m[41m                [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.log:26: trailing whitespace.
+[32m+[m[32m • Scan skipped:[m[41m [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:1: trailing whitespace.
+[32m+[m[41m               [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:2: trailing whitespace.
+[32m+[m[41m               [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:7: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:8: trailing whitespace.
+[32m+[m[32m  Language   Rules   Files          Origin   Rules[m[41m                                                                      [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:9: trailing whitespace.
+[32m+[m[32m ──────────────────────────        ────────────────[m[41m                                                                     [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:10: trailing whitespace.
+[32m+[m[32m  go             2      87          Custom       4[m[41m                                                                      [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:11: trailing whitespace.
+[32m+[m[32m  ts             2      79[m[41m                                                                                              [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:12: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:13: trailing whitespace.
+[32m+[m[41m                [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:14: trailing whitespace.
+[32m+[m[41m                [m
+evidence/SELF_VALIDATION_V6/V6_SEMGREP_AFTER.stderr.log:23: trailing whitespace.
+[32m+[m[32m • Scan skipped:[m[41m [m
+evidence/SELF_VALIDATION_V6/V6_V5_REPORT_INHERITED.md:3: trailing whitespace.
+[32m+[m[32m**Date d’exécution :** 2026-08-25 UTC[m[41m  [m
+evidence/SELF_VALIDATION_V6/V6_V5_REPORT_INHERITED.md:4: trailing whitespace.
+[32m+[m[32m**Dépôt :** [forgelocal-public-sanitized][1][m[41m  [m
+evidence/SELF_VALIDATION_V6/V6_V5_REPORT_INHERITED.md:5: trailing whitespace.
+[32m+[m[32m**Branche source vérifiée :** `audit/t00-t42-self-validation-synthetic-e2e`[m[41m  [m
+evidence/SELF_VALIDATION_V6/V6_V5_REPORT_INHERITED.md:6: trailing whitespace.
+[32m+[m[32m**HEAD source vérifié :** `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`[m[41m  [m
+evidence/SELF_VALIDATION_V6/V6_V5_REPORT_INHERITED.md:7: trailing whitespace.
+[32m+[m[32m**Baseline demandée :** tag `t00-t27-complete-20260820`, résolu dans le clone neuf vers `72d54110c89583beacc556bb103f881b667d8137`[m[41m  [m
+evidence/SELF_VALIDATION_V6/V6_V5_REPORT_INHERITED.md:8: trailing whitespace.
+[32m+[m[32m**Nombre de commits baseline..HEAD :** 58[m[41m  [m
+evidence/V6_FREEZE/V6_FREEZE_BUNDLE_VERIFY.log:5: trailing whitespace.
+[32m+[m[32mb34fa5c02ff20144abfb5d240db1c67ad1f038f9[m[41m [m
+evidence/V6_FREEZE/V6_FREEZE_README.md:3: trailing whitespace.
+[32m+[m[32m**Décision :** `V6_LOCAL_QUALIFIED_BASELINE_FROZEN`[m[41m  [m
+evidence/V6_FREEZE/V6_FREEZE_README.md:4: trailing whitespace.
+[32m+[m[32m**Statut de revue :** `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`[m[41m  [m
+evidence/V6_FREEZE/V6_FREEZE_README.md:5: trailing whitespace.
+[32m+[m[32m**Tag annoté :** `t00-t42-v6-local-qualified-2026-08-25`[m[41m  [m
+evidence/V6_FREEZE/V6_FREEZE_README.md:6: trailing whitespace.
+[32m+[m[32m**Commit du tag :** `999374d99b7996504ba91e421850a2fe84afb78d`[m[41m  [m
+evidence/V6_FREEZE/V6_FREEZE_README.md:7: trailing whitespace.
+[32m+[m[32m**Branche source :** `audit/t00-t42-v6-findings-remediation`[m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_BUNDLE_VERIFY.log:5: trailing whitespace.
+[32m+[m[32mb34fa5c02ff20144abfb5d240db1c67ad1f038f9[m[41m [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_BUNDLE_VERIFY_FINAL.log:5: trailing whitespace.
+[32m+[m[32mb34fa5c02ff20144abfb5d240db1c67ad1f038f9[m[41m [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:3: trailing whitespace.
+[32m+[m[32m**Date d’exécution :** 2026-08-25 UTC[m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:4: trailing whitespace.
+[32m+[m[32m**Dépôt :** [forgelocal-public-sanitized][1][m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:5: trailing whitespace.
+[32m+[m[32m**Branche source vérifiée :** `audit/t00-t42-self-validation-synthetic-e2e`[m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:6: trailing whitespace.
+[32m+[m[32m**HEAD source vérifié :** `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`[m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:7: trailing whitespace.
+[32m+[m[32m**Baseline demandée :** tag `t00-t27-complete-20260820`, résolu dans le clone neuf vers `72d54110c89583beacc556bb103f881b667d8137`[m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:8: trailing whitespace.
+[32m+[m[32m**Nombre de commits baseline..HEAD :** 58[m[41m  [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:2: trailing whitespace.
+[32m+[m[41m               [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:3: trailing whitespace.
+[32m+[m[41m               [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:8: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:9: trailing whitespace.
+[32m+[m[32m  Language   Rules   Files          Origin   Rules[m[41m                                                                      [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:10: trailing whitespace.
+[32m+[m[32m ──────────────────────────        ────────────────[m[41m                                                                     [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:11: trailing whitespace.
+[32m+[m[32m  go             2      87          Custom       4[m[41m                                                                      [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:12: trailing whitespace.
+[32m+[m[32m  ts             2      74[m[41m                                                                                              [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:13: trailing whitespace.
+[32m+[m[41m                                                                                                                        [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:14: trailing whitespace.
+[32m+[m[41m                [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:15: trailing whitespace.
+[32m+[m[41m                [m
+evidence/V6_HISTORY/SELF_VALIDATION_V5/SEMGREP_FINAL.log:24: trailing whitespace.
+[32m+[m[32m • Scan skipped:[m[41m [m
+diff_check_exit=2

@@ -1,0 +1,98 @@
+[DOCKER_NATIVE] branch=audit/t00-t42-docker-native-nonruntime-validation
+[DOCKER_NATIVE] remote_sha=38a273de9e9ba239338d4661119cdd53abd9ad28
+[DOCKER_NATIVE] clone_exit=0
+[DOCKER_NATIVE] fsck_before_exit=0
+[DOCKER_NATIVE] local_head=38a273de9e9ba239338d4661119cdd53abd9ad28 head_match=yes
+[DOCKER_NATIVE] sparse_checkout_exit=0
+[DOCKER_NATIVE] lfs_targeted_exit=0
+[DOCKER_NATIVE] zip_expected=3e989a014a8cd9950174e1c986ce94a9bcb44f357a89c84c41de0a1741067851 zip_actual=3e989a014a8cd9950174e1c986ce94a9bcb44f357a89c84c41de0a1741067851 zip_sha_exit=0
+[DOCKER_NATIVE] bundle_expected=929b9681ce32ef8f73e81399b84a36e80cacbae6e221ad439495548a3291d457 bundle_actual=929b9681ce32ef8f73e81399b84a36e80cacbae6e221ad439495548a3291d457 bundle_sha_exit=0
+[DOCKER_NATIVE] unzip_exit=0
+[DOCKER_NATIVE] internal_sha_exit=0
+[DOCKER_NATIVE] bundle_verify_exit=0
+[DOCKER_NATIVE] gitleaks_exit=0
+[DOCKER_NATIVE] final_fsck_exit=0
+[LFS_RESTORATION] branch=audit/t00-t42-lfs-conservation-restoration-v6
+[LFS_RESTORATION] remote_sha=1fa32f68dae6a745cd7f8fec2e883f13b2398aca
+[LFS_RESTORATION] clone_exit=0
+[LFS_RESTORATION] fsck_before_exit=0
+[LFS_RESTORATION] local_head=1fa32f68dae6a745cd7f8fec2e883f13b2398aca head_match=yes
+[LFS_RESTORATION] sparse_checkout_exit=0
+[LFS_RESTORATION] lfs_targeted_exit=0
+[LFS_RESTORATION] zip_expected=344e1d7d6a03cddde1136d7e47c2e9c5e3db44cf6dd1b0e76df4a30317b02fa1 zip_actual=344e1d7d6a03cddde1136d7e47c2e9c5e3db44cf6dd1b0e76df4a30317b02fa1 zip_sha_exit=0
+[LFS_RESTORATION] bundle_expected=26c4d13f8d46b414f8e84af889b766076d4744c785370f21fedfde4742b59ced bundle_actual=26c4d13f8d46b414f8e84af889b766076d4744c785370f21fedfde4742b59ced bundle_sha_exit=0
+[LFS_RESTORATION] unzip_exit=0
+[LFS_RESTORATION] internal_sha_exit=0
+[LFS_RESTORATION] bundle_verify_exit=0
+[LFS_RESTORATION] gitleaks_exit=0
+[LFS_RESTORATION] final_fsck_exit=0
+[OSV_RECONCILIATION] branch=audit/t00-t42-osv-toolchain-reconciliation-v6
+[OSV_RECONCILIATION] remote_sha=0f055e7fff5ac2f70885c937b2a036ffc45b5526
+[OSV_RECONCILIATION] clone_exit=0
+[OSV_RECONCILIATION] fsck_before_exit=0
+[OSV_RECONCILIATION] local_head=0f055e7fff5ac2f70885c937b2a036ffc45b5526 head_match=yes
+[OSV_RECONCILIATION] sparse_checkout_exit=0
+[OSV_RECONCILIATION] lfs_targeted_exit=0
+[OSV_RECONCILIATION] zip_expected=08321e9dfd91587d0178a5fa40a55e5c5081f5eaf8510af4b11f3e12cf67d4d5 zip_actual=08321e9dfd91587d0178a5fa40a55e5c5081f5eaf8510af4b11f3e12cf67d4d5 zip_sha_exit=0
+[OSV_RECONCILIATION] bundle_expected=8fecaaa71b5109f06f7c148e5beba0f35450113dc2ac80136b3e3c13d48f2c2f bundle_actual=8fecaaa71b5109f06f7c148e5beba0f35450113dc2ac80136b3e3c13d48f2c2f bundle_sha_exit=0
+[OSV_RECONCILIATION] unzip_exit=0
+[OSV_RECONCILIATION] internal_sha_exit=0
+[OSV_RECONCILIATION] bundle_verify_exit=0
+[OSV_RECONCILIATION] gitleaks_exit=0
+[OSV_RECONCILIATION] final_fsck_exit=0
+[LICENSE_TRIAGE] branch=audit/t00-t42-license-compliance-triage-v6
+[LICENSE_TRIAGE] remote_sha=0931ec8905b4b38ce9ce1f5d195287dae02267b3
+[LICENSE_TRIAGE] clone_exit=0
+[LICENSE_TRIAGE] fsck_before_exit=0
+[LICENSE_TRIAGE] local_head=0931ec8905b4b38ce9ce1f5d195287dae02267b3 head_match=yes
+[LICENSE_TRIAGE] sparse_checkout_exit=0
+[LICENSE_TRIAGE] lfs_targeted_exit=0
+[LICENSE_TRIAGE] zip_expected=ab86ae3be472954048267633b697cdeb2d2f2a4886539408eb23d2f242a4f307 zip_actual=ab86ae3be472954048267633b697cdeb2d2f2a4886539408eb23d2f242a4f307 zip_sha_exit=0
+[LICENSE_TRIAGE] bundle_expected=7c9b838ba5f822265f59d4a8e1cf0e114bcf4bd115e77e189cbd2b138cfc47e1 bundle_actual=7c9b838ba5f822265f59d4a8e1cf0e114bcf4bd115e77e189cbd2b138cfc47e1 bundle_sha_exit=0
+[LICENSE_TRIAGE] unzip_exit=0
+[LICENSE_TRIAGE] internal_sha_exit=0
+[LICENSE_TRIAGE] bundle_verify_exit=0
+[LICENSE_TRIAGE] gitleaks_exit=0
+[LICENSE_TRIAGE] final_fsck_exit=0
+[STATIC_DEBT] branch=audit/t00-t42-static-debt-prioritization-v6
+[STATIC_DEBT] remote_sha=78b6c49ccbe313ae4453c8ec6c042c4828faf296
+[STATIC_DEBT] clone_exit=0
+[STATIC_DEBT] fsck_before_exit=0
+[STATIC_DEBT] local_head=78b6c49ccbe313ae4453c8ec6c042c4828faf296 head_match=yes
+[STATIC_DEBT] sparse_checkout_exit=0
+[STATIC_DEBT] lfs_targeted_exit=0
+[STATIC_DEBT] zip_expected=e0641cb1254ffac6085e5146251b856c8b40334a44b358864f196a7b6a447e71 zip_actual=e0641cb1254ffac6085e5146251b856c8b40334a44b358864f196a7b6a447e71 zip_sha_exit=0
+[STATIC_DEBT] bundle_expected=1e54450bea38d5aa8b0417030412cec8434eee2e37bccccca6a87560e13ff1b5 bundle_actual=1e54450bea38d5aa8b0417030412cec8434eee2e37bccccca6a87560e13ff1b5 bundle_sha_exit=0
+[STATIC_DEBT] unzip_exit=0
+[STATIC_DEBT] internal_sha_exit=0
+[STATIC_DEBT] bundle_verify_exit=0
+[STATIC_DEBT] gitleaks_exit=0
+[STATIC_DEBT] final_fsck_exit=0
+[GITLEAKS_HISTORICAL] branch=audit/t00-t42-gitleaks-historical-method-hardening-v6
+[GITLEAKS_HISTORICAL] remote_sha=6fd0e31f1342be8c4eb067b9c72afa587ecc412e
+[GITLEAKS_HISTORICAL] clone_exit=0
+[GITLEAKS_HISTORICAL] fsck_before_exit=0
+[GITLEAKS_HISTORICAL] local_head=6fd0e31f1342be8c4eb067b9c72afa587ecc412e head_match=yes
+[GITLEAKS_HISTORICAL] sparse_checkout_exit=0
+[GITLEAKS_HISTORICAL] lfs_targeted_exit=0
+[GITLEAKS_HISTORICAL] zip_expected=11ea9935dd261c466007a9706c182d9174d820ad019af7a49582ee2b3b2a5eb5 zip_actual=11ea9935dd261c466007a9706c182d9174d820ad019af7a49582ee2b3b2a5eb5 zip_sha_exit=0
+[GITLEAKS_HISTORICAL] bundle_expected=67057075cf9465bca55d17f920a80eaf0780b60c878ccab2fce2eec1d5972936 bundle_actual=67057075cf9465bca55d17f920a80eaf0780b60c878ccab2fce2eec1d5972936 bundle_sha_exit=0
+[GITLEAKS_HISTORICAL] unzip_exit=0
+[GITLEAKS_HISTORICAL] internal_sha_exit=0
+[GITLEAKS_HISTORICAL] bundle_verify_exit=0
+[GITLEAKS_HISTORICAL] gitleaks_exit=0
+[GITLEAKS_HISTORICAL] final_fsck_exit=0
+[T30_RECONCILIATION] branch=audit/t00-t42-t30-remote-evidence-reconciliation-v6
+[T30_RECONCILIATION] remote_sha=e5241c9076814adf2b4870e4a61b2f8702f1e1fa
+[T30_RECONCILIATION] clone_exit=0
+[T30_RECONCILIATION] fsck_before_exit=0
+[T30_RECONCILIATION] local_head=e5241c9076814adf2b4870e4a61b2f8702f1e1fa head_match=yes
+[T30_RECONCILIATION] sparse_checkout_exit=0
+[T30_RECONCILIATION] lfs_targeted_exit=0
+[T30_RECONCILIATION] zip_expected=abd5b359e4ed69719f224222d940c25b3b99635f28017b7393159ca4893abf8e zip_actual=abd5b359e4ed69719f224222d940c25b3b99635f28017b7393159ca4893abf8e zip_sha_exit=0
+[T30_RECONCILIATION] bundle_expected=f9efb212024775c45da85d0c72cb8f7c5935bd84417a56c7136dd0a633da61ba bundle_actual=f9efb212024775c45da85d0c72cb8f7c5935bd84417a56c7136dd0a633da61ba bundle_sha_exit=0
+[T30_RECONCILIATION] unzip_exit=0
+[T30_RECONCILIATION] internal_sha_exit=0
+[T30_RECONCILIATION] bundle_verify_exit=0
+[T30_RECONCILIATION] gitleaks_exit=0
+[T30_RECONCILIATION] final_fsck_exit=0
