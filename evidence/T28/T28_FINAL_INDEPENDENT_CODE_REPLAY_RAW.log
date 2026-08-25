@@ -1,0 +1,65 @@
+utc=2026-08-25T15:45:41Z
+cwd=/home/ubuntu
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=feature/t28-local-extensions-controlled
+remote_head_expected=15f3c4a125e5a587fb99cd0851b10369964db30b
+## fresh code clone
+Cloning into '/tmp/t28_final_independent_code/clone'...
+clone_exit=0
+HEAD is now at 15f3c4a Finalize T28 R1 publication lineage
+checkout_exit=0
+clone_head=15f3c4a125e5a587fb99cd0851b10369964db30b
+## code scope
+A	internal/api/extensions.go
+A	internal/api/extensions_t28_test.go
+M	internal/api/openapi.go
+M	internal/api/router.go
+A	internal/extensions/store.go
+A	internal/extensions/store_test.go
+baseline_impl_internal_diff_exit=0
+impl_remote_internal_diff_exit=0
+## static contract controls
+/tmp/t28_final_independent_code/clone/internal/extensions/store.go:440:	sensitive := map[string]bool{"cookies": true, "webRequest": true, "webRequestBlocking": true, "debugger": true, "nativeMessaging": true, "management": true, "proxy": true, "downloads": true, "clipboardRead": true}
+forbidden_runtime_grep_exit=0
+/tmp/t28_final_independent_code/clone/internal/extensions/store.go:391:		state = "HIGH_RISK"
+/tmp/t28_final_independent_code/clone/internal/extensions/store.go:446:			categories["UNCLASSIFIED_HIGH_RISK"] = struct{}{}
+/tmp/t28_final_independent_code/clone/internal/extensions/store.go:622:	return &Version{ID: versionID, SeriesID: seriesID, Number: number, State: "approved", DigestPreview: digestPreview, Size: size, Format: format, Manifest: m, RiskState: map[bool]string{true: "HIGH_RISK", false: "NORMAL"}[len(risk) > 0], RiskCategories: risk, CreatedAt: created, ApprovedAt: approved}, nil
+/tmp/t28_final_independent_code/clone/internal/extensions/store_test.go:53:	if v.State != "imported" || v.RiskState != "HIGH_RISK" {
+/tmp/t28_final_independent_code/clone/internal/api/extensions.go:16:	AcceptHighRisk          bool     `json:"accept_high_risk"`
+/tmp/t28_final_independent_code/clone/internal/api/extensions.go:189:		code, message = "HIGH_RISK_ACK_REQUIRED", "high-risk permissions require explicit acceptance"
+/tmp/t28_final_independent_code/clone/internal/api/router.go:54:// profile↔proxy assignment) to the existing loopback-only admin group. All
+/tmp/t28_final_independent_code/clone/internal/api/router.go:345:		if !validBearerToken(r.Header.Get("Authorization"), h.token) {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:355:		if validBearerToken(r.Header.Get("Authorization"), h.token) || h.readonlySessions.validateToken(bearerToken(r.Header.Get("Authorization"))) {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:703:func validBearerToken(auth, token string) bool {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:704:	if token == "" || !strings.HasPrefix(auth, "Bearer ") {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:707:	got := auth[len("Bearer "):]
+/tmp/t28_final_independent_code/clone/internal/api/router.go:712:	if !strings.HasPrefix(auth, "Bearer ") {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:715:	return strings.TrimSpace(strings.TrimPrefix(auth, "Bearer "))
+/tmp/t28_final_independent_code/clone/internal/api/router.go:752:		origin := r.Header.Get("Origin")
+/tmp/t28_final_independent_code/clone/internal/api/router.go:753:		if origin != "" && isLoopbackOrigin(origin) {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:754:			w.Header().Set("Access-Control-Allow-Origin", origin)
+/tmp/t28_final_independent_code/clone/internal/api/router.go:755:			w.Header().Set("Vary", "Origin")
+/tmp/t28_final_independent_code/clone/internal/api/router.go:757:			w.Header().Set("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Request-ID")
+/tmp/t28_final_independent_code/clone/internal/api/router.go:761:			if origin != "" && !isLoopbackOrigin(origin) {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:762:				writeError(w, http.StatusForbidden, "CORS_ORIGIN_NOT_ALLOWED", "only loopback dashboard origins are allowed")
+/tmp/t28_final_independent_code/clone/internal/api/router.go:773:// (POST, PUT, DELETE, PATCH) must carry a loopback Origin OR Referer header.
+/tmp/t28_final_independent_code/clone/internal/api/router.go:781:		origin := r.Header.Get("Origin")
+/tmp/t28_final_independent_code/clone/internal/api/router.go:782:		if isLoopbackOrigin(origin) {
+/tmp/t28_final_independent_code/clone/internal/api/router.go:790:		writeError(w, http.StatusForbidden, "ORIGIN_REQUIRED_LOCAL_ONLY", "mutations require a loopback Origin or Referer")
+/tmp/t28_final_independent_code/clone/internal/api/router.go:795:	return ref != "" && isLoopbackOrigin(ref)
+/tmp/t28_final_independent_code/clone/internal/api/router.go:798:func isLoopbackOrigin(origin string) bool {
+security_controls_grep_exit=0
+## targeted T28 race tests
+ok  	forgelocal/internal/extensions	1.315s
+ok  	forgelocal/internal/api	1.191s
+targeted_test_exit=0
+## go vet
+vet_exit=0
+## go build
+build_exit=0
+## git diff check
+diff_check_exit=0
+## clean clone and fsck
+status_exit=0
+dangling commit 4f0f6201e1d8f8da44d82c4245bd9b7dfee44578
+fsck_exit=0
