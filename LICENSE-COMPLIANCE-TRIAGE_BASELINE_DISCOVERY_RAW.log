@@ -1,0 +1,18 @@
+utc=2026-08-25T04:05Z
+lot=LICENSE-COMPLIANCE-TRIAGE
+base_commit=fb9d20c7ffb241104eede582eee9cbd7a3bbc267
+base_branch=audit/t00-t42-license-static-debt-triage
+V6_frozen_commit=999374d99b7996504ba91e421850a2fe84afb78d
+working_tree_before_lot=clean
+
+--- observed inventory
+current clean CycloneDX components=749
+licensed components=3
+unknown components=746
+historical report count=744/741; difference explicitly retained in V6_LICENSE_COMPARE.log
+
+--- policy
+For each UNKNOWN component record component, version, PURL/source, official license lookup result, obligation and decision. Never guess a license. Do not modify V6 code, dependencies, wrappers or gates. Do not start T28/T29/T39/T40/T41/T42, Camoufox, real proxy, cookies, user data, native SystemVault, migration, production runtime or release.
+
+--- required outcome
+Keep UNKNOWN where official source/version evidence is insufficient. Define distribution policy before any release. Maintain individual owner Legal/OSS review and reproducible source lookup.
