@@ -1,0 +1,126 @@
+utc=2026-08-25T14:56:50Z
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+expected_head=6476a21313f14511b95e4037f782947fc5e96e83
+## clone
+Cloning into '/tmp/t28_public_verify_6476'...
+clone_exit=0
+## sparse
+sparse_exit=0
+HEAD is now at 6476a21 Publish T28 evidence package and final decision
+checkout_exit=0
+checked_head=6476a21313f14511b95e4037f782947fc5e96e83
+## fsck
+fsck_exit=0
+## sidecars
+t28-local-extensions-controlled-v1.zip: OK
+zip_sidecar_exit=0
+t28-local-extensions-controlled.delta.bundle: OK
+bundle_sidecar_exit=0
+## zip
+Archive:  t28-local-extensions-controlled-v1.zip
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/docs/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/docs/T28_EXTENSIONS_THREAT_MODEL.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/docs/T28_IMPLEMENTATION_HANDOVER.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/docs/T28_T42_STATUS_REGISTER.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/BASELINE_DISCOVERY_RAW.log   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/CHANGELOG.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/FINAL_VALIDATION_RAW.log   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_DIFF_CORRECTED.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_DIFF_POST.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_EXTRACTION.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_EXTRACTION_POST.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_FINAL_DIFF.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_FINAL_EXTRACTION.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GITLEAKS_PROTECT_DIFF.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_BASELINE.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_HEAD.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_HEAD_CORRECTED.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_API.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_API_PACKAGE.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_API_POST.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_EXTENSIONS.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GOSEC_T28_EXTENSIONS_POST.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/GO_GLOBAL_VALIDATION_RAW.log   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/REGISTER.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/SBOM_FINAL.spdx.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/SBOM_HEAD.spdx.json   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/SCANS_RAW.log   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/SCAN_DECISION.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/evidence/T28/todo.md   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/api/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/api/extensions.go   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/api/extensions_t28_test.go   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/api/openapi.go   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/api/router.go   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/extensions/   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/extensions/store.go   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/internal/extensions/store_test.go   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/PACKAGE_METADATA.txt   OK
+    testing: T28_LOCAL_EXTENSIONS_CONTROLLED/MANIFEST.md   OK
+No errors detected in compressed data of t28-local-extensions-controlled-v1.zip.
+zip_test_exit=0
+manifest_self_reference_exit=1
+PACKAGE_METADATA.txt: OK
+docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md: OK
+docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md: OK
+docs/T28_EXTENSIONS_THREAT_MODEL.md: OK
+docs/T28_IMPLEMENTATION_HANDOVER.md: OK
+docs/T28_T42_STATUS_REGISTER.md: OK
+evidence/T28/BASELINE_DISCOVERY_RAW.log: OK
+evidence/T28/CHANGELOG.md: OK
+evidence/T28/FINAL_VALIDATION_RAW.log: OK
+evidence/T28/GITLEAKS_BASELINE_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_DIFF_CORRECTED.json: OK
+evidence/T28/GITLEAKS_DIFF_POST.json: OK
+evidence/T28/GITLEAKS_DIFF_RANGE_CORRECTED.json: OK
+evidence/T28/GITLEAKS_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_EXTRACTION_POST.json: OK
+evidence/T28/GITLEAKS_FINAL_DIFF.json: OK
+evidence/T28/GITLEAKS_FINAL_EXTRACTION.json: OK
+evidence/T28/GITLEAKS_PROTECT_DIFF.json: OK
+evidence/T28/GOSEC_BASELINE.json: OK
+evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json: OK
+evidence/T28/GOSEC_HEAD.json: OK
+evidence/T28/GOSEC_HEAD_CORRECTED.json: OK
+evidence/T28/GOSEC_T28_API.json: OK
+evidence/T28/GOSEC_T28_API_PACKAGE.json: OK
+evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json: OK
+evidence/T28/GOSEC_T28_API_POST.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json: OK
+evidence/T28/GOSEC_T28_EXTENSIONS_POST.json: OK
+evidence/T28/GO_GLOBAL_VALIDATION_POST_IMPLEMENTATION_RAW.log: OK
+evidence/T28/GO_GLOBAL_VALIDATION_RAW.log: OK
+evidence/T28/REGISTER.md: OK
+evidence/T28/SBOM_FINAL.spdx.json: OK
+evidence/T28/SBOM_HEAD.spdx.json: OK
+evidence/T28/SCANS_RAW.log: OK
+evidence/T28/SCAN_DECISION.md: OK
+evidence/T28/todo.md: OK
+internal/api/extensions.go: OK
+internal/api/extensions_t28_test.go: OK
+internal/api/openapi.go: OK
+internal/api/router.go: OK
+internal/extensions/store.go: OK
+internal/extensions/store_test.go: OK
+manifest_checksums_exit=0
+## bundle
+evidence/T28/t28-local-extensions-controlled.delta.bundle is okay
+The bundle contains this ref:
+a8a014d361c8b364a8baf51b20f0e566231a138a refs/heads/feature/t28-local-extensions-controlled
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
