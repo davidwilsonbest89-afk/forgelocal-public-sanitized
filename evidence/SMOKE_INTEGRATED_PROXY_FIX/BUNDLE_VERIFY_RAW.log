@@ -1,38 +1,13 @@
-utc_start=2026-08-25T23:27:01Z
-cwd=/home/ubuntu
+utc_start=2026-08-25T23:34:00Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
 command=unzip fresh + tar fresh + manifest verification + git fsck --full
 unzip_exit=0
 untar_exit=0
-./README.md: OK
-./evidence/BASELINE_DISCOVERY_RAW_POSTSTOP.log: OK
-./evidence/CLEANUP_V5_RAW.log: OK
-./evidence/CORE_V5_HTTP_RAW_REDACTED.log: OK
-./evidence/GATES_POST_SMOKE_RAW.log: OK
-./evidence/SMOKE_INTEGRATED_PROXY_FIX_AUTHORITATIVE_RAW.log: OK
-./evidence/SMOKE_INTEGRATED_PROXY_FIX_REPORT.md: OK
-./evidence/STATUS_REGISTER.md: OK
-./source/SOURCE_REFERENCE.txt: OK
 zip_manifest_exit=0
-./README.md: OK
-./evidence/BASELINE_DISCOVERY_RAW_POSTSTOP.log: OK
-./evidence/CLEANUP_V5_RAW.log: OK
-./evidence/CORE_V5_HTTP_RAW_REDACTED.log: OK
-./evidence/GATES_POST_SMOKE_RAW.log: OK
-./evidence/SMOKE_INTEGRATED_PROXY_FIX_AUTHORITATIVE_RAW.log: OK
-./evidence/SMOKE_INTEGRATED_PROXY_FIX_REPORT.md: OK
-./evidence/STATUS_REGISTER.md: OK
-./source/SOURCE_REFERENCE.txt: OK
 tar_manifest_exit=0
 manifest_zip_tar_cmp_exit=0
-dangling blob 6501c02864bcf3d774ffa22c39898485c4a66946
-dangling blob 91e2fd6ab82bca143754fb002db8aa0e172bc05e
-dangling blob 57b37c2e7dc7fd2d34f367731dfcabea4c069b9c
-dangling blob aae4634b0b5edf51710d4820990ceed34e703bc5
-dangling blob 9305ca98322e7edc43bbc8765b3a6f9d5e87949e
-dangling blob 08761d89101fd7d5f28845fc2f53cdfbb9471b89
-dangling blob 5ca686e14938fb6c8c06ee5949f69f9c2553c828
-dangling blob a47c7569dbdb79f4475fd3dfacab8ee8b993c62c
 git_fsck_exit=0
-zip_sha256=73ad3acce612dda8b3f742474f89f18e9d3dc208be4ebb264401dc1dc0a0b9a9
-tar_sha256=c669baf74194c57593aedeec338d4e2f747027a2eadfe38cdf7ef7bdb1697239
-utc_end=2026-08-25T23:27:04Z
+dangling_objects=present_but_git_fsck_exit_0
+zip_sha256=09ec3007719966d08c98eb656ef1591b62ad0108ef49bb295c9e738e9e726fd0
+tar_sha256=9e5e51e6da2e7acec22a18dd252696862bed3b93a2bd3f39dda126cf9b7c0501
+utc_end=2026-08-25T23:34:04Z

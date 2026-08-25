@@ -3,7 +3,6 @@
   "source_commit": "9031f8324deeb4d6c171e01a244eeba778cf137c",
   "verdict": "SMOKE_INTEGRATED_PROXY_PASS",
   "files": [
-    {"sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "path": "./MANIFEST.checksums"},
     {"sha256": "5f5560dc176518eb9561901ac471221caa343ede602589842e977e81ef7442a8", "path": "./README.md"},
     {"sha256": "abdb5c097f6334dadeb5d23e0d5d428279219fe55110df387a2da14dba76ed3f", "path": "./evidence/BASELINE_DISCOVERY_RAW_POSTSTOP.log"},
     {"sha256": "c8f5ddd95651f422d8a9ee679119eed4a29a67085531448abe9d475bf7d11402", "path": "./evidence/CLEANUP_V5_RAW.log"},
