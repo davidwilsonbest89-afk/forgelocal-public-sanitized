@@ -1,7 +1,7 @@
-utc=2026-08-25T17:49:38Z
+utc=2026-08-25T17:19:25Z
 cwd=/home/ubuntu
 phase=V-DASHBOARD-API
-repo_head=b1559ca53852c493ba15e4a06ad89b0c171c7938
+repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
 dashboard_dependencies=node_modules already installed from frozen lockfile
 ## Core build/init/start
 core_build_exit=0
@@ -32,7 +32,7 @@ computing gzip size...
 ../dist/public/index.html                 367.57 kB │ gzip: 105.52 kB
 ../dist/public/assets/index-BIeqyB7B.css  132.29 kB │ gzip:  23.60 kB
 ../dist/public/assets/index-DcOPAphq.js   402.25 kB │ gzip: 114.21 kB
-✓ built in 2.86s
+✓ built in 2.67s
 
   dist/index.js  788b 
 
@@ -80,7 +80,7 @@ T06_EMPTY_CATALOGS: PASS groups=0 runtimes=0
 [1A[2Ktests/t06-groups-runtimes.spec.ts:162:1 › T06-3 — invalide la session mémoire après un 401 pendant le chargement
 T06_FORCED_401: PASS token=cleared ui=Core_non_connecte
 
-[1A[2K  5 passed (9.2s)
+[1A[2K  5 passed (9.4s)
 ## console/log redaction
 redaction=PASS
 process_cleanup=PASS

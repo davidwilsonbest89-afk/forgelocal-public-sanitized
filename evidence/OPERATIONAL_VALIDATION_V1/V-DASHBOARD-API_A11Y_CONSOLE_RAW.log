@@ -1,0 +1,61 @@
+utc=2026-08-25T17:52:46Z
+cwd=/home/ubuntu
+phase=V-DASHBOARD-API-A11Y-CONSOLE
+repo_head=b1559ca53852c493ba15e4a06ad89b0c171c7938
+core_build_exit=0
+core_init_exit=0
+core_ready_attempt=7
+dashboard_ready_attempt=9
+{
+  "url": "http://127.0.0.1:3002/",
+  "axe_violations": 1,
+  "axe_serious_critical": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": 11
+    }
+  ],
+  "console_entries": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "type": "debug",
+      "text": "[Manus] Debug collector initialized (no rrweb, UI events only)"
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "page_errors": []
+}
+a11y_console_exit=0
+process_cleanup=PASS
+cleanup=PASS

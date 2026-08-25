@@ -1,14 +1,14 @@
-utc=2026-08-25T17:04:37Z
+utc=2026-08-25T17:48:40Z
 cwd=/home/ubuntu
 phase=V-T28-RUNTIME-CONTRACT
-repo_head=053fd8f9612eb028c04983e0a23d311a6a099e29
+repo_head=b1559ca53852c493ba15e4a06ad89b0c171c7938
 scope=local synthetic controlled packages; no browser runtime
 ## targeted T28 tests
-ok  	forgelocal/internal/extensions	2.380s
-ok  	forgelocal/internal/api	1.173s
+ok  	forgelocal/internal/extensions	2.203s
+ok  	forgelocal/internal/api	1.183s
 t28_targeted_race_exit=0
 ## targeted package API tests
-ok  	forgelocal/internal/api	1.188s
+ok  	forgelocal/internal/api	1.167s
 api_extension_targeted_exit=0
 ## static package checks
 vet_exit=0
