@@ -1,0 +1,19 @@
+utc=2026-08-25T02:46:05Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
++ docker version
+bash: docker: command not found
+docker_version_exit=127
++ docker buildx version
+bash: docker: command not found
+buildx_exit=127
++ grep Docker build references
+.github/workflows/ci.yml:80:        run: docker compose -f docker/docker-compose.yml config
+.github/workflows/release.yml:243:          file: docker/Dockerfile.run
+scripts/release-preflight.sh:126:run docker compose -f docker/docker-compose.yml config
+scripts/release-preflight.sh:213:    run docker build \
+scripts/release-preflight.sh:216:      -f docker/Dockerfile.run \
+Makefile:8:	docker build --target base -t browseforge-dev .
+Makefile:14:	docker build --target build-server -t browseforge-build .
+Makefile:21:	docker build --target build-fingerprints -t browseforge-fp .
+Makefile:32:	docker build --target test -t browseforge-test .
+Makefile:86:	docker build --target base -t browseforge-dev .

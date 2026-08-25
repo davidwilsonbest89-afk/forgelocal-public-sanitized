@@ -5,7 +5,7 @@ FROM golang:1.26-bookworm AS base
 
 # Node.js 22 LTS for fingerprint-suite and web-ext
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs && \
+    apt-get install -y --no-install-recommends nodejs && \
     npm install -g web-ext
 
 # Playwright system dependencies
@@ -23,6 +23,16 @@ COPY package.json package-lock.json* ./
 RUN npm install 2>/dev/null || true
 
 COPY . .
+
+# Build outputs and the development workspace are writable by the dedicated user.
+RUN useradd --create-home --shell /bin/bash browseforge \
+    && mkdir -p /out \
+    && chown -R browseforge:browseforge /app /out
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD curl -fsS http://127.0.0.1:19280/api/health || exit 1
+
+USER browseforge
 
 # --- Build targets ---
 

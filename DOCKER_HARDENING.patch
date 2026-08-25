@@ -1,0 +1,60 @@
+[1mdiff --git a/Dockerfile b/Dockerfile[m
+[1mindex 35e51d3..8f83b3c 100644[m
+[1m--- a/Dockerfile[m
+[1m+++ b/Dockerfile[m
+[36m@@ -5,7 +5,7 @@[m [mFROM golang:1.26-bookworm AS base[m
+ [m
+ # Node.js 22 LTS for fingerprint-suite and web-ext[m
+ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \[m
+[31m-    apt-get install -y nodejs && \[m
+[32m+[m[32m    apt-get install -y --no-install-recommends nodejs && \[m
+     npm install -g web-ext[m
+ [m
+ # Playwright system dependencies[m
+[36m@@ -24,6 +24,16 @@[m [mRUN npm install 2>/dev/null || true[m
+ [m
+ COPY . .[m
+ [m
+[32m+[m[32m# Build outputs and the development workspace are writable by the dedicated user.[m
+[32m+[m[32mRUN useradd --create-home --shell /bin/bash browseforge \[m
+[32m+[m[32m    && mkdir -p /out \[m
+[32m+[m[32m    && chown -R browseforge:browseforge /app /out[m
+[32m+[m
+[32m+[m[32mHEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \[m
+[32m+[m[32m    CMD curl -fsS http://127.0.0.1:19280/api/health || exit 1[m
+[32m+[m
+[32m+[m[32mUSER browseforge[m
+[32m+[m
+ # --- Build targets ---[m
+ [m
+ # Build Go server for macOS ARM64[m
+[1mdiff --git a/docker/Dockerfile.run b/docker/Dockerfile.run[m
+[1mindex a1a14e7..4f04403 100644[m
+[1m--- a/docker/Dockerfile.run[m
+[1m+++ b/docker/Dockerfile.run[m
+[36m@@ -37,7 +37,7 @@[m [mRUN target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" && \[m
+     echo "Downloading: $KASMVNC_URL" && \[m
+     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" && \[m
+     echo "${KASMVNC_SHA256}  /tmp/kasmvnc.deb" | sha256sum -c - && \[m
+[31m-    apt-get update && apt-get install -y /tmp/kasmvnc.deb && \[m
+[32m+[m[32m    apt-get update && apt-get install -y --no-install-recommends /tmp/kasmvnc.deb && \[m
+     rm -f /tmp/kasmvnc.deb && rm -rf /var/lib/apt/lists/*[m
+ [m
+ WORKDIR /app[m
+[36m@@ -85,6 +85,15 @@[m [mRUN if [ "$BROWSEFORGE_PREINSTALL_BROWSERS" = "1" ] && /app/BrowseForge --help 2[m
+ EXPOSE 19280 6901[m
+ [m
+ COPY entrypoint.sh /entrypoint.sh[m
+[31m-RUN chmod +x /entrypoint.sh[m
+[32m+[m[32mRUN chmod +x /entrypoint.sh \[m
+[32m+[m[32m    && useradd --create-home --shell /bin/bash browseforge \[m
+[32m+[m[32m    && mkdir -p /app/profiles /app/data /app/browsers /app/logs /app/backups \[m
+[32m+[m[32m    && chown -R browseforge:browseforge /app /home/browseforge \[m
+[32m+[m[32m    && chown browseforge:browseforge /entrypoint.sh[m
+[32m+[m
+[32m+[m[32mUSER browseforge[m
+[32m+[m
+[32m+[m[32mHEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \[m
+[32m+[m[32m    CMD curl -fsS http://127.0.0.1:19280/api/health || exit 1[m
+ [m
+ ENTRYPOINT ["/entrypoint.sh"][m

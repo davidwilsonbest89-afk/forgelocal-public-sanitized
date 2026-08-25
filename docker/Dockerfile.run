@@ -37,7 +37,7 @@ RUN target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" && \
     echo "Downloading: $KASMVNC_URL" && \
     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" && \
     echo "${KASMVNC_SHA256}  /tmp/kasmvnc.deb" | sha256sum -c - && \
-    apt-get update && apt-get install -y /tmp/kasmvnc.deb && \
+    apt-get update && apt-get install -y --no-install-recommends /tmp/kasmvnc.deb && \
     rm -f /tmp/kasmvnc.deb && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -85,6 +85,15 @@ RUN if [ "$BROWSEFORGE_PREINSTALL_BROWSERS" = "1" ] && /app/BrowseForge --help 2
 EXPOSE 19280 6901
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh \
+    && useradd --create-home --shell /bin/bash browseforge \
+    && mkdir -p /app/profiles /app/data /app/browsers /app/logs /app/backups \
+    && chown -R browseforge:browseforge /app /home/browseforge \
+    && chown browseforge:browseforge /entrypoint.sh
+
+USER browseforge
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+    CMD curl -fsS http://127.0.0.1:19280/api/health || exit 1
 
 ENTRYPOINT ["/entrypoint.sh"]
