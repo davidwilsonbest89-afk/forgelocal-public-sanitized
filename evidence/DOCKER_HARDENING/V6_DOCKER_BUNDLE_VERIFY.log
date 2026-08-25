@@ -1,0 +1,6 @@
+evidence/docker-hardening-v6.delta.bundle is okay
+The bundle contains this ref:
+b1f3b5011c29acd501044530e600d44ba64cc1f5 refs/heads/audit/t00-t42-docker-hardening-v6
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
