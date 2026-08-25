@@ -1,0 +1,14 @@
+utc=2026-08-25T12:50:00Z
+lot=POST_V6-PRODUCT-DECISIONS-REQUIRED
+branch=audit/t00-t42-product-decisions-required-v6
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+
+--- scope
+Produce one decision document covering T28 Extensions, T29 Password Manager, T39 import/export, T40 final API, T41 final Dashboard and T42 MVP/release gates. Do not code these lots.
+
+--- capture note
+This raw record is committed as the first content of the dedicated branch. The branch was created from the clean V6 tag in no-checkout/sparse mode; no product code was changed. The decision document remains a product-input template and contains no implementation approval.
+
+--- policy
+All V6 gates remain unchanged. No T28/T29/T39/T40/T41/T42 code, runtime, migration, native SystemVault, Camoufox, real proxy/cookies, user data or release may start before written product decisions and separate protocol authorization.
