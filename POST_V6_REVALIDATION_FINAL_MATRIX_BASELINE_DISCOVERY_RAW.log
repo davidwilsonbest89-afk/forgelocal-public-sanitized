@@ -1,0 +1,14 @@
+utc=2026-08-25T13:10:00Z
+lot=POST-V6-REVALIDATION-FINAL-MATRIX
+branch=audit/t00-t42-post-v6-revalidation-final-matrix
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+
+--- scope
+Publish the final strict state after the real T10/T15 E2E run, Docker image validation attempt, required product decision document and external protocols. Preserve the V6 baseline and do not implement T28/T29/T39/T40/T41/T42.
+
+--- evidence rule
+Only executed checks may be marked PASS. Docker image build/inspect remains BLOCKED because no Docker/Buildx engine is present. Product decisions and external protocols remain REQUIRED/NOT_EXECUTED.
+
+--- gates
+Keep PUBLIC_RELEASE_BLOCKED, SCAN_BLOCKED_UNKNOWN, NATIVE_SYSTEMVAULT_NOT_TESTED, camoflox_execution_authorized=false, t08_authorized=false and release_authorized=false.
