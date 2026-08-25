@@ -1,0 +1,38 @@
+remote_branch=audit/t00-t42-post-v6-revalidation-final-matrix
+remote_head=d94cf4f7a6093685a169c59b9cf642cdaed4563f
+local_head=d94cf4f7a6093685a169c59b9cf642cdaed4563f
+public_raw_zip_download=0
+zip_sha=2f6dc798487aa10b8dc93284356bc6bce7ecb46982e5c62e28b16f4599bd06b3 expected=2f6dc798487aa10b8dc93284356bc6bce7ecb46982e5c62e28b16f4599bd06b3
+bundle_sha=fedd32ad4c779ea470a44bfb1fb38f4bc89bfa3a43b0d897e450a2a9085de02b expected=fedd32ad4c779ea470a44bfb1fb38f4bc89bfa3a43b0d897e450a2a9085de02b
+Archive:  /tmp/post-v6-revalidation-final-matrix-v6.zip
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/CHANGELOG.md   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/todo.md   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/BUNDLE_VERIFY.log   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/post-v6-revalidation-final-matrix-v6.delta.bundle   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/post-v6-revalidation-final-matrix-v6.delta.bundle.portable.sha256   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/MANIFEST.md   OK
+    testing: POST-V6-REVALIDATION-FINAL-MATRIX/SHA256SUMS   OK
+No errors detected in compressed data of /tmp/post-v6-revalidation-final-matrix-v6.zip.
+unzip_exit=0
+extract_exit=0
+BUNDLE_VERIFY.log: OK
+CHANGELOG.md: OK
+post-v6-revalidation-final-matrix-v6.delta.bundle: OK
+post-v6-revalidation-final-matrix-v6.delta.bundle.portable.sha256: OK
+todo.md: OK
+internal_sha_exit=0
+/tmp/post-v6-revalidation-final-matrix-v6.delta.bundle is okay
+The bundle contains this ref:
+553824477d1f28a9efc73008cdde1c546a79614b refs/heads/audit/t00-t42-post-v6-revalidation-final-matrix
+The bundle requires this ref:
+999374d99b7996504ba91e421850a2fe84afb78d 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+[90m1:08PM[0m [32mINF[0m scan completed in 4.39ms
+[90m1:08PM[0m [32mINF[0m no leaks found
+gitleaks_exit=0
+dangling blob c299ce9b2a1ca95ed6a89a1dd6660cc46f817c70
+dangling blob 7afc5a17adf90919b9e21c1f380ba8322d85a281
+reference_fsck_exit=0
+fresh_sparse_clone=completed_head_and_fsck_but_lfs_checkout_failed_due_no_space
