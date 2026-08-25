@@ -1,0 +1,6 @@
+utc=2026-08-25T02:40:15Z
+branch=audit/t00-t42-v6-findings-remediation
+head=65aaf76a13b6fd6c81b286af3a88043686336332
+--- git diff --check code/dashboard exact
+code_dashboard_diff_check_exit=0
+--- full diff-check is documented in V6_FREEZE_BASELINE_DISCOVERY_RAW.log and V6_FREEZE_DIFFCHECK_PATHS.txt
