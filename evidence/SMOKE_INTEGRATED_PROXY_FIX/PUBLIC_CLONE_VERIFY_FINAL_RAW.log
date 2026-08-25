@@ -1,0 +1,16 @@
+utc_start=2026-08-25T23:37:04Z
+command=GIT_LFS_SKIP_SMUDGE=1 gh repo clone davidwilsonbest89-afk/forgelocal-public-sanitized --depth 1 --filter=blob:none --branch validation/operational-v1
+clone_exit=0
+head=e344afbbab65010851bb44ebe2c11f126b00eb62
+remote_head=e344afbbab65010851bb44ebe2c11f126b00eb62
+fsck_exit=0
+zip_sha256=88623e08cd30d2a69acf7f9e9c79dc4a7ac6e9a80da5b7bdd5b8dabc9458ba52
+tar_sha256=adcdcbcdcd0b81ff994b04709fd592645953ec223d9eaad64f1d39404ddebd35
+public_unzip_exit=0
+public_untar_exit=0
+zip_manifest_verify_exit=0
+tar_manifest_verify_exit=0
+report_present_exit=0
+raw_present_exit=0
+fsck_detail=clean_output
+utc_end=2026-08-25T23:37:16Z
