@@ -45,14 +45,14 @@ La valeur exacte maintenue est `camoflox_execution_authorized=false`, avec `PUBL
 
 ## Conservation
 
-Les preuves R1 comprennent baseline brute, lignée brute/table, tests baseline/head/ciblés, OSV JSON/raw, Gitleaks par commit et extraction, Gosec baseline/head/comparaison normalisée, registre, changelog, todo et package T28. Le package strict final a été généré depuis le commit de contenu `2099ec17a5ae99c59afe31f467d437319639782e`.
+Les preuves R1 comprennent baseline brute, lignée brute/table, tests baseline/head/ciblés, OSV JSON/raw, Gitleaks par commit et extraction, Gosec baseline/head/comparaison normalisée, registre, changelog, todo et package T28. Le package strict final a été généré depuis le commit de contenu `bedf630139a8d63ec80419e071f0401f09cd54e8`.
 
 | Artefact | SHA-256 | Vérification |
 |---|---|---|
-| `evidence/T28/t28-evidence-qualification-r1.zip` | `7fb6dd1d5b5dcd8c5cf6b97e2ed64164214e1406d829909679fef4d4c6027eb9` | sidecar distribué + dossier neutre, `unzip -t`, extraction et manifeste/checksums |
-| `evidence/T28/t28-evidence-qualification-r1.delta.bundle` | `03a1be3960ee03cd3fb237d73f4f917732225aa572727be58686d60c43cecdf5` | sidecar distribué + dossier neutre, `git bundle verify`, clone bundle seedé, checkout explicite et fsck |
+| `evidence/T28/t28-evidence-qualification-r1.zip` | `7be89af8e093b9b35c7924bc0ac3d8f0268cba9a2682db0d558f9b8573d9158d` | sidecar distribué + dossier neutre, `unzip -t`, extraction et manifeste/checksums |
+| `evidence/T28/t28-evidence-qualification-r1.delta.bundle` | `442c1ff49b4f62b41edbe7cc2ee686fe8eaf15553b56e30ac39b4930e6a3944f` | sidecar distribué + dossier neutre, `git bundle verify`, clone bundle seedé, checkout explicite et fsck |
 
-La vérification finale a retourné code 0 pour les sidecars, `unzip -t`, extraction, manifeste non auto-référentiel, 68 checksums internes, absence de `.git`/`node_modules`/noms de DB-cookie-token-secret et absence de motifs de payloads secrets. Le clone bundle seul a échoué en code 128 comme prévu faute du prerequisite baseline ; le clone seedé puis l’attachement du bundle ont réussi avec checkout de la ref T28, `fsck=0` et worktree propre. Gitleaks sur l’extraction finale a retourné code 0 avec rapport vide. Les logs bruts sont `T28_R1_FINAL_PACKAGE_VERIFY_RAW.log` et `T28_R1_FINAL_PACKAGE_VERIFY_INITIAL_RAW.log`.
+La vérification finale a retourné code 0 pour les sidecars, `unzip -t`, extraction, manifeste non auto-référentiel, 70 checksums internes, absence de `.git`/`node_modules`/noms de DB-cookie-token-secret et absence de motifs de payloads secrets. Le clone bundle seul a échoué en code 128 comme prévu faute du prerequisite baseline ; le clone seedé puis l’attachement du bundle ont réussi avec checkout de la ref T28, `fsck=0` et worktree propre. Gitleaks sur l’extraction finale a retourné code 0 avec rapport vide. Les logs bruts sont `T28_R1_FINAL_PACKAGE_VERIFY_RAW.log` et `T28_R1_FINAL_PACKAGE_VERIFY_INITIAL_RAW.log`.
 
 ## Gates et arrêt
 
