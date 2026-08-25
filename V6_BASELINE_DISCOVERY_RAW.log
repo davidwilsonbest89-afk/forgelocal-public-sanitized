@@ -1,0 +1,339 @@
+utc=2026-08-25T01:35:18Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/repo
+head=b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+branch=audit/t00-t42-self-validation-synthetic-e2e
+--- disk
++ df -h .
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   36G   12G  76% /
+exit_code=0
+--- versions
++ git --version
+git version 2.43.0
+exit_code=0
++ git-lfs version
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+exit_code=0
++ go version
+go version go1.25.13 linux/amd64
+exit_code=0
++ node --version
+v22.13.0
+exit_code=0
++ pnpm --version
+11.20.0
+exit_code=0
++ gitleaks version
+8.18.4
+exit_code=0
++ golangci-lint version
+golangci-lint has version 2.13.1 built with go1.27.0 from 6d2288e0 on 2026-08-20T14:28:34Z
+exit_code=0
++ semgrep --version
+1.174.0
+exit_code=0
++ grype version
+Application:         grype
+Version:             0.117.0
+BuildDate:           2026-08-10T16:48:30Z
+GitCommit:           b5fa92bbcbef655497e3be840a2f718380e2cdd3
+GitDescription:      v0.117.0
+Platform:            linux/amd64
+GoVersion:           go1.26.3
+Compiler:            gc
+Syft Version:        v1.51.0
+Supported DB Schema: 6
+exit_code=0
++ staticcheck -version
+staticcheck 2025.1.1 (0.6.1)
+exit_code=0
++ govulncheck -version
+Scanner: govulncheck@v1.1.4
+DB: https://vuln.go.dev
+DB updated: 2026-08-21 20:38:00 +0000 UTC
+
+No vulnerabilities found.
+exit_code=0
++ osv-scanner --version
+bash: line 1: osv-scanner: command not found
+exit_code=127
++ trivy version
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+  UpdatedAt: 2026-08-24 19:00:50.305892687 +0000 UTC
+  NextUpdate: 2026-08-25 19:00:50.305892307 +0000 UTC
+  DownloadedAt: 2026-08-24 22:53:25.450675685 +0000 UTC
+Check Bundle:
+  Digest: sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c
+  DownloadedAt: 2026-08-24 22:53:26.26809121 +0000 UTC
+exit_code=0
+--- git state
++ git status --short --branch
+## [32maudit/t00-t42-self-validation-synthetic-e2e[m...[31morigin/audit/t00-t42-self-validation-synthetic-e2e[m
+[31m??[m V6_BASELINE_DISCOVERY_RAW.log
+exit_code=0
++ git rev-parse HEAD
+b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+exit_code=0
++ git rev-list --count BASE..HEAD
+58
+exit_code=0
++ git lfs ls-files
+a7e8729c65 - continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.00
+20b3271915 - continuation/T00-T27/archive-packages/forgelocal-continuation-t00-t23-20260819.zip.part.01
+037eb5650a - continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip
+9c9be6107e - continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+bb984b9d99 - continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip
+2a13180aa4 - continuation/T00-T27/archive-packages/forgelocal-t27-r1-local-continuation-full.tar.gz
+ab57d11f59 - continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+b1cdcf44d0 - continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+14ef76cb68 - evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle
+5c586895ea - evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip
+27598b6d55 - evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+5b31ae7afc - evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+f654409178 - evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip
+10059c3c61 - evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle
+exit_code=0
++ git fsck --full
+exit_code=0
+--- tool paths
++ command -v tools
+gitleaks=/home/ubuntu/bin/gitleaks
+golangci-lint=/home/ubuntu/bin/golangci-lint
+staticcheck=/home/ubuntu/bin/staticcheck
+govulncheck=/home/ubuntu/bin/govulncheck
+osv-scanner=trivy=/home/ubuntu/bin/trivy
+exit_code=0
++ find likely tool binaries
+/home/ubuntu/bin/gitleaks
+/home/ubuntu/bin/golangci-lint
+/home/ubuntu/bin/golangci-lint-2.13.1
+/home/ubuntu/bin/govulncheck
+/home/ubuntu/bin/grype-0.117.0
+/home/ubuntu/bin/staticcheck
+/home/ubuntu/bin/trivy
+exit_code=0
+--- repo inventory
++ find top-level and dashboard files
+./.codebase-memory/artifact.json
+./.codebase-memory/graph.db.zst
+./.git/HEAD
+./.git/config
+./.git/description
+./.git/index
+./.git/packed-refs
+./.gitattributes
+./.github/CODEOWNERS
+./.github/PULL_REQUEST_TEMPLATE.md
+./.github/production-release-policy.json
+./.gitignore
+./API.md
+./API.zh-TW.md
+./CHANGELOG.md
+./CODE_OF_CONDUCT.md
+./CONTRIBUTING.md
+./Dockerfile
+./LICENSE
+./Makefile
+./README.md
+./README.zh-TW.md
+./REIMPLEMENTATION_T12_T16_REPORT.md
+./SECURITY.md
+./SELF_VALIDATION_BUNDLE_DELTA_VERIFY.log
+./SELF_VALIDATION_CLEANUP_VERIFICATION.log
+./SELF_VALIDATION_FINDINGS_CLASSIFICATION.md
+./SELF_VALIDATION_MANIFEST.md
+./SELF_VALIDATION_SUMMARY.md
+./SELF_VALIDATION_SYNTHETIC_E2E_RAW.log
+./SHA256SUMS
+./SUPPORT.md
+./TOOLCHAIN.lock
+./V6_BASELINE_DISCOVERY_RAW.log
+./config.default.json
+./data/.gitkeep
+./docker/.dockerignore
+./docker/Dockerfile.run
+./docker/README.md
+./docker/README.zh-TW.md
+./docker/docker-compose.yml
+./docker/entrypoint.sh
+./docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.manifest.json
+./docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md
+./docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.manifest.json
+./docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md
+./docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.manifest.json
+./docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.md
+./docs/ADDENDUM_V2_4_READONLY_SESSION_BOOTSTRAP.md
+./docs/ADDENDUM_V2_5_READONLY_PRODUCT_SURFACES.md
+./docs/API_READONLY_V1.md
+./docs/BASELINE_DISCOVERY_POLICY.md
+./docs/BASELINE_DISCOVERY_T27_R1_RAW.log
+./docs/BOOTSTRAP_RO_01_EVIDENCE.md
+./docs/BOOTSTRAP_RO_01_STRICT_EXECUTION.md
+./docs/BRANCH_PROTECTION_REQUIREMENTS.md
+./docs/CAHIER_DES_CHARGES_FORGELOCAL.md
+./docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json
+./docs/CAHIER_DES_CHARGES_v3_9_7.md
+./docs/CAMO_CORE_01_REGISTER.md
+./docs/COMPONENT_RIGHTS_REGISTER.md
+./docs/README.md
+./docs/SELF_VALIDATION_V4_FINDINGS.md
+./docs/SELF_VALIDATION_V4_SUMMARY.md
+./docs/SQLITE_SCHEMA_REFERENCE.md
+./docs/T07-R-CHECKLIST.md
+./docs/T07-R-INDEPENDENT-REVIEW-RESPONSE.md
+./docs/T07-R-MESSAGE-TO-REVIEWER.md
+./docs/T07-R-OWNER-COMPLETION-GUIDE.md
+./docs/T07-R-REVIEW-PACKET.md
+./docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json
+./docs/T07_CAMOFLOX_PROVENANCE.md
+./docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json
+./docs/T07_EVIDENCE_REQUEST_TO_RIGHTS_HOLDER.md
+./docs/T07_EXTERNAL_SOURCES.md
+./docs/T07_REMEDIATION_CHAIN.md
+./docs/T07_SECURITY_TRIAGE_REQUEST.md
+./docs/T08-FOLLOW-UP-WATCH-STATE.md
+./docs/T08-R2-FINAL-REPORT.md
+./docs/T08_CONCURRENCY_SPEC.md
+./docs/T10_PROXIES_FRAMING.md
+./docs/T11_BACKUPS_FRAMING.md
+./docs/T20_CDC_GAP_AUDIT_AND_SCOPE_PROPOSAL.md
+./docs/T20_NCF_SCOPE_AND_ACCEPTANCE.md
+./docs/T22_CONSISTENCY_AND_RECOVERY_ADDENDUM.md
+./docs/T22_PROFILE_HISTORY_CONTRACT.md
+./docs/T23_ARCHIVE_RESTORE_CONTRACT.md
+./docs/T23_SCOPE_AND_EVIDENCE_AUTHORIZATION.md
+./docs/T24_BULK_OPERATIONS_CONTRACT.md
+./docs/T24_SR_DEPENDENCY_REMEDIATION_CONTRACT.md
+./docs/T25_COOKIE_FIXTURES_CONTRACT.md
+./docs/T26_SIMULATED_PROXY_PROVIDER_CONTRACT.md
+./docs/T27_R1_CONTINUATION_SCOPE.md
+./docs/T27_R1_CORRECTIVE_EXECUTION_CONTRACT.md
+./docs/T27_R1_CR06_TO_CR09_GATES.md
+./docs/T28_T42_EVIDENCE_CORRECTION.md
+./docs/T28_T42_STATUS_REGISTER.md
+./docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md
+./docs/T30_REMOTE_EVIDENCE_RECONCILIATION.md
+./docs/T31_CANVAS_WEBGL_AUDIO_DIAGNOSTICS_CONTRACT.md
+./docs/T32_CLIENTRECTS_DIAGNOSTICS_CONTRACT.md
+./docs/T33_SYNTHETIC_GEOLOCATION_QA_CONTRACT.md
+./docs/T34_HARDWARE_DIAGNOSTICS_CONTRACT.md
+./docs/T35_FONT_BUNDLE_PROVENANCE_CONTRACT.md
+./docs/T36_DIAGNOSTIC_DRIFT_CONTRACT.md
+./docs/T37_PROFILE_HEALTH_CONTRACT.md
+./docs/T38_SESSION_LIFECYCLE_CONTRACT.md
+./docs/T39_SECRET_IMPORT_EXPORT_CONTRACT.md
+./docs/T40_INTEGRATION_GATE_CONTRACT.md
+./docs/T41_RELEASE_READINESS_CONTRACT.md
+./docs/agent-integration.md
+./docs/agent-prompt-guide.md
+./docs/anti-detection.md
+./docs/architecture.md
+./docs/cli.md
+./docs/cloud-deployment.md
+./docs/code-review-web-search.md
+./docs/component-rights-register.json
+./docs/developer-integration.md
+./docs/documentation-language-audit.md
+./docs/dual-browser-architecture.md
+./docs/dual-browser-architecture.zh-TW.md
+./docs/execution.md
+./docs/fingerprint-detection-report.md
+./docs/humanize-research.md
+./docs/i18n.md
+./docs/linux-server.md
+./docs/linux-server.zh-TW.md
+./docs/local-quickstart.md
+./docs/mcp-call-flow.html
+./docs/phase2-fork-plan.md
+./docs/plan.md
+./docs/platform-support.md
+./docs/platform-support.zh-TW.md
+./docs/playwright-patches.md
+./docs/playwright-patches.zh-TW.md
+./docs/release.md
+./docs/session-arch-design.md
+./docs/spike-results.md
+./docs/t07-private-provenance-attestation.template.json
+./docs/wbs.md
+./docs/webgl-fingerprint-strategy.md
+./evidence/T42_DELIVERY.md
+./evidence/forgelocal-t00-t42-final-exit-checklist-code-fixed.zip
+./evidence/forgelocal-t00-t42-final-exit-checklist-code-fixed.zip.portable.sha256
+./evidence/forgelocal-t00-t42-final-exit-checklist.bundle
+./evidence/forgelocal-t00-t42-final-exit-checklist.bundle.portable.sha256
+./evidence/forgelocal-t00-t42-final-exit-checklist.zip
+./evidence/forgelocal-t00-t42-final-exit-checklist.zip.portable.sha256
+./evidence/forgelocal-t00-t42-prehuman-code-fixed-finalization.bundle
+./evidence/forgelocal-t00-t42-prehuman-code-fixed-finalization.bundle.portable.sha256
+./evidence/forgelocal-t00-t42-prehuman-final-findings-finalization.bundle
+./evidence/forgelocal-t00-t42-prehuman-final-findings-finalization.bundle.portable.sha256
+./evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+./evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip.portable.sha256
+./evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+./evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip.portable.sha256
+./evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip
+./evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip.portable.sha256
+./evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle
+./evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle.portable.sha256
+./examples/humanize-test.html
+./examples/multi-login.yaml
+./extension/background.js
+./extension/manifest.json
+./forge-dashboard/.gitignore
+./forge-dashboard/.gitkeep
+./forge-dashboard/.prettierignore
+./forge-dashboard/.prettierrc
+./forge-dashboard/T18_GAP_AUDIT.md
+./forge-dashboard/T19RR_REPRODUCTION.md
+./forge-dashboard/components.json
+./forge-dashboard/ideas.md
+./forge-dashboard/package.json
+./forge-dashboard/playwright.config.console.ts
+./forge-dashboard/playwright.config.ts
+./forge-dashboard/pnpm-lock.yaml
+./forge-dashboard/pnpm-workspace.yaml
+./forge-dashboard/template.json
+./forge-dashboard/todo.md
+./forge-dashboard/tsconfig.json
+./forge-dashboard/tsconfig.node.json
+./forge-dashboard/validate-core-readonly-bootstrap.mts
+./forge-dashboard/vite.config.ts
+./go.mod
+./go.sum
+./launch.test
+./package.json
+./profiles/.gitkeep
+./scripts/browseforge-native-smoke.sh
+./scripts/build-back01-minimal.sh
+./scripts/capture-runtime-release-evidence.sh
+./scripts/check-browseforge-chromium-assets.sh
+./scripts/check-ci-provenance-workflow.mjs
+./scripts/check-component-rights.mjs
+./scripts/check-doc-language.js
+./scripts/check-i18n.js
+./scripts/check-public-release-gate.py
+./scripts/check-release-separation.mjs
+./scripts/check-systemvault-anti-leak.sh
+./scripts/collect-bootstrap-ro-evidence.sh
+./scripts/collect-t06-evidence.sh
+./scripts/collect-t07-evidence.sh
+./scripts/collect-t07-r-evidence.sh
+./scripts/core-dev.sh
+./scripts/create-component-rights-evidence.mjs
+./scripts/dashboard-dev.sh
+./scripts/detector-harness.js
+./scripts/docker-go-validate.sh
+./scripts/generate-fingerprints.js
+./scripts/generate-t07-camoflox-dependency-inventory.mjs
+./scripts/generate-t07-camoflox-sbom.mjs
+./scripts/inject-webgl.py
+./scripts/mcp-web-smoke.sh
+./scripts/release-preflight.sh
+./scripts/release-push.sh
+./scripts/run-systemvault-native-gate.sh
+./scripts/run_t19rr_harness_evidence.sh
+./scripts/run_t30_full_race_replay.sh
+./scripts/sign-release-manifest.sh
+exit_code=0
