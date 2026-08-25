@@ -1,0 +1,16 @@
+title = "ForgeLocal V6 release-provenance scan policy"
+
+[allowlist]
+description = "Exact public PPA OpenPGP signing-key fingerprint in release provenance fixtures; not credential material."
+regexTarget = "match"
+regexes = [
+  '''5301FA4FD93244FBC6F6149982BB6851C64F6880'''
+]
+paths = [
+  '''^release/back01-minimal/RUNTIME_CANDIDATE_CHROMIUM_151\.0\.7922\.108\.json$''',
+  '''^release/back01-minimal/RUNTIME_RELEASE_LOCK\.json$''',
+  '''^validation_back01_integration/candidates/chromium-common_151\.0\.7922\.108-1xtradeb1\.2404\.1_amd64/REQUESTED_RUNTIME\.env$''',
+  '''^validation_back01_integration/candidates/chromium_151\.0\.7922\.108-1xtradeb1\.2404\.1_amd64/REQUESTED_RUNTIME\.env$''',
+  '''^validation_back01_integration/final/chromium_runtime_candidate_108_provenance\.out$''',
+  '''^validation_back01_integration/final/runtime_release_capture_qa/REQUESTED_RUNTIME\.env$'''
+]

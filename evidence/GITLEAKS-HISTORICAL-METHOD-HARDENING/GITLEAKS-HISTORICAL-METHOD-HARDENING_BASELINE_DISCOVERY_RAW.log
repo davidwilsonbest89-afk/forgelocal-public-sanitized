@@ -1,0 +1,15 @@
+utc=2026-08-25T04:25Z
+lot=GITLEAKS-HISTORICAL-METHOD-HARDENING
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+working_tree_before_lot=clean
+
+--- current issue
+The historical range scanner method can return exit 0 while enumerating zero commits. Such output must never be named PASS.
+Existing tree-by-tree evidence covers the four V6 content commits from b34fa5c02ff20144abfb5d240db1c67ad1f038f9 to fc080456711dd7f2266911aaec55041fdb1b424c.
+
+--- required method
+Enumerate every commit in baseline..HEAD explicitly. For each commit, resolve the tree hash, export that tree deterministically, run Gitleaks with the exact configuration and --no-git on that tree, save JSON and exit code. Record count, commit, tree hash, configuration path, JSON path and synthesis. A zero-commit result is INCONCLUSIVE/INVALID, never PASS.
+
+--- policy
+Do not alter V6 product code or historical wrappers. Do not start T28/T29/T39/T40/T41/T42, Camoufox, real proxy, cookies, user data, native SystemVault, migration, production runtime or release. Preserve all gates.
