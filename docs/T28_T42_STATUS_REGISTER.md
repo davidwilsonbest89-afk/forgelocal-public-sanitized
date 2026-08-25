@@ -121,3 +121,13 @@ La requalification V6 confirme `go test -shuffle=on -count=3 ./...`, la variante
 La branche [audit/t00-t42-v6-findings-remediation](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/audit/t00-t42-v6-findings-remediation) a été publiée. Le HEAD distant vérifié avant cette entrée est `8e26bfb0c8bf6e92c09d645dd84ec854320c01f9`. Un clone neuf avec `GIT_LFS_SKIP_SMUDGE=1` correspond exactement à ce SHA ; `git fsck --full` retourne 0 avant et après le fetch LFS ciblé des deux artefacts V6. Le wrapper et le bundle ciblés correspondent respectivement à `ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6` et `ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2`.
 
 Le bundle delta publié exige `b34fa5c02ff20144abfb5d240db1c67ad1f038f9` et cible le commit de contenu `fc080456711dd7f2266911aaec55041fdb1b424c`; le HEAD de packaging est distinct par construction. Les gates et les lots bloqués restent inchangés.
+
+## 2026-08-25 — Implémentation T28 Extensions locales contrôlées
+
+La branche dédiée `feature/t28-local-extensions-controlled` implémente le contrat T28 depuis le tag V6 immuable `t00-t42-v6-local-qualified-2026-08-25` / baseline `999374d99b7996504ba91e421850a2fe84afb78d`. Le HEAD publié de l’implémentation et des corrections est `4f0f6201e1d8f8da44d82c4245bd9b7dfee44578`.
+
+Le verdict strict est `T28_IMPLEMENTED_VERIFIABLE_LOCAL_PENDING_INDEPENDENT_REVIEW`. Les tests ciblés T28 sous `-race`, `go vet` ciblé, `go build ./...`, `govulncheck ./...` et Gitleaks extraction/diff sont documentés ; la suite globale `go test -count=1 -race ./...` conserve le finding runtime V6 préexistant concernant la configuration BrowseForge Chromium/Docker-GHCR et ne doit pas être attribué à T28. Gosec ciblé `internal/extensions` est à zéro ; le package API conserve uniquement les findings historiques hors fichiers T28.
+
+T28 reste strictement local-first : import ZIP explicite borné, extraction sans traversal/symlink, objet immuable, permissions 0700/0600, SQLite local, projection redacted, acknowledgement complet des permissions, high-risk explicite, affectation uniquement à un profil existant, update immuable, rollback, revoke/quarantine, purge contrôlée et audit sans package/token/chemin/secret. Aucun runtime d’extension n’est lancé.
+
+Les statuts T29/T39/T40/T41/T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION` / revue indépendante selon son registre antérieur. Les gates permanentes restent inchangées et aucune release n’est autorisée.

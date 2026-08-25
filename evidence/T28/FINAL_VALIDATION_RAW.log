@@ -1,0 +1,108 @@
+utc=2026-08-25T14:47:56Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+branch=feature/t28-local-extensions-controlled
+head=4f0f6201e1d8f8da44d82c4245bd9b7dfee44578
+
+## COMMAND: git diff --check
+exit=0
+
+## COMMAND: go test -count=1 -race ./internal/extensions ./internal/api -run ^TestT28
+ok  	forgelocal/internal/extensions	1.350s
+ok  	forgelocal/internal/api	1.187s
+exit=0
+
+## COMMAND: go vet ./internal/extensions ./internal/api
+exit=0
+
+## COMMAND: go test -count=1 -race ./...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.050s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	4.711s
+ok  	forgelocal/internal/backup	3.002s
+ok  	forgelocal/internal/browser	5.112s
+ok  	forgelocal/internal/config	1.019s
+ok  	forgelocal/internal/cookies	1.019s
+ok  	forgelocal/internal/drift	1.013s
+ok  	forgelocal/internal/environment	1.014s
+ok  	forgelocal/internal/extensions	1.367s
+ok  	forgelocal/internal/fingerprint	1.016s
+ok  	forgelocal/internal/fonts	1.016s
+ok  	forgelocal/internal/geolocation	1.013s
+ok  	forgelocal/internal/groups	1.020s
+ok  	forgelocal/internal/hardware	1.014s
+ok  	forgelocal/internal/history	1.228s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.787s
+ok  	forgelocal/internal/localvault	1.086s
+ok  	forgelocal/internal/mcp	1.055s
+ok  	forgelocal/internal/productschema	1.859s
+ok  	forgelocal/internal/profile	1.154s
+ok  	forgelocal/internal/profilehealth	1.014s
+ok  	forgelocal/internal/profilemigration	2.807s
+ok  	forgelocal/internal/proxies	1.091s
+ok  	forgelocal/internal/proxyprovider	1.015s
+--- FAIL: TestNewRegistryLoadsBrowseForgeChromiumFromDefaultConfig (0.00s)
+    runtime_test.go:28: BrowseForge Chromium binary/enabled = ""/false, want Docker/GHCR browser path and enabled
+FAIL
+FAIL	forgelocal/internal/runtime	0.241s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.015s
+ok  	forgelocal/internal/spike	20.167s
+ok  	forgelocal/internal/templates	1.363s
+ok  	forgelocal/internal/workflow	1.019s
+FAIL
+exit=1
+
+## COMMAND: go vet ./...
+exit=0
+
+## COMMAND: go build ./...
+exit=0
+
+## COMMAND: gitleaks detect --source /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled --no-git --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_FINAL_EXTRACTION.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m2:48PM[0m [32mINF[0m scan completed in 545ms
+[90m2:48PM[0m [32mINF[0m no leaks found
+exit=0
+
+## COMMAND: gitleaks detect --source /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled --log-opts=999374d99b7996504ba91e421850a2fe84afb78d..4f0f6201e1d8f8da44d82c4245bd9b7dfee44578 --redact --report-format json --report-path /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GITLEAKS_FINAL_DIFF.json
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m2:48PM[0m [32mINF[0m 0 commits scanned.
+[90m2:48PM[0m [32mINF[0m scan completed in 102ms
+[90m2:48PM[0m [32mINF[0m no leaks found
+exit=0
+
+## COMMAND: gosec -fmt json -out /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json ./internal/extensions
+[gosec] 2026/08/25 14:48:34 Including rules: default
+[gosec] 2026/08/25 14:48:34 Excluding rules: default
+[gosec] 2026/08/25 14:48:34 Including analyzers: default
+[gosec] 2026/08/25 14:48:34 Excluding analyzers: default
+[gosec] 2026/08/25 14:48:34 Import directory: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/extensions
+[gosec] 2026/08/25 14:48:34 Checking package: extensions
+[gosec] 2026/08/25 14:48:34 Checking file: /home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/extensions/store.go
+exit=0
+
+## COMMAND: govulncheck ./...
+No vulnerabilities found.
+exit=0
+
+## SHELL: command -v osv-scanner >/dev/null 2>&1 && osv-scanner scan source --path '/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled' || { echo osv-scanner-unavailable; exit 127; }
+osv-scanner-unavailable
+exit=127
+
+## COMMAND: syft dir:/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled -o spdx-json=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/evidence/T28/SBOM_FINAL.spdx.json
+[0;90m[0003][0m [0;33m WARN[0m no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+exit=0
