@@ -22,14 +22,14 @@ Ce verdict tient compte de deux échecs non critiques et de plusieurs environnem
 | `V-CORE` | **FAIL** | 23 assertions PASS ; CRUD, guards, erreurs, idempotence, redaction, arrêt brutal et reprise PASS. La capacité d’expiration/révocation du token admin est absente et reste FAIL non critique. |
 | `V-SQLITE-CRASH-RECOVERY` | **PASS** | WAL, concurrence, verrou, transaction interrompue, reprise, DB absente, copie corrompue, permissions et écriture sous disque presque plein PASS ; aucun secret en clair dans les preuves. |
 | `V-T28-RUNTIME-CONTRACT` | **PASS** | Tests T28 ciblés sous race, tests API ciblés, vet, build et diff check exit 0 sur `b1559ca`. Le code métier T28 reste inchangé. |
-| `V-RUNTIME-SYNTHETIQUE` | **NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` pour la qualification Camoufox/extension complète | Chromium système PASS pour page locale, isolation/persistance contrôlée, cookie synthétique, arrêt brutal et absence de processus résiduel. Camoufox absent ; la sémantique Firefox de l’extension ne doit pas être remplacée silencieusement par Chromium. |
+| `V-RUNTIME-SYNTHETIQUE` | **NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE** pour la qualification Camoufox/extension complète | Chromium système PASS pour page locale, isolation/persistance contrôlée, cookie synthétique, arrêt brutal et absence de processus résiduel. Camoufox absent ; la sémantique Firefox de l’extension ne doit pas être remplacée silencieusement par Chromium. |
 | `V-PROXY-COOKIES-SYNTHETIQUES` | **PASS** | Proxy local authentifié `407/200`, échec fermé si proxy indisponible, registry proxy, affectation profil, import/export de fixtures redacted et refus des fixtures invalides PASS. |
-| `V-SYSTEMVAULT` | **NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` pour le natif | MemoryVault local : récupération, erreur, suppression, rotation, secret synthétique et concurrence PASS. Secret Service/SystemVault natif absent et non écrit. |
+| `V-SYSTEMVAULT` | **NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE** pour le natif | MemoryVault local : récupération, erreur, suppression, rotation, secret synthétique et concurrence PASS. Secret Service/SystemVault natif absent et non écrit. |
 | `V-DOCKER` | **NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE** | Docker Engine et Buildx absents ; aucune image, couche ou service n’a été lancé. |
 | `V-DASHBOARD-API` | **FAIL** | Core/Dashboard, build/check, 5 specs Playwright T06/T10 sous Chromium système et redaction PASS. Le diagnostic Axe reproduit 1 violation `color-contrast` sérieuse sur 11 nœuds et la console signale des 404/500 d’assets/analytics non disponibles en environnement local. Défaut non critique, non masqué. |
 | `V-INSTALLATION-PROPRE` | **PASS avec réserve explicite** | Installation vierge, `init`, `init --force`, permissions top-level 0700 après correctif, token 0600 après startup, health, arrêt, nettoyage et redaction PASS. La réinitialisation d’une configuration existante exige l’option explicite `--force`. |
 | `V-SECURITY` | **FAIL / réserves** | Gitleaks : 0 finding, exit 0. Gosec : exit 0 avec 128 findings historiques sur `internal`, non masqués. OSV : 24 packages scannés, exit 1 ; analyse d’appel indisponible dans le contexte du scanner. pnpm audit production : 0 vulnérabilité, exit 0. Govulncheck, Semgrep, Trivy, Syft et Grype sont indisponibles selon la baseline. |
-| `V-EVIDENCE` | **PASS après publication du package** | Logs UTC/CWD/exit codes, rapports scanners, manifeste, ZIP, bundle, sidecars, extraction et clone seedé publiés séparément. |
+| `V-EVIDENCE` | **PASS** | ZIP/bundle/sidecars publiés dans le commit `9cc6f5e45fc1aff9ba7a6ca06740cb6ac17538a2` et vérification publique fraîche dans `OPERATIONAL_VALIDATION_V1_PUBLIC_VERIFY_RAW.log`. |
 
 ## Correction publiée
 
@@ -49,6 +49,15 @@ Les gates historiques restent inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOC
 
 T29, T39, T40, T41 et T42 ne sont pas démarrés dans cette campagne. Aucun runtime navigateur d’extension réel, proxy/cookies réels, migration, SystemVault natif ou release n’a été engagé.
 
-## Preuves
+## Artefacts et vérification publique
 
-Les journaux et rapports sont dans `evidence/OPERATIONAL_VALIDATION_V1/`. Le package ZIP et le bundle delta sont accompagnés de sidecars portables et de la vérification fraîche publiée séparément. Le package source n’est pas présenté comme contenant les journaux produits après sa génération.
+Le package source est `b594f236a28483cc975dd054575d6cfb171d4f86`. Les artefacts publiés séparément dans `9cc6f5e45fc1aff9ba7a6ca06740cb6ac17538a2` sont :
+
+| Artefact | SHA-256 |
+|---|---|
+| `forgelocal-operational-validation-v1.zip` | `664fba54efe36a20269e60bba007082458a5d90c45ca10e9728cdf15fc7fedf5` |
+| `forgelocal-operational-validation-v1.delta.bundle` | `67cce18e08f51540fceea71ba8e2dcb3c71344c24d10c4990e5e5e6460efb46f` |
+
+La vérification GitHub fraîche a confirmé : HEAD public `9cc6f5e45fc1aff9ba7a6ca06740cb6ac17538a2`, quatre sidecars distribués/neutres, hashes, `unzip -t`, extraction et checksums du manifeste, Gitleaks extraction avec 0 finding, absence de vraie valeur bearer/token/clé, `git bundle verify` exit 0, refus standalone pour baseline absente, import du bundle dans le clone seedé après checkout de `053fd8f…`, ref `b594f23…`, checkout source, `git fsck --full` exit 0 et worktree propre. Le fetch standalone a retourné exit 1 dans Git 2.43, avec l’erreur explicite de prérequis manquant ; il s’agit du refus attendu, non d’un succès silencieux.
+
+Le package source n’est pas présenté comme contenant le journal de vérification produit après sa génération. Les journaux et rapports sont dans `evidence/OPERATIONAL_VALIDATION_V1/` et les artefacts dans `evidence/OPERATIONAL_VALIDATION_V1_ARTIFACTS/`.

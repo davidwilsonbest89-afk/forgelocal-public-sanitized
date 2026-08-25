@@ -1,0 +1,60 @@
+utc=2026-08-25T18:14:23Z
+cwd=/home/ubuntu
+remote=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+branch=validation/operational-v1
+expected_public_head=9cc6f5e45fc1aff9ba7a6ca06740cb6ac17538a2
+package_source_head=b594f236a28483cc975dd054575d6cfb171d4f86
+bundle_base=053fd8f9612eb028c04983e0a23d311a6a099e29
+## public HEAD
+public_head=9cc6f5e45fc1aff9ba7a6ca06740cb6ac17538a2
+public_head_match=0
+## fresh public clone
+clone_exit=0
+checkout_public_exit=0
+public_clone_head=9cc6f5e45fc1aff9ba7a6ca06740cb6ac17538a2
+## distributed and neutral sidecars
+sidecar_forgelocal-operational-validation-v1.zip.portable.sha256=0
+sidecar_forgelocal-operational-validation-v1.delta.bundle.portable.sha256=0
+sidecar_forgelocal-operational-validation-v1.zip.portable.sha256=0
+sidecar_forgelocal-operational-validation-v1.delta.bundle.portable.sha256=0
+664fba54efe36a20269e60bba007082458a5d90c45ca10e9728cdf15fc7fedf5  /tmp/verify-opv1-public/public-clone/evidence/OPERATIONAL_VALIDATION_V1_ARTIFACTS/forgelocal-operational-validation-v1.zip
+67cce18e08f51540fceea71ba8e2dcb3c71344c24d10c4990e5e5e6460efb46f  /tmp/verify-opv1-public/public-clone/evidence/OPERATIONAL_VALIDATION_V1_ARTIFACTS/forgelocal-operational-validation-v1.delta.bundle
+zip_hash_match=0
+bundle_hash_match=0
+## ZIP extraction and manifest
+zip_test_exit=0
+zip_extract_exit=0
+manifest_checksums_exit=0
+manifest_self_reference_check_should_be_1=1
+package_source_head_match=0
+## Gitleaks extraction
+gitleaks_extraction_exit=0
+gitleaks_extraction_findings=0
+## forbidden content audit
+forbidden_secret_value_audit=PASS
+synthetic_fixture_markers_allowed=0
+## bundle verify in public clone
+/tmp/verify-opv1-public/public.bundle is okay
+The bundle contains this ref:
+b594f236a28483cc975dd054575d6cfb171d4f86 refs/heads/validation/operational-v1
+The bundle requires this ref:
+053fd8f9612eb028c04983e0a23d311a6a099e29 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit=0
+## expected standalone prerequisite failure
+standalone_fetch_exit=1
+error: Repository lacks these prerequisite commits:
+error: 053fd8f9612eb028c04983e0a23d311a6a099e29 
+## seeded clone import
+seed_baseline_checkout_exit=0
+seed_bundle_fetch_exit=0
+From /tmp/verify-opv1-public/public.bundle
+ * [new branch]      validation/operational-v1 -> bundle/validation/operational-v1
+b594f236a28483cc975dd054575d6cfb171d4f86
+seed_bundle_ref_expected=b594f236a28483cc975dd054575d6cfb171d4f86
+seed_bundle_ref_match=0
+seed_source_checkout_exit=0
+git_fsck_full_exit=0
+seed_worktree_clean=0
+## cleanup
+cleanup=PASS
