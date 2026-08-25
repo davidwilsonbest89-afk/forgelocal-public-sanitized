@@ -1,0 +1,4 @@
+2026-08-25T03:39:23Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-25T03:39:23Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-25T03:39:24Z	INFO	Detected config files	num=3
+trivy_config_exit=0

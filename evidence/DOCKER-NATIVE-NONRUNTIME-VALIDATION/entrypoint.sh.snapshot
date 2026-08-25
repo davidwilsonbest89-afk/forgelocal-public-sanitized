@@ -1,0 +1,109 @@
+#!/bin/bash
+
+: "${VNC_PASSWORD:=browseforge}"
+: "${BROWSEFORGE_SEED_BROWSERS:=1}"
+: "${BROWSEFORGE_DOCKER_GPU_MODE:=software}"
+: "${BROWSEFORGE_DOCKER_DISPLAY_WIDTH:=1920}"
+: "${BROWSEFORGE_DOCKER_DISPLAY_HEIGHT:=1080}"
+if ! [[ "$BROWSEFORGE_DOCKER_DISPLAY_WIDTH" =~ ^[1-9][0-9]*$ && "$BROWSEFORGE_DOCKER_DISPLAY_HEIGHT" =~ ^[1-9][0-9]*$ ]]; then
+  echo "BROWSEFORGE_DOCKER_DISPLAY_WIDTH and BROWSEFORGE_DOCKER_DISPLAY_HEIGHT must be positive integers" >&2
+  exit 2
+fi
+export BROWSEFORGE_DOCKER_DISPLAY_WIDTH
+export BROWSEFORGE_DOCKER_DISPLAY_HEIGHT
+export BROWSEFORGE_DOCKER_DISPLAY_GEOMETRY="${BROWSEFORGE_DOCKER_DISPLAY_WIDTH}x${BROWSEFORGE_DOCKER_DISPLAY_HEIGHT}"
+case "$BROWSEFORGE_DOCKER_GPU_MODE" in
+  software|native|passthrough) ;;
+  *)
+    echo "BROWSEFORGE_DOCKER_GPU_MODE must be one of software, native, or passthrough" >&2
+    exit 2
+    ;;
+esac
+export BROWSEFORGE_DOCKER_GPU_MODE
+if [ "$BROWSEFORGE_DOCKER_GPU_MODE" = "software" ]; then
+  export LIBGL_ALWAYS_SOFTWARE=1
+else
+  unset LIBGL_ALWAYS_SOFTWARE
+fi
+
+mkdir -p /app/profiles /app/data /app/browsers /app/logs /app/backups
+
+# Seed or update host-mounted browser cache from the image so browser engines
+# follow the BrowseForge image version contract instead of drifting silently.
+if [ "$BROWSEFORGE_SEED_BROWSERS" = "1" ] && [ -d /opt/browseforge/browsers ]; then
+  for engine in camoufox cloakbrowser browseforge-chromium; do
+    image_version=""
+    current_version=""
+    [ -f "/opt/browseforge/browsers/${engine}/.version" ] && image_version="$(cat "/opt/browseforge/browsers/${engine}/.version")"
+    [ -f "/app/browsers/${engine}/.version" ] && current_version="$(cat "/app/browsers/${engine}/.version")"
+    if [ -n "$image_version" ] && [ "$current_version" != "$image_version" ]; then
+      echo "Seeding ${engine} into /app/browsers..."
+      rm -rf "/app/browsers/${engine}"
+      mkdir -p "/app/browsers/${engine}"
+      cp -a "/opt/browseforge/browsers/${engine}/." "/app/browsers/${engine}/"
+    fi
+  done
+elif [ "$BROWSEFORGE_SEED_BROWSERS" != "1" ]; then
+  echo "Browser engine seeding disabled by BROWSEFORGE_SEED_BROWSERS=${BROWSEFORGE_SEED_BROWSERS}"
+fi
+
+if ! find /app/browsers -name ".version" -print -quit 2>/dev/null | grep -q .; then
+  echo "Browser engines are not installed yet. First startup may spend several minutes downloading them before the dashboard becomes available."
+fi
+
+# Clean up stale files
+rm -f /tmp/.X1-lock /tmp/.X11-unix/X1
+find /app/profiles -name "SingletonLock" -delete 2>/dev/null
+find /app/profiles -name "SingletonCookie" -delete 2>/dev/null
+find /app/profiles -name "SingletonSocket" -delete 2>/dev/null
+
+# Setup KasmVNC user with password
+mkdir -p ~/.vnc
+echo -e "${VNC_PASSWORD}\n${VNC_PASSWORD}\n" | vncpasswd -u user -wr
+
+# Start KasmVNC X server (Basic Auth protects HTTP, VNC protocol uses None).
+# The display geometry defaults to the BrowseForge Chromium native persona
+# screen contract so headed window bounds and Screen API values stay coherent.
+/usr/bin/Xvnc :1 \
+  -geometry "$BROWSEFORGE_DOCKER_DISPLAY_GEOMETRY" \
+  -depth 24 \
+  -sslOnly 0 \
+  -SecurityTypes None \
+  -AlwaysShared \
+  -websocketPort 6901 \
+  -interface 0.0.0.0 \
+  +extension GLX \
+  +render \
+  -http-header Cross-Origin-Embedder-Policy=require-corp \
+  -http-header Cross-Origin-Opener-Policy=same-origin \
+  -httpd /usr/share/kasmvnc/www &
+
+sleep 2
+
+# Start window manager
+export DISPLAY=:1
+openbox &
+
+# Start BrowseForge. Docker defaults to software GL; set native or passthrough
+# only when the container has a deliberate host GPU path.
+/app/BrowseForge &
+BF_PID=$!
+
+# Wait for ready and show token
+for i in $(seq 1 60); do
+  if [ -f /app/data/.api-token ]; then
+    TOKEN=$(cat /app/data/.api-token)
+    echo "========================================="
+    echo "  BrowseForge Docker (KasmVNC)"
+    echo "  Dashboard:  http://0.0.0.0:19280"
+    echo "  Remote VNC: http://0.0.0.0:6901"
+    echo "  VNC User:   user"
+    echo "  VNC Password: set via VNC_PASSWORD (default: browseforge)"
+    echo "  API Token: $TOKEN"
+    echo "========================================="
+    break
+  fi
+  sleep 2
+done
+
+wait $BF_PID

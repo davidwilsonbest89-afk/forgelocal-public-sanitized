@@ -1,0 +1,39 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  },
+  "ReportID": "01a03700-5734-7ba5-a608-8d8dcf0d0bc2",
+  "CreatedAt": "2026-08-25T03:39:24.340765052Z",
+  "ArtifactName": "/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": "Dockerfile",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 27,
+        "Failures": 0
+      }
+    },
+    {
+      "Target": "docker/Dockerfile.run",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 27,
+        "Failures": 0
+      }
+    },
+    {
+      "Target": "evidence/DOCKER-NATIVE-NONRUNTIME-VALIDATION/Dockerfile.snapshot",
+      "Class": "config",
+      "Type": "dockerfile",
+      "MisconfSummary": {
+        "Successes": 27,
+        "Failures": 0
+      }
+    }
+  ]
+}

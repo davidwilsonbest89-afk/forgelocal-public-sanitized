@@ -1,0 +1,33 @@
+utc=2026-08-25T03:38Z
+lot=DOCKER-NATIVE-NONRUNTIME-VALIDATION
+base_commit=1d585abea8f3081d9b7890400551e4318e1a4753
+base_branch=audit/t00-t42-docker-hardening-v6
+source_policy=validation branch only; frozen V6 branch/tag immutable
+working_tree_before_lot=clean
+
+--- scope
+Inspect Dockerfile and docker/Dockerfile.run only for native, non-runtime properties.
+Do not start a container, browser, workflow, production runtime, Camoufox, proxy, cookie, user data, SystemVault, migration, T28, T29, T39, T40, T41 or T42.
+
+--- required checks
+command: docker --version
+result: command unavailable / exit 127
+command: docker buildx version
+result: command unavailable / exit 127
+command: trivy config .
+result: available; prior hardened branch reported 0 misconfigurations
+command: bash -n docker/entrypoint.sh
+result: available and expected to remain 0
+command: grep for USER/HEALTHCHECK/no-install-recommends/ports/capabilities/secrets
+result: static inspection only; no new port/capability/secret/dependency permitted
+command: image build / history / Trivy image / cleanup
+result: blocked because Docker/Buildx daemon and image build are unavailable
+
+--- observed hardening inherited from isolated Docker patch
+Dockerfile and docker/Dockerfile.run contain no-install-recommends at flagged apt locations.
+The run image defines browseforge ownership, USER browseforge and a loopback API healthcheck.
+The entrypoint writes under /app and invokes vncpasswd/Xvnc/KasmVNC; non-root runtime compatibility remains an explicit unresolved validation item.
+
+--- decision before lot changes
+DOCKER_NATIVE_NONRUNTIME_VALIDATION_BLOCKED_PENDING_DOCKER_BUILDX
+No production runtime or container validation is claimed in this baseline.

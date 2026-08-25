@@ -1,0 +1,10 @@
+--- ports/capabilities/secrets/dependency inspection
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/Dockerfile:8:    apt-get install -y --no-install-recommends nodejs && \
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/Dockerfile:32:HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/Dockerfile:35:USER browseforge
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/docker/Dockerfile.run:18:RUN apt-get update && apt-get install -y --no-install-recommends \
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/docker/Dockerfile.run:40:    apt-get update && apt-get install -y --no-install-recommends /tmp/kasmvnc.deb && \
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/docker/Dockerfile.run:85:EXPOSE 19280 6901
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/docker/Dockerfile.run:94:USER browseforge
+/home/ubuntu/forgelocal_self_validation_v6/docker_native_validation/docker/Dockerfile.run:96:HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+static_inspection_exit=0
