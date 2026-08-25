@@ -798,3 +798,11 @@ Reste à faire :
 - [ ] Revoir les six misconfigurations Docker et les 741 licences `UNKNOWN` avec les propriétaires images/OSS.
 - [ ] Restaurer les 14 objets LFS historiques nécessaires à un `git lfs fsck` complet.
 - [ ] Obtenir la revue indépendante ; ne lever aucune gate et ne pas déclarer de release.
+
+# Publication distante V6 vérifiée — 2026-08-25
+- [x] Publier `audit/t00-t42-v6-findings-remediation` sur GitHub.
+- [x] Vérifier la référence distante et le SHA `8e26bfb0c8bf6e92c09d645dd84ec854320c01f9`.
+- [x] Cloner la branche dans un répertoire neuf avec `GIT_LFS_SKIP_SMUDGE=1` et confirmer le HEAD local identique.
+- [x] Exécuter `git fsck --full` avant et après réhydratation LFS ciblée ; code 0.
+- [x] Vérifier par hash le wrapper V6 `ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6` et le bundle `ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2`.
+- [ ] Obtenir la revue indépendante ; maintenir les gates et l’interdiction de release.

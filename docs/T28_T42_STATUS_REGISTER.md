@@ -114,3 +114,10 @@ La branche dédiée `audit/t00-t42-v6-findings-remediation` part du HEAD V5 `b34
 La requalification V6 confirme `go test -shuffle=on -count=3 ./...`, la variante race, `go vet`, `go build`, `govulncheck`, les deux Grype sur SBOM propres et l’E2E Axe loopback à zéro. Restent explicitement ouverts : 34 diagnostics Staticcheck historiques, 89 findings GolangCI-Lint historiques, 46 résultats OSV liés à la lecture `go 1.25.0` de la directive par OSV Scanner v1.9.2 malgré le toolchain effectif `go1.25.13`, six misconfigurations Docker Trivy, 741 licences `UNKNOWN`, la limite Gitleaks `0 commits scanned` sur `--log-opts` et 14 objets LFS historiques indisponibles pour `git lfs fsck`. Ces résultats sont conservés dans `V6_REMAINING_FINDINGS.md` et ne sont pas présentés comme un PASS global.
 
 **Statut exact :** `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`. Les statuts T28, T29, T39, T40, T41 et T42 restent `BLOCKED`; T30 reste `PENDING_REMOTE_EVIDENCE_RECONCILIATION`. Les gates `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false` et `release_authorized=false` restent inchangées.
+
+
+## 2026-08-25 — Publication distante V6 vérifiée
+
+La branche [audit/t00-t42-v6-findings-remediation](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/audit/t00-t42-v6-findings-remediation) a été publiée. Le HEAD distant vérifié avant cette entrée est `8e26bfb0c8bf6e92c09d645dd84ec854320c01f9`. Un clone neuf avec `GIT_LFS_SKIP_SMUDGE=1` correspond exactement à ce SHA ; `git fsck --full` retourne 0 avant et après le fetch LFS ciblé des deux artefacts V6. Le wrapper et le bundle ciblés correspondent respectivement à `ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6` et `ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2`.
+
+Le bundle delta publié exige `b34fa5c02ff20144abfb5d240db1c67ad1f038f9` et cible le commit de contenu `fc080456711dd7f2266911aaec55041fdb1b424c`; le HEAD de packaging est distinct par construction. Les gates et les lots bloqués restent inchangés.

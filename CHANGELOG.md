@@ -300,3 +300,10 @@ Le HEAD publié final de la branche audit/t00-t42-self-validation-synthetic-e2e 
 La qualification V6 append-only part du HEAD V5 `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`. Elle corrige les deux findings GolangCI-Lint obligatoires, les violations Axe `color-contrast`/`meta-viewport` et les deux advisories `golang.org/x/mod` avec tests ciblés et commits séparés. Les 18 findings Semgrep sont qualifiés individuellement comme usages `crypto/rand`, et les findings Gitleaks historiques restent redacted et classés sans réécriture d’historique.
 
 Les tests Go shuffle/race, vet, build, govulncheck, Grype sur SBOM CycloneDX/SPDX propres et l’E2E Playwright/Axe loopback passent. Les diagnostics Staticcheck/GolangCI-Lint historiques, les résultats OSV liés à la limite de détection de patch toolchain, les misconfigurations Docker Trivy, les licences inconnues, la limite Gitleaks de plage et les objets LFS historiques indisponibles restent ouverts et documentés. La sortie est `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`; aucune gate n’est levée et aucune release n’est autorisée.
+
+
+## 2026-08-25 — Publication distante V6 vérifiée
+
+La branche [audit/t00-t42-v6-findings-remediation](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/audit/t00-t42-v6-findings-remediation) est publiée au HEAD distant `8e26bfb0c8bf6e92c09d645dd84ec854320c01f9`. Un clone neuf correspond exactement à ce SHA ; `git fsck --full` retourne 0 avant et après le fetch LFS ciblé des deux artefacts V6. Le wrapper V6 est `ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6` et le bundle delta est `ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2`.
+
+Le bundle exige b34fa5c et cible le commit de contenu fc08045 ; cette distinction avec le commit de packaging est volontaire et documentée. Le statut reste `T00_T42_V6_FINDINGS_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_REVIEW`, sans levée de gate ni release.
