@@ -12,6 +12,8 @@ import (
 	"strings"
 
 	"forgelocal/internal/humanize"
+	"forgelocal/internal/profile"
+	"forgelocal/internal/proxies"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/mxschmitt/playwright-go"
@@ -51,7 +53,12 @@ func (h *handler) createSession(w http.ResponseWriter, r *http.Request) {
 		writeError(w, 404, "PROFILE_NOT_FOUND", err.Error())
 		return
 	}
-	sess, err := h.mgr.LaunchSession(p)
+	launchProfile, err := h.profileForSessionLaunch(p)
+	if err != nil {
+		writeSessionLaunchError(w, err)
+		return
+	}
+	sess, err := h.mgr.LaunchSession(launchProfile)
 	if err != nil {
 		writeSessionLaunchError(w, err)
 		return
@@ -63,12 +70,66 @@ func (h *handler) createSession(w http.ResponseWriter, r *http.Request) {
 	}})
 }
 
+type sessionProxyError struct {
+	code string
+}
+
+func (e *sessionProxyError) Error() string     { return e.code }
+func (e *sessionProxyError) ErrorCode() string { return e.code }
+func (e *sessionProxyError) StatusCode() int   { return http.StatusConflict }
+
+// profileForSessionLaunch resolves the durable registry assignment immediately
+// before launch. With no assignment, the existing explicit no-proxy/profile or
+// group policy is preserved. With an assignment, the canonical endpoint is
+// revalidated and copied into an ephemeral LaunchProxy override so group policy
+// cannot silently replace it. Credential values are resolved only in memory.
+func (h *handler) profileForSessionLaunch(p *profile.Profile) (*profile.Profile, error) {
+	if p == nil || h.proxyStore == nil {
+		return p, nil
+	}
+	proxyID, assigned := h.proxyStore.AssignedProxyID(p.ID)
+	if !assigned {
+		return p, nil // explicit no-registry-proxy behavior: use normal direct/profile/group policy
+	}
+	canonical, err := h.proxyStore.Get(proxyID)
+	if err != nil {
+		return nil, &sessionProxyError{code: "PROXY_ASSIGNMENT_UNKNOWN"}
+	}
+	if err := proxies.ValidateForLaunch(canonical); err != nil {
+		return nil, &sessionProxyError{code: "PROXY_ASSIGNMENT_INVALID"}
+	}
+
+	effective := &profile.ProxyConfig{
+		Type:      canonical.Type,
+		Host:      canonical.Host,
+		Port:      canonical.Port,
+		Region:    canonical.Region,
+		SecretRef: canonical.SecretRef,
+	}
+	if canonical.HasSecret {
+		username, password, err := h.store.ResolveProxySecret(canonical.SecretRef)
+		if err != nil {
+			return nil, &sessionProxyError{code: "PROXY_CREDENTIALS_UNAVAILABLE"}
+		}
+		effective.Username = username
+		effective.Password = password
+	}
+
+	copy := *p
+	copy.LaunchProxy = effective
+	return &copy, nil
+}
+
 func writeSessionLaunchError(w http.ResponseWriter, err error) {
 	code := "LAUNCH_FAILED"
+	status := http.StatusInternalServerError
 	if c := browserErrorCode(err); c != "" {
 		code = c
 	}
-	writeError(w, 500, code, err.Error())
+	if coded, ok := err.(interface{ StatusCode() int }); ok {
+		status = coded.StatusCode()
+	}
+	writeError(w, status, code, err.Error())
 }
 
 type browserErrorCoder interface {

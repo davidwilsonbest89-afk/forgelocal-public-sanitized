@@ -188,6 +188,11 @@ func (s *Store) EffectiveProxy(p *profile.Profile) EffectiveProxy {
 	if p == nil {
 		return EffectiveProxy{Source: "none", Mode: ProxyModeDefault}
 	}
+	// LaunchProxy is an ephemeral, API-resolved registry assignment. It must
+	// win for this launch only; the durable group/profile policy remains intact.
+	if p.LaunchProxy != nil {
+		return EffectiveProxy{Proxy: cloneProxy(p.LaunchProxy), Source: "registry", Mode: ProxyModeDefault}
+	}
 
 	var group *Group
 	if p.Group != "" {

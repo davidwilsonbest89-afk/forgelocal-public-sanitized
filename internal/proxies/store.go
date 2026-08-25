@@ -99,7 +99,7 @@ func (s *Store) load() error {
 		return err
 	}
 	var payload struct {
-		Proxies  []*Proxy        `json:"proxies"`
+		Proxies  []*Proxy          `json:"proxies"`
 		Assigned map[string]string `json:"assigned,omitempty"`
 	}
 	if err := json.Unmarshal(data, &payload); err != nil {
@@ -114,11 +114,10 @@ func (s *Store) load() error {
 		s.proxies[p.ID] = p
 	}
 	if payload.Assigned != nil {
-		// Only assignments whose proxy still exists are restored.
+		// Preserve the durable mapping even when its target is missing. Session
+		// creation must then fail closed instead of silently becoming direct.
 		for profileID, proxyID := range payload.Assigned {
-			if _, known := s.proxies[proxyID]; known {
-				s.assigned[profileID] = proxyID
-			}
+			s.assigned[profileID] = proxyID
 		}
 	}
 	return nil
@@ -126,7 +125,7 @@ func (s *Store) load() error {
 
 func (s *Store) saveLocked() error {
 	payload := struct {
-		Proxies  []*Proxy        `json:"proxies"`
+		Proxies  []*Proxy          `json:"proxies"`
 		Assigned map[string]string `json:"assigned,omitempty"`
 	}{Proxies: make([]*Proxy, 0, len(s.proxies)), Assigned: nil}
 	for _, p := range s.proxies {
@@ -312,6 +311,16 @@ func (s *Store) UnassignFor(profileID, proxyID string) error {
 	return s.saveLocked()
 }
 
+// AssignedProxyID returns the durable profile→proxy mapping, including a
+// mapping whose target is missing or malformed. Callers must treat a true
+// result with a nil AssignedProxy as an invalid assignment and fail closed.
+func (s *Store) AssignedProxyID(profileID string) (string, bool) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+	proxyID, ok := s.assigned[profileID]
+	return proxyID, ok
+}
+
 // AssignedProxy returns the proxy bound to the profile, or nil when none.
 func (s *Store) AssignedProxy(profileID string) *Proxy {
 	s.mu.RLock()
@@ -376,6 +385,23 @@ func (s *Store) isAssignedToAny(proxyID string) bool {
 
 func normalizeName(value string) string {
 	return strings.ToLower(strings.TrimSpace(value))
+}
+
+// ValidateForLaunch rechecks the canonical registry record immediately before
+// a browser launch. The registry intentionally stores only credential presence
+// and an opaque reference; credential values are resolved separately through
+// the configured vault and are never returned by this package.
+func ValidateForLaunch(p *Proxy) error {
+	if err := validateProxyInputs(p); err != nil {
+		return err
+	}
+	if p.ID == "" {
+		return ErrInvalidProxy
+	}
+	if p.HasSecret != (p.SecretRef != "") {
+		return ErrInvalidProxy
+	}
+	return nil
 }
 
 // validateProxyInputs enforces the T10 registry contract: short printable

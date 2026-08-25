@@ -106,7 +106,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 			tz, locale = fallbackGeoForProxyRegion(proxyRegion)
 			geoResult = fingerprint.GeoDetectionResult{Timezone: tz, Locale: locale, Source: "proxy_region_fallback", Status: "geo_provider_unavailable"}
 		}
-		args = append(args, "--fingerprint-webrtc-ip=auto")
+		args = append(args, "--fingerprint-webrtc-ip=auto", "--proxy-bypass-list=<-loopback>")
 	} else {
 		geoResult = fingerprint.DetectLocalGeo()
 		tz, locale = geoResult.Values()

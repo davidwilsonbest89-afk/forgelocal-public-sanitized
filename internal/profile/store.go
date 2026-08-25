@@ -9,6 +9,7 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 
@@ -30,8 +31,13 @@ type Profile struct {
 	Fingerprint     map[string]any  `json:"fingerprint,omitempty"`
 	FingerprintSeed uint32          `json:"fingerprint_seed,omitempty"` // CloakBrowser seed
 	Proxy           *ProxyConfig    `json:"proxy,omitempty"`
-	ContainerID     string          `json:"container_id,omitempty"`
-	ProfileDir      string          `json:"profile_dir"`
+	// LaunchProxy is populated only for one session-launch request after the
+	// canonical proxy registry assignment is resolved. It is never persisted or
+	// returned by JSON projections and has precedence over group policy for that
+	// launch only.
+	LaunchProxy *ProxyConfig `json:"-"`
+	ContainerID string       `json:"container_id,omitempty"`
+	ProfileDir  string       `json:"profile_dir"`
 	// Note and CustomFields are non-sensitive profile metadata. They are never
 	// projected by the dashboard read-only catalogue; authenticated metadata
 	// writes go through the Core-only T20-NCF contract and produce redacted audit.
@@ -1138,7 +1144,35 @@ func (p *Profile) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+var registryProxySecretRefPattern = regexp.MustCompile(`^proxy\.ref\.[A-Za-z0-9._-]{1,128}$`)
+
 func proxySecretRef(profileID string) string { return "proxy." + profileID }
+
+// ResolveProxySecret resolves a registry-owned proxy.ref.* entry through the
+// configured secret vault. The returned values are intended only for the
+// in-memory browser launch path; callers must not persist, serialize, or log
+// them. References outside the registry grammar are rejected before touching
+// the vault.
+func (s *Store) ResolveProxySecret(ref string) (username, password string, err error) {
+	if !registryProxySecretRefPattern.MatchString(ref) {
+		return "", "", fmt.Errorf("invalid proxy secret reference")
+	}
+	if s.vault == nil {
+		return "", "", fmt.Errorf("proxy credentials are unavailable")
+	}
+	payload, err := s.vault.GetSecret(ref)
+	if err != nil {
+		return "", "", fmt.Errorf("proxy credentials are unavailable")
+	}
+	var values struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	if err := json.Unmarshal(payload, &values); err != nil || values.Username == "" || values.Password == "" {
+		return "", "", fmt.Errorf("proxy credentials are unavailable")
+	}
+	return values.Username, values.Password, nil
+}
 
 func (s *Store) persistProxySecret(p *Profile) error {
 	if p == nil || p.Proxy == nil || (p.Proxy.Username == "" && p.Proxy.Password == "") {
