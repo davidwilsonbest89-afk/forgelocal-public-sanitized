@@ -24,6 +24,7 @@ import (
 	"forgelocal/internal/config"
 	"forgelocal/internal/cookies"
 	"forgelocal/internal/environment"
+	"forgelocal/internal/extensions"
 	"forgelocal/internal/fingerprint"
 	"forgelocal/internal/groups"
 	"forgelocal/internal/history"
@@ -85,6 +86,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 	if err != nil {
 		return nil, fmt.Errorf("open simulated proxy provider catalogue: %w", err)
 	}
+	extensionStore, err := extensions.Open(cfg.DataDir)
+	if err != nil {
+		return nil, fmt.Errorf("open T28 extension repository: %w", err)
+	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(correlationMiddleware)
@@ -104,7 +109,7 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		hcfg = humanize.ConfigFromRaw(cfg.Humanize.Enabled, cfg.Humanize.MouseSpeed, cfg.Humanize.TypingCPM, cfg.Humanize.TypoRate, cfg.Humanize.ScrollStyle)
 	}
 
-	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore, proxyProviderStore: proxyProviderStore}
+	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore, proxyProviderStore: proxyProviderStore, extensionStore: extensionStore}
 	if err := h.recoverPendingProfileHistory(context.Background()); err != nil {
 		return nil, fmt.Errorf("recover pending profile history: %w", err)
 	}
@@ -188,6 +193,16 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 			r.Get("/api/v1/runtimes/qualified/{id}", h.getQualifiedRuntime)
 		}
 		r.Get("/api/v1/environment/profiles/{id}", h.getEnvironmentDiagnostic)
+		r.Post("/api/v1/extensions/import", h.importExtension)
+		r.Get("/api/v1/extensions", h.listExtensions)
+		r.Get("/api/v1/extensions/{seriesID}", h.getExtensionSeries)
+		r.Post("/api/v1/extensions/{versionID}/approve", h.approveExtension)
+		r.Post("/api/v1/extensions/{versionID}/assign", h.assignExtension)
+		r.Post("/api/v1/extensions/{seriesID}/update", h.updateExtension)
+		r.Post("/api/v1/extensions/{seriesID}/rollback", h.rollbackExtension)
+		r.Post("/api/v1/extensions/{versionID}/revoke", h.revokeExtension)
+		r.Delete("/api/v1/extensions/{versionID}", h.purgeExtension)
+
 		if h.backupSvc != nil {
 			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
 			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
@@ -248,6 +263,7 @@ type handler struct {
 	historyStore       *history.Store
 	cookieFixtureStore *cookies.Store
 	proxyProviderStore *proxyprovider.Store
+	extensionStore     *extensions.Repository
 }
 
 // t13Checker projects environment diagnostics from stored metadata and the
