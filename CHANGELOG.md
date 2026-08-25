@@ -293,3 +293,7 @@ La branche audit/t00-t42-self-validation-synthetic-e2e est publiée au HEAD 5e17
 ## 2026-08-24 — HEAD publié v4 synchronisé
 
 Le HEAD publié final de la branche audit/t00-t42-self-validation-synthetic-e2e est b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5. Les preuves et hashes sont synchronisés ; le statut de self-validation reste en attente de revue indépendante et aucune release n’est autorisée.
+
+## 2026-08-25 — Self-validation renforcée V5
+
+Ajout append-only du dossier `evidence/SELF_VALIDATION_V5/` et des rapports V5. La campagne corrige la preuve Gitleaks de plage, rejoue GolangCI-Lint avec un outil compatible, ajoute shuffle/race, Semgrep, Grype et Axe loopback. Les findings et limites restent ouverts ; aucune gate ni statut historique n’est levé.

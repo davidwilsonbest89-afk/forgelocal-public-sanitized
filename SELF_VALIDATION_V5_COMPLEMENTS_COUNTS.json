@@ -1,0 +1,20 @@
+{
+  "semgrep_results": 18,
+  "semgrep_rules": {
+    "home.ubuntu.forgelocal_self_validation_v5.go-math-rand-read": 18
+  },
+  "grype_cyclonedx_matches": 2,
+  "grype_cyclonedx_severity": {
+    "High": 2
+  },
+  "grype_spdx_matches": 2,
+  "grype_spdx_severity": {
+    "High": 2
+  },
+  "axe_violations": 2,
+  "axe_blocking": 1,
+  "axe_impact": {
+    "serious": 1,
+    "moderate": 1
+  }
+}

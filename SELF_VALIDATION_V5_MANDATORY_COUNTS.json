@@ -1,0 +1,11 @@
+{
+  "golangci_baseline": 90,
+  "golangci_head": 90,
+  "golangci_new": 2,
+  "golangci_resolved": 2,
+  "gitleaks_tree_commits": 58,
+  "gitleaks_tree_findings": 348,
+  "gitleaks_rules": {
+    "generic-api-key": 348
+  }
+}

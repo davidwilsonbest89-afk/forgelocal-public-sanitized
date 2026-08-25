@@ -1,0 +1,67 @@
+utc=2026-08-25T00:39:34Z
+cwd=/home/ubuntu/forgelocal_self_validation_v5/repo
+base=72d54110c89583beacc556bb103f881b667d8137
+head=b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+commits=58
+method=git archive each commit tree; gitleaks detect --no-git --source <tree>
+commit=4f415ebdac686cf9cec4f5957c67c8beaf4b3888 tree_index=1 exit_code=1
+commit=5d100a0d0a8f51f4a99bb02a995ab18e32c25889 tree_index=2 exit_code=1
+commit=cbf3a502b3fd37c48798ec67a3a6d4edd5d4a5fb tree_index=3 exit_code=1
+commit=9d40bb4210a76e1fe0574292fc010dd2ae52eb31 tree_index=4 exit_code=1
+commit=9dad98703a748af61cbd3573b00e2bb036739a69 tree_index=5 exit_code=1
+commit=17b6daf72995e6c36d0d14cd51f36b84138bacb9 tree_index=6 exit_code=1
+commit=d7279e81dd724ba2278a65838bc65aaa16912007 tree_index=7 exit_code=1
+commit=5d4363a1888956a35f6a0448c446ed0eb1bf981e tree_index=8 exit_code=1
+commit=693632791041fde14db14ec8982b8bff1060a8d3 tree_index=9 exit_code=1
+commit=1ab112bce8189c54070c38e218783e6835b93a9e tree_index=10 exit_code=1
+commit=c7f66da0da6f547813d10826dfd7772ad7e0f4b6 tree_index=11 exit_code=1
+commit=6519e84c13f7ae89cae7711d1ff0e568b6b3767e tree_index=12 exit_code=1
+commit=891b2d166a30a96d5ca872b473251ed1a3706ba3 tree_index=13 exit_code=1
+commit=5085e6ac95d11649a74fb7137c6fca0b5ce7253a tree_index=14 exit_code=1
+commit=099ff7bbf384ff900ec44fc3e9aafd1fc273f0dd tree_index=15 exit_code=1
+commit=bfde794614effeedca281d4eb279632780901aa8 tree_index=16 exit_code=1
+commit=c0ad051c77e153b3ec4435fbc7ff98e30b96969b tree_index=17 exit_code=1
+commit=57fc8114bf360697bb075bb95d7062d5a2d49134 tree_index=18 exit_code=1
+commit=f8fcfa02935a62fa66c3e22bb6bd5a01493f2f62 tree_index=19 exit_code=1
+commit=60ca2a8839ca4226157f5629012f14b7964e363d tree_index=20 exit_code=1
+commit=08061f1e55a0bba01a4a28df66dc852e8f345ade tree_index=21 exit_code=1
+commit=61a91ee68bb26994948fa5e0b8a2e67b987dd9e8 tree_index=22 exit_code=1
+commit=077ba90b2c522415aeefdc2d651c457b8c59683d tree_index=23 exit_code=1
+commit=8227337b84e3986eb813cdfed2c27716c2d3501b tree_index=24 exit_code=1
+commit=944376fd1c9d22dad44730854ce4b2d6203c743b tree_index=25 exit_code=1
+commit=0e2b45a0b05ca7e03fd7bb514027c87d618a957f tree_index=26 exit_code=1
+commit=6489af39a4ac4f91f9f7dc1435f10b2bd10dfdc0 tree_index=27 exit_code=1
+commit=bb9375214bd05cf7b364ea332f6ddb5a59767fae tree_index=28 exit_code=1
+commit=dd1240472dd566fe4eeedcbe4206791c41f7b0b0 tree_index=29 exit_code=1
+commit=8dfbe18355e6fa481e8c6f773e5d4bfad6437a83 tree_index=30 exit_code=1
+commit=c61118ed2d5c2221ae6f34f28a11962624bb7094 tree_index=31 exit_code=1
+commit=59882a9bcac8755c0fb8a294be32a6b1d1ff4598 tree_index=32 exit_code=1
+commit=71a41567b98eb65d7cb250043082473d92530395 tree_index=33 exit_code=1
+commit=aa501b179e2917f306828e86aa83bf6cedc41ac7 tree_index=34 exit_code=1
+commit=59a732b516fcf265aac7b5ca875c2cd6a0683cdd tree_index=35 exit_code=1
+commit=6ae02e4ceed239b9310fbf3fccb1b5170117251e tree_index=36 exit_code=1
+commit=cf280858b345e2fd566d391590f23d8cfa6bbe6d tree_index=37 exit_code=1
+commit=b9bbb0366e2a773da22fb10476a922f0471edd79 tree_index=38 exit_code=1
+commit=cd6a95c66c029adf2140784491b06b8d9bf64fce tree_index=39 exit_code=1
+commit=631605ba136ff864d23e9674ca6adb4a8df0b740 tree_index=40 exit_code=1
+commit=a6382aa95c412d91c1bca2de34a87ca7908ed71f tree_index=41 exit_code=1
+commit=310119f91d5a4a89fcbf06ffe8e9ae84ea7c2a73 tree_index=42 exit_code=1
+commit=067ae29177a47dd39d98d2d5cba4d5ed7d80e260 tree_index=43 exit_code=1
+commit=25afca8ee005d22f8d98c3f44ed7de70d661f2cd tree_index=44 exit_code=1
+commit=7efa7efe0e1d28bc2ad8f4333cb2119b98fa13ea tree_index=45 exit_code=1
+commit=b7f067700c6d5b1afb504526b5a09e9c65f10eb8 tree_index=46 exit_code=1
+commit=f74f340a3c568780ed720a16523413d596ca2a2f tree_index=47 exit_code=1
+commit=e6e63574c816ec12ac7115b896cf6075d43bde39 tree_index=48 exit_code=1
+commit=696dd8a16a31978b5ec1ef32289c0897ca7e9cd6 tree_index=49 exit_code=1
+commit=7514885bd2382757d61b1616ece754e46221d33e tree_index=50 exit_code=1
+commit=db0dd08e19b61d2894cd566eaa4d869f70eb402e tree_index=51 exit_code=1
+commit=57d21b00e7582243b55d07445c5708be324f4986 tree_index=52 exit_code=1
+commit=51745c916431dc352ad03974a72cf48395ee422f tree_index=53 exit_code=1
+commit=dfb020d3f4d0d83d7bfef68d5646aabcf4320ba2 tree_index=54 exit_code=1
+commit=861880e56f13866346cf974110a01c8a890b86e2 tree_index=55 exit_code=1
+commit=5e174dba6dddc35865f5bd943383d988ea12170c tree_index=56 exit_code=1
+commit=b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5 tree_index=57 exit_code=1
+commit=b34fa5c02ff20144abfb5d240db1c67ad1f038f9 tree_index=58 exit_code=1
+total=58
+pass=0
+fail=58

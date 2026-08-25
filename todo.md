@@ -783,3 +783,10 @@ Reste à faire :
 # HEAD publié v4 — 2026-08-24
 - [x] Enregistrer le HEAD final publié b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5 après synchronisation des preuves.
 - [ ] Obtenir la revue humaine indépendante ; maintenir toutes les gates.
+
+# V5 — self-validation renforcée — 2026-08-25
+- [x] Rejouer Gitleaks sur la plage et sur le checkout frais, avec scan explicite des 58 arbres.
+- [x] Rejouer GolangCI-Lint avec le binaire 2.13.1 et comparer baseline/HEAD.
+- [x] Exécuter shuffle/race, Semgrep, Grype CycloneDX/SPDX et Axe loopback.
+- [x] Préparer wrapper, bundle, sidecars, manifeste et preuves de clone neuf.
+- [ ] Revue humaine indépendante ; maintenir les gates et l’interdiction de release.

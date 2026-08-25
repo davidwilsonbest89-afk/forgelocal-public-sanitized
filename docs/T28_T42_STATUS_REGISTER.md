@@ -105,3 +105,9 @@ Un clone neuf de cette branche retourne git fsck --full avec code 0. Le statut e
 ## 2026-08-24 — HEAD publié après synchronisation des preuves
 
 La branche audit/t00-t42-self-validation-synthetic-e2e est maintenant au HEAD b4a04e4b9b489c22f3a86986c6faa1cbb9bf77c5. Ce commit synchronise les preuves de bundle final, manifestes et hashes avec le contenu publié. Le wrapper V4 et le bundle delta restent vérifiés par leurs sidecars ; aucun code produit, gate ou statut de release n’a été modifié.
+
+## 2026-08-25 — Self-validation renforcée V5
+
+La branche dédiée `audit/t00-t42-self-validation-enhanced-v5` est préparée depuis le HEAD v4 `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`. Les contrôles obligatoires et complémentaires sont documentés : Gitleaks de plage et arbres explicites, GolangCI-Lint 2.13.1, Go shuffle/race, Semgrep 1.174.0, Grype 0.117.0 sur CycloneDX/SPDX et Axe Playwright loopback. Les findings restent ouverts et classés ; les gates restent fermées. Aucun runtime réel, donnée utilisateur, migration ou release n’est autorisé.
+
+Le scan Gitleaks demandé avec `--log-opts` a annoncé zéro commit ; ce résultat est classé incomplet. La preuve complémentaire couvre les 58 commits explicitement et retourne 348 détections historiques redacted. GolangCI-Lint retourne 2 nouveaux findings sur 90 au HEAD. Semgrep retourne 18 findings, Grype deux correspondances High par SBOM et Axe bloque volontairement sur une violation sérieuse de contraste.

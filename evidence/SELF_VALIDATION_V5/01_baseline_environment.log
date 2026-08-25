@@ -1,0 +1,8 @@
+utc=2026-08-25T00:33:27Z
+cwd=/home/ubuntu
+df=/dev/root        48G   24G   25G  49% /
+git_version=git version 2.43.0
+gitleaks_version=8.18.4
+go_version=go version go1.25.13 linux/amd64
+semgrep_version=/home/ubuntu/forgelocal_self_validation_v5_baseline.sh: line 19: semgrep: command not found
+grype_version=/home/ubuntu/forgelocal_self_validation_v5_baseline.sh: line 20: grype: command not found

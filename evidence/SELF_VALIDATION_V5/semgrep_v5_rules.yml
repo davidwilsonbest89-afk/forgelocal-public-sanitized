@@ -1,0 +1,24 @@
+rules:
+  - id: go-command-shell-exec
+    languages: [go]
+    message: Review shell command execution and argument boundaries.
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: exec.Command("sh", $ARG)
+          - pattern: exec.Command("bash", $ARG)
+  - id: go-math-rand-read
+    languages: [go]
+    message: Review math/rand use for security-sensitive values.
+    severity: WARNING
+    pattern: rand.Read($X)
+  - id: ts-dangerous-innerhtml
+    languages: [typescript]
+    message: Review direct HTML injection.
+    severity: WARNING
+    pattern: 'dangerouslySetInnerHTML: $X'
+  - id: ts-eval
+    languages: [typescript]
+    message: Avoid dynamic evaluation.
+    severity: ERROR
+    pattern: eval($X)

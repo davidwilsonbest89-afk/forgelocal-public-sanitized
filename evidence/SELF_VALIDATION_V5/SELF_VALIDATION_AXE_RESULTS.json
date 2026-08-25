@@ -1,0 +1,1245 @@
+{
+  "url": "http://127.0.0.1:4173",
+  "passes": 24,
+  "incomplete": 2,
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#1c2720",
+                "contrastRatio": 3.24,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:400\" class=\"metric-card metric-primary instrument-plate\">",
+                  "target": [
+                    ".metric-primary"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.24 (foreground color: #68766f, background color: #1c2720, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:400\" class=\"metric-coordinates\">PFL / 000</i>",
+          "target": [
+            ".metric-primary > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #68766f, background color: #1c2720, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#192027",
+                "contrastRatio": 3.45,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:401\" class=\"metric-card instrument-plate\">",
+                  "target": [
+                    "article:nth-child(2)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:401\" class=\"metric-coordinates\">RUN / 003</i>",
+          "target": [
+            "article:nth-child(2) > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#192027",
+                "contrastRatio": 3.45,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:402\" class=\"metric-card instrument-plate\">",
+                  "target": [
+                    "article:nth-child(3)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:402\" class=\"metric-coordinates\">VLT / PEND</i>",
+          "target": [
+            "article:nth-child(3) > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#192027",
+                "contrastRatio": 3.45,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:403\" class=\"metric-card instrument-plate\">",
+                  "target": [
+                    "article:nth-child(4)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:403\" class=\"metric-coordinates\">HST / LIVE</i>",
+          "target": [
+            "article:nth-child(4) > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#181f25",
+                "contrastRatio": 3.86,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:428\" class=\"profile-rows\">",
+                  "target": [
+                    ".profile-rows"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:426\" class=\"plate-code\">REG / PFL / 01</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:426\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Profil</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(1)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Runtime</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Proxy</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(3)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Dernière activité</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(4)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">État</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(5)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#181f25",
+                "contrastRatio": 3.86,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section data-loc=\"client/src/pages/Home.tsx:468\" class=\"catalog-panel instrument-plate\" data-testid=\"core-groups-panel\">",
+                  "target": [
+                    "section[data-testid=\"core-groups-panel\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:468\" class=\"plate-code\">CAT / GRP / RO</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:468\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#181f25",
+                "contrastRatio": 3.86,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section data-loc=\"client/src/pages/Home.tsx:475\" class=\"catalog-panel instrument-plate\" data-testid=\"core-runtimes-panel\">",
+                  "target": [
+                    "section[data-testid=\"core-runtimes-panel\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:475\" class=\"plate-code\">CAT / RUN / RO</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:475\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.18,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:488\" class=\"plate-code\">OBS / 14</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:488\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.18,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:506\" class=\"plate-code\">LOG / LOCAL</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:506\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#74827b",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.48,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small data-loc=\"client/src/pages/Home.tsx:506\">import · 14:22</small>",
+          "target": [
+            "li:nth-child(1) > div[data-loc=\"client/src/pages/Home.tsx:506\"] > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#74827b",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.48,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small data-loc=\"client/src/pages/Home.tsx:506\">runtime · 12:10</small>",
+          "target": [
+            "li:nth-child(2) > div[data-loc=\"client/src/pages/Home.tsx:506\"] > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#74827b",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.48,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small data-loc=\"client/src/pages/Home.tsx:506\">ui · maintenant</small>",
+          "target": [
+            "li:nth-child(3) > div[data-loc=\"client/src/pages/Home.tsx:506\"] > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    },
+    {
+      "id": "meta-viewport",
+      "impact": "moderate",
+      "tags": [
+        "cat.sensory-and-visual-cues",
+        "wcag2aa",
+        "wcag144",
+        "EN-301-549",
+        "EN-9.1.4.4",
+        "ACT",
+        "RGAAv4",
+        "RGAA-10.4.2"
+      ],
+      "description": "Ensure <meta name=\"viewport\"> does not disable text scaling and zooming",
+      "help": "Zooming and scaling must not be disabled",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/meta-viewport?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "meta-viewport",
+              "data": "maximum-scale",
+              "relatedNodes": [],
+              "impact": "moderate",
+              "message": "maximum-scale on <meta> tag disables zooming on mobile devices"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "moderate",
+          "html": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1\">",
+          "target": [
+            "meta[name=\"viewport\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  maximum-scale on <meta> tag disables zooming on mobile devices"
+        }
+      ]
+    }
+  ],
+  "blocking": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#1c2720",
+                "contrastRatio": 3.24,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:400\" class=\"metric-card metric-primary instrument-plate\">",
+                  "target": [
+                    ".metric-primary"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.24 (foreground color: #68766f, background color: #1c2720, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:400\" class=\"metric-coordinates\">PFL / 000</i>",
+          "target": [
+            ".metric-primary > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.24 (foreground color: #68766f, background color: #1c2720, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#192027",
+                "contrastRatio": 3.45,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:401\" class=\"metric-card instrument-plate\">",
+                  "target": [
+                    "article:nth-child(2)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:401\" class=\"metric-coordinates\">RUN / 003</i>",
+          "target": [
+            "article:nth-child(2) > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#192027",
+                "contrastRatio": 3.45,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:402\" class=\"metric-card instrument-plate\">",
+                  "target": [
+                    "article:nth-child(3)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:402\" class=\"metric-coordinates\">VLT / PEND</i>",
+          "target": [
+            "article:nth-child(3) > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#68766f",
+                "bgColor": "#192027",
+                "contrastRatio": 3.45,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<article data-loc=\"client/src/pages/Home.tsx:403\" class=\"metric-card instrument-plate\">",
+                  "target": [
+                    "article:nth-child(4)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<i data-loc=\"client/src/pages/Home.tsx:403\" class=\"metric-coordinates\">HST / LIVE</i>",
+          "target": [
+            "article:nth-child(4) > .metric-coordinates"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.45 (foreground color: #68766f, background color: #192027, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#181f25",
+                "contrastRatio": 3.86,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:428\" class=\"profile-rows\">",
+                  "target": [
+                    ".profile-rows"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:426\" class=\"plate-code\">REG / PFL / 01</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:426\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Profil</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(1)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Runtime</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(2)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Proxy</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(3)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">Dernière activité</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(4)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#708078",
+                "bgColor": "#171e23",
+                "contrastRatio": 4.04,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-loc=\"client/src/pages/Home.tsx:427\" class=\"profile-table-head\">",
+                  "target": [
+                    ".profile-table-head"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:427\">État</span>",
+          "target": [
+            "span[data-loc=\"client/src/pages/Home.tsx:427\"]:nth-child(5)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.04 (foreground color: #708078, background color: #171e23, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#181f25",
+                "contrastRatio": 3.86,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section data-loc=\"client/src/pages/Home.tsx:468\" class=\"catalog-panel instrument-plate\" data-testid=\"core-groups-panel\">",
+                  "target": [
+                    "section[data-testid=\"core-groups-panel\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:468\" class=\"plate-code\">CAT / GRP / RO</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:468\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#181f25",
+                "contrastRatio": 3.86,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section data-loc=\"client/src/pages/Home.tsx:475\" class=\"catalog-panel instrument-plate\" data-testid=\"core-runtimes-panel\">",
+                  "target": [
+                    "section[data-testid=\"core-runtimes-panel\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:475\" class=\"plate-code\">CAT / RUN / RO</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:475\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #6f7d77, background color: #181f25, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.18,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:488\" class=\"plate-code\">OBS / 14</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:488\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#6f7d77",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.18,
+                "fontSize": "5.3pt (7px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-loc=\"client/src/pages/Home.tsx:506\" class=\"plate-code\">LOG / LOCAL</span>",
+          "target": [
+            ".plate-code[data-loc=\"client/src/pages/Home.tsx:506\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.18 (foreground color: #6f7d77, background color: #11171d, font size: 5.3pt (7px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#74827b",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.48,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small data-loc=\"client/src/pages/Home.tsx:506\">import · 14:22</small>",
+          "target": [
+            "li:nth-child(1) > div[data-loc=\"client/src/pages/Home.tsx:506\"] > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#74827b",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.48,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small data-loc=\"client/src/pages/Home.tsx:506\">runtime · 12:10</small>",
+          "target": [
+            "li:nth-child(2) > div[data-loc=\"client/src/pages/Home.tsx:506\"] > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#74827b",
+                "bgColor": "#11171d",
+                "contrastRatio": 4.48,
+                "fontSize": "6.0pt (8px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<aside data-loc=\"client/src/pages/Home.tsx:486\" class=\"observation-rail\" aria-label=\"Observabilité locale\">",
+                  "target": [
+                    ".observation-rail"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<small data-loc=\"client/src/pages/Home.tsx:506\">ui · maintenant</small>",
+          "target": [
+            "li:nth-child(3) > div[data-loc=\"client/src/pages/Home.tsx:506\"] > small"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.48 (foreground color: #74827b, background color: #11171d, font size: 6.0pt (8px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ]
+}

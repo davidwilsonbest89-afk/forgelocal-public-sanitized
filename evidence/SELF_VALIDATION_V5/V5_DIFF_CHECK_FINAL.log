@@ -1,0 +1,16 @@
+utc=2026-08-25T01:25:05Z
+diff_check_exit_code=2
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_BUNDLE_VERIFY.log:5: trailing whitespace.
+[32m+[m[32mb34fa5c02ff20144abfb5d240db1c67ad1f038f9[m[41m [m
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:3: trailing whitespace.
+[32m+[m[32m**Date d’exécution :** 2026-08-25 UTC[m[41m  [m
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:4: trailing whitespace.
+[32m+[m[32m**Dépôt :** [forgelocal-public-sanitized][1][m[41m  [m
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:5: trailing whitespace.
+[32m+[m[32m**Branche source vérifiée :** `audit/t00-t42-self-validation-synthetic-e2e`[m[41m  [m
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:6: trailing whitespace.
+[32m+[m[32m**HEAD source vérifié :** `b34fa5c02ff20144abfb5d240db1c67ad1f038f9`[m[41m  [m
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:7: trailing whitespace.
+[32m+[m[32m**Baseline demandée :** tag `t00-t27-complete-20260820`, résolu dans le clone neuf vers `72d54110c89583beacc556bb103f881b667d8137`[m[41m  [m
+evidence/SELF_VALIDATION_V5/SELF_VALIDATION_V5_REPORT.md:8: trailing whitespace.
+[32m+[m[32m**Nombre de commits baseline..HEAD :** 58[m[41m  [m

@@ -1,0 +1,8 @@
+utc=2026-08-25T00:33:34Z
+cwd=/home/ubuntu/forgelocal_self_validation_v5/repo
+branch=audit/t00-t42-self-validation-synthetic-e2e
+base_tag=t00-t27-complete-20260820
+base=72d54110c89583beacc556bb103f881b667d8137
+head=b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+ancestor_rc=0
+commit_count=58

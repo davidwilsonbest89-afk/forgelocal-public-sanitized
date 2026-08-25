@@ -1,0 +1,15 @@
+utc=2026-08-25T00:33:34Z
+cwd=/home/ubuntu/forgelocal_self_validation_v5/repo
+head=b34fa5c02ff20144abfb5d240db1c67ad1f038f9
+base=72d54110c89583beacc556bb103f881b667d8137
+--- gitleaks historical range
+gitleaks_historical_exit_code=0
+--- gitleaks fresh checkout
+gitleaks_fresh_checkout_exit_code=1
+--- gitleaks historical tail
+[90m12:33AM[0m [32mINF[0m 0 commits scanned.
+[90m12:33AM[0m [32mINF[0m scan completed in 470ms
+[90m12:33AM[0m [32mINF[0m no leaks found
+--- gitleaks fresh tail
+[90m12:33AM[0m [32mINF[0m scan completed in 7.62s
+[90m12:33AM[0m [31mWRN[0m leaks found: 6
