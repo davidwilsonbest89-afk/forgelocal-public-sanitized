@@ -38,3 +38,13 @@ Aucun téléchargement de package d’extension, chargement/exécution, Camoufox
 2. Correction minimale appliquée : `verifyBlobIntegrity` compare taille et SHA-256 avant `Approve`, `Assign` et `Rollback`; l’API mappe l’échec vers `INTEGRITY_MISMATCH`. Aucun navigateur, runtime, réseau de package ou processus externe n’est impliqué.
 3. Tests ciblés ajoutés pour ZIP corrompu, ZIP dépassant la limite, conservation de toutes les permissions sensibles et host patterns, ignorance de `update_url`, purge lifecycle et package modifié après import. Les tests T28 sous race, vet ciblé, build et diff check corrigés ont tous retourné code 0.
 4. La clôture T28 est proposée comme `T28_APPROVED_VERIFIABLE_LOCAL`, limitée au Core local et aux artefacts de conservation. Cette approbation ne couvre aucun runtime navigateur, extension chargée/exécutée, SystemVault natif, proxy/cookies réels ou release.
+
+
+## 2026-08-25 — T28-POSTFIX-FINAL-CLOSURE
+
+1. Le correctif d’intégrité est publié dans `f0701da849ce0f9073397bb42ded5e2e76b29ef1`; les tests de régression `Approve`, `Assign` et `Rollback` sont publiés dans `e806d4e915d1b702362389411d8ac823551df044`.
+2. La requalification post-correctif depuis le commit `66f3bf09d3139e22f1885f7336c9edd879a32ede` a passé les tests T28 sous race, vet, build et diff check avec code 0.
+3. Gitleaks a passé le scan non vide des fichiers modifiés et l’extraction du nouveau ZIP avec code 0 et aucun leak. Le diagnostic séparé `0 commits scanned` est conservé et n’est pas présenté comme une validation de plage.
+4. Le nouveau ZIP `t28-postfix-evidence-v1.zip` porte le SHA-256 `4efda01771ed7af135769dfa68caa8bdc6f226ca7cad5bf894dcfce05f5c8923`; le nouveau bundle `t28-postfix-evidence.delta.bundle` porte le SHA-256 `e9f65a5b9a734933f20ecf13b05f73136e604dc006b50dfc0d40286d91262097`.
+5. `unzip -t`, extraction, manifeste/checksums, sidecars neutres, bundle verify, clone seedé par baseline et fsck ont passé la vérification fraîche.
+6. Statut : `T28_APPROVED_VERIFIABLE_LOCAL`, limité au Core local et aux preuves post-correctif. Aucun runtime, navigateur, proxy/cookie réel, SystemVault natif, migration, production ou release n’a été exécuté.

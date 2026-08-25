@@ -155,3 +155,14 @@ La dernière passe ciblée a démontré puis corrigé un défaut concret d’int
 Cette valeur signifie uniquement que T28 est implémenté et vérifiable localement, que son périmètre Core local est clôturé et que ses artefacts de conservation R1 sont acceptés. Elle ne signifie pas runtime navigateur approuvé, extension chargée/exécutée, SystemVault natif validé, proxy/cookies réels validés ou release publique autorisée.
 
 Les gates restent strictement inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`. T29, T39, T40, T41 et T42 ne sont pas démarrés.
+
+
+## 2026-08-25 — T28-POSTFIX-FINAL-CLOSURE
+
+Le défaut concret d’intégrité du blob après import a été corrigé dans `f0701da849ce0f9073397bb42ded5e2e76b29ef1`, puis couvert par les régressions `Approve`, `Assign` et `Rollback` dans `e806d4e915d1b702362389411d8ac823551df044`. La requalification ciblée est passée : tests T28 sous race, vet, build et diff check retournent `0` ; Gitleaks du diff non vide et de l’extraction finale retournent `0` sans leak.
+
+Les artefacts post-correctif distincts sont publiés depuis `66f3bf09d3139e22f1885f7336c9edd879a32ede` : ZIP SHA-256 `4efda01771ed7af135769dfa68caa8bdc6f226ca7cad5bf894dcfce05f5c8923`, bundle SHA-256 `e9f65a5b9a734933f20ecf13b05f73136e604dc006b50dfc0d40286d91262097`. Ils ont passé sidecars distribués/neutres, extraction, manifeste/checksums, bundle verify, clone seedé et fsck.
+
+**Statut exact :** `T28_APPROVED_VERIFIABLE_LOCAL`.
+
+L’approbation reste limitée au Core local et aux artefacts de conservation post-correctif. Elle ne qualifie pas de runtime navigateur, extension chargée/exécutée, SystemVault natif, proxy/cookies réels ou release publique. Gates inchangées : `PUBLIC_RELEASE_BLOCKED`, `SCAN_BLOCKED_UNKNOWN`, `NATIVE_SYSTEMVAULT_NOT_TESTED`, `camoflox_execution_authorized=false`, `t08_authorized=false`, `release_authorized=false`. T29, T39, T40, T41 et T42 restent non démarrés.

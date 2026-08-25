@@ -44,3 +44,19 @@ Le statut T28 reste `T28_EVIDENCE_QUALIFICATION_R1_READY_FOR_INDEPENDENT_REVIEW`
 | Revue propriétaire | Décision finale `T28_APPROVED_VERIFIABLE_LOCAL` à confirmer par le propriétaire | PENDING_OWNER_ACCEPTANCE |
 | Runtime navigateur/SystemVault/proxy/cookies/release | Hors périmètre et non autorisé | NOT_AUTHORIZED |
 | T29/T39/T40/T41/T42 | Ne pas démarrer avant acceptation finale T28 | BLOCKED |
+
+
+## T28-POSTFIX-FINAL-CLOSURE — 2026-08-25
+
+| Action | Résultat | Statut |
+|---|---|---|
+| Correctif taille/SHA-256 publié | `f0701da849ce0f9073397bb42ded5e2e76b29ef1` | DONE |
+| Régressions Approve/Assign/Rollback | `e806d4e915d1b702362389411d8ac823551df044`, tests sous race code 0 | DONE |
+| Requalification depuis clone/worktree neuf | `go test`, `go vet`, `go build`, `git diff --check` code 0 | DONE |
+| Gitleaks diff non vide et extraction finale | code 0, aucun leak ; diagnostic 0-commit conservé séparément | DONE |
+| Nouveau ZIP post-correctif | `4efda01771ed7af135769dfa68caa8bdc6f226ca7cad5bf894dcfce05f5c8923` | DONE |
+| Nouveau bundle post-correctif | `e9f65a5b9a734933f20ecf13b05f73136e604dc006b50dfc0d40286d91262097` | DONE |
+| Vérification fraîche des artefacts | sidecars neutres, unzip, extraction, manifest/checksums, bundle verify, clone seedé, fsck | DONE |
+| Statut T28 | `T28_APPROVED_VERIFIABLE_LOCAL` | DONE — Core local seulement |
+| Runtime navigateur, extension, proxy/cookies, SystemVault, migration, production, release | non exécutés et non autorisés | NOT_AUTHORIZED |
+| T29/T39/T40/T41/T42 | ne pas démarrer dans cette mission | BLOCKED |
