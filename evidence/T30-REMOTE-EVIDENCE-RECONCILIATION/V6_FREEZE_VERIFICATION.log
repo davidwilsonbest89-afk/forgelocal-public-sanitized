@@ -1,0 +1,55 @@
++ sidecar
+forgelocal-t00-t42-v6-local-qualified-freeze.zip: OK
+sidecar_exit_code=0
++ zip_test
+Archive:  /home/ubuntu/forgelocal_self_validation_v6/repo/evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip
+    testing: V6_FREEZE/               OK
+    testing: V6_FREEZE/V6_FREEZE_BASELINE_DISCOVERY_RAW.log   OK
+    testing: V6_FREEZE/V6_FREEZE_DIFFCHECK_PATHS.txt   OK
+    testing: V6_FREEZE/V6_FREEZE_SCOPE_CONFIRMATION.log   OK
+    testing: V6_FREEZE/V6_FREEZE_README.md   OK
+    testing: V6_FREEZE/V6_FREEZE_BUNDLE_VERIFY.log   OK
+    testing: V6_FREEZE/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle   OK
+    testing: V6_FREEZE/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle.portable.sha256   OK
+    testing: V6_FREEZE/MANIFEST.md    OK
+    testing: V6_FREEZE/SHA256SUMS     OK
+No errors detected in compressed data of /home/ubuntu/forgelocal_self_validation_v6/repo/evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip.
+zip_test_exit_code=0
++ extract
+extract_exit_code=0
++ manifest_sha
+V6_FREEZE_BASELINE_DISCOVERY_RAW.log: OK
+V6_FREEZE_BUNDLE_VERIFY.log: OK
+V6_FREEZE_DIFFCHECK_PATHS.txt: OK
+V6_FREEZE_README.md: OK
+V6_FREEZE_SCOPE_CONFIRMATION.log: OK
+forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle: OK
+forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle.portable.sha256: OK
+manifest_sha_exit_code=0
++ extracted_gitleaks
+[90m2:42AM[0m [32mINF[0m scan completed in 72.6ms
+[90m2:42AM[0m [32mINF[0m no leaks found
+extracted_gitleaks_exit_code=0
++ bundle_verify
+/tmp/forgelocal-v6-freeze-extract.WzQLEm/V6_FREEZE/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle is okay
+The bundle contains this ref:
+999374d99b7996504ba91e421850a2fe84afb78d refs/heads/audit/t00-t42-v6-local-freeze
+The bundle requires this ref:
+b34fa5c02ff20144abfb5d240db1c67ad1f038f9 
+The bundle uses this hash algorithm: sha1
+bundle_verify_exit_code=0
++ seeded_clone
+seeded_clone_exit_code=0
++ branch_status
+## [32maudit/t00-t42-v6-findings-remediation[m...[31morigin/audit/t00-t42-v6-findings-remediation[m [ahead [32m1[m]
+[31m??[m evidence/V6_FREEZE/MANIFEST.md
+[31m??[m evidence/V6_FREEZE/SHA256SUMS
+[31m??[m evidence/V6_FREEZE/V6_FREEZE_BUNDLE_VERIFY.log
+[31m??[m evidence/V6_FREEZE/V6_FREEZE_README.md
+[31m??[m evidence/V6_FREEZE/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle
+[31m??[m evidence/V6_FREEZE/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle.portable.sha256
+[31m??[m evidence/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle
+[31m??[m evidence/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle.portable.sha256
+[31m??[m evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip
+[31m??[m evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip.portable.sha256
+branch_status_exit_code=0

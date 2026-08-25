@@ -1,0 +1,44 @@
+remote_branch_sha=727e94bcf2bf40bc9388ee2df82bdb241962e5b2
+remote_tag_object_sha=310c10e7541bbec7828226ce1049df56da11ce0b
+local_tag_commit=999374d99b7996504ba91e421850a2fe84afb78d
++ clone
+Cloning into '/home/ubuntu/forgelocal_self_validation_v6/publication_clone_freeze_final'...
+env_exit_code=0
++ fsck
+git_exit_code=0
+clone_head=727e94bcf2bf40bc9388ee2df82bdb241962e5b2
+head_match_exit_code=0
++ status
+## [32maudit/t00-t42-v6-findings-remediation[m...[31morigin/audit/t00-t42-v6-findings-remediation[m
+git_exit_code=0
++ lfs_pointer_check
+135
+131
+132
+131
+bash_exit_code=0
++ targeted_lfs_pull
+bash_exit_code=0
++ artifact_hashes
+ce722915d70e0aa528927b753c6f18efa5706fc9fa8703ef6f449b6728a5fab6  /home/ubuntu/forgelocal_self_validation_v6/publication_clone_freeze_final/evidence/forgelocal-t00-t42-self-validation-v6-findings-remediation.zip
+ad4484e795b80eb5b7655228012e695dc4b260d43057477a97ae145d164614c2  /home/ubuntu/forgelocal_self_validation_v6/publication_clone_freeze_final/evidence/forgelocal-t00-t42-self-validation-v6.delta.bundle
+eb61ca0a42aad8afc8ba3a6088855acfd61dae0887bde339fad371e46feee264  /home/ubuntu/forgelocal_self_validation_v6/publication_clone_freeze_final/evidence/forgelocal-t00-t42-v6-local-qualified-freeze.zip
+7a324a93cffa2be2447371f92b3f3a1365d00bcc512fd606bb4bd39ea1384d9c  /home/ubuntu/forgelocal_self_validation_v6/publication_clone_freeze_final/evidence/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle
++ v6_bundle_verify
+evidence/forgelocal-t00-t42-self-validation-v6.delta.bundle is okay
+The bundle contains this ref:
+fc080456711dd7f2266911aaec55041fdb1b424c refs/heads/audit/t00-t42-v6-findings-remediation-content
+The bundle requires this ref:
+b34fa5c02ff20144abfb5d240db1c67ad1f038f9 
+The bundle uses this hash algorithm: sha1
+git_exit_code=0
++ freeze_bundle_verify
+evidence/forgelocal-t00-t42-self-validation-v6-freeze.delta.bundle is okay
+The bundle contains this ref:
+999374d99b7996504ba91e421850a2fe84afb78d refs/heads/audit/t00-t42-v6-local-freeze
+The bundle requires this ref:
+b34fa5c02ff20144abfb5d240db1c67ad1f038f9 
+The bundle uses this hash algorithm: sha1
+git_exit_code=0
++ final_fsck
+git_exit_code=0

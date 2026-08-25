@@ -1,0 +1,18 @@
+utc=2026-08-25T04:35Z
+lot=T30-REMOTE-EVIDENCE-RECONCILIATION
+base_commit=999374d99b7996504ba91e421850a2fe84afb78d
+base_tag=t00-t42-v6-local-qualified-2026-08-25
+working_tree_before_lot=clean
+
+--- initial status
+T30 initial status=PENDING_REMOTE_EVIDENCE_RECONCILIATION
+V6 freeze decision=V6_LOCAL_QUALIFIED_BASELINE_FROZEN
+
+--- required remote evidence
+A precise GitHub branch, commit, delta bundle, portable sidecars, ZIP, non-self-referential manifest, fresh extraction and fresh clone must be linked. The qualification decision must remain distinct from a production release.
+
+--- policy
+Do not start T30 runtime or any production workflow. Do not start T28/T29/T39/T40/T41/T42, Camoufox, real proxy, cookies, user data, native SystemVault, migration, targeted runtime or release. Do not modify V6 Core, Dashboard business logic or historical wrappers. Gates remain unchanged.
+
+--- intended decision
+T30_REMOTE_EVIDENCE_RECONCILED_PENDING_INDEPENDENT_REVIEW after public branch and artifact verification. This does not lift any product or release gate.
