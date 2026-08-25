@@ -45,7 +45,7 @@ La valeur exacte maintenue est `camoflox_execution_authorized=false`, avec `PUBL
 
 ## Conservation
 
-Les preuves R1 comprennent baseline brute, lignée brute/table, tests baseline/head/ciblés, OSV JSON/raw, Gitleaks par commit et extraction, Gosec baseline/head/comparaison normalisée, registre, changelog, todo et package T28. Le package strict final a été généré depuis le commit de contenu `bedf630139a8d63ec80419e071f0401f09cd54e8`.
+Les preuves R1 comprennent baseline brute, lignée brute/table, tests baseline/head/ciblés, OSV JSON/raw, Gitleaks par commit et extraction, Gosec baseline/head/comparaison normalisée, registre, changelog, todo et package T28. Le package strict final a été généré depuis le commit de contenu `bedf630139a8d63ec80419e071f0401f09cd54e8`. Le HEAD de publication GitHub de la branche est `37b69bd4ea8772f8138572149fed23dc962788b3` ; ses commits postérieurs au contenu package ne contiennent que les journaux de vérification R1.
 
 | Artefact | SHA-256 | Vérification |
 |---|---|---|
