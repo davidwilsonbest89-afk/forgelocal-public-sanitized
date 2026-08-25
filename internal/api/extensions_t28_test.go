@@ -125,6 +125,19 @@ func TestT28APIRejectsMissingAuthAndForeignOrigin(t *testing.T) {
 	}
 }
 
+func TestT28APIOffLoopbackRefused(t *testing.T) {
+	r, _, _ := t28APIRouter(t)
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/extensions", nil)
+	req.RemoteAddr = "192.0.2.10:19280"
+	req.Header.Set("Authorization", "Bearer t28-test-token")
+	req.Header.Set("Origin", "http://127.0.0.1:3000")
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+	if resp.Code != http.StatusForbidden || !strings.Contains(resp.Body.String(), `"LOOPBACK_REQUIRED"`) {
+		t.Fatalf("off-loopback request was not refused: code=%d body=%s", resp.Code, resp.Body.String())
+	}
+}
+
 func TestT28APIImportApproveListAndRedaction(t *testing.T) {
 	r, repo, _ := t28APIRouter(t)
 	manifest := `{"name":"Synthetic","version":"1","manifest_version":3,"permissions":["cookies","storage"],"host_permissions":["*://*/*"]}`
@@ -176,6 +189,26 @@ func TestT28APIImportApproveListAndRedaction(t *testing.T) {
 	var auditCount int
 	if err := repo.DB().QueryRow(`SELECT COUNT(*) FROM extension_audit_events`).Scan(&auditCount); err != nil || auditCount < 2 {
 		t.Fatalf("audit was not written: count=%d err=%v", auditCount, err)
+	}
+	rows, err := repo.DB().Query(`SELECT action, permission_categories_json, profile_pseudonym, correlation_id FROM extension_audit_events`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var action, categories, pseudonym, correlation string
+		if err := rows.Scan(&action, &categories, &pseudonym, &correlation); err != nil {
+			t.Fatal(err)
+		}
+		joined := action + categories + pseudonym + correlation
+		for _, forbidden := range []string{"local.zip", "payload.js", "must never execute", "Bearer", "cookie_value", "Set-Cookie"} {
+			if strings.Contains(joined, forbidden) {
+				t.Fatalf("audit leaked forbidden marker %q: %s", forbidden, joined)
+			}
+		}
+	}
+	if err := rows.Err(); err != nil {
+		t.Fatal(err)
 	}
 }
 

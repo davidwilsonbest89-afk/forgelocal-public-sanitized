@@ -1,0 +1,28 @@
+{
+	"Golang errors": {},
+	"Issues": [
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled/internal/extensions/store.go",
+			"code": "120: \t\t}\n121: \t\tif err := os.Chmod(dir, 0700); err != nil {\n122: \t\t\treturn nil, err\n",
+			"line": "121",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		}
+	],
+	"Stats": {
+		"files": 1,
+		"lines": 886,
+		"nosec": 0,
+		"found": 1
+	},
+	"GosecVersion": "dev"
+}

@@ -118,6 +118,7 @@ func Open(baseDir string) (*Repository, error) {
 		if err := os.MkdirAll(dir, 0700); err != nil {
 			return nil, err
 		}
+		// #nosec G302 -- T28 stores packages and metadata owner-only under the managed base directory.
 		if err := os.Chmod(dir, 0700); err != nil {
 			return nil, err
 		}
@@ -446,7 +447,7 @@ func riskCategories(m Manifest) []string {
 		}
 	}
 	for _, host := range append(append(append([]string{}, m.HostPermissions...), m.OptionalHostPermissions...), m.ContentScriptMatches...) {
-		if host == "<all_urls>" || host == "*://*/*" || host == "file:///*" || strings.Contains(host, "://*") {
+		if isGlobalHostPattern(host) {
 			categories[host] = struct{}{}
 		}
 	}
@@ -457,6 +458,11 @@ func riskCategories(m Manifest) []string {
 	sort.Strings(out)
 	return out
 }
+func isGlobalHostPattern(host string) bool {
+	host = strings.ToLower(strings.TrimSpace(host))
+	return host == "<all_urls>" || host == "*://*/*" || host == "file:///*" || strings.Contains(host, "://*") || strings.Contains(host, "*/*")
+}
+
 func knownPermission(value string) bool {
 	switch value {
 	case "activeTab", "alarms", "bookmarks", "contextMenus", "idle", "storage", "tabs", "unlimitedStorage", "notifications", "scripting", "sessions", "webNavigation":

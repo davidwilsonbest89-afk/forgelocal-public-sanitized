@@ -1,0 +1,48 @@
+utc=2026-08-25T14:34:46Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/t28_local_extensions_controlled
+head=9a15cc019a37383e8d8d8cf5fecd88f4b040e823
+## COMMAND: git diff --check
+exit=0
+## COMMAND: go test -count=1 -race ./...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	1.046s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	4.248s
+ok  	forgelocal/internal/backup	2.862s
+ok  	forgelocal/internal/browser	4.305s
+ok  	forgelocal/internal/config	1.018s
+ok  	forgelocal/internal/cookies	1.014s
+ok  	forgelocal/internal/drift	1.013s
+ok  	forgelocal/internal/environment	1.014s
+ok  	forgelocal/internal/extensions	1.268s
+ok  	forgelocal/internal/fingerprint	1.016s
+ok  	forgelocal/internal/fonts	1.012s
+ok  	forgelocal/internal/geolocation	1.014s
+ok  	forgelocal/internal/groups	1.019s
+ok  	forgelocal/internal/hardware	1.012s
+ok  	forgelocal/internal/history	1.189s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.773s
+ok  	forgelocal/internal/localvault	1.083s
+ok  	forgelocal/internal/mcp	1.056s
+ok  	forgelocal/internal/productschema	1.840s
+ok  	forgelocal/internal/profile	1.108s
+ok  	forgelocal/internal/profilehealth	1.013s
+ok  	forgelocal/internal/profilemigration	2.804s
+ok  	forgelocal/internal/proxies	1.104s
+ok  	forgelocal/internal/proxyprovider	1.013s
+--- FAIL: TestNewRegistryLoadsBrowseForgeChromiumFromDefaultConfig (0.00s)
+    runtime_test.go:28: BrowseForge Chromium binary/enabled = ""/false, want Docker/GHCR browser path and enabled
+FAIL
+FAIL	forgelocal/internal/runtime	0.228s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.012s
+ok  	forgelocal/internal/spike	3.304s
+ok  	forgelocal/internal/templates	1.382s
+ok  	forgelocal/internal/workflow	1.018s
+FAIL
+exit=1
+## COMMAND: go vet ./...
+exit=0
+## COMMAND: go build ./...
+exit=0

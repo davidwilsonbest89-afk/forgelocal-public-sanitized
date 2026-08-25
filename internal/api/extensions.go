@@ -30,6 +30,7 @@ func (h *handler) importExtension(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.Body = http.MaxBytesReader(w, r.Body, extensions.MaxZIPBytes+1<<20)
+	// #nosec G120 -- MaxBytesReader caps the request body before parsing the multipart form.
 	if err := r.ParseMultipartForm(extensions.MaxZIPBytes + 1<<20); err != nil {
 		writeExtensionError(w, err)
 		return
@@ -115,6 +116,7 @@ func (h *handler) assignExtension(w http.ResponseWriter, r *http.Request) {
 
 func (h *handler) updateExtension(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, extensions.MaxZIPBytes+1<<20)
+	// #nosec G120 -- MaxBytesReader caps the request body before parsing the multipart form.
 	if err := r.ParseMultipartForm(extensions.MaxZIPBytes + 1<<20); err != nil {
 		writeExtensionError(w, err)
 		return

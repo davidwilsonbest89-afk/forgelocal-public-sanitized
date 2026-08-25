@@ -147,6 +147,7 @@ func TestT28RejectsUnsafeArchivesAndCompensatesDatabaseFailure(t *testing.T) {
 		{"missing manifest", map[string]string{"payload.js": "x"}, ErrManifestInvalid},
 		{"zip slip", map[string]string{"manifest.json": `{}`, "../escape": "x"}, ErrInvalidArchive},
 		{"invalid manifest", map[string]string{"manifest.json": `[]`}, ErrManifestInvalid},
+		{"trailing json", map[string]string{"manifest.json": `{} {}`}, ErrManifestInvalid},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -208,6 +209,34 @@ func TestT28ConcurrentAssignmentCannotDoubleCreateRelation(t *testing.T) {
 	}
 	if len(series.Assignments) != 1 {
 		t.Fatalf("double assignment created: %+v", series.Assignments)
+	}
+}
+
+func TestT28RejectsSymlinkArchiveEntry(t *testing.T) {
+	var buf bytes.Buffer
+	zw := zip.NewWriter(&buf)
+	manifest, err := zw.Create("manifest.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := manifest.Write([]byte(`{}`)); err != nil {
+		t.Fatal(err)
+	}
+	h := &zip.FileHeader{Name: "link", Method: zip.Store}
+	h.SetMode(os.ModeSymlink | 0777)
+	link, err := zw.CreateHeader(h)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := link.Write([]byte("/tmp/not-followed")); err != nil {
+		t.Fatal(err)
+	}
+	if err := zw.Close(); err != nil {
+		t.Fatal(err)
+	}
+	r := openTestRepository(t)
+	if _, err := r.Import(context.Background(), bytes.NewReader(buf.Bytes()), "", "corr-symlink"); !errors.Is(err, ErrInvalidArchive) {
+		t.Fatalf("symlink entry was accepted: %v", err)
 	}
 }
 

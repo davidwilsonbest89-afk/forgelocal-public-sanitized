@@ -1,6 +1,6 @@
 # T28 — Décisions produit des extensions locales contrôlées
 
-**Autorisation appliquée :** T28 uniquement.  
+**Autorisation appliquée :** T28 uniquement.
 **Décision de sécurité structurante :** toutes les permissions sont importables et autorisables, mais aucune n’est tacitement accordée et aucune extension n’est téléchargée, chargée ou exécutée.
 
 ## Décisions fermées

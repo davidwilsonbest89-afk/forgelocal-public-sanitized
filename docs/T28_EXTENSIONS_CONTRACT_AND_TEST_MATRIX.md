@@ -1,6 +1,6 @@
 # T28 — Contrat des extensions locales contrôlées et matrice de tests
 
-**Statut du document :** contrat préalable à l’implémentation.  
+**Statut du document :** contrat préalable à l’implémentation.
 **Périmètre :** Core local uniquement ; aucun runtime navigateur, chargement ou exécution d’extension.
 
 ## 1. Objectif et frontières
