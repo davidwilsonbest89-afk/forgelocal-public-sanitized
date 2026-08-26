@@ -1,0 +1,11 @@
+package=FORGELOCAL_GOSEC_R2_OVERNIGHT_FINAL_V4
+source_head=90b292ee615fe0f4ae78418121375ccb577a442e
+branch=validation/operational-v1
+verdict=GOSEC_R2_OVERNIGHT_HARDENING_COMPLETE_WITH_OPEN_FINDINGS
+overall=OPERATIONAL_VALIDATION_PARTIAL_SECURITY_AND_ENVIRONMENT_GATES_OPEN
+gosec_final_findings=132
+gosec_exit_code=1
+osv_go_before_directive=46
+osv_go_after_directive=0
+archive_manifest=GOSEC_R2_OVERNIGHT_FILES.sha256
+self_reference=excluded
