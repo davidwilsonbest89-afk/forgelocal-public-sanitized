@@ -1,0 +1,45 @@
+UTC=2026-08-26T04:03:49Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/operational-v1
+HEAD=63a6175a71faf73d2071cbf80c38d5d264885e10
+
+COMMIT=233b1eefee9c057b975f4293d0b38cec9463cd2c
+[33m233b1ee[m security: root-scope full backup reads
+ cmd/server/cli_backup_security_test.go | 64 [32m++++++++++++++++++++++++++++++++++[m
+ cmd/server/cli_runtime.go              | 33 [32m+++++++++++++[m[31m-----[m
+ 2 files changed, 89 insertions(+), 8 deletions(-)
+M	cmd/server/cli_backup_security_test.go
+M	cmd/server/cli_runtime.go
+
+COMMIT=25d2f8890203b1770e9702d7e97580b80229f19a
+[33m25d2f88[m security: tighten runtime permissions and IO
+ cmd/server/cli_network_security_test.go | 37 [32m+++++++++++++++++[m
+ cmd/server/cli_runtime.go               | 28 [32m+++++++[m[31m------[m
+ internal/browser/archive_security.go    | 14 [32m+++[m[31m----[m
+ internal/browser/download.go            | 74 [32m+++++++++++++++++++++++[m[31m----------[m
+ internal/groups/store.go                |  5 [32m++[m[31m-[m
+ internal/groups/store_test.go           | 17 [32m++++++++[m
+ 6 files changed, 134 insertions(+), 41 deletions(-)
+M	cmd/server/cli_network_security_test.go
+M	cmd/server/cli_runtime.go
+M	internal/browser/archive_security.go
+M	internal/browser/download.go
+M	internal/groups/store.go
+M	internal/groups/store_test.go
+
+COMMIT=57420297849949369bf53c1a66631e783f2d8908
+[33m5742029[m security: bound session id encoding and journal context
+ internal/launch/id.go     | 15 [32m+++++++[m[31m--------[m
+ internal/launch/launch.go |  2 [32m+[m[31m-[m
+ 2 files changed, 8 insertions(+), 9 deletions(-)
+M	internal/launch/id.go
+M	internal/launch/launch.go
+
+COMMIT=63a6175a71faf73d2071cbf80c38d5d264885e10
+[33m63a6175[m security: close remaining runtime directory permissions
+ cmd/server/cli.go                   | 2 [32m+[m[31m-[m
+ internal/browser/launch_chromium.go | 4 [32m++[m[31m--[m
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+M	cmd/server/cli.go
+M	internal/browser/launch_chromium.go

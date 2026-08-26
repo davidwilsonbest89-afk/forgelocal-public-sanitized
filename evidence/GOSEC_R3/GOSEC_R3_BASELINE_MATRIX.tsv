@@ -1,0 +1,120 @@
+id	rule	severity	confidence	file	line	column	details	initial_status
+R3-BL-001	G115	HIGH	MEDIUM	internal/launch/id.go	56	16	integer overflow conversion uint64 -> byte	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-002	G115	HIGH	MEDIUM	internal/launch/id.go	55	16	integer overflow conversion uint64 -> byte	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-003	G115	HIGH	MEDIUM	internal/launch/id.go	53	16	integer overflow conversion uint64 -> byte	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-004	G115	HIGH	MEDIUM	internal/launch/id.go	50	16	integer overflow conversion uint64 -> byte	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-005	G115	HIGH	MEDIUM	internal/browser/launch_chromium.go	1015	16	integer overflow conversion int64 -> uint64	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-006	G115	HIGH	MEDIUM	internal/browser/archive_security.go	244	11	integer overflow conversion int64 -> uint64	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-007	G115	HIGH	MEDIUM	internal/browser/archive_security.go	209	115	integer overflow conversion int64 -> uint32	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-008	G115	HIGH	MEDIUM	cmd/server/cli_runtime.go	828	22	integer overflow conversion int64 -> uint32	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-009	G404	HIGH	MEDIUM	internal/humanize/mouse.go	89	6	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-010	G404	HIGH	MEDIUM	internal/humanize/mouse.go	37	14	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-011	G404	HIGH	MEDIUM	internal/humanize/mouse.go	36	14	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-012	G404	HIGH	MEDIUM	internal/humanize/math.go	128	14	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-013	G404	HIGH	MEDIUM	internal/humanize/math.go	120	14	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-014	G404	HIGH	MEDIUM	internal/humanize/math.go	115	29	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-015	G404	HIGH	MEDIUM	internal/humanize/math.go	108	10	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-016	G404	HIGH	MEDIUM	internal/humanize/math.go	98	26	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-017	G404	HIGH	MEDIUM	internal/humanize/math.go	97	11	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-018	G404	HIGH	MEDIUM	internal/humanize/math.go	77	11	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-019	G404	HIGH	MEDIUM	internal/humanize/math.go	76	11	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-020	G404	HIGH	MEDIUM	internal/humanize/math.go	59	32	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-021	G404	HIGH	MEDIUM	internal/humanize/math.go	55	8	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-022	G404	HIGH	MEDIUM	internal/humanize/math.go	49	5	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-023	G404	HIGH	MEDIUM	internal/humanize/keyboard.go	84	13	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-024	G404	HIGH	MEDIUM	internal/humanize/keyboard.go	56	26	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-025	G404	HIGH	MEDIUM	internal/fingerprint/pool.go	64	10	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-033	G101	HIGH	LOW	internal/api/admin_token.go	22	2	Potential hardcoded credentials	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-034	G703	HIGH	HIGH	cmd/server/cli_runtime.go	914	26	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-035	G703	HIGH	HIGH	cmd/server/cli_runtime.go	883	23	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-036	G703	HIGH	HIGH	cmd/server/cli_runtime.go	880	23	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-037	G703	HIGH	HIGH	cmd/server/cli_runtime.go	768	25	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-038	G703	HIGH	HIGH	cmd/server/cli_runtime.go	744	27	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-039	G703	HIGH	HIGH	cmd/server/cli_runtime.go	741	25	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-040	G703	HIGH	HIGH	cmd/server/cli_runtime.go	731	25	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-041	G703	HIGH	HIGH	cmd/server/cli_runtime.go	692	20	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-042	G703	HIGH	HIGH	cmd/server/cli_runtime.go	594	25	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-043	G703	HIGH	HIGH	cmd/server/cli_runtime.go	591	23	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-044	G703	HIGH	HIGH	cmd/server/cli_runtime.go	581	25	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-045	G703	HIGH	HIGH	cmd/server/cli_runtime.go	457	23	Path traversal via taint analysis	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-046	G118	HIGH	MEDIUM	internal/launch/launch.go	192	2	Goroutine uses context.Background/TODO while request-scoped context is available	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-047	G122	HIGH	MEDIUM	cmd/server/cli_runtime.go	658	21	Filesystem operation in filepath.Walk/WalkDir callback uses race-prone path; consider root-scoped APIs (e.g. os.Root) to prevent symlink TOCTOU traversal	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-053	G304	MEDIUM	HIGH	internal/workflow/engine.go	53	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-054	G304	MEDIUM	HIGH	internal/mcp/advanced_tools.go	481	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-055	G304	MEDIUM	HIGH	internal/fingerprint/pool.go	25	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-056	G304	MEDIUM	HIGH	internal/config/config.go	172	12	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-057	G304	MEDIUM	HIGH	internal/config/config.go	91	12	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-058	G304	MEDIUM	HIGH	internal/browser/launch_chromium.go	201	18	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-059	G304	MEDIUM	HIGH	internal/browser/download.go	532	14	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-060	G304	MEDIUM	HIGH	internal/browser/download.go	136	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-061	G304	MEDIUM	HIGH	internal/browser/archive_security.go	209	16	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-062	G304	MEDIUM	HIGH	internal/browser/archive_security.go	168	12	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-063	G304	MEDIUM	HIGH	internal/browser/archive_security.go	141	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-064	G304	MEDIUM	HIGH	internal/api/router.go	831	18	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-065	G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	914	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-066	G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	883	14	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-067	G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	744	16	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-068	G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	692	13	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-069	G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	658	14	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-070	G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	594	14	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-071	G304	MEDIUM	HIGH	cmd/server/cli.go	856	15	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-072	G304	MEDIUM	HIGH	cmd/server/cli.go	572	16	Potential file inclusion via variable	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-074	G305	MEDIUM	HIGH	cmd/server/cli_runtime.go	764	18	File traversal when extracting zip/tar archive	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-075	G302	MEDIUM	HIGH	internal/browser/download.go	473	2	Expect file permissions to be 0600 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-076	G302	MEDIUM	HIGH	internal/browser/download.go	394	2	Expect file permissions to be 0600 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-077	G302	MEDIUM	HIGH	internal/browser/download.go	342	2	Expect file permissions to be 0600 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-078	G302	MEDIUM	HIGH	cmd/server/cli.go	763	13	Expect file permissions to be 0600 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-079	G301	MEDIUM	HIGH	internal/groups/store.go	45	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-080	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	1913	13	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-081	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	64	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-082	G301	MEDIUM	HIGH	internal/browser/download.go	449	2	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-083	G301	MEDIUM	HIGH	internal/browser/download.go	368	2	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-084	G301	MEDIUM	HIGH	internal/browser/download.go	307	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-085	G301	MEDIUM	HIGH	internal/browser/archive_security.go	206	14	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-086	G301	MEDIUM	HIGH	internal/browser/archive_security.go	199	14	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-087	G301	MEDIUM	HIGH	internal/browser/archive_security.go	138	13	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-088	G301	MEDIUM	HIGH	internal/browser/archive_security.go	130	14	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-089	G301	MEDIUM	HIGH	internal/browser/archive_security.go	23	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-090	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	880	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-091	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	768	14	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-092	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	741	14	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-093	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	731	14	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-094	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	457	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-095	G301	MEDIUM	HIGH	cmd/server/cli.go	778	12	Expect directory permissions to be 0750 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-096	G306	MEDIUM	HIGH	internal/browser/download.go	144	2	Expect WriteFile permissions to be 0600 or less	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-097	G104	LOW	HIGH	internal/mcp/stdio.go	56	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-098	G104	LOW	HIGH	internal/mcp/server.go	818	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-099	G104	LOW	HIGH	internal/mcp/server.go	667	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-100	G104	LOW	HIGH	internal/mcp/protocol.go	40	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-101	G104	LOW	HIGH	internal/humanize/keyboard.go	73-75	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-102	G104	LOW	HIGH	internal/humanize/keyboard.go	60	5	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-103	G104	LOW	HIGH	internal/humanize/keyboard.go	33	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-104	G104	LOW	HIGH	internal/fingerprint/pool.go	72	4	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-105	G104	LOW	HIGH	internal/browser/socks5relay.go	144	4	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-106	G104	LOW	HIGH	internal/browser/socks5relay.go	142	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-107	G104	LOW	HIGH	internal/browser/socks5relay.go	135	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-108	G104	LOW	HIGH	internal/browser/socks5relay.go	129	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-109	G104	LOW	HIGH	internal/browser/socks5relay.go	122	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-110	G104	LOW	HIGH	internal/browser/socks5relay.go	95	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-111	G104	LOW	HIGH	internal/browser/socks5relay.go	87	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-112	G104	LOW	HIGH	internal/browser/socks5relay.go	49	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-113	G104	LOW	HIGH	internal/browser/manager.go	399	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-114	G104	LOW	HIGH	internal/browser/manager.go	391	4	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-115	G104	LOW	HIGH	internal/browser/manager.go	376	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-116	G104	LOW	HIGH	internal/browser/manager.go	373	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-117	G104	LOW	HIGH	internal/browser/launch_firefox.go	153	4	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-118	G104	LOW	HIGH	internal/browser/launch_chromium.go	333	4	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-119	G104	LOW	HIGH	internal/browser/launch_chromium.go	312	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-120	G104	LOW	HIGH	internal/browser/download.go	473	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-121	G104	LOW	HIGH	internal/browser/download.go	466	3	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-122	G104	LOW	HIGH	internal/browser/download.go	463	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-123	G104	LOW	HIGH	internal/browser/download.go	449	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-124	G104	LOW	HIGH	internal/browser/download.go	394	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-125	G104	LOW	HIGH	internal/browser/download.go	382	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-126	G104	LOW	HIGH	internal/browser/download.go	368	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-127	G104	LOW	HIGH	internal/browser/download.go	342	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-128	G104	LOW	HIGH	internal/browser/download.go	323	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-129	G104	LOW	HIGH	internal/browser/download.go	144	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-130	G104	LOW	HIGH	internal/api/router.go	707	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-131	G104	LOW	HIGH	internal/api/dashboard.go	13	2	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE
+R3-BL-132	G104	LOW	HIGH	cmd/server/main.go	429	5	Errors unhandled	OPEN_BASELINE_REQUIRES_TRIAGE

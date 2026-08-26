@@ -1,0 +1,205 @@
+UTC=2026-08-26T03:45:29Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+CLONE=/tmp/gosec_r3_phase0_clone
+HEAD=e9ad9d41afd2c80505d312efcac9f2c4e961abc7
+GOSEC_COMMAND=/home/ubuntu/bin/gosec
+GOSEC_VERSION_BEGIN
+Version: dev
+Git tag: 
+Build date: 
+GOSEC_VERSION_END
+[gosec] 2026/08/26 03:45:29 Including rules: default
+[gosec] 2026/08/26 03:45:29 Excluding rules: default
+[gosec] 2026/08/26 03:45:29 Including analyzers: default
+[gosec] 2026/08/26 03:45:29 Excluding analyzers: default
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/cmd/back01-core
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/cmd/server
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/cmd/systemvault-doctor
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/cookies
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/drift
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/api
+[gosec] 2026/08/26 03:45:29 Checking package: drift
+[gosec] 2026/08/26 03:45:29 Checking file: /tmp/gosec_r3_phase0_clone/internal/drift/detect.go
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/localvault
+[gosec] 2026/08/26 03:45:29 Checking package: cookies
+[gosec] 2026/08/26 03:45:29 Checking file: /tmp/gosec_r3_phase0_clone/internal/cookies/fixtures.go
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/profile
+[gosec] 2026/08/26 03:45:29 Checking package: main
+[gosec] 2026/08/26 03:45:29 Checking file: /tmp/gosec_r3_phase0_clone/cmd/systemvault-doctor/main.go
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/profilehealth
+[gosec] 2026/08/26 03:45:29 Checking package: main
+[gosec] 2026/08/26 03:45:29 Checking file: /tmp/gosec_r3_phase0_clone/cmd/back01-core/main.go
+[gosec] 2026/08/26 03:45:29 Checking package: profilehealth
+[gosec] 2026/08/26 03:45:29 Checking file: /tmp/gosec_r3_phase0_clone/internal/profilehealth/health.go
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/spike
+[gosec] 2026/08/26 03:45:29 Checking package: localvault
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/proxies
+[gosec] 2026/08/26 03:45:29 Checking file: /tmp/gosec_r3_phase0_clone/internal/localvault/localvault.go
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/proxyprovider
+[gosec] 2026/08/26 03:45:29 Import directory: /tmp/gosec_r3_phase0_clone/internal/history
+[gosec] 2026/08/26 03:45:30 Checking package: profile
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/profile/backup_snapshot.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/profile/errors.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/profile/store.go
+[gosec] 2026/08/26 03:45:30 Checking package: proxyprovider
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/proxyprovider/store.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/productschema
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/profilemigration
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/config
+[gosec] 2026/08/26 03:45:30 Checking package: proxies
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/proxies/errors.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/proxies/store.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/groups
+[gosec] 2026/08/26 03:45:30 Checking package: history
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/history/errors.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/history/store.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/secrets
+[gosec] 2026/08/26 03:45:30 Checking package: main
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/cmd/server/cli.go
+[gosec] 2026/08/26 03:45:30 Checking package: config
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/config/config.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/cmd/server/cli_runtime.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/humanize
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/cmd/server/http_server.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/cmd/server/main.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/backup
+[gosec] 2026/08/26 03:45:30 Checking package: groups
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/groups/store.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/extensions
+[gosec] 2026/08/26 03:45:30 Checking package: api
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/admin_token.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/artifacts.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/audit.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/backup.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/backup_v1.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/cookie_fixtures.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/correlation.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/dashboard.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/extensions.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/groups.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/localsession.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/openapi.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/profile_history.go
+[gosec] 2026/08/26 03:45:30 Checking package: profilemigration
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/profilemigration/migrator.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/profiles_bulk.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/profiles_write.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/proxies.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/proxy_providers.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/readonly.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/readonly_session.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/router.go
+[gosec] 2026/08/26 03:45:30 Checking package: secrets
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/secrets/keyring.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/geolocation
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/sessions.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/templates.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/hardware
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/api/workflow.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/launch
+[gosec] 2026/08/26 03:45:30 Checking package: hardware
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/hardware/diagnostic.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/mcp
+[gosec] 2026/08/26 03:45:30 Checking package: humanize
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/humanize/config.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/humanize/keyboard.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/humanize/math.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/humanize/mouse.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/humanize/scroll.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/browser
+[gosec] 2026/08/26 03:45:30 Checking package: geolocation
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/geolocation/qa.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/fingerprint
+[gosec] 2026/08/26 03:45:30 Checking package: backup
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/backup/bootstrap.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/backup/migrations.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/backup/service.go
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/backup/store.go
+[gosec] 2026/08/26 03:45:30 Checking package: extensions
+[gosec] 2026/08/26 03:45:30 Checking file: /tmp/gosec_r3_phase0_clone/internal/extensions/store.go
+[gosec] 2026/08/26 03:45:30 Import directory: /tmp/gosec_r3_phase0_clone/internal/runtime
+[gosec] 2026/08/26 03:45:31 Import directory: /tmp/gosec_r3_phase0_clone/internal/workflow
+[gosec] 2026/08/26 03:45:31 Checking package: launch
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/launch/id.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/launch/journal.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/launch/journal_sqlite.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/launch/launch.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/launch/manager.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/launch/redact.go
+[gosec] 2026/08/26 03:45:31 Import directory: /tmp/gosec_r3_phase0_clone/internal/environment
+[gosec] 2026/08/26 03:45:31 Checking package: fingerprint
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/fingerprint/geoip.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/fingerprint/local.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/fingerprint/pool.go
+[gosec] 2026/08/26 03:45:31 Import directory: /tmp/gosec_r3_phase0_clone/internal/fonts
+[gosec] 2026/08/26 03:45:31 Checking package: environment
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/environment/environment.go
+[gosec] 2026/08/26 03:45:31 Import directory: /tmp/gosec_r3_phase0_clone/internal/sessiontrack
+[gosec] 2026/08/26 03:45:31 Checking package: runtime
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/runtime/qualification.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/runtime/runtime.go
+[gosec] 2026/08/26 03:45:31 Checking package: fonts
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/fonts/inventory.go
+[gosec] 2026/08/26 03:45:31 Checking package: workflow
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/workflow/engine.go
+[gosec] 2026/08/26 03:45:31 Import directory: /tmp/gosec_r3_phase0_clone/internal/templates
+[gosec] 2026/08/26 03:45:31 Checking package: sessiontrack
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/sessiontrack/tracker.go
+[gosec] 2026/08/26 03:45:31 Checking package: mcp
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/advanced_tools.go
+[gosec] 2026/08/26 03:45:31 Checking package: browser
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/archive_security.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/protocol.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/results.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/screenshot_artifacts.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/download.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/search_provider.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/server.go
+[gosec] 2026/08/26 03:45:31 Checking package: templates
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/templates/errors.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/templates/store.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/launch_chromium.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/stdio.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/tool_schema.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/web_search.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/web_session_pool.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/mcp/web_tools.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/launch_firefox.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/launch_helpers.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/manager.go
+[gosec] 2026/08/26 03:45:31 Checking file: /tmp/gosec_r3_phase0_clone/internal/browser/socks5relay.go
+GOSEC_EXIT_CODE=1
+GOSEC_RULE_COUNTS_BEGIN
+      1 G101
+     36 G104
+      1 G107
+      8 G115
+      1 G118
+      1 G122
+      5 G204
+     17 G301
+      4 G302
+     20 G304
+      1 G305
+      1 G306
+     17 G404
+     12 G703
+      7 G704
+GOSEC_RULE_COUNTS_END
+R3_TARGET_RULE_COUNTS_BEGIN
+G703=12
+G304=20
+G305=1
+G122=1
+G110=0
+G301=17
+G302=4
+G306=1
+G104=36
+G404=17
+G115=8
+G118=1
+G101=1
+R3_TARGET_RULE_COUNTS_END
+BASELINE_RESULT=PASS
+exit

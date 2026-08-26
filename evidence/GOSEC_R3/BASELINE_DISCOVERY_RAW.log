@@ -1,0 +1,310 @@
+UTC=2026-08-26T03:43:32Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+LOCAL_STATUS_BEGIN
+[31m??[m evidence/GOSEC_R3/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+LOCAL_STATUS_END
+DISK_BEGIN
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   44G  4.5G  91% /
+/dev/root        48G   44G  4.5G  91% /
+DISK_END
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/operational-v1
+LOCAL_HEAD=e9ad9d41afd2c80505d312efcac9f2c4e961abc7
+REMOTE_HEAD=e9ad9d41afd2c80505d312efcac9f2c4e961abc7
+GH_ACCESS_BEGIN
+davidwilsonbest89-afk/forgelocal-public-sanitized viewerPermission=ADMIN default=main
+GH_ACCESS_END
+ANCESTRY_BEGIN
+20e5181554c52a92d6e1acad15feb426e8804621 commit
+31385c26bc6ca8944d68b50be71fec8c0783d590 commit
+701c5949261de261d2044cbff3e125b88c56f1a2 commit
+209148020e8254d7af903bc09485dbaed4014948 commit
+aab0cca666e470ed312aabcdb5e369157ba4f204 commit
+18367a6d651657e8e48afc006ad75bfa95aa46ea commit
+7f3f5bef4e8dba800c7548532e12fea09a876b46 commit
+f796299ef12c7c701937d53afd6e020088d95c3c commit
+ee45a147919e8d0e9c39e2f276f0e590e770a77e commit
+90b292ee615fe0f4ae78418121375ccb577a442e commit
+9bbc2beed7f2f8f3aa79f2447bbb348a10eb8225 commit
+e9ad9d41afd2c80505d312efcac9f2c4e961abc7 commit
+
+20e5181554c5 -> 31385c26bc6c merge_base=20e5181554c52a92d6e1acad15feb426e8804621 ancestor=PASS
+31385c26bc6c -> 701c5949261d merge_base=31385c26bc6ca8944d68b50be71fec8c0783d590 ancestor=PASS
+701c5949261d -> 209148020e82 merge_base=701c5949261de261d2044cbff3e125b88c56f1a2 ancestor=PASS
+209148020e82 -> aab0cca666e4 merge_base=209148020e8254d7af903bc09485dbaed4014948 ancestor=PASS
+aab0cca666e4 -> 18367a6d6516 merge_base=aab0cca666e470ed312aabcdb5e369157ba4f204 ancestor=PASS
+18367a6d6516 -> 7f3f5bef4e8d merge_base=18367a6d651657e8e48afc006ad75bfa95aa46ea ancestor=PASS
+7f3f5bef4e8d -> f796299ef12c merge_base=7f3f5bef4e8dba800c7548532e12fea09a876b46 ancestor=PASS
+f796299ef12c -> ee45a147919e merge_base=f796299ef12c7c701937d53afd6e020088d95c3c ancestor=PASS
+ee45a147919e -> 90b292ee615f merge_base=ee45a147919e8d0e9c39e2f276f0e590e770a77e ancestor=PASS
+90b292ee615f -> 9bbc2beed7f2 merge_base=90b292ee615fe0f4ae78418121375ccb577a442e ancestor=PASS
+9bbc2beed7f2 -> e9ad9d41afd2 merge_base=9bbc2beed7f2f8f3aa79f2447bbb348a10eb8225 ancestor=PASS
+ANCESTRY_END
+COMMIT_DIFFS_BEGIN
+
+COMMIT 20e5181554c52a92d6e1acad15feb426e8804621
+[33m20e5181[m evidence: finalize GOSEC R2 lot 1 package
+ .../PACKAGE_VERIFICATION_R2_LOT1_RAW.log               |  12 [32m++++++++++++[m
+ .../forgelocal-security-r2-lot1-delta-cba6beb.bundle   | Bin [31m0[m -> [32m476626[m bytes
+ ...elocal-security-r2-lot1-delta-cba6beb.bundle.sha256 |   1 [32m+[m
+ 3 files changed, 13 insertions(+)
+
+COMMIT 31385c26bc6ca8944d68b50be71fec8c0783d590
+[33m31385c2[m evidence: preserve GOSEC R2 lot 1 with verified manifest
+ .../GOSEC_REVIEW_R2_LOT1_FINAL_V2.manifest.txt     |  70 [32m+++++++++++++++++++++[m
+ ...C_REVIEW_R2_LOT1_PRESERVATION_V2_VERIFY_RAW.log |  43 [32m+++++++++++++[m
+ ...OSEC_REVIEW_R2_LOT1_PRESERVATION_VERIFY_RAW.log |  25 [32m++++++++[m
+ .../forgelocal-security-r2-lot1-final-v2.tar.gz    | Bin [31m0[m -> [32m242346[m bytes
+ ...gelocal-security-r2-lot1-final-v2.tar.gz.sha256 |   1 [32m+[m
+ .../forgelocal-security-r2-lot1-final-v2.zip       | Bin [31m0[m -> [32m259327[m bytes
+ ...forgelocal-security-r2-lot1-final-v2.zip.sha256 |   1 [32m+[m
+ 7 files changed, 140 insertions(+)
+
+COMMIT 701c5949261de261d2044cbff3e125b88c56f1a2
+[33m701c594[m security: bound local CLI and websocket network paths
+ cmd/server/cli.go                           | 48 [32m+++++++++++++++[m[31m-[m
+ cmd/server/cli_network_security_test.go     | 89 [32m+++++++++++++++++++++++++++++[m
+ cmd/server/cli_runtime.go                   | 12 [32m+++[m[31m-[m
+ internal/api/playwright_ws_security_test.go |  2 [32m+[m
+ internal/api/sessions.go                    |  9 [32m++[m[31m-[m
+ internal/browser/download.go                | 20 [32m++++++[m[31m-[m
+ 6 files changed, 174 insertions(+), 6 deletions(-)
+
+COMMIT 209148020e8254d7af903bc09485dbaed4014948
+[33m2091480[m test: cover local CLI HTTP timeout
+ cmd/server/cli_network_security_test.go | 22 [32m++++++++++++++++++++++[m
+ 1 file changed, 22 insertions(+)
+
+COMMIT aab0cca666e470ed312aabcdb5e369157ba4f204
+[33maab0cca[m evidence: finalize GOSEC R2 lot 2 package
+ .../PACKAGE_VERIFICATION_R2_LOT2_RAW.log             |  19 [32m+++++++++++++++++++[m
+ .../forgelocal-security-r2-lot2-delta-9e2361e.bundle | Bin [31m0[m -> [32m623340[m bytes
+ ...ocal-security-r2-lot2-delta-9e2361e.bundle.sha256 |   1 [32m+[m
+ 3 files changed, 20 insertions(+)
+
+COMMIT 18367a6d651657e8e48afc006ad75bfa95aa46ea
+[33m18367a6[m security: confine artifact and backup paths
+ cmd/server/cli_backup_security_test.go |  3 [32m++[m[31m-[m
+ cmd/server/cli_runtime.go              |  2 [32m+[m[31m-[m
+ internal/api/artifacts.go              | 16 [32m++++++++++++++[m[31m--[m
+ internal/api/artifacts_test.go         | 28 [32m++++++++++++++++++++++++++++[m
+ 4 files changed, 45 insertions(+), 4 deletions(-)
+
+COMMIT 7f3f5bef4e8dba800c7548532e12fea09a876b46
+[33m7f3f5be[m security: tighten runtime file permissions and IO
+ cmd/server/cli.go                       |  6 [32m+[m[31m--[m
+ cmd/server/cli_backup_security_test.go  | 21 [32m+++++++++[m
+ cmd/server/cli_runtime.go               | 21 [32m++++++[m[31m---[m
+ cmd/server/main.go                      |  2 [32m+[m[31m-[m
+ internal/browser/launch_chromium.go     | 10 [32m++[m[31m---[m
+ internal/browser/launch_firefox.go      |  4 [32m+[m[31m-[m
+ internal/config/config.go               | 11 [32m++++[m[31m-[m
+ internal/config/config_security_test.go | 30 [32m+++++++++++++[m
+ internal/mcp/advanced_tools.go          |  4 [32m+[m[31m-[m
+ internal/workflow/engine.go             | 79 [32m+++++++++++++++++++++++++++[m[31m------[m
+ 10 files changed, 154 insertions(+), 34 deletions(-)
+
+COMMIT f796299ef12c7c701937d53afd6e020088d95c3c
+[33mf796299[m security: pin patched Go toolchain directive
+ go.mod | 4 [32m+[m[31m---[m
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+COMMIT ee45a147919e8d0e9c39e2f276f0e590e770a77e
+[33mee45a14[m evidence: publish GOSEC R2 overnight review
+ .../GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log  |  106 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/CHANGELOG.md           |   11 [32m+[m
+ .../FILESYSTEM_COMPLEMENTARY_QUEUE.tsv             |   35 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/FINAL_SCANS_RAW.log    |  302 [32m+[m
+ .../FUNCTIONAL_TARGETED_REGRESSIONS_RAW.log        |   21 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/G104_QUEUE.tsv         |   38 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/GOSEC_AFTER_FS_RAW.log |  161 [32m+[m
+ .../GOSEC_R2_OVERNIGHT_FINAL.manifest.txt          |   45 [32m+[m
+ .../GOSEC_R2_OVERNIGHT_REPORT.md                   |   81 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/OSV_GO_DIRECTIVE_RAW.log    |    1 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/OSV_GO_MOD_46_FINDINGS.tsv  |   47 [32m+[m
+ .../PERMISSIONS_IO_FINDINGS_BASELINE.tsv           |   77 [32m+[m
+ .../PERMISSIONS_IO_FULL_GATES_RAW.log              |   51 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.md    |   11 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.tsv   |   78 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_QUEUE.tsv    |   77 [32m+[m
+ .../POST_OVERNIGHT_GATES_RAW.log                   |  303 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/TODO.md                |   28 [32m+[m
+ .../forgelocal-gosec-r2-overnight-final.tar.gz     |  Bin [31m0[m -> [32m419224[m bytes
+ ...rgelocal-gosec-r2-overnight-final.tar.gz.sha256 |    1 [32m+[m
+ .../forgelocal-gosec-r2-overnight-final.zip        |  Bin [31m0[m -> [32m427403[m bytes
+ .../forgelocal-gosec-r2-overnight-final.zip.sha256 |    1 [32m+[m
+ .../gosec_source_only_after_fs.json                | 2448 [32m++++++[m
+ .../gosec_source_only_final.json                   | 2144 [32m+++++[m
+ .../gosec_source_only_post_overnight.json          | 2144 [32m+++++[m
+ .../osv_go_mod_after_directive.json                |    9 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/osv_go_mod_final.json  | 5837 [32m+++++++++++++[m
+ .../osv_go_mod_post_directive.json                 |    9 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/osv_pnpm_lock_final.json    |    9 [32m+[m
+ .../osv_pnpm_lock_post_directive.json              |    9 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/syft_final.json        |    1 [32m+[m
+ .../GOSEC_R2_OVERNIGHT/syft_post_overnight.json    |    1 [32m+[m
+ evidence/GOSEC_R2_OVERNIGHT/trivy_final.json       | 9173 [32m++++++++++++++++++++[m
+ .../GOSEC_R2_OVERNIGHT/trivy_post_overnight.json   | 9173 [32m++++++++++++++++++++[m
+ 34 files changed, 32432 insertions(+)
+
+COMMIT 90b292ee615fe0f4ae78418121375ccb577a442e
+[33m90b292e[m evidence: publish canonical GOSEC R2 overnight package
+ .../GOSEC_R2_OVERNIGHT_FILES_V3.sha256             |  32 [32m+++++++++++++++++++++[m
+ .../GOSEC_R2_OVERNIGHT_FINAL_V3.manifest.txt       |  11 [32m+++++++[m
+ .../GOSEC_R2_OVERNIGHT_REPORT.md                   |   2 [32m+[m[31m-[m
+ .../forgelocal-gosec-r2-overnight-final-v3.tar.gz  | Bin [31m0[m -> [32m1508948[m bytes
+ ...local-gosec-r2-overnight-final-v3.tar.gz.sha256 |   1 [32m+[m
+ .../forgelocal-gosec-r2-overnight-final-v3.zip     | Bin [31m0[m -> [32m1517442[m bytes
+ ...rgelocal-gosec-r2-overnight-final-v3.zip.sha256 |   1 [32m+[m
+ 7 files changed, 46 insertions(+), 1 deletion(-)
+
+COMMIT 9bbc2beed7f2f8f3aa79f2447bbb348a10eb8225
+[33m9bbc2be[m evidence: publish final overnight proof package
+ .../GOSEC_R2_OVERNIGHT_FILES_V4.sha256             |  34 [32m+++++++++++++++++++[m
+ .../GOSEC_R2_OVERNIGHT_FINAL_V4.manifest.txt       |  11 [32m++++++[m
+ .../GOSEC_R2_OVERNIGHT_REPORT.md                   |   4 [32m+[m[31m--[m
+ .../PUBLIC_FINAL_VERIFICATION_CORRECTED.log        |  19 [32m+++++++++++[m
+ .../PUBLIC_FINAL_VERIFICATION_RAW.log              |  37 [32m+++++++++++++++++++++[m
+ .../forgelocal-gosec-r2-overnight-final-v4.tar.gz  | Bin [31m0[m -> [32m1509419[m bytes
+ ...local-gosec-r2-overnight-final-v4.tar.gz.sha256 |   1 [32m+[m
+ .../forgelocal-gosec-r2-overnight-final-v4.zip     | Bin [31m0[m -> [32m1519024[m bytes
+ ...rgelocal-gosec-r2-overnight-final-v4.zip.sha256 |   1 [32m+[m
+ 9 files changed, 105 insertions(+), 2 deletions(-)
+
+COMMIT e9ad9d41afd2c80505d312efcac9f2c4e961abc7
+[33me9ad9d4[m evidence: record public overnight verification
+ .../PUBLIC_FINAL_VERIFICATION_V4.log               | 36 [32m++++++++++++++++++++++[m
+ 1 file changed, 36 insertions(+)
+COMMIT_DIFFS_END
+PACKAGE_FILES_BEGIN
+evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FILES_V4.sha256
+evidence/GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_CORRECTED.log
+evidence/GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_RAW.log
+evidence/GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_V4.log
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle.sha256
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.tar.gz
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.tar.gz.sha256
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.zip
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.zip.sha256
+PACKAGE_FILES_END
+V4_MANIFEST_BEGIN
+package=FORGELOCAL_GOSEC_R2_OVERNIGHT_FINAL_V4
+source_head=90b292ee615fe0f4ae78418121375ccb577a442e
+branch=validation/operational-v1
+verdict=GOSEC_R2_OVERNIGHT_HARDENING_COMPLETE_WITH_OPEN_FINDINGS
+overall=OPERATIONAL_VALIDATION_PARTIAL_SECURITY_AND_ENVIRONMENT_GATES_OPEN
+gosec_final_findings=132
+gosec_exit_code=1
+osv_go_before_directive=46
+osv_go_after_directive=0
+archive_manifest=GOSEC_R2_OVERNIGHT_FILES.sha256
+self_reference=excluded
+V4_MANIFEST_END
+TOOLCHAIN_BEGIN
+bash: go: command not found
+bash: go: command not found
+bash: go: command not found
+TOOLCHAIN_END
+LOCAL_SERVICE_PORTS_BEGIN
+LOCAL_SERVICE_PORTS_END
+FRESH_CLONE_BEGIN
+FRESH_CLONE_HEAD=e9ad9d41afd2c80505d312efcac9f2c4e961abc7
+FRESH_CLONE_TOOLCHAIN
+bash: go: command not found
+FRESH_CLONE_FSCK_BEGIN
+FRESH_CLONE_FSCK_EXIT=0
+SIDECARS_BEGIN
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.zip: OK
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.tar.gz: OK
+SIDECARS_END
+ZIP_TAR_BEGIN
+No errors detected in compressed data of evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.zip.
+ZIP_TAR_END
+INTERNAL_HASHES_BEGIN
+GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log: OK
+GOSEC_R2_OVERNIGHT/CHANGELOG.md: OK
+GOSEC_R2_OVERNIGHT/FILESYSTEM_COMPLEMENTARY_QUEUE.tsv: OK
+GOSEC_R2_OVERNIGHT/FINAL_PRESERVATION_RAW.log: OK
+GOSEC_R2_OVERNIGHT/FINAL_SCANS_RAW.log: OK
+GOSEC_R2_OVERNIGHT/FUNCTIONAL_TARGETED_REGRESSIONS_RAW.log: OK
+GOSEC_R2_OVERNIGHT/G104_QUEUE.tsv: OK
+GOSEC_R2_OVERNIGHT/GOSEC_AFTER_FS_RAW.log: OK
+GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_REPORT.md: OK
+GOSEC_R2_OVERNIGHT/OSV_GO_DIRECTIVE_RAW.log: OK
+GOSEC_R2_OVERNIGHT/OSV_GO_MOD_46_FINDINGS.tsv: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_FINDINGS_BASELINE.tsv: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_FULL_GATES_RAW.log: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.md: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.tsv: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_QUEUE.tsv: OK
+GOSEC_R2_OVERNIGHT/POST_OVERNIGHT_GATES_RAW.log: OK
+GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_CORRECTED.log: OK
+GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_RAW.log: OK
+GOSEC_R2_OVERNIGHT/TODO.md: OK
+GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle: OK
+GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle.sha256: OK
+GOSEC_R2_OVERNIGHT/gosec_source_only_after_fs.json: OK
+GOSEC_R2_OVERNIGHT/gosec_source_only_final.json: OK
+GOSEC_R2_OVERNIGHT/gosec_source_only_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/osv_go_mod_after_directive.json: OK
+GOSEC_R2_OVERNIGHT/osv_go_mod_final.json: OK
+GOSEC_R2_OVERNIGHT/osv_go_mod_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_final.json: OK
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/syft_final.json: OK
+GOSEC_R2_OVERNIGHT/syft_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/trivy_final.json: OK
+GOSEC_R2_OVERNIGHT/trivy_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log: OK
+GOSEC_R2_OVERNIGHT/CHANGELOG.md: OK
+GOSEC_R2_OVERNIGHT/FILESYSTEM_COMPLEMENTARY_QUEUE.tsv: OK
+GOSEC_R2_OVERNIGHT/FINAL_PRESERVATION_RAW.log: OK
+GOSEC_R2_OVERNIGHT/FINAL_SCANS_RAW.log: OK
+GOSEC_R2_OVERNIGHT/FUNCTIONAL_TARGETED_REGRESSIONS_RAW.log: OK
+GOSEC_R2_OVERNIGHT/G104_QUEUE.tsv: OK
+GOSEC_R2_OVERNIGHT/GOSEC_AFTER_FS_RAW.log: OK
+GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_REPORT.md: OK
+GOSEC_R2_OVERNIGHT/OSV_GO_DIRECTIVE_RAW.log: OK
+GOSEC_R2_OVERNIGHT/OSV_GO_MOD_46_FINDINGS.tsv: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_FINDINGS_BASELINE.tsv: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_FULL_GATES_RAW.log: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.md: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.tsv: OK
+GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_QUEUE.tsv: OK
+GOSEC_R2_OVERNIGHT/POST_OVERNIGHT_GATES_RAW.log: OK
+GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_CORRECTED.log: OK
+GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_RAW.log: OK
+GOSEC_R2_OVERNIGHT/TODO.md: OK
+GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle: OK
+GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle.sha256: OK
+GOSEC_R2_OVERNIGHT/gosec_source_only_after_fs.json: OK
+GOSEC_R2_OVERNIGHT/gosec_source_only_final.json: OK
+GOSEC_R2_OVERNIGHT/gosec_source_only_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/osv_go_mod_after_directive.json: OK
+GOSEC_R2_OVERNIGHT/osv_go_mod_final.json: OK
+GOSEC_R2_OVERNIGHT/osv_go_mod_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_final.json: OK
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/syft_final.json: OK
+GOSEC_R2_OVERNIGHT/syft_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/trivy_final.json: OK
+GOSEC_R2_OVERNIGHT/trivy_post_overnight.json: OK
+INTERNAL_HASHES_END
+EXTRACTION_GITLEAKS_BEGIN
+[90m3:43AM[0m [1m[31mERR[0m[0m [git] fatal: not a git repository (or any of the parent directories): .git
+[90m3:43AM[0m [1m[31mERR[0m[0m  [36merror=[0m[31m"stderr is not empty"[0m
+[90m3:43AM[0m [32mINF[0m scan completed in 3.78ms
+[90m3:43AM[0m [32mINF[0m no leaks found
+EXTRACTION_GITLEAKS_END
+BUNDLE_VERIFY_BEGIN
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle is okay
+The bundle contains this ref:
+ee45a147919e8d0e9c39e2f276f0e590e770a77e refs/heads/validation/operational-v1
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_END
+R3_PHASE0_RESULT=PASS
+[?2004hubuntu@sandbox:~/forgelocal_self_validation_v6/operational_validation_v1/repo$ 

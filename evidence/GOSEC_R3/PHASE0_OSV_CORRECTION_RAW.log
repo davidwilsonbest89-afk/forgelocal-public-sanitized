@@ -1,0 +1,18 @@
+UTC=2026-08-26T03:44:32Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+PRIOR_ATTEMPT=failed_only_due_to_invalid_invocation_osv_scanner_scan_source_lockfile_go.mod
+OSV_VERSION=osv-scanner version: 1.9.2
+commit: n/a
+built at: n/a
+CLONE=/tmp/gosec_r3_phase0_clone
+CLONE_TOOLCHAIN
+go version go1.25.13 linux/amd64
+local
+go1.25.13
+toolchain_exit_code=0
+COMMAND=cd /tmp/gosec_r3_phase0_clone && osv-scanner scan --lockfile go.mod --format json --output /tmp/gosec_r3_osv_go.json
+Scanned /tmp/gosec_r3_phase0_clone/go.mod file and found 24 packages
+osv_exit_code=0
+OSV_OUTPUT_SAVED=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R3/PHASE0_OSV_GO.json
+PHASE0_OSV_CORRECTION_RESULT=PASS
+exit

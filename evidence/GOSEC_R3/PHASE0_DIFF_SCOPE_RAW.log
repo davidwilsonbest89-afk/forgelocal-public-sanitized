@@ -1,0 +1,132 @@
+UTC=2026-08-26T03:44:42Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+
+COMMIT=20e5181554c52a92d6e1acad15feb426e8804621
+subject=evidence: finalize GOSEC R2 lot 1 package
+parents=cba6beb496e0c56f98f03bdf1dc3efbd7adb3809
+
+A	evidence/SECURITY_GOSEC_REVIEW/PACKAGE_VERIFICATION_R2_LOT1_RAW.log
+A	evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-delta-cba6beb.bundle
+A	evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-delta-cba6beb.bundle.sha256
+
+COMMIT=31385c26bc6ca8944d68b50be71fec8c0783d590
+subject=evidence: preserve GOSEC R2 lot 1 with verified manifest
+parents=20e5181554c52a92d6e1acad15feb426e8804621
+
+A	evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_FINAL_V2.manifest.txt
+A	evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_PRESERVATION_V2_VERIFY_RAW.log
+A	evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_PRESERVATION_VERIFY_RAW.log
+A	evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.tar.gz
+A	evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.tar.gz.sha256
+A	evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.zip
+A	evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.zip.sha256
+
+COMMIT=701c5949261de261d2044cbff3e125b88c56f1a2
+subject=security: bound local CLI and websocket network paths
+parents=31385c26bc6ca8944d68b50be71fec8c0783d590
+
+M	cmd/server/cli.go
+A	cmd/server/cli_network_security_test.go
+M	cmd/server/cli_runtime.go
+M	internal/api/playwright_ws_security_test.go
+M	internal/api/sessions.go
+M	internal/browser/download.go
+
+COMMIT=209148020e8254d7af903bc09485dbaed4014948
+subject=test: cover local CLI HTTP timeout
+parents=701c5949261de261d2044cbff3e125b88c56f1a2
+
+M	cmd/server/cli_network_security_test.go
+
+COMMIT=18367a6d651657e8e48afc006ad75bfa95aa46ea
+subject=security: confine artifact and backup paths
+parents=aab0cca666e470ed312aabcdb5e369157ba4f204
+
+M	cmd/server/cli_backup_security_test.go
+M	cmd/server/cli_runtime.go
+M	internal/api/artifacts.go
+M	internal/api/artifacts_test.go
+
+COMMIT=7f3f5bef4e8dba800c7548532e12fea09a876b46
+subject=security: tighten runtime file permissions and IO
+parents=18367a6d651657e8e48afc006ad75bfa95aa46ea
+
+M	cmd/server/cli.go
+M	cmd/server/cli_backup_security_test.go
+M	cmd/server/cli_runtime.go
+M	cmd/server/main.go
+M	internal/browser/launch_chromium.go
+M	internal/browser/launch_firefox.go
+M	internal/config/config.go
+A	internal/config/config_security_test.go
+M	internal/mcp/advanced_tools.go
+M	internal/workflow/engine.go
+
+COMMIT=f796299ef12c7c701937d53afd6e020088d95c3c
+subject=security: pin patched Go toolchain directive
+parents=7f3f5bef4e8dba800c7548532e12fea09a876b46
+
+M	go.mod
+
+COMMIT=ee45a147919e8d0e9c39e2f276f0e590e770a77e
+subject=evidence: publish GOSEC R2 overnight review
+parents=f796299ef12c7c701937d53afd6e020088d95c3c
+
+A	evidence/GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/CHANGELOG.md
+A	evidence/GOSEC_R2_OVERNIGHT/FILESYSTEM_COMPLEMENTARY_QUEUE.tsv
+A	evidence/GOSEC_R2_OVERNIGHT/FINAL_SCANS_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/FUNCTIONAL_TARGETED_REGRESSIONS_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/G104_QUEUE.tsv
+A	evidence/GOSEC_R2_OVERNIGHT/GOSEC_AFTER_FS_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FINAL.manifest.txt
+A	evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_REPORT.md
+A	evidence/GOSEC_R2_OVERNIGHT/OSV_GO_DIRECTIVE_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/OSV_GO_MOD_46_FINDINGS.tsv
+A	evidence/GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_FINDINGS_BASELINE.tsv
+A	evidence/GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_FULL_GATES_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.md
+A	evidence/GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_MATRIX.tsv
+A	evidence/GOSEC_R2_OVERNIGHT/PERMISSIONS_IO_QUEUE.tsv
+A	evidence/GOSEC_R2_OVERNIGHT/POST_OVERNIGHT_GATES_RAW.log
+A	evidence/GOSEC_R2_OVERNIGHT/TODO.md
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.tar.gz
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.tar.gz.sha256
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.zip
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.zip.sha256
+A	evidence/GOSEC_R2_OVERNIGHT/gosec_source_only_after_fs.json
+A	evidence/GOSEC_R2_OVERNIGHT/gosec_source_only_final.json
+A	evidence/GOSEC_R2_OVERNIGHT/gosec_source_only_post_overnight.json
+A	evidence/GOSEC_R2_OVERNIGHT/osv_go_mod_after_directive.json
+A	evidence/GOSEC_R2_OVERNIGHT/osv_go_mod_final.json
+A	evidence/GOSEC_R2_OVERNIGHT/osv_go_mod_post_directive.json
+A	evidence/GOSEC_R2_OVERNIGHT/osv_pnpm_lock_final.json
+A	evidence/GOSEC_R2_OVERNIGHT/osv_pnpm_lock_post_directive.json
+A	evidence/GOSEC_R2_OVERNIGHT/syft_final.json
+A	evidence/GOSEC_R2_OVERNIGHT/syft_post_overnight.json
+A	evidence/GOSEC_R2_OVERNIGHT/trivy_final.json
+A	evidence/GOSEC_R2_OVERNIGHT/trivy_post_overnight.json
+
+COMMIT=90b292ee615fe0f4ae78418121375ccb577a442e
+subject=evidence: publish canonical GOSEC R2 overnight package
+parents=fd9b5eec153c9ee8d1b154483a170f3be1727951
+
+A	evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FILES_V3.sha256
+A	evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FINAL_V3.manifest.txt
+M	evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_REPORT.md
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.tar.gz
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.tar.gz.sha256
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.zip
+A	evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.zip.sha256
+
+COMMIT=e9ad9d41afd2c80505d312efcac9f2c4e961abc7
+subject=evidence: record public overnight verification
+parents=9bbc2beed7f2f8f3aa79f2447bbb348a10eb8225
+
+A	evidence/GOSEC_R2_OVERNIGHT/PUBLIC_FINAL_VERIFICATION_V4.log
+
+UNEXPECTED_SOURCE_DIFF_BETWEEN_F796_AND_FINAL_EVIDENCE_BEGIN
+none
+UNEXPECTED_SOURCE_DIFF_BETWEEN_F796_AND_FINAL_EVIDENCE_END
+PHASE0_DIFF_SCOPE_RESULT=PASS_REVIEW_REQUIRED_FOR_EVIDENCE_ONLY
+[?2004hubuntu@sandbox:~/forgelocal_self_validation_v6/operational_validation_v1/repo$ 

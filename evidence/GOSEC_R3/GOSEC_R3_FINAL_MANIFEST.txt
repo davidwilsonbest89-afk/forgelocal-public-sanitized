@@ -1,0 +1,12 @@
+format=forgelocal-gosec-r3-evidence-v1
+source_head=63a6175a71faf73d2071cbf80c38d5d264885e10
+branch=validation/operational-v1
+verdict=GOSEC_R3_CLASSIFIED_WITH_OPEN_FINDINGS
+baseline_gosec_findings=132
+final_gosec_findings=94
+osv_go=0
+osv_pnpm=0
+archive_manifest=GOSEC_R3_FILES.sha256
+bundle=forgelocal-gosec-r3-delta-63a6175.bundle
+self_reference=excluded
+package_public_verification=performed_after_publication_and_recorded_separately
