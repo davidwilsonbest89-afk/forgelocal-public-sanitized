@@ -1,0 +1,19 @@
+UTC=2026-08-26T02:31:19Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+PACKAGE_HEAD=9e2361eb2428a50ece22f806c8a3c79d3a85ffe1
+CLONE_HEAD=9e2361eb2428a50ece22f806c8a3c79d3a85ffe1
+ZIP_SIDECAR=PASS
+TAR_SIDECAR=PASS
+UNZIP_TEST=PASS
+ZIP_EXTRACTION=PASS
+TAR_EXTRACTION=PASS
+BUNDLE_VERIFY=PASS
+EXPLICIT_CHECKOUT=PASS
+CLONE_FSCK_EXIT_CODE=0
+PACKAGE_VERIFICATION_RESULT=PASS
+evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot2-delta-9e2361e.bundle is okay
+The bundle contains this ref:
+9e2361eb2428a50ece22f806c8a3c79d3a85ffe1 refs/heads/validation/operational-v1
+The bundle requires this ref:
+3fc5ef620800a182526e293d565a057fa65e65cb 
+The bundle uses this hash algorithm: sha1
