@@ -1,0 +1,20 @@
+UTC=2026-08-26T04:27:15Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r4
+BASELINE_FINDINGS=99
+
+COMMAND=go test -count=1 -race ./cmd/server ./internal/mcp
+EXIT_CODE=0
+RESULT=PASS
+
+COMMAND=gosec -fmt json -out evidence/GOSEC_R4/gosec_after_r4b_root.json ./cmd/... ./internal/...
+EXIT_CODE=1
+RESULT=OPEN_FINDINGS_EXPECTED
+COUNTS_G104=0
+COUNTS_G304=15
+COUNTS_G305=1
+COUNTS_G703=9
+TOTAL_FINDINGS=65
+
+CONTROLS=backup input/output parent-root-scoped; non-symlink regular-file check; MCP download parent-root-scoped; positive regular download test; negative external-file symlink test; negative symlinked downloads-directory test; negative symlinked backup-output test; existing archive traversal/hardlink/special-type tests preserved.
+LIMIT=G703/G304/G305 static findings remain visible; no nosec/nolint/skip/allowlist was added.

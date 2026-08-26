@@ -1,0 +1,9 @@
+UTC=2026-08-26T11:34:40Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r4
+HEAD=3cd3ac0fb9eb684e61eafb8746c69dda9781df64
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod file and found 24 packages
+OSV_GO_CORRECTED_EXIT_CODE=0
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/pnpm-lock.yaml file and found 698 packages
+OSV_PNPM_CORRECTED_EXIT_CODE=0
+exit
