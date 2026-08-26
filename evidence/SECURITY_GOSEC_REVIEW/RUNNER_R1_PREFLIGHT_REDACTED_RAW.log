@@ -1,0 +1,6 @@
+2026-08-26T01:49:27Z
+RUNNER_CONTRACT_PASS
+  if (!value) throw new Error(`missing required runtime environment: ${name}`);
+Error: missing required runtime environment: SMOKE_ADMIN_TOKEN
+RUNNER_MISSING_ENV_EXIT_CODE=1
+RUNNER_PREFLIGHT_PASS

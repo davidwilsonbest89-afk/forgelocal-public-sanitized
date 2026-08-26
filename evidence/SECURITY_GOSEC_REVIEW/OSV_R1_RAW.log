@@ -1,0 +1,48 @@
+Scanning dir .
+Scanning /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/ at commit 6aaa1aa2a142a45724f98537fb48c629503d1ea1
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v7
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-go@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:golang/forgelocal
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_SBOM.spdx.json as SPDX SBOM and found 753 packages
+Warning, duplicate PURL found in SBOM: pkg:github/JamesIves/github-pages-deploy-action@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v7
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-go@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:golang/forgelocal
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_SBOM.spdx.json as SPDX SBOM and found 765 packages
+Warning, duplicate PURL found in SBOM: pkg:github/actions/checkout@v7
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-go@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/setup-node@v6
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:github/actions/upload-artifact@v4
+Warning, duplicate PURL found in SBOM: pkg:golang/forgelocal
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/SELF_VALIDATION_V4/SELF_VALIDATION_SBOM.spdx.json as SPDX SBOM and found 753 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/T28/SBOM_FINAL.spdx.json as SPDX SBOM and found 43 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/T28/SBOM_HEAD.spdx.json as SPDX SBOM and found 43 packages
+Scanning directory for vendored libs: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/lib/vendor
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.pnpm/@iconify+types@2.0.0/node_modules/@iconify/types/pnpm-lock.yaml file and found 1 package
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.pnpm/combined-stream@1.0.8/node_modules/combined-stream/yarn.lock file and found 3 packages
+Scanning directory for vendored libs: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.pnpm/playwright-core@1.55.1/node_modules/playwright-core/lib/server/bidi/third_party
+Scanning directory for vendored libs: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.pnpm/playwright-core@1.55.1/node_modules/playwright-core/lib/third_party
+Scanning directory for vendored libs: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.pnpm/playwright@1.55.1/node_modules/playwright/lib/third_party
+Scanning directory for vendored libs: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/node_modules/.vite/deps
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/pnpm-lock.yaml file and found 698 packages
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod file and found 24 packages
+Skipping call analysis on Go code since Go is not installed.
+OSV_R1_EXIT_CODE=1
