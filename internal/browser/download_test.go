@@ -30,6 +30,13 @@ func TestR4BoundedArchiveSizeAndPersonaSeed(t *testing.T) {
 	if got := browseForgePersonaSeed(negative); got == ^uint64(0) {
 		t.Fatalf("negative persona seed wrapped to max uint64: %d", got)
 	}
+	large := &profile.Profile{Fingerprint: map[string]any{"canvas:seed": int64(1 << 62)}}
+	if got := browseForgePersonaSeed(large); got != 1<<62 {
+		t.Fatalf("large positive persona seed = %d, want %d", got, uint64(1<<62))
+	}
+	if got, err := checkedArchiveSize(1 << 62); err != nil || got != 1<<62 {
+		t.Fatalf("large valid archive size = %d, err=%v", got, err)
+	}
 }
 
 func TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts(t *testing.T) {
