@@ -11,7 +11,7 @@ Ce rapport conserve les contrôles nouvellement exécutés pendant cette clôtur
 
 ## 1. Périmètre et intégrité de la branche
 
-La qualification a été reprise depuis un clone neuf du dépôt `davidwilsonbest89-afk/forgelocal-public-sanitized`. Le checkout a été réalisé explicitement sur `refs/remotes/origin/validation/final-environment-qualification`. Le HEAD distant observé au début de la clôture était `4e944670b8f3b883bb673363a20a4e6c7c20c25a`; il sera réévalué après publication des nouvelles preuves.
+La qualification a été reprise depuis un clone neuf du dépôt `davidwilsonbest89-afk/forgelocal-public-sanitized`. Le checkout a été réalisé explicitement sur `refs/remotes/origin/validation/final-environment-qualification`. Le HEAD final publié et vérifié depuis un clone neuf est `f53849fc1ca6f03b3300607893903b3ead0ee24a`. Le commit de preuves avant package est `da813e5adabe983df0ff499820417a2c2fb24b9b`, et le commit package est `f53849fc1ca6f03b3300607893903b3ead0ee24a`.
 
 Le préflight est conservé dans [`FINAL_ENVIRONMENT_BASELINE_DISCOVERY_RAW.log`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2/FINAL_ENVIRONMENT_BASELINE_DISCOVERY_RAW.log). Il contient l’UTC, le répertoire de travail, l’architecture, l’espace disque, la mémoire, les processus actifs et les versions disponibles avant installation. Les outils supplémentaires ont ensuite été installés uniquement dans l’espace de qualification ou depuis les dépôts officiels Ubuntu et les releases officielles des projets.
 
@@ -106,7 +106,7 @@ Le log brut est [`environment-checks-raw.log`](evidence/FINAL_ENVIRONMENT_CLOSUR
 | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` | Go complet avec dépendances réseau, Govulncheck complet, Grype complet, Docker/Buildx, Firefox/Camoufox, SystemVault natif |
 | `INHERITED_FROM_R7` | commits, manifeste, log public et artefacts ZIP/TAR/bundle R7 |
 
-Les preuves nouvelles sont regroupées dans [`evidence/FINAL_ENVIRONMENT_CLOSURE_V2/`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2/). Le package final sera construit sans auto-référence depuis le commit de preuves, avec sidecars SHA-256 et vérification depuis un clone neuf. La branche dédiée uniquement sera publiée ; aucune branche `main`, release ou production ne sera modifiée.
+Les preuves nouvelles sont regroupées dans [`evidence/FINAL_ENVIRONMENT_CLOSURE_V2/`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2/). Le package a été construit sans auto-référence depuis le commit de preuves `da813e5…`, puis ajouté par le commit `f53849f…`. Ses sidecars SHA-256 et son contenu ont été vérifiés depuis un clone neuf. La branche dédiée uniquement a été publiée ; aucune branche `main`, release ou production n’a été modifiée.
 
 ## Références de preuve
 
@@ -120,3 +120,8 @@ Les preuves nouvelles sont regroupées dans [`evidence/FINAL_ENVIRONMENT_CLOSURE
 8. [`environment-checks-raw.log`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2/environment/environment-checks-raw.log)
 9. [`R7_FINAL_MANIFEST_V4.txt`](evidence/GOSEC_R7/R7_FINAL_MANIFEST_V4.txt)
 10. [`R7_PUBLIC_VERIFICATION_V4_RAW.log`](evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V4_RAW.log)
+11. [`FINAL_PUBLIC_VERIFICATION_V2_RAW.log`](evidence/FINAL_PUBLIC_VERIFICATION_V2_RAW.log)
+12. [`FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE_MANIFEST.txt`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE_MANIFEST.txt)
+13. [`forgelocal-final-environment-closure-v2.zip`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.zip) — SHA-256 `dfd008b4d7df4e73be0496a15124062e2152126238126b3135fbe9d62e3fd14c`
+14. [`forgelocal-final-environment-closure-v2.tar.gz`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.tar.gz) — SHA-256 `25530d8a07da93fee1b19d14a635f02e662257e76bdf70f7610631c0590b909e`
+15. [`forgelocal-final-environment-closure-v2.bundle`](evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle) — SHA-256 `0db4d4e9df7472003eeca6cc4df434790b00bdaa10728065fab1d32e6a4be556`

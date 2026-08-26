@@ -1,0 +1,36 @@
+=== FINAL PUBLIC VERIFICATION V2 FROM FRESH CLONE ===
+2026-08-26T19:08:21+00:00
+clone=/home/ubuntu/forgelocal-final-environment-closure/final-public-clone
+branch=validation/final-environment-qualification
+head=f53849fc1ca6f03b3300607893903b3ead0ee24a
+remote_dedicated=f53849fc1ca6f03b3300607893903b3ead0ee24a	refs/heads/validation/final-environment-qualification
+remote_main=f09af4b2a5c6bf6914a214e1220a0353c09a6fb0	refs/heads/main
+=== CHECKOUT ===
+## [32mvalidation/final-environment-qualification[m...[31morigin/validation/final-environment-qualification[m
+=== PACKAGE HASHES ===
+dfd008b4d7df4e73be0496a15124062e2152126238126b3135fbe9d62e3fd14c  evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.zip
+25530d8a07da93fee1b19d14a635f02e662257e76bdf70f7610631c0590b909e  evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.tar.gz
+0db4d4e9df7472003eeca6cc4df434790b00bdaa10728065fab1d32e6a4be556  evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle
+forgelocal-final-environment-closure-v2.zip: OK
+forgelocal-final-environment-closure-v2.tar.gz: OK
+forgelocal-final-environment-closure-v2.bundle: OK
+ZIP_TAR_EXTRACTION=PASS
+evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle is okay
+The bundle contains this ref:
+da813e5adabe983df0ff499820417a2c2fb24b9b HEAD
+The bundle requires this ref:
+4e944670b8f3b883bb673363a20a4e6c7c20c25a 
+The bundle uses this hash algorithm: sha1
+=== FSCK ===
+FSCK_EXIT_CODE=0
+=== PACKAGE MANIFEST HEAD ===
+package_name=forgelocal-final-environment-closure-v2
+source_commit=da813e5adabe983df0ff499820417a2c2fb24b9b
+base_commit=4e944670b8f3b883bb673363a20a4e6c7c20c25a
+manifest_scope=all files under forgelocal-final-environment-closure-v2-evidence excluding this manifest
+c515273255d5cb780522a7798e5f5e18dcf3cf76dc515792485bf45c46b7f653  forgelocal-final-environment-closure-v2-evidence/FINAL_CLOSURE_V2_REPORT.md
+172bafd109f0868ca5deee2d827183332ddefde4f2d362eb26c5ad752fea953f  forgelocal-final-environment-closure-v2-evidence/FINAL_ENVIRONMENT_CLOSURE_V2/FINAL_ENVIRONMENT_BASELINE_DISCOVERY_RAW.log
+93de0f03d95278cbfbc25eb3650557683568a83c636d9c73ca0145ffa1bc6d23  forgelocal-final-environment-closure-v2-evidence/FINAL_ENVIRONMENT_CLOSURE_V2/FINAL_ENVIRONMENT_TESTS_RAW.log
+087b2f99e0eb779d99f6044259d0d3c7b9fbeea3bd3cd8f47f894876144e55b9  forgelocal-final-environment-closure-v2-evidence/FINAL_ENVIRONMENT_CLOSURE_V2/FINAL_STATIC_SUMMARY.tsv
+=== FINAL STATUS ===
+STATUS_EXIT_CODE=0
