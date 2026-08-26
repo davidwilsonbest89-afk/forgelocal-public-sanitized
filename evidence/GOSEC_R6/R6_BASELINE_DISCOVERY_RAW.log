@@ -1,0 +1,65 @@
+UTC=2026-08-26T13:07:23Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r6
+HEAD=28f66a1b2e2a27b90b8542458d4774dd3f264797
+COMMAND=git ls-remote origin refs/heads/validation/gosec-r5 refs/heads/validation/gosec-r6 refs/heads/validation/operational-v1
+28f66a1b2e2a27b90b8542458d4774dd3f264797	refs/heads/validation/gosec-r5
+28f66a1b2e2a27b90b8542458d4774dd3f264797	refs/heads/validation/gosec-r6
+80048180d4ec5241c08146ade698d53a3f29454d	refs/heads/validation/operational-v1
+REMOTE_HEADS_EXIT_CODE=0
+COMMAND=sha256sum -c evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip.sha256
+evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip: OK
+R5_PACKAGE_ZIP_HASH_EXIT_CODE=0
+COMMAND=sha256sum -c evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz.sha256
+evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz: OK
+R5_PACKAGE_TAR_HASH_EXIT_CODE=0
+COMMAND=git bundle verify evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle
+evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle is okay
+The bundle contains this ref:
+517b55557297a6372bb5ef2dcb6d8c2b80a8db70 refs/gosec-r5/package-head
+The bundle requires this ref:
+096e3f591f273801cf735669d7a135daf6a7f601 
+The bundle uses this hash algorithm: sha1
+R5_BUNDLE_VERIFY_EXIT_CODE=0
+COMMAND=gosec -fmt json -out /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R6/gosec_r6_baseline.json ./cmd/... ./internal/...
+[gosec] 2026/08/26 13:07:24 Including rules: default
+[gosec] 2026/08/26 13:07:24 Excluding rules: default
+[gosec] 2026/08/26 13:07:24 Including analyzers: default
+[gosec] 2026/08/26 13:07:24 Excluding analyzers: default
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/spike
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/productschema
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies
+[gosec] 2026/08/26 13:07:24 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime
+GOSEC_SCAN_EXIT_CODE=1
+JSON_SHA256=78fb85f036f01bd557f0e02b8880dc1573f4e2d89609e50de899489ea7f6e27e
+ISSUES_LEN=0
+SUM_COUNTS=0
