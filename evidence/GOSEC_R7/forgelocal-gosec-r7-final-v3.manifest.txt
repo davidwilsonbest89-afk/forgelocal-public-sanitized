@@ -1,0 +1,13 @@
+package=forgelocal-gosec-r7-final-v3
+authoritative_source_head=3656dbad4bfef0381e1f9d837271d293ecffe292
+evidence_head=0ba8ac9b3b256f1b20520a2d01ccc9bb68383ab
+package_head=recorded_after_artifact_commit
+branch=validation/gosec-r7
+bundle=evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-0ba8ac9.bundle
+bundle_scope=delta_from_3656dbad4bfef0381e1f9d837271d293ecffe292_to_0ba8ac9b3b256f1b20520a2d01ccc9bb68383ab
+bundle_creation=git_bundle_temp_ref_pack_compression_0_verified
+manifest_non_autoreferential=true
+verification_scope=R7 risk review evidence; no production release or deployment
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+previous_package_v1_preserved=true
+previous_package_v2_preserved=true
