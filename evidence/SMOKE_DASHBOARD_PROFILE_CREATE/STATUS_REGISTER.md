@@ -27,6 +27,8 @@
 | SystemVault natif | NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE | Secret Service natif non disponible |
 | Docker/Buildx | NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE | Aucun daemon ni installation |
 | Proxies commerciaux/comptes/cookies/sites externes | NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE | Fixtures loopback uniquement |
+| Package ZIP/TAR et manifeste | PASS | Commit package `ff2f0ef4aac7f4969e8c9285bbf336df3575dc41`, extractions fraîches et manifestes à zéro divergence |
+| Clone GitHub frais | PASS | `PUBLIC_CLONE_VERIFY_FINAL_RAW.log`, HEAD `ff2f0ef4aac7f4969e8c9285bbf336df3575dc41`, fsck exit 0 |
 | Production-ready | NON DÉCLARÉ | Gosec et gates d’environnement restent ouverts |
 
 Les fichiers T28 historiques, T29 et T31–T38 ne font pas partie du périmètre modifié par ce lot.

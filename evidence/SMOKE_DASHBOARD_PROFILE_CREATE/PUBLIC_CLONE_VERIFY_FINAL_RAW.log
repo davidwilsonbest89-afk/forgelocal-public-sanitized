@@ -1,0 +1,12 @@
+utc=2026-08-26T00:53:00Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+command=GIT_LFS_SKIP_SMUDGE=1 gh repo clone davidwilsonbest89-afk/forgelocal-public-sanitized /tmp/forgelocal_dashboard_profile_public_final_20260826 -- --branch validation/operational-v1 --depth=1 --filter=blob:none
+clone_rc=0
+remote_head=ff2f0ef4aac7f4969e8c9285bbf336df3575dc41
+source_present=yes
+evidence_present=yes
+zip_present=yes
+tar_present=yes
+manifest_present=yes
+public_fsck_rc=0
+notes=Fresh GitHub clone verified source, evidence, ZIP, TAR.GZ and manifest; LFS smudge was skipped for unrelated historical blobs.

@@ -54,6 +54,10 @@ Les premières exécutions de reprise V1–V3 ont été conservées comme diagno
 
 `go test ./...`, `go vet ./...`, `go build ./...`, `pnpm run check`, Gitleaks et Govulncheck ont réussi sur l’état vérifié. Gitleaks a signalé zéro fuite et Govulncheck aucune vulnérabilité. `git fsck --full` a retourné exit_code=0 lors de la vérification de conservation. Gosec reste en échec avec 177 findings historiques/non masqués ; ce résultat ne constitue pas une régression masquée et le gate reste inchangé. Aucun finding n’a été supprimé par allowlist globale, skip ou nolint.
 
+## Conservation et publication
+
+Le package `artifacts/forgelocal-dashboard-profile-create-0c4b9ae` est publié dans le commit `ff2f0ef4aac7f4969e8c9285bbf336df3575dc41`. Le ZIP a pour SHA-256 `6d331748a22e85dd31dcbd2df38c7464299ff1a2ea7e61ef0b302ba976019e70` et le TAR.GZ a pour SHA-256 `7885f6fcd1803d18d00d81466f8b1ea4d141649322e4d6f4c457eb4b62f6addf`. Les deux archives ont été extraites dans des répertoires frais, leurs manifestes ont retourné zéro divergence et `git fsck --full` a retourné exit_code=0. Le clone GitHub frais final a confirmé le HEAD `ff2f0ef4aac7f4969e8c9285bbf336df3575dc41` et la présence de la source, des preuves, du ZIP, du TAR.GZ et du manifeste.
+
 ## Limites et statut des gates
 
 | Catégorie | Statut |
