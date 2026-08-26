@@ -1,0 +1,32 @@
+[
+  {
+    "bytes": 3,
+    "exists": true,
+    "file": "gitleaks-source.json",
+    "findings": 0
+  },
+  {
+    "bytes": 3,
+    "exists": true,
+    "file": "gitleaks-extraction.json",
+    "findings": 0
+  },
+  {
+    "bytes": 288567,
+    "exists": true,
+    "file": "trivy-secrets.json",
+    "misconfigurations": 0,
+    "results": 2,
+    "secrets": 0,
+    "vulnerabilities": 0
+  },
+  {
+    "bytes": 302293,
+    "exists": true,
+    "file": "trivy-fs.json",
+    "misconfigurations": 6,
+    "results": 4,
+    "secrets": 0,
+    "vulnerabilities": 0
+  }
+]

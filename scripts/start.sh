@@ -24,9 +24,7 @@ for i in $(seq 1 10); do
   sleep 1
 done
 
-# Read API token
-TOKEN=$(cat data/.api-token 2>/dev/null || echo "")
-echo "API Token: $TOKEN"
+# API token is intentionally not read or printed by the launcher.
 
 # Camoufox will be launched by Control Server via Playwright
 # Just wait for server to exit

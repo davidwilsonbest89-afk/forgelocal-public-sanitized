@@ -1,0 +1,8 @@
+category	classification	path	line	permissions	sha256
+token-log-variable	source-runtime	docker/entrypoint.sh	102	0o644	91729a3d6eb6b062d82f3b4c049ac263c4ca4d977faff97f590845b690a5cf70
+bearer-concrete	test-or-fixture	forge-dashboard/tests/cr03-debug-collector-sentinel.mjs	57	0o644	e3e13b365b24ce76f6841c0f04c4b9870c9996aea46aaa763aa0bc4be7962cc7
+bearer-concrete	test-or-fixture	internal/api/admin_token_test.go	48	0o644	73152ae6d628aaac24ecb5cc0138314dc23b051da4a6288af026d05006e695c7
+bearer-concrete	test-or-fixture	internal/launch/journal_t18_test.go	337	0o644	268b044aff622fd3dc76ecc9dd1cc9351b9a6f7807f6fa65c4f08a423df104c6
+bearer-concrete	test-or-fixture	internal/launch/launch_test.go	428	0o644	6f00237126b4b0bbdbbe34896b302433ef32b230ba9cc50ecd2bc60fce4ac1c8
+bearer-concrete	test-or-fixture	launch.test	3605	0o755	535bceec440669b8a2dbd5f7a8394a803e1c6a063bddb400a119e5cbc755f69f
+token-log-variable	source-runtime	scripts/start.sh	29	0o644	0840a8ba89cb846be05fb91a307365027a0bade38ba7954adea65c90ecd2b2bb
