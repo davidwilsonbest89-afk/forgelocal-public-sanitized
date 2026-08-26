@@ -11,7 +11,7 @@ Une divulgation critique réelle a été confirmée dans la branche de qualifica
 
 Le correctif appliqué est volontairement minimal. Les deux lanceurs ne lisent plus le fichier de token et ne l’impriment plus. L’entrypoint conserve uniquement le test d’existence du fichier et affiche un état générique redacted ; le lanceur local supprime entièrement le bloc de lecture et d’affichage. Un binaire de test suivi par Git, classé artefact généré contenant des chaînes de fixture bearer-like, a également été retiré de la branche corrective ; seul son hash historique est conservé dans la preuve.
 
-Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. Les contrôles Docker runtime/image n’ont pas été exécutés car le client/daemon Docker est indisponible dans l’environnement ; ils restent `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE`. Le verdict de release reste bloqué par mandat et par les autres constats de qualification : `GOSEC_R7_BLOCKED_CRITICAL_FINDING`, `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
+Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. Le diagnostic demandé a confirmé que `docker version`, `docker info`, `docker buildx version` et `docker context ls` échouent tous avec `docker: command not found` (code 127) ; `systemctl is-system-running` répond `running`, mais cela ne constitue pas la présence d’un daemon Docker. L’espace disponible était de 25G sur 48G et l’utilisateur était `ubuntu` avec groupe sudo ; aucune installation ni tentative de démarrage n’a été effectuée. Les contrôles Docker restent `DOCKER_RUNTIME_VALIDATION_PENDING`, `DOCKER_BUILD_RUN_LOG_LAYERS_NOT_EXECUTED` et `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE`. Le verdict de release reste bloqué par mandat et par les autres constats de qualification : `GOSEC_R7_BLOCKED_CRITICAL_FINDING`, `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
 
 ## Preuve et audit de contamination
 
@@ -54,12 +54,14 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | ShellCheck des deux lanceurs | `FAIL` au sens exit code | Seulement deux warnings SC2034 sur l’index de boucle inutilisé ; aucun diagnostic secret ou erreur |
 | `git diff --check` | `PASS` | Aucun whitespace error |
 | `git fsck --full` local | `PASS` | Intégrité du clone locale vérifiée |
-| Docker build/run/logs/layers/Trivy image | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` | Daemon Docker absent ; aucune simulation effectuée |
+| Docker version/info/Buildx/context | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` | Client absent : `docker: command not found`, codes 127 |
+| Docker build/run/logs/layers/Trivy image | `DOCKER_RUNTIME_VALIDATION_PENDING` / `DOCKER_BUILD_RUN_LOG_LAYERS_NOT_EXECUTED` | Daemon réel indisponible ; aucune simulation, installation ou contournement effectué |
+| Syft SBOM CycloneDX | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` | Binaire `syft` absent ; aucun SBOM simulé |
 | Grype SBOM | `NOT_EXECUTED` | Contrôle secondaire hors du scope critique immédiat |
 | Firefox/Camoufox natifs, SystemVault, Windows/macOS | `BLOCKED_ENVIRONMENT_REQUIRED` / `NATIVE_SYSTEMVAULT_NOT_TESTED` | Environnements non disponibles |
 | Références et packages R7 historiques | `INHERITED_FROM_R7` | Non présentés comme nouvelle exécution |
 
-Les sorties brutes et rapports JSON correspondants sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Les journaux ne contiennent pas la sentinelle synthétique.
+Le replay additionnel prescrit par la pièce jointe a reconfirmé `bash -n`, Go race/vet/build, `git diff --check`, Gitleaks source-only, Trivy filesystem et `git fsck --full`. ShellCheck conserve uniquement les warnings SC2034 déjà classés. Les sorties brutes Docker et post-blocage, ainsi que les rapports JSON correspondants, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Les journaux ne contiennent pas la sentinelle synthétique.
 
 ## Package et vérification
 
