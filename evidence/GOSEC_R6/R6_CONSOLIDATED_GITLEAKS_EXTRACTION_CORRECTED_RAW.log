@@ -1,0 +1,9 @@
+UTC=2026-08-26T14:28:32Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+COMMAND=tar -xzf evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-final-v1.tar.gz -C /tmp/r6_consolidated_tar_corrected
+TAR_EXTRACT_EXIT_CODE=0
+COMMAND=gitleaks detect --no-git --source /tmp/r6_consolidated_tar_corrected/forgelocal-gosec-r6c-final-v1-evidence/evidence/GOSEC_R6/R6_C --no-banner --redact
+[90m2:28PM[0m [32mINF[0m scan completed in 24.1ms
+[90m2:28PM[0m [32mINF[0m no leaks found
+GITLEAKS_EXTRACTION_CORRECTED_EXIT_CODE=0
+exit

@@ -1,0 +1,62 @@
+UTC=2026-08-26T14:32:04Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r6
+HEAD=f84738250fff6a91697629f899689e98da95da52
+GO=go version go1.25.13 linux/amd64
+COMMAND=go test -count=1 ./internal/browser -run Test(R4BoundedArchiveSizeAndPersonaSeed|SecureExtract|FindBinary)
+ok  	forgelocal/internal/browser	0.011s
+BROWSER_ARCHIVE_EXIT_CODE=0
+COMMAND=go test -count=1 ./internal/browser -run Test(Download|InstalledVersion|Runtime)
+ok  	forgelocal/internal/browser	0.007s
+BROWSER_RUNTIME_EXIT_CODE=0
+COMMAND=go test -count=1 ./internal/groups -run Test(GroupStoreUsesPrivateDirectory|GroupStorePersistsAndImports)
+ok  	forgelocal/internal/groups	0.005s
+GROUPS_PERMISSIONS_EXIT_CODE=0
+COMMAND=go test -count=1 ./internal/api -run Test(AdminToken|LoadOrCreateToken|Token)
+ok  	forgelocal/internal/api	0.010s
+API_TOKEN_EXIT_CODE=0
+COMMAND=go test -count=1 ./internal/workflow -run Test
+ok  	forgelocal/internal/workflow	0.005s
+WORKFLOW_NETWORK_EXIT_CODE=0
+COMMAND=go test -count=1 ./cmd/server -run Test.*(Loopback|Network|URL|Backup|Restore|Token)
+ok  	forgelocal/cmd/server	0.310s
+CLI_NETWORK_EXIT_CODE=0
+COMMAND=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.246s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	4.256s
+ok  	forgelocal/internal/backup	2.821s
+ok  	forgelocal/internal/browser	5.345s
+ok  	forgelocal/internal/config	1.015s
+ok  	forgelocal/internal/cookies	1.011s
+ok  	forgelocal/internal/drift	1.010s
+ok  	forgelocal/internal/environment	1.012s
+ok  	forgelocal/internal/extensions	2.094s
+ok  	forgelocal/internal/fingerprint	1.015s
+ok  	forgelocal/internal/fonts	1.011s
+ok  	forgelocal/internal/geolocation	1.010s
+ok  	forgelocal/internal/groups	1.022s
+ok  	forgelocal/internal/hardware	1.012s
+ok  	forgelocal/internal/history	1.171s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.724s
+ok  	forgelocal/internal/localvault	1.089s
+ok  	forgelocal/internal/mcp	1.033s
+ok  	forgelocal/internal/productschema	1.719s
+ok  	forgelocal/internal/profile	1.110s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.453s
+ok  	forgelocal/internal/proxies	1.085s
+ok  	forgelocal/internal/proxyprovider	1.013s
+ok  	forgelocal/internal/runtime	1.232s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.011s
+ok  	forgelocal/internal/spike	3.460s
+ok  	forgelocal/internal/templates	1.378s
+ok  	forgelocal/internal/workflow	1.019s
+FULL_RACE_EXIT_CODE=0
+COMMAND=go vet ./cmd/... ./internal/...
+VET_EXIT_CODE=0
+COMMAND=go build ./cmd/... ./internal/...
+BUILD_EXIT_CODE=0
