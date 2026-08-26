@@ -1,0 +1,39 @@
+UTC=2026-08-26T12:39:13Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r5
+HEAD=9412b314a3cdaff51d59b562ff2f97504844d9dc
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+SCOPE=R5-C permissions/conversions/randomness/secret findings; synthetic local tests only; no production runtime
+
+COMMAND=inventory from evidence/GOSEC_R5/gosec_after_r5b.json
+G115	internal/browser/launch_chromium.go	1019	integer overflow conversion int64 -> uint64
+G115	internal/browser/archive_security.go	252	integer overflow conversion int64 -> uint64
+G115	internal/browser/archive_security.go	210	integer overflow conversion int64 -> uint32
+G404	internal/humanize/mouse.go	89	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/mouse.go	37	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/mouse.go	36	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	128	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	120	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	115	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	108	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	98	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	97	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	77	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	76	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	59	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	55	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/math.go	49	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/keyboard.go	92	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/humanize/keyboard.go	58	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	internal/fingerprint/pool.go	64	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G101	internal/api/admin_token.go	22	Potential hardcoded credentials
+G302	internal/groups/store.go	48	Expect file permissions to be 0600 or less
+G302	internal/browser/download.go	526	Expect file permissions to be 0600 or less
+G302	internal/browser/download.go	434	Expect file permissions to be 0600 or less
+G302	internal/browser/download.go	374	Expect file permissions to be 0600 or less
+G302	cmd/server/cli.go	763	Expect file permissions to be 0600 or less
+
+COMMAND=git status --short
+[31m??[m evidence/GOSEC_R5/R5_C_BASELINE_DISCOVERY_RAW.log
+[31m??[m evidence/GOSEC_R5/R5_C_FINAL_RAW.log
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
