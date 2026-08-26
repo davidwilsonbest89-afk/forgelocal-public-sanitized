@@ -1,0 +1,29 @@
+=== FINAL PUBLIC VERIFICATION V2 FINAL ===
+2026-08-26T19:09:24+00:00
+clone=/home/ubuntu/forgelocal-final-environment-closure/final-public-clone-2
+branch=validation/final-environment-qualification
+head=526fa4d54b7b5e1674ff00c1daf447ef1f0e6d48
+remote_dedicated=526fa4d54b7b5e1674ff00c1daf447ef1f0e6d48	refs/heads/validation/final-environment-qualification
+remote_main=f09af4b2a5c6bf6914a214e1220a0353c09a6fb0	refs/heads/main
+=== CHECKOUT ===
+## [32mvalidation/final-environment-qualification[m...[31morigin/validation/final-environment-qualification[m
+=== REFERENCES ===
+526fa4d54b7b5e1674ff00c1daf447ef1f0e6d48 f53849fc1ca6f03b3300607893903b3ead0ee24a evidence: record final public closure verification
+da813e5adabe983df0ff499820417a2c2fb24b9b 4e944670b8f3b883bb673363a20a4e6c7c20c25a evidence: close environment qualification v2
+=== PACKAGE HASHES ===
+dfd008b4d7df4e73be0496a15124062e2152126238126b3135fbe9d62e3fd14c  evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.zip
+25530d8a07da93fee1b19d14a635f02e662257e76bdf70f7610631c0590b909e  evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.tar.gz
+0db4d4e9df7472003eeca6cc4df434790b00bdaa10728065fab1d32e6a4be556  evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle
+forgelocal-final-environment-closure-v2.zip: OK
+forgelocal-final-environment-closure-v2.tar.gz: OK
+forgelocal-final-environment-closure-v2.bundle: OK
+ZIP_TAR_EXTRACTION=PASS
+evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle is okay
+The bundle contains this ref:
+da813e5adabe983df0ff499820417a2c2fb24b9b HEAD
+The bundle requires this ref:
+4e944670b8f3b883bb673363a20a4e6c7c20c25a 
+The bundle uses this hash algorithm: sha1
+FSCK_EXIT_CODE=0
+=== FINAL STATUS ===
+STATUS_EXIT_CODE=0
