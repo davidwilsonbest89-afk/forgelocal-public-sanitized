@@ -42,7 +42,10 @@ func NewStore(dataDir string) (*Store, error) {
 	if dataDir == "" {
 		dataDir = "data"
 	}
-	if err := os.MkdirAll(dataDir, 0755); err != nil {
+	if err := os.MkdirAll(dataDir, 0700); err != nil {
+		return nil, err
+	}
+	if err := os.Chmod(dataDir, 0700); err != nil {
 		return nil, err
 	}
 	s := &Store{path: filepath.Join(dataDir, "groups.json"), groups: make(map[string]*Group)}

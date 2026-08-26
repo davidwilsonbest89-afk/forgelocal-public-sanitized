@@ -454,7 +454,7 @@ func browsersReady(states []browserState) bool {
 }
 
 func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {
-	if err := os.MkdirAll(filepath.Join(baseDir, "browsers"), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Join(baseDir, "browsers"), 0700); err != nil {
 		return selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err
 	}
 	selection, err := parseRuntimeSelection(runtimesCSV)
@@ -745,7 +745,7 @@ func extractFullBackupToStage(stage, path string) error {
 			if clean == first && header.Name != first && header.Name != first+string(os.PathSeparator) {
 				return fmt.Errorf("invalid backup root entry: %s", header.Name)
 			}
-			if err := os.MkdirAll(target, 0755); err != nil {
+			if err := os.MkdirAll(target, 0700); err != nil {
 				return err
 			}
 		case tar.TypeReg, tar.TypeRegA:
@@ -755,7 +755,7 @@ func extractFullBackupToStage(stage, path string) error {
 			if header.Size < 0 || header.Size > maxRestoreBytes || total > maxRestoreBytes-header.Size {
 				return fmt.Errorf("backup expanded size exceeds limit")
 			}
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 				return err
 			}
 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedRestoreMode(header.Mode, 0644))
@@ -782,7 +782,7 @@ func extractFullBackupToStage(stage, path string) error {
 			if _, err := safeBackupPath(linkTarget); err != nil {
 				return fmt.Errorf("unsafe backup symlink target: %s", header.Linkname)
 			}
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 				return err
 			}
 			if err := os.Symlink(header.Linkname, target); err != nil {
@@ -842,9 +842,9 @@ func rollbackRestoreActivation(activated []restoreActivation, cause error) error
 }
 
 func normalizedRestoreMode(mode int64, fallback os.FileMode) os.FileMode {
-	clean := os.FileMode(mode) & 0777
+	clean := os.FileMode(mode) & 0700
 	if clean == 0 {
-		return fallback
+		return fallback & 0700
 	}
 	return clean
 }
@@ -865,7 +865,7 @@ func hasPathVolume(name string) bool {
 	return len(name) >= 2 && ((name[0] >= 'A' && name[0] <= 'Z') || (name[0] >= 'a' && name[0] <= 'z')) && name[1] == ':'
 }
 
-func createMetadataBackup(global cliGlobal, output, baseURL, token string) error {
+func createMetadataBackup(global cliGlobal, output, baseURL, token string) (result error) {
 	cfg, err := config.Load(global.configPath)
 	if err != nil && baseURL == "" {
 		return err
@@ -894,16 +894,20 @@ func createMetadataBackup(global cliGlobal, output, baseURL, token string) error
 	if resp.StatusCode >= 400 {
 		return fmt.Errorf("HTTP %d", resp.StatusCode)
 	}
-	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {
 		return err
 	}
-	out, err := os.Create(output)
+	out, err := os.OpenFile(output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
-	_, err = io.Copy(out, resp.Body)
-	return err
+	defer func() {
+		if closeErr := out.Close(); result == nil {
+			result = closeErr
+		}
+	}()
+	_, result = io.Copy(out, resp.Body)
+	return result
 }
 
 func restoreMetadataBackup(global cliGlobal, path, baseURL, token string) error {

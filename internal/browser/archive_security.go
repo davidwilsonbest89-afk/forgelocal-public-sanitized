@@ -20,7 +20,7 @@ const (
 
 func secureExtractArchive(file, destDir string) error {
 	parent := filepath.Dir(destDir)
-	if err := os.MkdirAll(parent, 0755); err != nil {
+	if err := os.MkdirAll(parent, 0700); err != nil {
 		return err
 	}
 	stage, err := os.MkdirTemp(parent, ".forgelocal-extract-")
@@ -127,7 +127,7 @@ func secureExtractZip(zipFile, destDir string) error {
 			return err
 		}
 		if f.FileInfo().IsDir() {
-			if err := os.MkdirAll(target, 0755); err != nil {
+			if err := os.MkdirAll(target, 0700); err != nil {
 				return err
 			}
 			continue
@@ -135,7 +135,7 @@ func secureExtractZip(zipFile, destDir string) error {
 		if f.UncompressedSize64 > maxArchiveFileBytes || total > maxArchiveTotalBytes-f.UncompressedSize64 {
 			return fmt.Errorf("archive expanded size exceeds limit")
 		}
-		if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 			return err
 		}
 		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(mode))
@@ -196,14 +196,14 @@ func secureExtractTarGz(tarFile, destDir string) error {
 		}
 		switch hdr.Typeflag {
 		case tar.TypeDir:
-			if err := os.MkdirAll(target, 0755); err != nil {
+			if err := os.MkdirAll(target, 0700); err != nil {
 				return err
 			}
 		case tar.TypeReg, tar.TypeRegA:
 			if hdr.Size < 0 || uint64(hdr.Size) > maxArchiveFileBytes || total > maxArchiveTotalBytes-uint64(hdr.Size) {
 				return fmt.Errorf("archive expanded size exceeds limit")
 			}
-			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 				return err
 			}
 			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(os.FileMode(hdr.Mode)))
@@ -226,9 +226,9 @@ func secureExtractTarGz(tarFile, destDir string) error {
 }
 
 func normalizedArchiveMode(mode os.FileMode) os.FileMode {
-	mode &= 0777
+	mode &= 0700
 	if mode == 0 {
-		mode = 0644
+		mode = 0600
 	}
 	return mode
 }

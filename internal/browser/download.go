@@ -140,8 +140,8 @@ func InstalledVersion(baseDir, browserName string) string {
 	return strings.TrimSpace(string(data))
 }
 
-func writeVersionMarker(dir, version string) {
-	os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0644)
+func writeVersionMarker(dir, version string) error {
+	return os.WriteFile(filepath.Join(dir, ".version"), []byte(version), 0600)
 }
 
 // FindBinary searches a browser directory for a known executable.
@@ -304,7 +304,7 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 		return "", err
 	}
 	destDir := filepath.Join(baseDir, "browsers", BrowseForgeChromiumRuntimeID)
-	if err := os.MkdirAll(destDir, 0755); err != nil {
+	if err := os.MkdirAll(destDir, 0700); err != nil {
 		return "", err
 	}
 
@@ -320,7 +320,9 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 	if err := extract(tmpFile, destDir); err != nil {
 		return "", err
 	}
-	os.Remove(tmpFile)
+	if err := os.Remove(tmpFile); err != nil {
+		return "", fmt.Errorf("remove downloaded archive: %w", err)
+	}
 
 	// Flatten: if the archive extracted into a single subdirectory, hoist its
 	// contents up so the binary lives directly under destDir (e.g. chrome is at
@@ -339,10 +341,14 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 	if binPath == "" {
 		return "", fmt.Errorf("binary not found after extract in %s", destDir)
 	}
-	os.Chmod(binPath, 0755)
+	if err := os.Chmod(binPath, 0755); err != nil {
+		return "", err
+	}
 
 	fmt.Println("✅ BrowseForge Chromium installed")
-	writeVersionMarker(destDir, version)
+	if err := writeVersionMarker(destDir, version); err != nil {
+		return "", err
+	}
 	return binPath, nil
 }
 
@@ -365,7 +371,9 @@ func DownloadCamoufox(baseDir string) (string, error) {
 		return "", err
 	}
 	destDir := filepath.Join(baseDir, "browsers", "camoufox")
-	os.MkdirAll(destDir, 0755)
+	if err := os.MkdirAll(destDir, 0700); err != nil {
+		return "", err
+	}
 
 	tmpFile := filepath.Join(os.TempDir(), filename)
 	slog.Info("downloading Camoufox", "url", url)
@@ -379,7 +387,9 @@ func DownloadCamoufox(baseDir string) (string, error) {
 	if err := extract(tmpFile, destDir); err != nil {
 		return "", err
 	}
-	os.Remove(tmpFile)
+	if err := os.Remove(tmpFile); err != nil {
+		return "", fmt.Errorf("remove downloaded archive: %w", err)
+	}
 
 	if runtime.GOOS == "darwin" {
 		if err := clearMacOSQuarantine(destDir); err != nil {
@@ -391,10 +401,14 @@ func DownloadCamoufox(baseDir string) (string, error) {
 	if binPath == "" {
 		return "", fmt.Errorf("binary not found after extract in %s", destDir)
 	}
-	os.Chmod(binPath, 0755)
+	if err := os.Chmod(binPath, 0755); err != nil {
+		return "", err
+	}
 
 	fmt.Println("✅ Camoufox installed")
-	writeVersionMarker(destDir, CamoufoxVersion)
+	if err := writeVersionMarker(destDir, CamoufoxVersion); err != nil {
+		return "", err
+	}
 	return binPath, nil
 }
 
@@ -446,7 +460,9 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	}
 	url := fmt.Sprintf("https://github.com/CloakHQ/CloakBrowser/releases/download/%s/%s", version, filename)
 	destDir := filepath.Join(baseDir, "browsers", "cloakbrowser")
-	os.MkdirAll(destDir, 0755)
+	if err := os.MkdirAll(destDir, 0700); err != nil {
+		return "", err
+	}
 
 	tmpFile := filepath.Join(os.TempDir(), filename)
 	slog.Info("downloading CloakBrowser", "url", url)
@@ -460,7 +476,9 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	if err := extract(tmpFile, destDir); err != nil {
 		return "", err
 	}
-	os.Remove(tmpFile)
+	if err := os.Remove(tmpFile); err != nil {
+		return "", fmt.Errorf("remove downloaded archive: %w", err)
+	}
 
 	if osName == "darwin" {
 		exec.Command("xattr", "-cr", destDir).Run()
@@ -470,10 +488,14 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	if binPath == "" {
 		return "", fmt.Errorf("binary not found after extract in %s", destDir)
 	}
-	os.Chmod(binPath, 0755)
+	if err := os.Chmod(binPath, 0755); err != nil {
+		return "", err
+	}
 
 	fmt.Println("✅ CloakBrowser installed")
-	writeVersionMarker(destDir, version)
+	if err := writeVersionMarker(destDir, version); err != nil {
+		return "", err
+	}
 	return binPath, nil
 }
 
@@ -519,21 +541,29 @@ func flattenSingleSubdir(dir string) error {
 	return os.Remove(subdir)
 }
 
-func download(dlURL, dest string) error {
+func download(dlURL, dest string) (result error) {
 	resp, err := http.Get(dlURL)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); result == nil {
+			result = closeErr
+		}
+	}()
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("download failed: HTTP %d", resp.StatusCode)
 	}
 
-	out, err := os.Create(dest)
+	out, err := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
+	defer func() {
+		if closeErr := out.Close(); result == nil {
+			result = closeErr
+		}
+	}()
 
 	total := resp.ContentLength
 	var written int64
@@ -546,7 +576,9 @@ func download(dlURL, dest string) error {
 			}
 			written += int64(n)
 			if total > 0 {
-				fmt.Fprintf(os.Stderr, "\r  %d / %d MB (%.0f%%)", written>>20, total>>20, float64(written)/float64(total)*100)
+				if _, err := fmt.Fprintf(os.Stderr, "\r  %d / %d MB (%.0f%%)", written>>20, total>>20, float64(written)/float64(total)*100); err != nil {
+					return err
+				}
 			}
 		}
 		if readErr == io.EOF {
@@ -556,8 +588,8 @@ func download(dlURL, dest string) error {
 			return readErr
 		}
 	}
-	fmt.Fprintln(os.Stderr)
-	return nil
+	_, result = fmt.Fprintln(os.Stderr)
+	return result
 }
 
 func extract(file, destDir string) error {

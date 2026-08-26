@@ -47,6 +47,23 @@ func TestEffectiveProxyEnforcedModeUsesGroupOverride(t *testing.T) {
 	}
 }
 
+func TestGroupStoreUsesPrivateDirectory(t *testing.T) {
+	dir := filepath.Join(t.TempDir(), "groups")
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := NewStore(dir); err != nil {
+		t.Fatal(err)
+	}
+	info, err := os.Stat(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := info.Mode().Perm(); got != 0700 {
+		t.Fatalf("groups directory mode = %04o, want 0700", got)
+	}
+}
+
 func TestGroupStorePersistsAndImports(t *testing.T) {
 	dir := t.TempDir()
 	store, err := NewStore(dir)

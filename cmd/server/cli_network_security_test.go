@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -107,5 +109,40 @@ func TestMetadataBackupRejectsExternalBeforeTokenUse(t *testing.T) {
 	}
 	if err := restoreMetadataBackup(global, "/nonexistent/backup.tar.gz", "http://example.invalid", "synthetic-token"); err == nil {
 		t.Fatal("restoreMetadataBackup accepted external URL")
+	}
+}
+
+func TestMetadataBackupUsesPrivateOutput(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost || r.URL.Path != "/api/backup" {
+			t.Fatalf("unexpected request: %s %s", r.Method, r.URL.Path)
+		}
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte("synthetic-backup"))
+	}))
+	defer server.Close()
+
+	outputDir := filepath.Join(t.TempDir(), "nested", "backups")
+	output := filepath.Join(outputDir, "metadata.zip")
+	global := cliGlobal{baseDir: t.TempDir(), configPath: "/nonexistent/config.json"}
+	if err := createMetadataBackup(global, output, server.URL, "synthetic-token"); err != nil {
+		t.Fatal(err)
+	}
+	if info, err := os.Stat(outputDir); err != nil {
+		t.Fatal(err)
+	} else if got := info.Mode().Perm(); got != 0700 {
+		t.Fatalf("metadata output directory mode = %04o, want 0700", got)
+	}
+	if info, err := os.Stat(output); err != nil {
+		t.Fatal(err)
+	} else if got := info.Mode().Perm(); got != 0600 {
+		t.Fatalf("metadata output mode = %04o, want 0600", got)
+	}
+	data, err := os.ReadFile(output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(data) != "synthetic-backup" {
+		t.Fatalf("metadata output = %q", data)
 	}
 }
