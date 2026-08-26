@@ -1,0 +1,12 @@
+PACKAGE_VERIFY_UTC=2026-08-26T02:10:22Z
+ZIP_EXTRACTION=PASS
+TAR_EXTRACTION=PASS
+BUNDLE_VERIFY=PASS
+FRESH_CLONE_HEAD=cba6beb496e0c56f98f03bdf1dc3efbd7adb3809
+GIT_FSCK_FULL_EXIT_CODE=0
+evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-delta-cba6beb.bundle is okay
+The bundle contains this ref:
+cba6beb496e0c56f98f03bdf1dc3efbd7adb3809 refs/heads/validation/operational-v1
+The bundle requires this ref:
+45b2fc1e1c2481a6ac6a13ba18cb7ad6bcc437f4 
+The bundle uses this hash algorithm: sha1
