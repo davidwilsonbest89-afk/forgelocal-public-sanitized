@@ -1,0 +1,35 @@
+G304	MEDIUM	HIGH	cmd/server/cli.go	572	Potential file inclusion via variable
+G304	MEDIUM	HIGH	cmd/server/cli.go	856	Potential file inclusion via variable
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	453	Path traversal via taint analysis
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	577	Path traversal via taint analysis
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	587	Path traversal via taint analysis
+G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	590	Potential file inclusion via variable
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	590	Path traversal via taint analysis
+G122	HIGH	MEDIUM	cmd/server/cli_runtime.go	645	Filesystem operation in filepath.Walk/WalkDir callback uses race-prone path; consider root-scoped APIs (e.g. os.Root) to prevent symlink TOCTOU traversal
+G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	645	Potential file inclusion via variable
+G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	679	Potential file inclusion via variable
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	679	Path traversal via taint analysis
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	718	Path traversal via taint analysis
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	728	Path traversal via taint analysis
+G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	731	Potential file inclusion via variable
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	731	Path traversal via taint analysis
+G305	MEDIUM	HIGH	cmd/server/cli_runtime.go	748	File traversal when extracting zip/tar archive
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	752	Path traversal via taint analysis
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	853	Path traversal via taint analysis
+G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	856	Potential file inclusion via variable
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	856	Path traversal via taint analysis
+G304	MEDIUM	HIGH	cmd/server/cli_runtime.go	884	Potential file inclusion via variable
+G703	HIGH	HIGH	cmd/server/cli_runtime.go	884	Path traversal via taint analysis
+G304	MEDIUM	HIGH	internal/api/artifacts.go	31	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/api/router.go	831	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/browser/archive_security.go	141	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/browser/archive_security.go	168	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/browser/archive_security.go	209	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/browser/download.go	134	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/browser/download.go	516	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/browser/launch_chromium.go	201	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/config/config.go	90	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/config/config.go	169	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/fingerprint/pool.go	25	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/mcp/advanced_tools.go	481	Potential file inclusion via variable
+G304	MEDIUM	HIGH	internal/workflow/engine.go	52	Potential file inclusion via variable
