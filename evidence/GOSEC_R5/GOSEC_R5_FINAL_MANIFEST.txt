@@ -1,0 +1,46 @@
+package=forgelocal-gosec-r5-final-v1
+package_version=v1
+branch=validation/gosec-r5
+base_head=096e3f591f273801cf735669d7a135daf6a7f601
+source_head=54ed3a4964806eeb4880c9ebb3949d410c335174
+evidence_head=517b55557297a6372bb5ef2dcb6d8c2b80a8db70
+bundle=evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle
+bundle_scope=delta_from_517b55557297a6372bb5ef2dcb6d8c2b80a8db70
+bundle_creation=git_bundle_temp_ref_with_pack_compression_0_verified
+manifest_non_autoreferential=true
+verification_scope=source-only ./cmd/... ./internal/...; synthetic local fixtures only
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+package_commit=recorded_after_artifact_commit; not used as package input
+--- included_files ---
+evidence/GOSEC_R5/BASELINE_DISCOVERY_RAW.log
+evidence/GOSEC_R5/CHANGELOG.md
+evidence/GOSEC_R5/GOSEC_R5_BASELINE_MATRIX.md
+evidence/GOSEC_R5/GOSEC_R5_BASELINE_MATRIX.tsv
+evidence/GOSEC_R5/GOSEC_R5_BASELINE_RAW.log
+evidence/GOSEC_R5/GOSEC_R5_FINAL_REPORT.md
+evidence/GOSEC_R5/GOSEC_R5_THREAT_MODEL.md
+evidence/GOSEC_R5/LINEAGE_RECONCILIATION_RAW.log
+evidence/GOSEC_R5/R5_A_CLASSIFICATION.tsv
+evidence/GOSEC_R5/R5_A_FINAL_RAW.log
+evidence/GOSEC_R5/R5_A_REPORT.md
+evidence/GOSEC_R5/R5_A_REPORT_CORRECTED.md
+evidence/GOSEC_R5/R5_B_BASELINE_DISCOVERY_RAW.log
+evidence/GOSEC_R5/R5_B_CLASSIFICATION.tsv
+evidence/GOSEC_R5/R5_B_FINAL_RAW.log
+evidence/GOSEC_R5/R5_B_REPORT.md
+evidence/GOSEC_R5/R5_B_RERUN_RAW.log
+evidence/GOSEC_R5/R5_C_BASELINE_DISCOVERY_RAW.log
+evidence/GOSEC_R5/R5_C_CLASSIFICATION.tsv
+evidence/GOSEC_R5/R5_C_FINAL_RAW.log
+evidence/GOSEC_R5/R5_C_REPORT.md
+evidence/GOSEC_R5/R5_FINAL_GATES_RAW.log
+evidence/GOSEC_R5/R5_GOVULNCHECK_CORRECTED_RAW.log
+evidence/GOSEC_R5/TODO.md
+evidence/GOSEC_R5/build_r5_matrix.py
+evidence/GOSEC_R5/gosec_after_r5a.json
+evidence/GOSEC_R5/gosec_after_r5b.json
+evidence/GOSEC_R5/gosec_after_r5c.json
+evidence/GOSEC_R5/gosec_r5_final.json
+evidence/GOSEC_R5/gosec_source_only_baseline.json
+evidence/GOSEC_R5/R5_BUNDLE_VERIFY_RAW.log
+evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle
