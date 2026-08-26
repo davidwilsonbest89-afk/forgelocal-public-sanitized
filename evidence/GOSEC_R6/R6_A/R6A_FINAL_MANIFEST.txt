@@ -1,0 +1,12 @@
+package=forgelocal-gosec-r6a-final-v1
+branch=validation/gosec-r6
+source_head=142477ae0d576eae937b16660899fd973d6f2464
+evidence_head=77ed72b31695d4beaa49e6697f4e0c5419849364
+base_head=142477ae0d576eae937b16660899fd973d6f2464
+bundle=evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-delta-142477a-77ed72b.bundle
+bundle_scope=delta_from_77ed72b31695d4beaa49e6697f4e0c5419849364
+bundle_creation=git_bundle_temp_ref_pack_compression_0_verified
+manifest_non_autoreferential=true
+verification_scope=R6-A source-only tests and Gosec; synthetic local fixtures only
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+package_commit=recorded_after_artifact_commit; not used as package input
