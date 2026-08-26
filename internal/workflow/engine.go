@@ -274,6 +274,12 @@ func validateWorkflowURL(raw string) (*url.URL, error) {
 	if u.User != nil || u.Fragment != "" {
 		return nil, fmt.Errorf("workflow API URL must not contain userinfo or fragment")
 	}
+	if u.RawQuery != "" {
+		values, queryErr := url.ParseQuery(u.RawQuery)
+		if queryErr != nil || len(values) != 1 || len(values["full_page"]) != 1 || (values.Get("full_page") != "true" && values.Get("full_page") != "false") {
+			return nil, fmt.Errorf("workflow API URL query is not allowlisted")
+		}
+	}
 	host := strings.Trim(u.Hostname(), "[]")
 	if host != "localhost" {
 		ip := net.ParseIP(host)
