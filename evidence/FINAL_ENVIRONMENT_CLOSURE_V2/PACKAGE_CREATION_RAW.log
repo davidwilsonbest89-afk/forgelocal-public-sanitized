@@ -1,0 +1,17 @@
+=== PACKAGE DELTA REBUILD FINAL ===
+2026-08-26T19:07:15+00:00
+source_commit=da813e5adabe983df0ff499820417a2c2fb24b9b
+base_commit=4e944670b8f3b883bb673363a20a4e6c7c20c25a
+dfd008b4d7df4e73be0496a15124062e2152126238126b3135fbe9d62e3fd14c  /home/ubuntu/forgelocal-final-environment-closure/repo/evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.zip
+25530d8a07da93fee1b19d14a635f02e662257e76bdf70f7610631c0590b909e  /home/ubuntu/forgelocal-final-environment-closure/repo/evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.tar.gz
+0db4d4e9df7472003eeca6cc4df434790b00bdaa10728065fab1d32e6a4be556  /home/ubuntu/forgelocal-final-environment-closure/repo/evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle
+forgelocal-final-environment-closure-v2.zip: OK
+forgelocal-final-environment-closure-v2.tar.gz: OK
+forgelocal-final-environment-closure-v2.bundle: OK
+/home/ubuntu/forgelocal-final-environment-closure/repo/evidence/FINAL_ENVIRONMENT_CLOSURE_V2_PACKAGE/forgelocal-final-environment-closure-v2.bundle is okay
+The bundle contains this ref:
+da813e5adabe983df0ff499820417a2c2fb24b9b HEAD
+The bundle requires this ref:
+4e944670b8f3b883bb673363a20a4e6c7c20c25a 
+The bundle uses this hash algorithm: sha1
+ZIP_TAR_BUNDLE_VERIFICATION=PASS
