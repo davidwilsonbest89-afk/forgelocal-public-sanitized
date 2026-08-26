@@ -1,0 +1,218 @@
+UTC=2026-08-26T12:18:20Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+=== AUTH ===
+[0;1;39mgithub.com[0m
+  [0;32m✓[0m Logged in to github.com account [0;1;39mdavidwilsonbest89-afk[0m (GH_TOKEN)
+  - Active account: [0;1;39mtrue[0m
+  - Git operations protocol: [0;1;39mhttps[0m
+  - Token: [0;1;39mghu_************************************[0m
+
+  [0;32m✓[0m Logged in to github.com account [0;1;39mdavidwilsonbest89-afk[0m (/home/ubuntu/.config/gh/hosts.yml)
+  - Active account: [0;1;39mfalse[0m
+  - Git operations protocol: [0;1;39mhttps[0m
+  - Token: [0;1;39mghu_************************************[0m
+GH_AUTH_EXIT_CODE=0
+=== REMOTE ===
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch) [blob:none]
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
+davidwilsonbest89-afk/forgelocal-public-sanitized permissions={"admin":true,"maintain":true,"pull":true,"push":true,"triage":true}
+GH_WRITE_CHECK_EXIT_CODE=0
+=== LOCAL STATUS ===
+BRANCH=validation/gosec-r4
+LOCAL_HEAD=2d528eae1788c4e05bd51d1fa7235ecc3200c66c
+[31m??[m evidence/GOSEC_R5/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+TAGS=
+=== DYNAMIC R4 HEAD ===
+R4_REMOTE_HEAD=2d528eae1788c4e05bd51d1fa7235ecc3200c66c
+R3_REMOTE_HEAD=80048180d4ec5241c08146ade698d53a3f29454d
+=== ENV ===
+Linux db71298c03d4 6.18.38+ #1 SMP PREEMPT_DYNAMIC Thu Aug  6 06:48:14 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+go version go1.25.13 linux/amd64
+local
+v22.13.0
+11.20.0
+git version 2.43.0
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+DISK=/dev/root        48G   47G  1.1G  98% /
+R4_EVIDENCE_SIZE=3.3M	evidence/GOSEC_R4
+SMOKE_STATUS=NOT_VISIBLE
+=== FRESH CLONE ===
+Cloning into '/tmp/gosec_r5_r4_clone_1787746708'...
+Updating files:   0% (2/2132)Updating files:   1% (22/2132)Updating files:   2% (43/2132)Updating files:   3% (64/2132)Updating files:   4% (86/2132)Updating files:   5% (107/2132)Updating files:   6% (128/2132)Updating files:   7% (150/2132)Updating files:   8% (171/2132)Updating files:   9% (192/2132)Updating files:  10% (214/2132)Updating files:  11% (235/2132)Updating files:  12% (256/2132)Updating files:  13% (278/2132)Updating files:  14% (299/2132)Updating files:  15% (320/2132)Updating files:  16% (342/2132)Updating files:  17% (363/2132)Updating files:  18% (384/2132)Updating files:  19% (406/2132)Updating files:  20% (427/2132)Updating files:  20% (428/2132)Updating files:  21% (448/2132)Updating files:  22% (470/2132)Updating files:  23% (491/2132)Updating files:  24% (512/2132)Updating files:  25% (533/2132)Updating files:  26% (555/2132)Updating files:  27% (576/2132)Updating files:  28% (597/2132)Updating files:  29% (619/2132)Updating files:  30% (640/2132)Updating files:  31% (661/2132)Updating files:  32% (683/2132)Updating files:  33% (704/2132)Updating files:  34% (725/2132)Updating files:  35% (747/2132)Updating files:  36% (768/2132)Updating files:  37% (789/2132)Updating files:  38% (811/2132)Updating files:  39% (832/2132)Updating files:  40% (853/2132)Updating files:  41% (875/2132)Updating files:  42% (896/2132)Updating files:  43% (917/2132)Updating files:  44% (939/2132)Updating files:  45% (960/2132)Updating files:  46% (981/2132)Updating files:  47% (1003/2132)Updating files:  48% (1024/2132)Updating files:  49% (1045/2132)Updating files:  50% (1066/2132)Updating files:  51% (1088/2132)Updating files:  52% (1109/2132)Updating files:  53% (1130/2132)Updating files:  54% (1152/2132)Updating files:  55% (1173/2132)Updating files:  56% (1194/2132)Updating files:  57% (1216/2132)Updating files:  58% (1237/2132)Updating files:  59% (1258/2132)Updating files:  60% (1280/2132)Updating files:  61% (1301/2132)Updating files:  62% (1322/2132)Updating files:  63% (1344/2132)Updating files:  64% (1365/2132)Updating files:  65% (1386/2132)Updating files:  66% (1408/2132)Updating files:  67% (1429/2132)Updating files:  68% (1450/2132)Updating files:  69% (1472/2132)Updating files:  70% (1493/2132)Updating files:  71% (1514/2132)Updating files:  72% (1536/2132)Updating files:  73% (1557/2132)Updating files:  74% (1578/2132)Updating files:  75% (1599/2132)Updating files:  76% (1621/2132)Updating files:  77% (1642/2132)Updating files:  78% (1663/2132)Updating files:  79% (1685/2132)Updating files:  80% (1706/2132)Updating files:  81% (1727/2132)Updating files:  82% (1749/2132)Updating files:  83% (1770/2132)Updating files:  84% (1791/2132)Updating files:  85% (1813/2132)Updating files:  86% (1834/2132)Updating files:  87% (1855/2132)Updating files:  88% (1877/2132)Updating files:  89% (1898/2132)Updating files:  90% (1919/2132)Updating files:  91% (1941/2132)Updating files:  91% (1947/2132)Updating files:  92% (1962/2132)Updating files:  93% (1983/2132)Updating files:  94% (2005/2132)Updating files:  95% (2026/2132)Updating files:  96% (2047/2132)Updating files:  97% (2069/2132)Updating files:  98% (2090/2132)Updating files:  99% (2111/2132)Updating files: 100% (2132/2132)Updating files: 100% (2132/2132), done.
+CLONE_EXIT_CODE=0
+Already on 'validation/gosec-r4'
+Your branch is up to date with 'origin/validation/gosec-r4'.
+CHECKOUT_EXIT_CODE=0
+CLONE_HEAD=2d528eae1788c4e05bd51d1fa7235ecc3200c66c
+HEAD_EQUALITY_EXIT_CODE=0
+=== LINEAGE ===
+SOURCE_HEAD_ANCESTOR_EXIT_CODE=1
+PACKAGE_COMMIT_ANCESTOR_EXIT_CODE=1
+R3_HEAD_ANCESTOR_EXIT_CODE=1
+=== PACKAGE HASHES ===
+evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip: OK
+ZIP_SIDECAR_EXIT_CODE=0
+evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz: OK
+TAR_SIDECAR_EXIT_CODE=0
+=== MANIFEST ===
+package=forgelocal-gosec-r4-final-v1
+package_version=v1
+branch=validation/gosec-r4
+base_head=80048180d4ec5241c08146ade698d53a3f29454d
+source_head=3cd3ac0fb9eb684e61eafb8746c69dda9781df64
+evidence_head=75edd5480a1d283046b54445c150f0a220e07d66
+bundle=evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle
+manifest_non_autoreferential=true
+verification_scope=source-only ./cmd/... ./internal/...; synthetic local fixtures only
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+--- included_files ---
+evidence/GOSEC_R4/BASELINE_DISCOVERY_RAW.log
+evidence/GOSEC_R4/CHANGELOG.md
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.md
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.tsv
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_RAW.log
+evidence/GOSEC_R4/GOSEC_R4_FINAL_REPORT.md
+evidence/GOSEC_R4/GOSEC_R4_MATRIX_BUILD_RAW.log
+evidence/GOSEC_R4/GOSEC_R4_THREAT_MODEL.md
+evidence/GOSEC_R4/R4_A_CLEANUP_SCAN_RAW.log
+evidence/GOSEC_R4/R4_A_FINAL_CONFIRMATION_RAW.log
+evidence/GOSEC_R4/R4_A_FINAL_SCAN_RAW.log
+evidence/GOSEC_R4/R4_A_PROGRESS_RAW.log
+evidence/GOSEC_R4/R4_B_PROGRESS_RAW.log
+evidence/GOSEC_R4/R4_C_CLASSIFICATION.tsv
+evidence/GOSEC_R4/R4_C_FINAL_RAW.log
+evidence/GOSEC_R4/R4_C_RESULT.md
+evidence/GOSEC_R4/R4_D_CLASSIFICATION.tsv
+evidence/GOSEC_R4/R4_D_RESULT.md
+evidence/GOSEC_R4/R4_ENVIRONMENT_PREFLIGHTS.md
+evidence/GOSEC_R4/R4_ENV_PREFLIGHTS_RAW.log
+evidence/GOSEC_R4/R4_FINAL_SCANS_RAW.log
+evidence/GOSEC_R4/R4_OSV_CORRECTED_RAW.log
+evidence/GOSEC_R4/TODO.md
+evidence/GOSEC_R4/build_r4_risk_matrix.py
+evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle
+evidence/GOSEC_R4/gosec_after_r4_final.json
+evidence/GOSEC_R4/gosec_after_r4a.json
+evidence/GOSEC_R4/gosec_after_r4a_cleanup.json
+evidence/GOSEC_R4/gosec_after_r4a_final.json
+evidence/GOSEC_R4/gosec_after_r4a_final2.json
+evidence/GOSEC_R4/gosec_after_r4a_progress.json
+evidence/GOSEC_R4/gosec_after_r4b_progress.json
+evidence/GOSEC_R4/gosec_after_r4b_root.json
+evidence/GOSEC_R4/gosec_after_r4c_bounded.json
+evidence/GOSEC_R4/gosec_after_r4c_final.json
+evidence/GOSEC_R4/gosec_after_r4c_g107.json
+evidence/GOSEC_R4/gosec_source_only_baseline.json
+evidence/GOSEC_R4/osv_go_r4_corrected.json
+evidence/GOSEC_R4/osv_pnpm_r4_corrected.json
+evidence/GOSEC_R4/print_g104_remaining.py
+evidence/GOSEC_R4/print_r4b_remaining.py
+evidence/GOSEC_R4/print_r4c_remaining.py
+MANIFEST_SELF_REFERENCE_COUNT=0
+=== ARCHIVE TESTS ===
+ZIP_TEST_EXIT_CODE=0
+TAR_TEST_EXIT_CODE=0
+ZIP_EXTRACT_EXIT_CODE=0
+TAR_EXTRACT_EXIT_CODE=0
+evidence/GOSEC_R4/BASELINE_DISCOVERY_RAW.log: OK
+evidence/GOSEC_R4/CHANGELOG.md: OK
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.md: OK
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.tsv: OK
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_RAW.log: OK
+evidence/GOSEC_R4/GOSEC_R4_FINAL_MANIFEST.txt: OK
+evidence/GOSEC_R4/GOSEC_R4_FINAL_REPORT.md: OK
+evidence/GOSEC_R4/GOSEC_R4_MATRIX_BUILD_RAW.log: OK
+evidence/GOSEC_R4/GOSEC_R4_THREAT_MODEL.md: OK
+evidence/GOSEC_R4/R4_A_CLEANUP_SCAN_RAW.log: OK
+evidence/GOSEC_R4/R4_A_FINAL_CONFIRMATION_RAW.log: OK
+evidence/GOSEC_R4/R4_A_FINAL_SCAN_RAW.log: OK
+evidence/GOSEC_R4/R4_A_PROGRESS_RAW.log: OK
+evidence/GOSEC_R4/R4_B_PROGRESS_RAW.log: OK
+evidence/GOSEC_R4/R4_C_CLASSIFICATION.tsv: OK
+evidence/GOSEC_R4/R4_C_FINAL_RAW.log: OK
+evidence/GOSEC_R4/R4_C_RESULT.md: OK
+evidence/GOSEC_R4/R4_D_CLASSIFICATION.tsv: OK
+evidence/GOSEC_R4/R4_D_RESULT.md: OK
+evidence/GOSEC_R4/R4_ENVIRONMENT_PREFLIGHTS.md: OK
+evidence/GOSEC_R4/R4_ENV_PREFLIGHTS_RAW.log: OK
+evidence/GOSEC_R4/R4_FINAL_SCANS_RAW.log: OK
+evidence/GOSEC_R4/R4_OSV_CORRECTED_RAW.log: OK
+evidence/GOSEC_R4/TODO.md: OK
+evidence/GOSEC_R4/build_r4_risk_matrix.py: OK
+evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle: OK
+evidence/GOSEC_R4/gosec_after_r4_final.json: OK
+evidence/GOSEC_R4/gosec_after_r4a.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_cleanup.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_final.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_final2.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_progress.json: OK
+evidence/GOSEC_R4/gosec_after_r4b_progress.json: OK
+evidence/GOSEC_R4/gosec_after_r4b_root.json: OK
+evidence/GOSEC_R4/gosec_after_r4c_bounded.json: OK
+evidence/GOSEC_R4/gosec_after_r4c_final.json: OK
+evidence/GOSEC_R4/gosec_after_r4c_g107.json: OK
+evidence/GOSEC_R4/gosec_source_only_baseline.json: OK
+evidence/GOSEC_R4/osv_go_r4_corrected.json: OK
+evidence/GOSEC_R4/osv_pnpm_r4_corrected.json: OK
+evidence/GOSEC_R4/print_g104_remaining.py: OK
+evidence/GOSEC_R4/print_r4b_remaining.py: OK
+evidence/GOSEC_R4/print_r4c_remaining.py: OK
+ZIP_INTERNAL_HASH_EXIT_CODE=0
+evidence/GOSEC_R4/BASELINE_DISCOVERY_RAW.log: OK
+evidence/GOSEC_R4/CHANGELOG.md: OK
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.md: OK
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.tsv: OK
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_RAW.log: OK
+evidence/GOSEC_R4/GOSEC_R4_FINAL_MANIFEST.txt: OK
+evidence/GOSEC_R4/GOSEC_R4_FINAL_REPORT.md: OK
+evidence/GOSEC_R4/GOSEC_R4_MATRIX_BUILD_RAW.log: OK
+evidence/GOSEC_R4/GOSEC_R4_THREAT_MODEL.md: OK
+evidence/GOSEC_R4/R4_A_CLEANUP_SCAN_RAW.log: OK
+evidence/GOSEC_R4/R4_A_FINAL_CONFIRMATION_RAW.log: OK
+evidence/GOSEC_R4/R4_A_FINAL_SCAN_RAW.log: OK
+evidence/GOSEC_R4/R4_A_PROGRESS_RAW.log: OK
+evidence/GOSEC_R4/R4_B_PROGRESS_RAW.log: OK
+evidence/GOSEC_R4/R4_C_CLASSIFICATION.tsv: OK
+evidence/GOSEC_R4/R4_C_FINAL_RAW.log: OK
+evidence/GOSEC_R4/R4_C_RESULT.md: OK
+evidence/GOSEC_R4/R4_D_CLASSIFICATION.tsv: OK
+evidence/GOSEC_R4/R4_D_RESULT.md: OK
+evidence/GOSEC_R4/R4_ENVIRONMENT_PREFLIGHTS.md: OK
+evidence/GOSEC_R4/R4_ENV_PREFLIGHTS_RAW.log: OK
+evidence/GOSEC_R4/R4_FINAL_SCANS_RAW.log: OK
+evidence/GOSEC_R4/R4_OSV_CORRECTED_RAW.log: OK
+evidence/GOSEC_R4/TODO.md: OK
+evidence/GOSEC_R4/build_r4_risk_matrix.py: OK
+evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle: OK
+evidence/GOSEC_R4/gosec_after_r4_final.json: OK
+evidence/GOSEC_R4/gosec_after_r4a.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_cleanup.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_final.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_final2.json: OK
+evidence/GOSEC_R4/gosec_after_r4a_progress.json: OK
+evidence/GOSEC_R4/gosec_after_r4b_progress.json: OK
+evidence/GOSEC_R4/gosec_after_r4b_root.json: OK
+evidence/GOSEC_R4/gosec_after_r4c_bounded.json: OK
+evidence/GOSEC_R4/gosec_after_r4c_final.json: OK
+evidence/GOSEC_R4/gosec_after_r4c_g107.json: OK
+evidence/GOSEC_R4/gosec_source_only_baseline.json: OK
+evidence/GOSEC_R4/osv_go_r4_corrected.json: OK
+evidence/GOSEC_R4/osv_pnpm_r4_corrected.json: OK
+evidence/GOSEC_R4/print_g104_remaining.py: OK
+evidence/GOSEC_R4/print_r4b_remaining.py: OK
+evidence/GOSEC_R4/print_r4c_remaining.py: OK
+TAR_INTERNAL_HASH_EXIT_CODE=0
+=== BUNDLE ===
+evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle is okay
+The bundle contains this ref:
+75edd5480a1d283046b54445c150f0a220e07d66 HEAD
+The bundle requires this ref:
+80048180d4ec5241c08146ade698d53a3f29454d 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+=== FSCK AND DIFF ===
+FSCK_EXIT_CODE=0
+DIFF_CHECK_EXIT_CODE=0
+=== PHASE0 VERDICT ===
+PHASE0_VERDICT=PASS_R4_LINEAGE_PACKAGE_VERIFIED

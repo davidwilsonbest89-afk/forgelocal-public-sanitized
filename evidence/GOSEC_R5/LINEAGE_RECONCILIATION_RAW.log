@@ -1,0 +1,123 @@
+UTC=2026-08-26T12:20:03Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+R4_BRANCH=validation/gosec-r4
+R4_HEAD=2d528eae1788c4e05bd51d1fa7235ecc3200c66c
+R3_BRANCH=validation/operational-v1
+R3_HEAD=80048180d4ec5241c08146ade698d53a3f29454d
+CHECK=R3_HEAD COMMIT=80048180d4ec5241c08146ade698d53a3f29454d
+commit
+ANCESTOR_EXIT_CODE=0
+CHECK=R4_SOURCE COMMIT=3cd3ac0fb9eb684e61eafb8746c69dda9781df64
+commit
+ANCESTOR_EXIT_CODE=0
+CHECK=R4_EVIDENCE COMMIT=75edd5480a1d283046b54445c150f0a220e07d66
+commit
+ANCESTOR_EXIT_CODE=0
+CHECK=R4_PACKAGE COMMIT=6c949a7c093f7f59ebedc79c084b53389cd649c7
+commit
+ANCESTOR_EXIT_CODE=0
+CHECK=R4_PUBLIC COMMIT=681b24f47748285110e2b29ea7ffc2b7f2b14eb4
+commit
+ANCESTOR_EXIT_CODE=0
+CHECK=R4_HANDOVER COMMIT=6167906badf6cb63e5c60dbcdc79a0d34a057434
+commit
+ANCESTOR_EXIT_CODE=0
+CHECK=R4_FINAL COMMIT=2d528eae1788c4e05bd51d1fa7235ecc3200c66c
+commit
+ANCESTOR_EXIT_CODE=0
+=== GITHUB COMPARE R3 TO R4 ===
+[1;38m{[m
+[1;34m"ahead_by"[m[1;38m:[m 9[1;38m,[m
+[1;34m"behind_by"[m[1;38m:[m 0[1;38m,[m
+[1;34m"commits"[m[1;38m:[m [32m"78cf74eddbda08c9d2be44f96534be18d86524ab,dac05e6d597e98116e90176a69203223354f7aca,53c5e7a9652b4a01e87a6aac729218547fe158a1,3cd3ac0fb9eb684e61eafb8746c69dda9781df64,75edd5480a1d283046b54445c150f0a220e07d66,6c949a7c093f7f59ebedc79c084b53389cd649c7,681b24f47748285110e2b29ea7ffc2b7f2b14eb4,6167906badf6cb63e5c60dbcdc79a0d34a057434,2d528eae1788c4e05bd51d1fa7235ecc3200c66c"[m[1;38m,[m
+[1;34m"status"[m[1;38m:[m [32m"ahead"[m[1;38m,[m
+[1;34m"total_commits"[m[1;38m:[m 9
+[1;38m}[m
+=== COMMIT PATHS ===
+COMMIT=78cf74eddbda08c9d2be44f96534be18d86524ab
+evidence/GOSEC_R4/BASELINE_DISCOVERY_RAW.log
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.md
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.tsv
+evidence/GOSEC_R4/GOSEC_R4_BASELINE_RAW.log
+evidence/GOSEC_R4/GOSEC_R4_MATRIX_BUILD_RAW.log
+evidence/GOSEC_R4/GOSEC_R4_THREAT_MODEL.md
+evidence/GOSEC_R4/build_r4_risk_matrix.py
+evidence/GOSEC_R4/gosec_source_only_baseline.json
+COMMIT=dac05e6d597e98116e90176a69203223354f7aca
+cmd/server/main.go
+internal/api/dashboard.go
+internal/api/router.go
+internal/browser/download.go
+internal/browser/launch_chromium.go
+internal/browser/launch_firefox.go
+internal/browser/manager.go
+internal/browser/socks5relay.go
+internal/fingerprint/pool.go
+internal/humanize/keyboard.go
+internal/mcp/protocol.go
+internal/mcp/server.go
+internal/mcp/stdio.go
+COMMIT=53c5e7a9652b4a01e87a6aac729218547fe158a1
+cmd/server/cli_backup_security_test.go
+cmd/server/cli_runtime.go
+internal/mcp/advanced_tools.go
+internal/mcp/server_test.go
+COMMIT=3cd3ac0fb9eb684e61eafb8746c69dda9781df64
+cmd/server/cli_runtime.go
+internal/browser/archive_security.go
+internal/browser/download.go
+internal/browser/download_test.go
+COMMIT=75edd5480a1d283046b54445c150f0a220e07d66
+evidence/GOSEC_R4/CHANGELOG.md
+evidence/GOSEC_R4/GOSEC_R4_FINAL_REPORT.md
+evidence/GOSEC_R4/R4_A_CLEANUP_SCAN_RAW.log
+evidence/GOSEC_R4/R4_A_FINAL_CONFIRMATION_RAW.log
+evidence/GOSEC_R4/R4_A_FINAL_SCAN_RAW.log
+evidence/GOSEC_R4/R4_A_PROGRESS_RAW.log
+evidence/GOSEC_R4/R4_B_PROGRESS_RAW.log
+evidence/GOSEC_R4/R4_C_CLASSIFICATION.tsv
+evidence/GOSEC_R4/R4_C_FINAL_RAW.log
+evidence/GOSEC_R4/R4_C_RESULT.md
+evidence/GOSEC_R4/R4_D_CLASSIFICATION.tsv
+evidence/GOSEC_R4/R4_D_RESULT.md
+evidence/GOSEC_R4/R4_ENVIRONMENT_PREFLIGHTS.md
+evidence/GOSEC_R4/R4_ENV_PREFLIGHTS_RAW.log
+evidence/GOSEC_R4/R4_FINAL_SCANS_RAW.log
+evidence/GOSEC_R4/R4_OSV_CORRECTED_RAW.log
+evidence/GOSEC_R4/TODO.md
+evidence/GOSEC_R4/gosec_after_r4_final.json
+evidence/GOSEC_R4/gosec_after_r4a.json
+evidence/GOSEC_R4/gosec_after_r4a_cleanup.json
+evidence/GOSEC_R4/gosec_after_r4a_final.json
+evidence/GOSEC_R4/gosec_after_r4a_final2.json
+evidence/GOSEC_R4/gosec_after_r4a_progress.json
+evidence/GOSEC_R4/gosec_after_r4b_progress.json
+evidence/GOSEC_R4/gosec_after_r4b_root.json
+evidence/GOSEC_R4/gosec_after_r4c_bounded.json
+evidence/GOSEC_R4/gosec_after_r4c_final.json
+evidence/GOSEC_R4/gosec_after_r4c_g107.json
+evidence/GOSEC_R4/osv_go_r4_corrected.json
+evidence/GOSEC_R4/osv_pnpm_r4_corrected.json
+evidence/GOSEC_R4/print_g104_remaining.py
+evidence/GOSEC_R4/print_r4b_remaining.py
+evidence/GOSEC_R4/print_r4c_remaining.py
+COMMIT=6c949a7c093f7f59ebedc79c084b53389cd649c7
+evidence/GOSEC_R4/GOSEC_R4_FILES.sha256
+evidence/GOSEC_R4/GOSEC_R4_FINAL_MANIFEST.txt
+evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle
+evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz
+evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz.sha256
+evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip
+evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip.sha256
+COMMIT=681b24f47748285110e2b29ea7ffc2b7f2b14eb4
+evidence/GOSEC_R4/PUBLIC_R4_VERIFICATION_CORRECTED.log
+evidence/GOSEC_R4/PUBLIC_R4_VERIFICATION_RAW.log
+evidence/GOSEC_R4/PUBLIC_R4_VERIFICATION_RETRY_RAW.log
+COMMIT=6167906badf6cb63e5c60dbcdc79a0d34a057434
+evidence/GOSEC_R4/R4_FINAL_HANDOVER.md
+evidence/GOSEC_R4/R4_FINAL_HANDOVER_RAW.log
+COMMIT=2d528eae1788c4e05bd51d1fa7235ecc3200c66c
+evidence/GOSEC_R4/R4_POST_HANDOVER_CHECK_RAW.log
+SEED_CLONE_ATTEMPT=FAILED_DUE_TO_DISK_FULL_AND_CLEANED_TEMPORARIES
+exit
