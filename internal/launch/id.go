@@ -2,6 +2,7 @@ package launch
 
 import (
 	"crypto/rand"
+	"encoding/binary"
 	"encoding/hex"
 	"sync"
 	"sync/atomic"
@@ -46,13 +47,11 @@ func newID() string {
 		v = seq ^ (now * 0x9e3779b97f4a7c15)
 	}
 	buf := make([]byte, 16)
-	for i := 0; i < 8; i++ {
-		buf[i] = byte(v >> (56 - 8*i))
-	}
-	for i := 8; i < 16; i++ {
-		buf[i] = byte(now >> (120 - 8*i))
-	}
-	buf[0] ^= byte(seq)
-	buf[1] ^= byte(seq >> 8)
+	binary.BigEndian.PutUint64(buf[:8], v)
+	binary.BigEndian.PutUint64(buf[8:], now)
+	var seqBytes [8]byte
+	binary.BigEndian.PutUint64(seqBytes[:], seq)
+	buf[0] ^= seqBytes[7]
+	buf[1] ^= seqBytes[6]
 	return "sess-" + hex.EncodeToString(buf)[:32]
 }

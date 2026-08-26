@@ -221,7 +221,7 @@ func (m *Manager) begin(ctx context.Context, sess Session, launcher Launcher, no
 			final.State = attachFailureState(err, callerCtx)
 			final.Err = redacted(err.Error())
 		} else if st, ok := m.running[sess.ID]; ok {
-			if journalErr := m.transitionDurable(context.Background(), *st, StateStarting, StateRunning, ""); journalErr != nil {
+			if journalErr := m.transitionDurable(attachCtx, *st, StateStarting, StateRunning, ""); journalErr != nil {
 				m.failLocked(sess, journalErr, StateError)
 				final = sess
 				final.State = StateError
