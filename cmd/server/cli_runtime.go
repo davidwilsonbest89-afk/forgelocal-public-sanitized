@@ -652,7 +652,30 @@ func addPathToTar(tw *tar.Writer, baseDir, root string) error {
 	})
 }
 
+const (
+	maxRestoreFiles = 4096
+	maxRestoreBytes = 2 << 30
+)
+
+type restoreActivation struct {
+	target string
+	backup string
+	hadOld bool
+}
+
 func restoreFullBackup(baseDir, path string) error {
+	stage, err := os.MkdirTemp(baseDir, ".forgelocal-restore-")
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(stage)
+	if err := extractFullBackupToStage(stage, path); err != nil {
+		return err
+	}
+	return activateRestoreStage(baseDir, stage)
+}
+
+func extractFullBackupToStage(stage, path string) error {
 	in, err := os.Open(path)
 	if err != nil {
 		return err
@@ -665,6 +688,7 @@ func restoreFullBackup(baseDir, path string) error {
 	defer gr.Close()
 	tr := tar.NewReader(gr)
 	allowed := map[string]bool{"profiles": true, "data": true, "browsers": true, "logs": true}
+	var files, total int64
 	for {
 		header, err := tr.Next()
 		if errors.Is(err, io.EOF) {
@@ -672,6 +696,10 @@ func restoreFullBackup(baseDir, path string) error {
 		}
 		if err != nil {
 			return err
+		}
+		files++
+		if files > maxRestoreFiles {
+			return fmt.Errorf("backup contains too many entries")
 		}
 		clean, err := safeBackupPath(header.Name)
 		if err != nil {
@@ -681,47 +709,130 @@ func restoreFullBackup(baseDir, path string) error {
 		if !allowed[first] {
 			return fmt.Errorf("unexpected backup path: %s", header.Name)
 		}
-		target := filepath.Join(baseDir, clean)
+		target := filepath.Join(stage, clean)
 		switch header.Typeflag {
 		case tar.TypeDir:
-			if err := os.MkdirAll(target, os.FileMode(header.Mode)); err != nil {
+			if clean == first && header.Name != first && header.Name != first+string(os.PathSeparator) {
+				return fmt.Errorf("invalid backup root entry: %s", header.Name)
+			}
+			if err := os.MkdirAll(target, 0755); err != nil {
 				return err
 			}
-		case tar.TypeReg:
+		case tar.TypeReg, tar.TypeRegA:
+			if clean == first {
+				return fmt.Errorf("backup root must be a directory: %s", header.Name)
+			}
+			if header.Size < 0 || header.Size > maxRestoreBytes || total > maxRestoreBytes-header.Size {
+				return fmt.Errorf("backup expanded size exceeds limit")
+			}
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
 				return err
 			}
-			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, os.FileMode(header.Mode))
+			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedRestoreMode(header.Mode, 0644))
 			if err != nil {
 				return err
 			}
-			if _, err := io.Copy(out, tr); err != nil {
-				out.Close()
-				return err
+			n, copyErr := io.CopyN(out, tr, header.Size)
+			closeErr := out.Close()
+			if copyErr == nil && n != header.Size {
+				copyErr = io.ErrUnexpectedEOF
 			}
-			out.Close()
+			if copyErr != nil {
+				return copyErr
+			}
+			if closeErr != nil {
+				return closeErr
+			}
+			total += header.Size
 		case tar.TypeSymlink:
-			if _, err := safeBackupPath(header.Linkname); err != nil {
+			if filepath.IsAbs(header.Linkname) || hasPathVolume(header.Linkname) {
+				return fmt.Errorf("unsafe backup symlink target: %s", header.Linkname)
+			}
+			linkTarget := filepath.Join(filepath.Dir(clean), header.Linkname)
+			if _, err := safeBackupPath(linkTarget); err != nil {
 				return fmt.Errorf("unsafe backup symlink target: %s", header.Linkname)
 			}
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
 				return err
 			}
-			_ = os.Remove(target)
 			if err := os.Symlink(header.Linkname, target); err != nil {
 				return err
 			}
+		default:
+			return fmt.Errorf("backup entry type is not allowed: %d", header.Typeflag)
+		}
+	}
+	for _, root := range []string{"profiles", "data", "browsers", "logs"} {
+		candidate := filepath.Join(stage, root)
+		if info, err := os.Stat(candidate); err == nil && !info.IsDir() {
+			return fmt.Errorf("backup root is not a directory: %s", root)
 		}
 	}
 	return nil
 }
 
+func activateRestoreStage(baseDir, stage string) error {
+	backupRoot, err := os.MkdirTemp(baseDir, ".forgelocal-restore-backup-")
+	if err != nil {
+		return err
+	}
+	defer os.RemoveAll(backupRoot)
+	var activated []restoreActivation
+	for _, root := range []string{"profiles", "data", "browsers", "logs"} {
+		staged := filepath.Join(stage, root)
+		if _, err := os.Stat(staged); os.IsNotExist(err) {
+			continue
+		}
+		target := filepath.Join(baseDir, root)
+		backup := filepath.Join(backupRoot, root)
+		entry := restoreActivation{target: target, backup: backup}
+		if _, err := os.Lstat(target); err == nil {
+			if err := os.Rename(target, backup); err != nil {
+				return rollbackRestoreActivation(activated, err)
+			}
+			entry.hadOld = true
+		}
+		if err := os.Rename(staged, target); err != nil {
+			return rollbackRestoreActivation(append(activated, entry), err)
+		}
+		activated = append(activated, entry)
+	}
+	return nil
+}
+
+func rollbackRestoreActivation(activated []restoreActivation, cause error) error {
+	for i := len(activated) - 1; i >= 0; i-- {
+		entry := activated[i]
+		_ = os.RemoveAll(entry.target)
+		if entry.hadOld {
+			_ = os.Rename(entry.backup, entry.target)
+		}
+	}
+	return fmt.Errorf("restore activation rolled back: %w", cause)
+}
+
+func normalizedRestoreMode(mode int64, fallback os.FileMode) os.FileMode {
+	clean := os.FileMode(mode) & 0777
+	if clean == 0 {
+		return fallback
+	}
+	return clean
+}
+
 func safeBackupPath(name string) (string, error) {
+	name = strings.ReplaceAll(name, "\\\\", "/")
 	clean := filepath.Clean(name)
-	if clean == "." || strings.HasPrefix(clean, ".."+string(os.PathSeparator)) || clean == ".." || filepath.IsAbs(clean) {
+	if clean == "." || strings.HasPrefix(clean, ".."+string(os.PathSeparator)) || clean == ".." || filepath.IsAbs(clean) || hasPathVolume(name) {
 		return "", fmt.Errorf("unsafe path")
 	}
 	return clean, nil
+}
+
+func hasPathVolume(name string) bool {
+	if filepath.VolumeName(name) != "" {
+		return true
+	}
+	return len(name) >= 2 && ((name[0] >= 'A' && name[0] <= 'Z') || (name[0] >= 'a' && name[0] <= 'z')) && name[1] == ':'
 }
 
 func createMetadataBackup(global cliGlobal, output, baseURL, token string) error {

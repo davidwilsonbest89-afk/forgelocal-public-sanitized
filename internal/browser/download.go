@@ -1,9 +1,6 @@
 package browser
 
 import (
-	"archive/tar"
-	"archive/zip"
-	"compress/gzip"
 	"errors"
 	"fmt"
 	"io"
@@ -549,103 +546,18 @@ func download(dlURL, dest string) error {
 
 func extract(file, destDir string) error {
 	if strings.HasSuffix(file, ".zip") {
-		return extractZip(file, destDir)
+		return secureExtractArchive(file, destDir)
 	}
 	if strings.HasSuffix(file, ".tar.gz") {
-		return extractTarGz(file, destDir)
+		return secureExtractArchive(file, destDir)
 	}
 	return fmt.Errorf("unknown archive format: %s", file)
 }
 
 func extractZip(zipFile, destDir string) error {
-	r, err := zip.OpenReader(zipFile)
-	if err != nil {
-		return err
-	}
-	defer r.Close()
-
-	for _, f := range r.File {
-		target := filepath.Join(destDir, f.Name)
-		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {
-			continue // skip zip slip
-		}
-		if f.FileInfo().IsDir() {
-			os.MkdirAll(target, 0755)
-			continue
-		}
-		os.MkdirAll(filepath.Dir(target), 0755)
-		mode := f.Mode() | 0644 // ensure writable on Windows (mode 0 = read-only)
-		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
-		if err != nil {
-			return err
-		}
-		rc, err := f.Open()
-		if err != nil {
-			out.Close()
-			return err
-		}
-		_, err = io.Copy(out, rc)
-		rc.Close()
-		out.Close()
-		if err != nil {
-			return err
-		}
-	}
-	return nil
+	return secureExtractArchive(zipFile, destDir)
 }
 
 func extractTarGz(tarFile, destDir string) error {
-	f, err := os.Open(tarFile)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	gz, err := gzip.NewReader(f)
-	if err != nil {
-		return err
-	}
-	defer gz.Close()
-
-	tr := tar.NewReader(gz)
-	for {
-		hdr, err := tr.Next()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return err
-		}
-		target := filepath.Join(destDir, hdr.Name)
-		if !strings.HasPrefix(filepath.Clean(target), filepath.Clean(destDir)+string(os.PathSeparator)) {
-			continue // skip path traversal
-		}
-		switch hdr.Typeflag {
-		case tar.TypeDir:
-			os.MkdirAll(target, 0755)
-		case tar.TypeReg:
-			os.MkdirAll(filepath.Dir(target), 0755)
-			mode := os.FileMode(hdr.Mode) | 0644 // ensure writable on Windows
-			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, mode)
-			if err != nil {
-				return err
-			}
-			_, err = io.Copy(out, tr)
-			out.Close()
-			if err != nil {
-				return err
-			}
-		case tar.TypeSymlink:
-			os.MkdirAll(filepath.Dir(target), 0755)
-			os.Remove(target)
-			if err := os.Symlink(hdr.Linkname, target); err != nil {
-				// Windows: symlink needs admin/dev-mode — copy the target instead
-				src := filepath.Join(filepath.Dir(target), hdr.Linkname)
-				if data, readErr := os.ReadFile(src); readErr == nil {
-					os.WriteFile(target, data, 0755)
-				}
-			}
-		}
-	}
-	return nil
+	return secureExtractArchive(tarFile, destDir)
 }
