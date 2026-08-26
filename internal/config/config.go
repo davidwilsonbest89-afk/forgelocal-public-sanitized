@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -77,6 +78,38 @@ func (cfg *Config) CloakBrowserSettings() *CloakBrowserConfig {
 	return cfg.ChromiumRuntimeSettings("cloakbrowser")
 }
 
+func openConfigFile(path string, flags int, mode os.FileMode) (*os.Root, *os.File, error) {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	parent, base := filepath.Split(filepath.Clean(abs))
+	root, err := os.OpenRoot(filepath.Clean(parent))
+	if err != nil {
+		return nil, nil, err
+	}
+	info, err := root.Lstat(base)
+	if err != nil && !os.IsNotExist(err) {
+		_ = root.Close()
+		return nil, nil, err
+	}
+	if err == nil && info.Mode()&os.ModeSymlink != 0 {
+		_ = root.Close()
+		return nil, nil, fmt.Errorf("configuration file cannot be a symlink: %s", path)
+	}
+	var file *os.File
+	if flags == 0 {
+		file, err = root.Open(base)
+	} else {
+		file, err = root.OpenFile(base, flags, mode)
+	}
+	if err != nil {
+		_ = root.Close()
+		return nil, nil, err
+	}
+	return root, file, nil
+}
+
 func Load(path string) (*Config, error) {
 	cfg := &Config{
 		Host:             "127.0.0.1",
@@ -88,7 +121,7 @@ func Load(path string) (*Config, error) {
 		FingerprintDir:   "data",
 	}
 
-	f, err := os.Open(path)
+	root, f, err := openConfigFile(path, 0, 0)
 	if err != nil {
 		if os.IsNotExist(err) {
 			applyPublicBaseURL(cfg)
@@ -96,6 +129,7 @@ func Load(path string) (*Config, error) {
 		}
 		return nil, err
 	}
+	defer root.Close()
 	defer f.Close()
 
 	var raw struct {
@@ -169,13 +203,15 @@ func SetupLogger(logFile string) *slog.Logger {
 	if err := os.MkdirAll(filepath.Dir(logFile), 0700); err != nil {
 		return slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	}
-	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
+	root, f, err := openConfigFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
 	if err != nil {
 		return slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	}
 	if err := f.Chmod(0600); err != nil {
 		_ = f.Close()
+		_ = root.Close()
 		return slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	}
+	_ = root.Close()
 	return slog.New(slog.NewJSONHandler(f, nil))
 }

@@ -130,10 +130,40 @@ func CheckBrowsers(camoufoxPath, cloakPath string) (camoufox, cloak BrowserInfo)
 	return
 }
 
+// openVersionMarker opens the runtime marker beneath the selected browser root
+// and refuses a symlinked marker to avoid reading outside that root.
+func openVersionMarker(baseDir, browserName string) (*os.Root, *os.File, error) {
+	runtimeRoot, err := os.OpenRoot(filepath.Join(baseDir, "browsers", browserName))
+	if err != nil {
+		return nil, nil, err
+	}
+	info, err := runtimeRoot.Lstat(".version")
+	if err != nil {
+		_ = runtimeRoot.Close()
+		return nil, nil, err
+	}
+	if info.Mode()&os.ModeSymlink != 0 || !info.Mode().IsRegular() {
+		_ = runtimeRoot.Close()
+		return nil, nil, fmt.Errorf("runtime version marker is not a regular file")
+	}
+	file, err := runtimeRoot.Open(".version")
+	if err != nil {
+		_ = runtimeRoot.Close()
+		return nil, nil, err
+	}
+	return runtimeRoot, file, nil
+}
+
 // InstalledVersion reads the .version marker file in a browser directory.
-// Returns empty string if not installed.
+// Returns empty string if not installed or if the marker is unsafe.
 func InstalledVersion(baseDir, browserName string) string {
-	data, err := os.ReadFile(filepath.Join(baseDir, "browsers", browserName, ".version"))
+	root, file, err := openVersionMarker(baseDir, browserName)
+	if err != nil {
+		return ""
+	}
+	defer root.Close()
+	defer file.Close()
+	data, err := io.ReadAll(file)
 	if err != nil {
 		return ""
 	}

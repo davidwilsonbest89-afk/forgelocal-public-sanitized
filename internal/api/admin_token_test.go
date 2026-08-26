@@ -187,3 +187,32 @@ func TestAdminTokenConcurrentValidationAndRevocation(t *testing.T) {
 		t.Fatalf("final validation error = %v, want revoked", err)
 	}
 }
+
+func TestLoadOrCreateTokenRejectsSymlinkedTokenFile(t *testing.T) {
+	t.Setenv("BROWSEFORGE_TOKEN", "")
+	dir := t.TempDir()
+	want := "synthetic-bootstrap-token"
+	if err := os.WriteFile(filepath.Join(dir, ".api-token"), []byte(want), 0600); err != nil {
+		t.Fatal(err)
+	}
+	got, err := loadOrCreateToken(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got != want {
+		t.Fatalf("loadOrCreateToken() = %q, want %q", got, want)
+	}
+	if err := os.Remove(filepath.Join(dir, ".api-token")); err != nil {
+		t.Fatal(err)
+	}
+	external := filepath.Join(dir, "external-token")
+	if err := os.WriteFile(external, []byte("external-token"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(external, filepath.Join(dir, ".api-token")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := loadOrCreateToken(dir); err == nil {
+		t.Fatal("loadOrCreateToken() followed a symlinked token file")
+	}
+}

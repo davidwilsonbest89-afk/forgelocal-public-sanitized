@@ -260,3 +260,31 @@ func zipArchive(t *testing.T, name string, data []byte, mode os.FileMode) []byte
 	}
 	return buf.Bytes()
 }
+
+func TestInstalledVersionRejectsSymlinkedMarker(t *testing.T) {
+	baseDir := t.TempDir()
+	runtimeDir := filepath.Join(baseDir, "browsers", "synthetic")
+	if err := os.MkdirAll(runtimeDir, 0700); err != nil {
+		t.Fatal(err)
+	}
+	marker := filepath.Join(runtimeDir, ".version")
+	if err := os.WriteFile(marker, []byte("v1"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if got := InstalledVersion(baseDir, "synthetic"); got != "v1" {
+		t.Fatalf("InstalledVersion() = %q, want v1", got)
+	}
+	if err := os.Remove(marker); err != nil {
+		t.Fatal(err)
+	}
+	external := filepath.Join(baseDir, "external.version")
+	if err := os.WriteFile(external, []byte("external"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(external, marker); err != nil {
+		t.Fatal(err)
+	}
+	if got := InstalledVersion(baseDir, "synthetic"); got != "" {
+		t.Fatalf("InstalledVersion() followed symlink and returned %q", got)
+	}
+}

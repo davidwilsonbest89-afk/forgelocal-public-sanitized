@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"net"
 	"net/http"
@@ -830,22 +831,51 @@ func loadOrCreateToken(dataDir string) (string, error) {
 		return "", fmt.Errorf("create token directory: %w", err)
 	}
 	path := dataDir + "/.api-token"
-	if data, err := os.ReadFile(path); err == nil {
+	root, err := os.OpenRoot(dataDir)
+	if err != nil {
+		return "", fmt.Errorf("open token directory: %w", err)
+	}
+	defer root.Close()
+	if info, statErr := root.Lstat(".api-token"); statErr == nil {
+		if info.Mode()&os.ModeSymlink != 0 || !info.Mode().IsRegular() {
+			return "", fmt.Errorf("API token file is not a regular file: %s", path)
+		}
+		file, openErr := root.Open(".api-token")
+		if openErr != nil {
+			return "", fmt.Errorf("read API token: %w", openErr)
+		}
+		data, readErr := io.ReadAll(file)
+		closeErr := file.Close()
+		if readErr != nil {
+			return "", fmt.Errorf("read API token: %w", readErr)
+		}
+		if closeErr != nil {
+			return "", fmt.Errorf("close API token: %w", closeErr)
+		}
 		token := strings.TrimSpace(string(data))
 		if token == "" {
 			return "", fmt.Errorf("API token file is empty: %s", path)
 		}
 		return token, nil
-	} else if !os.IsNotExist(err) {
-		return "", fmt.Errorf("read API token: %w", err)
+	} else if !os.IsNotExist(statErr) {
+		return "", fmt.Errorf("stat API token: %w", statErr)
 	}
 	b := make([]byte, 32)
 	if _, err := rand.Read(b); err != nil {
 		return "", fmt.Errorf("generate API token: %w", err)
 	}
 	token := hex.EncodeToString(b)
-	if err := os.WriteFile(path, []byte(token), 0600); err != nil {
+	file, err := root.OpenFile(".api-token", os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0600)
+	if err != nil {
 		return "", fmt.Errorf("write API token: %w", err)
+	}
+	_, writeErr := file.WriteString(token)
+	closeErr := file.Close()
+	if writeErr != nil {
+		return "", fmt.Errorf("write API token: %w", writeErr)
+	}
+	if closeErr != nil {
+		return "", fmt.Errorf("close API token: %w", closeErr)
 	}
 	slog.Info("generated API token", "path", path)
 	return token, nil
