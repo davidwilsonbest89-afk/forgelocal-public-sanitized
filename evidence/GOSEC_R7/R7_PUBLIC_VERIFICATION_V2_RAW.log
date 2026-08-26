@@ -1,0 +1,45 @@
+UTC=2026-08-26T15:05:42Z
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/gosec-r7
+EXPECTED_PACKAGE_COMMIT=ddd2c68e1fc108acf89fcd745d9ddd6a139a9d58
+Cloning into '/tmp/forgelocal-r7-public-clone-v2'...
+Updating files:   0% (2/2293)Updating files:   1% (23/2293)Updating files:   2% (46/2293)Updating files:   3% (69/2293)Updating files:   4% (92/2293)Updating files:   5% (115/2293)Updating files:   6% (138/2293)Updating files:   7% (161/2293)Updating files:   8% (184/2293)Updating files:   8% (200/2293)Updating files:   9% (207/2293)Updating files:  10% (230/2293)Updating files:  11% (253/2293)Updating files:  12% (276/2293)Updating files:  13% (299/2293)Updating files:  14% (322/2293)Updating files:  15% (344/2293)Updating files:  16% (367/2293)Updating files:  17% (390/2293)Updating files:  18% (413/2293)Updating files:  19% (436/2293)Updating files:  20% (459/2293)Updating files:  21% (482/2293)Updating files:  22% (505/2293)Updating files:  23% (528/2293)Updating files:  24% (551/2293)Updating files:  25% (574/2293)Updating files:  26% (597/2293)Updating files:  27% (620/2293)Updating files:  28% (643/2293)Updating files:  29% (665/2293)Updating files:  30% (688/2293)Updating files:  31% (711/2293)Updating files:  32% (734/2293)Updating files:  33% (757/2293)Updating files:  34% (780/2293)Updating files:  35% (803/2293)Updating files:  36% (826/2293)Updating files:  37% (849/2293)Updating files:  38% (872/2293)Updating files:  39% (895/2293)Updating files:  40% (918/2293)Updating files:  41% (941/2293)Updating files:  42% (964/2293)Updating files:  43% (986/2293)Updating files:  44% (1009/2293)Updating files:  45% (1032/2293)Updating files:  46% (1055/2293)Updating files:  47% (1078/2293)Updating files:  48% (1101/2293)Updating files:  49% (1124/2293)Updating files:  50% (1147/2293)Updating files:  51% (1170/2293)Updating files:  52% (1193/2293)Updating files:  53% (1216/2293)Updating files:  54% (1239/2293)Updating files:  55% (1262/2293)Updating files:  56% (1285/2293)Updating files:  57% (1308/2293)Updating files:  58% (1330/2293)Updating files:  59% (1353/2293)Updating files:  60% (1376/2293)Updating files:  61% (1399/2293)Updating files:  62% (1422/2293)Updating files:  62% (1431/2293)Updating files:  63% (1445/2293)Updating files:  64% (1468/2293)Updating files:  65% (1491/2293)Updating files:  66% (1514/2293)Updating files:  67% (1537/2293)Updating files:  68% (1560/2293)Updating files:  69% (1583/2293)Updating files:  70% (1606/2293)Updating files:  71% (1629/2293)Updating files:  72% (1651/2293)Updating files:  73% (1674/2293)Updating files:  74% (1697/2293)Updating files:  75% (1720/2293)Updating files:  76% (1743/2293)Updating files:  77% (1766/2293)Updating files:  78% (1789/2293)Updating files:  79% (1812/2293)Updating files:  80% (1835/2293)Updating files:  81% (1858/2293)Updating files:  82% (1881/2293)Updating files:  83% (1904/2293)Updating files:  84% (1927/2293)Updating files:  85% (1950/2293)Updating files:  86% (1972/2293)Updating files:  87% (1995/2293)Updating files:  88% (2018/2293)Updating files:  89% (2041/2293)Updating files:  90% (2064/2293)Updating files:  91% (2087/2293)Updating files:  92% (2110/2293)Updating files:  93% (2133/2293)Updating files:  94% (2156/2293)Updating files:  95% (2179/2293)Updating files:  96% (2202/2293)Updating files:  97% (2225/2293)Updating files:  98% (2248/2293)Updating files:  99% (2271/2293)Updating files: 100% (2293/2293)Updating files: 100% (2293/2293), done.
+HEAD is now at ddd2c68 evidence: publish corrected GOSEC R7 package
+CLONE_HEAD=ddd2c68e1fc108acf89fcd745d9ddd6a139a9d58
+FSCK_EXIT_CODE=0
+SOURCE_TO_EVIDENCE_ANCESTOR_EXIT_CODE=0
+EVIDENCE_TO_PACKAGE_ANCESTOR_EXIT_CODE=0
+SOURCE_TO_PACKAGE_NON_EVIDENCE_PATHS=NONE
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.zip: OK
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.tar.gz: OK
+    testing: forgelocal-gosec-r7-final-v2-evidence/evidence/GOSEC_R7/R7_VALIDATION_COMMANDS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v2-evidence/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-dda5525.bundle   OK
+    testing: forgelocal-gosec-r7-final-v2-evidence/evidence/GOSEC_R7/R7_BUNDLE_VERIFY_V2_RAW.log   OK
+No errors detected in compressed data of evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.zip.
+[90m3:05PM[0m [32mINF[0m scan completed in 440ms
+[90m3:05PM[0m [32mINF[0m no leaks found
+GITLEAKS_ZIP_EXTRACT_EXIT_CODE=0
+[90m3:05PM[0m [32mINF[0m scan completed in 452ms
+[90m3:05PM[0m [32mINF[0m no leaks found
+GITLEAKS_TAR_EXTRACT_EXIT_CODE=0
+evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-dda5525.bundle is okay
+The bundle contains this ref:
+dda55254f658f12f07e000212db983dd5aef665d refs/gosec-r7/package-v2-head
+The bundle requires this ref:
+3656dbad4bfef0381e1f9d837271d293ecffe292 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+SMOKE_IN_PACKAGE=EXCLUDED
+--- corrected manifest ---
+package=forgelocal-gosec-r7-final-v2
+authoritative_source_head=3656dbad4bfef0381e1f9d837271d293ecffe292
+evidence_head=dda55254f658f12f07e000212db983dd5aef665d
+package_head=recorded_after_artifact_commit
+branch=validation/gosec-r7
+bundle=evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-dda5525.bundle
+bundle_scope=delta_from_3656dbad4bfef0381e1f9d837271d293ecffe292_to_dda55254f658f12f07e000212db983dd5aef665d
+bundle_creation=git_bundle_temp_ref_pack_compression_0_verified
+manifest_non_autoreferential=true
+verification_scope=R7 risk review evidence; no production release or deployment
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+previous_package_v1_preserved=true
