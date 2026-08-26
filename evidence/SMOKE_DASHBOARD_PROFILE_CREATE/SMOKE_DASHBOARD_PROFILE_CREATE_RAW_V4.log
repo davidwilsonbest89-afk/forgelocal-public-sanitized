@@ -1,0 +1,304 @@
+utc_start=2026-08-26T00:00:32Z
+cwd=/home/ubuntu
+repo_head=a9d31cf87cd55a1506bdbff6f6b19a66ab0a3ccb
+command=timeout 240s node /home/ubuntu/forgelocal_self_validation_v6/integrated_smoke_runner.js
+{
+  "status": "SMOKE_DASHBOARD_PROFILE_CREATE_PASS",
+  "dashboard_profile_create_path": "PASS_DASHBOARD_MUTATION",
+  "core_session_proxy_pass": true,
+  "direct_browser_nominal_pass": true,
+  "proxy_stopped_fail_closed": true,
+  "proxy_bad_auth_rejected": true,
+  "profile_isolation_pass": true,
+  "core_profile_assignments_persisted": true,
+  "destinations": {
+    "alpha": {
+      "total": 3,
+      "viaProxy": 3
+    },
+    "beta": {
+      "total": 2,
+      "viaProxy": 2
+    }
+  },
+  "proxies": {
+    "alpha": {
+      "total": 5,
+      "accepted": 5,
+      "rejected": 0
+    },
+    "beta": {
+      "total": 3,
+      "accepted": 3,
+      "rejected": 0
+    },
+    "bad_auth": {
+      "total": 3,
+      "accepted": 0,
+      "rejected": 3
+    }
+  },
+  "core_session_status": 201,
+  "core_session_navigate_status": 200,
+  "events": [
+    {
+      "kind": "local_services_ready",
+      "at": "2026-08-26T00:00:33.169Z",
+      "destination_ports": [
+        19283,
+        19285,
+        19287
+      ],
+      "proxy_ports": [
+        19282,
+        19284,
+        19286
+      ]
+    },
+    {
+      "kind": "dashboard_admin_linked",
+      "at": "2026-08-26T00:00:34.564Z",
+      "status": "linked"
+    },
+    {
+      "kind": "profile_created",
+      "at": "2026-08-26T00:00:35.217Z",
+      "profile": "smoke-alpha",
+      "profile_id_present": true
+    },
+    {
+      "kind": "profile_created",
+      "at": "2026-08-26T00:00:35.781Z",
+      "profile": "smoke-beta",
+      "profile_id_present": true
+    },
+    {
+      "kind": "dashboard_profiles_created",
+      "at": "2026-08-26T00:00:35.781Z",
+      "alpha_id_present": true,
+      "beta_id_present": true,
+      "creation_via_dashboard": true
+    },
+    {
+      "kind": "dashboard_profile_selected",
+      "at": "2026-08-26T00:00:35.856Z",
+      "profile": "alpha",
+      "profile_id_present": true
+    },
+    {
+      "kind": "proxy_created",
+      "at": "2026-08-26T00:00:36.102Z",
+      "proxy": "smoke-proxy-alpha",
+      "proxy_id_present": true,
+      "credential_value_logged": false
+    },
+    {
+      "kind": "alpha_assignment_persisted",
+      "at": "2026-08-26T00:00:36.166Z",
+      "profile_id_present": true,
+      "proxy_id_present": true
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:36.733Z",
+      "proxy": "alpha",
+      "target_host": "clients2.google.com",
+      "target_port": "",
+      "target_path": "/time/1/current",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:39.371Z",
+      "proxy": "alpha",
+      "target_host": "127.0.0.1",
+      "target_port": "19283",
+      "target_path": "/core-session",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "destination_request",
+      "at": "2026-08-26T00:00:39.372Z",
+      "destination": "alpha",
+      "path": "/core-session",
+      "via_proxy": true,
+      "method": "GET"
+    },
+    {
+      "kind": "core_session_navigation",
+      "at": "2026-08-26T00:00:39.459Z",
+      "create_status": 201,
+      "navigate_status": 200,
+      "destination_hits": 1,
+      "destination_via_proxy": 1,
+      "alpha_proxy_forwards": 2
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:39.657Z",
+      "proxy": "alpha",
+      "target_host": "clients2.google.com",
+      "target_port": "",
+      "target_path": "/time/1/current",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:39.758Z",
+      "proxy": "alpha",
+      "target_host": "127.0.0.1",
+      "target_port": "19283",
+      "target_path": "/nominal",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "destination_request",
+      "at": "2026-08-26T00:00:39.758Z",
+      "destination": "alpha",
+      "path": "/nominal",
+      "via_proxy": true,
+      "method": "GET"
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:39.802Z",
+      "proxy": "alpha",
+      "target_host": "127.0.0.1",
+      "target_port": "19283",
+      "target_path": "/favicon.ico",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "destination_request",
+      "at": "2026-08-26T00:00:39.802Z",
+      "destination": "alpha",
+      "path": "/favicon.ico",
+      "via_proxy": true,
+      "method": "GET"
+    },
+    {
+      "kind": "direct_browser_nominal",
+      "at": "2026-08-26T00:00:40.295Z",
+      "status": 200,
+      "destination_hits": 3,
+      "proxy_accepted": 5
+    },
+    {
+      "kind": "proxy_stopped_result",
+      "at": "2026-08-26T00:00:40.661Z",
+      "result": "fail-closed",
+      "error": "Error: page.goto: net::ERR_PROXY_CONNECTION_FAILED at http://127.0.0.1:19283/proxy-stopped\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:19283/proxy-stopped\", waiting until \"load\"\u001b[22m\n",
+      "destination_hits": 3,
+      "destination_unchanged": true
+    },
+    {
+      "kind": "proxy_auth_rejected",
+      "at": "2026-08-26T00:00:40.917Z",
+      "proxy": "bad-auth",
+      "has_proxy_authorization": false
+    },
+    {
+      "kind": "proxy_auth_rejected",
+      "at": "2026-08-26T00:00:41.021Z",
+      "proxy": "bad-auth",
+      "has_proxy_authorization": false
+    },
+    {
+      "kind": "proxy_auth_rejected",
+      "at": "2026-08-26T00:00:41.023Z",
+      "proxy": "bad-auth",
+      "has_proxy_authorization": true
+    },
+    {
+      "kind": "proxy_bad_auth_result",
+      "at": "2026-08-26T00:00:41.038Z",
+      "result": "rejected",
+      "http_status": 407,
+      "destination_hits": 3
+    },
+    {
+      "kind": "proxy_created",
+      "at": "2026-08-26T00:00:41.407Z",
+      "proxy": "smoke-proxy-beta",
+      "proxy_id_present": true,
+      "credential_value_logged": false
+    },
+    {
+      "kind": "beta_assignment_persisted",
+      "at": "2026-08-26T00:00:41.485Z",
+      "profile_id_present": true,
+      "proxy_id_present": true,
+      "distinct_from_alpha": true
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:41.707Z",
+      "proxy": "beta",
+      "target_host": "clients2.google.com",
+      "target_port": "",
+      "target_path": "/time/1/current",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:41.822Z",
+      "proxy": "beta",
+      "target_host": "127.0.0.1",
+      "target_port": "19285",
+      "target_path": "/isolated",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "destination_request",
+      "at": "2026-08-26T00:00:41.823Z",
+      "destination": "beta",
+      "path": "/isolated",
+      "via_proxy": true,
+      "method": "GET"
+    },
+    {
+      "kind": "proxy_forward",
+      "at": "2026-08-26T00:00:41.853Z",
+      "proxy": "beta",
+      "target_host": "127.0.0.1",
+      "target_port": "19285",
+      "target_path": "/favicon.ico",
+      "auth": "synthetic-accepted"
+    },
+    {
+      "kind": "destination_request",
+      "at": "2026-08-26T00:00:41.854Z",
+      "destination": "beta",
+      "path": "/favicon.ico",
+      "via_proxy": true,
+      "method": "GET"
+    },
+    {
+      "kind": "beta_isolation_browser",
+      "at": "2026-08-26T00:00:42.342Z",
+      "status": 200,
+      "beta_proxy_accepted": 3,
+      "alpha_proxy_accepted": 5,
+      "distinct_destination": true
+    },
+    {
+      "kind": "token_probe_before_revoke",
+      "at": "2026-08-26T00:00:42.408Z",
+      "status": 200,
+      "reason": "none",
+      "token_value_logged": false
+    },
+    {
+      "kind": "token_revocation",
+      "at": "2026-08-26T00:00:42.410Z",
+      "revoke_status": 204,
+      "probe_status": 401,
+      "reason": "revoked",
+      "token_value_logged": false,
+      "write_state_expected": "removed"
+    }
+  ]
+}
+exit_code=0
+utc_end=2026-08-26T00:01:52Z
+exit
