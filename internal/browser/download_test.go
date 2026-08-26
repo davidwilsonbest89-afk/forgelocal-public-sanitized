@@ -4,13 +4,33 @@ import (
 	"archive/zip"
 	"bytes"
 	"errors"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"forgelocal/internal/profile"
 )
+
+func TestR4BoundedArchiveSizeAndPersonaSeed(t *testing.T) {
+	if _, err := checkedArchiveSize(-1); err == nil {
+		t.Fatal("negative archive size accepted")
+	}
+	if err := copyArchiveBytes(io.Discard, strings.NewReader(""), uint64(1<<63)); err == nil {
+		t.Fatal("int64-overflow archive size accepted")
+	}
+	positive := &profile.Profile{Fingerprint: map[string]any{"canvas:seed": int64(42)}}
+	if got := browseForgePersonaSeed(positive); got != 42 {
+		t.Fatalf("positive persona seed = %d, want 42", got)
+	}
+	negative := &profile.Profile{ID: "synthetic", RuntimeID: "test", Fingerprint: map[string]any{"canvas:seed": int64(-1)}}
+	if got := browseForgePersonaSeed(negative); got == ^uint64(0) {
+		t.Fatalf("negative persona seed wrapped to max uint64: %d", got)
+	}
+}
 
 func TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts(t *testing.T) {
 	tests := []struct {

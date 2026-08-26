@@ -865,7 +865,10 @@ func rollbackRestoreActivation(activated []restoreActivation, cause error) error
 }
 
 func normalizedRestoreMode(mode int64, fallback os.FileMode) os.FileMode {
-	clean := os.FileMode(mode) & 0700
+	if mode < 0 {
+		return fallback & 0700
+	}
+	clean := os.FileMode(mode & 0700)
 	if clean == 0 {
 		return fallback & 0700
 	}

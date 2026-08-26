@@ -200,7 +200,8 @@ func secureExtractTarGz(tarFile, destDir string) error {
 				return err
 			}
 		case tar.TypeReg, tar.TypeRegA:
-			if hdr.Size < 0 || uint64(hdr.Size) > maxArchiveFileBytes || total > maxArchiveTotalBytes-uint64(hdr.Size) {
+			size, err := checkedArchiveSize(hdr.Size)
+			if err != nil || size > maxArchiveFileBytes || total > maxArchiveTotalBytes-size {
 				return fmt.Errorf("archive expanded size exceeds limit")
 			}
 			if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
@@ -210,7 +211,7 @@ func secureExtractTarGz(tarFile, destDir string) error {
 			if err != nil {
 				return err
 			}
-			err = copyArchiveBytes(out, tr, uint64(hdr.Size))
+			err = copyArchiveBytes(out, tr, size)
 			closeErr := out.Close()
 			if err == nil {
 				err = closeErr
@@ -218,7 +219,7 @@ func secureExtractTarGz(tarFile, destDir string) error {
 			if err != nil {
 				return err
 			}
-			total += uint64(hdr.Size)
+			total += size
 		default:
 			return fmt.Errorf("archive entry type is not allowed: %d", hdr.Typeflag)
 		}
@@ -233,8 +234,15 @@ func normalizedArchiveMode(mode os.FileMode) os.FileMode {
 	return mode
 }
 
+func checkedArchiveSize(size int64) (uint64, error) {
+	if size < 0 {
+		return 0, fmt.Errorf("negative archive entry size")
+	}
+	return uint64(size), nil
+}
+
 func copyArchiveBytes(dst io.Writer, src io.Reader, size uint64) error {
-	if size > maxArchiveFileBytes {
+	if size > maxArchiveFileBytes || size > uint64(1<<63-1) {
 		return fmt.Errorf("archive entry exceeds file size limit")
 	}
 	n, err := io.CopyN(dst, src, int64(size))

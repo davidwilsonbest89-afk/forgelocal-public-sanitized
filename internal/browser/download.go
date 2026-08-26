@@ -547,7 +547,17 @@ func flattenSingleSubdir(dir string) error {
 }
 
 func download(dlURL, dest string) (result error) {
-	resp, err := http.Get(dlURL)
+	req, err := http.NewRequest(http.MethodGet, dlURL, nil)
+	if err != nil {
+		return err
+	}
+	client := &http.Client{
+		Timeout: 60 * time.Second,
+		CheckRedirect: func(_ *http.Request, _ []*http.Request) error {
+			return fmt.Errorf("download redirects are not allowed")
+		},
+	}
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
