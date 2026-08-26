@@ -1,0 +1,44 @@
+UTC=2026-08-26T12:58:15Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+LOCAL_HEAD=b2fdecf97e3c28b29c374cf89f9bdbe4077d0bd7
+SOURCE_HEAD=54ed3a4964806eeb4880c9ebb3949d410c335174
+EVIDENCE_HEAD=517b55557297a6372bb5ef2dcb6d8c2b80a8db70
+COMMAND=sha256sum -c evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip.sha256
+evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip: OK
+ZIP_HASH_EXIT_CODE=0
+COMMAND=sha256sum -c evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz.sha256
+evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz: OK
+TAR_HASH_EXIT_CODE=0
+COMMAND=tar -xzf evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz -C /tmp/r5_public_tar
+TAR_EXTRACT_EXIT_CODE=0
+COMMAND=unzip -q evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip -d /tmp/r5_public_zip
+ZIP_EXTRACT_EXIT_CODE=0
+COMMAND=cmp evidence/GOSEC_R5/GOSEC_R5_FINAL_MANIFEST.txt /tmp/r5_public_tar/forgelocal-gosec-r5-final-v1-evidence/evidence/GOSEC_R5/GOSEC_R5_FINAL_MANIFEST.txt
+MANIFEST_TAR_EXIT_CODE=0
+COMMAND=cmp evidence/GOSEC_R5/GOSEC_R5_FINAL_MANIFEST.txt /tmp/r5_public_zip/forgelocal-gosec-r5-final-v1-evidence/evidence/GOSEC_R5/GOSEC_R5_FINAL_MANIFEST.txt
+MANIFEST_ZIP_EXIT_CODE=0
+PACKAGE_SMOKE_EXCLUSION_EXIT_CODE=1
+COMMAND=git bundle verify evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle
+evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle is okay
+The bundle contains this ref:
+517b55557297a6372bb5ef2dcb6d8c2b80a8db70 refs/gosec-r5/package-head
+The bundle requires this ref:
+096e3f591f273801cf735669d7a135daf6a7f601 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+COMMAND=env GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --branch validation/gosec-r5 https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git /tmp/r5_public_clone
+Cloning into '/tmp/r5_public_clone'...
+Updating files:  92% (2003/2170)Updating files:  93% (2019/2170)Updating files:  94% (2040/2170)Updating files:  95% (2062/2170)Updating files:  96% (2084/2170)Updating files:  97% (2105/2170)Updating files:  98% (2127/2170)Updating files:  99% (2149/2170)Updating files: 100% (2170/2170)Updating files: 100% (2170/2170), done.
+PUBLIC_CLONE_EXIT_CODE=0
+COMMAND=git rev-parse HEAD
+b2fdecf97e3c28b29c374cf89f9bdbe4077d0bd7
+PUBLIC_HEAD_EXIT_CODE=0
+COMMAND=git checkout --detach HEAD
+HEAD is now at b2fdecf evidence: package GOSEC R5 v1
+PUBLIC_CHECKOUT_EXIT_CODE=0
+COMMAND=git fsck --full
+PUBLIC_FSCK_EXIT_CODE=0
+COMMAND=git ls-remote origin refs/heads/validation/gosec-r5 refs/heads/validation/operational-v1
+b2fdecf97e3c28b29c374cf89f9bdbe4077d0bd7	refs/heads/validation/gosec-r5
+80048180d4ec5241c08146ade698d53a3f29454d	refs/heads/validation/operational-v1
+REMOTE_HEAD_EXIT_CODE=0
