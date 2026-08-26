@@ -1,0 +1,62 @@
+UTC=2026-08-26T15:52:42Z
+CWD=/home/ubuntu
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+R7_DISCOVERED_HEAD=b907dfcd68c290144e2b922e352d5a937e9b3259
+R6_DISCOVERED_HEAD=3656dbad4bfef0381e1f9d837271d293ecffe292
+GIT=git version 2.43.0
+Cloning into '/tmp/forgelocal-r7-remediation-baseline'...
+Updating files:   0% (2/2316)Updating files:   1% (24/2316)Updating files:   2% (47/2316)Updating files:   3% (70/2316)Updating files:   4% (93/2316)Updating files:   5% (116/2316)Updating files:   6% (139/2316)Updating files:   7% (163/2316)Updating files:   8% (186/2316)Updating files:   9% (209/2316)Updating files:  10% (232/2316)Updating files:  11% (255/2316)Updating files:  12% (278/2316)Updating files:  13% (302/2316)Updating files:  14% (325/2316)Updating files:  15% (348/2316)Updating files:  16% (371/2316)Updating files:  17% (394/2316)Updating files:  18% (417/2316)Updating files:  19% (441/2316)Updating files:  20% (464/2316)Updating files:  21% (487/2316)Updating files:  22% (510/2316)Updating files:  23% (533/2316)Updating files:  24% (556/2316)Updating files:  25% (579/2316)Updating files:  26% (603/2316)Updating files:  27% (626/2316)Updating files:  28% (649/2316)Updating files:  29% (672/2316)Updating files:  30% (695/2316)Updating files:  31% (718/2316)Updating files:  32% (742/2316)Updating files:  33% (765/2316)Updating files:  34% (788/2316)Updating files:  35% (811/2316)Updating files:  36% (834/2316)Updating files:  37% (857/2316)Updating files:  38% (881/2316)Updating files:  39% (904/2316)Updating files:  40% (927/2316)Updating files:  41% (950/2316)Updating files:  42% (973/2316)Updating files:  43% (996/2316)Updating files:  44% (1020/2316)Updating files:  45% (1043/2316)Updating files:  46% (1066/2316)Updating files:  47% (1089/2316)Updating files:  48% (1112/2316)Updating files:  49% (1135/2316)Updating files:  50% (1158/2316)Updating files:  51% (1182/2316)Updating files:  52% (1205/2316)Updating files:  53% (1228/2316)Updating files:  54% (1251/2316)Updating files:  55% (1274/2316)Updating files:  56% (1297/2316)Updating files:  57% (1321/2316)Updating files:  58% (1344/2316)Updating files:  59% (1367/2316)Updating files:  60% (1390/2316)Updating files:  61% (1413/2316)Updating files:  62% (1436/2316)Updating files:  62% (1442/2316)Updating files:  63% (1460/2316)Updating files:  64% (1483/2316)Updating files:  65% (1506/2316)Updating files:  66% (1529/2316)Updating files:  67% (1552/2316)Updating files:  68% (1575/2316)Updating files:  69% (1599/2316)Updating files:  70% (1622/2316)Updating files:  71% (1645/2316)Updating files:  72% (1668/2316)Updating files:  73% (1691/2316)Updating files:  74% (1714/2316)Updating files:  75% (1737/2316)Updating files:  76% (1761/2316)Updating files:  77% (1784/2316)Updating files:  78% (1807/2316)Updating files:  79% (1830/2316)Updating files:  80% (1853/2316)Updating files:  81% (1876/2316)Updating files:  82% (1900/2316)Updating files:  83% (1923/2316)Updating files:  84% (1946/2316)Updating files:  85% (1969/2316)Updating files:  86% (1992/2316)Updating files:  87% (2015/2316)Updating files:  88% (2039/2316)Updating files:  89% (2062/2316)Updating files:  90% (2085/2316)Updating files:  91% (2108/2316)Updating files:  92% (2131/2316)Updating files:  93% (2154/2316)Updating files:  94% (2178/2316)Updating files:  95% (2201/2316)Updating files:  96% (2224/2316)Updating files:  97% (2247/2316)Updating files:  98% (2270/2316)Updating files:  99% (2293/2316)Updating files: 100% (2316/2316)Updating files: 100% (2316/2316), done.
+HEAD is now at b907dfc evidence: record final R7 v4 public verification
+CLONE_HEAD=b907dfcd68c290144e2b922e352d5a937e9b3259
+R6_OBJECT_PRESENT_EXIT_CODE=0
+R6_TO_R7_ANCESTOR_EXIT_CODE=0
+R6_EXPECTED_TO_R7_ANCESTOR_EXIT_CODE=0
+* [33mb907dfc[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/validation/gosec-r7[m[33m, [m[1;32mvalidation/gosec-r7[m[33m)[m evidence: record final R7 v4 public verification
+* [33m5cd16b1[m evidence: publish final non-recursive R7 package
+* [33m1dca108[m evidence: align final R7 decision references
+* [33m310efc4[m evidence: record final public verification of R7
+* [33md69d103[m evidence: publish final GOSEC R7 package
+* [33m0ba8ac9[m evidence: complete final GOSEC R7 postcheck
+* [33mf3ddc4d[m evidence: record public verification of R7 package
+* [33mddd2c68[m evidence: publish corrected GOSEC R7 package
+* [33mdda5525[m evidence: add corrected R7 manifest
+* [33m2299226[m evidence: reconcile R7 package manifest
+* [33m002b072[m evidence: package GOSEC R7 verification
+* [33m24537ac[m evidence: publish GOSEC R7 risk review
+R7_DIFF_NON_EVIDENCE=NONE
+62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a  evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a  evidence/GOSEC_R7/R7_GOSEC_FINAL.json
+BASELINE_SHA256=62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a
+TOTAL=46
+COUNTS={'G101': 1, 'G115': 3, 'G204': 5, 'G302': 5, 'G305': 1, 'G404': 17, 'G703': 7, 'G704': 7}
+BASELINE_DISTRIBUTION=PASS
+3fd6636ecc94fc5fdedd2de49a414d0f937844d9ed8ceec9308256cea0960534  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.zip
+45ea80d2f18b21fca7c52e7d35c63f0f96f8d07612b0a000828ed2cd9aa84cf6  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.tar.gz
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.zip: OK
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.tar.gz: OK
+evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-0ba8ac9.bundle is okay
+The bundle contains this ref:
+0ba8ac9b3b256f1b20520a2d01ccc9bb68383ab0 refs/gosec-r7/package-v3-head
+The bundle requires this ref:
+3656dbad4bfef0381e1f9d837271d293ecffe292 
+The bundle uses this hash algorithm: sha1
+dangling blob 6501c02864bcf3d774ffa22c39898485c4a66946
+dangling blob 7dc1ad2e2c8875fe30ad82f9335dfce4e43d884a
+dangling blob 91e2fd6ab82bca143754fb002db8aa0e172bc05e
+dangling blob 6f043316130e9d25f4791806d90e61f2f9c78016
+dangling blob a004f71b3ea38b5f42975dab551dcf90c9f9040a
+dangling blob aae4634b0b5edf51710d4820990ceed34e703bc5
+dangling blob 9305ca98322e7edc43bbc8765b3a6f9d5e87949e
+dangling blob 5ca686e14938fb6c8c06ee5949f69f9c2553c828
+dangling blob 8f87244b0c954eafdbd76de3d69e4b8c703eec64
+dangling blob 55a9429bab8affbb57e36092f206384c756ff2d0
+dangling blob 57b37c2e7dc7fd2d34f367731dfcabea4c069b9c
+dangling blob 08761d89101fd7d5f28845fc2f53cdfbb9471b89
+dangling blob dd38d9b5b525dd2d935f8eb3f1c3aa9c3735d01c
+dangling blob 6afc817348d52d34f0ac5421b450c92d00f8bc9d
+dangling blob a47c7569dbdb79f4475fd3dfacab8ee8b993c62c
+dangling blob 18bd2568235f2865eca4823f3b1f3bc4f6602e55
+dangling blob a45dc2c82bde9fae8f33cae3fc94c5f365df217c
+dangling blob 26ffc76d5aa1dd0e382a2e929be1f05e68d0b4c3
+dangling blob 4ddf989c670ecaf451c8f70cbda54b2d936b098c
+R7_V3_BASELINE_PACKAGE_DISCOVERY=PASS

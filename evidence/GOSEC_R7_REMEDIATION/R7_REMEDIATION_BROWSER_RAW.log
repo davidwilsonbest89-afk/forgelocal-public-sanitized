@@ -1,0 +1,12 @@
+UTC=2026-08-26T15:59:54Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r7-final-remediation
+HEAD=b907dfcd68c290144e2b922e352d5a937e9b3259
+CHROMIUM_PATH=/usr/bin/chromium
+COMMAND=chromium --headless --no-sandbox --disable-gpu --dump-dom data:text/html synthetic
+[798606:798606:0826/155955.022594:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+<html><head><title>R7Synthetic</title></head><body><p>loopback-free synthetic fixture</p></body></html>
+CHROMIUM_HEADLESS_EXIT_CODE=0
+CHROMIUM_RESIDUAL_PROCESS=NONE
+FIREFOX_STATUS=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+FIREFOX_REASON=binary absent
