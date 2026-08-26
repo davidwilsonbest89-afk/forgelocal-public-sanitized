@@ -50,20 +50,21 @@ Les G703, G305, G302, G115 et G704 restent scanner-visibles malgré les contrôl
 
 Les cinq G204 concernent les appels natifs `open`, `xdg-open`, `rundll32` et `xattr`. La simple présence d’une GUI Linux ne constitue pas une validation native. Aucune exécution dangereuse n’a été lancée; macOS et Windows ne sont pas disponibles. Ces findings restent `BLOCKED_ENVIRONMENT_REQUIRED`.
 
-## Références exactes du package R7 v2
+## Références exactes du package R7 v3
 
 | Référence | Valeur |
 |---|---|
 | `source_head` | `3656dbad4bfef0381e1f9d837271d293ecffe292` |
-| `evidence_head` | `dda55254f658f12f07e000212db983dd5aef665d` |
-| `package_commit` | `ddd2c68e1fc108acf89fcd745d9ddd6a139a9d58` |
-| `public_verification_head` | `f3ddc4d1da8f525103efee4ddc2a9554fbd1f50b` |
-| ZIP SHA-256 | `7eb7ad17e2ddcfee4f9f99070020a553ce10996d075b45469083ac469dfc7caa` |
-| TAR SHA-256 | `bbe4ba8e4cb4b4024b2745833c35dbd897552b8d6aff49dc4253f19439d0dcd8` |
-| Bundle | `forgelocal-gosec-r7-delta-3656dba-dda5525.bundle` |
-| Vérification publique | clone neuf, checkout explicite, `fsck=0`, hashes PASS, extraction ZIP/TAR PASS, Gitleaks extraction PASS, bundle verify PASS, SMOKE exclu |
+| `evidence_head` | `0ba8ac9b3b256f1b20520a2d01ccc9bb68383ab0` |
+| `package_commit` | `d69d1033e437cd3de3e4697d0f73b9b52edc3321` |
+| `public_verification_head` | `310efc4e6961fdaa6fb63606d14a8078ce6730ff` |
+| ZIP SHA-256 | `3fd6636ecc94fc5fdedd2de49a414d0f937844d9ed8ceec9308256cea0960534` |
+| TAR SHA-256 | `45ea80d2f18b21fca7c52e7d35c63f0f96f8d07612b0a000828ed2cd9aa84cf6` |
+| Bundle | `forgelocal-gosec-r7-delta-3656dba-0ba8ac9.bundle` |
+| Bundle SHA-256 | `ce69c5bc9c2bc021c25e78521ebd713bc0ed72a060e373c6d6066c557abad37c` |
+| Vérification publique | clone neuf, checkout explicite, `fsck=0`, hashes PASS, extraction ZIP/TAR PASS, manifest comparé, Gitleaks extraction PASS, bundle verify PASS, SMOKE exclu |
 
-Le package R7 v1 et ses artefacts historiques sont conservés. La correction de son libellé de scope est documentée par `R7_MANIFEST_RECONCILIATION.md` et le manifest v2, sans réécriture des archives v1.
+Le package R7 v1 et v2 ainsi que leurs artefacts historiques sont conservés. La correction de libellé du scope v1 est documentée par `R7_MANIFEST_RECONCILIATION.md`; aucun package historique n’a été réécrit.
 
 ## Environnements et outils indisponibles
 
