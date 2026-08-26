@@ -1,0 +1,23 @@
+control	status	command_or_scope	findings_or_observation	evidence
+Gosec source-only	FAIL	gosec -fmt json ... ./cmd/... ./internal/...	G101=1; G115=3; G204=5; G302=5; G304=0; G305=1; G404=17; G703=7; G704=7; TOTAL=46	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/gosec-source-only.json
+Gitleaks source-only	PASS	gitleaks detect --source <source-only> --no-git --redact	0 leaks	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/gitleaks-source-only.json
+Semgrep source-only	FAIL	semgrep scan --config auto --json	18 results; 4 rule errors; no artificial exclusions	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/semgrep-source-only.json
+ShellCheck source-only	FAIL	find <source-only> -name '*.sh' | xargs shellcheck -f json	exit 123; findings retained	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/shellcheck-source-only.json
+Yamllint source-only	FAIL	find <source-only> -name '*.yml' -o -name '*.yaml' | xargs yamllint -f parsable	exit 123; line-length findings retained	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/yamllint-source-only.txt
+Govulncheck Go	PASS	govulncheck -json ./cmd/... ./internal/...	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+OSV recursive source	PASS	osv-scanner scan source -r <source-only> --format json	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+Trivy filesystem	PASS	trivy fs --scanners vuln,secret,misconfig <source-only>	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/trivy-filesystem-source-only.json
+Syft JSON	PASS	syft scan dir:<source-only> -o json	745 artifacts	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/syft-source-only.json
+Syft CycloneDX	PASS	syft scan dir:<source-only> -o cyclonedx-json	SBOM generated	FINAL_ENVIRONMENT_TESTS_RAW.log; scan-results/syft-source-only.cdx.json
+Grype SBOM	PASS	grype sbom:<syft-json> -o json	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+Go tests race	PASS	go test -count=1 -race ./cmd/... ./internal/...	replay final exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+Go vet	PASS	go vet ./cmd/... ./internal/...	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+Go build	PASS	go build ./cmd/... ./internal/...	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+Git diff check	PASS	git diff --check	exit 0	FINAL_ENVIRONMENT_TESTS_RAW.log
+Chromium loopback	PASS	chromium headless with two disposable profiles and 127.0.0.1 fixture	loopback page rendered; cleanup executed	FINAL_ENVIRONMENT_TESTS_RAW.log
+Chromium invalid proxy	PASS	chromium with proxy 127.0.0.1:1 and synthetic target	Chromium error page observed; limited fixture scope	FINAL_ENVIRONMENT_TESTS_RAW.log
+Docker/Buildx	NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE	docker version; docker info; docker buildx version	client and daemon absent	FINAL_ENVIRONMENT_TESTS_RAW.log
+Firefox standard	NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE	firefox version/headless	binary absent; Camoufox not downloaded	FINAL_ENVIRONMENT_TESTS_RAW.log
+SystemVault native	NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE	Secret Service/D-Bus/keyring native checks	NATIVE_SYSTEMVAULT_NOT_TESTED	FINAL_ENVIRONMENT_TESTS_RAW.log
+Windows/macOS native	BLOCKED_ENVIRONMENT_REQUIRED	rundll32/open/xattr/Keychain	no native OS; no simulation	FINAL_ENVIRONMENT_TESTS_RAW.log
+R7 package and evidence	INHERITED_FROM_R7	R7 v4 package, public verification log, manifest and bundle	read and hash-verified; not a new execution	R7_FINAL_MANIFEST_V4.txt; R7_PUBLIC_VERIFICATION_V4_RAW.log

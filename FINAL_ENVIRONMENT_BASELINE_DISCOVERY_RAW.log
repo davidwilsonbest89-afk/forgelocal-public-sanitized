@@ -1,0 +1,2615 @@
+=== PREFLIGHT UTC ===
+2026-08-26T16:33:14+00:00
+=== UNAME ===
+Linux bd76b5bace51 6.1.102 #1 SMP PREEMPT_DYNAMIC Tue Mar 25 09:02:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+=== ARCHITECTURE ===
+x86_64
+=== DF -H ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G  7.8G   32G  20% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           789M  180K  789M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+=== DU -XHD1 /home/ubuntu ===
+51M	/home/ubuntu/.browser_data_dir
+84K	/home/ubuntu/.cache
+68K	/home/ubuntu/.config
+616M	/home/ubuntu/.local
+16K	/home/ubuntu/.logs
+11M	/home/ubuntu/.npm
+244M	/home/ubuntu/.nvm
+4.0K	/home/ubuntu/Downloads
+8.0K	/home/ubuntu/.secrets
+12K	/home/ubuntu/.manus
+2.7M	/home/ubuntu/skills
+16K	/home/ubuntu/upload
+8.0K	/home/ubuntu/forgelocal-final-env-qualification
+923M	/home/ubuntu
+=== FREE -H ===
+               total        used        free      shared  buff/cache   available
+Mem:           3.8Gi       896Mi       2.4Gi        11Mi       990Mi       3.0Gi
+Swap:          2.0Gi          0B       2.0Gi
+=== ACTIVE PROCESSES ===
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.3  21028 12364 ?        Ss   08:29   0:00 /sbin/init nomodules
+root           2  0.0  0.0      0     0 ?        S    08:29   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   08:29   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   08:29   0:00 [rcu_par_gp]
+root           5  0.0  0.0      0     0 ?        I<   08:29   0:00 [slub_flushwq]
+root           6  0.0  0.0      0     0 ?        I<   08:29   0:00 [netns]
+root           8  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/0:0H-events_highpri]
+root           9  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:0-flush-254:0]
+root          10  0.0  0.0      0     0 ?        I<   08:29   0:00 [mm_percpu_wq]
+root          11  0.0  0.0      0     0 ?        I    08:29   0:00 [rcu_tasks_kthread]
+root          12  0.0  0.0      0     0 ?        I    08:29   0:00 [rcu_tasks_trace_kthread]
+root          13  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/0]
+root          14  0.0  0.0      0     0 ?        I    08:29   0:00 [rcu_preempt]
+root          15  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/0]
+root          16  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/0:1-mm_percpu_wq]
+root          17  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/0]
+root          18  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/1]
+root          19  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/1]
+root          20  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/1]
+root          21  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/1:0-events]
+root          22  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/1:0H-kblockd]
+root          23  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/2]
+root          24  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/2]
+root          25  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/2]
+root          27  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/2:0H-events_highpri]
+root          28  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/3]
+root          29  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/3]
+root          30  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/3]
+root          32  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/3:0H-kblockd]
+root          33  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/4]
+root          34  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/4]
+root          35  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/4]
+root          36  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/4:0-slub_flushwq]
+root          37  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/4:0H-kblockd]
+root          38  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/5]
+root          39  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/5]
+root          40  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/5]
+root          41  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/5:0-events]
+root          42  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/5:0H-kblockd]
+root          44  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:1-events_unbound]
+root          45  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:2-ext4-rsv-conversion]
+root          46  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:3-events_unbound]
+root          47  0.0  0.0      0     0 ?        S    08:29   0:00 [kdevtmpfs]
+root          48  0.0  0.0      0     0 ?        I<   08:29   0:00 [inet_frag_wq]
+root          49  0.0  0.0      0     0 ?        S    08:29   0:00 [kauditd]
+root          50  0.0  0.0      0     0 ?        S    08:29   0:00 [khungtaskd]
+root          51  0.0  0.0      0     0 ?        S    08:29   0:00 [oom_reaper]
+root          52  0.0  0.0      0     0 ?        I<   08:29   0:00 [writeback]
+root          53  0.0  0.0      0     0 ?        S    08:29   0:00 [kcompactd0]
+root          54  0.0  0.0      0     0 ?        SN   08:29   0:00 [ksmd]
+root          55  0.0  0.0      0     0 ?        SN   08:29   0:00 [khugepaged]
+root          56  0.0  0.0      0     0 ?        I<   08:29   0:00 [kintegrityd]
+root          57  0.0  0.0      0     0 ?        I<   08:29   0:00 [kblockd]
+root          58  0.0  0.0      0     0 ?        I<   08:29   0:00 [blkcg_punt_bio]
+root          59  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/4:1-mm_percpu_wq]
+root          60  0.0  0.0      0     0 ?        S    08:29   0:00 [watchdogd]
+root          61  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/3:1-events]
+root          62  0.0  0.0      0     0 ?        I<   08:29   0:00 [rpciod]
+root          63  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/0:1H-kblockd]
+root          64  0.0  0.0      0     0 ?        I<   08:29   0:00 [xprtiod]
+root          97  0.0  0.0      0     0 ?        S    08:29   0:00 [kswapd0]
+root         100  0.0  0.0      0     0 ?        I<   08:29   0:00 [nfsiod]
+root         103  0.0  0.0      0     0 ?        I<   08:29   0:00 [xfsalloc]
+root         104  0.0  0.0      0     0 ?        I<   08:29   0:00 [xfs_mru_cache]
+root         107  0.0  0.0      0     0 ?        I<   08:29   0:00 [kthrotld]
+root         110  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/0:2-events]
+root         112  0.0  0.0      0     0 ?        S    08:29   0:00 [irq/24-ACPI:Ged]
+root         157  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/3:1H-kblockd]
+root         166  0.0  0.0      0     0 ?        I<   08:29   0:00 [iscsi_conn_clea]
+root         183  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/5:1-mm_percpu_wq]
+root         184  0.0  0.0      0     0 ?        I<   08:29   0:00 [mld]
+root         185  0.0  0.0      0     0 ?        I<   08:29   0:00 [ipv6_addrconf]
+root         186  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/2:1H-kblockd]
+root         188  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/2:1-mm_percpu_wq]
+root         194  0.0  0.0   1112     4 ?        S    08:29   0:00 bpfilter_umh
+root         195  0.0  0.0      0     0 ?        I<   08:29   0:00 [kstrp]
+root         200  0.0  0.0      0     0 ?        I<   08:29   0:00 [zswap-shrink]
+root         201  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/u13:0]
+root         250  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/3:2-events_power_efficient]
+root         269  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/1:1-mm_percpu_wq]
+root         270  0.0  0.0      0     0 ?        I<   08:29   0:00 [ext4-rsv-conver]
+root         286  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/4:1H-kblockd]
+root         287  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/1:1H-kblockd]
+root         289  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/5:1H-kblockd]
+root         292  0.0  0.4  59520 20032 ?        S<s  08:29   0:00 /usr/lib/systemd/systemd-journald
+root         574  0.0  0.1  23932  5988 ?        Ss   08:29   0:00 /usr/lib/systemd/systemd-udevd
+message+     623  0.0  0.0   8128  3812 ?        Ss   08:29   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+61876        625  0.0  0.0   2700  1004 ?        SLs  08:29   0:00 /usr/bin/earlyoom -r 3600
+root         626  0.0  0.1  17520  6628 ?        Ss   08:29   0:00 /usr/lib/systemd/systemd-logind
+root         632  0.0  1.3 1235708 54128 ?       S<Lsl 08:29   0:00 /usr/bin/envd -cmd /e2b-startup.sh
+root         634  0.0  0.1  19564  7220 ?        Ss   08:29   0:00 (agetty)
+root         635  0.0  0.0   3116  1064 tty1     Ss+  08:29   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+_chrony      642  0.0  0.0  11076  2516 ?        S    08:29   0:00 /usr/sbin/chronyd
+root         681  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:4-events_unbound]
+root         684  0.0  0.0   4324  3204 ?        S<   08:29   0:00 /bin/bash /e2b-startup.sh
+root         706  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/2:2-cgroup_destroy]
+root         707  0.0  0.1  11612  5508 ?        S<   08:29   0:00 sudo -u ubuntu /startup.sh
+ubuntu       708  0.0  0.0   5016  3772 ?        S<   08:29   0:00 /bin/bash /startup.sh
+ubuntu       739  0.0  0.0   7996  2388 ?        S<s  08:29   0:00 dbus-daemon --session --fork --address=unix:path=/tmp/dbus-session-bus-socket
+root         750  0.0  0.5  35932 24152 ?        S<s  08:29   0:00 /usr/bin/python3 /usr/bin/supervisord
+root         751  0.0  0.0   2700  1008 ?        S<L  08:29   0:00 /usr/bin/earlyoom -m 10,5 -s 100,100 -r 0 --avoid (^|/)(supervisord|sandbox-runtime|runtime-upgrade|Xorg|x11vnc|websockify|ws-server|ws-mount|statesync|manus-[a-z-]*|tini|sshd)$
+ubuntu       752  0.0  0.3 1340116 14656 ?       S<l  08:29   0:00 /usr/local/bin/sandbox-process-observer
+ubuntu       753  0.0  1.5 1312620 64284 ?       S<l  08:29   0:00 /usr/local/bin/sandbox-runtime
+root         754  0.0  1.9 548804 78044 ?        S<l  08:29   0:00 /usr/lib/xorg/Xorg :0 -noreset -nolisten tcp -logfile /var/log/Xorg.0.log -config /etc/X11/xorg.conf
+ubuntu       755  0.0  0.5 1277508 22884 ?       S<l  08:29   0:00 /usr/local/bin/runtime-upgrade
+ubuntu       756  0.0  0.0   4752  3504 ?        S<   08:29   0:00 /bin/bash /opt/.manus/.packages/scripts/start-chrome.sh
+root         757  0.0  0.3 1275404 12344 ?       S<l  08:29   0:00 websockify 5901 localhost:5900
+ubuntu       758  0.0  0.3 1275932 13028 ?       S<l  08:29   0:00 /usr/local/bin/ws-server --listen 0.0.0.0:19780 --mount-base /mnt --mount-bin /usr/local/bin/ws-mount
+root         759  0.0  0.5  41380 20940 ?        S<   08:29   0:00 x11vnc -display :0 -repeat -rfbport 5900 -geometry 1280x1029 -shared -forever -alwaysshared -permitfiletransfer -noxrecord -noxfixes -noxdamage -dpms -desktop chrome -noshm
+ubuntu       872  0.0  7.7 55659736 314232 ?     S<l  08:29   0:02 /usr/lib/chromium/chromium --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --disable-features=HighEfficiencyModeAvailable,HighEfficiencyModeToggle,DestroyProfileOnBrowserClose,Translate,PaintHolding,AcceptCHFrame --disable-permission-action-reporting --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --no-default-browser-check --disable-dev-shm-usage --disable-hang-monitor --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --use-angle=swiftshader-webgl --ozone-override-screen-size=1280,1029 --noerrdialogs --window-size=1280,1029 --window-position=0,0 --lang=en-US --num-raster-threads=4 --remote-debugging-port=9222 --load-extension=/opt/.manus/.packages/chrome-extensions/ublock-lite --user-data-dir=/home/ubuntu/.browser_data_dir --download-default-directory=/home/ubuntu/Downloads
+ubuntu       888  0.0  0.1 54542224 4144 ?       S<l  08:29   0:00 /usr/lib/chromium/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=5 --shared-client-connection
+ubuntu       892  0.0  0.1 54534004 4180 ?       S<   08:29   0:00 /usr/lib/chromium/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=4 --shared-client-connection
+ubuntu       894  0.0  1.6 55184772 65880 ?      S<   08:29   0:00 /usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ubuntu       895  0.0  1.6 55184764 65796 ?      S<   08:29   0:00 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ubuntu       899  0.0  0.4 55184784 18544 ?      S<   08:29   0:00 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ubuntu       918  0.0  3.0 55546640 124744 ?     S<l  08:29   0:00 /usr/lib/chromium/chromium --type=gpu-process --disable-dev-shm-usage --disable-breakpad --enable-gpu-rasterization --ozone-platform=x11 --use-angle=swiftshader-webgl --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,14294420545452562047,9469423695053790826,262144 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708988185955192
+ubuntu       921  0.0  2.4 55013968 97268 ?      Sl   08:29   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8784313375464038644,915059709222587707,524288 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708989122997041
+ubuntu       946  0.0  1.0 55251280 42932 ?      S<l  08:29   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8698336276883141512,6667406349070442013,524288 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708990060038890
+ubuntu       964  0.0  0.0   3156  1008 ?        S<   08:29   0:00 tail -f /var/log/supervisor/sandbox-earlyoom.err.log /var/log/supervisor/sandbox-earlyoom.log /var/log/supervisor/sandbox-process-observer.log /var/log/supervisor/sandbox-runtime.err.log /var/log/supervisor/sandbox-runtime.log /var/log/supervisor/supervisord.log
+root        1036  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:5-flush-254:0]
+ubuntu      1037  0.0  2.5 1518549592 104584 ?   S<l  08:29   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=5400503 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,11438431268231495036,10265841381648439950,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708994745248135
+ubuntu      1071  0.0  2.5 1518549592 103624 ?   S<l  08:29   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=13 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=5507300 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,7025139036083743332,10156130213467403569,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708998493415531
+ubuntu      1117  0.1  2.3 55460432 93576 ?      S<l  16:32   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=on_device_model.mojom.OnDeviceModelService --lang=en-US --service-sandbox-type=on_device_model_execution --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,17935317198866357150,11717645014077003379,524288 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708999430457380
+ubuntu      1128  0.0  0.6 55374856 27820 ?      S<   16:32   0:00 /usr/lib/chromium/chromium --type=broker
+root        1179  0.0  0.0      0     0 ?        I    16:32   0:00 [kworker/3:0]
+root        1180  0.0  0.0      0     0 ?        I    16:32   0:00 [kworker/0:0]
+ubuntu      1181  0.2  0.6 1283504 27368 ?       S<l  16:32   0:00 /usr/local/bin/statesync --config /home/ubuntu/.config/state-sync/state-sync-config.yaml
+ubuntu      1221  0.0  2.4 1518541460 100532 ?   S<l  16:32   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=16 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=28959752539 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,12766456114987107328,7144630038884955043,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190709001304541078
+ubuntu      1230  0.0  1.6 1518540948 68512 ?    S<l  16:32   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=17 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=28959782482 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,15290713034685431224,1111861232208253589,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190709002241582927
+ubuntu      1346  0.0  0.0   3124  1004 ?        S<   16:33   0:00 sleep 10
+ubuntu      1347  0.0  0.1   5016  4332 pts/0    S<s  16:33   0:00 /usr/bin/bash --noprofile --norc -i
+ubuntu      1356  0.0  0.1   8332  4280 pts/0    R<+  16:33   0:00 ps auxww
+=== REPOSITORY STATE ===
+Repository not cloned yet; branch and HEAD: unavailable at preflight.
+=== TOOL VERSIONS AVAILABLE BEFORE INSTALLATION ===
+
+[go]
+NOT_INSTALLED
+
+[node]
+v22.13.0
+
+[pnpm]
+11.24.0
+
+[git]
+git version 2.43.0
+
+[git-lfs]
+NOT_INSTALLED
+
+[gh]
+gh version 2.97.0 (2026-07-31)
+
+[docker]
+NOT_INSTALLED
+
+[firefox]
+NOT_INSTALLED
+
+[chromium]
+Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS
+
+[chromium-browser]
+NOT_INSTALLED
+
+[semgrep]
+NOT_INSTALLED
+
+[grype]
+NOT_INSTALLED
+
+[shellcheck]
+NOT_INSTALLED
+
+[yamllint]
+NOT_INSTALLED
+
+[gitleaks]
+NOT_INSTALLED
+
+[govulncheck]
+NOT_INSTALLED
+
+[trivy]
+NOT_INSTALLED
+
+[syft]
+NOT_INSTALLED
+=== POST-CLONE REPOSITORY STATE ===
+2026-08-26T16:33:49+00:00
+## [32mvalidation/final-environment-qualification[m...[31morigin/validation/gosec-r7[m
+  main                                                                [m f09af4b [[34morigin/main[m] docs: require baseline discovery before future lots
+* [32mvalidation/final-environment-qualification                          [m b907dfc [[34morigin/validation/gosec-r7[m] evidence: record final R7 v4 public verification
+  [31mremotes/origin/HEAD                                                 [m -> origin/main
+  [31mremotes/origin/audit/independent-validation-20260824                [m 08107b3 audit: publish independently validated archive results
+  [31mremotes/origin/audit/t00-t42-docker-hardening-v6                    [m 1d585ab Package isolated Docker hardening evidence
+  [31mremotes/origin/audit/t00-t42-docker-image-validation-v6             [m 80a4a15 Package Docker image validation blocker
+  [31mremotes/origin/audit/t00-t42-docker-native-nonruntime-validation    [m 38a273d Package Docker native non-runtime validation
+  [31mremotes/origin/audit/t00-t42-docker-v6-independent-image-validation [m b53eccd Publish final Docker V6 evidence package
+  [31mremotes/origin/audit/t00-t42-external-validation-protocols-v6       [m b8efc38 Package external validation protocols
+  [31mremotes/origin/audit/t00-t42-gitleaks-historical-method-hardening-v6[m 6fd0e31 Package historical Gitleaks method hardening
+  [31mremotes/origin/audit/t00-t42-lfs-conservation-audit                 [m a236291 Package LFS conservation audit evidence
+  [31mremotes/origin/audit/t00-t42-lfs-conservation-restoration-v6        [m 1fa32f6 Package LFS conservation restoration
+  [31mremotes/origin/audit/t00-t42-license-compliance-triage-v6           [m 0931ec8 Package license compliance triage
+  [31mremotes/origin/audit/t00-t42-license-static-debt-triage             [m fb9d20c Package license and static debt triage
+  [31mremotes/origin/audit/t00-t42-osv-toolchain-reconciliation           [m 89dea88 Package OSV toolchain reconciliation evidence
+  [31mremotes/origin/audit/t00-t42-osv-toolchain-reconciliation-v6        [m 0f055e7 Package OSV toolchain reconciliation
+  [31mremotes/origin/audit/t00-t42-post-v6-revalidation-final-matrix      [m 2d4a51d Finalize revalidation matrix package
+  [31mremotes/origin/audit/t00-t42-post-v6-roadmap-final-matrix           [m 3b46a17 Package post V6 final matrix
+  [31mremotes/origin/audit/t00-t42-prehuman-validation                    [m 861880e evidence: publish code-fixed finalization bundle
+  [31mremotes/origin/audit/t00-t42-product-decisions-required-v6          [m 93bc841 Package required product decisions
+  [31mremotes/origin/audit/t00-t42-self-validation-enhanced-v5            [m 8cea3be Include public clone verification evidence
+  [31mremotes/origin/audit/t00-t42-self-validation-synthetic-e2e          [m b34fa5c Record final published v4 head
+  [31mremotes/origin/audit/t00-t42-static-debt-prioritization-v6          [m 78b6c49 Package static debt prioritization
+  [31mremotes/origin/audit/t00-t42-t10-t15-e2e-validation-v6              [m 8c38830 Package T10 T15 E2E validation
+  [31mremotes/origin/audit/t00-t42-t10-t15-independent-review-v6          [m 47303ea Finalize independent T10 T15 evidence package
+  [31mremotes/origin/audit/t00-t42-t30-remote-evidence-reconciliation-v6  [m e5241c9 Package T30 remote evidence reconciliation
+  [31mremotes/origin/audit/t00-t42-v6-findings-remediation                [m 727e94b Freeze V6 local qualified baseline
+  [31mremotes/origin/audit/t28-t42-evidence-correction                    [m 6ae02e4 docs: align V2 delivery head metadata
+  [31mremotes/origin/continuation-t00-t27-canonical                       [m 69411e6 Archive verified T00-T27 packages with LFS fragments
+  [31mremotes/origin/continuation-t27-r1-canonical                        [m 76551a9 docs(t27): register continuity branch
+  [31mremotes/origin/continuity-t00-t26-handover                          [m 1a5112b docs(continuity): add T00-T26 restart handover
+  [31mremotes/origin/continuity-t24-t24sr                                 [m 7a375cc docs(governance): require baseline discovery evidence
+  [31mremotes/origin/continuity-t25-synthetic-cookie-fixtures             [m a7ccfbc feat(t25): add synthetic cookie fixture manifests
+  [31mremotes/origin/continuity-t26-simulated-proxy-provider              [m 930003c feat(t26): add simulated local proxy provider catalogue
+  [31mremotes/origin/feature/t28-local-extensions-controlled              [m 053fd8f Sync T28 closure metadata with current head
+  [31mremotes/origin/handover/t28-t42-new-session                         [m f03b584 docs: add T28-T42 new session handover
+  [31mremotes/origin/main                                                 [m f09af4b docs: require baseline discovery before future lots
+  [31mremotes/origin/validation/gosec-r4                                  [m 2d528ea evidence: record final R4 post-handover checks
+  [31mremotes/origin/validation/gosec-r5                                  [m 28f66a1 evidence: reconcile GOSEC R5 finding count
+  [31mremotes/origin/validation/gosec-r6                                  [m 3656dba evidence: publish consolidated GOSEC R6 review
+  [31mremotes/origin/validation/gosec-r7                                  [m b907dfc evidence: record final R7 v4 public verification
+  [31mremotes/origin/validation/gosec-r7-final-remediation                [m 97ce9b8 evidence: record public verification of remediation package
+  [31mremotes/origin/validation/operational-v1                            [m 8004818 evidence: record public R3 verification
+  [31mremotes/origin/work/t28-agent03-audit                               [m 34d3ba9 archive T28 audit delta bundle
+  [31mremotes/origin/work/t31-canvas-webgl-audio                          [m 9dad987 evidence: add T31 validation bundle
+  [31mremotes/origin/work/t32-client-rects                                [m d7279e8 evidence: add T32 validation bundle
+  [31mremotes/origin/work/t33-synthetic-geolocation                       [m 6936327 evidence: add T33 validation bundle
+  [31mremotes/origin/work/t34-hardware-diagnostics                        [m c7f66da evidence: add T34 validation bundle
+  [31mremotes/origin/work/t35-font-bundle                                 [m 891b2d1 evidence: add T35 validation bundle
+  [31mremotes/origin/work/t36-drift-detection                             [m 099ff7b evidence: add T36 validation bundle
+  [31mremotes/origin/work/t37-profile-health                              [m c0ad051 evidence: add T37 validation bundle
+  [31mremotes/origin/work/t38-session-lifecycle                           [m f8fcfa0 evidence: add T38 lifecycle validation bundle
+  [31mremotes/origin/work/t39-secret-import-export-blocked                [m 08061f1 evidence: add T39 blocked verdict
+  [31mremotes/origin/work/t40-integration-gated                           [m 077ba90 evidence: add T40 integration gate
+  [31mremotes/origin/work/t41-release-readiness-blocked                   [m 944376f evidence: add compact T41 blocked verdict
+  [31mremotes/origin/work/t42-final-closure                               [m 6489af3 evidence: add compact T42 final closure
+b907dfcd68c290144e2b922e352d5a937e9b3259
+b907dfcd68c290144e2b922e352d5a937e9b3259	refs/heads/validation/gosec-r7
+=== CANONICAL R7 REFERENCE VERIFICATION ===
+2026-08-26T16:35:14+00:00
+HEAD=b907dfcd68c290144e2b922e352d5a937e9b3259
+REMOTE_R7=b907dfcd68c290144e2b922e352d5a937e9b3259	refs/heads/validation/gosec-r7
+SOURCE_COMMIT=3656dbad4bfef0381e1f9d837271d293ecffe292
+EVIDENCE_COMMIT=1dca108197f90e379184474ad37bbb9f386fe309
+PACKAGE_COMMIT=5cd16b11f62b8c16582973001ce81bff9ef03dcf
+=== REQUIRED FILES ===
+PRESENT evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+PRESENT evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz
+PRESENT evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+PRESENT evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+PRESENT evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip.sha256
+PRESENT evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz.sha256
+PRESENT evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.bundle.sha256
+=== MERGE BASES ===
+3656dbad4bfef0381e1f9d837271d293ecffe292 -> 3656dbad4bfef0381e1f9d837271d293ecffe292
+1dca108197f90e379184474ad37bbb9f386fe309 -> 1dca108197f90e379184474ad37bbb9f386fe309
+5cd16b11f62b8c16582973001ce81bff9ef03dcf -> 5cd16b11f62b8c16582973001ce81bff9ef03dcf
+=== SHA256 ===
+80b0546eca714826023bfc4cc3e33381b1b9d3dfe52900771dd00a2cd2ba5ed8  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+faf43da4e69e20aa4dc59863173b0f64b8a411f102d7dcd4c46b22fc8089fa7e  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz
+6f732c627ee58529898753c09f292c5c0e79b9ee4a32cf6bd58b755f7ae4edb0  evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a  evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+80b0546eca714826023bfc4cc3e33381b1b9d3dfe52900771dd00a2cd2ba5ed8  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+faf43da4e69e20aa4dc59863173b0f64b8a411f102d7dcd4c46b22fc8089fa7e  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz
+6f732c627ee58529898753c09f292c5c0e79b9ee4a32cf6bd58b755f7ae4edb0  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+=== ZIP TEST ===
+Archive:  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+    testing: forgelocal-gosec-r7-final-v4-evidence/   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_BASELINE_DISCOVERY_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_BUNDLE_VERIFY_V4_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_CHANGELOG.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_COMMANDS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_CONSOLIDATED_TESTS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_MANIFEST_V4.txt   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_MANIFEST_V3.txt   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_POSTCHECK_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_RISK_DECISION.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINDINGS_MATRIX.tsv   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINDING_MATRIX.tsv   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_GOSEC_BASELINE.json   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_GOSEC_FINAL.json   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_MANIFEST_RECONCILIATION.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_MATRIX_PRELIMINARY_REPORT.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V2_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V3_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_RISK_SCOPE.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_SYFT.json   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_TODO.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_VALIDATION_COMMANDS_RAW.log   OK
+No errors detected in compressed data of evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip.
+=== TAR TEST ===
+TAR_TEST=PASS
+=== BUNDLE VERIFY ===
+evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle is okay
+The bundle contains this ref:
+1dca108197f90e379184474ad37bbb9f386fe309 refs/gosec-r7/package-v4-head
+The bundle requires this ref:
+3656dbad4bfef0381e1f9d837271d293ecffe292 
+The bundle uses this hash algorithm: sha1
+=== FSCK ===
+=== BASELINE ===
+{
+	"Golang errors": {},
+	"Issues": [
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint64",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go",
+			"code": "1047: \tif seed, ok := fingerprintInt(p.Fingerprint, \"canvas:seed\"); ok {\n1048: \t\treturn uint64(seed)\n1049: \t}\n",
+			"line": "1048",
+			"column": "16",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint64",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/archive_security.go",
+			"code": "262: \t}\n263: \tif uint64(n) != size {\n264: \t\treturn fmt.Errorf(\"archive entry size mismatch\")\n",
+			"line": "263",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "190",
+				"url": "https://cwe.mitre.org/data/definitions/190.html"
+			},
+			"rule_id": "G115",
+			"details": "integer overflow conversion int64 -\u003e uint32",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/archive_security.go",
+			"code": "220: \t\t\t}\n221: \t\t\tout, err := openBrowserArchiveOutput(destRoot, destDir, target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(os.FileMode(hdr.Mode)))\n222: \t\t\tif err != nil {\n",
+			"line": "221",
+			"column": "147",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go",
+			"code": "88: \n89: \t\tif rand.Float64() \u003c microPauseProb {\n90: \t\t\ttime.Sleep(time.Duration(randRangeInt(pauseMs[0], pauseMs[1])) * time.Millisecond)\n",
+			"line": "89",
+			"column": "6",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go",
+			"code": "36: \t\tX: box.X + rand.Float64()*box.Width,\n37: \t\tY: box.Y + rand.Float64()*box.Height,\n38: \t}\n",
+			"line": "37",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go",
+			"code": "35: \ttarget := vec2{\n36: \t\tX: box.X + rand.Float64()*box.Width,\n37: \t\tY: box.Y + rand.Float64()*box.Height,\n",
+			"line": "36",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "127: \t}\n128: \treturn lo + rand.IntN(hi-lo+1)\n129: }\n",
+			"line": "128",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "119: func randRange(lo, hi float64) float64 {\n120: \treturn lo + rand.Float64()*(hi-lo)\n121: }\n",
+			"line": "120",
+			"column": "14",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "114: func logNormalDelay(mu, sigma float64) float64 {\n115: \treturn math.Exp(mu + sigma*rand.NormFloat64())\n116: }\n",
+			"line": "115",
+			"column": "29",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "107: \tid := math.Log2(dist/targetWidth + 1)\n108: \tbase := rand.Float64() * float64(minSteps)\n109: \tsteps := int(math.Ceil((math.Log2(2*id+1) + base) * 3))\n",
+			"line": "108",
+			"column": "10",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "97: \tangle := rand.Float64() * 2 * math.Pi\n98: \tr := radius * math.Sqrt(rand.Float64())\n99: \treturn target.add(vec2{r * math.Cos(angle), r * math.Sin(angle)})\n",
+			"line": "98",
+			"column": "26",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "96: func overshootPoint(target vec2, radius float64) vec2 {\n97: \tangle := rand.Float64() * 2 * math.Pi\n98: \tr := radius * math.Sqrt(rand.Float64())\n",
+			"line": "97",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "76: \t\tpt.X += rand.NormFloat64()\n77: \t\tpt.Y += rand.NormFloat64()\n78: \t\tpts[i] = pt\n",
+			"line": "77",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "75: \t\t// Add micro-jitter (Gaussian, σ=1px)\n76: \t\tpt.X += rand.NormFloat64()\n77: \t\tpt.Y += rand.NormFloat64()\n",
+			"line": "76",
+			"column": "11",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "58: \t\tperpDir := dir.normalize().perp().scale(spread * side)\n59: \t\treturn mid.add(perpDir.scale(rand.Float64()))\n60: \t}\n",
+			"line": "59",
+			"column": "32",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "54: \t\t// Random point along the line segment\n55: \t\tt := rand.Float64()\n56: \t\tmid := start.add(dir.scale(t))\n",
+			"line": "55",
+			"column": "8",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+			"code": "48: \tside := 1.0\n49: \tif rand.Float64() \u003c 0.5 {\n50: \t\tside = -1\n",
+			"line": "49",
+			"column": "5",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go",
+			"code": "91: \t}\n92: \treturn adj[rand.IntN(len(adj))]\n93: }\n",
+			"line": "92",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go",
+			"code": "57: \t\t// Typo simulation\n58: \t\tif cfg.TypoRate \u003e 0 \u0026\u0026 rand.Float64() \u003c cfg.TypoRate {\n59: \t\t\tif typo := pickTypo(ch); typo != 0 {\n",
+			"line": "58",
+			"column": "26",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "MEDIUM",
+			"cwe": {
+				"id": "338",
+				"url": "https://cwe.mitre.org/data/definitions/338.html"
+			},
+			"rule_id": "G404",
+			"details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go",
+			"code": "79: \tfor i := 0; i \u003c len(fps); i++ {\n80: \t\tidx := rand.Intn(len(fps))\n81: \t\tfp := fps[idx]\n",
+			"line": "80",
+			"column": "10",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go",
+			"code": "477: \t// Dial internal Playwright WebSocket with a bounded connection attempt.\n478: \tbackendConn, err := net.DialTimeout(\"tcp\", internalAddr, 5*time.Second)\n479: \tif err != nil {\n",
+			"line": "478",
+			"column": "37",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "1038: \t}\n1039: \treq, err := http.NewRequest(http.MethodPost, resolvedBase+\"/api/restore\", \u0026body)\n1040: \tif err != nil {\n",
+			"line": "1039",
+			"column": "29",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "967: \treq.Header.Set(\"Authorization\", \"Bearer \"+resolvedToken)\n968: \tresp, err := newCLILocalHTTPClient(60 * time.Second).Do(req)\n969: \tif err != nil {\n",
+			"line": "968",
+			"column": "57",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "962: \t}\n963: \treq, err := http.NewRequest(http.MethodPost, resolvedBase+\"/api/backup\", nil)\n964: \tif err != nil {\n",
+			"line": "963",
+			"column": "29",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+			"code": "1087: \tclient := newCLILocalHTTPClient(10 * time.Second)\n1088: \tresp, err := client.Do(req)\n1089: \tif err != nil {\n",
+			"line": "1088",
+			"column": "24",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+			"code": "1003: \t}\n1004: \treq, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))\n1005: \tif err != nil {\n",
+			"line": "1004",
+			"column": "29",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "918",
+				"url": "https://cwe.mitre.org/data/definitions/918.html"
+			},
+			"rule_id": "G704",
+			"details": "SSRF via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+			"code": "984: \t}\n985: \treq, err := http.NewRequest(http.MethodGet, url, nil)\n986: \tif err != nil {\n",
+			"line": "985",
+			"column": "29",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "LOW",
+			"cwe": {
+				"id": "798",
+				"url": "https://cwe.mitre.org/data/definitions/798.html"
+			},
+			"rule_id": "G101",
+			"details": "Potential hardcoded credentials",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go",
+			"code": "21: \tadminTokenLifetime        = 15 * time.Minute\n22: \tadminTokenMetadataName    = \".api-token.meta\"\n23: )\n",
+			"line": "22",
+			"column": "2",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "975: \t}\n976: \tif err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {\n977: \t\treturn err\n",
+			"line": "976",
+			"column": "23",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "811: \t\t\t}\n812: \t\t\tif err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {\n813: \t\t\t\treturn err\n",
+			"line": "812",
+			"column": "25",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "780: \t\t\t}\n781: \t\t\tif err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {\n782: \t\t\t\treturn err\n",
+			"line": "781",
+			"column": "25",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "770: \t\t\t}\n771: \t\t\tif err := os.MkdirAll(target, 0700); err != nil {\n772: \t\t\t\treturn err\n",
+			"line": "771",
+			"column": "25",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "591: func createFullBackup(baseDir, output string) (result error) {\n592: \tif err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {\n593: \t\treturn err\n",
+			"line": "592",
+			"column": "23",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "581: \t}\n582: \tif info, err := os.Stat(output); err == nil \u0026\u0026 info.IsDir() {\n583: \t\treturn filepath.Join(output, name)\n",
+			"line": "582",
+			"column": "25",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "HIGH",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G703",
+			"details": "Path traversal via taint analysis",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "457: func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {\n458: \tif err := os.MkdirAll(filepath.Join(baseDir, \"browsers\"), 0700); err != nil {\n459: \t\treturn selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err\n",
+			"line": "458",
+			"column": "23",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+			"code": "514: \t\tctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)\n515: \t\terr := exec.CommandContext(ctx, \"xattr\", \"-cr\", destDir).Run()\n516: \t\tcancel()\n",
+			"line": "515",
+			"column": "10",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+			"code": "387: \tdefer cancel()\n388: \terr := exec.CommandContext(ctx, \"xattr\", \"-cr\", path).Run()\n389: \tif ctx.Err() != nil {\n",
+			"line": "388",
+			"column": "9",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go",
+			"code": "563: \tcase \"windows\":\n564: \t\tcmd = exec.Command(\"rundll32\", \"url.dll,FileProtocolHandler\", url)\n565: \t}\n",
+			"line": "564",
+			"column": "9",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go",
+			"code": "561: \tcase \"linux\":\n562: \t\tcmd = exec.Command(\"xdg-open\", url)\n563: \tcase \"windows\":\n",
+			"line": "562",
+			"column": "9",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "78",
+				"url": "https://cwe.mitre.org/data/definitions/78.html"
+			},
+			"rule_id": "G204",
+			"details": "Subprocess launched with variable",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go",
+			"code": "559: \tcase \"darwin\":\n560: \t\tcmd = exec.Command(\"open\", url)\n561: \tcase \"linux\":\n",
+			"line": "560",
+			"column": "9",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "22",
+				"url": "https://cwe.mitre.org/data/definitions/22.html"
+			},
+			"rule_id": "G305",
+			"details": "File traversal when extracting zip/tar archive",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+			"code": "807: \t\t\t}\n808: \t\t\tlinkTarget := filepath.Join(filepath.Dir(clean), header.Linkname)\n809: \t\t\tif _, err := safeBackupPath(linkTarget); err != nil {\n",
+			"line": "808",
+			"column": "18",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go",
+			"code": "47: \t}\n48: \tif err := os.Chmod(dataDir, 0700); err != nil {\n49: \t\treturn nil, err\n",
+			"line": "48",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+			"code": "525: \t}\n526: \tif err := os.Chmod(binPath, 0755); err != nil {\n527: \t\treturn \"\", err\n",
+			"line": "526",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+			"code": "433: \t}\n434: \tif err := os.Chmod(binPath, 0755); err != nil {\n435: \t\treturn \"\", err\n",
+			"line": "434",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+			"code": "373: \t}\n374: \tif err := os.Chmod(binPath, 0755); err != nil {\n375: \t\treturn \"\", err\n",
+			"line": "374",
+			"column": "12",
+			"nosec": false,
+			"suppressions": null
+		},
+		{
+			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"id": "276",
+				"url": "https://cwe.mitre.org/data/definitions/276.html"
+			},
+			"rule_id": "G302",
+			"details": "Expect file permissions to be 0600 or less",
+			"file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+			"code": "762: \t\t// rather than relying on MkdirAll's mode for existing paths.\n763: \t\tif err := os.Chmod(path, 0700); err != nil {\n764: \t\t\treturn err\n",
+			"line": "763",
+			"column": "13",
+			"nosec": false,
+			"suppressions": null
+		}
+	],
+	"Stats": {
+		"files": 95,
+		"lines": 27418,
+		"nosec": 22,
+		"found": 46
+	},
+	"GosecVersion": "dev"
+}=== BASELINE DISTRIBUTION ===
+{
+  "Golang errors": {},
+  "GosecVersion": "dev",
+  "Issues": [
+    {
+      "code": "1047: \tif seed, ok := fingerprintInt(p.Fingerprint, \"canvas:seed\"); ok {\n1048: \t\treturn uint64(seed)\n1049: \t}\n",
+      "column": "16",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "190",
+        "url": "https://cwe.mitre.org/data/definitions/190.html"
+      },
+      "details": "integer overflow conversion int64 -> uint64",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go",
+      "line": "1048",
+      "nosec": false,
+      "rule_id": "G115",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "262: \t}\n263: \tif uint64(n) != size {\n264: \t\treturn fmt.Errorf(\"archive entry size mismatch\")\n",
+      "column": "11",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "190",
+        "url": "https://cwe.mitre.org/data/definitions/190.html"
+      },
+      "details": "integer overflow conversion int64 -> uint64",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/archive_security.go",
+      "line": "263",
+      "nosec": false,
+      "rule_id": "G115",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "220: \t\t\t}\n221: \t\t\tout, err := openBrowserArchiveOutput(destRoot, destDir, target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(os.FileMode(hdr.Mode)))\n222: \t\t\tif err != nil {\n",
+      "column": "147",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "190",
+        "url": "https://cwe.mitre.org/data/definitions/190.html"
+      },
+      "details": "integer overflow conversion int64 -> uint32",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/archive_security.go",
+      "line": "221",
+      "nosec": false,
+      "rule_id": "G115",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "88: \n89: \t\tif rand.Float64() < microPauseProb {\n90: \t\t\ttime.Sleep(time.Duration(randRangeInt(pauseMs[0], pauseMs[1])) * time.Millisecond)\n",
+      "column": "6",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go",
+      "line": "89",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "36: \t\tX: box.X + rand.Float64()*box.Width,\n37: \t\tY: box.Y + rand.Float64()*box.Height,\n38: \t}\n",
+      "column": "14",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go",
+      "line": "37",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "35: \ttarget := vec2{\n36: \t\tX: box.X + rand.Float64()*box.Width,\n37: \t\tY: box.Y + rand.Float64()*box.Height,\n",
+      "column": "14",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go",
+      "line": "36",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "127: \t}\n128: \treturn lo + rand.IntN(hi-lo+1)\n129: }\n",
+      "column": "14",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "128",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "119: func randRange(lo, hi float64) float64 {\n120: \treturn lo + rand.Float64()*(hi-lo)\n121: }\n",
+      "column": "14",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "120",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "114: func logNormalDelay(mu, sigma float64) float64 {\n115: \treturn math.Exp(mu + sigma*rand.NormFloat64())\n116: }\n",
+      "column": "29",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "115",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "107: \tid := math.Log2(dist/targetWidth + 1)\n108: \tbase := rand.Float64() * float64(minSteps)\n109: \tsteps := int(math.Ceil((math.Log2(2*id+1) + base) * 3))\n",
+      "column": "10",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "108",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "97: \tangle := rand.Float64() * 2 * math.Pi\n98: \tr := radius * math.Sqrt(rand.Float64())\n99: \treturn target.add(vec2{r * math.Cos(angle), r * math.Sin(angle)})\n",
+      "column": "26",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "98",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "96: func overshootPoint(target vec2, radius float64) vec2 {\n97: \tangle := rand.Float64() * 2 * math.Pi\n98: \tr := radius * math.Sqrt(rand.Float64())\n",
+      "column": "11",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "97",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "76: \t\tpt.X += rand.NormFloat64()\n77: \t\tpt.Y += rand.NormFloat64()\n78: \t\tpts[i] = pt\n",
+      "column": "11",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "77",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "75: \t\t// Add micro-jitter (Gaussian, \u03c3=1px)\n76: \t\tpt.X += rand.NormFloat64()\n77: \t\tpt.Y += rand.NormFloat64()\n",
+      "column": "11",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "76",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "58: \t\tperpDir := dir.normalize().perp().scale(spread * side)\n59: \t\treturn mid.add(perpDir.scale(rand.Float64()))\n60: \t}\n",
+      "column": "32",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "59",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "54: \t\t// Random point along the line segment\n55: \t\tt := rand.Float64()\n56: \t\tmid := start.add(dir.scale(t))\n",
+      "column": "8",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "55",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "48: \tside := 1.0\n49: \tif rand.Float64() < 0.5 {\n50: \t\tside = -1\n",
+      "column": "5",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go",
+      "line": "49",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "91: \t}\n92: \treturn adj[rand.IntN(len(adj))]\n93: }\n",
+      "column": "13",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go",
+      "line": "92",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "57: \t\t// Typo simulation\n58: \t\tif cfg.TypoRate > 0 && rand.Float64() < cfg.TypoRate {\n59: \t\t\tif typo := pickTypo(ch); typo != 0 {\n",
+      "column": "26",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go",
+      "line": "58",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "79: \tfor i := 0; i < len(fps); i++ {\n80: \t\tidx := rand.Intn(len(fps))\n81: \t\tfp := fps[idx]\n",
+      "column": "10",
+      "confidence": "MEDIUM",
+      "cwe": {
+        "id": "338",
+        "url": "https://cwe.mitre.org/data/definitions/338.html"
+      },
+      "details": "Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go",
+      "line": "80",
+      "nosec": false,
+      "rule_id": "G404",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "477: \t// Dial internal Playwright WebSocket with a bounded connection attempt.\n478: \tbackendConn, err := net.DialTimeout(\"tcp\", internalAddr, 5*time.Second)\n479: \tif err != nil {\n",
+      "column": "37",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go",
+      "line": "478",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "1038: \t}\n1039: \treq, err := http.NewRequest(http.MethodPost, resolvedBase+\"/api/restore\", &body)\n1040: \tif err != nil {\n",
+      "column": "29",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "1039",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "967: \treq.Header.Set(\"Authorization\", \"Bearer \"+resolvedToken)\n968: \tresp, err := newCLILocalHTTPClient(60 * time.Second).Do(req)\n969: \tif err != nil {\n",
+      "column": "57",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "968",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "962: \t}\n963: \treq, err := http.NewRequest(http.MethodPost, resolvedBase+\"/api/backup\", nil)\n964: \tif err != nil {\n",
+      "column": "29",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "963",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "1087: \tclient := newCLILocalHTTPClient(10 * time.Second)\n1088: \tresp, err := client.Do(req)\n1089: \tif err != nil {\n",
+      "column": "24",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+      "line": "1088",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "1003: \t}\n1004: \treq, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(data))\n1005: \tif err != nil {\n",
+      "column": "29",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+      "line": "1004",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "984: \t}\n985: \treq, err := http.NewRequest(http.MethodGet, url, nil)\n986: \tif err != nil {\n",
+      "column": "29",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "918",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "details": "SSRF via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+      "line": "985",
+      "nosec": false,
+      "rule_id": "G704",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "21: \tadminTokenLifetime        = 15 * time.Minute\n22: \tadminTokenMetadataName    = \".api-token.meta\"\n23: )\n",
+      "column": "2",
+      "confidence": "LOW",
+      "cwe": {
+        "id": "798",
+        "url": "https://cwe.mitre.org/data/definitions/798.html"
+      },
+      "details": "Potential hardcoded credentials",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go",
+      "line": "22",
+      "nosec": false,
+      "rule_id": "G101",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "975: \t}\n976: \tif err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {\n977: \t\treturn err\n",
+      "column": "23",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "976",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "811: \t\t\t}\n812: \t\t\tif err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {\n813: \t\t\t\treturn err\n",
+      "column": "25",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "812",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "780: \t\t\t}\n781: \t\t\tif err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {\n782: \t\t\t\treturn err\n",
+      "column": "25",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "781",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "770: \t\t\t}\n771: \t\t\tif err := os.MkdirAll(target, 0700); err != nil {\n772: \t\t\t\treturn err\n",
+      "column": "25",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "771",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "591: func createFullBackup(baseDir, output string) (result error) {\n592: \tif err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {\n593: \t\treturn err\n",
+      "column": "23",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "592",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "581: \t}\n582: \tif info, err := os.Stat(output); err == nil && info.IsDir() {\n583: \t\treturn filepath.Join(output, name)\n",
+      "column": "25",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "582",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "457: func installBrowsers(baseDir string, stdout io.Writer, runtimesCSV string) ([]browserState, error) {\n458: \tif err := os.MkdirAll(filepath.Join(baseDir, \"browsers\"), 0700); err != nil {\n459: \t\treturn selectBrowserStates(collectBrowserStates(baseDir), runtimesCSV), err\n",
+      "column": "23",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "Path traversal via taint analysis",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "458",
+      "nosec": false,
+      "rule_id": "G703",
+      "severity": "HIGH",
+      "suppressions": null
+    },
+    {
+      "code": "514: \t\tctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)\n515: \t\terr := exec.CommandContext(ctx, \"xattr\", \"-cr\", destDir).Run()\n516: \t\tcancel()\n",
+      "column": "10",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "78",
+        "url": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "details": "Subprocess launched with variable",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+      "line": "515",
+      "nosec": false,
+      "rule_id": "G204",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "387: \tdefer cancel()\n388: \terr := exec.CommandContext(ctx, \"xattr\", \"-cr\", path).Run()\n389: \tif ctx.Err() != nil {\n",
+      "column": "9",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "78",
+        "url": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "details": "Subprocess launched with variable",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+      "line": "388",
+      "nosec": false,
+      "rule_id": "G204",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "563: \tcase \"windows\":\n564: \t\tcmd = exec.Command(\"rundll32\", \"url.dll,FileProtocolHandler\", url)\n565: \t}\n",
+      "column": "9",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "78",
+        "url": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "details": "Subprocess launched with variable",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go",
+      "line": "564",
+      "nosec": false,
+      "rule_id": "G204",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "561: \tcase \"linux\":\n562: \t\tcmd = exec.Command(\"xdg-open\", url)\n563: \tcase \"windows\":\n",
+      "column": "9",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "78",
+        "url": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "details": "Subprocess launched with variable",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go",
+      "line": "562",
+      "nosec": false,
+      "rule_id": "G204",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "559: \tcase \"darwin\":\n560: \t\tcmd = exec.Command(\"open\", url)\n561: \tcase \"linux\":\n",
+      "column": "9",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "78",
+        "url": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "details": "Subprocess launched with variable",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go",
+      "line": "560",
+      "nosec": false,
+      "rule_id": "G204",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "807: \t\t\t}\n808: \t\t\tlinkTarget := filepath.Join(filepath.Dir(clean), header.Linkname)\n809: \t\t\tif _, err := safeBackupPath(linkTarget); err != nil {\n",
+      "column": "18",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "22",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "details": "File traversal when extracting zip/tar archive",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go",
+      "line": "808",
+      "nosec": false,
+      "rule_id": "G305",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "47: \t}\n48: \tif err := os.Chmod(dataDir, 0700); err != nil {\n49: \t\treturn nil, err\n",
+      "column": "12",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "276",
+        "url": "https://cwe.mitre.org/data/definitions/276.html"
+      },
+      "details": "Expect file permissions to be 0600 or less",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go",
+      "line": "48",
+      "nosec": false,
+      "rule_id": "G302",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "525: \t}\n526: \tif err := os.Chmod(binPath, 0755); err != nil {\n527: \t\treturn \"\", err\n",
+      "column": "12",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "276",
+        "url": "https://cwe.mitre.org/data/definitions/276.html"
+      },
+      "details": "Expect file permissions to be 0600 or less",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+      "line": "526",
+      "nosec": false,
+      "rule_id": "G302",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "433: \t}\n434: \tif err := os.Chmod(binPath, 0755); err != nil {\n435: \t\treturn \"\", err\n",
+      "column": "12",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "276",
+        "url": "https://cwe.mitre.org/data/definitions/276.html"
+      },
+      "details": "Expect file permissions to be 0600 or less",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+      "line": "434",
+      "nosec": false,
+      "rule_id": "G302",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "373: \t}\n374: \tif err := os.Chmod(binPath, 0755); err != nil {\n375: \t\treturn \"\", err\n",
+      "column": "12",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "276",
+        "url": "https://cwe.mitre.org/data/definitions/276.html"
+      },
+      "details": "Expect file permissions to be 0600 or less",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go",
+      "line": "374",
+      "nosec": false,
+      "rule_id": "G302",
+      "severity": "MEDIUM",
+      "suppressions": null
+    },
+    {
+      "code": "762: \t\t// rather than relying on MkdirAll's mode for existing paths.\n763: \t\tif err := os.Chmod(path, 0700); err != nil {\n764: \t\t\treturn err\n",
+      "column": "13",
+      "confidence": "HIGH",
+      "cwe": {
+        "id": "276",
+        "url": "https://cwe.mitre.org/data/definitions/276.html"
+      },
+      "details": "Expect file permissions to be 0600 or less",
+      "file": "/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go",
+      "line": "763",
+      "nosec": false,
+      "rule_id": "G302",
+      "severity": "MEDIUM",
+      "suppressions": null
+    }
+  ],
+  "Stats": {
+    "files": 95,
+    "found": 46,
+    "lines": 27418,
+    "nosec": 22
+  }
+}
+{
+  "version": "go1.25.13",
+  "filename": "go1.25.13.linux-amd64.tar.gz",
+  "url": "https://go.dev/dl/go1.25.13.linux-amd64.tar.gz",
+  "sha256": "39042a078ea9ceebe3ecda4a7188f0f5b96e14a071d27923ba7f40b456e85ae3",
+  "install_dir": "/home/ubuntu/forgelocal-final-env-qualification/tools/go"
+}
+=== C TOOLCHAIN INSTALLATION ===
+2026-08-26T16:37:51+00:00
+SOURCE=Ubuntu noble main archive.ubuntu.com; apt metadata refreshed immediately before install.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu bzip2 dpkg-dev g++ g++-13
+  g++-13-x86-64-linux-gnu g++-x86-64-linux-gnu gcc gcc-13
+  gcc-13-x86-64-linux-gnu gcc-x86-64-linux-gnu libasan8 libatomic1 libbinutils
+  libcc1-0 libctf-nobfd0 libctf0 libdpkg-perl libgcc-13-dev libgprofng0
+  libhwasan0 libitm1 libjansson4 liblsan0 libquadmath0 libsframe1
+  libstdc++-13-dev libtsan2 libubsan1 lto-disabled-list
+Suggested packages:
+  binutils-doc gprofng-gui bzip2-doc debian-keyring g++-multilib
+  g++-13-multilib gcc-13-doc gcc-multilib manpages-dev autoconf automake
+  libtool flex bison gdb gcc-doc gcc-13-multilib gcc-13-locales
+  gdb-x86-64-linux-gnu bzr libstdc++-13-doc
+Recommended packages:
+  fakeroot libalgorithm-merge-perl libfile-fcntllock-perl
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential bzip2
+  dpkg-dev g++ g++-13 g++-13-x86-64-linux-gnu g++-x86-64-linux-gnu gcc gcc-13
+  gcc-13-x86-64-linux-gnu gcc-x86-64-linux-gnu libasan8 libatomic1 libbinutils
+  libcc1-0 libctf-nobfd0 libctf0 libdpkg-perl libgcc-13-dev libgprofng0
+  libhwasan0 libitm1 libjansson4 liblsan0 libquadmath0 libsframe1
+  libstdc++-13-dev libtsan2 libubsan1 lto-disabled-list
+0 upgraded, 33 newly installed, 0 to remove and 34 not upgraded.
+Need to get 54.8 MB of archives.
+After this operation, 193 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble/main amd64 libjansson4 amd64 2.14-2build2 [32.8 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 binutils-common amd64 2.42-4ubuntu2.10 [240 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libsframe1 amd64 2.42-4ubuntu2.10 [15.7 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libbinutils amd64 2.42-4ubuntu2.10 [577 kB]
+Get:5 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libctf-nobfd0 amd64 2.42-4ubuntu2.10 [98.0 kB]
+Get:6 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libctf0 amd64 2.42-4ubuntu2.10 [94.5 kB]
+Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgprofng0 amd64 2.42-4ubuntu2.10 [849 kB]
+Get:8 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 binutils-x86-64-linux-gnu amd64 2.42-4ubuntu2.10 [2463 kB]
+Get:9 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 binutils amd64 2.42-4ubuntu2.10 [18.2 kB]
+Get:10 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libcc1-0 amd64 14.2.0-4ubuntu2~24.04.1 [48.0 kB]
+Get:11 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libitm1 amd64 14.2.0-4ubuntu2~24.04.1 [29.7 kB]
+Get:12 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libatomic1 amd64 14.2.0-4ubuntu2~24.04.1 [10.5 kB]
+Get:13 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libasan8 amd64 14.2.0-4ubuntu2~24.04.1 [3027 kB]
+Get:14 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 liblsan0 amd64 14.2.0-4ubuntu2~24.04.1 [1322 kB]
+Get:15 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libtsan2 amd64 14.2.0-4ubuntu2~24.04.1 [2772 kB]
+Get:16 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libubsan1 amd64 14.2.0-4ubuntu2~24.04.1 [1184 kB]
+Get:17 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libhwasan0 amd64 14.2.0-4ubuntu2~24.04.1 [1641 kB]
+Get:18 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libquadmath0 amd64 14.2.0-4ubuntu2~24.04.1 [153 kB]
+Get:19 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libgcc-13-dev amd64 13.3.0-6ubuntu2~24.04.1 [2681 kB]
+Get:20 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 gcc-13-x86-64-linux-gnu amd64 13.3.0-6ubuntu2~24.04.1 [21.1 MB]
+Get:21 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 gcc-13 amd64 13.3.0-6ubuntu2~24.04.1 [494 kB]
+Get:22 http://archive.ubuntu.com/ubuntu noble/main amd64 gcc-x86-64-linux-gnu amd64 4:13.2.0-7ubuntu1 [1212 B]
+Get:23 http://archive.ubuntu.com/ubuntu noble/main amd64 gcc amd64 4:13.2.0-7ubuntu1 [5018 B]
+Get:24 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libstdc++-13-dev amd64 13.3.0-6ubuntu2~24.04.1 [2420 kB]
+Get:25 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 g++-13-x86-64-linux-gnu amd64 13.3.0-6ubuntu2~24.04.1 [12.2 MB]
+Get:26 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 g++-13 amd64 13.3.0-6ubuntu2~24.04.1 [16.0 kB]
+Get:27 http://archive.ubuntu.com/ubuntu noble/main amd64 g++-x86-64-linux-gnu amd64 4:13.2.0-7ubuntu1 [964 B]
+Get:28 http://archive.ubuntu.com/ubuntu noble/main amd64 g++ amd64 4:13.2.0-7ubuntu1 [1100 B]
+Get:29 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libdpkg-perl all 1.22.6ubuntu6.6 [268 kB]
+Get:30 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 bzip2 amd64 1.0.8-5.1build0.1 [34.5 kB]
+Get:31 http://archive.ubuntu.com/ubuntu noble/main amd64 lto-disabled-list all 47 [12.4 kB]
+Get:32 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 dpkg-dev all 1.22.6ubuntu6.6 [1074 kB]
+Get:33 http://archive.ubuntu.com/ubuntu noble/main amd64 build-essential amd64 12.10ubuntu1 [4928 B]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 54.8 MB in 1s (73.1 MB/s)
+Selecting previously unselected package libjansson4:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 51189 files and directories currently installed.)
+Preparing to unpack .../00-libjansson4_2.14-2build2_amd64.deb ...
+Unpacking libjansson4:amd64 (2.14-2build2) ...
+Selecting previously unselected package binutils-common:amd64.
+Preparing to unpack .../01-binutils-common_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking binutils-common:amd64 (2.42-4ubuntu2.10) ...
+Selecting previously unselected package libsframe1:amd64.
+Preparing to unpack .../02-libsframe1_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking libsframe1:amd64 (2.42-4ubuntu2.10) ...
+Selecting previously unselected package libbinutils:amd64.
+Preparing to unpack .../03-libbinutils_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking libbinutils:amd64 (2.42-4ubuntu2.10) ...
+Selecting previously unselected package libctf-nobfd0:amd64.
+Preparing to unpack .../04-libctf-nobfd0_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking libctf-nobfd0:amd64 (2.42-4ubuntu2.10) ...
+Selecting previously unselected package libctf0:amd64.
+Preparing to unpack .../05-libctf0_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking libctf0:amd64 (2.42-4ubuntu2.10) ...
+Selecting previously unselected package libgprofng0:amd64.
+Preparing to unpack .../06-libgprofng0_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking libgprofng0:amd64 (2.42-4ubuntu2.10) ...
+Selecting previously unselected package binutils-x86-64-linux-gnu.
+Preparing to unpack .../07-binutils-x86-64-linux-gnu_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking binutils-x86-64-linux-gnu (2.42-4ubuntu2.10) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../08-binutils_2.42-4ubuntu2.10_amd64.deb ...
+Unpacking binutils (2.42-4ubuntu2.10) ...
+Selecting previously unselected package libcc1-0:amd64.
+Preparing to unpack .../09-libcc1-0_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libcc1-0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libitm1:amd64.
+Preparing to unpack .../10-libitm1_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libitm1:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libatomic1:amd64.
+Preparing to unpack .../11-libatomic1_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libatomic1:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libasan8:amd64.
+Preparing to unpack .../12-libasan8_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libasan8:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package liblsan0:amd64.
+Preparing to unpack .../13-liblsan0_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking liblsan0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libtsan2:amd64.
+Preparing to unpack .../14-libtsan2_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libtsan2:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libubsan1:amd64.
+Preparing to unpack .../15-libubsan1_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libubsan1:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libhwasan0:amd64.
+Preparing to unpack .../16-libhwasan0_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libhwasan0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libquadmath0:amd64.
+Preparing to unpack .../17-libquadmath0_14.2.0-4ubuntu2~24.04.1_amd64.deb ...
+Unpacking libquadmath0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Selecting previously unselected package libgcc-13-dev:amd64.
+Preparing to unpack .../18-libgcc-13-dev_13.3.0-6ubuntu2~24.04.1_amd64.deb ...
+Unpacking libgcc-13-dev:amd64 (13.3.0-6ubuntu2~24.04.1) ...
+Selecting previously unselected package gcc-13-x86-64-linux-gnu.
+Preparing to unpack .../19-gcc-13-x86-64-linux-gnu_13.3.0-6ubuntu2~24.04.1_amd64.deb ...
+Unpacking gcc-13-x86-64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+Selecting previously unselected package gcc-13.
+Preparing to unpack .../20-gcc-13_13.3.0-6ubuntu2~24.04.1_amd64.deb ...
+Unpacking gcc-13 (13.3.0-6ubuntu2~24.04.1) ...
+Selecting previously unselected package gcc-x86-64-linux-gnu.
+Preparing to unpack .../21-gcc-x86-64-linux-gnu_4%3a13.2.0-7ubuntu1_amd64.deb ...
+Unpacking gcc-x86-64-linux-gnu (4:13.2.0-7ubuntu1) ...
+Selecting previously unselected package gcc.
+Preparing to unpack .../22-gcc_4%3a13.2.0-7ubuntu1_amd64.deb ...
+Unpacking gcc (4:13.2.0-7ubuntu1) ...
+Selecting previously unselected package libstdc++-13-dev:amd64.
+Preparing to unpack .../23-libstdc++-13-dev_13.3.0-6ubuntu2~24.04.1_amd64.deb ...
+Unpacking libstdc++-13-dev:amd64 (13.3.0-6ubuntu2~24.04.1) ...
+Selecting previously unselected package g++-13-x86-64-linux-gnu.
+Preparing to unpack .../24-g++-13-x86-64-linux-gnu_13.3.0-6ubuntu2~24.04.1_amd64.deb ...
+Unpacking g++-13-x86-64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+Selecting previously unselected package g++-13.
+Preparing to unpack .../25-g++-13_13.3.0-6ubuntu2~24.04.1_amd64.deb ...
+Unpacking g++-13 (13.3.0-6ubuntu2~24.04.1) ...
+Selecting previously unselected package g++-x86-64-linux-gnu.
+Preparing to unpack .../26-g++-x86-64-linux-gnu_4%3a13.2.0-7ubuntu1_amd64.deb ...
+Unpacking g++-x86-64-linux-gnu (4:13.2.0-7ubuntu1) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../27-g++_4%3a13.2.0-7ubuntu1_amd64.deb ...
+Unpacking g++ (4:13.2.0-7ubuntu1) ...
+Selecting previously unselected package libdpkg-perl.
+Preparing to unpack .../28-libdpkg-perl_1.22.6ubuntu6.6_all.deb ...
+Unpacking libdpkg-perl (1.22.6ubuntu6.6) ...
+Selecting previously unselected package bzip2.
+Preparing to unpack .../29-bzip2_1.0.8-5.1build0.1_amd64.deb ...
+Unpacking bzip2 (1.0.8-5.1build0.1) ...
+Selecting previously unselected package lto-disabled-list.
+Preparing to unpack .../30-lto-disabled-list_47_all.deb ...
+Unpacking lto-disabled-list (47) ...
+Selecting previously unselected package dpkg-dev.
+Preparing to unpack .../31-dpkg-dev_1.22.6ubuntu6.6_all.deb ...
+Unpacking dpkg-dev (1.22.6ubuntu6.6) ...
+Selecting previously unselected package build-essential.
+Preparing to unpack .../32-build-essential_12.10ubuntu1_amd64.deb ...
+Unpacking build-essential (12.10ubuntu1) ...
+Setting up lto-disabled-list (47) ...
+Setting up binutils-common:amd64 (2.42-4ubuntu2.10) ...
+Setting up libctf-nobfd0:amd64 (2.42-4ubuntu2.10) ...
+Setting up bzip2 (1.0.8-5.1build0.1) ...
+Setting up libsframe1:amd64 (2.42-4ubuntu2.10) ...
+Setting up libjansson4:amd64 (2.14-2build2) ...
+Setting up libquadmath0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libatomic1:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libdpkg-perl (1.22.6ubuntu6.6) ...
+Setting up libubsan1:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libhwasan0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libasan8:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libtsan2:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libbinutils:amd64 (2.42-4ubuntu2.10) ...
+Setting up libcc1-0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up liblsan0:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libitm1:amd64 (14.2.0-4ubuntu2~24.04.1) ...
+Setting up libctf0:amd64 (2.42-4ubuntu2.10) ...
+Setting up libgprofng0:amd64 (2.42-4ubuntu2.10) ...
+Setting up libgcc-13-dev:amd64 (13.3.0-6ubuntu2~24.04.1) ...
+Setting up libstdc++-13-dev:amd64 (13.3.0-6ubuntu2~24.04.1) ...
+Setting up binutils-x86-64-linux-gnu (2.42-4ubuntu2.10) ...
+Setting up gcc-13-x86-64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+Setting up binutils (2.42-4ubuntu2.10) ...
+Setting up dpkg-dev (1.22.6ubuntu6.6) ...
+Setting up gcc-13 (13.3.0-6ubuntu2~24.04.1) ...
+Setting up g++-13-x86-64-linux-gnu (13.3.0-6ubuntu2~24.04.1) ...
+Setting up gcc-x86-64-linux-gnu (4:13.2.0-7ubuntu1) ...
+Setting up gcc (4:13.2.0-7ubuntu1) ...
+Setting up g++-x86-64-linux-gnu (4:13.2.0-7ubuntu1) ...
+Setting up g++-13 (13.3.0-6ubuntu2~24.04.1) ...
+Setting up g++ (4:13.2.0-7ubuntu1) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/c++.1.gz because associated file /usr/share/man/man1/g++.1.gz (of link group c++) doesn't exist
+Setting up build-essential (12.10ubuntu1) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.8) ...
+=== C TOOLCHAIN VERSION ===
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+build-essential 12.10ubuntu1
+g++ 4:13.2.0-7ubuntu1
+gcc 4:13.2.0-7ubuntu1
+libc6-dev 2.39-0ubuntu8.8
+=== SPACE AFTER INSTALLATION ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G  9.7G   30G  25% /
+=== SHELLCHECK/YAMLLINT INSTALLATION ===
+2026-08-26T16:39:54+00:00
+SOURCE=Ubuntu noble main archive.ubuntu.com; packages selected after apt metadata refresh.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  libyaml-0-2 python3-pathspec python3-yaml
+The following NEW packages will be installed:
+  libyaml-0-2 python3-pathspec python3-yaml shellcheck yamllint
+0 upgraded, 5 newly installed, 0 to remove and 34 not upgraded.
+Need to get 3091 kB of archives.
+After this operation, 20.4 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble/main amd64 libyaml-0-2 amd64 0.2.5-1build1 [51.5 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble/main amd64 python3-yaml amd64 6.0.1-2build2 [123 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble/universe amd64 python3-pathspec all 0.12.1-1 [24.5 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble/universe amd64 yamllint all 1.33.0-1 [47.2 kB]
+Get:5 http://archive.ubuntu.com/ubuntu noble/universe amd64 shellcheck amd64 0.9.0-1 [2845 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 3091 kB in 0s (16.3 MB/s)
+Selecting previously unselected package libyaml-0-2:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 53224 files and directories currently installed.)
+Preparing to unpack .../libyaml-0-2_0.2.5-1build1_amd64.deb ...
+Unpacking libyaml-0-2:amd64 (0.2.5-1build1) ...
+Selecting previously unselected package python3-yaml.
+Preparing to unpack .../python3-yaml_6.0.1-2build2_amd64.deb ...
+Unpacking python3-yaml (6.0.1-2build2) ...
+Selecting previously unselected package python3-pathspec.
+Preparing to unpack .../python3-pathspec_0.12.1-1_all.deb ...
+Unpacking python3-pathspec (0.12.1-1) ...
+Selecting previously unselected package yamllint.
+Preparing to unpack .../yamllint_1.33.0-1_all.deb ...
+Unpacking yamllint (1.33.0-1) ...
+Selecting previously unselected package shellcheck.
+Preparing to unpack .../shellcheck_0.9.0-1_amd64.deb ...
+Unpacking shellcheck (0.9.0-1) ...
+Setting up libyaml-0-2:amd64 (0.2.5-1build1) ...
+Setting up python3-yaml (6.0.1-2build2) ...
+Setting up shellcheck (0.9.0-1) ...
+Setting up python3-pathspec (0.12.1-1) ...
+Setting up yamllint (1.33.0-1) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.8) ...
+=== VERSIONS ===
+ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+yamllint 1.33.0
+=== SPACE ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G   11G   30G  26% /
+=== GO SCANNERS INSTALLATION ===
+2026-08-26T16:40:25+00:00
+PROVENANCE=Go module proxy/default sumdb; exact module paths and @latest resolved by Go.
+go: downloading github.com/securego/gosec/v2 v2.29.0
+go: downloading github.com/securego/gosec v0.0.0-20200401082031-e946c8c39989
+go: downloading github.com/anthropics/anthropic-sdk-go v1.66.0
+go: downloading github.com/openai/openai-go/v3 v3.52.0
+go: downloading google.golang.org/genai v1.69.0
+go: downloading github.com/ccojocar/zxcvbn-go v1.0.4
+go: downloading golang.org/x/sync v0.22.0
+go: downloading golang.org/x/tools v0.49.0
+go: downloading github.com/gookit/color v1.6.1
+go: downloading go.yaml.in/yaml/v3 v3.0.5
+go: downloading cloud.google.com/go/auth v0.23.2
+go: downloading cloud.google.com/go v0.123.0
+go: downloading github.com/google/go-cmp v0.7.0
+go: downloading github.com/gorilla/websocket v1.5.3
+go: downloading github.com/tidwall/sjson v1.2.5
+go: downloading github.com/invopop/jsonschema v0.14.0
+go: downloading github.com/standard-webhooks/standard-webhooks/libraries v0.0.1
+go: downloading github.com/pb33f/ordered-map/v2 v2.3.1
+go: downloading github.com/tidwall/gjson v1.19.0
+go: downloading github.com/xo/terminfo v1.0.0
+go: downloading github.com/googleapis/gax-go/v2 v2.24.0
+go: downloading cloud.google.com/go/compute/metadata v0.9.0
+go: downloading go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.70.0
+go: downloading go.opentelemetry.io/otel v1.45.0
+go: downloading go.opentelemetry.io/otel/trace v1.45.0
+go: downloading google.golang.org/api v0.293.0
+go: downloading golang.org/x/mod v0.40.0
+go: downloading github.com/tidwall/match v1.2.0
+go: downloading github.com/tidwall/pretty v1.2.1
+go: downloading github.com/googleapis/enterprise-certificate-proxy v0.3.20
+go: downloading github.com/google/s2a-go v0.1.9
+go: downloading google.golang.org/grpc v1.83.1
+go: downloading github.com/bahlo/generic-list-go v0.2.0
+go: downloading github.com/buger/jsonparser v1.6.1
+go: downloading go.yaml.in/yaml/v4 v4.0.0-rc.6
+go: downloading go.opentelemetry.io/otel/metric v1.45.0
+go: downloading google.golang.org/protobuf v1.36.12
+go: downloading github.com/felixge/httpsnoop v1.1.0
+go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20260819154853-08b0e4226688
+go: downloading github.com/go-logr/logr v1.4.4
+go: downloading golang.org/x/text v0.41.0
+go: downloading github.com/cespare/xxhash/v2 v2.3.0
+go: downloading github.com/go-logr/stdr v1.2.2
+go: downloading go.opentelemetry.io/auto/sdk v1.2.1
+go: downloading golang.org/x/crypto v0.55.0
+go: downloading github.com/gitleaks/gitleaks/v8 v8.30.1
+go: downloading github.com/gitleaks/gitleaks v1.25.1
+go: github.com/gitleaks/gitleaks/v8@latest: version constraints conflict:
+	github.com/gitleaks/gitleaks/v8@v8.30.1: parsing go.mod:
+	module declares its path as: github.com/zricethezav/gitleaks/v8
+	        but was required as: github.com/gitleaks/gitleaks/v8
+=== GO SCANNERS CORRECTED INSTALLATION ===
+2026-08-26T16:41:59+00:00
+GITLEAKS_MODULE=github.com/zricethezav/gitleaks/v8@latest (module-declared path)
+go: downloading github.com/zricethezav/gitleaks/v8 v8.30.1
+go: downloading github.com/zricethezav/gitleaks v1.25.1
+go: downloading github.com/rs/zerolog v1.33.0
+go: downloading github.com/spf13/cobra v1.9.1
+go: downloading github.com/spf13/viper v1.19.0
+go: downloading github.com/BobuSumisu/aho-corasick v1.0.3
+go: downloading github.com/hashicorp/go-version v1.7.0
+go: downloading golang.org/x/exp v0.0.0-20250218142911-aa4b98e5adaa
+go: downloading github.com/charmbracelet/lipgloss v0.5.0
+go: downloading github.com/fatih/semgroup v1.2.0
+go: downloading github.com/Masterminds/sprig/v3 v3.3.0
+go: downloading github.com/gitleaks/go-gitdiff v0.9.1
+go: downloading github.com/h2non/filetype v1.1.3
+go: downloading github.com/mholt/archives v0.1.2
+go: downloading github.com/fsnotify/fsnotify v1.8.0
+go: downloading github.com/mitchellh/mapstructure v1.5.0
+go: downloading github.com/sagikazarmark/slog-shim v0.1.0
+go: downloading github.com/spf13/afero v1.12.0
+go: downloading github.com/spf13/cast v1.7.1
+go: downloading github.com/spf13/pflag v1.0.6
+go: downloading github.com/mattn/go-colorable v0.1.14
+go: downloading github.com/lucasb-eyer/go-colorful v1.2.0
+go: downloading github.com/mattn/go-runewidth v0.0.14
+go: downloading github.com/muesli/reflow v0.2.1-0.20210115123740-9e1d0d53df68
+go: downloading github.com/muesli/termenv v0.15.1
+go: downloading golang.org/x/sync v0.11.0
+go: downloading dario.cat/mergo v1.0.1
+go: downloading github.com/Masterminds/goutils v1.1.1
+go: downloading github.com/Masterminds/semver/v3 v3.3.0
+go: downloading github.com/huandu/xstrings v1.5.0
+go: downloading github.com/mitchellh/copystructure v1.2.0
+go: downloading github.com/shopspring/decimal v1.4.0
+go: downloading golang.org/x/crypto v0.35.0
+go: downloading github.com/STARRY-S/zip v0.2.1
+go: downloading github.com/andybalholm/brotli v1.1.2-0.20250424173009-453214e765f3
+go: downloading github.com/bodgit/sevenzip v1.6.0
+go: downloading github.com/dsnet/compress v0.0.2-0.20230904184137-39efe44ab707
+go: downloading github.com/klauspost/compress v1.17.11
+go: downloading github.com/klauspost/pgzip v1.2.6
+go: downloading github.com/minio/minlz v1.0.0
+go: downloading github.com/nwaples/rardecode/v2 v2.1.0
+go: downloading github.com/pierrec/lz4/v4 v4.1.21
+go: downloading github.com/sorairolake/lzip-go v0.3.5
+go: downloading github.com/therootcompany/xz v1.0.1
+go: downloading github.com/ulikunitz/xz v0.5.12
+go: downloading golang.org/x/text v0.22.0
+go: downloading golang.org/x/sys v0.30.0
+go: downloading github.com/subosito/gotenv v1.6.0
+go: downloading github.com/hashicorp/hcl v1.0.0
+go: downloading gopkg.in/ini.v1 v1.67.0
+go: downloading github.com/magiconair/properties v1.8.9
+go: downloading github.com/pelletier/go-toml/v2 v2.2.3
+go: downloading github.com/mattn/go-isatty v0.0.20
+go: downloading github.com/rivo/uniseg v0.2.0
+go: downloading github.com/aymanbagabas/go-osc52/v2 v2.0.1
+go: downloading github.com/mitchellh/reflectwalk v1.0.2
+go: downloading github.com/bodgit/plumbing v1.3.0
+go: downloading github.com/bodgit/windows v1.0.1
+go: downloading github.com/hashicorp/go-multierror v1.1.1
+go: downloading go4.org v0.0.0-20230225012048-214862532bf5
+go: downloading github.com/hashicorp/golang-lru/v2 v2.0.7
+go: downloading github.com/hashicorp/errwrap v1.1.0
+GOVULNCHECK_MODULE=golang.org/x/vuln/cmd/govulncheck@latest
+go: downloading golang.org/x/vuln v1.7.0
+go: downloading golang.org/x/telemetry v0.0.0-20260811182544-a038080d80e5
+go: downloading golang.org/x/mod v0.39.0
+=== VERSIONS ===
+Version: dev
+Git tag: 
+Build date: 
+version is set by build process
+Go: go1.25.13
+Scanner: govulncheck@v1.7.0
+DB: https://vuln.go.dev
+DB updated: 2026-08-26 14:57:44 +0000 UTC
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G   12G   28G  30% /
+=== OFFICIAL RELEASE SCANNERS INSTALLATION ===
+2026-08-26T16:43:51+00:00
+=== grype INSTALLATION ===
+REPOSITORY=anchore/grype TAG=v0.117.0
+grype_0.117.0_linux_amd64.tar.gz: OK
+INSTALLED=/home/ubuntu/forgelocal-final-env-qualification/tools/bin/grype
+Application:         grype
+Version:             0.117.0
+BuildDate:           2026-08-10T16:48:30Z
+GitCommit:           b5fa92bbcbef655497e3be840a2f718380e2cdd3
+GitDescription:      v0.117.0
+Platform:            linux/amd64
+GoVersion:           go1.26.3
+Compiler:            gc
+Syft Version:        v1.51.0
+Supported DB Schema: 6
+=== syft INSTALLATION ===
+REPOSITORY=anchore/syft TAG=v1.51.0
+syft_1.51.0_linux_amd64.tar.gz: OK
+INSTALLED=/home/ubuntu/forgelocal-final-env-qualification/tools/bin/syft
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+=== trivy INSTALLATION ===
+REPOSITORY=aquasecurity/trivy TAG=v0.74.0
+trivy_0.74.0_Linux-64bit.tar.gz: OK
+INSTALLED=/home/ubuntu/forgelocal-final-env-qualification/tools/bin/trivy
+Version: 0.74.0
+=== osv-scanner INSTALLATION ===
+REPOSITORY=google/osv-scanner TAG=v2.5.1
+osv-scanner_linux_amd64: OK
+osv-scanner version: 2.5.1
+osv-scalibr version: 0.5.2
+commit: c84fa4568f2526d0333e9a914ea8a0a5f74ad68b
+built at: 2026-08-17T03:44:26Z
+=== SPACE ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G   13G   27G  33% /
+=== SEMGREP INSTALLATION ===
+2026-08-26T16:44:34+00:00
+PROVENANCE=PyPI via pip in isolated venv; no system Python mutation.
+Requirement already satisfied: pip in ./forgelocal-final-env-qualification/tools/semgrep-venv/lib/python3.12/site-packages (24.0)
+Collecting pip
+  Downloading pip-26.2.1-py3-none-any.whl.metadata (4.6 kB)
+Downloading pip-26.2.1-py3-none-any.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 95.3 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 24.0
+    Uninstalling pip-24.0:
+      Successfully uninstalled pip-24.0
+Successfully installed pip-26.2.1
+Collecting semgrep
+  Downloading semgrep-1.174.0-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl.metadata (22 kB)
+Collecting attrs>=21.3 (from semgrep)
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting boltons~=21.0 (from semgrep)
+  Downloading boltons-21.0.0-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting click-option-group~=0.5 (from semgrep)
+  Downloading click_option_group-0.5.9-py3-none-any.whl.metadata (5.8 kB)
+Collecting click~=8.4.2 (from semgrep)
+  Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting colorama~=0.4.0 (from semgrep)
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting exceptiongroup~=1.2.0 (from semgrep)
+  Downloading exceptiongroup-1.2.2-py3-none-any.whl.metadata (6.6 kB)
+Collecting glom>=23.3 (from semgrep)
+  Downloading glom-25.12.0-py3-none-any.whl.metadata (5.2 kB)
+Collecting jsonschema~=4.25.1 (from semgrep)
+  Downloading jsonschema-4.25.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting mcp==1.29.0 (from semgrep)
+  Downloading mcp-1.29.0-py3-none-any.whl.metadata (9.3 kB)
+Collecting opentelemetry-api~=1.37.0 (from semgrep)
+  Downloading opentelemetry_api-1.37.0-py3-none-any.whl.metadata (1.5 kB)
+Collecting opentelemetry-sdk~=1.37.0 (from semgrep)
+  Downloading opentelemetry_sdk-1.37.0-py3-none-any.whl.metadata (1.5 kB)
+Collecting opentelemetry-exporter-otlp-proto-http~=1.37.0 (from semgrep)
+  Downloading opentelemetry_exporter_otlp_proto_http-1.37.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.65b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-threading~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_threading-0.65b0-py3-none-any.whl.metadata (2.1 kB)
+Collecting packaging>=21.0 (from semgrep)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting peewee~=3.14 (from semgrep)
+  Downloading peewee-3.19.0-py3-none-any.whl.metadata (7.0 kB)
+Collecting pyjwt~=2.13.0 (from pyjwt[crypto]~=2.13.0->semgrep)
+  Downloading pyjwt-2.13.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting requests~=2.22 (from semgrep)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting rich>=13.5.2 (from semgrep)
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting ruamel.yaml>=0.18.15 (from semgrep)
+  Downloading ruamel_yaml-0.19.1-py3-none-any.whl.metadata (16 kB)
+Collecting ruamel.yaml.clib==0.2.15 (from semgrep)
+  Downloading ruamel_yaml_clib-0.2.15-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (3.5 kB)
+Collecting semantic-version~=2.10.0 (from semgrep)
+  Downloading semantic_version-2.10.0-py2.py3-none-any.whl.metadata (9.7 kB)
+Collecting tomli~=2.4.0 (from semgrep)
+  Downloading tomli-2.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (10 kB)
+Collecting typing-extensions~=4.2 (from semgrep)
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting urllib3~=2.0 (from semgrep)
+  Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting wcmatch~=8.3 (from semgrep)
+  Downloading wcmatch-8.5.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting anyio>=4.5 (from mcp==1.29.0->semgrep)
+  Downloading anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+Collecting httpx-sse>=0.4 (from mcp==1.29.0->semgrep)
+  Downloading httpx_sse-0.4.3-py3-none-any.whl.metadata (9.7 kB)
+Collecting httpx<1.0.0,>=0.27.1 (from mcp==1.29.0->semgrep)
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting pydantic-settings>=2.5.2 (from mcp==1.29.0->semgrep)
+  Downloading pydantic_settings-2.15.0-py3-none-any.whl.metadata (3.9 kB)
+Collecting pydantic<3.0.0,>=2.11.0 (from mcp==1.29.0->semgrep)
+  Downloading pydantic-2.13.4-py3-none-any.whl.metadata (109 kB)
+Collecting python-multipart>=0.0.9 (from mcp==1.29.0->semgrep)
+  Downloading python_multipart-0.0.32-py3-none-any.whl.metadata (2.1 kB)
+Collecting sse-starlette>=1.6.1 (from mcp==1.29.0->semgrep)
+  Downloading sse_starlette-3.4.8-py3-none-any.whl.metadata (15 kB)
+Collecting starlette>=0.27 (from mcp==1.29.0->semgrep)
+  Downloading starlette-1.6.0-py3-none-any.whl.metadata (6.4 kB)
+Collecting typing-inspection>=0.4.1 (from mcp==1.29.0->semgrep)
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting uvicorn>=0.31.1 (from mcp==1.29.0->semgrep)
+  Downloading uvicorn-0.52.4-py3-none-any.whl.metadata (6.6 kB)
+Collecting certifi (from httpx<1.0.0,>=0.27.1->mcp==1.29.0->semgrep)
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1.0.0,>=0.27.1->mcp==1.29.0->semgrep)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx<1.0.0,>=0.27.1->mcp==1.29.0->semgrep)
+  Downloading idna-3.19-py3-none-any.whl.metadata (9.2 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0,>=0.27.1->mcp==1.29.0->semgrep)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema~=4.25.1->semgrep)
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing>=0.28.4 (from jsonschema~=4.25.1->semgrep)
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py>=0.7.1 (from jsonschema~=4.25.1->semgrep)
+  Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.1 kB)
+Collecting importlib-metadata<8.8.0,>=6.0 (from opentelemetry-api~=1.37.0->semgrep)
+  Downloading importlib_metadata-8.7.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting zipp>=3.20 (from importlib-metadata<8.8.0,>=6.0->opentelemetry-api~=1.37.0->semgrep)
+  Downloading zipp-4.1.0-py3-none-any.whl.metadata (3.6 kB)
+Collecting googleapis-common-protos~=1.52 (from opentelemetry-exporter-otlp-proto-http~=1.37.0->semgrep)
+  Downloading googleapis_common_protos-1.75.2-py3-none-any.whl.metadata (8.5 kB)
+Collecting opentelemetry-exporter-otlp-proto-common==1.37.0 (from opentelemetry-exporter-otlp-proto-http~=1.37.0->semgrep)
+  Downloading opentelemetry_exporter_otlp_proto_common-1.37.0-py3-none-any.whl.metadata (1.8 kB)
+Collecting opentelemetry-proto==1.37.0 (from opentelemetry-exporter-otlp-proto-http~=1.37.0->semgrep)
+  Downloading opentelemetry_proto-1.37.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting protobuf<7.0,>=5.0 (from opentelemetry-proto==1.37.0->opentelemetry-exporter-otlp-proto-http~=1.37.0->semgrep)
+  Downloading protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl.metadata (593 bytes)
+Collecting opentelemetry-instrumentation==0.65b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.65b0-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.65b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.65b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.65b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.65b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting wrapt<3.0.0,>=1.0.0 (from opentelemetry-instrumentation==0.65b0->opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading wrapt-2.3.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (7.4 kB)
+INFO: pip is looking at multiple versions of opentelemetry-semantic-conventions to determine which version is compatible with other requirements. This could take a while.
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.64b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.64b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.64b0-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.64b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.64b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.64b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.64b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.63b1-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.63b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.63b1-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.63b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.63b1-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.63b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.63b1-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.63b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.63b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.63b0-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.63b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.63b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.63b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.63b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.62b1-py3-none-any.whl.metadata (2.7 kB)
+Collecting opentelemetry-instrumentation==0.62b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.62b1-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.62b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.62b1-py3-none-any.whl.metadata (2.5 kB)
+Collecting opentelemetry-util-http==0.62b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.62b1-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.62b0-py3-none-any.whl.metadata (2.7 kB)
+Collecting opentelemetry-instrumentation==0.62b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.62b0-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.62b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.62b0-py3-none-any.whl.metadata (2.5 kB)
+Collecting opentelemetry-util-http==0.62b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.62b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.61b0-py3-none-any.whl.metadata (2.7 kB)
+Collecting opentelemetry-instrumentation==0.61b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.61b0-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.61b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.61b0-py3-none-any.whl.metadata (2.5 kB)
+Collecting opentelemetry-util-http==0.61b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.61b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.60b1-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.60b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.60b1-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.60b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.60b1-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.60b1 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.60b1-py3-none-any.whl.metadata (2.6 kB)
+INFO: pip is still looking at multiple versions of opentelemetry-semantic-conventions to determine which version is compatible with other requirements. This could take a while.
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.60b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.60b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.60b0-py3-none-any.whl.metadata (7.2 kB)
+Collecting opentelemetry-semantic-conventions==0.60b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.60b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.60b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.60b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.59b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.59b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.59b0-py3-none-any.whl.metadata (7.1 kB)
+Collecting opentelemetry-semantic-conventions==0.59b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.59b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.59b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.59b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation-requests~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_requests-0.58b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting opentelemetry-instrumentation==0.58b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_instrumentation-0.58b0-py3-none-any.whl.metadata (7.1 kB)
+Collecting opentelemetry-semantic-conventions==0.58b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_semantic_conventions-0.58b0-py3-none-any.whl.metadata (2.4 kB)
+Collecting opentelemetry-util-http==0.58b0 (from opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading opentelemetry_util_http-0.58b0-py3-none-any.whl.metadata (2.6 kB)
+Collecting wrapt<2.0.0,>=1.0.0 (from opentelemetry-instrumentation==0.58b0->opentelemetry-instrumentation-requests~=0.58b0->semgrep)
+  Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.4 kB)
+INFO: pip is looking at multiple versions of opentelemetry-instrumentation-threading to determine which version is compatible with other requirements. This could take a while.
+Collecting opentelemetry-instrumentation-threading~=0.58b0 (from semgrep)
+  Downloading opentelemetry_instrumentation_threading-0.64b0-py3-none-any.whl.metadata (2.1 kB)
+  Downloading opentelemetry_instrumentation_threading-0.63b1-py3-none-any.whl.metadata (2.1 kB)
+  Downloading opentelemetry_instrumentation_threading-0.63b0-py3-none-any.whl.metadata (2.1 kB)
+  Downloading opentelemetry_instrumentation_threading-0.62b1-py3-none-any.whl.metadata (2.2 kB)
+  Downloading opentelemetry_instrumentation_threading-0.62b0-py3-none-any.whl.metadata (2.2 kB)
+  Downloading opentelemetry_instrumentation_threading-0.61b0-py3-none-any.whl.metadata (2.2 kB)
+  Downloading opentelemetry_instrumentation_threading-0.60b1-py3-none-any.whl.metadata (2.1 kB)
+INFO: pip is still looking at multiple versions of opentelemetry-instrumentation-threading to determine which version is compatible with other requirements. This could take a while.
+  Downloading opentelemetry_instrumentation_threading-0.60b0-py3-none-any.whl.metadata (2.1 kB)
+  Downloading opentelemetry_instrumentation_threading-0.59b0-py3-none-any.whl.metadata (2.1 kB)
+  Downloading opentelemetry_instrumentation_threading-0.58b0-py3-none-any.whl.metadata (2.1 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3.0.0,>=2.11.0->mcp==1.29.0->semgrep)
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.46.4 (from pydantic<3.0.0,>=2.11.0->mcp==1.29.0->semgrep)
+  Downloading pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting cryptography>=3.4.0 (from pyjwt[crypto]~=2.13.0->semgrep)
+  Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+Collecting charset_normalizer<4,>=2 (from requests~=2.22->semgrep)
+  Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (45 kB)
+Collecting bracex>=2.1.1 (from wcmatch~=8.3->semgrep)
+  Downloading bracex-3.0.1-py3-none-any.whl.metadata (3.3 kB)
+Collecting cffi>=2.0.0 (from cryptography>=3.4.0->pyjwt[crypto]~=2.13.0->semgrep)
+  Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography>=3.4.0->pyjwt[crypto]~=2.13.0->semgrep)
+  Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+Collecting face>=20.1.1 (from glom>=23.3->semgrep)
+  Downloading face-26.0.1-py3-none-any.whl.metadata (1.8 kB)
+Collecting python-dotenv>=0.21.0 (from pydantic-settings>=2.5.2->mcp==1.29.0->semgrep)
+  Downloading python_dotenv-1.2.3-py3-none-any.whl.metadata (29 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=13.5.2->semgrep)
+  Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=13.5.2->semgrep)
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=13.5.2->semgrep)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading semgrep-1.174.0-cp310.cp311.cp312.cp313.cp314.py310.py311.py312.py313.py314-none-manylinux_2_34_x86_64.whl (69.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.8/69.8 MB 109.1 MB/s  0:00:00
+Downloading mcp-1.29.0-py3-none-any.whl (223 kB)
+Downloading ruamel_yaml_clib-0.2.15-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (788 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 788.2/788.2 kB 120.8 MB/s  0:00:00
+Downloading boltons-21.0.0-py2.py3-none-any.whl (193 kB)
+Downloading click-8.4.2-py3-none-any.whl (119 kB)
+Downloading click_option_group-0.5.9-py3-none-any.whl (11 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading exceptiongroup-1.2.2-py3-none-any.whl (16 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading jsonschema-4.25.1-py3-none-any.whl (90 kB)
+Downloading opentelemetry_api-1.37.0-py3-none-any.whl (65 kB)
+Downloading importlib_metadata-8.7.1-py3-none-any.whl (27 kB)
+Downloading opentelemetry_exporter_otlp_proto_http-1.37.0-py3-none-any.whl (19 kB)
+Downloading opentelemetry_exporter_otlp_proto_common-1.37.0-py3-none-any.whl (18 kB)
+Downloading opentelemetry_proto-1.37.0-py3-none-any.whl (72 kB)
+Downloading googleapis_common_protos-1.75.2-py3-none-any.whl (307 kB)
+Downloading opentelemetry_instrumentation_requests-0.58b0-py3-none-any.whl (12 kB)
+Downloading opentelemetry_semantic_conventions-0.58b0-py3-none-any.whl (207 kB)
+Downloading opentelemetry_instrumentation-0.58b0-py3-none-any.whl (33 kB)
+Downloading opentelemetry_util_http-0.58b0-py3-none-any.whl (7.7 kB)
+Downloading opentelemetry_instrumentation_threading-0.58b0-py3-none-any.whl (9.3 kB)
+Downloading opentelemetry_sdk-1.37.0-py3-none-any.whl (131 kB)
+Downloading peewee-3.19.0-py3-none-any.whl (411 kB)
+Downloading protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl (323 kB)
+Downloading pydantic-2.13.4-py3-none-any.whl (472 kB)
+Downloading pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 203.0 MB/s  0:00:00
+Downloading pyjwt-2.13.0-py3-none-any.whl (31 kB)
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (248 kB)
+Downloading idna-3.19-py3-none-any.whl (68 kB)
+Downloading semantic_version-2.10.0-py2.py3-none-any.whl (15 kB)
+Downloading tomli-2.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (253 kB)
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+Downloading wcmatch-8.5.2-py3-none-any.whl (39 kB)
+Downloading wrapt-1.17.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (88 kB)
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading anyio-4.14.2-py3-none-any.whl (125 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading bracex-3.0.1-py3-none-any.whl (11 kB)
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 229.7 MB/s  0:00:00
+Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+Downloading glom-25.12.0-py3-none-any.whl (103 kB)
+Downloading face-26.0.1-py3-none-any.whl (57 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading httpx_sse-0.4.3-py3-none-any.whl (9.0 kB)
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pydantic_settings-2.15.0-py3-none-any.whl (69 kB)
+Downloading python_dotenv-1.2.3-py3-none-any.whl (22 kB)
+Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 158.9 MB/s  0:00:00
+Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+Downloading ruamel_yaml-0.19.1-py3-none-any.whl (118 kB)
+Downloading sse_starlette-3.4.8-py3-none-any.whl (16 kB)
+Downloading starlette-1.6.0-py3-none-any.whl (75 kB)
+Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Downloading uvicorn-0.52.4-py3-none-any.whl (79 kB)
+Downloading zipp-4.1.0-py3-none-any.whl (10 kB)
+Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+Installing collected packages: peewee, boltons, zipp, wrapt, urllib3, typing-extensions, tomli, semantic-version, ruamel.yaml.clib, ruamel.yaml, rpds-py, python-multipart, python-dotenv, pyjwt, pygments, pycparser, protobuf, packaging, opentelemetry-util-http, mdurl, idna, httpx-sse, h11, face, exceptiongroup, colorama, click, charset_normalizer, certifi, bracex, attrs, annotated-types, wcmatch, uvicorn, typing-inspection, requests, referencing, pydantic-core, opentelemetry-proto, markdown-it-py, importlib-metadata, httpcore, googleapis-common-protos, glom, click-option-group, cffi, anyio, starlette, rich, pydantic, opentelemetry-exporter-otlp-proto-common, opentelemetry-api, jsonschema-specifications, httpx, cryptography, sse-starlette, pydantic-settings, opentelemetry-semantic-conventions, jsonschema, opentelemetry-sdk, opentelemetry-instrumentation, mcp, opentelemetry-instrumentation-threading, opentelemetry-instrumentation-requests, opentelemetry-exporter-otlp-proto-http, semgrep
+
+Successfully installed annotated-types-0.8.0 anyio-4.14.2 attrs-26.1.0 boltons-21.0.0 bracex-3.0.1 certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.5.1 click-8.4.2 click-option-group-0.5.9 colorama-0.4.6 cryptography-50.0.1 exceptiongroup-1.2.2 face-26.0.1 glom-25.12.0 googleapis-common-protos-1.75.2 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 httpx-sse-0.4.3 idna-3.19 importlib-metadata-8.7.1 jsonschema-4.25.1 jsonschema-specifications-2025.9.1 markdown-it-py-4.2.0 mcp-1.29.0 mdurl-0.1.2 opentelemetry-api-1.37.0 opentelemetry-exporter-otlp-proto-common-1.37.0 opentelemetry-exporter-otlp-proto-http-1.37.0 opentelemetry-instrumentation-0.58b0 opentelemetry-instrumentation-requests-0.58b0 opentelemetry-instrumentation-threading-0.58b0 opentelemetry-proto-1.37.0 opentelemetry-sdk-1.37.0 opentelemetry-semantic-conventions-0.58b0 opentelemetry-util-http-0.58b0 packaging-26.3 peewee-3.19.0 protobuf-6.33.6 pycparser-3.0 pydantic-2.13.4 pydantic-core-2.46.4 pydantic-settings-2.15.0 pygments-2.21.0 pyjwt-2.13.0 python-dotenv-1.2.3 python-multipart-0.0.32 referencing-0.37.0 requests-2.34.2 rich-15.0.0 rpds-py-2026.6.3 ruamel.yaml-0.19.1 ruamel.yaml.clib-0.2.15 semantic-version-2.10.0 semgrep-1.174.0 sse-starlette-3.4.8 starlette-1.6.0 tomli-2.4.1 typing-extensions-4.16.0 typing-inspection-0.4.4 urllib3-2.7.0 uvicorn-0.52.4 wcmatch-8.5.2 wrapt-1.17.3 zipp-4.1.0
+=== VERSION ===
+1.174.0
+=== SPACE ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G   14G   27G  34% /

@@ -1,0 +1,716 @@
+=== STATUS ===
+## [32mvalidation/final-environment-qualification[m...[31morigin/validation/gosec-r7[m
+=== BRANCHES ===
+  main
+* validation/final-environment-qualification
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/audit/independent-validation-20260824
+  remotes/origin/audit/t00-t42-docker-hardening-v6
+  remotes/origin/audit/t00-t42-docker-image-validation-v6
+  remotes/origin/audit/t00-t42-docker-native-nonruntime-validation
+  remotes/origin/audit/t00-t42-docker-v6-independent-image-validation
+  remotes/origin/audit/t00-t42-external-validation-protocols-v6
+  remotes/origin/audit/t00-t42-gitleaks-historical-method-hardening-v6
+  remotes/origin/audit/t00-t42-lfs-conservation-audit
+  remotes/origin/audit/t00-t42-lfs-conservation-restoration-v6
+  remotes/origin/audit/t00-t42-license-compliance-triage-v6
+  remotes/origin/audit/t00-t42-license-static-debt-triage
+  remotes/origin/audit/t00-t42-osv-toolchain-reconciliation
+  remotes/origin/audit/t00-t42-osv-toolchain-reconciliation-v6
+  remotes/origin/audit/t00-t42-post-v6-revalidation-final-matrix
+  remotes/origin/audit/t00-t42-post-v6-roadmap-final-matrix
+  remotes/origin/audit/t00-t42-prehuman-validation
+  remotes/origin/audit/t00-t42-product-decisions-required-v6
+  remotes/origin/audit/t00-t42-self-validation-enhanced-v5
+  remotes/origin/audit/t00-t42-self-validation-synthetic-e2e
+  remotes/origin/audit/t00-t42-static-debt-prioritization-v6
+  remotes/origin/audit/t00-t42-t10-t15-e2e-validation-v6
+  remotes/origin/audit/t00-t42-t10-t15-independent-review-v6
+  remotes/origin/audit/t00-t42-t30-remote-evidence-reconciliation-v6
+  remotes/origin/audit/t00-t42-v6-findings-remediation
+  remotes/origin/audit/t28-t42-evidence-correction
+  remotes/origin/continuation-t00-t27-canonical
+  remotes/origin/continuation-t27-r1-canonical
+  remotes/origin/continuity-t00-t26-handover
+  remotes/origin/continuity-t24-t24sr
+  remotes/origin/continuity-t25-synthetic-cookie-fixtures
+  remotes/origin/continuity-t26-simulated-proxy-provider
+  remotes/origin/feature/t28-local-extensions-controlled
+  remotes/origin/handover/t28-t42-new-session
+  remotes/origin/main
+  remotes/origin/validation/gosec-r4
+  remotes/origin/validation/gosec-r5
+  remotes/origin/validation/gosec-r6
+  remotes/origin/validation/gosec-r7
+  remotes/origin/validation/gosec-r7-final-remediation
+  remotes/origin/validation/operational-v1
+  remotes/origin/work/t28-agent03-audit
+  remotes/origin/work/t31-canvas-webgl-audio
+  remotes/origin/work/t32-client-rects
+  remotes/origin/work/t33-synthetic-geolocation
+  remotes/origin/work/t34-hardware-diagnostics
+  remotes/origin/work/t35-font-bundle
+  remotes/origin/work/t36-drift-detection
+  remotes/origin/work/t37-profile-health
+  remotes/origin/work/t38-session-lifecycle
+  remotes/origin/work/t39-secret-import-export-blocked
+  remotes/origin/work/t40-integration-gated
+  remotes/origin/work/t41-release-readiness-blocked
+  remotes/origin/work/t42-final-closure
+=== LOG GRAPH R7 WINDOW ===
+* [33m97ce9b8[m[33m ([m[1;31morigin/validation/gosec-r7-final-remediation[m[33m)[m evidence: record public verification of remediation package
+* [33m032cd3d[m evidence: publish R7 targeted remediation package
+* [33m5acdab9[m evidence: record final R7 local remediation review
+* [33mb907dfc[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvalidation/final-environment-qualification[m[33m, [m[1;31morigin/validation/gosec-r7[m[33m)[m evidence: record final R7 v4 public verification
+* [33m5cd16b1[m evidence: publish final non-recursive R7 package
+* [33m1dca108[m evidence: align final R7 decision references
+* [33m310efc4[m evidence: record final public verification of R7
+* [33md69d103[m evidence: publish final GOSEC R7 package
+* [33m0ba8ac9[m evidence: complete final GOSEC R7 postcheck
+* [33mf3ddc4d[m evidence: record public verification of R7 package
+* [33mddd2c68[m evidence: publish corrected GOSEC R7 package
+* [33mdda5525[m evidence: add corrected R7 manifest
+* [33m2299226[m evidence: reconcile R7 package manifest
+* [33m002b072[m evidence: package GOSEC R7 verification
+* [33m24537ac[m evidence: publish GOSEC R7 risk review
+* [33m3656dba[m[33m ([m[1;31morigin/validation/gosec-r6[m[33m)[m evidence: publish consolidated GOSEC R6 review
+* [33mf847382[m evidence: verify GOSEC R6 Lot C package publicly
+* [33md85ed7e[m evidence: package GOSEC R6 Lot C
+* [33mb7a86b8[m evidence: publish GOSEC R6 Lot C
+* [33m6bdda53[m test: cover R6 permissions and conversion bounds
+* [33m1c1fe37[m test: assert private groups file mode
+* [33m2d91059[m evidence: verify GOSEC R6 Lot B package publicly
+* [33mf505f4a[m evidence: package GOSEC R6 Lot B
+* [33me0c9e16[m evidence: publish GOSEC R6 Lot B
+* [33ma436a68[m security: allowlist workflow queries
+* [33m3a6cabb[m evidence: verify GOSEC R6 Lot A package publicly
+* [33m22737a4[m evidence: package GOSEC R6 Lot A
+* [33m77ed72b[m evidence: publish GOSEC R6 Lot A
+* [33m142477a[m security: confine R6 paths and archive writes
+* [33m4105763[m evidence: establish GOSEC R6 baseline
+* [33m28f66a1[m[33m ([m[1;31morigin/validation/gosec-r5[m[33m)[m evidence: reconcile GOSEC R5 finding count
+* [33md01cea8[m evidence: record GOSEC R5 public verification
+* [33mb2fdecf[m evidence: package GOSEC R5 v1
+* [33m517b555[m evidence: publish GOSEC R5 final report
+* [33mef73ba4[m evidence: record GOSEC R5 final gates
+* [33mc4b4c95[m evidence: record GOSEC R5-C classification
+* [33m9412b31[m evidence: record GOSEC R5-B network review
+* [33mad2dd61[m evidence: record GOSEC R5-A path hardening
+* [33m54ed3a4[m security: harden config runtime and bootstrap file access
+* [33m096e3f5[m evidence: establish GOSEC R5 baseline and threat model
+=== HEAD AND REFERENCE COMMITS ===
+b907dfcd68c290144e2b922e352d5a937e9b3259 5cd16b11f62b8c16582973001ce81bff9ef03dcf evidence: record final R7 v4 public verification
+3656dbad4bfef0381e1f9d837271d293ecffe292 f84738250fff6a91697629f899689e98da95da52 evidence: publish consolidated GOSEC R6 review
+1dca108197f90e379184474ad37bbb9f386fe309 310efc4e6961fdaa6fb63606d14a8078ce6730ff evidence: align final R7 decision references
+5cd16b11f62b8c16582973001ce81bff9ef03dcf 1dca108197f90e379184474ad37bbb9f386fe309 evidence: publish final non-recursive R7 package
+=== MERGE BASES ===
+3656dbad4bfef0381e1f9d837271d293ecffe292 -> 3656dbad4bfef0381e1f9d837271d293ecffe292
+1dca108197f90e379184474ad37bbb9f386fe309 -> 1dca108197f90e379184474ad37bbb9f386fe309
+5cd16b11f62b8c16582973001ce81bff9ef03dcf -> 5cd16b11f62b8c16582973001ce81bff9ef03dcf
+=== EVIDENCE CANDIDATES ===
+./artifacts/DASHBOARD_FINAL_OPERATIONAL/forgelocal-dashboard-final-operational.delta.bundle
+./artifacts/DASHBOARD_FINAL_OPERATIONAL/forgelocal-dashboard-final-operational.zip
+./artifacts/OPERATIONAL_VALIDATION_V1_R2/forgelocal-operational-validation-v1-r2.delta.bundle
+./artifacts/OPERATIONAL_VALIDATION_V1_R2/forgelocal-operational-validation-v1-r2.zip
+./artifacts/forgelocal-dashboard-profile-create-0c4b9ae.zip
+./artifacts/forgelocal-proxy-session-fix-9031f83.zip
+./continuation/T00-T27/archive-packages/forgelocal-t24-bulk-evidence-7f63c71.zip
+./continuation/T00-T27/archive-packages/forgelocal-t25-synthetic-cookie-fixtures-a7ccfbc.zip
+./continuation/T00-T27/archive-packages/forgelocal-t26-simulated-provider-930003c.zip
+./continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle
+./continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-evidence-df50a2b.zip
+./continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-d993289.delta.bundle
+./continuation/T27-R1/evidence/CR02/forgelocal-t27-r1-cr02-evidence-d993289.zip
+./continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-a912cd6.delta.bundle
+./continuation/T27-R1/evidence/CR03/forgelocal-t27-r1-cr03-evidence-a912cd6.zip
+./continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-967d293.delta.bundle
+./continuation/T27-R1/evidence/CR04/forgelocal-t27-r1-cr04-evidence-967d293.zip
+./continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-9386e5c.delta.bundle
+./continuation/T27-R1/evidence/CR05/forgelocal-t27-r1-cr05-evidence-9386e5c.zip
+./docs/security/GOSEC_BASELINE_BACK_01.md
+./evidence/DASHBOARD_FINAL_OPERATIONAL/gosec-final.json
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_AFTER_FS_RAW.log
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FILES.sha256
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FILES_V3.sha256
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FILES_V4.sha256
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FINAL.manifest.txt
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FINAL_V2.manifest.txt
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FINAL_V3.manifest.txt
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_FINAL_V4.manifest.txt
+./evidence/GOSEC_R2_OVERNIGHT/GOSEC_R2_OVERNIGHT_REPORT.md
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v2.tar.gz
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v2.tar.gz.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v2.zip
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v2.zip.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.tar.gz
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.tar.gz.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.zip
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v3.zip.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.tar.gz
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.tar.gz.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.zip
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final-v4.zip.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.tar.gz
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.tar.gz.sha256
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.zip
+./evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-final.zip.sha256
+./evidence/GOSEC_R2_OVERNIGHT/gosec_source_only_after_fs.json
+./evidence/GOSEC_R2_OVERNIGHT/gosec_source_only_final.json
+./evidence/GOSEC_R2_OVERNIGHT/gosec_source_only_post_overnight.json
+./evidence/GOSEC_R3/GOSEC_R3_A_GATES_RAW.log
+./evidence/GOSEC_R3/GOSEC_R3_A_MATRIX.md
+./evidence/GOSEC_R3/GOSEC_R3_A_MATRIX.tsv
+./evidence/GOSEC_R3/GOSEC_R3_BASELINE_MATRIX.md
+./evidence/GOSEC_R3/GOSEC_R3_BASELINE_MATRIX.tsv
+./evidence/GOSEC_R3/GOSEC_R3_BASELINE_RAW.log
+./evidence/GOSEC_R3/GOSEC_R3_B_FINAL_GATES_RAW.log
+./evidence/GOSEC_R3/GOSEC_R3_B_GATES_RAW.log
+./evidence/GOSEC_R3/GOSEC_R3_C_GATES_RAW.log
+./evidence/GOSEC_R3/GOSEC_R3_FILES.sha256
+./evidence/GOSEC_R3/GOSEC_R3_FINAL_FINDINGS.tsv
+./evidence/GOSEC_R3/GOSEC_R3_FINAL_MANIFEST.txt
+./evidence/GOSEC_R3/GOSEC_R3_FINAL_MATRIX.md
+./evidence/GOSEC_R3/GOSEC_R3_FINAL_MATRIX.tsv
+./evidence/GOSEC_R3/GOSEC_R3_REPORT.md
+./evidence/GOSEC_R3/forgelocal-gosec-r3-delta-63a6175.bundle
+./evidence/GOSEC_R3/forgelocal-gosec-r3-delta-63a6175.bundle.sha256
+./evidence/GOSEC_R3/forgelocal-gosec-r3-final-v1.tar.gz
+./evidence/GOSEC_R3/forgelocal-gosec-r3-final-v1.tar.gz.sha256
+./evidence/GOSEC_R3/forgelocal-gosec-r3-final-v1.zip
+./evidence/GOSEC_R3/forgelocal-gosec-r3-final-v1.zip.sha256
+./evidence/GOSEC_R3/gosec_source_only_after_r3a.json
+./evidence/GOSEC_R3/gosec_source_only_after_r3b.json
+./evidence/GOSEC_R3/gosec_source_only_after_r3b_final.json
+./evidence/GOSEC_R3/gosec_source_only_after_r3c.json
+./evidence/GOSEC_R3/gosec_source_only_baseline.json
+./evidence/GOSEC_R3/gosec_source_only_final_r3.json
+./evidence/GOSEC_R3/gosec_source_only_final_r3_head63.json
+./evidence/GOSEC_R3/gosec_source_only_final_r3_postfix.json
+./evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.md
+./evidence/GOSEC_R4/GOSEC_R4_BASELINE_MATRIX.tsv
+./evidence/GOSEC_R4/GOSEC_R4_BASELINE_RAW.log
+./evidence/GOSEC_R4/GOSEC_R4_FILES.sha256
+./evidence/GOSEC_R4/GOSEC_R4_FINAL_MANIFEST.txt
+./evidence/GOSEC_R4/GOSEC_R4_FINAL_REPORT.md
+./evidence/GOSEC_R4/GOSEC_R4_MATRIX_BUILD_RAW.log
+./evidence/GOSEC_R4/GOSEC_R4_THREAT_MODEL.md
+./evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle
+./evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz
+./evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz.sha256
+./evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip
+./evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip.sha256
+./evidence/GOSEC_R4/gosec_after_r4_final.json
+./evidence/GOSEC_R4/gosec_after_r4a.json
+./evidence/GOSEC_R4/gosec_after_r4a_cleanup.json
+./evidence/GOSEC_R4/gosec_after_r4a_final.json
+./evidence/GOSEC_R4/gosec_after_r4a_final2.json
+./evidence/GOSEC_R4/gosec_after_r4a_progress.json
+./evidence/GOSEC_R4/gosec_after_r4b_progress.json
+./evidence/GOSEC_R4/gosec_after_r4b_root.json
+./evidence/GOSEC_R4/gosec_after_r4c_bounded.json
+./evidence/GOSEC_R4/gosec_after_r4c_final.json
+./evidence/GOSEC_R4/gosec_after_r4c_g107.json
+./evidence/GOSEC_R4/gosec_source_only_baseline.json
+./evidence/GOSEC_R5/GOSEC_R5_BASELINE_MATRIX.md
+./evidence/GOSEC_R5/GOSEC_R5_BASELINE_MATRIX.tsv
+./evidence/GOSEC_R5/GOSEC_R5_BASELINE_RAW.log
+./evidence/GOSEC_R5/GOSEC_R5_FINAL_MANIFEST.txt
+./evidence/GOSEC_R5/GOSEC_R5_FINAL_REPORT.md
+./evidence/GOSEC_R5/GOSEC_R5_FINAL_REPORT_CORRECTED.md
+./evidence/GOSEC_R5/GOSEC_R5_THREAT_MODEL.md
+./evidence/GOSEC_R5/forgelocal-gosec-r5-delta-096e3f5-517b555.bundle
+./evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.manifest.txt
+./evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz
+./evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.tar.gz.sha256
+./evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip
+./evidence/GOSEC_R5/forgelocal-gosec-r5-final-v1.zip.sha256
+./evidence/GOSEC_R5/gosec_after_r5a.json
+./evidence/GOSEC_R5/gosec_after_r5b.json
+./evidence/GOSEC_R5/gosec_after_r5c.json
+./evidence/GOSEC_R5/gosec_r5_final.json
+./evidence/GOSEC_R5/gosec_source_only_baseline.json
+./evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-delta-142477a-77ed72b.bundle
+./evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.manifest.txt
+./evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.tar.gz
+./evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.tar.gz.sha256
+./evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.zip
+./evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.zip.sha256
+./evidence/GOSEC_R6/R6_A/gosec_r6a_after.json
+./evidence/GOSEC_R6/R6_A/gosec_r6a_after_postcommit.json
+./evidence/GOSEC_R6/R6_A/gosec_r6a_after_retry.json
+./evidence/GOSEC_R6/R6_A/gosec_r6a_baseline.json
+./evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-delta-a436a68-e0c9e16.bundle
+./evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.manifest.txt
+./evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.tar.gz
+./evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.tar.gz.sha256
+./evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.zip
+./evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.zip.sha256
+./evidence/GOSEC_R6/R6_B/gosec_r6b_after.json
+./evidence/GOSEC_R6/R6_B/gosec_r6b_baseline.json
+./evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-delta-6bdda53-b7a86b8.bundle
+./evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-final-v1.manifest.txt
+./evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-final-v1.tar.gz
+./evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-final-v1.tar.gz.sha256
+./evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-final-v1.zip
+./evidence/GOSEC_R6/R6_C/forgelocal-gosec-r6c-final-v1.zip.sha256
+./evidence/GOSEC_R6/R6_C/gosec_r6c_after.json
+./evidence/GOSEC_R6/R6_C/gosec_r6c_after_postcommit.json
+./evidence/GOSEC_R6/R6_C/gosec_r6c_baseline.json
+./evidence/GOSEC_R6/R6_CONSOLIDATED_GOSEC_CURRENT.json
+./evidence/GOSEC_R6/gosec_r6_baseline.json
+./evidence/GOSEC_R6/gosec_r6_baseline_corrected.json
+./evidence/GOSEC_R7/R7_BASELINE_DISCOVERY_RAW.log
+./evidence/GOSEC_R7/R7_BUNDLE_VERIFY_RAW.log
+./evidence/GOSEC_R7/R7_BUNDLE_VERIFY_V2_RAW.log
+./evidence/GOSEC_R7/R7_BUNDLE_VERIFY_V3_RAW.log
+./evidence/GOSEC_R7/R7_BUNDLE_VERIFY_V4_RAW.log
+./evidence/GOSEC_R7/R7_CHANGELOG.md
+./evidence/GOSEC_R7/R7_COMMANDS_RAW.log
+./evidence/GOSEC_R7/R7_CONSOLIDATED_TESTS_RAW.log
+./evidence/GOSEC_R7/R7_FINAL_MANIFEST.txt
+./evidence/GOSEC_R7/R7_FINAL_MANIFEST_V2.txt
+./evidence/GOSEC_R7/R7_FINAL_MANIFEST_V3.txt
+./evidence/GOSEC_R7/R7_FINAL_MANIFEST_V4.txt
+./evidence/GOSEC_R7/R7_FINAL_POSTCHECK_RAW.log
+./evidence/GOSEC_R7/R7_FINAL_RISK_DECISION.md
+./evidence/GOSEC_R7/R7_FINDINGS_MATRIX.tsv
+./evidence/GOSEC_R7/R7_FINDING_MATRIX.tsv
+./evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+./evidence/GOSEC_R7/R7_GOSEC_FINAL.json
+./evidence/GOSEC_R7/R7_MANIFEST_RECONCILIATION.md
+./evidence/GOSEC_R7/R7_MATRIX_PRELIMINARY_REPORT.md
+./evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_RAW.log
+./evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V2_RAW.log
+./evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V3_RAW.log
+./evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V4_RAW.log
+./evidence/GOSEC_R7/R7_RISK_SCOPE.md
+./evidence/GOSEC_R7/R7_SYFT.json
+./evidence/GOSEC_R7/R7_TODO.md
+./evidence/GOSEC_R7/R7_VALIDATION_COMMANDS_RAW.log
+./evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-0ba8ac9.bundle
+./evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+./evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-24537ac.bundle
+./evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-dda5525.bundle
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.manifest.txt
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.tar.gz
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.tar.gz.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.manifest.txt
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.tar.gz
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.tar.gz.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.zip
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v2.zip.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.bundle.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.manifest.txt
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.tar.gz
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.tar.gz.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.zip
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.zip.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.bundle.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.manifest.txt
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz.sha256
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+./evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip.sha256
+./evidence/OPERATIONAL_VALIDATION_V1/GOSEC_OPERATIONAL.json
+./evidence/OPERATIONAL_VALIDATION_V1/gosec.out
+./evidence/OPERATIONAL_VALIDATION_V1_ARTIFACTS/forgelocal-operational-validation-v1.delta.bundle
+./evidence/OPERATIONAL_VALIDATION_V1_ARTIFACTS/forgelocal-operational-validation-v1.zip
+./evidence/OPERATIONAL_VALIDATION_V1_R2/GOSEC_OPERATIONAL.json
+./evidence/OPERATIONAL_VALIDATION_V1_R2/gosec.out
+./evidence/PREHUMAN_T00_T42/PREHUMAN_T00_T42_GOSEC_BASELINE_HEAD_DIFF.log
+./evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.bundle
+./evidence/PREHUMAN_T00_T42/forgelocal-t28-t42-prehuman-validation.zip
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_GOSEC_BASELINE.json
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_GOSEC_HEAD.json
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/POSTFIX_GOSEC_NORMALIZED_IGNORE_LINE.log
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_GOSEC_BASELINE.json
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_GOSEC_HEAD.json
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/PREHUMAN_FINAL_GOSEC_NORMALIZED.log
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/normalize_final_gosec.py
+./evidence/PREHUMAN_T00_T42_FINAL_CHECKLIST/normalize_postfix_gosec.py
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_CLASSIFICATION.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_CLASSIFICATION_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_FINDINGS.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_HARDENING_FOCUSED_TESTS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_POST_FIX_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_R1_INDIVIDUAL_FINDINGS.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_R1_INDIVIDUAL_REVIEW.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_R1_SOURCE_SCAN_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_R1_SOURCE_SUMMARY.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R1_BASELINE_DISCOVERY_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R1_FINAL.manifest.txt
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R1_REPORT.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R1_SCANS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_ALL_SCANS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_BASELINE_DISCOVERY_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_FINAL.manifest.txt
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_FINAL_V2.manifest.txt
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_MATRIX.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_MATRIX.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_POSTFIX_SCANS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_POST_QUEUE.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_PRESERVATION_V2_VERIFY_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_PRESERVATION_VERIFY_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_QUEUE.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_REPORT.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT1_TARGETED_TESTS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_ALL_SCANS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_BASELINE_DISCOVERY_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_FINAL.manifest.txt
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_HEAD_QUEUE.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_MATRIX.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_MATRIX.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_QUEUE.tsv
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_REPORT.md
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_TARGETED_TESTS_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_SOURCE_ONLY_RAW.log
+./evidence/SECURITY_GOSEC_REVIEW/GOSEC_TRIAGE.md
+./evidence/SECURITY_GOSEC_REVIEW/SECURITY_GOSEC_REVIEW.manifest.txt
+./evidence/SECURITY_GOSEC_REVIEW/SECURITY_GOSEC_REVIEW_R1.manifest.txt
+./evidence/SECURITY_GOSEC_REVIEW/SECURITY_GOSEC_REVIEW_REPORT.md
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-ca00a0f.tar.gz
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-ca00a0f.tar.gz.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-ca00a0f.zip
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-ca00a0f.zip.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-delta-2b4ec20.bundle
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-delta-2b4ec20.bundle.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-ba8f39d.tar.gz
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-ba8f39d.tar.gz.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-ba8f39d.zip
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-ba8f39d.zip.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-delta-d297d9d.bundle
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-delta-d297d9d.bundle.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-final.tar.gz
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-final.tar.gz.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-final.zip
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-gosec-r1-final.zip.sha256
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-delta-cba6beb.bundle
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.zip
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final.zip
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot2-delta-9e2361e.bundle
+./evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot2-final.zip
+./evidence/SECURITY_GOSEC_REVIEW/gosec.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only_post_fix.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only_r1_after_g112.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only_r1_final.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only_r2_lot1.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only_r2_lot1_published.json
+./evidence/SECURITY_GOSEC_REVIEW/gosec_source_only_r2_lot2_head.json
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_BASELINE.json
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_BASELINE.log
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_COMPARE_SUMMARY.log
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_HEAD.json
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_HEAD.log
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_HEAD_COMPARE.json
+./evidence/SELF_VALIDATION_V4/SELF_VALIDATION_GOSEC_HEAD_COMPARE.log
+./evidence/SELF_VALIDATION_V6/forgelocal-t00-t42-self-validation-v6.delta.bundle
+./evidence/T28/GOSEC_BASELINE.json
+./evidence/T28/GOSEC_FINAL_CLOSURE_T28.json
+./evidence/T28/GOSEC_FINAL_T28_EXTENSIONS.json
+./evidence/T28/GOSEC_HEAD.json
+./evidence/T28/GOSEC_HEAD_CORRECTED.json
+./evidence/T28/GOSEC_R1_BASELINE.json
+./evidence/T28/GOSEC_R1_BASELINE_HEAD_RAW.log
+./evidence/T28/GOSEC_R1_HEAD.json
+./evidence/T28/GOSEC_R1_NORMALIZED_COMPARISON.json
+./evidence/T28/GOSEC_T28_API.json
+./evidence/T28/GOSEC_T28_API_PACKAGE.json
+./evidence/T28/GOSEC_T28_API_PACKAGE_AFTER.json
+./evidence/T28/GOSEC_T28_API_POST.json
+./evidence/T28/GOSEC_T28_EXTENSIONS.json
+./evidence/T28/GOSEC_T28_EXTENSIONS_CORRECTED.json
+./evidence/T28/GOSEC_T28_EXTENSIONS_POST.json
+./evidence/T28/T28_FINAL_CLOSURE_GOSEC_RAW.log
+./evidence/T28/t28-evidence-qualification-r1.delta.bundle
+./evidence/T28/t28-evidence-qualification-r1.zip
+./evidence/T28/t28-local-extensions-controlled-v1.zip
+./evidence/T28/t28-local-extensions-controlled.delta.bundle
+./evidence/T28/t28-postfix-evidence-v1.zip
+./evidence/T28/t28-postfix-evidence.delta.bundle
+./evidence/T28_T42_CORRECTION/07_gosec_baseline.json
+./evidence/T28_T42_CORRECTION/07_gosec_baseline.log
+./evidence/T28_T42_CORRECTION/08_gosec_head.json
+./evidence/T28_T42_CORRECTION/08_gosec_head.log
+./evidence/T28_T42_CORRECTION/09_gosec_comparison_normalized.log
+./evidence/T28_T42_CORRECTION/forgelocal-t28-t42-correction.delta.bundle
+./evidence/T28_T42_CORRECTION/forgelocal-t28-t42-evidence-correction.zip
+./evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-correction-v2.delta.bundle
+./evidence/T28_T42_CORRECTION_V2/forgelocal-t28-t42-evidence-correction-v2.zip
+./evidence/T31/forgelocal-t31-canvas-webgl-audio.bundle
+./evidence/T31/forgelocal-t31-evidence.zip
+./evidence/T32/forgelocal-t32-client-rects.bundle
+./evidence/T32/forgelocal-t32-evidence.zip
+./evidence/T33/forgelocal-t33-evidence.zip
+./evidence/T33/forgelocal-t33-synthetic-geolocation.bundle
+./evidence/T34/forgelocal-t34-evidence.zip
+./evidence/T34/forgelocal-t34-hardware-diagnostics.bundle
+./evidence/T35/forgelocal-t35-evidence.zip
+./evidence/T35/forgelocal-t35-font-bundle.bundle
+./evidence/T36/forgelocal-t36-drift-detection.bundle
+./evidence/T36/forgelocal-t36-evidence.zip
+./evidence/T37/forgelocal-t37-evidence.zip
+./evidence/T37/forgelocal-t37-profile-health.bundle
+./evidence/T38/forgelocal-t38-evidence.zip
+./evidence/T38/forgelocal-t38-session-lifecycle.bundle
+./evidence/T39/forgelocal-t39-blocked.bundle
+./evidence/T39/forgelocal-t39-evidence.zip
+./evidence/T40/forgelocal-t40-evidence.zip
+./evidence/T40/forgelocal-t40-integration-gated.bundle
+./evidence/T41/forgelocal-t41-delta.bundle
+./evidence/T41/forgelocal-t41-evidence-compact.zip
+./evidence/T42/forgelocal-t42-compact.bundle
+./evidence/T42/forgelocal-t42-evidence-compact.zip
+./evidence/V6_HISTORY/SELF_VALIDATION_V5/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+./evidence/V6_HISTORY/SELF_VALIDATION_V5/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip
+./evidence/V6_HISTORY/SELF_VALIDATION_V5/forgelocal-t00-t42-self-validation-v5.delta.bundle
+./evidence/V6_HISTORY/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+./evidence/V6_HISTORY/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip
+./evidence/V6_HISTORY/forgelocal-t00-t42-self-validation-v5-enhanced.zip
+./evidence/V6_HISTORY/forgelocal-t00-t42-self-validation-v5.delta.bundle
+./evidence/forgelocal-t00-t42-final-exit-checklist-code-fixed.zip
+./evidence/forgelocal-t00-t42-final-exit-checklist.bundle
+./evidence/forgelocal-t00-t42-final-exit-checklist.zip
+./evidence/forgelocal-t00-t42-prehuman-code-fixed-finalization.bundle
+./evidence/forgelocal-t00-t42-prehuman-final-findings-finalization.bundle
+./evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v2.zip
+./evidence/forgelocal-t00-t42-prehuman-final-review-wrapper-v3-code-fixed.zip
+./evidence/forgelocal-t00-t42-self-validation-v4-synthetic-e2e.zip
+./evidence/forgelocal-t00-t42-self-validation-v4.delta.bundle
+./evidence/forgelocal-t00-t42-self-validation-v6-findings-remediation.zip
+./evidence/forgelocal-t00-t42-self-validation-v6.delta.bundle
+./evidence/t22-consistency/gosec-base-head.diff
+./evidence/t22-consistency/gosec-base-head.log
+./evidence/t22-consistency/gosec-base-normalized.txt
+./evidence/t22-consistency/gosec-base-rule-file.txt
+./evidence/t22-consistency/gosec-base.json
+./evidence/t22-consistency/gosec-head-normalized.txt
+./evidence/t22-consistency/gosec-head-rule-file.txt
+./evidence/t22-consistency/gosec-head.json
+./evidence/t22-consistency/gosec-rule-file.diff
+./evidence/t22-consistency/gosec-signatures.txt
+./forge-dashboard/proofs/gosec_t19r_raw.json
+./forge-dashboard/proofs/t19r-gosec-filtered.json
+./validation_back01_integration/final/GOSEC_BASELINE_RECONCILIATION_2026-08-14.md
+./validation_back01_integration/final/gosec-baseline-64bede3-v2.21.4-20260814.json
+./validation_back01_integration/final/gosec_api.json
+./validation_back01_integration/final/gosec_api.log
+./validation_back01_integration/final/gosec_back01_profile.json
+./validation_back01_integration/final/gosec_back01_profile.log
+./validation_back01_integration/final/sandbox-gosec-20260814.json
+./validation_back01_integration/final/sandbox-gosec-classification-20260814.txt
+./validation_back01_integration/gosec_after_import_hardening.json
+./validation_back01_integration/gosec_after_import_hardening.log
+./validation_back01_integration/gosec_after_io_hardening.json
+./validation_back01_integration/gosec_after_io_hardening.log
+./validation_back01_integration/gosec_after_multipart_fix.json
+./validation_back01_integration/gosec_after_multipart_fix.log
+./validation_back01_integration/gosec_final.json
+./validation_back01_integration/gosec_final.log
+./validation_back01_integration/gosec_modified.json
+./validation_back01_integration/gosec_modified.log
+=== TOP LEVEL ===
+./.codebase-memory/artifact.json
+./.codebase-memory/graph.db.zst
+./.gitattributes
+./.github/CODEOWNERS
+./.github/PULL_REQUEST_TEMPLATE.md
+./.github/production-release-policy.json
+./.gitignore
+./.gitleaks.toml
+./API.md
+./API.zh-TW.md
+./CHANGELOG.md
+./CODE_OF_CONDUCT.md
+./CONTRIBUTING.md
+./Dockerfile
+./LICENSE
+./Makefile
+./README.md
+./README.zh-TW.md
+./REIMPLEMENTATION_T12_T16_REPORT.md
+./SECURITY.md
+./SELF_VALIDATION_BUNDLE_DELTA_VERIFY.log
+./SELF_VALIDATION_CLEANUP_VERIFICATION.log
+./SELF_VALIDATION_FINDINGS_CLASSIFICATION.md
+./SELF_VALIDATION_MANIFEST.md
+./SELF_VALIDATION_SUMMARY.md
+./SELF_VALIDATION_SYNTHETIC_E2E_RAW.log
+./SELF_VALIDATION_V6_REPORT.md
+./SHA256SUMS
+./SUPPORT.md
+./T28_EVIDENCE_QUALIFICATION_R1.md
+./T28_FINAL_CLOSURE.md
+./T28_FINAL_DECISION.md
+./T28_FINAL_INDEPENDENT_EVIDENCE_REVIEW.md
+./T28_POSTFIX_FINAL_CLOSURE.md
+./TOOLCHAIN.lock
+./V6_AXE_RESULTS_AFTER.json
+./V6_AXE_RESULTS_BEFORE.json
+./V6_AXE_SUMMARY.py
+./V6_BASELINE_DISCOVERY_RAW.log
+./V6_CLEANUP_VERIFICATION.log
+./V6_CODE_DIFF.patch
+./V6_DASHBOARD_BUILD.log
+./V6_DASHBOARD_BUILD_AXE.log
+./V6_DASHBOARD_INSTALL.log
+./V6_DASHBOARD_TARGETED.log
+./V6_DASHBOARD_TSC.log
+./V6_DASHBOARD_TSC_AXE.log
+./V6_FINAL_COUNTS.log
+./V6_FULL_REQUALIFICATION_RAW.log
+./V6_GITLEAKS_CHECKOUT.json
+./V6_GITLEAKS_CHECKOUT.log
+./V6_GITLEAKS_EXACT_EXCEPTION_TEST.json
+./V6_GITLEAKS_EXACT_EXCEPTION_TEST.toml
+./V6_GITLEAKS_FINAL.log
+./V6_GITLEAKS_FRESH.json
+./V6_GITLEAKS_FRESH.log
+./V6_GITLEAKS_RANGE.json
+./V6_GITLEAKS_RANGE.log
+./V6_GITLEAKS_TRIAGE.csv
+./V6_GITLEAKS_TRIAGE_SUMMARY.md
+./V6_GOLANGCI_AFTER_GO.json
+./V6_GOLANGCI_AFTER_GO.log
+./V6_GOLANGCI_AFTER_GO.stderr.log
+./V6_GOLANGCI_AFTER_GO.stdout.log
+./V6_GOLANGCI_AFTER_GO_SUMMARY.log
+./V6_GOLANGCI_FINAL.json
+./V6_GOLANGCI_FINAL.stderr.log
+./V6_GOLANGCI_FINAL.stdout.log
+./V6_GO_REMEDIATION_MAPPING.md
+./V6_GRYPE_ARTIFACT_LOCATIONS.log
+./V6_GRYPE_CYCLONEDX.json
+./V6_GRYPE_CYCLONEDX_CLEAN.json
+./V6_GRYPE_DEPENDENCY_TRIAGE_RAW.log
+./V6_GRYPE_SPDX.json
+./V6_GRYPE_SPDX_CLEAN.json
+./V6_GRYPE_TRIAGE.md
+./V6_LFS_CHECKOUT.log
+./V6_LFS_FSCK_AFTER_PULL.log
+./V6_LFS_FSCK_AFTER_V4_FETCH.log
+./V6_LFS_TARGETED_FETCH_V4.log
+./V6_LFS_TARGETED_PULL.log
+./V6_LICENSE_INVENTORY.csv
+./V6_LICENSE_INVENTORY.md
+./V6_LICENSE_INVENTORY_RUN.log
+./V6_OSV_SCANNER.json
+./V6_OSV_SCANNER.log
+./V6_OSV_SCANNER.stderr.log
+./V6_OSV_SCANNER.stdout.log
+./V6_OSV_SCANNER_FINAL.json
+./V6_OSV_SCANNER_RUN.log
+./V6_PLAYWRIGHT_AXE_RAW.log
+./V6_REMAINING_FINDINGS.md
+./V6_SBOM_CYCLONEDX.json
+./V6_SBOM_CYCLONEDX_CLEAN.json
+./V6_SBOM_GENERATION.log
+./V6_SBOM_GRYPE_CLEAN_SUMMARY.log
+./V6_SBOM_SPDX.json
+./V6_SBOM_SPDX_CLEAN.json
+./V6_SECURITY_DETAILS.log
+./V6_SECURITY_SUMMARY.log
+./V6_SEMGREP_AFTER.json
+./V6_SEMGREP_AFTER.log
+./V6_SEMGREP_AFTER.stderr.log
+./V6_SEMGREP_AFTER.stdout.log
+./V6_SEMGREP_RULES.yml
+./V6_SEMGREP_TRIAGE.md
+./V6_SYFT_CYCLONEDX.log
+./V6_SYFT_CYCLONEDX_CLEAN.log
+./V6_SYFT_SPDX.log
+./V6_SYFT_SPDX_CLEAN.log
+./V6_SYFT_VERSION.log
+./V6_TARGETED_TESTS.log
+./V6_TRIAGE_CONTEXTS_RAW.log
+./V6_TRIVY_FS_FINAL.json
+./V6_V5_COMPLEMENTS_ANALYSIS_INHERITED.md
+./V6_V5_MANDATORY_ANALYSIS_INHERITED.md
+./V6_V5_REPORT_INHERITED.md
+./V6_VULN_SCAN_SUMMARY.log
+./V6_XMOD_COMPATIBILITY_RAW.log
+./V6_XMOD_DEPENDENCY_FINAL.log
+./V6_XMOD_REMEDIATION_TESTS.log
+./artifacts/forgelocal-dashboard-profile-create-0c4b9ae.tar.gz
+./artifacts/forgelocal-dashboard-profile-create-0c4b9ae.zip
+./artifacts/forgelocal-proxy-session-fix-9031f83.tar.gz
+./artifacts/forgelocal-proxy-session-fix-9031f83.zip
+./config.default.json
+./data/.gitkeep
+./docker/.dockerignore
+./docker/Dockerfile.run
+./docker/README.md
+./docker/README.zh-TW.md
+./docker/docker-compose.yml
+./docker/entrypoint.sh
+./docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.manifest.json
+./docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md
+./docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.manifest.json
+./docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md
+./docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.manifest.json
+./docs/ADDENDUM_V2_3_COMPONENT_PROVENANCE.md
+./docs/ADDENDUM_V2_4_READONLY_SESSION_BOOTSTRAP.md
+./docs/ADDENDUM_V2_5_READONLY_PRODUCT_SURFACES.md
+./docs/API_READONLY_V1.md
+./docs/BASELINE_DISCOVERY_POLICY.md
+./docs/BASELINE_DISCOVERY_T27_R1_RAW.log
+./docs/BOOTSTRAP_RO_01_EVIDENCE.md
+./docs/BOOTSTRAP_RO_01_STRICT_EXECUTION.md
+./docs/BRANCH_PROTECTION_REQUIREMENTS.md
+./docs/CAHIER_DES_CHARGES_FORGELOCAL.md
+./docs/CAHIER_DES_CHARGES_FORGELOCAL.v1.0.manifest.json
+./docs/CAHIER_DES_CHARGES_v3_9_7.md
+./docs/CAMO_CORE_01_REGISTER.md
+./docs/COMPONENT_RIGHTS_REGISTER.md
+./docs/README.md
+./docs/SELF_VALIDATION_V4_FINDINGS.md
+./docs/SELF_VALIDATION_V4_SUMMARY.md
+./docs/SQLITE_SCHEMA_REFERENCE.md
+./docs/T07-R-CHECKLIST.md
+./docs/T07-R-INDEPENDENT-REVIEW-RESPONSE.md
+./docs/T07-R-MESSAGE-TO-REVIEWER.md
+./docs/T07-R-OWNER-COMPLETION-GUIDE.md
+./docs/T07-R-REVIEW-PACKET.md
+./docs/T07_CAMOFLOX_DEPENDENCY_INVENTORY.json
+./docs/T07_CAMOFLOX_PROVENANCE.md
+./docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json
+./docs/T07_EVIDENCE_REQUEST_TO_RIGHTS_HOLDER.md
+./docs/T07_EXTERNAL_SOURCES.md
+./docs/T07_REMEDIATION_CHAIN.md
+./docs/T07_SECURITY_TRIAGE_REQUEST.md
+./docs/T08-FOLLOW-UP-WATCH-STATE.md
+./docs/T08-R2-FINAL-REPORT.md
+./docs/T08_CONCURRENCY_SPEC.md
+./docs/T10_PROXIES_FRAMING.md
+./docs/T11_BACKUPS_FRAMING.md
+./docs/T20_CDC_GAP_AUDIT_AND_SCOPE_PROPOSAL.md
+./docs/T20_NCF_SCOPE_AND_ACCEPTANCE.md
+./docs/T22_CONSISTENCY_AND_RECOVERY_ADDENDUM.md
+./docs/T22_PROFILE_HISTORY_CONTRACT.md
+./docs/T23_ARCHIVE_RESTORE_CONTRACT.md
+./docs/T23_SCOPE_AND_EVIDENCE_AUTHORIZATION.md
+./docs/T24_BULK_OPERATIONS_CONTRACT.md
+./docs/T24_SR_DEPENDENCY_REMEDIATION_CONTRACT.md
+./docs/T25_COOKIE_FIXTURES_CONTRACT.md
+./docs/T26_SIMULATED_PROXY_PROVIDER_CONTRACT.md
+./docs/T27_R1_CONTINUATION_SCOPE.md
+./docs/T27_R1_CORRECTIVE_EXECUTION_CONTRACT.md
+./docs/T27_R1_CR06_TO_CR09_GATES.md
+./docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+./docs/T28_EXTENSIONS_PRODUCT_DECISIONS.md
+./docs/T28_EXTENSIONS_THREAT_MODEL.md
+./docs/T28_IMPLEMENTATION_HANDOVER.md
+./docs/T28_T42_EVIDENCE_CORRECTION.md
+./docs/T28_T42_STATUS_REGISTER.md
+./docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md
+./docs/T30_REMOTE_EVIDENCE_RECONCILIATION.md
+./docs/T31_CANVAS_WEBGL_AUDIO_DIAGNOSTICS_CONTRACT.md
+./docs/T32_CLIENTRECTS_DIAGNOSTICS_CONTRACT.md
+./docs/T33_SYNTHETIC_GEOLOCATION_QA_CONTRACT.md
+./docs/T34_HARDWARE_DIAGNOSTICS_CONTRACT.md
+./docs/T35_FONT_BUNDLE_PROVENANCE_CONTRACT.md
+./docs/T36_DIAGNOSTIC_DRIFT_CONTRACT.md

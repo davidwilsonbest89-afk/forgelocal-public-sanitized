@@ -1,0 +1,20 @@
+=== BUNDLE HASHES ===
+ce69c5bc9c2bc021c25e78521ebd713bc0ed72a060e373c6d6066c557abad37c  evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-0ba8ac9.bundle
+6f732c627ee58529898753c09f292c5c0e79b9ee4a32cf6bd58b755f7ae4edb0  evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+e5a931cbf64202bfbd163b5effd2dd9dc15f4b883ff15943474771b0ed72d7e1  evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-24537ac.bundle
+879fcb3bb7767e3d9a0018c2c997c1c556bd511fd1b57d52e48a73f1392e4de8  evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-dda5525.bundle
+=== BUNDLE SIDECARS ===
+evidence/GOSEC_R7/forgelocal-gosec-r7-final-v3.bundle.sha256
+ce69c5bc9c2bc021c25e78521ebd713bc0ed72a060e373c6d6066c557abad37c  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-0ba8ac9.bundle
+evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.bundle.sha256
+6f732c627ee58529898753c09f292c5c0e79b9ee4a32cf6bd58b755f7ae4edb0  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+=== JSON HASHES ===
+62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a  evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a  evidence/GOSEC_R7/R7_GOSEC_FINAL.json
+057657c9cb380b48db72723990d31a8a445cb3cb4d0ddee211e3a569ff1612b5  evidence/GOSEC_R7/R7_SYFT.json
+=== ZIP/TAR HASHES ===
+80b0546eca714826023bfc4cc3e33381b1b9d3dfe52900771dd00a2cd2ba5ed8  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+faf43da4e69e20aa4dc59863173b0f64b8a411f102d7dcd4c46b22fc8089fa7e  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz
+=== EXPECTED ===
+bundle=6f732c627ee58529898753c09f292c5c0e79b9ee4a32cf6bd58b755f7ae4edb0
+baseline=62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a
