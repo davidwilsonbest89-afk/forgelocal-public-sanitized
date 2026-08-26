@@ -48,6 +48,34 @@ func TestArtifactServesProfileArtifact(t *testing.T) {
 	}
 }
 
+func TestArtifactRejectsExternalSymlink(t *testing.T) {
+	store, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	p := &profile.Profile{ID: "prof_art_link", Name: "Artifact Link", RuntimeID: "camoufox"}
+	if err := store.Create(p); err != nil {
+		t.Fatal(err)
+	}
+	outside := filepath.Join(t.TempDir(), "outside.txt")
+	if err := os.WriteFile(outside, []byte("outside"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	link := filepath.Join(p.ProfileDir, "artifacts", "outside.txt")
+	if err := os.MkdirAll(filepath.Dir(link), 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(outside, link); err != nil {
+		t.Fatal(err)
+	}
+
+	rec := httptest.NewRecorder()
+	(&handler{store: store}).artifact(rec, artifactRequest("prof_art_link", "outside.txt"))
+	if rec.Code != http.StatusNotFound {
+		t.Fatalf("external symlink was not refused: status=%d body=%q", rec.Code, rec.Body.String())
+	}
+}
+
 func TestResolveProfileArtifactPathRejectsTraversal(t *testing.T) {
 	if _, err := resolveProfileArtifactPath("/tmp/profile", "../secret.png"); err == nil {
 		t.Fatal("expected traversal error")

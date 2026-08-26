@@ -824,7 +824,7 @@ func normalizedRestoreMode(mode int64, fallback os.FileMode) os.FileMode {
 }
 
 func safeBackupPath(name string) (string, error) {
-	name = strings.ReplaceAll(name, "\\\\", "/")
+	name = strings.ReplaceAll(name, "\\", "/")
 	clean := filepath.Clean(name)
 	if clean == "." || strings.HasPrefix(clean, ".."+string(os.PathSeparator)) || clean == ".." || filepath.IsAbs(clean) || hasPathVolume(name) {
 		return "", fmt.Errorf("unsafe path")

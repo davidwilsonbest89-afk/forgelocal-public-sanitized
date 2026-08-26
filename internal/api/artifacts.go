@@ -28,7 +28,19 @@ func (h *handler) artifact(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", err.Error())
 		return
 	}
-	file, err := os.Open(path)
+	base := filepath.Join(p.ProfileDir, "artifacts")
+	rel, err := filepath.Rel(base, path)
+	if err != nil || rel == "." || strings.HasPrefix(rel, ".."+string(os.PathSeparator)) {
+		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", "artifact path must stay within profile artifacts")
+		return
+	}
+	root, err := os.OpenRoot(base)
+	if err != nil {
+		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+		return
+	}
+	defer root.Close()
+	file, err := root.Open(filepath.ToSlash(rel))
 	if err != nil {
 		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
 		return
@@ -43,7 +55,7 @@ func (h *handler) artifact(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", "artifact path must name a file")
 		return
 	}
-	mimeType := mime.TypeByExtension(filepath.Ext(path))
+	mimeType := mime.TypeByExtension(filepath.Ext(rel))
 	if mimeType == "" {
 		buf := make([]byte, 512)
 		n, _ := file.Read(buf)

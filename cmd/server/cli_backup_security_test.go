@@ -19,7 +19,8 @@ func TestCLIFullBackupRestoreRejectsUnsafeEntriesWithoutPartialActivation(t *tes
 		linkname string
 	}{
 		{name: "traversal after valid entry", entry: "profiles/../../escape.txt", typeflag: tar.TypeReg},
-		{name: "windows separator traversal", entry: `profiles/..\\..\\escape.txt`, typeflag: tar.TypeReg},
+		{name: "windows separator traversal", entry: `profiles/..\..\escape.txt`, typeflag: tar.TypeReg},
+		{name: "double windows separator traversal", entry: `profiles/..\\..\\escape.txt`, typeflag: tar.TypeReg},
 		{name: "external symlink", entry: "profiles/escape", typeflag: tar.TypeSymlink, linkname: "../../escape"},
 		{name: "windows volume symlink", entry: "profiles/windows-escape", typeflag: tar.TypeSymlink, linkname: `C:\\outside`},
 		{name: "hardlink", entry: "profiles/hardlink", typeflag: tar.TypeLink, linkname: "profiles/profile.json"},
