@@ -1,0 +1,69 @@
+{
+  "issue_count": 176,
+  "rules": [
+    {
+      "rule": "G101",
+      "count": 1
+    },
+    {
+      "rule": "G104",
+      "count": 53
+    },
+    {
+      "rule": "G107",
+      "count": 1
+    },
+    {
+      "rule": "G110",
+      "count": 3
+    },
+    {
+      "rule": "G115",
+      "count": 8
+    },
+    {
+      "rule": "G118",
+      "count": 1
+    },
+    {
+      "rule": "G122",
+      "count": 1
+    },
+    {
+      "rule": "G204",
+      "count": 6
+    },
+    {
+      "rule": "G301",
+      "count": 25
+    },
+    {
+      "rule": "G302",
+      "count": 5
+    },
+    {
+      "rule": "G304",
+      "count": 22
+    },
+    {
+      "rule": "G305",
+      "count": 3
+    },
+    {
+      "rule": "G306",
+      "count": 9
+    },
+    {
+      "rule": "G404",
+      "count": 17
+    },
+    {
+      "rule": "G703",
+      "count": 14
+    },
+    {
+      "rule": "G704",
+      "count": 7
+    }
+  ]
+}

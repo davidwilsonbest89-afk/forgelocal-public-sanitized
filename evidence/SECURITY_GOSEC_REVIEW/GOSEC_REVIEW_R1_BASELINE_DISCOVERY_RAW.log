@@ -1,0 +1,15 @@
+2026-08-26T01:42:35Z
+--- HEAD/REMOTE ---
+63d04de788b73dfac26cb62900c7ddbf09ce96ac
+63d04de788b73dfac26cb62900c7ddbf09ce96ac	refs/heads/validation/operational-v1
+--- STATUS ---
+[31m??[m evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R1_BASELINE_DISCOVERY_RAW.log
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+--- PORTS ---
+--- PROCESSES ---
+--- TOOLS ---
+/home/ubuntu/bin/gosec
+/home/ubuntu/bin/govulncheck
+/home/ubuntu/bin/gitleaks
+/home/ubuntu/bin/osv-scanner
+/home/ubuntu/bin/trivy

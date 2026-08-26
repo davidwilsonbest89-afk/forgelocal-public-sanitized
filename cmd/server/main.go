@@ -411,7 +411,7 @@ func runServer(flags *serveFlags) {
 	router.Get("/api/screenshots/{id}", mcpServer.ServeScreenshotArtifact)
 
 	// HTTP Server with error channel (no os.Exit in goroutine)
-	srv := &http.Server{Addr: net.JoinHostPort(cfg.Host, cfg.Port), Handler: router}
+	srv := newHTTPServer(net.JoinHostPort(cfg.Host, cfg.Port), router)
 	serverErr := make(chan error, 1)
 
 	go func() {
