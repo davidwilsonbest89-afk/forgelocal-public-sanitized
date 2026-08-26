@@ -1,0 +1,45 @@
+UTC=2026-08-26T13:33:30Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r6
+PACKAGE_SOURCE_HEAD=142477ae0d576eae937b16660899fd973d6f2464
+PACKAGE_EVIDENCE_HEAD=77ed72b31695d4beaa49e6697f4e0c5419849364
+CURRENT_HEAD=22737a4c03855bf1963278da6b1f3ab83dd23d88
+COMMAND=sha256sum -c evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.zip.sha256
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.zip: OK
+ZIP_HASH_EXIT_CODE=0
+COMMAND=sha256sum -c evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.tar.gz.sha256
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.tar.gz: OK
+TAR_HASH_EXIT_CODE=0
+COMMAND=tar -xzf evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.tar.gz -C /tmp/r6a_verify_tar2
+TAR_EXTRACT_EXIT_CODE=0
+COMMAND=unzip -q evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-final-v1.zip -d /tmp/r6a_verify_zip2
+ZIP_EXTRACT_EXIT_CODE=0
+COMMAND=cmp evidence/GOSEC_R6/R6_A/R6A_FINAL_MANIFEST.txt /tmp/r6a_verify_tar2/forgelocal-gosec-r6a-final-v1-evidence/evidence/GOSEC_R6/R6_A/R6A_FINAL_MANIFEST.txt
+MANIFEST_TAR_EXIT_CODE=0
+COMMAND=cmp evidence/GOSEC_R6/R6_A/R6A_FINAL_MANIFEST.txt /tmp/r6a_verify_zip2/forgelocal-gosec-r6a-final-v1-evidence/evidence/GOSEC_R6/R6_A/R6A_FINAL_MANIFEST.txt
+MANIFEST_ZIP_EXIT_CODE=0
+PACKAGE_SMOKE_MEMBER_EXCLUSION=PASS
+evidence/GOSEC_R6/R6_A/forgelocal-gosec-r6a-delta-142477a-77ed72b.bundle is okay
+The bundle contains this ref:
+77ed72b31695d4beaa49e6697f4e0c5419849364 refs/gosec-r6a/package-head
+The bundle requires this ref:
+142477ae0d576eae937b16660899fd973d6f2464 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+COMMAND=env GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --branch validation/gosec-r6 https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git /tmp/r6a_public_clone2
+Cloning into '/tmp/r6a_public_clone2'...
+Updating files:  92% (2040/2207)Updating files:  93% (2053/2207)Updating files:  94% (2075/2207)Updating files:  95% (2097/2207)Updating files:  96% (2119/2207)Updating files:  97% (2141/2207)Updating files:  98% (2163/2207)Updating files:  99% (2185/2207)Updating files: 100% (2207/2207)Updating files: 100% (2207/2207), done.
+PUBLIC_CLONE_EXIT_CODE=0
+COMMAND=git rev-parse HEAD
+22737a4c03855bf1963278da6b1f3ab83dd23d88
+PUBLIC_HEAD_EXIT_CODE=0
+COMMAND=git checkout --detach HEAD
+HEAD is now at 22737a4 evidence: package GOSEC R6 Lot A
+PUBLIC_CHECKOUT_EXIT_CODE=0
+COMMAND=git fsck --full
+PUBLIC_FSCK_EXIT_CODE=0
+COMMAND=git ls-remote origin refs/heads/validation/gosec-r6 refs/heads/validation/gosec-r5 refs/heads/validation/operational-v1
+28f66a1b2e2a27b90b8542458d4774dd3f264797	refs/heads/validation/gosec-r5
+22737a4c03855bf1963278da6b1f3ab83dd23d88	refs/heads/validation/gosec-r6
+80048180d4ec5241c08146ade698d53a3f29454d	refs/heads/validation/operational-v1
+REMOTE_HEAD_EXIT_CODE=0
