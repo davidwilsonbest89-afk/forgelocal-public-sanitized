@@ -5,7 +5,9 @@ import (
 	"bytes"
 	"compress/gzip"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"testing"
@@ -96,6 +98,68 @@ func TestCLIFullBackupUsesPrivateMode(t *testing.T) {
 	}
 	if mode := info.Mode().Perm(); mode != 0600 {
 		t.Fatalf("backup mode = %04o, want 0600", mode)
+	}
+}
+
+func TestCLIFullBackupDoesNotDereferenceExternalSymlink(t *testing.T) {
+	baseDir := t.TempDir()
+	profiles := filepath.Join(baseDir, "profiles")
+	if err := os.MkdirAll(profiles, 0700); err != nil {
+		t.Fatal(err)
+	}
+	external := filepath.Join(t.TempDir(), "outside-secret.txt")
+	if err := os.WriteFile(external, []byte("outside-secret"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	link := filepath.Join(profiles, "external-link")
+	if err := os.Symlink(external, link); err != nil {
+		t.Fatal(err)
+	}
+	output := filepath.Join(t.TempDir(), "backup.tgz")
+	if err := createFullBackup(baseDir, output); err != nil {
+		t.Fatal(err)
+	}
+
+	file, err := os.Open(output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer file.Close()
+	gz, err := gzip.NewReader(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer gz.Close()
+	tr := tar.NewReader(gz)
+	var found bool
+	for {
+		header, err := tr.Next()
+		if errors.Is(err, io.EOF) {
+			break
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		if header.Name != "profiles/external-link" {
+			continue
+		}
+		found = true
+		if header.Typeflag != tar.TypeSymlink {
+			t.Fatalf("external link type = %v, want symlink", header.Typeflag)
+		}
+		if header.Linkname != external {
+			t.Fatalf("external link target = %q, want %q", header.Linkname, external)
+		}
+		data, err := io.ReadAll(tr)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if string(data) != "" {
+			t.Fatalf("symlink entry unexpectedly carried external data: %q", data)
+		}
+	}
+	if !found {
+		t.Fatal("external symlink was not preserved as an archive entry")
 	}
 }
 

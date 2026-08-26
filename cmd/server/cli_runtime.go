@@ -621,14 +621,27 @@ func createFullBackup(baseDir, output string) error {
 	return out.Close()
 }
 
-func addPathToTar(tw *tar.Writer, baseDir, root string) error {
-	return filepath.WalkDir(root, func(path string, d os.DirEntry, err error) error {
-		if err != nil {
-			return err
+func addPathToTar(tw *tar.Writer, baseDir, root string) (err error) {
+	baseRoot, err := os.OpenRoot(baseDir)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if closeErr := baseRoot.Close(); err == nil {
+			err = closeErr
+		}
+	}()
+
+	err = filepath.WalkDir(root, func(path string, d os.DirEntry, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
 		}
 		info, err := d.Info()
 		if err != nil {
 			return err
+		}
+		if !d.IsDir() && info.Mode()&os.ModeSymlink == 0 && !info.Mode().IsRegular() {
+			return fmt.Errorf("unsupported backup entry type: %s", path)
 		}
 		header, err := tar.FileInfoHeader(info, "")
 		if err != nil {
@@ -655,14 +668,18 @@ func addPathToTar(tw *tar.Writer, baseDir, root string) error {
 		if d.IsDir() || !info.Mode().IsRegular() {
 			return nil
 		}
-		in, err := os.Open(path)
+		in, err := baseRoot.Open(filepath.ToSlash(rel))
 		if err != nil {
 			return err
 		}
-		defer in.Close()
-		_, err = io.Copy(tw, in)
-		return err
+		_, copyErr := io.Copy(tw, in)
+		closeErr := in.Close()
+		if copyErr != nil {
+			return copyErr
+		}
+		return closeErr
 	})
+	return err
 }
 
 const (
