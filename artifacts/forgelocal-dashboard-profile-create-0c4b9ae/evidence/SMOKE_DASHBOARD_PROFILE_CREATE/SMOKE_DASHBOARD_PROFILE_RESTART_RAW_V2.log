@@ -1,0 +1,39 @@
+utc_start=2026-08-26T00:34:14Z
+cwd=/home/ubuntu
+repo_head=a9d31cf87cd55a1506bdbff6f6b19a66ab0a3ccb
+command=timeout 120s node dashboard_restart_persistence_runner.js
+{
+  "status": "SMOKE_DASHBOARD_PROFILE_RESTART_FAIL",
+  "persisted": false,
+  "auth": true,
+  "events": [
+    {
+      "kind": "dashboard_reconnected_after_restart",
+      "at": "2026-08-26T00:34:17.131Z",
+      "connected": true
+    },
+    {
+      "kind": "dashboard_profiles_persisted_after_restart",
+      "at": "2026-08-26T00:34:17.593Z",
+      "alpha_present": true,
+      "beta_present": true,
+      "alpha_proxy_present": true,
+      "beta_proxy_present": true,
+      "proxies_distinct": true,
+      "alpha_ui_proxy_configured": false,
+      "screenshot_written": true,
+      "credential_value_logged": false
+    },
+    {
+      "kind": "restart_auth_revoke",
+      "at": "2026-08-26T00:34:17.599Z",
+      "revoke_status": 204,
+      "probe_status": 401,
+      "reason": "revoked",
+      "token_value_logged": false
+    }
+  ]
+}
+exit_code=0
+utc_end=2026-08-26T00:34:17Z
+exit

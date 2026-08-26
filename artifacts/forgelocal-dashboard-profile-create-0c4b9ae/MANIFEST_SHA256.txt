@@ -1,0 +1,1 @@
+7438a20e9ee56c6284a0f36de3cc511246b0fb2befdff8f0ac3d03df52147ae8  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/MANIFEST.sha256

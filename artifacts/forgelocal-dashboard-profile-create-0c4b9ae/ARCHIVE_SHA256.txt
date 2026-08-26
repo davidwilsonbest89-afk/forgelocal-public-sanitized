@@ -1,0 +1,2 @@
+6d331748a22e85dd31dcbd2df38c7464299ff1a2ea7e61ef0b302ba976019e70  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae.zip
+7885f6fcd1803d18d00d81466f8b1ea4d141649322e4d6f4c457eb4b62f6addf  /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae.tar.gz

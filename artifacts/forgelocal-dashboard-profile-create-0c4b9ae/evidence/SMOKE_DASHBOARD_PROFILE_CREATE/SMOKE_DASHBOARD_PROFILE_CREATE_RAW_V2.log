@@ -1,0 +1,72 @@
+utc_start=2026-08-25T23:55:25Z
+cwd=/home/ubuntu
+repo_head=a9d31cf87cd55a1506bdbff6f6b19a66ab0a3ccb
+command=timeout 180s node /home/ubuntu/forgelocal_self_validation_v6/integrated_smoke_runner.js
+{
+  "status": "SMOKE_INTEGRATED_PROXY_FAIL_UNKNOWN",
+  "dashboard_profile_create_path": "FAIL_NOT_DASHBOARD_MUTATION",
+  "core_session_proxy_pass": false,
+  "direct_browser_nominal_pass": false,
+  "proxy_stopped_fail_closed": false,
+  "proxy_bad_auth_rejected": false,
+  "profile_isolation_pass": false,
+  "core_profile_assignments_persisted": false,
+  "destinations": {
+    "alpha": {
+      "total": 0,
+      "viaProxy": 0
+    },
+    "beta": {
+      "total": 0,
+      "viaProxy": 0
+    }
+  },
+  "proxies": {
+    "alpha": {
+      "total": 0,
+      "accepted": 0,
+      "rejected": 0
+    },
+    "beta": {
+      "total": 0,
+      "accepted": 0,
+      "rejected": 0
+    },
+    "bad_auth": {
+      "total": 0,
+      "accepted": 0,
+      "rejected": 0
+    }
+  },
+  "core_session_status": null,
+  "core_session_navigate_status": null,
+  "events": [
+    {
+      "kind": "local_services_ready",
+      "at": "2026-08-25T23:55:26.061Z",
+      "destination_ports": [
+        19283,
+        19285,
+        19287
+      ],
+      "proxy_ports": [
+        19282,
+        19284,
+        19286
+      ]
+    },
+    {
+      "kind": "dashboard_admin_linked",
+      "at": "2026-08-25T23:55:27.521Z",
+      "status": "linked"
+    },
+    {
+      "kind": "smoke_error",
+      "at": "2026-08-25T23:55:58.081Z",
+      "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('smoke-alpha', { exact: true }).first()\u001b[22m\n"
+    }
+  ]
+}
+exit_code=0
+utc_end=2026-08-25T23:55:58Z
+exit

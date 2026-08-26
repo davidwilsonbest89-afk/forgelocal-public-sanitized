@@ -1,0 +1,51 @@
+utc_start=2026-08-25T23:46:55Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+repo_head=a9d31cf87cd55a1506bdbff6f6b19a66ab0a3ccb
+branch=validation/operational-v1
+remote_head=a9d31cf87cd55a1506bdbff6f6b19a66ab0a3ccb
+## status_before
+[31m??[m evidence/SMOKE_DASHBOARD_PROFILE_CREATE/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+## scope
+dashboard_profile_creation_and_full_local_smoke_only
+historical_T28_untouched=true
+T29_not_started=true
+network=loopback_synthetic_only
+camoufox_docker_systemvault_native_real_accounts_cookies_external_sites=forbidden
+## known_limitation
+readonly_runtime_catalogue_empty_blocked_dashboard_profile_dialog
+## target_files
+forge-dashboard/client/src/components/AutomationPanel.tsx
+forge-dashboard/client/src/components/RuntimePanel.tsx
+forge-dashboard/client/src/lib/coreWrite.ts
+forge-dashboard/client/src/pages/Home.tsx
+internal/api/profile_history.go
+internal/api/profile_history_test.go
+internal/api/profiles_bulk.go
+internal/api/profiles_bulk_strict_test.go
+internal/api/profiles_bulk_test.go
+internal/api/profiles_metadata_test.go
+internal/api/profiles_write.go
+internal/api/profiles_write_test.go
+internal/api/readonly.go
+internal/api/readonly_session.go
+internal/api/readonly_session_test.go
+internal/api/readonly_test.go
+internal/api/router.go
+internal/profile/backup_snapshot.go
+internal/profile/backup_snapshot_test.go
+internal/profile/bisect_test.go
+internal/profile/duponly_test.go
+internal/profile/errors.go
+internal/profile/history_pending_test.go
+internal/profile/lifecycle_t23_test.go
+internal/profile/metadata_test.go
+internal/profile/store.go
+internal/profile/store_secrets_test.go
+internal/profile/store_test.go
+internal/profile/t09_test.go
+internal/runtime/qualification.go
+internal/runtime/qualification_test.go
+internal/runtime/runtime.go
+internal/runtime/runtime_test.go
+utc_end=2026-08-25T23:46:55Z
