@@ -1,0 +1,32 @@
+UTC=2026-08-26T16:01:16Z
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/gosec-r7-final-remediation
+SOURCE_HEAD=b907dfcd68c290144e2b922e352d5a937e9b3259
+EVIDENCE_HEAD=5acdab9b14f7db0e4683ef021ce29d2268f3901d
+PACKAGE_COMMIT=032cd3d7ade92c23d901e9ef180e57acdaae5b4d
+Cloning into '/tmp/forgelocal-r7-remediation-public'...
+Updating files:   0% (2/2332)Updating files:   1% (24/2332)Updating files:   2% (47/2332)Updating files:   3% (70/2332)Updating files:   4% (94/2332)Updating files:   5% (117/2332)Updating files:   6% (140/2332)Updating files:   7% (164/2332)Updating files:   8% (187/2332)Updating files:   9% (210/2332)Updating files:  10% (234/2332)Updating files:  11% (257/2332)Updating files:  12% (280/2332)Updating files:  13% (304/2332)Updating files:  14% (327/2332)Updating files:  15% (350/2332)Updating files:  16% (374/2332)Updating files:  17% (397/2332)Updating files:  18% (420/2332)Updating files:  19% (444/2332)Updating files:  20% (467/2332)Updating files:  21% (490/2332)Updating files:  22% (514/2332)Updating files:  23% (537/2332)Updating files:  24% (560/2332)Updating files:  25% (583/2332)Updating files:  26% (607/2332)Updating files:  27% (630/2332)Updating files:  28% (653/2332)Updating files:  29% (677/2332)Updating files:  30% (700/2332)Updating files:  31% (723/2332)Updating files:  31% (745/2332)Updating files:  32% (747/2332)Updating files:  33% (770/2332)Updating files:  34% (793/2332)Updating files:  35% (817/2332)Updating files:  36% (840/2332)Updating files:  37% (863/2332)Updating files:  38% (887/2332)Updating files:  39% (910/2332)Updating files:  40% (933/2332)Updating files:  41% (957/2332)Updating files:  42% (980/2332)Updating files:  43% (1003/2332)Updating files:  44% (1027/2332)Updating files:  45% (1050/2332)Updating files:  46% (1073/2332)Updating files:  47% (1097/2332)Updating files:  48% (1120/2332)Updating files:  49% (1143/2332)Updating files:  50% (1166/2332)Updating files:  51% (1190/2332)Updating files:  52% (1213/2332)Updating files:  53% (1236/2332)Updating files:  54% (1260/2332)Updating files:  55% (1283/2332)Updating files:  56% (1306/2332)Updating files:  57% (1330/2332)Updating files:  58% (1353/2332)Updating files:  59% (1376/2332)Updating files:  60% (1400/2332)Updating files:  61% (1423/2332)Updating files:  62% (1446/2332)Updating files:  63% (1470/2332)Updating files:  64% (1493/2332)Updating files:  65% (1516/2332)Updating files:  66% (1540/2332)Updating files:  67% (1563/2332)Updating files:  68% (1586/2332)Updating files:  69% (1610/2332)Updating files:  70% (1633/2332)Updating files:  71% (1656/2332)Updating files:  72% (1680/2332)Updating files:  73% (1703/2332)Updating files:  74% (1726/2332)Updating files:  75% (1749/2332)Updating files:  76% (1773/2332)Updating files:  77% (1796/2332)Updating files:  78% (1819/2332)Updating files:  79% (1843/2332)Updating files:  80% (1866/2332)Updating files:  81% (1889/2332)Updating files:  82% (1913/2332)Updating files:  83% (1936/2332)Updating files:  84% (1959/2332)Updating files:  85% (1983/2332)Updating files:  86% (2006/2332)Updating files:  87% (2029/2332)Updating files:  88% (2053/2332)Updating files:  89% (2076/2332)Updating files:  90% (2099/2332)Updating files:  91% (2123/2332)Updating files:  92% (2146/2332)Updating files:  92% (2147/2332)Updating files:  93% (2169/2332)Updating files:  94% (2193/2332)Updating files:  95% (2216/2332)Updating files:  96% (2239/2332)Updating files:  97% (2263/2332)Updating files:  98% (2286/2332)Updating files:  99% (2309/2332)Updating files: 100% (2332/2332)Updating files: 100% (2332/2332), done.
+HEAD is now at 032cd3d evidence: publish R7 targeted remediation package
+CLONE_HEAD=032cd3d7ade92c23d901e9ef180e57acdaae5b4d
+FSCK_EXIT_CODE=0
+SOURCE_TO_EVIDENCE_ANCESTOR_EXIT_CODE=0
+EVIDENCE_TO_PACKAGE_ANCESTOR_EXIT_CODE=0
+SOURCE_TO_PACKAGE_NON_EVIDENCE_PATHS=NONE
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7_REMEDIATION/forgelocal-gosec-r7-final-remediation-v1.zip: OK
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7_REMEDIATION/forgelocal-gosec-r7-final-remediation-v1.tar.gz: OK
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7_REMEDIATION/forgelocal-gosec-r7-remediation-delta-b907dfc-5acdab9.bundle: OK
+13 /tmp/remediation_tar_listing.txt
+[90m4:01PM[0m [32mINF[0m scan completed in 340ms
+[90m4:01PM[0m [32mINF[0m no leaks found
+GITLEAKS_ZIP_EXTRACT_EXIT_CODE=0
+[90m4:01PM[0m [32mINF[0m scan completed in 328ms
+[90m4:01PM[0m [32mINF[0m no leaks found
+GITLEAKS_TAR_EXTRACT_EXIT_CODE=0
+evidence/GOSEC_R7_REMEDIATION/forgelocal-gosec-r7-remediation-delta-b907dfc-5acdab9.bundle is okay
+The bundle contains this ref:
+5acdab9b14f7db0e4683ef021ce29d2268f3901d refs/gosec-r7/remediation-package-head
+The bundle requires this ref:
+b907dfcd68c290144e2b922e352d5a937e9b3259 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+SMOKE_IN_PACKAGE=EXCLUDED
