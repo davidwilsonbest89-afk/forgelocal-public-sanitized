@@ -1,0 +1,43 @@
+UTC=2026-08-26T02:19:26Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+CURRENT_HEAD=20e5181554c52a92d6e1acad15feb426e8804621
+EXPECTED_LOT1_FINAL=20e5181554c52a92d6e1acad15feb426e8804621
+SOURCE_COMMIT=cd0d2e61990ceb421765f75a26cfd986ad9dc558
+ORIGINAL_V1_MANIFEST_SELF_REFERENCE=FAIL_DOCUMENTED
+HEAD_MATCH=PASS
+SOURCE_IS_ANCESTOR=PASS
+--- SOURCE DIFF ---
+ cmd/server/cli_backup_security_test.go    | 127 [32m+++++++++++++++[m
+ cmd/server/cli_runtime.go                 | 133 [32m++++++++++++++[m[31m--[m
+ internal/browser/archive_security.go      | 248 [32m++++++++++++++++++++++++++++++[m
+ internal/browser/archive_security_test.go | 151 [32m++++++++++++++++++[m
+ internal/browser/download.go              |  96 [32m+[m[31m-----------[m
+ 5 files changed, 652 insertions(+), 103 deletions(-)
+cmd/server/cli_backup_security_test.go
+cmd/server/cli_runtime.go
+internal/browser/archive_security.go
+internal/browser/archive_security_test.go
+internal/browser/download.go
+--- V2 SIDECARS ---
+evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.zip: OK
+evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.tar.gz: OK
+--- MANIFEST V2 ---
+MANIFEST_V2_SELF_REFERENCE=PASS
+--- ARCHIVE V2 ---
+No errors detected in compressed data of evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-final-v2.zip.
+UNZIP_TEST=PASS
+TAR_LIST_TEST=PASS
+ZIP_EXTRACTION=PASS
+TAR_EXTRACTION=PASS
+--- EXISTING BUNDLE ---
+BUNDLE_VERIFY=PASS
+--- FRESH CLONE EXPLICIT CHECKOUT ---
+CLONE_HEAD=20e5181554c52a92d6e1acad15feb426e8804621
+CLONE_FSCK_EXIT_CODE=0
+PRESERVATION_V2_RESULT=PASS_WITH_V1_REPLACEMENT
+evidence/SECURITY_GOSEC_REVIEW/forgelocal-security-r2-lot1-delta-cba6beb.bundle is okay
+The bundle contains this ref:
+cba6beb496e0c56f98f03bdf1dc3efbd7adb3809 refs/heads/validation/operational-v1
+The bundle requires this ref:
+45b2fc1e1c2481a6ac6a13ba18cb7ad6bcc437f4 
+The bundle uses this hash algorithm: sha1
