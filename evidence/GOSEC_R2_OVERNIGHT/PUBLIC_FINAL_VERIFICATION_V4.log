@@ -1,0 +1,36 @@
+UTC=2026-08-26T03:37:00Z
+REMOTE_HEAD=9bbc2beed7f2f8f3aa79f2447bbb348a10eb8225
+PUBLIC_CLONE=PASS
+CHECKOUT_NO_LFS=PASS
+HEAD_MATCH=PASS
+FSCK_EXIT_CODE=0
+V4_ZIP_SIDECAR=PASS
+V4_TAR_SIDECAR=PASS
+V4_UNZIP_TEST=PASS
+V4_ZIP_EXTRACTION=PASS
+V4_TAR_EXTRACTION=PASS
+V4_ZIP_HASHES=PASS
+V4_TAR_HASHES=PASS
+BUNDLE_VERIFY=PASS
+PUBLIC_FINAL_VERIFICATION=PASS
+
+--- bundle ---
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle is okay
+The bundle contains this ref:
+ee45a147919e8d0e9c39e2f276f0e590e770a77e refs/heads/validation/operational-v1
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+
+--- zip hashes ---
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/syft_final.json: OK
+GOSEC_R2_OVERNIGHT/syft_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/trivy_final.json: OK
+GOSEC_R2_OVERNIGHT/trivy_post_overnight.json: OK
+
+--- tar hashes ---
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/syft_final.json: OK
+GOSEC_R2_OVERNIGHT/syft_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/trivy_final.json: OK
+GOSEC_R2_OVERNIGHT/trivy_post_overnight.json: OK
