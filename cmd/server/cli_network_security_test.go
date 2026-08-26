@@ -45,6 +45,28 @@ func TestValidateCLILoopbackURLBoundaries(t *testing.T) {
 	}
 }
 
+func TestCLILocalHTTPClientNominalAndTimeout(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/slow" {
+			time.Sleep(100 * time.Millisecond)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"ok":true}`))
+	}))
+	defer server.Close()
+
+	client := newCLILocalHTTPClient(20 * time.Millisecond)
+	resp, err := client.Get(server.URL + "/ok")
+	if err != nil {
+		t.Fatalf("local nominal request failed: %v", err)
+	}
+	_ = resp.Body.Close()
+	if _, err := client.Get(server.URL + "/slow"); err == nil {
+		t.Fatal("slow local request exceeded timeout without error")
+	}
+}
+
 func TestCLILocalHTTPClientRejectsExternalRedirect(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "http://example.invalid/external", http.StatusFound)
