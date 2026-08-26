@@ -1,0 +1,77 @@
+G104	LOW	HIGH	cmd/server/main.go	429	Errors unhandled
+G104	LOW	HIGH	internal/api/dashboard.go	13	Errors unhandled
+G104	LOW	HIGH	internal/api/router.go	707	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	144	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	323	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	342	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	368	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	382	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	394	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	449	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	463	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	466	Errors unhandled
+G104	LOW	HIGH	internal/browser/download.go	473	Errors unhandled
+G104	LOW	HIGH	internal/browser/launch_chromium.go	312	Errors unhandled
+G104	LOW	HIGH	internal/browser/launch_chromium.go	333	Errors unhandled
+G104	LOW	HIGH	internal/browser/launch_firefox.go	153	Errors unhandled
+G104	LOW	HIGH	internal/browser/manager.go	373	Errors unhandled
+G104	LOW	HIGH	internal/browser/manager.go	376	Errors unhandled
+G104	LOW	HIGH	internal/browser/manager.go	391	Errors unhandled
+G104	LOW	HIGH	internal/browser/manager.go	399	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	49	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	87	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	95	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	122	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	129	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	135	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	142	Errors unhandled
+G104	LOW	HIGH	internal/browser/socks5relay.go	144	Errors unhandled
+G104	LOW	HIGH	internal/config/config.go	168	Errors unhandled
+G104	LOW	HIGH	internal/fingerprint/pool.go	72	Errors unhandled
+G104	LOW	HIGH	internal/humanize/keyboard.go	33	Errors unhandled
+G104	LOW	HIGH	internal/humanize/keyboard.go	60	Errors unhandled
+G104	LOW	HIGH	internal/humanize/keyboard.go	73-75	Errors unhandled
+G104	LOW	HIGH	internal/mcp/protocol.go	40	Errors unhandled
+G104	LOW	HIGH	internal/mcp/server.go	667	Errors unhandled
+G104	LOW	HIGH	internal/mcp/server.go	818	Errors unhandled
+G104	LOW	HIGH	internal/mcp/stdio.go	56	Errors unhandled
+G104	LOW	HIGH	internal/workflow/engine.go	281	Errors unhandled
+G301	MEDIUM	HIGH	cmd/server/cli.go	778	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	457	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	591	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	722	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	732	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	759	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	871	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/archive_security.go	23	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/archive_security.go	130	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/archive_security.go	138	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/archive_security.go	199	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/archive_security.go	206	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/download.go	307	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/download.go	368	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/download.go	449	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	64	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	191	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	196	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	949	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	1913	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_firefox.go	66	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/browser/launch_firefox.go	80	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/config/config.go	168	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/groups/store.go	45	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/mcp/advanced_tools.go	724	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	internal/workflow/engine.go	251	Expect directory permissions to be 0750 or less
+G302	MEDIUM	HIGH	cmd/server/cli.go	763	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	internal/browser/download.go	342	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	internal/browser/download.go	394	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	internal/browser/download.go	473	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	internal/config/config.go	169	Expect file permissions to be 0600 or less
+G306	MEDIUM	HIGH	cmd/server/cli.go	620	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	cmd/server/cli.go	625	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	cmd/server/cli.go	787	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	cmd/server/main.go	325	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	internal/browser/download.go	144	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	internal/browser/launch_chromium.go	217	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	internal/browser/launch_chromium.go	957	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	internal/mcp/advanced_tools.go	727	Expect WriteFile permissions to be 0600 or less

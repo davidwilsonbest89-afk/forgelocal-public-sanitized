@@ -1,0 +1,78 @@
+id	rule	severity	confidence	file	line	details	control	disposition	head_count
+R2-PERM-001	G302	MEDIUM	HIGH	internal/config/config.go	169	Expect file permissions to be 0600 or less	SetupLogger uses filepath.Dir, 0700 directory, 0600 file, explicit fallback close	CORRECTED_AND_VERIFIED	4
+R2-PERM-002	G302	MEDIUM	HIGH	internal/browser/download.go	473	Expect file permissions to be 0600 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	4
+R2-PERM-003	G302	MEDIUM	HIGH	internal/browser/download.go	394	Expect file permissions to be 0600 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	4
+R2-PERM-004	G302	MEDIUM	HIGH	internal/browser/download.go	342	Expect file permissions to be 0600 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	4
+R2-PERM-005	G302	MEDIUM	HIGH	cmd/server/cli.go	763	Expect file permissions to be 0600 or less	migration backups/outputs 0600; full backup 0600 and explicit tar/gzip/file closes	CORRECTED_AND_VERIFIED	4
+R2-PERM-006	G301	MEDIUM	HIGH	internal/workflow/engine.go	251	Expect directory permissions to be 0750 or less	screenshot output uses 0700/0600; request/response errors propagated	CORRECTED_AND_VERIFIED	17
+R2-PERM-007	G301	MEDIUM	HIGH	internal/mcp/advanced_tools.go	724	Expect directory permissions to be 0750 or less	saved screenshots use 0700/0600	CORRECTED_AND_VERIFIED	17
+R2-PERM-008	G301	MEDIUM	HIGH	internal/groups/store.go	45	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-009	G301	MEDIUM	HIGH	internal/config/config.go	168	Expect directory permissions to be 0750 or less	SetupLogger uses filepath.Dir, 0700 directory, 0600 file, explicit fallback close	CORRECTED_AND_VERIFIED	17
+R2-PERM-010	G301	MEDIUM	HIGH	internal/browser/launch_firefox.go	80	Expect directory permissions to be 0750 or less	browser-data/downloads use 0700	CORRECTED_AND_VERIFIED	17
+R2-PERM-011	G301	MEDIUM	HIGH	internal/browser/launch_firefox.go	66	Expect directory permissions to be 0750 or less	browser-data/downloads use 0700	CORRECTED_AND_VERIFIED	17
+R2-PERM-012	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	1913	Expect directory permissions to be 0750 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	17
+R2-PERM-013	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	949	Expect directory permissions to be 0750 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	17
+R2-PERM-014	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	196	Expect directory permissions to be 0750 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	17
+R2-PERM-015	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	191	Expect directory permissions to be 0750 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	17
+R2-PERM-016	G301	MEDIUM	HIGH	internal/browser/launch_chromium.go	64	Expect directory permissions to be 0750 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	17
+R2-PERM-017	G301	MEDIUM	HIGH	internal/browser/download.go	449	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-018	G301	MEDIUM	HIGH	internal/browser/download.go	368	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-019	G301	MEDIUM	HIGH	internal/browser/download.go	307	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-020	G301	MEDIUM	HIGH	internal/browser/archive_security.go	206	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-021	G301	MEDIUM	HIGH	internal/browser/archive_security.go	199	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-022	G301	MEDIUM	HIGH	internal/browser/archive_security.go	138	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-023	G301	MEDIUM	HIGH	internal/browser/archive_security.go	130	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-024	G301	MEDIUM	HIGH	internal/browser/archive_security.go	23	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-025	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	871	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-026	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	759	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-027	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	732	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-028	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	722	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-029	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	591	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-030	G301	MEDIUM	HIGH	cmd/server/cli_runtime.go	457	Expect directory permissions to be 0750 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	17
+R2-PERM-031	G301	MEDIUM	HIGH	cmd/server/cli.go	778	Expect directory permissions to be 0750 or less	migration backups/outputs 0600; full backup 0600 and explicit tar/gzip/file closes	CORRECTED_AND_VERIFIED	17
+R2-PERM-032	G306	MEDIUM	HIGH	internal/mcp/advanced_tools.go	727	Expect WriteFile permissions to be 0600 or less	saved screenshots use 0700/0600	CORRECTED_AND_VERIFIED	1
+R2-PERM-033	G306	MEDIUM	HIGH	internal/browser/launch_chromium.go	957	Expect WriteFile permissions to be 0600 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	1
+R2-PERM-034	G306	MEDIUM	HIGH	internal/browser/launch_chromium.go	217	Expect WriteFile permissions to be 0600 or less	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	CORRECTED_AND_VERIFIED	1
+R2-PERM-035	G306	MEDIUM	HIGH	internal/browser/download.go	144	Expect WriteFile permissions to be 0600 or less	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	1
+R2-PERM-036	G306	MEDIUM	HIGH	cmd/server/main.go	325	Expect WriteFile permissions to be 0600 or less	startup config write changed to 0600; write errors propagated	CORRECTED_AND_VERIFIED	1
+R2-PERM-037	G306	MEDIUM	HIGH	cmd/server/cli.go	787	Expect WriteFile permissions to be 0600 or less	migration backups/outputs 0600; full backup 0600 and explicit tar/gzip/file closes	CORRECTED_AND_VERIFIED	1
+R2-PERM-038	G306	MEDIUM	HIGH	cmd/server/cli.go	625	Expect WriteFile permissions to be 0600 or less	migration backups/outputs 0600; full backup 0600 and explicit tar/gzip/file closes	CORRECTED_AND_VERIFIED	1
+R2-PERM-039	G306	MEDIUM	HIGH	cmd/server/cli.go	620	Expect WriteFile permissions to be 0600 or less	migration backups/outputs 0600; full backup 0600 and explicit tar/gzip/file closes	CORRECTED_AND_VERIFIED	1
+R2-PERM-040	G104	LOW	HIGH	internal/workflow/engine.go	281	Errors unhandled	screenshot output uses 0700/0600; request/response errors propagated	NEEDS_MANUAL_REVIEW	36
+R2-PERM-041	G104	LOW	HIGH	internal/mcp/stdio.go	56	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-042	G104	LOW	HIGH	internal/mcp/server.go	818	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-043	G104	LOW	HIGH	internal/mcp/server.go	667	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-044	G104	LOW	HIGH	internal/mcp/protocol.go	40	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-045	G104	LOW	HIGH	internal/humanize/keyboard.go	73-75	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-046	G104	LOW	HIGH	internal/humanize/keyboard.go	60	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-047	G104	LOW	HIGH	internal/humanize/keyboard.go	33	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-048	G104	LOW	HIGH	internal/fingerprint/pool.go	72	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-049	G104	LOW	HIGH	internal/config/config.go	168	Errors unhandled	SetupLogger uses filepath.Dir, 0700 directory, 0600 file, explicit fallback close	CORRECTED_AND_VERIFIED	36
+R2-PERM-050	G104	LOW	HIGH	internal/browser/socks5relay.go	144	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-051	G104	LOW	HIGH	internal/browser/socks5relay.go	142	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-052	G104	LOW	HIGH	internal/browser/socks5relay.go	135	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-053	G104	LOW	HIGH	internal/browser/socks5relay.go	129	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-054	G104	LOW	HIGH	internal/browser/socks5relay.go	122	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-055	G104	LOW	HIGH	internal/browser/socks5relay.go	95	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-056	G104	LOW	HIGH	internal/browser/socks5relay.go	87	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-057	G104	LOW	HIGH	internal/browser/socks5relay.go	49	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-058	G104	LOW	HIGH	internal/browser/manager.go	399	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-059	G104	LOW	HIGH	internal/browser/manager.go	391	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-060	G104	LOW	HIGH	internal/browser/manager.go	376	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-061	G104	LOW	HIGH	internal/browser/manager.go	373	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-062	G104	LOW	HIGH	internal/browser/launch_firefox.go	153	Errors unhandled	browser-data/downloads use 0700	NEEDS_MANUAL_REVIEW	36
+R2-PERM-063	G104	LOW	HIGH	internal/browser/launch_chromium.go	333	Errors unhandled	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	NEEDS_MANUAL_REVIEW	36
+R2-PERM-064	G104	LOW	HIGH	internal/browser/launch_chromium.go	312	Errors unhandled	browser downloads/prefs/persona/cache use private dirs/files; executable modes excluded as intentional	NEEDS_MANUAL_REVIEW	36
+R2-PERM-065	G104	LOW	HIGH	internal/browser/download.go	473	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-066	G104	LOW	HIGH	internal/browser/download.go	466	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-067	G104	LOW	HIGH	internal/browser/download.go	463	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-068	G104	LOW	HIGH	internal/browser/download.go	449	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-069	G104	LOW	HIGH	internal/browser/download.go	394	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-070	G104	LOW	HIGH	internal/browser/download.go	382	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-071	G104	LOW	HIGH	internal/browser/download.go	368	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-072	G104	LOW	HIGH	internal/browser/download.go	342	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-073	G104	LOW	HIGH	internal/browser/download.go	323	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-074	G104	LOW	HIGH	internal/browser/download.go	144	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-075	G104	LOW	HIGH	internal/api/router.go	707	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-076	G104	LOW	HIGH	internal/api/dashboard.go	13	Errors unhandled	source path requires manual lifecycle/I/O review	NEEDS_MANUAL_REVIEW	36
+R2-PERM-077	G104	LOW	HIGH	cmd/server/main.go	429	Errors unhandled	startup config write changed to 0600; write errors propagated	NEEDS_MANUAL_REVIEW	36
