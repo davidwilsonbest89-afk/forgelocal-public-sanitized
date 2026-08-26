@@ -1,0 +1,25 @@
+UTC=2026-08-26T12:36:02Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r5
+HEAD=ad2dd61bce4acf5e735b08a9afdc45605eaf90ff
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+SCOPE=R5-B subprocess and loopback network controls; synthetic loopback only; no production runtime
+
+COMMAND=gosec inventory from evidence/GOSEC_R5/gosec_after_r5a.json
+G704	internal/api/sessions.go	478	-	SSRF via taint analysis
+G704	cmd/server/cli_runtime.go	1032	-	SSRF via taint analysis
+G704	cmd/server/cli_runtime.go	964	-	SSRF via taint analysis
+G704	cmd/server/cli_runtime.go	959	-	SSRF via taint analysis
+G704	cmd/server/cli.go	1088	-	SSRF via taint analysis
+G704	cmd/server/cli.go	1004	-	SSRF via taint analysis
+G704	cmd/server/cli.go	985	-	SSRF via taint analysis
+G204	internal/browser/download.go	515	-	Subprocess launched with variable
+G204	internal/browser/download.go	388	-	Subprocess launched with variable
+G204	cmd/server/main.go	564	-	Subprocess launched with variable
+G204	cmd/server/main.go	562	-	Subprocess launched with variable
+G204	cmd/server/main.go	560	-	Subprocess launched with variable
+
+COMMAND=git status --short
+[31m??[m evidence/GOSEC_R5/R5_B_BASELINE_DISCOVERY_RAW.log
+[31m??[m evidence/GOSEC_R5/R5_B_FINAL_RAW.log
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
