@@ -979,6 +979,9 @@ func smokeMCP(baseURL, token string) (map[string]any, error) {
 }
 
 func apiGET(url, token string) (map[string]any, error) {
+	if _, err := validateCLILoopbackURL(url); err != nil {
+		return nil, err
+	}
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
@@ -991,6 +994,9 @@ func apiGET(url, token string) (map[string]any, error) {
 }
 
 func apiPOST(url, token string, body any) (map[string]any, error) {
+	if _, err := validateCLILoopbackURL(url); err != nil {
+		return nil, err
+	}
 	data, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
@@ -1037,8 +1043,48 @@ func isLoopbackHost(host string) bool {
 	return false
 }
 
+func validateCLILoopbackURL(raw string) (*urlpkg.URL, error) {
+	if strings.ContainsAny(raw, "?#") {
+		return nil, fmt.Errorf("CLI URL must not contain query or fragment")
+	}
+	u, err := urlpkg.ParseRequestURI(raw)
+	if err != nil || u == nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" {
+		return nil, fmt.Errorf("CLI URL must be an HTTP(S) loopback URL")
+	}
+	if u.User != nil || u.RawQuery != "" || u.Fragment != "" || !isLoopbackHost(u.Hostname()) {
+		return nil, fmt.Errorf("CLI URL must be an HTTP(S) loopback URL without userinfo, query, fragment or external host")
+	}
+	if port := u.Port(); port != "" {
+		for _, r := range port {
+			if r < '0' || r > '9' {
+				return nil, fmt.Errorf("CLI URL port is invalid")
+			}
+		}
+		var n int
+		if _, scanErr := fmt.Sscanf(port, "%d", &n); scanErr != nil || n < 1 || n > 65535 {
+			return nil, fmt.Errorf("CLI URL port is invalid")
+		}
+	}
+	return u, nil
+}
+
+func newCLILocalHTTPClient(timeout time.Duration) *http.Client {
+	return &http.Client{
+		Timeout: timeout,
+		CheckRedirect: func(req *http.Request, _ []*http.Request) error {
+			if _, err := validateCLILoopbackURL(req.URL.String()); err != nil {
+				return fmt.Errorf("external redirect refused: %w", err)
+			}
+			return nil
+		},
+	}
+}
+
 func doJSON(req *http.Request) (map[string]any, error) {
-	client := &http.Client{Timeout: 10 * time.Second}
+	if _, err := validateCLILoopbackURL(req.URL.String()); err != nil {
+		return nil, err
+	}
+	client := newCLILocalHTTPClient(10 * time.Second)
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

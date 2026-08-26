@@ -35,6 +35,8 @@ func TestValidateInternalPlaywrightEndpoint(t *testing.T) {
 		{"missing-port", "ws://127.0.0.1/api/playwright/ws/sess-1"},
 		{"invalid-port", "ws://127.0.0.1:70000/api/playwright/ws/sess-1"},
 		{"query", "ws://127.0.0.1:19280/api/playwright/ws/sess-1?target=evil"},
+		{"fragment", "ws://127.0.0.1:19280/api/playwright/ws/sess-1#target=evil"},
+
 		{"wrong-path", "ws://127.0.0.1:19280/api/playwright/ws/other"},
 		{"userinfo", "ws://user:pass@127.0.0.1:19280/api/playwright/ws/sess-1"},
 	}

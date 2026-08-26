@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"forgelocal/internal/humanize"
 	"forgelocal/internal/profile"
@@ -473,8 +474,8 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 	}
 	defer clientConn.Close()
 
-	// Dial internal Playwright WebSocket
-	backendConn, err := net.Dial("tcp", internalAddr)
+	// Dial internal Playwright WebSocket with a bounded connection attempt.
+	backendConn, err := net.DialTimeout("tcp", internalAddr, 5*time.Second)
 	if err != nil {
 		if err := writeAll(clientConn, []byte("HTTP/1.1 502 Bad Gateway\r\n\r\n")); err != nil {
 			return
@@ -482,6 +483,9 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer backendConn.Close()
+	if err := backendConn.SetDeadline(time.Now().Add(5 * time.Second)); err != nil {
+		return
+	}
 
 	// Forward client's upgrade request to backend (preserving all WebSocket headers)
 	upgradeReq := fmt.Sprintf("GET %s HTTP/1.1\r\nHost: %s\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: %s\r\nSec-WebSocket-Key: %s\r\n",
@@ -505,6 +509,7 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	_ = backendConn.SetDeadline(time.Time{})
 
 	// Forward ALL response headers to client (critical: includes Sec-WebSocket-Extensions)
 	if err := writeAll(clientConn, []byte("HTTP/1.1 101 Switching Protocols\r\n")); err != nil {

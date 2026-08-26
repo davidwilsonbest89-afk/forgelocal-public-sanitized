@@ -162,6 +162,10 @@ func runOpenCommand(args []string, global cliGlobal, stdout, stderr io.Writer) i
 		return 1
 	}
 	url := dashboardOpenURL(resolveBaseURL(*baseURL, cfg))
+	if _, err := validateCLILoopbackURL(url); err != nil {
+		fmt.Fprintf(stderr, "open failed: %v\n", err)
+		return 1
+	}
 	if err := openBrowser(url); err != nil {
 		fmt.Fprintf(stderr, "open failed: %v\n", err)
 		return 1
@@ -841,6 +845,9 @@ func createMetadataBackup(global cliGlobal, output, baseURL, token string) error
 		return err
 	}
 	resolvedBase := resolveBaseURL(baseURL, cfg)
+	if _, err := validateCLILoopbackURL(resolvedBase); err != nil {
+		return err
+	}
 	resolvedToken := token
 	if resolvedToken == "" {
 		resolvedToken, _, err = readToken(global.configPath, global.baseDir)
@@ -853,7 +860,7 @@ func createMetadataBackup(global cliGlobal, output, baseURL, token string) error
 		return err
 	}
 	req.Header.Set("Authorization", "Bearer "+resolvedToken)
-	resp, err := (&http.Client{Timeout: 60 * time.Second}).Do(req)
+	resp, err := newCLILocalHTTPClient(60 * time.Second).Do(req)
 	if err != nil {
 		return err
 	}
@@ -879,6 +886,9 @@ func restoreMetadataBackup(global cliGlobal, path, baseURL, token string) error 
 		return err
 	}
 	resolvedBase := resolveBaseURL(baseURL, cfg)
+	if _, err := validateCLILoopbackURL(resolvedBase); err != nil {
+		return err
+	}
 	resolvedToken := token
 	if resolvedToken == "" {
 		resolvedToken, _, err = readToken(global.configPath, global.baseDir)

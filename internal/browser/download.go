@@ -1,6 +1,7 @@
 package browser
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -11,6 +12,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"time"
 
 	bfruntime "forgelocal/internal/runtime"
 )
@@ -328,7 +330,9 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 	}
 
 	if runtime.GOOS == "darwin" {
-		exec.Command("xattr", "-cr", destDir).Run()
+		if err := clearMacOSQuarantine(destDir); err != nil {
+			slog.Warn("clearing macOS quarantine failed", "err", err)
+		}
 	}
 
 	binPath := FindBinary(baseDir, BrowseForgeChromiumRuntimeID)
@@ -340,6 +344,16 @@ func DownloadBrowseForgeChromium(baseDir string) (string, error) {
 	fmt.Println("✅ BrowseForge Chromium installed")
 	writeVersionMarker(destDir, version)
 	return binPath, nil
+}
+
+func clearMacOSQuarantine(path string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	err := exec.CommandContext(ctx, "xattr", "-cr", path).Run()
+	if ctx.Err() != nil {
+		return ctx.Err()
+	}
+	return err
 }
 
 func DownloadCamoufox(baseDir string) (string, error) {
@@ -368,7 +382,9 @@ func DownloadCamoufox(baseDir string) (string, error) {
 	os.Remove(tmpFile)
 
 	if runtime.GOOS == "darwin" {
-		exec.Command("xattr", "-cr", destDir).Run()
+		if err := clearMacOSQuarantine(destDir); err != nil {
+			slog.Warn("clearing macOS quarantine failed", "err", err)
+		}
 	}
 
 	binPath := FindBinary(baseDir, "camoufox")
