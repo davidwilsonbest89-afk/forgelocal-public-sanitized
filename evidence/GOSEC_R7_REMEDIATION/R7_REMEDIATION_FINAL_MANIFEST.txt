@@ -1,0 +1,12 @@
+package=forgelocal-gosec-r7-final-remediation-v1
+source_head=b907dfcd68c290144e2b922e352d5a937e9b3259
+evidence_head=5acdab9b14f7db0e4683ef021ce29d2268f3901d
+package_commit=recorded_after_artifact_commit
+branch=validation/gosec-r7-final-remediation
+bundle=evidence/GOSEC_R7_REMEDIATION/forgelocal-gosec-r7-remediation-delta-b907dfc-5acdab9.bundle
+bundle_scope=delta_from_b907dfcd68c290144e2b922e352d5a937e9b3259_to_5acdab9b14f7db0e4683ef021ce29d2268f3901d
+bundle_creation=git_bundle_temp_ref_pack_compression_0_verified
+manifest_non_autoreferential=true
+verification_scope=R7 local targeted remediation evidence; no production release or deployment
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+code_changes=none
