@@ -1,0 +1,87 @@
+UTC=2026-08-26T15:03:11Z
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/gosec-r7
+EXPECTED_PACKAGE_COMMIT=002b072d0de17a1ec4e1eace0298208ab49e0389
+Cloning into '/tmp/forgelocal-r7-public-clone'...
+Updating files:   0% (2/2283)Updating files:   1% (23/2283)Updating files:   2% (46/2283)Updating files:   3% (69/2283)Updating files:   4% (92/2283)Updating files:   5% (115/2283)Updating files:   6% (137/2283)Updating files:   7% (160/2283)Updating files:   8% (183/2283)Updating files:   9% (206/2283)Updating files:  10% (229/2283)Updating files:  11% (252/2283)Updating files:  12% (274/2283)Updating files:  13% (297/2283)Updating files:  14% (320/2283)Updating files:  15% (343/2283)Updating files:  16% (366/2283)Updating files:  17% (389/2283)Updating files:  18% (411/2283)Updating files:  19% (434/2283)Updating files:  20% (457/2283)Updating files:  21% (480/2283)Updating files:  22% (503/2283)Updating files:  23% (526/2283)Updating files:  24% (548/2283)Updating files:  25% (571/2283)Updating files:  26% (594/2283)Updating files:  27% (617/2283)Updating files:  28% (640/2283)Updating files:  29% (663/2283)Updating files:  30% (685/2283)Updating files:  31% (708/2283)Updating files:  32% (731/2283)Updating files:  33% (754/2283)Updating files:  34% (777/2283)Updating files:  35% (800/2283)Updating files:  36% (822/2283)Updating files:  37% (845/2283)Updating files:  38% (868/2283)Updating files:  39% (891/2283)Updating files:  40% (914/2283)Updating files:  41% (937/2283)Updating files:  42% (959/2283)Updating files:  43% (982/2283)Updating files:  44% (1005/2283)Updating files:  45% (1028/2283)Updating files:  46% (1051/2283)Updating files:  47% (1074/2283)Updating files:  48% (1096/2283)Updating files:  49% (1119/2283)Updating files:  50% (1142/2283)Updating files:  51% (1165/2283)Updating files:  52% (1188/2283)Updating files:  53% (1210/2283)Updating files:  54% (1233/2283)Updating files:  55% (1256/2283)Updating files:  56% (1279/2283)Updating files:  57% (1302/2283)Updating files:  58% (1325/2283)Updating files:  59% (1347/2283)Updating files:  60% (1370/2283)Updating files:  61% (1393/2283)Updating files:  61% (1396/2283)Updating files:  62% (1416/2283)Updating files:  63% (1439/2283)Updating files:  64% (1462/2283)Updating files:  65% (1484/2283)Updating files:  66% (1507/2283)Updating files:  67% (1530/2283)Updating files:  68% (1553/2283)Updating files:  69% (1576/2283)Updating files:  70% (1599/2283)Updating files:  71% (1621/2283)Updating files:  72% (1644/2283)Updating files:  73% (1667/2283)Updating files:  74% (1690/2283)Updating files:  75% (1713/2283)Updating files:  76% (1736/2283)Updating files:  77% (1758/2283)Updating files:  78% (1781/2283)Updating files:  79% (1804/2283)Updating files:  80% (1827/2283)Updating files:  81% (1850/2283)Updating files:  82% (1873/2283)Updating files:  83% (1895/2283)Updating files:  84% (1918/2283)Updating files:  85% (1941/2283)Updating files:  86% (1964/2283)Updating files:  87% (1987/2283)Updating files:  88% (2010/2283)Updating files:  89% (2032/2283)Updating files:  90% (2055/2283)Updating files:  91% (2078/2283)Updating files:  92% (2101/2283)Updating files:  92% (2115/2283)Updating files:  93% (2124/2283)Updating files:  94% (2147/2283)Updating files:  95% (2169/2283)Updating files:  96% (2192/2283)Updating files:  97% (2215/2283)Updating files:  98% (2238/2283)Updating files:  99% (2261/2283)Updating files: 100% (2283/2283)Updating files: 100% (2283/2283), done.
+HEAD is now at 002b072 evidence: package GOSEC R7 verification
+CLONE_HEAD=002b072d0de17a1ec4e1eace0298208ab49e0389
+CLONE_BRANCH=
+FSCK_EXIT_CODE=0
+ANCESTOR_CHECK=0
+PACKAGE_ANCESTOR_CHECK=0
+--- changed paths source..package ---
+A	evidence/GOSEC_R7/R7_BASELINE_DISCOVERY_RAW.log
+A	evidence/GOSEC_R7/R7_BUNDLE_VERIFY_RAW.log
+A	evidence/GOSEC_R7/R7_CHANGELOG.md
+A	evidence/GOSEC_R7/R7_COMMANDS_RAW.log
+A	evidence/GOSEC_R7/R7_CONSOLIDATED_TESTS_RAW.log
+A	evidence/GOSEC_R7/R7_FINAL_MANIFEST.txt
+A	evidence/GOSEC_R7/R7_FINAL_RISK_DECISION.md
+A	evidence/GOSEC_R7/R7_FINDING_MATRIX.tsv
+A	evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+A	evidence/GOSEC_R7/R7_GOSEC_FINAL.json
+A	evidence/GOSEC_R7/R7_MATRIX_PRELIMINARY_REPORT.md
+A	evidence/GOSEC_R7/R7_RISK_SCOPE.md
+A	evidence/GOSEC_R7/R7_SYFT.json
+A	evidence/GOSEC_R7/R7_TODO.md
+A	evidence/GOSEC_R7/R7_VALIDATION_COMMANDS_RAW.log
+A	evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-24537ac.bundle
+A	evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.manifest.txt
+A	evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.tar.gz
+A	evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.tar.gz.sha256
+A	evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip
+A	evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip.sha256
+--- sidecar hashes ---
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip: OK
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.tar.gz: OK
+Archive:  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip
+    testing: forgelocal-gosec-r7-final-v1-evidence/   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_BASELINE_DISCOVERY_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_CHANGELOG.md   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_COMMANDS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_CONSOLIDATED_TESTS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_FINAL_RISK_DECISION.md   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_FINDING_MATRIX.tsv   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_GOSEC_BASELINE.json   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_GOSEC_FINAL.json   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_MATRIX_PRELIMINARY_REPORT.md   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_RISK_SCOPE.md   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_SYFT.json   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_TODO.md   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_VALIDATION_COMMANDS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-24537ac.bundle   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_BUNDLE_VERIFY_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v1-evidence/evidence/GOSEC_R7/R7_FINAL_MANIFEST.txt   OK
+No errors detected in compressed data of evidence/GOSEC_R7/forgelocal-gosec-r7-final-v1.zip.
+ZIP_EXTRACT_TOP=forgelocal-gosec-r7-final-v1-evidence
+TAR_EXTRACT_TOP=forgelocal-gosec-r7-final-v1-evidence
+[90m3:03PM[0m [32mINF[0m scan completed in 351ms
+[90m3:03PM[0m [32mINF[0m no leaks found
+GITLEAKS_ZIP_EXTRACT_EXIT_CODE=0
+[90m3:03PM[0m [32mINF[0m scan completed in 330ms
+[90m3:03PM[0m [32mINF[0m no leaks found
+GITLEAKS_TAR_EXTRACT_EXIT_CODE=0
+evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-24537ac.bundle is okay
+The bundle contains this ref:
+24537ac09191ca4e1472ae48e167a0fa30691eaf refs/gosec-r7/package-head
+The bundle requires this ref:
+3656dbad4bfef0381e1f9d837271d293ecffe292 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+SMOKE_IN_PACKAGE=EXCLUDED
+--- manifest ---
+package=forgelocal-gosec-r7-final-v1
+branch=validation/gosec-r7
+source_head=3656dbad4bfef0381e1f9d837271d293ecffe292
+evidence_head=24537ac09191ca4e1472ae48e167a0fa30691eaf
+base_head=3656dbad4bfef0381e1f9d837271d293ecffe292
+bundle=evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-24537ac.bundle
+bundle_scope=delta_from_24537ac09191ca4e1472ae48e167a0fa30691eaf
+bundle_creation=git_bundle_temp_ref_pack_compression_0_verified
+manifest_non_autoreferential=true
+verification_scope=R7 risk review evidence; no production release or deployment
+historical_smoke_excluded=evidence/SMOKE_INTEGRATED_PROXY/
+package_commit=recorded_after_artifact_commit; not used as package input
