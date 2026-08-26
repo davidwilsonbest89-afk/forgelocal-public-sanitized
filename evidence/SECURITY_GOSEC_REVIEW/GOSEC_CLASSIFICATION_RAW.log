@@ -1,0 +1,5 @@
+findings=177
+severity={'HIGH': 49, 'MEDIUM': 75, 'LOW': 53}
+confidence={'MEDIUM': 31, 'HIGH': 144, 'LOW': 2}
+rules={'G115': 8, 'G404': 17, 'G704': 7, 'G101': 1, 'G703': 14, 'G118': 1, 'G122': 1, 'G204': 6, 'G304': 22, 'G112': 1, 'G107': 1, 'G110': 3, 'G305': 3, 'G302': 5, 'G301': 25, 'G306': 9, 'G104': 53}
+zones={'other-core-source': 43, 'executed-core-path': 134}

@@ -1,0 +1,40 @@
+2026-08-26T01:31:21Z
+HEAD=e8581550b226dfcb60eb0c6b74b004901148a0e8
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	(cached)
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	(cached)
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/browser	(cached)
+ok  	forgelocal/internal/config	(cached)
+ok  	forgelocal/internal/cookies	(cached)
+ok  	forgelocal/internal/drift	(cached)
+ok  	forgelocal/internal/environment	(cached)
+ok  	forgelocal/internal/extensions	(cached)
+ok  	forgelocal/internal/fingerprint	(cached)
+ok  	forgelocal/internal/fonts	(cached)
+ok  	forgelocal/internal/geolocation	(cached)
+ok  	forgelocal/internal/groups	(cached)
+ok  	forgelocal/internal/hardware	(cached)
+ok  	forgelocal/internal/history	(cached)
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	(cached)
+ok  	forgelocal/internal/localvault	(cached)
+ok  	forgelocal/internal/mcp	(cached)
+ok  	forgelocal/internal/productschema	(cached)
+ok  	forgelocal/internal/profile	(cached)
+ok  	forgelocal/internal/profilehealth	(cached)
+ok  	forgelocal/internal/profilemigration	(cached)
+ok  	forgelocal/internal/proxies	(cached)
+ok  	forgelocal/internal/proxyprovider	(cached)
+ok  	forgelocal/internal/runtime	(cached)
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	(cached)
+ok  	forgelocal/internal/spike	(cached)
+ok  	forgelocal/internal/templates	(cached)
+ok  	forgelocal/internal/workflow	(cached)
+GO_TEST_SOURCE_EXIT_CODE=0
+GO_VET_SOURCE_EXIT_CODE=0
+GO_BUILD_SOURCE_EXIT_CODE=0
+No vulnerabilities found.
+GOVULNCHECK_SOURCE_EXIT_CODE=0

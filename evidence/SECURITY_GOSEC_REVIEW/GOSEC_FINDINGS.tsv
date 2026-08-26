@@ -1,0 +1,178 @@
+rule_id	severity	confidence	file	line	details
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go	56	integer overflow conversion uint64 -> byte
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go	55	integer overflow conversion uint64 -> byte
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go	53	integer overflow conversion uint64 -> byte
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go	50	integer overflow conversion uint64 -> byte
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	1015	integer overflow conversion int64 -> uint64
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	628	integer overflow conversion int64 -> uint32
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	694	integer overflow conversion int64 -> uint32
+G115	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	687	integer overflow conversion int64 -> uint32
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go	89	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go	37	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go	36	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	128	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	120	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	115	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	108	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	98	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	97	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	77	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	76	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	59	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	55	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go	49	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go	84	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go	56	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G404	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go	64	Use of weak random number generator (math/rand or math/rand/v2 instead of crypto/rand)
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go	477	SSRF via taint analysis
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	794	SSRF via taint analysis
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	745	SSRF via taint analysis
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	740	SSRF via taint analysis
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	1042	SSRF via taint analysis
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	998	SSRF via taint analysis
+G704	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	982	SSRF via taint analysis
+G101	HIGH	LOW	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go	22	Potential hardcoded credentials
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	645	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	784	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	756	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	753	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	710	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	707	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	694	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	691	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	687	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	656	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	590	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	587	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	577	Path traversal via taint analysis
+G703	HIGH	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	453	Path traversal via taint analysis
+G118	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/launch.go	192	Goroutine uses context.Background/TODO while request-scoped context is available
+G122	HIGH	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	645	Filesystem operation in filepath.Walk/WalkDir callback uses race-prone path; consider root-scoped APIs (e.g. os.Root) to prevent symlink TOCTOU traversal
+G204	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	453	Subprocess launched with variable
+G204	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	374	Subprocess launched with variable
+G204	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	334	Subprocess launched with variable
+G204	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go	559	Subprocess launched with variable
+G204	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go	557	Subprocess launched with variable
+G204	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go	555	Subprocess launched with variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go	52	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go	481	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go	25	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go	169	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go	90	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	201	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	644	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	629	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	598	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	578	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	519	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	137	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go	831	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts.go	31	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	784	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	756	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	694	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	656	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	645	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	590	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	856	Potential file inclusion via variable
+G304	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	572	Potential file inclusion via variable
+G112	MEDIUM	LOW	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go	414	Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server
+G107	MEDIUM	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	510	Potential HTTP request made with variable url
+G110	MEDIUM	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	633	Potential DoS vulnerability via decompression bomb
+G110	MEDIUM	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	587	Potential DoS vulnerability via decompression bomb
+G110	MEDIUM	MEDIUM	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	698	Potential DoS vulnerability via decompression bomb
+G305	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	643	File traversal when extracting zip/tar archive
+G305	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	619	File traversal when extracting zip/tar archive
+G305	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	568	File traversal when extracting zip/tar archive
+G302	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go	169	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	460	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	381	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	341	Expect file permissions to be 0600 or less
+G302	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	763	Expect file permissions to be 0600 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go	251	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go	724	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go	45	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go	168	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go	80	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go	66	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	1913	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	949	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	196	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	191	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	64	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	639	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	627	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	625	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	576	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	573	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	436	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	357	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	308	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	753	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	707	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	691	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	587	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	453	Expect directory permissions to be 0750 or less
+G301	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	778	Expect directory permissions to be 0750 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go	727	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	957	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	217	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	645	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	145	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go	325	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	787	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	625	Expect WriteFile permissions to be 0600 or less
+G306	MEDIUM	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go	620	Expect WriteFile permissions to be 0600 or less
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go	281	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/stdio.go	56	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go	818	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go	667	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/protocol.go	40	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go	73-75	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go	60	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go	33	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go	72	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go	168	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	144	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	142	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	135	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	129	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	122	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	95	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	87	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go	49	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go	399	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go	391	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go	376	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go	373	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go	153	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	333	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go	312	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	645	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	640	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	639	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	634	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	627	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	625	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	589	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	588	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	584	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	576	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	573	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	460	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	453	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	450	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	436	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	381	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	374	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	371	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	357	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	341	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	334	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	324	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go	145	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go	707	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/dashboard.go	13	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go	429	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	702	Errors unhandled
+G104	LOW	HIGH	/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go	699	Errors unhandled

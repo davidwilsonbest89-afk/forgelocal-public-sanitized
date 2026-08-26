@@ -1,0 +1,104 @@
+2026-08-26T01:30:53Z
+HEAD=e8581550b226dfcb60eb0c6b74b004901148a0e8
+# forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api [forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api.test]
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:41:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:46:2: undefined: writeJSON
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:53:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:66:2: undefined: writeJSON
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:76:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: undefined: writeError
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:105:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:148:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:197:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:267:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: too many errors
+FAIL	forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api [build failed]
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	0.019s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	(cached)
+ok  	forgelocal/internal/backup	(cached)
+ok  	forgelocal/internal/browser	(cached)
+ok  	forgelocal/internal/config	(cached)
+ok  	forgelocal/internal/cookies	(cached)
+ok  	forgelocal/internal/drift	(cached)
+ok  	forgelocal/internal/environment	(cached)
+ok  	forgelocal/internal/extensions	(cached)
+ok  	forgelocal/internal/fingerprint	(cached)
+ok  	forgelocal/internal/fonts	(cached)
+ok  	forgelocal/internal/geolocation	(cached)
+ok  	forgelocal/internal/groups	(cached)
+ok  	forgelocal/internal/hardware	(cached)
+ok  	forgelocal/internal/history	(cached)
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	(cached)
+ok  	forgelocal/internal/localvault	(cached)
+ok  	forgelocal/internal/mcp	(cached)
+ok  	forgelocal/internal/productschema	(cached)
+ok  	forgelocal/internal/profile	(cached)
+ok  	forgelocal/internal/profilehealth	(cached)
+ok  	forgelocal/internal/profilemigration	(cached)
+ok  	forgelocal/internal/proxies	(cached)
+ok  	forgelocal/internal/proxyprovider	(cached)
+ok  	forgelocal/internal/runtime	(cached)
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	(cached)
+ok  	forgelocal/internal/spike	(cached)
+ok  	forgelocal/internal/templates	(cached)
+ok  	forgelocal/internal/workflow	(cached)
+FAIL
+GO_TEST_EXIT_CODE=1
+# forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api
+# [forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api]
+vet: artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:41:10: undefined: handler
+GO_VET_EXIT_CODE=1
+# forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:41:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:46:2: undefined: writeJSON
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:53:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:66:2: undefined: writeJSON
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:76:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: undefined: writeError
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:105:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:148:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:197:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:267:10: undefined: handler
+artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: too many errors
+GO_BUILD_EXIT_CODE=1
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard
+> tsc --noEmit
+
+DASHBOARD_CHECK_EXIT_CODE=0
+[90m1:31AM[0m [32mINF[0m 0 commits scanned.
+[90m1:31AM[0m [32mINF[0m scan completed in 3.21s
+[90m1:31AM[0m [32mINF[0m no leaks found
+GITLEAKS_EXIT_CODE=0
+govulncheck: loading packages: 
+There are errors with the provided package patterns:
+
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:41:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:53:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:76:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:105:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:148:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:197:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:267:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:46:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:66:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:102:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:133:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:145:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:166:4: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:182:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:194:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:218:4: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:250:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:262:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:287:4: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:294:3: undefined: writeError
+
+For details on package patterns, see https://pkg.go.dev/cmd/go#hdr-Package_lists_and_patterns.
+
+GOVULNCHECK_EXIT_CODE=1
