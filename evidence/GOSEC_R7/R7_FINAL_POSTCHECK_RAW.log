@@ -1,0 +1,76 @@
+UTC=2026-08-26T15:31:47Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r7
+LOCAL_HEAD=f3ddc4d1da8f525103efee4ddc2a9554fbd1f50b
+R6_HEAD=3656dbad4bfef0381e1f9d837271d293ecffe292
+R7_PUBLIC_HEAD=f3ddc4d1da8f525103efee4ddc2a9554fbd1f50b
+GO=go version go1.25.13 linux/amd64
+GOTOOLCHAIN=local
+COMMAND=git rev-parse HEAD
+f3ddc4d1da8f525103efee4ddc2a9554fbd1f50b
+REV_PARSE_EXIT_CODE=0
+COMMAND=git merge-base --is-ancestor 3656dbad4bfef0381e1f9d837271d293ecffe292 HEAD
+MERGE_BASE_EXIT_CODE=0
+COMMAND=git log --graph --oneline --decorate -8 validation/gosec-r7
+* [33mf3ddc4d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvalidation/gosec-r7[m[33m)[m evidence: record public verification of R7 package
+* [33mddd2c68[m evidence: publish corrected GOSEC R7 package
+* [33mdda5525[m evidence: add corrected R7 manifest
+* [33m2299226[m evidence: reconcile R7 package manifest
+* [33m002b072[m evidence: package GOSEC R7 verification
+* [33m24537ac[m evidence: publish GOSEC R7 risk review
+* [33m3656dba[m[33m ([m[1;32mvalidation/gosec-r6[m[33m)[m evidence: publish consolidated GOSEC R6 review
+* [33mf847382[m evidence: verify GOSEC R6 Lot C package publicly
+LOG_GRAPH_EXIT_CODE=0
+COMMAND=git diff --name-status 3656dbad4bfef0381e1f9d837271d293ecffe292 HEAD -- :!evidence/GOSEC_R7
+DIFF_R6_EXIT_CODE=0
+COMMAND=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.565s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	5.469s
+ok  	forgelocal/internal/backup	3.174s
+ok  	forgelocal/internal/browser	11.130s
+ok  	forgelocal/internal/config	1.019s
+ok  	forgelocal/internal/cookies	1.022s
+ok  	forgelocal/internal/drift	1.018s
+ok  	forgelocal/internal/environment	1.043s
+ok  	forgelocal/internal/extensions	2.523s
+ok  	forgelocal/internal/fingerprint	1.023s
+ok  	forgelocal/internal/fonts	1.013s
+ok  	forgelocal/internal/geolocation	1.026s
+ok  	forgelocal/internal/groups	1.025s
+ok  	forgelocal/internal/hardware	1.013s
+ok  	forgelocal/internal/history	1.211s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.804s
+ok  	forgelocal/internal/localvault	1.094s
+ok  	forgelocal/internal/mcp	1.033s
+ok  	forgelocal/internal/productschema	1.840s
+ok  	forgelocal/internal/profile	1.128s
+ok  	forgelocal/internal/profilehealth	1.013s
+ok  	forgelocal/internal/profilemigration	2.822s
+ok  	forgelocal/internal/proxies	1.097s
+ok  	forgelocal/internal/proxyprovider	1.016s
+ok  	forgelocal/internal/runtime	1.252s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.013s
+ok  	forgelocal/internal/spike	4.037s
+ok  	forgelocal/internal/templates	1.523s
+ok  	forgelocal/internal/workflow	1.019s
+GO_TEST_RACE_EXIT_CODE=0
+COMMAND=go vet ./cmd/... ./internal/...
+GO_VET_EXIT_CODE=0
+COMMAND=go build ./cmd/... ./internal/...
+GO_BUILD_EXIT_CODE=0
+COMMAND=git diff --check -- . :(exclude)evidence/GOSEC_R7/*.log
+DIFF_CHECK_EXIT_CODE=0
+INHERITED_TARGETED_TESTS=R7_CONSOLIDATED_TESTS_RAW.log
+INHERITED_PACKAGE_R6C=R6-C physical verification raw and package artifacts
+INHERITED_GITSECURITY=R7_VALIDATION_COMMANDS_RAW.log
+PACKAGE_V2_COMMIT=ddd2c68e1fc108acf89fcd745d9ddd6a139a9d58
+PACKAGE_V2_ZIP_SHA256=7eb7ad17e2ddcfee4f9f99070020a553ce10996d075b45469083ac469dfc7caa
+PACKAGE_V2_TAR_SHA256=bbe4ba8e4cb4b4024b2745833c35dbd897552b8d6aff49dc4253f19439d0dcd8
+PACKAGE_V2_PUBLIC_VERIFICATION_HEAD=f3ddc4d1da8f525103efee4ddc2a9554fbd1f50b
+R7_FINDINGS_TOTAL=46
+R7_FINDINGS_DISTRIBUTION=G101=1,G115=3,G204=5,G302=5,G304=0,G305=1,G404=17,G703=7,G704=7
+exit
