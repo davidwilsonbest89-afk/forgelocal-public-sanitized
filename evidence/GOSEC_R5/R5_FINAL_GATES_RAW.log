@@ -1,0 +1,1066 @@
+UTC=2026-08-26T12:41:08Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r5
+HEAD=c4b4c95151e92a6b17b08d304c7a4d178116796e
+GO=go version go1.25.13 linux/amd64
+GOTOOLCHAIN=local
+
+COMMAND=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.119s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	4.157s
+ok  	forgelocal/internal/backup	2.842s
+ok  	forgelocal/internal/browser	4.628s
+ok  	forgelocal/internal/config	1.016s
+ok  	forgelocal/internal/cookies	1.015s
+ok  	forgelocal/internal/drift	1.011s
+ok  	forgelocal/internal/environment	1.012s
+ok  	forgelocal/internal/extensions	2.135s
+ok  	forgelocal/internal/fingerprint	1.022s
+ok  	forgelocal/internal/fonts	1.013s
+ok  	forgelocal/internal/geolocation	1.019s
+ok  	forgelocal/internal/groups	1.017s
+ok  	forgelocal/internal/hardware	1.013s
+ok  	forgelocal/internal/history	1.170s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.750s
+ok  	forgelocal/internal/localvault	1.090s
+ok  	forgelocal/internal/mcp	1.032s
+ok  	forgelocal/internal/productschema	1.761s
+ok  	forgelocal/internal/profile	1.109s
+ok  	forgelocal/internal/profilehealth	1.015s
+ok  	forgelocal/internal/profilemigration	2.568s
+ok  	forgelocal/internal/proxies	1.088s
+ok  	forgelocal/internal/proxyprovider	1.013s
+ok  	forgelocal/internal/runtime	1.241s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.011s
+ok  	forgelocal/internal/spike	3.160s
+ok  	forgelocal/internal/templates	1.289s
+ok  	forgelocal/internal/workflow	1.017s
+GO_TEST_RACE_EXIT_CODE=0
+
+COMMAND=go vet ./cmd/... ./internal/...
+GO_VET_EXIT_CODE=0
+
+COMMAND=go build ./cmd/... ./internal/...
+GO_BUILD_EXIT_CODE=0
+
+COMMAND=gosec -fmt json -out evidence/GOSEC_R5/gosec_r5_final.json ./cmd/... ./internal/...
+[gosec] 2026/08/26 12:41:21 Including rules: default
+[gosec] 2026/08/26 12:41:21 Excluding rules: default
+[gosec] 2026/08/26 12:41:21 Including analyzers: default
+[gosec] 2026/08/26 12:41:21 Excluding analyzers: default
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch
+[gosec] 2026/08/26 12:41:21 Checking package: cookies
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies/fixtures.go
+[gosec] 2026/08/26 12:41:21 Checking package: launch
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go
+[gosec] 2026/08/26 12:41:21 Checking package: main
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor/main.go
+[gosec] 2026/08/26 12:41:21 Checking package: groups
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/journal.go
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/journal_sqlite.go
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/launch.go
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/manager.go
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/redact.go
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint
+[gosec] 2026/08/26 12:41:21 Checking package: hardware
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware/diagnostic.go
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies
+[gosec] 2026/08/26 12:41:21 Checking package: main
+[gosec] 2026/08/26 12:41:21 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core/main.go
+[gosec] 2026/08/26 12:41:21 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment
+[gosec] 2026/08/26 12:41:22 Checking package: profilehealth
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth/health.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize
+[gosec] 2026/08/26 12:41:22 Checking package: main
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/http_server.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go
+[gosec] 2026/08/26 12:41:22 Checking package: secrets
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/productschema
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration
+[gosec] 2026/08/26 12:41:22 Checking package: environment
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment/environment.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow
+[gosec] 2026/08/26 12:41:22 Checking package: proxies
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies/errors.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies/store.go
+[gosec] 2026/08/26 12:41:22 Checking package: fingerprint
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/geoip.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/local.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile
+[gosec] 2026/08/26 12:41:22 Checking package: humanize
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/config.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/scroll.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider
+[gosec] 2026/08/26 12:41:22 Checking package: workflow
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates
+[gosec] 2026/08/26 12:41:22 Checking package: profilemigration
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration/migrator.go
+[gosec] 2026/08/26 12:41:22 Checking package: proxyprovider
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider/store.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault
+[gosec] 2026/08/26 12:41:22 Checking package: backup
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/bootstrap.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/migrations.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/service.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/store.go
+[gosec] 2026/08/26 12:41:22 Checking package: profile
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/backup_snapshot.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/errors.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/store.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp
+[gosec] 2026/08/26 12:41:22 Checking package: browser
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/archive_security.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack
+[gosec] 2026/08/26 12:41:22 Checking package: drift
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift/detect.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/spike
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_helpers.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go
+[gosec] 2026/08/26 12:41:22 Checking package: templates
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates/errors.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates/store.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config
+[gosec] 2026/08/26 12:41:22 Checking package: localvault
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault/localvault.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions
+[gosec] 2026/08/26 12:41:22 Checking package: sessiontrack
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack/tracker.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime
+[gosec] 2026/08/26 12:41:22 Checking package: geolocation
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation/qa.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history
+[gosec] 2026/08/26 12:41:22 Checking package: mcp
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go
+[gosec] 2026/08/26 12:41:22 Checking package: config
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/protocol.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/results.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/screenshot_artifacts.go
+[gosec] 2026/08/26 12:41:22 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/search_provider.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/stdio.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/tool_schema.go
+[gosec] 2026/08/26 12:41:22 Checking package: runtime
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime/qualification.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_search.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_session_pool.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime/runtime.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_tools.go
+[gosec] 2026/08/26 12:41:22 Checking package: extensions
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go
+[gosec] 2026/08/26 12:41:22 Checking package: api
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/audit.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup_v1.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/cookie_fixtures.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/correlation.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/dashboard.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go
+[gosec] 2026/08/26 12:41:22 Checking package: fonts
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts/inventory.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/groups.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/localsession.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/openapi.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profile_history.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profiles_bulk.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profiles_write.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/proxies.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/proxy_providers.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/readonly.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/readonly_session.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/templates.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/workflow.go
+[gosec] 2026/08/26 12:41:22 Checking package: history
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history/errors.go
+[gosec] 2026/08/26 12:41:22 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history/store.go
+GOSEC_EXIT_CODE=1
+G101=1
+G104=0
+G107=0
+G115=3
+G204=5
+G302=5
+G304=11
+G305=1
+G404=17
+G703=9
+G704=7
+GOSEC_TOTAL=59
+
+COMMAND=govulncheck ./...
+govulncheck: loading packages: 
+There are errors with the provided package patterns:
+
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:41:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:53:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:76:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:105:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:148:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:197:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:267:10: undefined: handler
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:46:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:66:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:102:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:133:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:145:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:166:4: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:182:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:194:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:218:4: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:250:3: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:262:2: undefined: writeJSON
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:287:4: undefined: writeError
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:294:3: undefined: writeError
+
+For details on package patterns, see https://pkg.go.dev/cmd/go#hdr-Package_lists_and_patterns.
+
+GOVULNCHECK_EXIT_CODE=1
+
+COMMAND=gitleaks detect --source . --no-banner --redact
+[90m12:41PM[0m [32mINF[0m 0 commits scanned.
+[90m12:41PM[0m [32mINF[0m scan completed in 6.58s
+[90m12:41PM[0m [32mINF[0m no leaks found
+GITLEAKS_EXIT_CODE=0
+
+COMMAND=osv-scanner scan --lockfile go.mod
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod file and found 24 packages
+No issues found
+OSV_GO_EXIT_CODE=0
+
+COMMAND=osv-scanner scan --lockfile forge-dashboard/pnpm-lock.yaml
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/pnpm-lock.yaml file and found 698 packages
+No issues found
+OSV_PNPM_EXIT_CODE=0
+
+COMMAND=trivy fs --skip-dirs .git .
+2026-08-26T12:41:45Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-26T12:41:45Z	INFO	[secret] Secret scanning is enabled
+2026-08-26T12:41:45Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2026-08-26T12:41:45Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-26T12:41:45Z	WARN	[secret] The size of the scanned file is too large. It is recommended to use `--skip-files` for this file to avoid high memory consumption.	file_path="continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle" size (MB)=146
+2026-08-26T12:42:09Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-26T12:42:09Z	INFO	Number of language-specific files	num=2
+2026-08-26T12:42:09Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-26T12:42:10Z	INFO	[pnpm] Detecting vulnerabilities...
+
+Report Summary
+
+┌────────────────────────────────┬───────┬─────────────────┬─────────┐
+│             Target             │ Type  │ Vulnerabilities │ Secrets │
+├────────────────────────────────┼───────┼─────────────────┼─────────┤
+│ forge-dashboard/pnpm-lock.yaml │ pnpm  │        0        │    -    │
+├────────────────────────────────┼───────┼─────────────────┼─────────┤
+│ go.mod                         │ gomod │        0        │    -    │
+└────────────────────────────────┴───────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+TRIVY_FS_EXIT_CODE=0
+
+COMMAND=syft dir:.
+[0;90m[0002][0m [0;33m WARN[0m no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+NAME                                                                  VERSION                             TYPE                                     
+./.github/workflows/npm-publish.yml                                   UNKNOWN                             github-action-workflow  [90m(+1 duplicate)[0m   [0m
+@antfu/install-pkg                                                    1.1.0                               npm                     [90m[0m                 [0m
+@axe-core/playwright                                                  4.13.0                              npm                     [90m[0m                 [0m
+@babel/code-frame                                                     7.29.7                              npm                     [90m[0m                 [0m
+@babel/compat-data                                                    7.29.7                              npm                     [90m[0m                 [0m
+@babel/core                                                           7.29.7                              npm                     [90m[0m                 [0m
+@babel/generator                                                      7.29.8                              npm                     [90m[0m                 [0m
+@babel/helper-compilation-targets                                     7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-globals                                                 7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-module-imports                                          7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-module-transforms                                       7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-plugin-utils                                            7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-string-parser                                           7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-validator-identifier                                    7.29.7                              npm                     [90m[0m                 [0m
+@babel/helper-validator-option                                        7.29.7                              npm                     [90m[0m                 [0m
+@babel/helpers                                                        7.29.7                              npm                     [90m[0m                 [0m
+@babel/parser                                                         7.29.8                              npm                     [90m[0m                 [0m
+@babel/plugin-transform-react-jsx-self                                7.29.7                              npm                     [90m[0m                 [0m
+@babel/plugin-transform-react-jsx-source                              7.29.7                              npm                     [90m[0m                 [0m
+@babel/runtime                                                        7.29.7                              npm                     [90m[0m                 [0m
+@babel/template                                                       7.29.7                              npm                     [90m[0m                 [0m
+@babel/traverse                                                       7.29.8                              npm                     [90m[0m                 [0m
+@babel/types                                                          7.29.8                              npm                     [90m[0m                 [0m
+@braintree/sanitize-url                                               7.1.2                               npm                     [90m[0m                 [0m
+@builder.io/jsx-loc-internals                                         0.0.1                               npm                     [90m[0m                 [0m
+@builder.io/vite-plugin-jsx-loc                                       0.1.1                               npm                     [90m[0m                 [0m
+@chevrotain/types                                                     11.1.2                              npm                     [90m[0m                 [0m
+@date-fns/tz                                                          1.5.0                               npm                     [90m[0m                 [0m
+@esbuild/aix-ppc64                                                    0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/aix-ppc64                                                    0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/android-arm                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/android-arm                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/android-arm64                                                0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/android-arm64                                                0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/android-x64                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/android-x64                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/darwin-arm64                                                 0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/darwin-arm64                                                 0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/darwin-x64                                                   0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/darwin-x64                                                   0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/freebsd-arm64                                                0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/freebsd-arm64                                                0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/freebsd-x64                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/freebsd-x64                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-arm                                                    0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-arm                                                    0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-arm64                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-arm64                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-ia32                                                   0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-ia32                                                   0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-loong64                                                0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-loong64                                                0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-mips64el                                               0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-mips64el                                               0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-ppc64                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-ppc64                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-riscv64                                                0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-riscv64                                                0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-s390x                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-s390x                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/linux-x64                                                    0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/linux-x64                                                    0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/netbsd-arm64                                                 0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/netbsd-arm64                                                 0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/netbsd-x64                                                   0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/netbsd-x64                                                   0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/openbsd-arm64                                                0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/openbsd-arm64                                                0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/openbsd-x64                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/openbsd-x64                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/openharmony-arm64                                            0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/openharmony-arm64                                            0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/sunos-x64                                                    0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/sunos-x64                                                    0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/win32-arm64                                                  0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/win32-arm64                                                  0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/win32-ia32                                                   0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/win32-ia32                                                   0.28.2                              npm                     [90m[0m                 [0m
+@esbuild/win32-x64                                                    0.25.12                             npm                     [90m[0m                 [0m
+@esbuild/win32-x64                                                    0.28.2                              npm                     [90m[0m                 [0m
+@floating-ui/core                                                     1.8.0                               npm                     [90m[0m                 [0m
+@floating-ui/dom                                                      1.8.0                               npm                     [90m[0m                 [0m
+@floating-ui/react-dom                                                2.1.9                               npm                     [90m[0m                 [0m
+@floating-ui/utils                                                    0.2.12                              npm                     [90m[0m                 [0m
+@hookform/resolvers                                                   5.9.1                               npm                     [90m[0m                 [0m
+@iconify/types                                                        2.0.0                               npm                     [90m[0m                 [0m
+@iconify/utils                                                        3.1.4                               npm                     [90m[0m                 [0m
+@jridgewell/gen-mapping                                               0.3.13                              npm                     [90m[0m                 [0m
+@jridgewell/remapping                                                 2.3.5                               npm                     [90m[0m                 [0m
+@jridgewell/resolve-uri                                               3.1.2                               npm                     [90m[0m                 [0m
+@jridgewell/sourcemap-codec                                           1.5.5                               npm                     [90m[0m                 [0m
+@jridgewell/trace-mapping                                             0.3.31                              npm                     [90m[0m                 [0m
+@medv/finder                                                          4.0.2                               npm                     [90m[0m                 [0m
+@mermaid-js/parser                                                    1.2.1                               npm                     [90m[0m                 [0m
+@napi-rs/lzma-linux-x64-gnu                                           1.5.1                               npm                     [90m[0m                 [0m
+@playwright/test                                                      1.55.1                              npm                     [90m[0m                 [0m
+@radix-ui/number                                                      1.1.3                               npm                     [90m[0m                 [0m
+@radix-ui/primitive                                                   1.1.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-accordion                                             1.2.20                              npm                     [90m[0m                 [0m
+@radix-ui/react-alert-dialog                                          1.1.23                              npm                     [90m[0m                 [0m
+@radix-ui/react-arrow                                                 1.1.15                              npm                     [90m[0m                 [0m
+@radix-ui/react-aspect-ratio                                          1.1.15                              npm                     [90m[0m                 [0m
+@radix-ui/react-avatar                                                1.2.6                               npm                     [90m[0m                 [0m
+@radix-ui/react-checkbox                                              1.3.11                              npm                     [90m[0m                 [0m
+@radix-ui/react-collapsible                                           1.1.20                              npm                     [90m[0m                 [0m
+@radix-ui/react-collection                                            1.1.15                              npm                     [90m[0m                 [0m
+@radix-ui/react-compose-refs                                          1.1.5                               npm                     [90m[0m                 [0m
+@radix-ui/react-context                                               1.2.2                               npm                     [90m[0m                 [0m
+@radix-ui/react-context-menu                                          2.3.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-dialog                                                1.1.23                              npm                     [90m[0m                 [0m
+@radix-ui/react-direction                                             1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-dismissable-layer                                     1.1.19                              npm                     [90m[0m                 [0m
+@radix-ui/react-dropdown-menu                                         2.1.24                              npm                     [90m[0m                 [0m
+@radix-ui/react-focus-guards                                          1.1.6                               npm                     [90m[0m                 [0m
+@radix-ui/react-focus-scope                                           1.1.16                              npm                     [90m[0m                 [0m
+@radix-ui/react-hover-card                                            1.1.23                              npm                     [90m[0m                 [0m
+@radix-ui/react-id                                                    1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-label                                                 2.1.15                              npm                     [90m[0m                 [0m
+@radix-ui/react-menu                                                  2.1.24                              npm                     [90m[0m                 [0m
+@radix-ui/react-menubar                                               1.1.24                              npm                     [90m[0m                 [0m
+@radix-ui/react-navigation-menu                                       1.2.22                              npm                     [90m[0m                 [0m
+@radix-ui/react-popover                                               1.1.23                              npm                     [90m[0m                 [0m
+@radix-ui/react-popper                                                1.3.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-portal                                                1.1.17                              npm                     [90m[0m                 [0m
+@radix-ui/react-presence                                              1.1.10                              npm                     [90m[0m                 [0m
+@radix-ui/react-primitive                                             2.1.10                              npm                     [90m[0m                 [0m
+@radix-ui/react-progress                                              1.1.16                              npm                     [90m[0m                 [0m
+@radix-ui/react-radio-group                                           1.4.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-roving-focus                                          1.1.19                              npm                     [90m[0m                 [0m
+@radix-ui/react-scroll-area                                           1.2.18                              npm                     [90m[0m                 [0m
+@radix-ui/react-select                                                2.3.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-separator                                             1.1.15                              npm                     [90m[0m                 [0m
+@radix-ui/react-slider                                                1.4.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-slot                                                  1.3.3                               npm                     [90m[0m                 [0m
+@radix-ui/react-switch                                                1.3.7                               npm                     [90m[0m                 [0m
+@radix-ui/react-tabs                                                  1.1.21                              npm                     [90m[0m                 [0m
+@radix-ui/react-toggle                                                1.1.18                              npm                     [90m[0m                 [0m
+@radix-ui/react-toggle-group                                          1.1.19                              npm                     [90m[0m                 [0m
+@radix-ui/react-tooltip                                               1.2.16                              npm                     [90m[0m                 [0m
+@radix-ui/react-use-callback-ref                                      1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-controllable-state                                1.2.6                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-effect-event                                      0.0.5                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-is-hydrated                                       0.1.3                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-layout-effect                                     1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-previous                                          1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-rect                                              1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-use-size                                              1.1.4                               npm                     [90m[0m                 [0m
+@radix-ui/react-visually-hidden                                       1.2.11                              npm                     [90m[0m                 [0m
+@radix-ui/rect                                                        1.1.3                               npm                     [90m[0m                 [0m
+@rolldown/pluginutils                                                 1.0.0-rc.3                          npm                     [90m[0m                 [0m
+@rollup/rollup-android-arm-eabi                                       4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-android-arm64                                          4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-darwin-arm64                                           4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-darwin-x64                                             4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-freebsd-arm64                                          4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-freebsd-x64                                            4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-arm-gnueabihf                                    4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-arm-musleabihf                                   4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-arm64-gnu                                        4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-arm64-musl                                       4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-loong64-gnu                                      4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-loong64-musl                                     4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-ppc64-gnu                                        4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-ppc64-musl                                       4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-riscv64-gnu                                      4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-riscv64-musl                                     4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-s390x-gnu                                        4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-x64-gnu                                          4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-linux-x64-musl                                         4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-openbsd-x64                                            4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-openharmony-arm64                                      4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-win32-arm64-msvc                                       4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-win32-ia32-msvc                                        4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-win32-x64-gnu                                          4.62.4                              npm                     [90m[0m                 [0m
+@rollup/rollup-win32-x64-msvc                                         4.62.4                              npm                     [90m[0m                 [0m
+@shikijs/core                                                         3.23.0                              npm                     [90m[0m                 [0m
+@shikijs/engine-javascript                                            3.23.0                              npm                     [90m[0m                 [0m
+@shikijs/engine-oniguruma                                             3.23.0                              npm                     [90m[0m                 [0m
+@shikijs/langs                                                        3.23.0                              npm                     [90m[0m                 [0m
+@shikijs/themes                                                       3.23.0                              npm                     [90m[0m                 [0m
+@shikijs/types                                                        3.23.0                              npm                     [90m[0m                 [0m
+@shikijs/vscode-textmate                                              10.0.2                              npm                     [90m[0m                 [0m
+@standard-schema/utils                                                0.3.0                               npm                     [90m[0m                 [0m
+@tabby_ai/hijri-converter                                             1.0.5                               npm                     [90m[0m                 [0m
+@tailwindcss/node                                                     4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide                                                    4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-android-arm64                                      4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-darwin-arm64                                       4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-darwin-x64                                         4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-freebsd-x64                                        4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-linux-arm-gnueabihf                                4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-linux-arm64-gnu                                    4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-linux-arm64-musl                                   4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-linux-x64-gnu                                      4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-linux-x64-musl                                     4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-wasm32-wasi                                        4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-win32-arm64-msvc                                   4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/oxide-win32-x64-msvc                                     4.3.3                               npm                     [90m[0m                 [0m
+@tailwindcss/typography                                               0.5.20                              npm                     [90m[0m                 [0m
+@tailwindcss/vite                                                     4.3.3                               npm                     [90m[0m                 [0m
+@types/babel__core                                                    7.20.5                              npm                     [90m[0m                 [0m
+@types/babel__generator                                               7.27.0                              npm                     [90m[0m                 [0m
+@types/babel__template                                                7.4.4                               npm                     [90m[0m                 [0m
+@types/babel__traverse                                                7.28.0                              npm                     [90m[0m                 [0m
+@types/body-parser                                                    1.19.6                              npm                     [90m[0m                 [0m
+@types/chai                                                           5.2.3                               npm                     [90m[0m                 [0m
+@types/connect                                                        3.4.38                              npm                     [90m[0m                 [0m
+@types/d3                                                             7.4.3                               npm                     [90m[0m                 [0m
+@types/d3-array                                                       3.2.2                               npm                     [90m[0m                 [0m
+@types/d3-axis                                                        3.0.6                               npm                     [90m[0m                 [0m
+@types/d3-brush                                                       3.0.6                               npm                     [90m[0m                 [0m
+@types/d3-chord                                                       3.0.6                               npm                     [90m[0m                 [0m
+@types/d3-color                                                       3.1.3                               npm                     [90m[0m                 [0m
+@types/d3-contour                                                     3.0.6                               npm                     [90m[0m                 [0m
+@types/d3-delaunay                                                    6.0.4                               npm                     [90m[0m                 [0m
+@types/d3-dispatch                                                    3.0.7                               npm                     [90m[0m                 [0m
+@types/d3-drag                                                        3.0.7                               npm                     [90m[0m                 [0m
+@types/d3-dsv                                                         3.0.7                               npm                     [90m[0m                 [0m
+@types/d3-ease                                                        3.0.2                               npm                     [90m[0m                 [0m
+@types/d3-fetch                                                       3.0.7                               npm                     [90m[0m                 [0m
+@types/d3-force                                                       3.0.10                              npm                     [90m[0m                 [0m
+@types/d3-format                                                      3.0.4                               npm                     [90m[0m                 [0m
+@types/d3-geo                                                         3.1.1                               npm                     [90m[0m                 [0m
+@types/d3-hierarchy                                                   3.1.7                               npm                     [90m[0m                 [0m
+@types/d3-interpolate                                                 3.0.4                               npm                     [90m[0m                 [0m
+@types/d3-path                                                        3.1.1                               npm                     [90m[0m                 [0m
+@types/d3-polygon                                                     3.0.2                               npm                     [90m[0m                 [0m
+@types/d3-quadtree                                                    3.0.6                               npm                     [90m[0m                 [0m
+@types/d3-random                                                      3.0.4                               npm                     [90m[0m                 [0m
+@types/d3-scale                                                       4.0.9                               npm                     [90m[0m                 [0m
+@types/d3-scale-chromatic                                             3.1.0                               npm                     [90m[0m                 [0m
+@types/d3-selection                                                   3.0.11                              npm                     [90m[0m                 [0m
+@types/d3-shape                                                       3.1.8                               npm                     [90m[0m                 [0m
+@types/d3-time                                                        3.0.4                               npm                     [90m[0m                 [0m
+@types/d3-time-format                                                 4.0.3                               npm                     [90m[0m                 [0m
+@types/d3-timer                                                       3.0.2                               npm                     [90m[0m                 [0m
+@types/d3-transition                                                  3.0.9                               npm                     [90m[0m                 [0m
+@types/d3-zoom                                                        3.0.8                               npm                     [90m[0m                 [0m
+@types/debug                                                          4.1.13                              npm                     [90m[0m                 [0m
+@types/deep-eql                                                       4.0.2                               npm                     [90m[0m                 [0m
+@types/estree                                                         1.0.9                               npm                     [90m[0m                 [0m
+@types/estree-jsx                                                     1.0.5                               npm                     [90m[0m                 [0m
+@types/express                                                        4.17.21                             npm                     [90m[0m                 [0m
+@types/express-serve-static-core                                      4.19.9                              npm                     [90m[0m                 [0m
+@types/geojson                                                        7946.0.16                           npm                     [90m[0m                 [0m
+@types/google.maps                                                    3.65.5                              npm                     [90m[0m                 [0m
+@types/hast                                                           3.0.5                               npm                     [90m[0m                 [0m
+@types/http-errors                                                    2.0.5                               npm                     [90m[0m                 [0m
+@types/katex                                                          0.16.8                              npm                     [90m[0m                 [0m
+@types/mdast                                                          4.0.4                               npm                     [90m[0m                 [0m
+@types/ms                                                             2.1.0                               npm                     [90m[0m                 [0m
+@types/node                                                           24.13.3                             npm                     [90m[0m                 [0m
+@types/qs                                                             6.15.1                              npm                     [90m[0m                 [0m
+@types/range-parser                                                   1.2.7                               npm                     [90m[0m                 [0m
+@types/react                                                          19.2.18                             npm                     [90m[0m                 [0m
+@types/react-dom                                                      19.2.4                              npm                     [90m[0m                 [0m
+@types/send                                                           1.2.1                               npm                     [90m[0m                 [0m
+@types/serve-static                                                   2.2.0                               npm                     [90m[0m                 [0m
+@types/trusted-types                                                  2.0.7                               npm                     [90m[0m                 [0m
+@types/unist                                                          2.0.11                              npm                     [90m[0m                 [0m
+@types/unist                                                          3.0.3                               npm                     [90m[0m                 [0m
+@ungap/structured-clone                                               1.3.3                               npm                     [90m[0m                 [0m
+@upsetjs/venn.js                                                      2.0.0                               npm                     [90m[0m                 [0m
+@vitejs/plugin-react                                                  5.2.0                               npm                     [90m[0m                 [0m
+@vitest/expect                                                        3.2.7                               npm                     [90m[0m                 [0m
+@vitest/mocker                                                        3.2.7                               npm                     [90m[0m                 [0m
+@vitest/pretty-format                                                 3.2.7                               npm                     [90m[0m                 [0m
+@vitest/runner                                                        3.2.7                               npm                     [90m[0m                 [0m
+@vitest/snapshot                                                      3.2.7                               npm                     [90m[0m                 [0m
+@vitest/spy                                                           3.2.7                               npm                     [90m[0m                 [0m
+@vitest/utils                                                         3.2.7                               npm                     [90m[0m                 [0m
+JamesIves/github-pages-deploy-action                                  v4                                  github-action           [90m(+1 duplicate)[0m   [0m
+accepts                                                               1.3.8                               npm                     [90m[0m                 [0m
+actions/checkout                                                      v2                                  github-action           [90m[0m                 [0m
+actions/checkout                                                      v4                                  github-action           [90m(+1 duplicate)[0m   [0m
+actions/checkout                                                      v6                                  github-action           [90m(+3 duplicates)[0m  [0m
+actions/setup-node                                                    v1                                  github-action           [90m[0m                 [0m
+actions/setup-node                                                    v4                                  github-action           [90m(+1 duplicate)[0m   [0m
+actions/setup-node                                                    v6                                  github-action           [90m(+3 duplicates)[0m  [0m
+actions/upload-artifact                                               v4                                  github-action           [90m(+1 duplicate)[0m   [0m
+add                                                                   2.0.9                               npm                     [90m[0m                 [0m
+agent-base                                                            6.0.2                               npm                     [90m[0m                 [0m
+aria-hidden                                                           1.2.6                               npm                     [90m[0m                 [0m
+array-flatten                                                         1.1.1                               npm                     [90m[0m                 [0m
+assertion-error                                                       2.0.1                               npm                     [90m[0m                 [0m
+asynckit                                                              0.4.0                               npm                     [90m[0m                 [0m
+autoprefixer                                                          10.5.4                              npm                     [90m[0m                 [0m
+axe-core                                                              4.13.0                              npm                     [90m[0m                 [0m
+axios                                                                 1.19.0                              npm                     [90m[0m                 [0m
+bail                                                                  2.0.2                               npm                     [90m[0m                 [0m
+baseline-browser-mapping                                              2.11.15                             npm                     [90m[0m                 [0m
+body-parser                                                           1.20.6                              npm                     [90m[0m                 [0m
+braintree/security-workflows/.github/workflows/codeql.yml             main                                github-action-workflow  [90m[0m                 [0m
+braintree/security-workflows/.github/workflows/dependency-review.yml  main                                github-action-workflow  [90m[0m                 [0m
+browserslist                                                          4.28.8                              npm                     [90m[0m                 [0m
+bytes                                                                 3.1.2                               npm                     [90m[0m                 [0m
+cac                                                                   6.7.14                              npm                     [90m[0m                 [0m
+call-bind-apply-helpers                                               1.0.2                               npm                     [90m[0m                 [0m
+call-bound                                                            1.0.4                               npm                     [90m[0m                 [0m
+caniuse-lite                                                          1.0.30001809                        npm                     [90m[0m                 [0m
+ccount                                                                2.0.1                               npm                     [90m[0m                 [0m
+chai                                                                  5.3.3                               npm                     [90m[0m                 [0m
+character-entities                                                    2.0.2                               npm                     [90m[0m                 [0m
+character-entities-html4                                              2.1.0                               npm                     [90m[0m                 [0m
+character-entities-legacy                                             3.0.0                               npm                     [90m[0m                 [0m
+character-reference-invalid                                           2.0.1                               npm                     [90m[0m                 [0m
+check-error                                                           2.1.3                               npm                     [90m[0m                 [0m
+class-variance-authority                                              0.7.1                               npm                     [90m[0m                 [0m
+clsx                                                                  2.1.1                               npm                     [90m[0m                 [0m
+cmdk                                                                  1.1.1                               npm                     [90m[0m                 [0m
+combined-stream                                                       1.0.8                               npm                     [90m[0m                 [0m
+comma-separated-tokens                                                2.0.3                               npm                     [90m[0m                 [0m
+commander                                                             7.2.0                               npm                     [90m[0m                 [0m
+commander                                                             8.3.0                               npm                     [90m[0m                 [0m
+content-disposition                                                   0.5.4                               npm                     [90m[0m                 [0m
+content-type                                                          1.0.5                               npm                     [90m[0m                 [0m
+convert-source-map                                                    2.0.0                               npm                     [90m[0m                 [0m
+cookie                                                                0.7.2                               npm                     [90m[0m                 [0m
+cookie-signature                                                      1.0.7                               npm                     [90m[0m                 [0m
+cose-base                                                             1.0.3                               npm                     [90m[0m                 [0m
+cose-base                                                             2.2.0                               npm                     [90m[0m                 [0m
+coverallsapp/github-action                                            master                              github-action           [90m[0m                 [0m
+cssesc                                                                3.0.0                               npm                     [90m[0m                 [0m
+csstype                                                               3.2.3                               npm                     [90m[0m                 [0m
+cytoscape                                                             3.34.1                              npm                     [90m[0m                 [0m
+cytoscape-cose-bilkent                                                4.1.0                               npm                     [90m[0m                 [0m
+cytoscape-fcose                                                       2.2.0                               npm                     [90m[0m                 [0m
+d3                                                                    7.9.0                               npm                     [90m[0m                 [0m
+d3-array                                                              2.12.1                              npm                     [90m[0m                 [0m
+d3-array                                                              3.2.4                               npm                     [90m[0m                 [0m
+d3-axis                                                               3.0.0                               npm                     [90m[0m                 [0m
+d3-brush                                                              3.0.0                               npm                     [90m[0m                 [0m
+d3-chord                                                              3.0.1                               npm                     [90m[0m                 [0m
+d3-color                                                              3.1.0                               npm                     [90m[0m                 [0m
+d3-contour                                                            4.0.2                               npm                     [90m[0m                 [0m
+d3-delaunay                                                           6.0.4                               npm                     [90m[0m                 [0m
+d3-dispatch                                                           3.0.1                               npm                     [90m[0m                 [0m
+d3-drag                                                               3.0.0                               npm                     [90m[0m                 [0m
+d3-dsv                                                                3.0.1                               npm                     [90m[0m                 [0m
+d3-ease                                                               3.0.1                               npm                     [90m[0m                 [0m
+d3-fetch                                                              3.0.1                               npm                     [90m[0m                 [0m
+d3-force                                                              3.0.0                               npm                     [90m[0m                 [0m
+d3-format                                                             3.1.2                               npm                     [90m[0m                 [0m
+d3-geo                                                                3.1.1                               npm                     [90m[0m                 [0m
+d3-hierarchy                                                          3.1.2                               npm                     [90m[0m                 [0m
+d3-interpolate                                                        3.0.1                               npm                     [90m[0m                 [0m
+d3-path                                                               1.0.9                               npm                     [90m[0m                 [0m
+d3-path                                                               3.1.0                               npm                     [90m[0m                 [0m
+d3-polygon                                                            3.0.1                               npm                     [90m[0m                 [0m
+d3-quadtree                                                           3.0.1                               npm                     [90m[0m                 [0m
+d3-random                                                             3.0.1                               npm                     [90m[0m                 [0m
+d3-sankey                                                             0.12.3                              npm                     [90m[0m                 [0m
+d3-scale                                                              4.0.2                               npm                     [90m[0m                 [0m
+d3-scale-chromatic                                                    3.1.0                               npm                     [90m[0m                 [0m
+d3-selection                                                          3.0.0                               npm                     [90m[0m                 [0m
+d3-shape                                                              1.3.7                               npm                     [90m[0m                 [0m
+d3-shape                                                              3.2.0                               npm                     [90m[0m                 [0m
+d3-time                                                               3.1.0                               npm                     [90m[0m                 [0m
+d3-time-format                                                        4.1.0                               npm                     [90m[0m                 [0m
+d3-timer                                                              3.0.1                               npm                     [90m[0m                 [0m
+d3-transition                                                         3.0.1                               npm                     [90m[0m                 [0m
+d3-zoom                                                               3.0.0                               npm                     [90m[0m                 [0m
+dagre-d3-es                                                           7.0.14                              npm                     [90m[0m                 [0m
+date-fns                                                              4.4.0                               npm                     [90m[0m                 [0m
+date-fns-jalali                                                       4.1.0-0                             npm                     [90m[0m                 [0m
+dayjs                                                                 1.11.23                             npm                     [90m[0m                 [0m
+debug                                                                 2.6.9                               npm                     [90m[0m                 [0m
+debug                                                                 4.4.3                               npm                     [90m[0m                 [0m
+decimal.js-light                                                      2.5.1                               npm                     [90m[0m                 [0m
+decode-named-character-reference                                      1.3.0                               npm                     [90m[0m                 [0m
+deep-eql                                                              5.0.2                               npm                     [90m[0m                 [0m
+delaunator                                                            5.1.0                               npm                     [90m[0m                 [0m
+delayed-stream                                                        1.0.0                               npm                     [90m[0m                 [0m
+depd                                                                  2.0.0                               npm                     [90m[0m                 [0m
+dequal                                                                2.0.3                               npm                     [90m[0m                 [0m
+destroy                                                               1.2.0                               npm                     [90m[0m                 [0m
+detect-libc                                                           2.1.2                               npm                     [90m[0m                 [0m
+detect-node-es                                                        1.1.0                               npm                     [90m[0m                 [0m
+devlop                                                                1.1.0                               npm                     [90m[0m                 [0m
+dom-helpers                                                           5.2.1                               npm                     [90m[0m                 [0m
+dompurify                                                             3.4.14                              npm                     [90m[0m                 [0m
+dunder-proto                                                          1.0.1                               npm                     [90m[0m                 [0m
+ee-first                                                              1.1.1                               npm                     [90m[0m                 [0m
+electron-to-chromium                                                  1.5.411                             npm                     [90m[0m                 [0m
+embla-carousel                                                        8.6.0                               npm                     [90m[0m                 [0m
+embla-carousel-react                                                  8.6.0                               npm                     [90m[0m                 [0m
+embla-carousel-reactive-utils                                         8.6.0                               npm                     [90m[0m                 [0m
+encodeurl                                                             2.0.0                               npm                     [90m[0m                 [0m
+enhanced-resolve                                                      5.24.5                              npm                     [90m[0m                 [0m
+entities                                                              6.0.1                               npm                     [90m[0m                 [0m
+es-define-property                                                    1.0.1                               npm                     [90m[0m                 [0m
+es-errors                                                             1.3.0                               npm                     [90m[0m                 [0m
+es-module-lexer                                                       1.7.0                               npm                     [90m[0m                 [0m
+es-object-atoms                                                       1.1.2                               npm                     [90m[0m                 [0m
+es-set-tostringtag                                                    2.1.0                               npm                     [90m[0m                 [0m
+es-toolkit                                                            1.51.0                              npm                     [90m[0m                 [0m
+esbuild                                                               0.25.12                             npm                     [90m[0m                 [0m
+esbuild                                                               0.28.2                              npm                     [90m[0m                 [0m
+escalade                                                              3.2.0                               npm                     [90m[0m                 [0m
+escape-html                                                           1.0.3                               npm                     [90m[0m                 [0m
+escape-string-regexp                                                  5.0.0                               npm                     [90m[0m                 [0m
+estree-util-is-identifier-name                                        3.0.0                               npm                     [90m[0m                 [0m
+estree-walker                                                         2.0.2                               npm                     [90m[0m                 [0m
+estree-walker                                                         3.0.3                               npm                     [90m[0m                 [0m
+etag                                                                  1.8.1                               npm                     [90m[0m                 [0m
+eventemitter3                                                         4.0.7                               npm                     [90m[0m                 [0m
+expect-type                                                           1.4.0                               npm                     [90m[0m                 [0m
+express                                                               4.22.2                              npm                     [90m[0m                 [0m
+extend                                                                3.0.2                               npm                     [90m[0m                 [0m
+fast-equals                                                           5.4.1                               npm                     [90m[0m                 [0m
+fastdom                                                               1.0.12                              npm                     [90m[0m                 [0m
+fdir                                                                  6.5.0                               npm                     [90m[0m                 [0m
+finalhandler                                                          1.3.2                               npm                     [90m[0m                 [0m
+follow-redirects                                                      1.16.0                              npm                     [90m[0m                 [0m
+forgelocal                                                            UNKNOWN                             go-module               [90m[0m                 [0m
+form-data                                                             4.0.6                               npm                     [90m[0m                 [0m
+forwarded                                                             0.2.0                               npm                     [90m[0m                 [0m
+fraction.js                                                           5.3.4                               npm                     [90m[0m                 [0m
+framer-motion                                                         12.43.0                             npm                     [90m[0m                 [0m
+fresh                                                                 0.5.2                               npm                     [90m[0m                 [0m
+fsevents                                                              2.3.2                               npm                     [90m[0m                 [0m
+fsevents                                                              2.3.3                               npm                     [90m[0m                 [0m
+function-bind                                                         1.1.2                               npm                     [90m[0m                 [0m
+gensync                                                               1.0.0-beta.2                        npm                     [90m[0m                 [0m
+get-east-asian-width                                                  1.6.0                               npm                     [90m[0m                 [0m
+get-intrinsic                                                         1.3.0                               npm                     [90m[0m                 [0m
+get-nonce                                                             1.0.1                               npm                     [90m[0m                 [0m
+get-proto                                                             1.0.1                               npm                     [90m[0m                 [0m
+github.com/danieljoos/wincred                                         v1.2.3                              go-module               [90m[0m                 [0m
+github.com/davecgh/go-spew                                            v1.1.1                              go-module               [90m[0m                 [0m
+github.com/deckarep/golang-set/v2                                     v2.8.0                              go-module               [90m[0m                 [0m
+github.com/dustin/go-humanize                                         v1.0.1                              go-module               [90m[0m                 [0m
+github.com/evanw/esbuild                                              v0.0.0-20251101233416-208f539945b1  go-module               [90m[0m                 [0m
+github.com/go-chi/chi/v5                                              v5.3.1                              go-module               [90m[0m                 [0m
+github.com/go-jose/go-jose/v3                                         v3.0.5                              go-module               [90m[0m                 [0m
+github.com/go-stack/stack                                             v1.8.1                              go-module               [90m[0m                 [0m
+github.com/godbus/dbus/v5                                             v5.2.2                              go-module               [90m[0m                 [0m
+github.com/google/pprof                                               v0.0.0-20260802141513-ef3492d7dac3  go-module               [90m[0m                 [0m
+github.com/google/uuid                                                v1.6.0                              go-module               [90m[0m                 [0m
+github.com/hashicorp/golang-lru/v2                                    v2.0.7                              go-module               [90m[0m                 [0m
+github.com/kr/pretty                                                  v0.3.1                              go-module               [90m[0m                 [0m
+github.com/kr/text                                                    v0.2.0                              go-module               [90m[0m                 [0m
+github.com/mattn/go-isatty                                            v0.0.24                             go-module               [90m[0m                 [0m
+github.com/mxschmitt/playwright-go                                    v0.6100.0                           go-module               [90m[0m                 [0m
+github.com/ncruces/go-strftime                                        v1.0.0                              go-module               [90m[0m                 [0m
+github.com/pmezard/go-difflib                                         v1.0.0                              go-module               [90m[0m                 [0m
+github.com/remyoudompheng/bigfft                                      v0.0.0-20230129092748-24d4a6f8daec  go-module               [90m[0m                 [0m
+github.com/rogpeppe/go-internal                                       v1.11.0                             go-module               [90m[0m                 [0m
+github.com/stretchr/testify                                           v1.11.1                             go-module               [90m[0m                 [0m
+github.com/zalando/go-keyring                                         v0.2.8                              go-module               [90m[0m                 [0m
+golang.org/x/mod                                                      v0.40.0                             go-module               [90m[0m                 [0m
+golang.org/x/net                                                      v0.58.0                             go-module               [90m[0m                 [0m
+golang.org/x/sync                                                     v0.22.0                             go-module               [90m[0m                 [0m
+golang.org/x/sys                                                      v0.0.0-20220715151400-c0bba94af5f8  go-module               [90m[0m                 [0m
+golang.org/x/sys                                                      v0.47.0                             go-module               [90m[0m                 [0m
+golang.org/x/tools                                                    v0.49.0                             go-module               [90m[0m                 [0m
+gopd                                                                  1.2.0                               npm                     [90m[0m                 [0m
+gopkg.in/check.v1                                                     v1.0.0-20201130134442-10cb98267c6c  go-module               [90m[0m                 [0m
+gopkg.in/yaml.v3                                                      v3.0.1                              go-module               [90m[0m                 [0m
+graceful-fs                                                           4.2.11                              npm                     [90m[0m                 [0m
+hachure-fill                                                          0.5.2                               npm                     [90m[0m                 [0m
+has-symbols                                                           1.1.0                               npm                     [90m[0m                 [0m
+has-tostringtag                                                       1.0.2                               npm                     [90m[0m                 [0m
+hasown                                                                2.0.4                               npm                     [90m[0m                 [0m
+hast                                                                  1.0.0                               npm                     [90m[0m                 [0m
+hast-util-from-dom                                                    5.0.1                               npm                     [90m[0m                 [0m
+hast-util-from-html                                                   2.0.3                               npm                     [90m[0m                 [0m
+hast-util-from-html-isomorphic                                        2.0.0                               npm                     [90m[0m                 [0m
+hast-util-from-parse5                                                 8.0.3                               npm                     [90m[0m                 [0m
+hast-util-is-element                                                  3.0.0                               npm                     [90m[0m                 [0m
+hast-util-parse-selector                                              4.0.0                               npm                     [90m[0m                 [0m
+hast-util-raw                                                         9.1.0                               npm                     [90m[0m                 [0m
+hast-util-sanitize                                                    5.0.2                               npm                     [90m[0m                 [0m
+hast-util-to-html                                                     9.0.5                               npm                     [90m[0m                 [0m
+hast-util-to-jsx-runtime                                              2.3.6                               npm                     [90m[0m                 [0m
+hast-util-to-parse5                                                   8.0.1                               npm                     [90m[0m                 [0m
+hast-util-to-text                                                     4.0.2                               npm                     [90m[0m                 [0m
+hast-util-whitespace                                                  3.0.0                               npm                     [90m[0m                 [0m
+hastscript                                                            9.0.1                               npm                     [90m[0m                 [0m
+html-url-attributes                                                   3.0.1                               npm                     [90m[0m                 [0m
+html-void-elements                                                    3.0.0                               npm                     [90m[0m                 [0m
+http-errors                                                           2.0.1                               npm                     [90m[0m                 [0m
+https-proxy-agent                                                     5.0.1                               npm                     [90m[0m                 [0m
+iconv-lite                                                            0.4.24                              npm                     [90m[0m                 [0m
+iconv-lite                                                            0.6.3                               npm                     [90m[0m                 [0m
+import-meta-resolve                                                   4.2.0                               npm                     [90m[0m                 [0m
+inherits                                                              2.0.4                               npm                     [90m[0m                 [0m
+inline-style-parser                                                   0.2.7                               npm                     [90m[0m                 [0m
+input-otp                                                             1.5.0                               npm                     [90m[0m                 [0m
+internmap                                                             1.0.1                               npm                     [90m[0m                 [0m
+internmap                                                             2.0.3                               npm                     [90m[0m                 [0m
+ipaddr.js                                                             1.9.1                               npm                     [90m[0m                 [0m
+is-alphabetical                                                       2.0.1                               npm                     [90m[0m                 [0m
+is-alphanumerical                                                     2.0.1                               npm                     [90m[0m                 [0m
+is-decimal                                                            2.0.1                               npm                     [90m[0m                 [0m
+is-hexadecimal                                                        2.0.1                               npm                     [90m[0m                 [0m
+is-plain-obj                                                          4.1.0                               npm                     [90m[0m                 [0m
+jiti                                                                  2.7.0                               npm                     [90m[0m                 [0m
+js-tokens                                                             4.0.0                               npm                     [90m[0m                 [0m
+js-tokens                                                             9.0.1                               npm                     [90m[0m                 [0m
+jsesc                                                                 3.1.0                               npm                     [90m[0m                 [0m
+json5                                                                 2.2.3                               npm                     [90m[0m                 [0m
+katex                                                                 0.16.47                             npm                     [90m[0m                 [0m
+khroma                                                                2.1.0                               npm                     [90m[0m                 [0m
+layout-base                                                           1.0.2                               npm                     [90m[0m                 [0m
+layout-base                                                           2.0.1                               npm                     [90m[0m                 [0m
+lightningcss                                                          1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-android-arm64                                            1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-darwin-arm64                                             1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-darwin-x64                                               1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-freebsd-x64                                              1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-linux-arm-gnueabihf                                      1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-linux-arm64-gnu                                          1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-linux-arm64-musl                                         1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-linux-x64-gnu                                            1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-linux-x64-musl                                           1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-win32-arm64-msvc                                         1.32.0                              npm                     [90m[0m                 [0m
+lightningcss-win32-x64-msvc                                           1.32.0                              npm                     [90m[0m                 [0m
+lodash                                                                4.18.1                              npm                     [90m[0m                 [0m
+lodash-es                                                             4.18.1                              npm                     [90m[0m                 [0m
+longest-streak                                                        3.1.0                               npm                     [90m[0m                 [0m
+loose-envify                                                          1.4.0                               npm                     [90m[0m                 [0m
+loupe                                                                 3.2.1                               npm                     [90m[0m                 [0m
+lru-cache                                                             5.1.1                               npm                     [90m[0m                 [0m
+lucide-react                                                          0.453.0                             npm                     [90m[0m                 [0m
+lucide-react                                                          0.542.0                             npm                     [90m[0m                 [0m
+magic-string                                                          0.30.21                             npm                     [90m[0m                 [0m
+markdown-table                                                        3.0.4                               npm                     [90m[0m                 [0m
+marked                                                                16.4.2                              npm                     [90m[0m                 [0m
+math-intrinsics                                                       1.1.0                               npm                     [90m[0m                 [0m
+mdast-util-find-and-replace                                           3.0.2                               npm                     [90m[0m                 [0m
+mdast-util-from-markdown                                              2.0.3                               npm                     [90m[0m                 [0m
+mdast-util-gfm                                                        3.1.0                               npm                     [90m[0m                 [0m
+mdast-util-gfm-autolink-literal                                       2.0.1                               npm                     [90m[0m                 [0m
+mdast-util-gfm-footnote                                               2.1.0                               npm                     [90m[0m                 [0m
+mdast-util-gfm-strikethrough                                          2.0.0                               npm                     [90m[0m                 [0m
+mdast-util-gfm-table                                                  2.0.0                               npm                     [90m[0m                 [0m
+mdast-util-gfm-task-list-item                                         2.0.0                               npm                     [90m[0m                 [0m
+mdast-util-math                                                       3.0.0                               npm                     [90m[0m                 [0m
+mdast-util-mdx-expression                                             2.0.1                               npm                     [90m[0m                 [0m
+mdast-util-mdx-jsx                                                    3.2.0                               npm                     [90m[0m                 [0m
+mdast-util-mdxjs-esm                                                  2.0.1                               npm                     [90m[0m                 [0m
+mdast-util-phrasing                                                   4.1.0                               npm                     [90m[0m                 [0m
+mdast-util-to-hast                                                    13.2.1                              npm                     [90m[0m                 [0m
+mdast-util-to-markdown                                                2.1.2                               npm                     [90m[0m                 [0m
+mdast-util-to-string                                                  4.0.0                               npm                     [90m[0m                 [0m
+media-typer                                                           0.3.0                               npm                     [90m[0m                 [0m
+merge-descriptors                                                     1.0.3                               npm                     [90m[0m                 [0m
+mermaid                                                               11.17.0                             npm                     [90m[0m                 [0m
+methods                                                               1.1.2                               npm                     [90m[0m                 [0m
+micromark                                                             4.0.2                               npm                     [90m[0m                 [0m
+micromark-core-commonmark                                             2.0.3                               npm                     [90m[0m                 [0m
+micromark-extension-cjk-friendly                                      1.2.3                               npm                     [90m[0m                 [0m
+micromark-extension-cjk-friendly-gfm-strikethrough                    1.2.3                               npm                     [90m[0m                 [0m
+micromark-extension-cjk-friendly-util                                 2.1.1                               npm                     [90m[0m                 [0m
+micromark-extension-gfm                                               3.0.0                               npm                     [90m[0m                 [0m
+micromark-extension-gfm-autolink-literal                              2.1.0                               npm                     [90m[0m                 [0m
+micromark-extension-gfm-footnote                                      2.1.0                               npm                     [90m[0m                 [0m
+micromark-extension-gfm-strikethrough                                 2.1.0                               npm                     [90m[0m                 [0m
+micromark-extension-gfm-table                                         2.1.1                               npm                     [90m[0m                 [0m
+micromark-extension-gfm-tagfilter                                     2.0.0                               npm                     [90m[0m                 [0m
+micromark-extension-gfm-task-list-item                                2.1.0                               npm                     [90m[0m                 [0m
+micromark-extension-math                                              3.1.0                               npm                     [90m[0m                 [0m
+micromark-factory-destination                                         2.0.1                               npm                     [90m[0m                 [0m
+micromark-factory-label                                               2.0.1                               npm                     [90m[0m                 [0m
+micromark-factory-space                                               2.0.1                               npm                     [90m[0m                 [0m
+micromark-factory-title                                               2.0.1                               npm                     [90m[0m                 [0m
+micromark-factory-whitespace                                          2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-character                                              2.1.1                               npm                     [90m[0m                 [0m
+micromark-util-chunked                                                2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-classify-character                                     2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-combine-extensions                                     2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-decode-numeric-character-reference                     2.0.2                               npm                     [90m[0m                 [0m
+micromark-util-decode-string                                          2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-encode                                                 2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-html-tag-name                                          2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-normalize-identifier                                   2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-resolve-all                                            2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-sanitize-uri                                           2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-subtokenize                                            2.1.0                               npm                     [90m[0m                 [0m
+micromark-util-symbol                                                 2.0.1                               npm                     [90m[0m                 [0m
+micromark-util-types                                                  2.0.2                               npm                     [90m[0m                 [0m
+mime                                                                  1.6.0                               npm                     [90m[0m                 [0m
+mime-db                                                               1.52.0                              npm                     [90m[0m                 [0m
+mime-types                                                            2.1.35                              npm                     [90m[0m                 [0m
+mitt                                                                  3.0.1                               npm                     [90m[0m                 [0m
+modern-screenshot                                                     4.7.0                               npm                     [90m[0m                 [0m
+modernc.org/cc/v4                                                     v4.29.1                             go-module               [90m[0m                 [0m
+modernc.org/ccgo/v4                                                   v4.34.6                             go-module               [90m[0m                 [0m
+modernc.org/fileutil                                                  v1.4.0                              go-module               [90m[0m                 [0m
+modernc.org/gc/v2                                                     v2.6.5                              go-module               [90m[0m                 [0m
+modernc.org/gc/v3                                                     v3.1.4                              go-module               [90m[0m                 [0m
+modernc.org/goabi0                                                    v0.2.0                              go-module               [90m[0m                 [0m
+modernc.org/libc                                                      v1.74.4                             go-module               [90m[0m                 [0m
+modernc.org/mathutil                                                  v1.7.1                              go-module               [90m[0m                 [0m
+modernc.org/memory                                                    v1.11.0                             go-module               [90m[0m                 [0m
+modernc.org/opt                                                       v0.2.0                              go-module               [90m[0m                 [0m
+modernc.org/sortutil                                                  v1.2.1                              go-module               [90m[0m                 [0m
+modernc.org/sqlite                                                    v1.56.0                             go-module               [90m[0m                 [0m
+modernc.org/strutil                                                   v1.2.1                              go-module               [90m[0m                 [0m
+modernc.org/token                                                     v1.1.0                              go-module               [90m[0m                 [0m
+motion-dom                                                            12.43.0                             npm                     [90m[0m                 [0m
+motion-utils                                                          12.39.0                             npm                     [90m[0m                 [0m
+ms                                                                    2.0.0                               npm                     [90m[0m                 [0m
+ms                                                                    2.1.3                               npm                     [90m[0m                 [0m
+nanoid                                                                3.3.18                              npm                     [90m[0m                 [0m
+nanoid                                                                5.1.16                              npm                     [90m[0m                 [0m
+negotiator                                                            0.6.3                               npm                     [90m[0m                 [0m
+next-themes                                                           0.4.6                               npm                     [90m[0m                 [0m
+node-releases                                                         2.0.53                              npm                     [90m[0m                 [0m
+object-assign                                                         4.1.1                               npm                     [90m[0m                 [0m
+object-inspect                                                        1.13.4                              npm                     [90m[0m                 [0m
+on-finished                                                           2.4.1                               npm                     [90m[0m                 [0m
+oniguruma-parser                                                      0.12.2                              npm                     [90m[0m                 [0m
+oniguruma-to-es                                                       4.3.6                               npm                     [90m[0m                 [0m
+package-manager-detector                                              1.8.0                               npm                     [90m[0m                 [0m
+parse-entities                                                        4.0.2                               npm                     [90m[0m                 [0m
+parse5                                                                7.3.0                               npm                     [90m[0m                 [0m
+parseurl                                                              1.3.3                               npm                     [90m[0m                 [0m
+path-data-parser                                                      0.1.0                               npm                     [90m[0m                 [0m
+path-to-regexp                                                        0.1.13                              npm                     [90m[0m                 [0m
+pathe                                                                 2.0.3                               npm                     [90m[0m                 [0m
+pathval                                                               2.0.1                               npm                     [90m[0m                 [0m
+picocolors                                                            1.1.1                               npm                     [90m[0m                 [0m
+picomatch                                                             4.0.5                               npm                     [90m[0m                 [0m
+playwright                                                            1.55.1                              npm                     [90m[0m                 [0m
+playwright-core                                                       1.55.1                              npm                     [90m[0m                 [0m
+points-on-curve                                                       0.2.0                               npm                     [90m[0m                 [0m
+points-on-path                                                        0.2.1                               npm                     [90m[0m                 [0m
+postcss                                                               8.5.26                              npm                     [90m[0m                 [0m
+postcss-selector-parser                                               6.0.10                              npm                     [90m[0m                 [0m
+postcss-value-parser                                                  4.2.0                               npm                     [90m[0m                 [0m
+prettier                                                              3.9.6                               npm                     [90m[0m                 [0m
+prop-types                                                            15.8.1                              npm                     [90m[0m                 [0m
+property-information                                                  7.2.0                               npm                     [90m[0m                 [0m
+proxy-addr                                                            2.0.7                               npm                     [90m[0m                 [0m
+proxy-from-env                                                        2.1.0                               npm                     [90m[0m                 [0m
+qs                                                                    6.15.3                              npm                     [90m[0m                 [0m
+range-parser                                                          1.2.1                               npm                     [90m[0m                 [0m
+raw-body                                                              2.5.3                               npm                     [90m[0m                 [0m
+react                                                                 19.2.8                              npm                     [90m[0m                 [0m
+react-day-picker                                                      9.14.0                              npm                     [90m[0m                 [0m
+react-dom                                                             19.2.8                              npm                     [90m[0m                 [0m
+react-hook-form                                                       7.85.0                              npm                     [90m[0m                 [0m
+react-is                                                              16.13.1                             npm                     [90m[0m                 [0m
+react-is                                                              18.3.1                              npm                     [90m[0m                 [0m
+react-refresh                                                         0.18.0                              npm                     [90m[0m                 [0m
+react-remove-scroll                                                   2.7.2                               npm                     [90m[0m                 [0m
+react-remove-scroll-bar                                               2.3.8                               npm                     [90m[0m                 [0m
+react-resizable-panels                                                3.0.6                               npm                     [90m[0m                 [0m
+react-smooth                                                          4.0.4                               npm                     [90m[0m                 [0m
+react-style-singleton                                                 2.2.3                               npm                     [90m[0m                 [0m
+react-transition-group                                                4.4.5                               npm                     [90m[0m                 [0m
+recharts                                                              2.15.4                              npm                     [90m[0m                 [0m
+recharts-scale                                                        0.4.5                               npm                     [90m[0m                 [0m
+regex                                                                 6.1.0                               npm                     [90m[0m                 [0m
+regex-recursion                                                       6.0.2                               npm                     [90m[0m                 [0m
+regex-utilities                                                       2.3.0                               npm                     [90m[0m                 [0m
+regexparam                                                            3.0.0                               npm                     [90m[0m                 [0m
+rehype-harden                                                         1.1.8                               npm                     [90m[0m                 [0m
+rehype-katex                                                          7.0.1                               npm                     [90m[0m                 [0m
+rehype-raw                                                            7.0.0                               npm                     [90m[0m                 [0m
+rehype-sanitize                                                       6.0.0                               npm                     [90m[0m                 [0m
+remark-cjk-friendly                                                   1.2.3                               npm                     [90m[0m                 [0m
+remark-cjk-friendly-gfm-strikethrough                                 1.2.3                               npm                     [90m[0m                 [0m
+remark-gfm                                                            4.0.1                               npm                     [90m[0m                 [0m
+remark-math                                                           6.0.0                               npm                     [90m[0m                 [0m
+remark-parse                                                          11.0.0                              npm                     [90m[0m                 [0m
+remark-rehype                                                         11.1.2                              npm                     [90m[0m                 [0m
+remark-stringify                                                      11.0.0                              npm                     [90m[0m                 [0m
+remend                                                                1.0.1                               npm                     [90m[0m                 [0m
+robust-predicates                                                     3.0.3                               npm                     [90m[0m                 [0m
+rollup                                                                4.62.4                              npm                     [90m[0m                 [0m
+roughjs                                                               4.6.6                               npm                     [90m[0m                 [0m
+rw                                                                    1.3.3                               npm                     [90m[0m                 [0m
+safe-buffer                                                           5.2.1                               npm                     [90m[0m                 [0m
+safer-buffer                                                          2.1.2                               npm                     [90m[0m                 [0m
+scheduler                                                             0.27.0                              npm                     [90m[0m                 [0m
+semver                                                                6.3.1                               npm                     [90m[0m                 [0m
+send                                                                  0.19.2                              npm                     [90m[0m                 [0m
+serve-static                                                          1.16.3                              npm                     [90m[0m                 [0m
+setprototypeof                                                        1.2.0                               npm                     [90m[0m                 [0m
+shiki                                                                 3.23.0                              npm                     [90m[0m                 [0m
+side-channel                                                          1.1.1                               npm                     [90m[0m                 [0m
+side-channel-list                                                     1.0.1                               npm                     [90m[0m                 [0m
+side-channel-map                                                      1.0.1                               npm                     [90m[0m                 [0m
+side-channel-weakmap                                                  1.0.2                               npm                     [90m[0m                 [0m
+siginfo                                                               2.0.0                               npm                     [90m[0m                 [0m
+sonner                                                                2.0.8                               npm                     [90m[0m                 [0m
+source-map-js                                                         1.2.1                               npm                     [90m[0m                 [0m
+space-separated-tokens                                                2.0.2                               npm                     [90m[0m                 [0m
+stackback                                                             0.0.2                               npm                     [90m[0m                 [0m
+statuses                                                              2.0.2                               npm                     [90m[0m                 [0m
+std-env                                                               3.10.0                              npm                     [90m[0m                 [0m
+stdlib                                                                go1.23.12                           go-module               [90m[0m                 [0m
+streamdown                                                            1.6.11                              npm                     [90m[0m                 [0m
+strictdom                                                             1.0.1                               npm                     [90m[0m                 [0m
+stringify-entities                                                    4.0.4                               npm                     [90m[0m                 [0m
+strip-literal                                                         3.1.0                               npm                     [90m[0m                 [0m
+style-to-js                                                           1.1.21                              npm                     [90m[0m                 [0m
+style-to-object                                                       1.0.14                              npm                     [90m[0m                 [0m
+stylis                                                                4.4.0                               npm                     [90m[0m                 [0m
+tailwind-merge                                                        3.6.0                               npm                     [90m[0m                 [0m
+tailwindcss                                                           4.3.3                               npm                     [90m[0m                 [0m
+tailwindcss-animate                                                   1.0.7                               npm                     [90m[0m                 [0m
+tapable                                                               2.3.3                               npm                     [90m[0m                 [0m
+tiny-invariant                                                        1.3.3                               npm                     [90m[0m                 [0m
+tinybench                                                             2.9.0                               npm                     [90m[0m                 [0m
+tinyexec                                                              0.3.2                               npm                     [90m[0m                 [0m
+tinyexec                                                              1.3.0                               npm                     [90m[0m                 [0m
+tinyglobby                                                            0.2.17                              npm                     [90m[0m                 [0m
+tinypool                                                              1.1.1                               npm                     [90m[0m                 [0m
+tinyrainbow                                                           2.0.0                               npm                     [90m[0m                 [0m
+tinyspy                                                               4.0.4                               npm                     [90m[0m                 [0m
+toidentifier                                                          1.0.1                               npm                     [90m[0m                 [0m
+trim-lines                                                            3.0.1                               npm                     [90m[0m                 [0m
+trough                                                                2.2.0                               npm                     [90m[0m                 [0m
+ts-dedent                                                             2.3.0                               npm                     [90m[0m                 [0m
+tslib                                                                 2.8.1                               npm                     [90m[0m                 [0m
+tsx                                                                   4.23.12                             npm                     [90m[0m                 [0m
+tw-animate-css                                                        1.4.0                               npm                     [90m[0m                 [0m
+type-is                                                               1.6.18                              npm                     [90m[0m                 [0m
+typescript                                                            5.6.3                               npm                     [90m[0m                 [0m
+undici-types                                                          7.18.2                              npm                     [90m[0m                 [0m
+unified                                                               11.0.5                              npm                     [90m[0m                 [0m
+unist-util-find-after                                                 5.0.0                               npm                     [90m[0m                 [0m
+unist-util-is                                                         6.0.1                               npm                     [90m[0m                 [0m
+unist-util-position                                                   5.0.0                               npm                     [90m[0m                 [0m
+unist-util-remove-position                                            5.0.0                               npm                     [90m[0m                 [0m
+unist-util-stringify-position                                         4.0.0                               npm                     [90m[0m                 [0m
+unist-util-visit                                                      5.1.0                               npm                     [90m[0m                 [0m
+unist-util-visit-parents                                              6.0.2                               npm                     [90m[0m                 [0m
+unpipe                                                                1.0.0                               npm                     [90m[0m                 [0m
+update-browserslist-db                                                1.3.1                               npm                     [90m[0m                 [0m
+use-callback-ref                                                      1.3.3                               npm                     [90m[0m                 [0m
+use-sidecar                                                           1.1.3                               npm                     [90m[0m                 [0m
+use-sync-external-store                                               1.6.0                               npm                     [90m[0m                 [0m
+util-deprecate                                                        1.0.2                               npm                     [90m[0m                 [0m
+utils-merge                                                           1.0.1                               npm                     [90m[0m                 [0m
+uuid                                                                  14.0.2                              npm                     [90m[0m                 [0m
+vary                                                                  1.1.2                               npm                     [90m[0m                 [0m
+vaul                                                                  1.1.2                               npm                     [90m[0m                 [0m
+vfile                                                                 6.0.3                               npm                     [90m[0m                 [0m
+vfile-location                                                        5.0.3                               npm                     [90m[0m                 [0m
+vfile-message                                                         4.0.3                               npm                     [90m[0m                 [0m
+victory-vendor                                                        36.9.2                              npm                     [90m[0m                 [0m
+vite                                                                  7.3.6                               npm                     [90m[0m                 [0m
+vite-node                                                             3.2.4                               npm                     [90m[0m                 [0m
+vite-plugin-manus-runtime                                             0.0.58                              npm                     [90m[0m                 [0m
+vitest                                                                3.2.7                               npm                     [90m[0m                 [0m
+web-namespaces                                                        2.0.1                               npm                     [90m[0m                 [0m
+why-is-node-running                                                   2.3.0                               npm                     [90m[0m                 [0m
+wouter                                                                3.10.0                              npm                     [90m[0m                 [0m
+yallist                                                               3.1.1                               npm                     [90m[0m                 [0m
+zod                                                                   4.4.3                               npm                     [90m[0m                 [0m
+zwitch                                                                2.0.4                               npm                     [90m[0m                 [0m
+SYFT_EXIT_CODE=0
+
+COMMAND=pnpm run check
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard
+> tsc --noEmit
+
+DASHBOARD_CHECK_EXIT_CODE=0
+
+COMMAND=git diff --check -- . :(exclude)evidence/GOSEC_R5/*.log
+DIFF_CHECK_EXIT_CODE=0
