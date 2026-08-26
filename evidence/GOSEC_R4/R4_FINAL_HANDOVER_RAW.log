@@ -1,0 +1,49 @@
+UTC=2026-08-26T11:41:28Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r4
+LOCAL_HEAD=681b24f47748285110e2b29ea7ffc2b7f2b14eb4
+REMOTE_HEAD=681b24f47748285110e2b29ea7ffc2b7f2b14eb4
+R3_REMOTE_HEAD=80048180d4ec5241c08146ade698d53a3f29454d
+dangling blob 6501c02864bcf3d774ffa22c39898485c4a66946
+dangling blob 91e2fd6ab82bca143754fb002db8aa0e172bc05e
+dangling blob 6f043316130e9d25f4791806d90e61f2f9c78016
+dangling blob a004f71b3ea38b5f42975dab551dcf90c9f9040a
+dangling blob aae4634b0b5edf51710d4820990ceed34e703bc5
+dangling blob 9305ca98322e7edc43bbc8765b3a6f9d5e87949e
+dangling blob 5ca686e14938fb6c8c06ee5949f69f9c2553c828
+dangling blob 8f87244b0c954eafdbd76de3d69e4b8c703eec64
+dangling blob 57b37c2e7dc7fd2d34f367731dfcabea4c069b9c
+dangling blob 08761d89101fd7d5f28845fc2f53cdfbb9471b89
+dangling blob dd38d9b5b525dd2d935f8eb3f1c3aa9c3735d01c
+dangling blob 6afc817348d52d34f0ac5421b450c92d00f8bc9d
+dangling blob a47c7569dbdb79f4475fd3dfacab8ee8b993c62c
+dangling blob a45dc2c82bde9fae8f33cae3fc94c5f365df217c
+dangling blob 4ddf989c670ecaf451c8f70cbda54b2d936b098c
+LOCAL_FSCK_EXIT_CODE=0
+LOCAL_REMOTE_EQUALITY_EXIT_CODE=0
+PORT_19281=FREE
+PORT_3001=FREE
+PORT_19282=FREE
+PORT_19283=FREE
+PORT_19284=FREE
+PORT_19285=FREE
+PORT_19286=FREE
+PORT_19287=FREE
+ACTIVE_RELEVANT_PROCESSES=
+428659 /usr/lib/chromium/chromium --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --disable-features=HighEfficiencyModeAvailable,HighEfficiencyModeToggle,DestroyProfileOnBrowserClose,Translate,PaintHolding,AcceptCHFrame --disable-permission-action-reporting --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --no-default-browser-check --disable-dev-shm-usage --disable-hang-monitor --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --use-angle=swiftshader-webgl --ozone-override-screen-size=1280,1029 --noerrdialogs --window-size=1280,1029 --window-position=0,0 --lang=en-US --num-raster-threads=4 --remote-debugging-port=9222 --load-extension=/opt/.manus/.packages/chrome-extensions/ublock-lite --user-data-dir=/home/ubuntu/.browser_data_dir --download-default-directory=/home/ubuntu/Downloads
+428675 /usr/lib/chromium/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=5 --shared-client-connection
+428677 /usr/lib/chromium/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=4 --shared-client-connection
+428681 /usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+428683 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+428687 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+428707 /usr/lib/chromium/chromium --type=gpu-process --disable-dev-shm-usage --disable-breakpad --enable-gpu-rasterization --ozone-platform=x11 --use-angle=swiftshader-webgl --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,11065090832617891368,13348017158058586842,262144 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708988185955192
+428708 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,2011133410812760104,5510692890254912529,524288 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708989122997041
+428720 /usr/lib/chromium/chromium --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,17289870680153002038,3846912200178008603,524288 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708990060038890
+716284 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=20 --time-ticks-at-unix-epoch=-1787636529484801 --launch-time-ticks=77071181222 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,4179669459084467285,15243540382539265055,2097152 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190709005052708474
+717195 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=25 --time-ticks-at-unix-epoch=-1787636529484801 --launch-time-ticks=78297182436 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,16856372262553929463,7404368497539029315,2097152 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190709009737917719
+/dev/root        48G   47G  1.1G  98% /
+HISTORICAL_SMOKE_UNTRACKED=NOT_PRESENT_IN_STATUS
+WORKTREE_STATUS
+[31m??[m evidence/GOSEC_R4/R4_FINAL_HANDOVER_RAW.log
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+exit
