@@ -77,8 +77,11 @@ func TestGroupStorePersistsAndImports(t *testing.T) {
 	if upserted.Proxy.Region != "us-ny" {
 		t.Fatalf("upserted proxy region = %q", upserted.Proxy.Region)
 	}
-	if _, err := os.Stat(filepath.Join(dir, "groups.json")); err != nil {
+	groupsPath := filepath.Join(dir, "groups.json")
+	if info, err := os.Stat(groupsPath); err != nil {
 		t.Fatalf("groups.json not written: %v", err)
+	} else if got := info.Mode().Perm(); got != 0600 {
+		t.Fatalf("groups.json mode = %04o, want 0600", got)
 	}
 
 	reloaded, err := NewStore(dir)
