@@ -72,7 +72,9 @@ Le runner reste limité au Chromium système et au loopback synthétique. Camouf
 | Correctif WebSocket ciblé | `ca00a0ffaf70c667e0583faafc3e477885a4c67f` |
 | G112 + matrice R1 | `81958ea510c8ff07e7d4d5f1d918b26e2714ecad` |
 | Runner publié | `6aaa1aa2a142a45724f98537fb48c629503d1ea1` |
-| HEAD distant au début de la finalisation | `6aaa1aa2a142a45724f98537fb48c629503d1ea1` |
+| HEAD distant avant package final | `6aaa1aa2a142a45724f98537fb48c629503d1ea1` |
+| Clone neuf vérifié avec LFS ignoré | `aae2782c0762c7ce1ebb8776ffd6e873be4deaf2` |
+| HEAD vérifié après preuve fsck, avant dernier commit documentaire | `74d1e81dd11ee08b8643e9c4261bb8abb1e78bce` |
 
 ## Limites et décision
 
@@ -86,4 +88,4 @@ OPERATIONAL_VALIDATION_PARTIAL_SECURITY_AND_ENVIRONMENT_GATES_OPEN
 FORGELOCAL_PRODUCTION_READY=false
 ```
 
-T28 n’est pas redémarré, T29 n’est pas commencé et T31–T38 ne sont pas touchés. Les prochaines actions doivent traiter les findings restants par petits lots avec preuves de frontière, sans déclaration de production readiness.
+T28 n’est pas redémarré, T29 n’est pas commencé et T31–T38 ne sont pas touchés. Les prochaines actions doivent traiter les findings restants par petits lots avec preuves de frontière, sans déclaration de production readiness. La preuve finale de package est `PACKAGE_VERIFICATION_R1_RAW.log`; `GIT_FSCK_R1_RAW.log` conserve la sortie de `git fsck --full` avec `exit_code=0`.
