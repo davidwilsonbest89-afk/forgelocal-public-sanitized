@@ -1,0 +1,47 @@
+package_source_commit=0553a0e36d53f4975b1921cf324c8adebfcc4a8f
+zip_sha256=367cd53ae909940acb3c2cd1a97710b80a6562bfc6d3025ff5e60cf0e3f27534
+tar_sha256=3e4840f343b31492a9d1cec79f9a6b3898db5816609eb45a3866ac5a921dfa7f
+bundle_sha256=e51f02201c4ee7eb1cf8a7c2da9285580168e32885423c434b3714a5d6d6cd6c
+Archive:  /home/ubuntu/forgelocal-final-env-qualification/repo/evidence/FINAL_ENVIRONMENT_QUALIFICATION_PACKAGE/forgelocal-final-environment-qualification.zip
+    testing: evidence/                OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/gitleaks-source-only.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/gosec-source-only.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/semgrep-source-only.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/shellcheck-source-only.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/shellcheck-source-only.stderr   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/syft-source-only.cdx.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/syft-source-only.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/trivy-filesystem-source-only.json   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/scans/yamllint-source-only.txt   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/reference-integrity-raw.log   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/bundle-baseline-hashes.log   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/repo-inventory.txt   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/run_regression.sh   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/run_qualification_scans.sh   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/run_environment_checks.sh   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/forgelocal-final-environment-qualification.bundle   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/forgelocal-final-environment-qualification.bundle.sha256   OK
+    testing: evidence/FINAL_ENVIRONMENT_QUALIFICATION/bundle-verify.log   OK
+    testing: bundle-verify.log        OK
+    testing: FINAL_SCANNER_FINDINGS.tsv   OK
+    testing: forgelocal-final-environment-qualification.bundle   OK
+    testing: forgelocal-final-environment-qualification.bundle.sha256   OK
+    testing: FINAL_ENVIRONMENT_BASELINE_DISCOVERY_RAW.log   OK
+    testing: FINAL_ENVIRONMENT_TESTS_RAW.log   OK
+    testing: FINAL_ENVIRONMENT_MATRIX.md   OK
+    testing: FINAL_SECURITY_ENVIRONMENT_REPORT.md   OK
+    testing: FINAL_ENVIRONMENT_QUALIFICATION_MANIFEST.txt   OK
+No errors detected in compressed data of /home/ubuntu/forgelocal-final-env-qualification/repo/evidence/FINAL_ENVIRONMENT_QUALIFICATION_PACKAGE/forgelocal-final-environment-qualification.zip.
+TAR_TEST=PASS
+/home/ubuntu/forgelocal-final-env-qualification/repo/evidence/FINAL_ENVIRONMENT_QUALIFICATION_PACKAGE/forgelocal-final-environment-qualification.bundle is okay
+The bundle contains this ref:
+0553a0e36d53f4975b1921cf324c8adebfcc4a8f HEAD
+The bundle requires this ref:
+b907dfcd68c290144e2b922e352d5a937e9b3259 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+dangling blob 62143f0d3c9809d086c5fae63fe0bef0b87ffc20
+dangling blob 5ef47db3dfb001b53ac9302dbc2e27a7b5873bd5
+FSCK_EXIT_CODE=0
