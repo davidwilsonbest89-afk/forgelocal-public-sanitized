@@ -588,28 +588,37 @@ func backupOutputPath(output, prefix, suffix string) string {
 }
 
 func createFullBackup(baseDir, output string) error {
-	if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {
 		return err
 	}
-	out, err := os.Create(output)
+	out, err := os.OpenFile(output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
 	gw := gzip.NewWriter(out)
-	defer gw.Close()
 	tw := tar.NewWriter(gw)
-	defer tw.Close()
 	for _, name := range []string{"profiles", "data", "browsers", "logs"} {
 		root := filepath.Join(baseDir, name)
 		if _, err := os.Stat(root); os.IsNotExist(err) {
 			continue
 		}
 		if err := addPathToTar(tw, baseDir, root); err != nil {
+			_ = tw.Close()
+			_ = gw.Close()
+			_ = out.Close()
 			return err
 		}
 	}
-	return nil
+	if err := tw.Close(); err != nil {
+		_ = gw.Close()
+		_ = out.Close()
+		return err
+	}
+	if err := gw.Close(); err != nil {
+		_ = out.Close()
+		return err
+	}
+	return out.Close()
 }
 
 func addPathToTar(tw *tar.Writer, baseDir, root string) error {

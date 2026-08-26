@@ -188,12 +188,12 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("downloads path: %w", err)
 	}
-	if err := os.MkdirAll(downloadsDir, 0755); err != nil {
+	if err := os.MkdirAll(downloadsDir, 0700); err != nil {
 		return nil, fmt.Errorf("create downloads dir: %w", err)
 	}
 
 	prefsDir := filepath.Join(userDataDir, "Default")
-	if err := os.MkdirAll(prefsDir, 0755); err != nil {
+	if err := os.MkdirAll(prefsDir, 0700); err != nil {
 		return nil, fmt.Errorf("create chromium prefs dir: %w", err)
 	}
 	prefsPath := filepath.Join(prefsDir, "Preferences")
@@ -214,7 +214,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("encode chromium preferences: %w", err)
 	}
-	if err := os.WriteFile(prefsPath, out, 0644); err != nil {
+	if err := os.WriteFile(prefsPath, out, 0600); err != nil {
 		return nil, fmt.Errorf("write chromium preferences: %w", err)
 	}
 
@@ -946,7 +946,7 @@ func writeBrowseForgeNativeConfig(userDataDir string, persona chromiumLaunchPers
 		return "", err
 	}
 	configDir := filepath.Join(userDataDir, "BrowseForgeNative")
-	if err := os.MkdirAll(configDir, 0755); err != nil {
+	if err := os.MkdirAll(configDir, 0700); err != nil {
 		return "", fmt.Errorf("create BrowseForge native config dir: %w", err)
 	}
 	configPath := filepath.Join(configDir, "persona.json")
@@ -954,7 +954,7 @@ func writeBrowseForgeNativeConfig(userDataDir string, persona chromiumLaunchPers
 	if err != nil {
 		return "", fmt.Errorf("encode BrowseForge native config: %w", err)
 	}
-	if err := os.WriteFile(configPath, append(data, '\n'), 0644); err != nil {
+	if err := os.WriteFile(configPath, append(data, '\n'), 0600); err != nil {
 		return "", fmt.Errorf("write BrowseForge native config: %w", err)
 	}
 	return configPath, nil

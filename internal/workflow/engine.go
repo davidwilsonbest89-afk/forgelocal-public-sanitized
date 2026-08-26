@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"net"
 	"net/http"
 	"net/url"
 	"os"
@@ -221,13 +222,16 @@ func (e *Engine) downloadScreenshot(sessionID, path string, fullPage bool) error
 	if encoded := query.Encode(); encoded != "" {
 		endpoint += "?" + encoded
 	}
+	if _, err := validateWorkflowURL(endpoint); err != nil {
+		return err
+	}
 	req, err := http.NewRequest(http.MethodGet, endpoint, nil)
 	if err != nil {
 		return err
 	}
 	req.Header.Set("Authorization", "Bearer "+e.token)
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := workflowHTTPClient().Do(req)
 	if err != nil {
 		return err
 	}
@@ -248,37 +252,86 @@ func (e *Engine) downloadScreenshot(sessionID, path string, fullPage bool) error
 	if strings.HasPrefix(clean, "..") {
 		return fmt.Errorf("screenshot path must stay within the working directory")
 	}
-	if err := os.MkdirAll(filepath.Dir(clean), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(clean), 0700); err != nil {
 		return err
 	}
-	out, err := os.Create(clean)
+	out, err := os.OpenFile(clean, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
-	defer out.Close()
-	_, err = io.Copy(out, resp.Body)
-	return err
+	if _, err := io.Copy(out, resp.Body); err != nil {
+		_ = out.Close()
+		return err
+	}
+	return out.Close()
+}
+
+func validateWorkflowURL(raw string) (*url.URL, error) {
+	u, err := url.ParseRequestURI(raw)
+	if err != nil || u == nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" {
+		return nil, fmt.Errorf("workflow API URL must be HTTP(S) loopback")
+	}
+	if u.User != nil || u.Fragment != "" {
+		return nil, fmt.Errorf("workflow API URL must not contain userinfo or fragment")
+	}
+	host := strings.Trim(u.Hostname(), "[]")
+	if host != "localhost" {
+		ip := net.ParseIP(host)
+		if ip == nil || !ip.IsLoopback() {
+			return nil, fmt.Errorf("workflow API URL must be loopback")
+		}
+	}
+	if port := u.Port(); port != "" {
+		var n int
+		if _, scanErr := fmt.Sscanf(port, "%d", &n); scanErr != nil || n < 1 || n > 65535 {
+			return nil, fmt.Errorf("workflow API URL port is invalid")
+		}
+	}
+	return u, nil
+}
+
+func workflowHTTPClient() *http.Client {
+	return &http.Client{
+		Timeout: 30 * time.Second,
+		CheckRedirect: func(req *http.Request, _ []*http.Request) error {
+			if _, err := validateWorkflowURL(req.URL.String()); err != nil {
+				return fmt.Errorf("external workflow redirect refused: %w", err)
+			}
+			return nil
+		},
+	}
 }
 
 func (e *Engine) apiCall(method, path string, body any) (map[string]any, error) {
-	var r *http.Request
+	endpoint := strings.TrimRight(e.apiBase, "/") + path
+	if _, err := validateWorkflowURL(endpoint); err != nil {
+		return nil, err
+	}
+	var payload io.Reader
 	if body != nil {
-		data, _ := json.Marshal(body)
-		r, _ = http.NewRequest(method, e.apiBase+path, strings.NewReader(string(data)))
-	} else {
-		r, _ = http.NewRequest(method, e.apiBase+path, nil)
+		data, err := json.Marshal(body)
+		if err != nil {
+			return nil, fmt.Errorf("encode workflow request: %w", err)
+		}
+		payload = strings.NewReader(string(data))
+	}
+	r, err := http.NewRequest(method, endpoint, payload)
+	if err != nil {
+		return nil, fmt.Errorf("create workflow request: %w", err)
 	}
 	r.Header.Set("Authorization", "Bearer "+e.token)
 	r.Header.Set("Content-Type", "application/json")
 
-	resp, err := http.DefaultClient.Do(r)
+	resp, err := workflowHTTPClient().Do(r)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	var result map[string]any
-	json.NewDecoder(resp.Body).Decode(&result)
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("decode workflow response: %w", err)
+	}
 
 	if resp.StatusCode >= 400 {
 		if errObj, ok := result["error"].(map[string]any); ok {

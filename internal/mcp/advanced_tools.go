@@ -721,10 +721,10 @@ func (s *Server) finishScreenshotResult(args map[string]any, profileID string, d
 		if err != nil {
 			return nil, newError(-32602, err.Error())
 		}
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
 			return nil, newError(-32000, err.Error())
 		}
-		if err := os.WriteFile(path, data, 0644); err != nil {
+		if err := os.WriteFile(path, data, 0600); err != nil {
 			return nil, newError(-32000, err.Error())
 		}
 		artifactPath, err := filepath.Rel(filepath.Join(p.ProfileDir, "artifacts"), path)

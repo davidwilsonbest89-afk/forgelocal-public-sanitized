@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -165,9 +166,15 @@ func applyLegacyRuntimeConfig(cfg *Config, camoufoxPath, cloakBrowserPath string
 }
 
 func SetupLogger(logFile string) *slog.Logger {
-	os.MkdirAll("logs", 0755)
-	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err := os.MkdirAll(filepath.Dir(logFile), 0700); err != nil {
+		return slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	}
+	f, err := os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0600)
 	if err != nil {
+		return slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	}
+	if err := f.Chmod(0600); err != nil {
+		_ = f.Close()
 		return slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	}
 	return slog.New(slog.NewJSONHandler(f, nil))

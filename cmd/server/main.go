@@ -322,7 +322,7 @@ func runServer(flags *serveFlags) {
 			slog.Error("config encode", "error", err)
 			exitServerError(flags, "Config encode error: %v", err)
 		}
-		if err := os.WriteFile(flags.configPath, cfgJSON, 0644); err != nil {
+		if err := os.WriteFile(flags.configPath, cfgJSON, 0600); err != nil {
 			slog.Error("config write", "error", err)
 			exitServerError(flags, "Config write error: %v", err)
 		}

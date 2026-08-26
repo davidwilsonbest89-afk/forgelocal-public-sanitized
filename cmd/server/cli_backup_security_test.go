@@ -78,6 +78,27 @@ func TestCLIFullBackupRestoreRejectsTooManyEntries(t *testing.T) {
 	}
 }
 
+func TestCLIFullBackupUsesPrivateMode(t *testing.T) {
+	baseDir := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(baseDir, "profiles"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(baseDir, "profiles", "profile.json"), []byte(`{"synthetic":true}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	output := filepath.Join(t.TempDir(), "backup.tgz")
+	if err := createFullBackup(baseDir, output); err != nil {
+		t.Fatal(err)
+	}
+	info, err := os.Stat(output)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if mode := info.Mode().Perm(); mode != 0600 {
+		t.Fatalf("backup mode = %04o, want 0600", mode)
+	}
+}
+
 type restoreArchiveEntry struct {
 	name     string
 	typeflag byte

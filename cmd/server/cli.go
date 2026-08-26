@@ -617,12 +617,12 @@ func runMigrateCommand(args []string, global cliGlobal, stdout, stderr io.Writer
 		for _, plan := range plans {
 			backup := plan.path + ".v1.bak"
 			if _, err := os.Stat(backup); os.IsNotExist(err) {
-				if err := os.WriteFile(backup, plan.data, 0644); err != nil {
+				if err := os.WriteFile(backup, plan.data, 0600); err != nil {
 					fmt.Fprintf(stderr, "migrate backup %s failed: %v\n", plan.path, err)
 					return 1
 				}
 			}
-			if err := os.WriteFile(plan.path, plan.out, 0644); err != nil {
+			if err := os.WriteFile(plan.path, plan.out, 0600); err != nil {
 				fmt.Fprintf(stderr, "migrate write %s failed: %v\n", plan.path, err)
 				return 1
 			}
@@ -784,7 +784,7 @@ func writeDefaultConfig(path, baseDir string, force bool) error {
 		return err
 	}
 	data = append(data, '\n')
-	return os.WriteFile(path, data, 0644)
+	return os.WriteFile(path, data, 0600)
 }
 
 func defaultConfig(baseDir string) *config.Config {

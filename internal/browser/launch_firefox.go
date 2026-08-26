@@ -63,7 +63,7 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("browser data path: %w", err)
 	}
-	if err := os.MkdirAll(userDataDir, 0755); err != nil {
+	if err := os.MkdirAll(userDataDir, 0700); err != nil {
 		return nil, fmt.Errorf("create browser data dir: %w", err)
 	}
 	cleanProfileLocks(userDataDir)
@@ -77,7 +77,7 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("downloads path: %w", err)
 	}
-	if err := os.MkdirAll(downloadsDir, 0755); err != nil {
+	if err := os.MkdirAll(downloadsDir, 0700); err != nil {
 		return nil, fmt.Errorf("create downloads dir: %w", err)
 	}
 
