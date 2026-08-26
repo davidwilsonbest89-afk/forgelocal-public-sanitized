@@ -1,0 +1,10 @@
+utc=2026-08-26T00:50:00Z
+cwd=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+commands=unzip extraction + tar extraction + sha256sum -c MANIFEST.sha256 + git fsck --full
+unzip_rc=0
+tar_rc=0
+zip_manifest_rc=0
+tar_manifest_rc=0
+fsck_rc=0
+manifest_mismatch=0
+notes=Manifest excludes itself; both fresh extractions validated all listed files.
