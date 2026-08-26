@@ -1,0 +1,364 @@
+=== CLOSURE PREFLIGHT UTC ===
+2026-08-26T17:58:43+00:00
+=== CWD ===
+/home/ubuntu
+=== UNAME ===
+Linux bd76b5bace51 6.1.102 #1 SMP PREEMPT_DYNAMIC Tue Mar 25 09:02:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+=== ARCHITECTURE ===
+x86_64
+=== DF -H ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G  7.8G   32G  20% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           789M  180K  789M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+=== DU -XHD1 ===
+51M	/home/ubuntu/.browser_data_dir
+84K	/home/ubuntu/.cache
+68K	/home/ubuntu/.config
+616M	/home/ubuntu/.local
+16K	/home/ubuntu/.logs
+11M	/home/ubuntu/.npm
+244M	/home/ubuntu/.nvm
+4.0K	/home/ubuntu/Downloads
+8.0K	/home/ubuntu/.secrets
+32K	/home/ubuntu/upload
+4.0M	/home/ubuntu/forgelocal-final-env-qualification
+2.7M	/home/ubuntu/skills
+12K	/home/ubuntu/.manus
+8.0K	/home/ubuntu/forgelocal-final-environment-closure
+926M	/home/ubuntu
+=== FREE -H ===
+               total        used        free      shared  buff/cache   available
+Mem:           3.8Gi       910Mi       2.4Gi        11Mi       990Mi       3.0Gi
+Swap:          2.0Gi          0B       2.0Gi
+=== ACTIVE PROCESSES ===
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.3  21028 12364 ?        Ss   08:29   0:00 /sbin/init nomodules
+root           2  0.0  0.0      0     0 ?        S    08:29   0:00 [kthreadd]
+root           3  0.0  0.0      0     0 ?        I<   08:29   0:00 [rcu_gp]
+root           4  0.0  0.0      0     0 ?        I<   08:29   0:00 [rcu_par_gp]
+root           5  0.0  0.0      0     0 ?        I<   08:29   0:00 [slub_flushwq]
+root           6  0.0  0.0      0     0 ?        I<   08:29   0:00 [netns]
+root           8  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/0:0H-events_highpri]
+root           9  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:0-ext4-rsv-conversion]
+root          10  0.0  0.0      0     0 ?        I<   08:29   0:00 [mm_percpu_wq]
+root          11  0.0  0.0      0     0 ?        I    08:29   0:00 [rcu_tasks_kthread]
+root          12  0.0  0.0      0     0 ?        I    08:29   0:00 [rcu_tasks_trace_kthread]
+root          13  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/0]
+root          14  0.0  0.0      0     0 ?        I    08:29   0:00 [rcu_preempt]
+root          15  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/0]
+root          16  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/0:1-mm_percpu_wq]
+root          17  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/0]
+root          18  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/1]
+root          19  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/1]
+root          20  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/1]
+root          21  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/1:0-cgroup_destroy]
+root          22  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/1:0H-kblockd]
+root          23  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/2]
+root          24  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/2]
+root          25  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/2]
+root          27  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/2:0H-events_highpri]
+root          28  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/3]
+root          29  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/3]
+root          30  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/3]
+root          32  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/3:0H-kblockd]
+root          33  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/4]
+root          34  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/4]
+root          35  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/4]
+root          36  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/4:0-slub_flushwq]
+root          37  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/4:0H-kblockd]
+root          38  0.0  0.0      0     0 ?        S    08:29   0:00 [cpuhp/5]
+root          39  0.0  0.0      0     0 ?        S    08:29   0:00 [migration/5]
+root          40  0.0  0.0      0     0 ?        S    08:29   0:00 [ksoftirqd/5]
+root          41  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/5:0-events]
+root          42  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/5:0H-kblockd]
+root          44  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:1-flush-254:0]
+root          45  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:2-flush-254:0]
+root          46  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:3-events_unbound]
+root          47  0.0  0.0      0     0 ?        S    08:29   0:00 [kdevtmpfs]
+root          48  0.0  0.0      0     0 ?        I<   08:29   0:00 [inet_frag_wq]
+root          49  0.0  0.0      0     0 ?        S    08:29   0:00 [kauditd]
+root          50  0.0  0.0      0     0 ?        S    08:29   0:00 [khungtaskd]
+root          51  0.0  0.0      0     0 ?        S    08:29   0:00 [oom_reaper]
+root          52  0.0  0.0      0     0 ?        I<   08:29   0:00 [writeback]
+root          53  0.0  0.0      0     0 ?        S    08:29   0:00 [kcompactd0]
+root          54  0.0  0.0      0     0 ?        SN   08:29   0:00 [ksmd]
+root          55  0.0  0.0      0     0 ?        SN   08:29   0:00 [khugepaged]
+root          56  0.0  0.0      0     0 ?        I<   08:29   0:00 [kintegrityd]
+root          57  0.0  0.0      0     0 ?        I<   08:29   0:00 [kblockd]
+root          58  0.0  0.0      0     0 ?        I<   08:29   0:00 [blkcg_punt_bio]
+root          59  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/4:1-mm_percpu_wq]
+root          60  0.0  0.0      0     0 ?        S    08:29   0:00 [watchdogd]
+root          61  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/3:1-events]
+root          62  0.0  0.0      0     0 ?        I<   08:29   0:00 [rpciod]
+root          63  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/0:1H-kblockd]
+root          64  0.0  0.0      0     0 ?        I<   08:29   0:00 [xprtiod]
+root          97  0.0  0.0      0     0 ?        S    08:29   0:00 [kswapd0]
+root         100  0.0  0.0      0     0 ?        I<   08:29   0:00 [nfsiod]
+root         103  0.0  0.0      0     0 ?        I<   08:29   0:00 [xfsalloc]
+root         104  0.0  0.0      0     0 ?        I<   08:29   0:00 [xfs_mru_cache]
+root         107  0.0  0.0      0     0 ?        I<   08:29   0:00 [kthrotld]
+root         110  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/0:2-events]
+root         112  0.0  0.0      0     0 ?        S    08:29   0:00 [irq/24-ACPI:Ged]
+root         157  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/3:1H-kblockd]
+root         166  0.0  0.0      0     0 ?        I<   08:29   0:00 [iscsi_conn_clea]
+root         183  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/5:1-mm_percpu_wq]
+root         184  0.0  0.0      0     0 ?        I<   08:29   0:00 [mld]
+root         185  0.0  0.0      0     0 ?        I<   08:29   0:00 [ipv6_addrconf]
+root         186  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/2:1H-kblockd]
+root         188  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/2:1-mm_percpu_wq]
+root         194  0.0  0.0   1112     4 ?        S    08:29   0:00 bpfilter_umh
+root         195  0.0  0.0      0     0 ?        I<   08:29   0:00 [kstrp]
+root         200  0.0  0.0      0     0 ?        I<   08:29   0:00 [zswap-shrink]
+root         201  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/u13:0]
+root         250  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/3:2-mm_percpu_wq]
+root         269  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/1:1-mm_percpu_wq]
+root         270  0.0  0.0      0     0 ?        I<   08:29   0:00 [ext4-rsv-conver]
+root         286  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/4:1H-kblockd]
+root         287  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/1:1H-kblockd]
+root         289  0.0  0.0      0     0 ?        I<   08:29   0:00 [kworker/5:1H-kblockd]
+root         292  0.0  0.4  51540 16860 ?        S<s  08:29   0:00 /usr/lib/systemd/systemd-journald
+root         574  0.0  0.1  23932  5988 ?        Ss   08:29   0:00 /usr/lib/systemd/systemd-udevd
+message+     623  0.0  0.0   8128  3812 ?        Ss   08:29   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+61876        625  0.0  0.0   2700  1004 ?        SLs  08:29   0:00 /usr/bin/earlyoom -r 3600
+root         626  0.0  0.1  17520  6628 ?        Ss   08:29   0:00 /usr/lib/systemd/systemd-logind
+root         632  0.0  1.3 1235964 54440 ?       S<Lsl 08:29   0:00 /usr/bin/envd -cmd /e2b-startup.sh
+root         634  0.0  0.1  19564  7220 ?        Ss   08:29   0:00 (agetty)
+root         635  0.0  0.0   3116  1064 tty1     Ss+  08:29   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+_chrony      642  0.0  0.0  11076  2516 ?        S    08:29   0:00 /usr/sbin/chronyd
+root         681  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:4-events_unbound]
+root         684  0.0  0.0   4324  3204 ?        S<   08:29   0:00 /bin/bash /e2b-startup.sh
+root         706  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/2:2-cgroup_destroy]
+root         707  0.0  0.1  11612  5508 ?        S<   08:29   0:00 sudo -u ubuntu /startup.sh
+ubuntu       708  0.0  0.0   5016  3772 ?        S<   08:29   0:00 /bin/bash /startup.sh
+ubuntu       739  0.0  0.0   7996  2388 ?        S<s  08:29   0:00 dbus-daemon --session --fork --address=unix:path=/tmp/dbus-session-bus-socket
+root         750  0.0  0.5  35932 24152 ?        S<s  08:29   0:00 /usr/bin/python3 /usr/bin/supervisord
+root         751  0.0  0.0   2700  1008 ?        S<L  08:29   0:00 /usr/bin/earlyoom -m 10,5 -s 100,100 -r 0 --avoid (^|/)(supervisord|sandbox-runtime|runtime-upgrade|Xorg|x11vnc|websockify|ws-server|ws-mount|statesync|manus-[a-z-]*|tini|sshd)$
+ubuntu       752  0.0  0.3 1341212 15616 ?       S<l  08:29   0:00 /usr/local/bin/sandbox-process-observer
+ubuntu       753  0.0  1.5 1312364 61468 ?       S<l  08:29   0:00 /usr/local/bin/sandbox-runtime
+root         754  0.0  1.9 548804 78044 ?        S<l  08:29   0:00 /usr/lib/xorg/Xorg :0 -noreset -nolisten tcp -logfile /var/log/Xorg.0.log -config /etc/X11/xorg.conf
+ubuntu       755  0.0  0.5 1277508 22876 ?       S<l  08:29   0:00 /usr/local/bin/runtime-upgrade
+ubuntu       756  0.0  0.0   4752  3504 ?        S<   08:29   0:00 /bin/bash /opt/.manus/.packages/scripts/start-chrome.sh
+root         757  0.0  0.3 1275404 12344 ?       S<l  08:29   0:00 websockify 5901 localhost:5900
+ubuntu       758  0.0  0.3 1275932 13028 ?       S<l  08:29   0:00 /usr/local/bin/ws-server --listen 0.0.0.0:19780 --mount-base /mnt --mount-bin /usr/local/bin/ws-mount
+root         759  0.0  0.5  41380 20940 ?        S<   08:29   0:00 x11vnc -display :0 -repeat -rfbport 5900 -geometry 1280x1029 -shared -forever -alwaysshared -permitfiletransfer -noxrecord -noxfixes -noxdamage -dpms -desktop chrome -noshm
+ubuntu       872  0.0  7.7 55659736 313996 ?     S<l  08:29   0:02 /usr/lib/chromium/chromium --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --disable-features=HighEfficiencyModeAvailable,HighEfficiencyModeToggle,DestroyProfileOnBrowserClose,Translate,PaintHolding,AcceptCHFrame --disable-permission-action-reporting --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --no-default-browser-check --disable-dev-shm-usage --disable-hang-monitor --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --use-angle=swiftshader-webgl --ozone-override-screen-size=1280,1029 --noerrdialogs --window-size=1280,1029 --window-position=0,0 --lang=en-US --num-raster-threads=4 --remote-debugging-port=9222 --load-extension=/opt/.manus/.packages/chrome-extensions/ublock-lite --user-data-dir=/home/ubuntu/.browser_data_dir --download-default-directory=/home/ubuntu/Downloads
+ubuntu       888  0.0  0.1 54542224 4144 ?       S<l  08:29   0:00 /usr/lib/chromium/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=5 --shared-client-connection
+ubuntu       892  0.0  0.1 54534004 4180 ?       S<   08:29   0:00 /usr/lib/chromium/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=4 --shared-client-connection
+ubuntu       894  0.0  1.6 55184772 65880 ?      S<   08:29   0:00 /usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ubuntu       895  0.0  1.6 55184764 65796 ?      S<   08:29   0:00 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ubuntu       899  0.0  0.4 55184784 18544 ?      S<   08:29   0:00 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ubuntu       918  0.0  3.1 55546640 125188 ?     S<l  08:29   0:00 /usr/lib/chromium/chromium --type=gpu-process --disable-dev-shm-usage --disable-breakpad --enable-gpu-rasterization --ozone-platform=x11 --use-angle=swiftshader-webgl --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,14294420545452562047,9469423695053790826,262144 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708988185955192
+ubuntu       921  0.0  2.4 55013968 97256 ?      Sl   08:29   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8784313375464038644,915059709222587707,524288 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708989122997041
+ubuntu       946  0.0  1.0 55251280 42936 ?      S<l  08:29   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8698336276883141512,6667406349070442013,524288 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708990060038890
+ubuntu       964  0.0  0.0   3156  1008 ?        S<   08:29   0:00 tail -f /var/log/supervisor/sandbox-earlyoom.err.log /var/log/supervisor/sandbox-earlyoom.log /var/log/supervisor/sandbox-process-observer.log /var/log/supervisor/sandbox-runtime.err.log /var/log/supervisor/sandbox-runtime.log /var/log/supervisor/supervisord.log
+root        1036  0.0  0.0      0     0 ?        I    08:29   0:00 [kworker/u12:5-events_unbound]
+ubuntu      1037  0.0  2.5 1518549592 104584 ?   S<l  08:29   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=5400503 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,11438431268231495036,10265841381648439950,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708994745248135
+ubuntu      1071  0.0  2.5 1518549592 103600 ?   S<l  08:29   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=13 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=5507300 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,7025139036083743332,10156130213467403569,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708998493415531
+root        1105  0.0  0.0      0     0 ?        I    17:57   0:00 [kworker/u12:6-flush-254:0]
+ubuntu      1117  0.1  2.3 55460432 93568 ?      S<l  17:57   0:00 /usr/lib/chromium/chromium --type=utility --utility-sub-type=on_device_model.mojom.OnDeviceModelService --lang=en-US --service-sandbox-type=on_device_model_execution --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,6301840976763537213,10638592319366428411,524288 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190708999430457380
+ubuntu      1129  0.0  0.6 55374856 27820 ?      S<   17:57   0:00 /usr/lib/chromium/chromium --type=broker
+root        1179  0.0  0.0      0     0 ?        I    17:58   0:00 [kworker/2:0]
+root        1180  0.0  0.0      0     0 ?        I    17:58   0:00 [kworker/1:2-cgroup_destroy]
+ubuntu      1181  0.3  0.6 1348856 27404 ?       S<l  17:58   0:00 /usr/local/bin/statesync --config /home/ubuntu/.config/state-sync/state-sync-config.yaml
+ubuntu      1192  0.1  2.5 1518541460 101072 ?   S<l  17:58   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=16 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=34089681799 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,14066143847784518391,4457188035167879157,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190709001304541078
+ubuntu      1201  0.0  1.6 1518540884 68072 ?    S<l  17:58   0:00 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=17 --time-ticks-at-unix-epoch=-1787732991778476 --launch-time-ticks=34089722236 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,17820699117160175383,3173302117542930332,2097152 --field-trial-handle=3,i,8325866017272880703,795250513947652069,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,5337620136693804902,9753172207217177109,4 --trace-process-track-uuid=3190709002241582927
+ubuntu      1432  0.0  0.1   5144  4328 pts/0    S<s  17:58   0:00 /usr/bin/bash --noprofile --norc -i
+ubuntu      1453  0.0  0.0   3124  1004 ?        S<   17:58   0:00 sleep 10
+ubuntu      1464  0.0  0.1   8332  4268 pts/0    R<+  17:58   0:00 ps auxww
+=== EXISTING RESTORED WORKTREE ===
+/home/ubuntu/forgelocal-final-env-qualification/FINAL_ENVIRONMENT_BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-final-env-qualification/FINAL_ENVIRONMENT_PUBLIC_VERIFICATION_RAW.log
+/home/ubuntu/forgelocal-final-env-qualification/FINAL_REFERENCES_FINAL_AUDIT.txt
+/home/ubuntu/forgelocal-final-env-qualification/install_go.py
+/home/ubuntu/forgelocal-final-env-qualification/install_release_scanners.sh
+/home/ubuntu/forgelocal-final-env-qualification/inventory.sh
+/home/ubuntu/forgelocal-final-env-qualification/reference-integrity-raw.log
+/home/ubuntu/forgelocal-final-env-qualification/reference_verify.sh
+/home/ubuntu/forgelocal-final-env-qualification/repo/FINAL_ENVIRONMENT_BASELINE_DISCOVERY_RAW.log
+/home/ubuntu/forgelocal-final-env-qualification/repo/FINAL_ENVIRONMENT_MATRIX.md
+/home/ubuntu/forgelocal-final-env-qualification/repo/FINAL_ENVIRONMENT_TESTS_RAW.log
+/home/ubuntu/forgelocal-final-env-qualification/repo/FINAL_SCANNER_FINDINGS.tsv
+/home/ubuntu/forgelocal-final-env-qualification/repo/FINAL_SECURITY_ENVIRONMENT_REPORT.md
+/home/ubuntu/forgelocal-final-env-qualification/run_environment_checks.sh
+/home/ubuntu/forgelocal-final-env-qualification/run_qualification_scans.sh
+/home/ubuntu/forgelocal-final-env-qualification/run_regression.sh
+=== TOOL VERSIONS BEFORE INSTALLATION ===
+
+[go]
+NOT_INSTALLED
+
+[node]
+v22.13.0
+
+[pnpm]
+11.24.0
+
+[git]
+git version 2.43.0
+
+[git-lfs]
+NOT_INSTALLED
+
+[gh]
+gh version 2.97.0 (2026-07-31)
+
+[docker]
+NOT_INSTALLED
+
+[firefox]
+NOT_INSTALLED
+
+[chromium]
+Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS
+
+[chromium-browser]
+NOT_INSTALLED
+
+[semgrep]
+NOT_INSTALLED
+
+[grype]
+NOT_INSTALLED
+
+[shellcheck]
+NOT_INSTALLED
+
+[yamllint]
+NOT_INSTALLED
+
+[gitleaks]
+NOT_INSTALLED
+
+[govulncheck]
+NOT_INSTALLED
+
+[trivy]
+NOT_INSTALLED
+
+[syft]
+NOT_INSTALLED
+
+[osv-scanner]
+NOT_INSTALLED
+=== POST-CLONE CLOSURE REPOSITORY ===
+2026-08-26T17:59:02+00:00
+/home/ubuntu/forgelocal-final-environment-closure/repo
+## [32mvalidation/final-environment-qualification[m...[31morigin/validation/final-environment-qualification[m
+  main                                                                [m f09af4b [[34morigin/main[m] docs: require baseline discovery before future lots
+* [32mvalidation/final-environment-qualification                          [m 4e94467 [[34morigin/validation/final-environment-qualification[m] evidence: record public qualification verification
+  [31mremotes/origin/HEAD                                                 [m -> origin/main
+  [31mremotes/origin/audit/independent-validation-20260824                [m 08107b3 audit: publish independently validated archive results
+  [31mremotes/origin/audit/t00-t42-docker-hardening-v6                    [m 1d585ab Package isolated Docker hardening evidence
+  [31mremotes/origin/audit/t00-t42-docker-image-validation-v6             [m 80a4a15 Package Docker image validation blocker
+  [31mremotes/origin/audit/t00-t42-docker-native-nonruntime-validation    [m 38a273d Package Docker native non-runtime validation
+  [31mremotes/origin/audit/t00-t42-docker-v6-independent-image-validation [m b53eccd Publish final Docker V6 evidence package
+  [31mremotes/origin/audit/t00-t42-external-validation-protocols-v6       [m b8efc38 Package external validation protocols
+  [31mremotes/origin/audit/t00-t42-gitleaks-historical-method-hardening-v6[m 6fd0e31 Package historical Gitleaks method hardening
+  [31mremotes/origin/audit/t00-t42-lfs-conservation-audit                 [m a236291 Package LFS conservation audit evidence
+  [31mremotes/origin/audit/t00-t42-lfs-conservation-restoration-v6        [m 1fa32f6 Package LFS conservation restoration
+  [31mremotes/origin/audit/t00-t42-license-compliance-triage-v6           [m 0931ec8 Package license compliance triage
+  [31mremotes/origin/audit/t00-t42-license-static-debt-triage             [m fb9d20c Package license and static debt triage
+  [31mremotes/origin/audit/t00-t42-osv-toolchain-reconciliation           [m 89dea88 Package OSV toolchain reconciliation evidence
+  [31mremotes/origin/audit/t00-t42-osv-toolchain-reconciliation-v6        [m 0f055e7 Package OSV toolchain reconciliation
+  [31mremotes/origin/audit/t00-t42-post-v6-revalidation-final-matrix      [m 2d4a51d Finalize revalidation matrix package
+  [31mremotes/origin/audit/t00-t42-post-v6-roadmap-final-matrix           [m 3b46a17 Package post V6 final matrix
+  [31mremotes/origin/audit/t00-t42-prehuman-validation                    [m 861880e evidence: publish code-fixed finalization bundle
+  [31mremotes/origin/audit/t00-t42-product-decisions-required-v6          [m 93bc841 Package required product decisions
+  [31mremotes/origin/audit/t00-t42-self-validation-enhanced-v5            [m 8cea3be Include public clone verification evidence
+  [31mremotes/origin/audit/t00-t42-self-validation-synthetic-e2e          [m b34fa5c Record final published v4 head
+  [31mremotes/origin/audit/t00-t42-static-debt-prioritization-v6          [m 78b6c49 Package static debt prioritization
+  [31mremotes/origin/audit/t00-t42-t10-t15-e2e-validation-v6              [m 8c38830 Package T10 T15 E2E validation
+  [31mremotes/origin/audit/t00-t42-t10-t15-independent-review-v6          [m 47303ea Finalize independent T10 T15 evidence package
+  [31mremotes/origin/audit/t00-t42-t30-remote-evidence-reconciliation-v6  [m e5241c9 Package T30 remote evidence reconciliation
+  [31mremotes/origin/audit/t00-t42-v6-findings-remediation                [m 727e94b Freeze V6 local qualified baseline
+  [31mremotes/origin/audit/t28-t42-evidence-correction                    [m 6ae02e4 docs: align V2 delivery head metadata
+  [31mremotes/origin/continuation-t00-t27-canonical                       [m 69411e6 Archive verified T00-T27 packages with LFS fragments
+  [31mremotes/origin/continuation-t27-r1-canonical                        [m 76551a9 docs(t27): register continuity branch
+  [31mremotes/origin/continuity-t00-t26-handover                          [m 1a5112b docs(continuity): add T00-T26 restart handover
+  [31mremotes/origin/continuity-t24-t24sr                                 [m 7a375cc docs(governance): require baseline discovery evidence
+  [31mremotes/origin/continuity-t25-synthetic-cookie-fixtures             [m a7ccfbc feat(t25): add synthetic cookie fixture manifests
+  [31mremotes/origin/continuity-t26-simulated-proxy-provider              [m 930003c feat(t26): add simulated local proxy provider catalogue
+  [31mremotes/origin/feature/t28-local-extensions-controlled              [m 053fd8f Sync T28 closure metadata with current head
+  [31mremotes/origin/handover/t28-t42-new-session                         [m f03b584 docs: add T28-T42 new session handover
+  [31mremotes/origin/main                                                 [m f09af4b docs: require baseline discovery before future lots
+  [31mremotes/origin/validation/final-environment-qualification           [m 4e94467 evidence: record public qualification verification
+  [31mremotes/origin/validation/gosec-r4                                  [m 2d528ea evidence: record final R4 post-handover checks
+  [31mremotes/origin/validation/gosec-r5                                  [m 28f66a1 evidence: reconcile GOSEC R5 finding count
+  [31mremotes/origin/validation/gosec-r6                                  [m 3656dba evidence: publish consolidated GOSEC R6 review
+  [31mremotes/origin/validation/gosec-r7                                  [m b907dfc evidence: record final R7 v4 public verification
+  [31mremotes/origin/validation/gosec-r7-final-remediation                [m 97ce9b8 evidence: record public verification of remediation package
+  [31mremotes/origin/validation/operational-v1                            [m 8004818 evidence: record public R3 verification
+  [31mremotes/origin/work/t28-agent03-audit                               [m 34d3ba9 archive T28 audit delta bundle
+  [31mremotes/origin/work/t31-canvas-webgl-audio                          [m 9dad987 evidence: add T31 validation bundle
+  [31mremotes/origin/work/t32-client-rects                                [m d7279e8 evidence: add T32 validation bundle
+  [31mremotes/origin/work/t33-synthetic-geolocation                       [m 6936327 evidence: add T33 validation bundle
+  [31mremotes/origin/work/t34-hardware-diagnostics                        [m c7f66da evidence: add T34 validation bundle
+  [31mremotes/origin/work/t35-font-bundle                                 [m 891b2d1 evidence: add T35 validation bundle
+  [31mremotes/origin/work/t36-drift-detection                             [m 099ff7b evidence: add T36 validation bundle
+  [31mremotes/origin/work/t37-profile-health                              [m c0ad051 evidence: add T37 validation bundle
+  [31mremotes/origin/work/t38-session-lifecycle                           [m f8fcfa0 evidence: add T38 lifecycle validation bundle
+  [31mremotes/origin/work/t39-secret-import-export-blocked                [m 08061f1 evidence: add T39 blocked verdict
+  [31mremotes/origin/work/t40-integration-gated                           [m 077ba90 evidence: add T40 integration gate
+  [31mremotes/origin/work/t41-release-readiness-blocked                   [m 944376f evidence: add compact T41 blocked verdict
+  [31mremotes/origin/work/t42-final-closure                               [m 6489af3 evidence: add compact T42 final closure
+4e944670b8f3b883bb673363a20a4e6c7c20c25a
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch)
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
+=== TOOLS INSTALLED DURING CLOSURE ===
+2026-08-26T18:00:53+00:00
+ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+yamllint 1.33.0
+1.175.0
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G  9.3G   31G  24% /
+{
+  "version": "go1.25.13",
+  "url": "https://go.dev/dl/go1.25.13.linux-amd64.tar.gz",
+  "sha256": "39042a078ea9ceebe3ecda4a7188f0f5b96e14a071d27923ba7f40b456e85ae3",
+  "install_dir": "/home/ubuntu/forgelocal-final-environment-closure/tools/go"
+}
+=== BINARY SCANNERS INSTALLATION ===
+2026-08-26T18:27:08+00:00
+PROVENANCE=official GitHub releases, SHA-256 sidecars verified
+gosec_2.29.0_linux_amd64.tar.gz: OK
+gitleaks_8.30.1_linux_x64.tar.gz: OK
+grype_0.117.0_linux_amd64.tar.gz: OK
+syft_1.51.0_linux_amd64.tar.gz: OK
+trivy_0.74.0_Linux-64bit.tar.gz: OK
+osv-scanner_linux_amd64: OK
+=== VERSIONS ===
+Version: 2.29.0
+Git tag: v2.29.0
+Build date: 2026-08-26T08:27:32Z
+8.30.1
+Application:         grype
+Version:             0.117.0
+BuildDate:           2026-08-10T16:48:30Z
+GitCommit:           b5fa92bbcbef655497e3be840a2f718380e2cdd3
+GitDescription:      v0.117.0
+Platform:            linux/amd64
+GoVersion:           go1.26.3
+Compiler:            gc
+Syft Version:        v1.51.0
+Supported DB Schema: 6
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+Version: 0.74.0
+osv-scanner version: 2.5.1
+osv-scalibr version: 0.5.2
+commit: c84fa4568f2526d0333e9a914ea8a0a5f74ad68b
+built at: 2026-08-17T03:44:26Z
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        40G   12G   28G  31% /

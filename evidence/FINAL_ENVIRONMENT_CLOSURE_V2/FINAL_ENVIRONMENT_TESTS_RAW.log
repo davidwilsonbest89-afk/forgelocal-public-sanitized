@@ -1,0 +1,167 @@
+=== GOSEC_SOURCE_ONLY ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/gosec -fmt json -out /home/ubuntu/forgelocal-final-environment-closure/independent-results/gosec.json ./cmd/... ./internal/...
+2026-08-26T18:41:05+00:00
+[gosec] 2026/08/26 18:41:05 Including rules: default
+[gosec] 2026/08/26 18:41:05 Excluding rules: default
+[gosec] 2026/08/26 18:41:05 Including analyzers: default
+[gosec] 2026/08/26 18:41:05 Excluding analyzers: default
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/cmd/server
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/cmd/back01-core
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/runtime
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/cmd/systemvault-doctor
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/launch
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/browser
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/productschema
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/proxies
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/secrets
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/backup
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/geolocation
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/spike
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/drift
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/mcp
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/profile
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/config
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/groups
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/hardware
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/profilehealth
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/templates
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/workflow
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/fingerprint
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/humanize
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/api
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/extensions
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/history
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/localvault
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/profilemigration
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/sessiontrack
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/cookies
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/environment
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/fonts
+[gosec] 2026/08/26 18:41:05 Import directory: /home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/proxyprovider
+EXIT_CODE=1
+=== GITLEAKS_SOURCE_ONLY ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/gitleaks detect --source /home/ubuntu/forgelocal-final-environment-closure/source-independent --no-git --no-banner --redact --report-format json --report-path /home/ubuntu/forgelocal-final-environment-closure/independent-results/gitleaks-source.json
+2026-08-26T18:41:05+00:00
+[90m6:41PM[0m [32mINF[0m [1mscanned ~17024091 bytes (17.02 MB) in 745ms[0m
+[90m6:41PM[0m [32mINF[0m [1mno leaks found[0m
+EXIT_CODE=0
+=== GITLEAKS_EXTRACTION_NO_GIT ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/gitleaks detect --source /home/ubuntu/forgelocal-final-environment-closure/source-independent --no-git --no-banner --redact --report-format json --report-path /home/ubuntu/forgelocal-final-environment-closure/independent-results/gitleaks-extraction.json
+2026-08-26T18:41:06+00:00
+[90m6:41PM[0m [32mINF[0m [1mscanned ~17024091 bytes (17.02 MB) in 737ms[0m
+[90m6:41PM[0m [32mINF[0m [1mno leaks found[0m
+EXIT_CODE=0
+=== OSV_GO_AND_PNPM ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/osv-scanner scan source -r /home/ubuntu/forgelocal-final-environment-closure/source-independent --format json
+2026-08-26T18:41:07+00:00
+Scanning dir /home/ubuntu/forgelocal-final-environment-closure/source-independent
+Starting filesystem walk for root: /
+Scanned /home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard/pnpm-lock.yaml file and found 698 packages
+Scanned /home/ubuntu/forgelocal-final-environment-closure/source-independent/go.mod file and found 24 packages
+End status: 80 dirs visited, 645 inodes visited, 2 Extract calls, 36.165269ms elapsed, 36.165759ms wall time
+{
+  "results": [],
+  "experimental_config": {
+    "licenses": {
+      "summary": false,
+      "allowlist": null
+    }
+  }
+}
+EXIT_CODE=0
+=== OSV_PNPM ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/osv-scanner scan source -r /home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard --format json
+2026-08-26T18:41:14+00:00
+Scanning dir /home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard
+Starting filesystem walk for root: /
+Scanned /home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard/pnpm-lock.yaml file and found 698 packages
+End status: 17 dirs visited, 144 inodes visited, 1 Extract calls, 27.436264ms elapsed, 27.436488ms wall time
+{
+  "results": [],
+  "experimental_config": {
+    "licenses": {
+      "summary": false,
+      "allowlist": null
+    }
+  }
+}
+EXIT_CODE=0
+=== TRIVY_FILESYSTEM ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/trivy fs --scanners vuln,secret,misconfig --format json --output /home/ubuntu/forgelocal-final-environment-closure/independent-results/trivy.json --skip-dirs /home/ubuntu/forgelocal-final-environment-closure/source-independent/.git /home/ubuntu/forgelocal-final-environment-closure/source-independent
+2026-08-26T18:41:19+00:00
+2026-08-26T18:41:19Z	INFO	[vulndb] Need to update DB
+2026-08-26T18:41:19Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-26T18:41:19Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+30.17 MiB / 109.17 MiB [----------->____________________________] 27.64% ? p/s ?68.27 MiB / 109.17 MiB [------------------------->______________] 62.53% ? p/s ?105.05 MiB / 109.17 MiB [------------------------------------->_] 96.22% ? p/s ?109.17 MiB / 109.17 MiB [----------------------->] 100.00% 131.64 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 131.64 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 131.64 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 123.14 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 123.14 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 123.14 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 115.20 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 115.20 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 115.20 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 107.77 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 107.77 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 107.77 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 100.81 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 100.81 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [----------------------->] 100.00% 100.81 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 94.31 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 94.31 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 94.31 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 88.23 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 88.23 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 88.23 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [------------------------>] 100.00% 82.53 MiB p/s ETA 0s109.17 MiB / 109.17 MiB [---------------------------] 100.00% 22.39 MiB p/s 5.1s2026-08-26T18:41:25Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-26T18:41:25Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-26T18:41:25Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-26T18:41:25Z	INFO	[checks-client] Need to update the checks bundle
+2026-08-26T18:41:25Z	INFO	[checks-client] Downloading the checks bundle...
+234.65 KiB / 234.65 KiB [----------------------------------] 100.00% ? p/s 100ms2026-08-26T18:41:27Z	INFO	[secret] Secret scanning is enabled
+2026-08-26T18:41:27Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-26T18:41:27Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-26T18:41:29Z	INFO	[pnpm] Run "pnpm install" to collect the license information of packages	dir="forge-dashboard/node_modules"
+2026-08-26T18:41:30Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-26T18:41:30Z	INFO	Number of language-specific files	num=2
+2026-08-26T18:41:30Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-26T18:41:30Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-26T18:41:30Z	INFO	Detected config files	num=2
+EXIT_CODE=0
+=== SYFT_JSON ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/syft scan dir:/home/ubuntu/forgelocal-final-environment-closure/source-independent -o json=/home/ubuntu/forgelocal-final-environment-closure/independent-results/syft.json
+2026-08-26T18:41:30+00:00
+[0;90m[0003][0m [0;33m WARN[0m no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+EXIT_CODE=0
+=== SYFT_CDX ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/syft scan dir:/home/ubuntu/forgelocal-final-environment-closure/source-independent -o cyclonedx-json=/home/ubuntu/forgelocal-final-environment-closure/independent-results/syft.cdx.json
+2026-08-26T18:41:37+00:00
+[0;90m[0006][0m [0;33m WARN[0m no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+EXIT_CODE=0
+=== GRYPE_SYFT ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/bin/grype sbom:/home/ubuntu/forgelocal-final-environment-closure/independent-results/syft.json -o json
+2026-08-26T18:41:47+00:00
+[0;90m[0000][0m [0;33m WARN[0m go binary packages were found but none carry function symbols; go vulnerability matching falls back to module granularity and may report false positives. if scanning an SBOM, regenerate it with symbol capture enabled for more precise results.
+EXIT_CODE=124
+=== SEMGREP ===
+COMMAND=/home/ubuntu/forgelocal-final-environment-closure/tools/semgrep-venv/bin/semgrep scan --config auto --json --output /home/ubuntu/forgelocal-final-environment-closure/independent-results/semgrep.json /home/ubuntu/forgelocal-final-environment-closure/source-independent
+2026-08-26T18:46:47+00:00
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 649 files tracked by git with 1074 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      60     649          Community    1074                                                                
+  go               84      95                                                                                           
+  ts              163      80                                                                                           
+  json              4      69                                                                                           
+  bash              4      25                                                                                           
+  js              153      21                                                                                           
+  python          243       6                                                                                           
+  yaml             38       5                                                                                           
+  html              1       5                                                                                           
+  dockerfile        6       1                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 15 (15 blocking)
+ • Rules run: 597
+ • Targets scanned: 649
+ • Parsed lines: ~99.8%
+ • Scan skipped: 
+   ◦ Files larger than  files 1.0 MB: 10
+   ◦ Files matching .semgrepignore patterns: 103
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 597 rules on 649 files: 15 findings.
+EXIT_CODE=0
+=== SHELLCHECK_SOURCE_ONLY ===
+EXIT_CODE=0
+=== YAMLLINT_SOURCE_ONLY ===
+EXIT_CODE=0

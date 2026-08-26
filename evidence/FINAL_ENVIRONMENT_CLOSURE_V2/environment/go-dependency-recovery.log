@@ -1,0 +1,8 @@
+=== GO DEPENDENCY RECOVERY ===
+2026-08-26T18:21:37+00:00
+GOPROXY=direct
+GOSUMDB=sum.golang.org
+EXIT_CODE=124
+direct
+sum.golang.org
+/home/ubuntu/go/pkg/mod

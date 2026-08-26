@@ -4,7 +4,8 @@
 set -euo pipefail
 umask 077
 export PATH=/home/ubuntu/.local/go1.25.13/bin:$PATH
-export BROWSEFORGE_TOKEN="$(head -c 32 /dev/urandom | od -v -An -tx1 | tr -d ' \n')"
+BROWSEFORGE_TOKEN="$(head -c 32 /dev/urandom | od -v -An -tx1 | tr -d ' \n')"
+export BROWSEFORGE_TOKEN
 BASE="/tmp/forge-e2e-base"
 rm -rf "$BASE"
 mkdir -p "$BASE"

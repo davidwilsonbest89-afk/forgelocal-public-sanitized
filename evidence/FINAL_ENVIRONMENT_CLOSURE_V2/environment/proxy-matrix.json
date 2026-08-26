@@ -1,0 +1,159 @@
+{
+  "target_port": 51195,
+  "proxy_port": 54721,
+  "target_requests": [
+    {
+      "path": "/",
+      "profile": "A"
+    },
+    {
+      "path": "/",
+      "profile": "B"
+    },
+    {
+      "path": "/slow",
+      "profile": ""
+    }
+  ],
+  "proxy_requests": [
+    {
+      "path": "http://127.0.0.1:51195/",
+      "auth": "Basic dmFsaWQ=",
+      "host": "127.0.0.1:51195"
+    },
+    {
+      "path": "http://127.0.0.1:51195/",
+      "auth": "Basic dmFsaWQ=",
+      "host": "127.0.0.1:51195"
+    },
+    {
+      "path": "http://synthetic-external.invalid/",
+      "auth": "Basic dmFsaWQ=",
+      "host": "synthetic-external.invalid"
+    },
+    {
+      "path": "http://127.0.0.1:51195/",
+      "auth": "Basic ZXhwaXJlZA==",
+      "host": "127.0.0.1:51195"
+    },
+    {
+      "path": "http://127.0.0.1:51195/",
+      "auth": "Basic cmV2b2tlZA==",
+      "host": "127.0.0.1:51195"
+    },
+    {
+      "path": "http://127.0.0.1:51195/slow",
+      "auth": "Basic dmFsaWQ=",
+      "host": "127.0.0.1:51195"
+    }
+  ],
+  "results": [
+    {
+      "name": "proxy valide -> trafic acheminé",
+      "status": "PASS",
+      "detail": {
+        "returncode": 0,
+        "status": "200",
+        "stdout": "synthetic-target-ok",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "profils A et B -> aucune confusion",
+      "status": "PASS",
+      "detail": {
+        "target_log": [
+          {
+            "path": "/",
+            "profile": "A"
+          },
+          {
+            "path": "/",
+            "profile": "B"
+          }
+        ],
+        "response": {
+          "returncode": 0,
+          "status": "200",
+          "stdout": "synthetic-target-ok",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "name": "proxy arrêté -> fail-closed",
+      "status": "PASS",
+      "detail": {
+        "returncode": 7,
+        "status": "000",
+        "stdout": "",
+        "stderr": "curl: (7) Failed to connect to 127.0.0.1 port 54721 after 0 ms: Couldn't connect to server\n"
+      }
+    },
+    {
+      "name": "proxy invalide -> refus attendu",
+      "status": "PASS",
+      "detail": {
+        "returncode": 7,
+        "status": "000",
+        "stdout": "",
+        "stderr": "curl: (7) Failed to connect to 127.0.0.1 port 1 after 0 ms: Couldn't connect to server\n"
+      }
+    },
+    {
+      "name": "port invalide -> refus",
+      "status": "PASS",
+      "detail": {
+        "returncode": 7,
+        "status": "000",
+        "stdout": "",
+        "stderr": "curl: (7) Failed to connect to 127.0.0.1 port 65534 after 0 ms: Couldn't connect to server\n"
+      }
+    },
+    {
+      "name": "hôte externe -> refus selon contrat",
+      "status": "PASS",
+      "detail": {
+        "returncode": 0,
+        "status": "403",
+        "stdout": "<!DOCTYPE HTML>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error response</title>\n    </head>\n    <body>\n        <h1>Error response</h1>\n        <p>Error code: 403</p>\n        <p>Message: synthetic external host refused by loopback proxy policy.</p>\n        <p>Error code explanation: 403 - Request forbidden -- authorization will not help.</p>\n    </body>\n</html>\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "token expiré -> refus",
+      "status": "PASS",
+      "detail": {
+        "returncode": 0,
+        "status": "407",
+        "stdout": "<!DOCTYPE HTML>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error response</title>\n    </head>\n    <body>\n        <h1>Error response</h1>\n        <p>Error code: 407</p>\n        <p>Message: synthetic token expired or revoked.</p>\n        <p>Error code explanation: 407 - You must authenticate with this proxy before proceeding.</p>\n    </body>\n</html>\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "token révoqué -> refus",
+      "status": "PASS",
+      "detail": {
+        "returncode": 0,
+        "status": "407",
+        "stdout": "<!DOCTYPE HTML>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <title>Error response</title>\n    </head>\n    <body>\n        <h1>Error response</h1>\n        <p>Error code: 407</p>\n        <p>Message: synthetic token expired or revoked.</p>\n        <p>Error code explanation: 407 - You must authenticate with this proxy before proceeding.</p>\n    </body>\n</html>\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "timeout -> arrêt propre",
+      "status": "PASS",
+      "detail": {
+        "returncode": 28,
+        "status": "000",
+        "stdout": "",
+        "stderr": "curl: (28) Operation timed out after 1001 milliseconds with 0 bytes received\n"
+      }
+    },
+    {
+      "name": "processus résiduel -> aucun",
+      "status": "PASS",
+      "detail": []
+    }
+  ]
+}

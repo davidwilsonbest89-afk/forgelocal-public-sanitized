@@ -1,0 +1,81 @@
+=== STATIC ANALYSIS PREFLIGHT ===
+2026-08-26T18:59:38+00:00
+source=/home/ubuntu/forgelocal-final-environment-closure/source-only
+semgrep=1.175.0
+ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
+yamllint 1.33.0
+=== SEMGREP ===
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 649 files tracked by git with 1074 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      60     649          Community    1074                                                                
+  go               84      95                                                                                           
+  ts              163      80                                                                                           
+  json              4      69                                                                                           
+  bash              4      25                                                                                           
+  js              153      21                                                                                           
+  python          243       6                                                                                           
+  yaml             38       5                                                                                           
+  html              1       5                                                                                           
+  dockerfile        6       1                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 15 (15 blocking)
+ • Rules run: 597
+ • Targets scanned: 649
+ • Parsed lines: ~99.9%
+ • Scan skipped: 
+   ◦ Files larger than  files 1.0 MB: 10
+   ◦ Files matching .semgrepignore patterns: 105
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 597 rules on 649 files: 15 findings.
+SEMGREP_EXIT_CODE=0
+=== SHELLCHECK ===
+SHELLCHECK_EXIT_CODE=123
+=== YAMLLINT ===
+YAMLLINT_EXIT_CODE=123
+=== FILE INVENTORY ===
+V6_SEMGREP_RULES.yml
+docker/docker-compose.yml
+docker/entrypoint.sh
+examples/multi-login.yaml
+forge-dashboard/pnpm-lock.yaml
+forge-dashboard/pnpm-workspace.yaml
+scripts/browseforge-native-smoke.sh
+scripts/build-back01-minimal.sh
+scripts/capture-runtime-release-evidence.sh
+scripts/check-browseforge-chromium-assets.sh
+scripts/check-systemvault-anti-leak.sh
+scripts/collect-bootstrap-ro-evidence.sh
+scripts/collect-t06-evidence.sh
+scripts/collect-t07-evidence.sh
+scripts/collect-t07-r-evidence.sh
+scripts/core-dev.sh
+scripts/dashboard-dev.sh
+scripts/docker-go-validate.sh
+scripts/mcp-web-smoke.sh
+scripts/release-preflight.sh
+scripts/release-push.sh
+scripts/run-systemvault-native-gate.sh
+scripts/run_t19rr_harness_evidence.sh
+scripts/run_t30_full_race_replay.sh
+scripts/sign-release-manifest.sh
+scripts/start.sh
+scripts/test-bootstrap-ro-playwright.sh
+scripts/validate-bootstrap-ro-01.sh
+scripts/verify-release-manifest.sh
+start-core-e2e.sh

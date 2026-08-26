@@ -1,0 +1,75 @@
+=== GO_TEST_RACE_OFFLINE ===
+2026-08-26T19:01:34+00:00
+go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+go: downloading github.com/go-jose/go-jose/v3 v3.0.5
+# forgelocal/cmd/server
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+# forgelocal/cmd/server
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+FAIL	forgelocal/cmd/server [setup failed]
+# forgelocal/internal/api
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+# forgelocal/internal/api
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+FAIL	forgelocal/internal/api [setup failed]
+# forgelocal/internal/browser
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+# forgelocal/internal/browser
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+FAIL	forgelocal/internal/browser [setup failed]
+# forgelocal/internal/humanize
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+# forgelocal/internal/humanize
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+FAIL	forgelocal/internal/humanize [setup failed]
+# forgelocal/internal/mcp
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+# forgelocal/internal/mcp
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+FAIL	forgelocal/internal/mcp [setup failed]
+# forgelocal/internal/spike
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+FAIL	forgelocal/internal/spike [setup failed]
+?   	forgelocal/cmd/back01-core	[no test files]
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/backup	2.978s
+ok  	forgelocal/internal/config	1.016s
+ok  	forgelocal/internal/cookies	1.015s
+ok  	forgelocal/internal/drift	1.016s
+ok  	forgelocal/internal/environment	1.015s
+ok  	forgelocal/internal/extensions	2.609s
+ok  	forgelocal/internal/fingerprint	1.019s
+ok  	forgelocal/internal/fonts	1.014s
+ok  	forgelocal/internal/geolocation	1.014s
+ok  	forgelocal/internal/groups	1.024s
+ok  	forgelocal/internal/hardware	1.015s
+ok  	forgelocal/internal/history	1.190s
+ok  	forgelocal/internal/launch	3.795s
+ok  	forgelocal/internal/localvault	1.063s
+ok  	forgelocal/internal/productschema	1.926s
+ok  	forgelocal/internal/profile	1.117s
+ok  	forgelocal/internal/profilehealth	1.014s
+ok  	forgelocal/internal/profilemigration	2.996s
+ok  	forgelocal/internal/proxies	1.086s
+ok  	forgelocal/internal/proxyprovider	1.014s
+ok  	forgelocal/internal/runtime	1.265s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.013s
+ok  	forgelocal/internal/templates	1.324s
+ok  	forgelocal/internal/workflow	1.022s
+FAIL
+EXIT_CODE=1
+=== GO_VET_OFFLINE ===
+2026-08-26T19:02:18+00:00
+go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+go: downloading github.com/go-jose/go-jose/v3 v3.0.5
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+EXIT_CODE=1
+=== GO_BUILD_OFFLINE ===
+2026-08-26T19:02:18+00:00
+go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+go: downloading github.com/go-jose/go-jose/v3 v3.0.5
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/frame.go:10:2: module lookup disabled by GOPROXY=off
+../../go/pkg/mod/github.com/mxschmitt/playwright-go@v0.6100.0/transport.go:10:2: module lookup disabled by GOPROXY=off
+EXIT_CODE=1

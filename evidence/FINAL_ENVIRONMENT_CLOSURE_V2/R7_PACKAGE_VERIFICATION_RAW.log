@@ -1,0 +1,51 @@
+=== R7 V4 VERIFICATION FROM CLOSURE CLONE ===
+2026-08-26T17:59:53+00:00
+clone_head=4e944670b8f3b883bb673363a20a4e6c7c20c25a
+remote_r7=b907dfcd68c290144e2b922e352d5a937e9b3259	refs/heads/validation/gosec-r7
+source_head=3656dbad4bfef0381e1f9d837271d293ecffe292
+evidence_head=1dca108197f90e379184474ad37bbb9f386fe309
+package_commit=5cd16b11f62b8c16582973001ce81bff9ef03dcf
+80b0546eca714826023bfc4cc3e33381b1b9d3dfe52900771dd00a2cd2ba5ed8  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+faf43da4e69e20aa4dc59863173b0f64b8a411f102d7dcd4c46b22fc8089fa7e  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.tar.gz
+6f732c627ee58529898753c09f292c5c0e79b9ee4a32cf6bd58b755f7ae4edb0  evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle
+62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a  evidence/GOSEC_R7/R7_GOSEC_BASELINE.json
+forgelocal-gosec-r7-final-v4.zip: OK
+forgelocal-gosec-r7-final-v4.tar.gz: OK
+forgelocal-gosec-r7-delta-3656dba-1dca108.bundle: OK
+Archive:  evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip
+    testing: forgelocal-gosec-r7-final-v4-evidence/   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_BASELINE_DISCOVERY_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_BUNDLE_VERIFY_V4_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_CHANGELOG.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_COMMANDS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_CONSOLIDATED_TESTS_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_MANIFEST_V4.txt   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_MANIFEST_V3.txt   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_POSTCHECK_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINAL_RISK_DECISION.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINDINGS_MATRIX.tsv   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_FINDING_MATRIX.tsv   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_GOSEC_BASELINE.json   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_GOSEC_FINAL.json   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_MANIFEST_RECONCILIATION.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_MATRIX_PRELIMINARY_REPORT.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V2_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_PUBLIC_VERIFICATION_V3_RAW.log   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_RISK_SCOPE.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_SYFT.json   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_TODO.md   OK
+    testing: forgelocal-gosec-r7-final-v4-evidence/evidence/GOSEC_R7/R7_VALIDATION_COMMANDS_RAW.log   OK
+No errors detected in compressed data of evidence/GOSEC_R7/forgelocal-gosec-r7-final-v4.zip.
+TAR_TEST=PASS
+evidence/GOSEC_R7/forgelocal-gosec-r7-delta-3656dba-1dca108.bundle is okay
+The bundle contains this ref:
+1dca108197f90e379184474ad37bbb9f386fe309 refs/gosec-r7/package-v4-head
+The bundle requires this ref:
+3656dbad4bfef0381e1f9d837271d293ecffe292 
+The bundle uses this hash algorithm: sha1
+ZIP_TAR_EXTRACTION=PASS
+FSCK_EXIT_CODE=0

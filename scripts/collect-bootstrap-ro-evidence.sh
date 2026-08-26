@@ -125,7 +125,7 @@ DASHBOARD_DIR="$DASHBOARD_DIR" FORGELOCAL_E2E_BASE_DIR="$CORE_BASE_DIR" FORGELOC
   FORGELOCAL_DASHBOARD_PORT="$DASHBOARD_PORT" "$ROOT/scripts/test-bootstrap-ro-playwright.sh" >"$EVIDENCE_DIR/T05_playwright.log" 2>&1
 
 if grep -Eiq 'authorization:|bearer[[:space:]]+[a-f0-9]{16,}|"token"[[:space:]]*:' "$EVIDENCE_DIR"/T05_*.log; then
-  printf 'Les logs T05 contiennent un motif d’autorisation interdit\n' >&2
+  printf "Les logs T05 contiennent un motif d'autorisation interdit\n" >&2
   exit 1
 fi
 printf 'T05_LOG_REDACTION: PASS authorization=absent bearer=absent token_value=absent\n' >"$EVIDENCE_DIR/T05_log_redaction.log"

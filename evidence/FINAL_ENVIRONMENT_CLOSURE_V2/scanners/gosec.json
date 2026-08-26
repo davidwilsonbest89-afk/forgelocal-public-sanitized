@@ -1,0 +1,243 @@
+{
+	"Golang errors": {
+		"cmd/back01-core": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"cmd/back01-core\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"cmd/server": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"cmd/server\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"cmd/systemvault-doctor": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"cmd/systemvault-doctor\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/api": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/api\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/backup": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/backup\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/browser": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/browser\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/config": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/config\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/cookies": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/cookies\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/drift": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/drift\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/environment": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/environment\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/extensions": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/extensions\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/fingerprint": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/fingerprint\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/fonts": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/fonts\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/geolocation": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/geolocation\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/groups": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/groups\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/hardware": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/hardware\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/history": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/history\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/humanize": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/humanize\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/launch": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/launch\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/localvault": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/localvault\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/mcp": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/mcp\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/productschema": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/productschema\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/profile": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/profile\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/profilehealth": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/profilehealth\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/profilemigration": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/profilemigration\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/proxies": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/proxies\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/proxyprovider": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/proxyprovider\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/runtime": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/runtime\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/secrets": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/secrets\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/sessiontrack": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/sessiontrack\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/spike": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/spike\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/templates": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/templates\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		],
+		"internal/workflow": [
+			{
+				"line": 0,
+				"column": 0,
+				"error": "loading files from package \"internal/workflow\": err: go command required, not found: exec: \"go\": executable file not found in $PATH: stderr: "
+			}
+		]
+	},
+	"Issues": [],
+	"Stats": {
+		"files": 0,
+		"lines": 0,
+		"nosec": 0,
+		"found": 0
+	},
+	"GosecVersion": "2.29.0"
+}

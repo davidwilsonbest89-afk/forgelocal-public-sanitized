@@ -133,9 +133,9 @@ for endpoint in '/api/v1/readonly/health' '/api/v1/readonly/summary' '/api/v1/re
 done
 printf 'control_09_lectures_redacted_health_summary_profiles=PASS\n' >> "$EVIDENCE_FILE"
 
-write_result="$(write_attempt "$token")" || fail 'tentative d’écriture impossible'
+write_result="$(write_attempt "$token")" || fail "tentative d'écriture impossible"
 split_response "$write_result"
-require_status 401 "$response_status" 'tentative d’écriture avec token court'
+require_status 401 "$response_status" "tentative d'écriture avec token court"
 summary_after="$(read_endpoint "$token" '/api/v1/readonly/summary')" || fail 'lecture summary après écriture impossible'
 split_response "$summary_after"
 require_status 200 "$response_status" 'summary après écriture'

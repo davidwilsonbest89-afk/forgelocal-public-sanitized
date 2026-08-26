@@ -1,0 +1,171 @@
+gosec_findings=0	stats={'files': 0, 'lines': 0, 'nosec': 0, 'found': 0}
+semgrep_findings=15	semgrep_errors=6
+SEMGREP_1	/home/ubuntu/forgelocal-final-environment-closure/source-independent/API.md	line=444	rule=javascript.lang.security.detect-insecure-websocket.detect-insecure-websocket	severity=ERROR	message=Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections.
+SEMGREP_2	/home/ubuntu/forgelocal-final-environment-closure/source-independent/API.zh-TW.md	line=468	rule=javascript.lang.security.detect-insecure-websocket.detect-insecure-websocket	severity=ERROR	message=Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections.
+SEMGREP_3	/home/ubuntu/forgelocal-final-environment-closure/source-independent/README.md	line=363	rule=javascript.lang.security.detect-insecure-websocket.detect-insecure-websocket	severity=ERROR	message=Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections.
+SEMGREP_4	/home/ubuntu/forgelocal-final-environment-closure/source-independent/README.zh-TW.md	line=362	rule=javascript.lang.security.detect-insecure-websocket.detect-insecure-websocket	severity=ERROR	message=Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections.
+SEMGREP_5	/home/ubuntu/forgelocal-final-environment-closure/source-independent/extension/sidebar/app.js	line=17	rule=typescript.react.security.react-insecure-request.react-insecure-request	severity=ERROR	message=Unencrypted request over HTTP detected.
+SEMGREP_6	/home/ubuntu/forgelocal-final-environment-closure/source-independent/extension/sidebar/app.js	line=70	rule=typescript.react.security.react-insecure-request.react-insecure-request	severity=ERROR	message=Unencrypted request over HTTP detected.
+SEMGREP_7	/home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard/client/index.html	line=8	rule=html.security.audit.missing-integrity.missing-integrity	severity=WARNING	message=This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you’re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.
+SEMGREP_8	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/api/dashboard.go	line=14	rule=go.lang.security.audit.xss.no-direct-write-to-responsewriter.no-direct-write-to-responsewriter	severity=WARNING	message=Detected directly writing or similar in 'http.ResponseWriter.write()'. This bypasses HTML escaping that prevents cross-site scripting vulnerabilities. Instead, use the 'html/template' package and render data using 'template.Execute()'.
+SEMGREP_9	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/api/sessions.go	line=432	rule=javascript.lang.security.detect-insecure-websocket.detect-insecure-websocket	severity=ERROR	message=Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections.
+SEMGREP_10	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/api/sessions.go	line=441	rule=javascript.lang.security.detect-insecure-websocket.detect-insecure-websocket	severity=ERROR	message=Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections.
+SEMGREP_11	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/fingerprint/pool.go	line=7	rule=go.lang.security.audit.crypto.math_random.math-random-used	severity=WARNING	message=Do not use `math/rand`. Use `crypto/rand` instead.
+SEMGREP_12	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/humanize/keyboard.go	line=5	rule=go.lang.security.audit.crypto.math_random.math-random-used	severity=WARNING	message=Do not use `math/rand`. Use `crypto/rand` instead.
+SEMGREP_13	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/humanize/math.go	line=5	rule=go.lang.security.audit.crypto.math_random.math-random-used	severity=WARNING	message=Do not use `math/rand`. Use `crypto/rand` instead.
+SEMGREP_14	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/humanize/mouse.go	line=4	rule=go.lang.security.audit.crypto.math_random.math-random-used	severity=WARNING	message=Do not use `math/rand`. Use `crypto/rand` instead.
+SEMGREP_15	/home/ubuntu/forgelocal-final-environment-closure/source-independent/internal/runtime/qualification.go	line=85	rule=go.lang.security.audit.dangerous-exec-command.dangerous-exec-command	severity=ERROR	message=Detected non-static command inside Command. Audit the input to 'exec.Command'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code.
+SEMGREP_ERROR_1	path=/home/ubuntu/forgelocal-final-environment-closure/source-independent/validation_systemvault_native.json	message=Syntax error at line /home/ubuntu/forgelocal-final-environment-closure/source-independent/validation_systemvault_native.json:1:
+ `.` was unexpected
+SEMGREP_ERROR_2	path=/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/check-browseforge-chromium-assets.sh	message=Syntax error at line /home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/check-browseforge-chromium-assets.sh:38:
+ `<` was unexpected
+SEMGREP_ERROR_3	path=/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-bootstrap-ro-evidence.sh	message=Syntax error at line /home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-bootstrap-ro-evidence.sh:5:
+ `set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+GO="${FORGELOCAL_GO:-/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.13.linux-amd64/bin/go}"
+TARGET_COMMIT="${FORGELOCAL_TARGET_COMMIT:-5123dc4}"
+DASHBOARD_DIR="${DASHBOARD_DIR:?DASHBOARD_DIR requis}"
+EVIDENCE_DIR="${BOOTSTRAP_RO_EVIDENCE_DIR:?BOOTSTRAP_RO_EVIDENCE_DIR requis}"
+CORE_PORT="${FORGELOCAL_E2E_PORT:-19280}"
+NONLOOP_PORT="${FORGELOCAL_NONLOOP_PORT:-19281}"
+DASHBOARD_PORT="${FORGELOCAL_DASHBOARD_PORT:-3001}"
+SOURCE_DIR="$EVIDENCE_DIR/source"
+CORE_BASE_DIR="$EVIDENCE_DIR/core"
+NONLOOP_BASE_DIR="$EVIDENCE_DIR/nonloop"
+
+case "$EVIDENCE_DIR" in
+  /tmp/forgelocal-*|/home/ubuntu/ForgeLocal/.local-evidence/*) ;;
+  *) printf 'Le dossier de preuves doit rester hors livraison : /tmp/forgelocal-* ou .local-evidence/\n' >&2; exit 2 ;;
+esac
+test -f "$DASHBOARD_DIR/package.json"
+test -x "$GO"
+mkdir -p "$EVIDENCE_DIR"
+for port in "$CORE_PORT" "$NONLOOP_PORT" "$DASHBOARD_PORT"; do
+  if ss -ltn "sport = :$port" | grep -q LISTEN; then
+    printf 'Le port de preuve %s est déjà occupé ; choisir un triplet libre.\n' "$port" >&2
+    exit 2
+  fi
+done
+if [[ -e "$SOURCE_DIR" ]]; then
+  printf 'Le worktree de preuve existe déjà : %s\n' "$SOURCE_DIR" >&2
+  exit 2
+fi
+
+core_pid=""
+nonloop_pid=""
+dashboard_pid=""
+stop_services() {
+  for pid in "$dashboard_pid" "$nonloop_pid" "$core_pid"; do
+    [[ -n "$pid" ]] && kill "$pid" 2>/dev/null || true
+  done
+  for pid in "$dashboard_pid" "$nonloop_pid" "$core_pid"; do
+    [[ -n "$pid" ]] && wait "$pid" 2>/dev/null || true
+  done
+  dashboard_pid=""
+  nonloop_pid=""
+  core_pid=""
+}
+cleanup() {
+  stop_services
+  [[ -d "$SOURCE_DIR" ]] && git -C "$ROOT" worktree remove --force "$SOURCE_DIR" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+git -C "$ROOT" worktree add --detach "$SOURCE_DIR" "$TARGET_COMMIT"
+git -C "$SOURCE_DIR" status --short >"$EVIDENCE_DIR/T00_git_status_short.log"
+git -C "$SOURCE_DIR" diff --check >"$EVIDENCE_DIR/T00_git_diff_check.log"
+target_parent="$(git -C "$SOURCE_DIR" rev-parse "${TARGET... (truncated 5404 more characters)
+SEMGREP_ERROR_4	path=/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t06-evidence.sh	message=Syntax error at line /home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t06-evidence.sh:5:
+ `set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+GO="${FORGELOCAL_GO:-/home/ubuntu/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.13.linux-amd64/bin/go}"
+GITLEAKS="${FORGELOCAL_GITLEAKS:-/tmp/forgelocal-gitleaks-8.18.4-verified/gitleaks}"
+TARGET_COMMIT="${FORGELOCAL_TARGET_COMMIT:-$(git -C "$ROOT" rev-parse HEAD)}"
+BASELINE_COMMIT="${FORGELOCAL_T06_BASELINE_COMMIT:?FORGELOCAL_T06_BASELINE_COMMIT requis}"
+DASHBOARD_DIR="${DASHBOARD_DIR:?DASHBOARD_DIR requis}"
+DASHBOARD_PORT="${FORGELOCAL_T06_DASHBOARD_PORT:-3012}"
+EVIDENCE_DIR="${T06_EVIDENCE_DIR:?T06_EVIDENCE_DIR requis}"
+
+case "$EVIDENCE_DIR" in
+  /tmp/forgelocal-*|"$ROOT"/.local-evidence/*) ;;
+  *) printf 'Le dossier de preuves T06 doit rester sous /tmp/forgelocal-* ou .local-evidence/.\n' >&2; exit 2 ;;
+esac
+test -x "$GO"
+test -x "$GITLEAKS"
+test -f "$DASHBOARD_DIR/package.json"
+
+SOURCE_DIR="$EVIDENCE_DIR/source"
+PREARCHIVE_DIR="$EVIDENCE_DIR/prearchive-extracted"
+FINAL_ARCHIVE="${EVIDENCE_DIR%/}.zip"
+FINAL_EXTRACTED="${EVIDENCE_DIR}-extracted"
+dashboard_pid=""
+
+stop_dashboard() {
+  if [[ -n "$dashboard_pid" ]]; then
+    kill -TERM -- "-$dashboard_pid" 2>/dev/null || true
+    wait "$dashboard_pid" 2>/dev/null || true
+    dashboard_pid=""
+  fi
+}
+cleanup() {
+  stop_dashboard
+  [[ -d "$SOURCE_DIR" ]] && git -C "$ROOT" worktree remove --force "$SOURCE_DIR" 2>/dev/null || true
+}
+trap cleanup EXIT
+
+if [[ -e "$EVIDENCE_DIR" || -e "$FINAL_ARCHIVE" || -e "$FINAL_EXTRACTED" ]]; then
+  printf 'Le chemin de preuve T06 existe déjà : %s\n' "$EVIDENCE_DIR" >&2
+  exit 2
+fi
+for port in "$DASHBOARD_PORT"; do
+  if ss -ltn "sport = :$port" | grep -q LISTEN; then
+    printf 'Le port de preuve T06 %s est déjà occupé.\n' "$port" >&2
+    exit 2
+  fi
+done
+
+mkdir -p "$EVIDENCE_DIR"
+git -C "$ROOT" worktree add --detach "$SOURCE_DIR" "$TARGET_COMMIT" >/dev/null
+git -C "$SOURCE_DIR" merge-base --is-ancestor "$BASELINE_COMMIT" "$TARGET_COMMIT"
+
+git -C "$SOURCE_DIR" status --short >"$EVIDENCE_DIR/T00_git_status_short.log"
+git -C "$SOURCE_DIR" diff --check >"$E... (truncated 4812 more characters)
+SEMGREP_ERROR_5	path=/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/sign-release-manifest.sh	message=Syntax error at line /home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/sign-release-manifest.sh:6:
+ `<` was unexpected
+SEMGREP_ERROR_6	path=/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/verify-release-manifest.sh	message=Syntax error at line /home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/verify-release-manifest.sh:5:
+ `<` was unexpected
+shellcheck_findings=26
+shellcheck_codes=SC1091:info=2;SC2015:info=4;SC2034:warning=4;SC2066:error=1;SC2086:info=1;SC2094:info=10;SC2129:style=4
+SHELLCHECK_1	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/validate-bootstrap-ro-01.sh	line=96	column=1	code=SC2129	level=style	message=Consider using { cmd1; cmd2; } >> file instead of individual redirects.
+SHELLCHECK_2	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/test-bootstrap-ro-playwright.sh	line=5	column=1	code=SC2034	level=warning	message=ROOT appears unused. Verify use (or export if used externally).
+SHELLCHECK_3	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/start.sh	line=19	column=1	code=SC2034	level=warning	message=i appears unused. Verify use (or export if used externally).
+SHELLCHECK_4	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/run_t19rr_harness_evidence.sh	line=117	column=1	code=SC2129	level=style	message=Consider using { cmd1; cmd2; } >> file instead of individual redirects.
+SHELLCHECK_5	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/run-systemvault-native-gate.sh	line=29	column=20	code=SC1091	level=info	message=Not following: /etc/os-release was not specified as input (see shellcheck -x).
+SHELLCHECK_6	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/run-systemvault-native-gate.sh	line=30	column=28	code=SC1091	level=info	message=Not following: /etc/os-release was not specified as input (see shellcheck -x).
+SHELLCHECK_7	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/release-preflight.sh	line=112	column=22	code=SC2086	level=info	message=Double quote to prevent globbing and word splitting.
+SHELLCHECK_8	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-r-evidence.sh	line=103	column=26	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_9	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-r-evidence.sh	line=103	column=91	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_10	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-r-evidence.sh	line=128	column=26	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_11	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-r-evidence.sh	line=128	column=91	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_12	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-evidence.sh	line=33	column=1	code=SC2129	level=style	message=Consider using { cmd1; cmd2; } >> file instead of individual redirects.
+SHELLCHECK_13	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-evidence.sh	line=49	column=1	code=SC2129	level=style	message=Consider using { cmd1; cmd2; } >> file instead of individual redirects.
+SHELLCHECK_14	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-evidence.sh	line=127	column=26	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_15	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-evidence.sh	line=127	column=91	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_16	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-evidence.sh	line=152	column=26	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_17	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t07-evidence.sh	line=152	column=91	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_18	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t06-evidence.sh	line=39	column=26	code=SC2015	level=info	message=Note that A && B || C is not if-then-else. C may run when A is true.
+SHELLCHECK_19	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-t06-evidence.sh	line=47	column=13	code=SC2066	level=error	message=Since you double quoted this, it will not word split, and the loop will only run once.
+SHELLCHECK_20	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-bootstrap-ro-evidence.sh	line=42	column=21	code=SC2015	level=info	message=Note that A && B || C is not if-then-else. C may run when A is true.
+SHELLCHECK_21	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-bootstrap-ro-evidence.sh	line=45	column=21	code=SC2015	level=info	message=Note that A && B || C is not if-then-else. C may run when A is true.
+SHELLCHECK_22	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/collect-bootstrap-ro-evidence.sh	line=53	column=26	code=SC2015	level=info	message=Note that A && B || C is not if-then-else. C may run when A is true.
+SHELLCHECK_23	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/build-back01-minimal.sh	line=220	column=26	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_24	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/build-back01-minimal.sh	line=220	column=78	code=SC2094	level=info	message=Make sure not to read and write the same file in the same pipeline.
+SHELLCHECK_25	/home/ubuntu/forgelocal-final-environment-closure/source-independent/scripts/browseforge-native-smoke.sh	line=8	column=1	code=SC2034	level=warning	message=PROFILE_NAME appears unused. Verify use (or export if used externally).
+SHELLCHECK_26	/home/ubuntu/forgelocal-final-environment-closure/source-independent/docker/entrypoint.sh	line=93	column=1	code=SC2034	level=warning	message=i appears unused. Verify use (or export if used externally).
+trivy_result_sections=4
+trivy_findings=6
+syft_artifacts=725
+yamllint_diagnostics=895
+yamllint_by_file=/home/ubuntu/forgelocal-final-environment-closure/source-independent/V6_SEMGREP_RULES.yml=1;/home/ubuntu/forgelocal-final-environment-closure/source-independent/docker/docker-compose.yml=3;/home/ubuntu/forgelocal-final-environment-closure/source-independent/examples/multi-login.yaml=1;/home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard/pnpm-lock.yaml=889;/home/ubuntu/forgelocal-final-environment-closure/source-independent/forge-dashboard/pnpm-workspace.yaml=1
