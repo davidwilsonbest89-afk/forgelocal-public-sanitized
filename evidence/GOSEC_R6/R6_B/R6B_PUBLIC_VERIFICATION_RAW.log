@@ -1,0 +1,50 @@
+UTC=2026-08-26T13:50:05Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r6
+PACKAGE_SOURCE_HEAD=a436a68d1ca4e223b54c45d7b99efa77617e620b
+PACKAGE_EVIDENCE_HEAD=e0c9e16b879f0ef6ee1a6cf733d84eb8a172e854
+CURRENT_HEAD=f505f4a5e1a4d14df40c13555e8ec24b0e305f4c
+COMMAND=sha256sum -c evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.zip.sha256
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.zip: OK
+ZIP_HASH_EXIT_CODE=0
+COMMAND=sha256sum -c evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.tar.gz.sha256
+/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.tar.gz: OK
+TAR_HASH_EXIT_CODE=0
+COMMAND=tar -xzf evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.tar.gz -C /tmp/r6b_verify_tar
+TAR_EXTRACT_EXIT_CODE=0
+COMMAND=unzip -q evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-final-v1.zip -d /tmp/r6b_verify_zip
+ZIP_EXTRACT_EXIT_CODE=0
+COMMAND=cmp evidence/GOSEC_R6/R6_B/R6B_FINAL_MANIFEST.txt /tmp/r6b_verify_tar/forgelocal-gosec-r6b-final-v1-evidence/evidence/GOSEC_R6/R6_B/R6B_FINAL_MANIFEST.txt
+MANIFEST_TAR_EXIT_CODE=0
+COMMAND=cmp evidence/GOSEC_R6/R6_B/R6B_FINAL_MANIFEST.txt /tmp/r6b_verify_zip/forgelocal-gosec-r6b-final-v1-evidence/evidence/GOSEC_R6/R6_B/R6B_FINAL_MANIFEST.txt
+MANIFEST_ZIP_EXIT_CODE=0
+PACKAGE_TAR_SMOKE_MEMBER=PASS
+PACKAGE_ZIP_SMOKE_MEMBER=PASS
+COMMAND=git bundle verify evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-delta-a436a68-e0c9e16.bundle
+evidence/GOSEC_R6/R6_B/forgelocal-gosec-r6b-delta-a436a68-e0c9e16.bundle is okay
+The bundle contains this ref:
+e0c9e16b879f0ef6ee1a6cf733d84eb8a172e854 refs/gosec-r6b/package-head
+The bundle requires this ref:
+a436a68d1ca4e223b54c45d7b99efa77617e620b 
+The bundle uses this hash algorithm: sha1
+BUNDLE_VERIFY_EXIT_CODE=0
+COMMAND=env GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --branch validation/gosec-r6 https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git /tmp/r6b_public_clone
+Cloning into '/tmp/r6b_public_clone'...
+PUBLIC_CLONE_EXIT_CODE=0
+COMMAND=git rev-parse HEAD
+f505f4a5e1a4d14df40c13555e8ec24b0e305f4c
+PUBLIC_LATEST_HEAD_EXIT_CODE=0
+COMMAND=git fetch --no-tags origin f505f4a5e1a4d14df40c13555e8ec24b0e305f4c
+From https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized
+ * branch            f505f4a5e1a4d14df40c13555e8ec24b0e305f4c -> FETCH_HEAD
+PUBLIC_FETCH_PACKAGE_EXIT_CODE=0
+COMMAND=git checkout --detach f505f4a5e1a4d14df40c13555e8ec24b0e305f4c
+HEAD is now at f505f4a evidence: package GOSEC R6 Lot B
+PUBLIC_PACKAGE_CHECKOUT_EXIT_CODE=0
+COMMAND=git fsck --full
+PUBLIC_FSCK_EXIT_CODE=0
+COMMAND=git ls-remote origin refs/heads/validation/gosec-r6 refs/heads/validation/gosec-r5 refs/heads/validation/operational-v1
+28f66a1b2e2a27b90b8542458d4774dd3f264797	refs/heads/validation/gosec-r5
+f505f4a5e1a4d14df40c13555e8ec24b0e305f4c	refs/heads/validation/gosec-r6
+80048180d4ec5241c08146ade698d53a3f29454d	refs/heads/validation/operational-v1
+REMOTE_HEAD_EXIT_CODE=0
