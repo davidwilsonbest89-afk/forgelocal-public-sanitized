@@ -264,7 +264,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		ctx, err := m.pw.Chromium.LaunchPersistentContext(userDataDir, opts)
 		if err != nil {
 			if relay != nil {
-				relay.Close()
+				closeSOCKS5Relay(relay)
 			}
 			return nil, nil, err
 		}
@@ -307,9 +307,11 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 	if err := installChromiumAutomationMitigations(ctx); err != nil {
 		if relay != nil {
-			relay.Close()
+			closeSOCKS5Relay(relay)
 		}
-		ctx.Close()
+		if closeErr := ctx.Close(); closeErr != nil {
+			slog.Warn("close Chromium context after mitigation failure", "error", closeErr)
+		}
 		return nil, fmt.Errorf("install chromium automation mitigations: %w", err)
 	}
 
@@ -328,9 +330,11 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 		page, err = ctx.NewPage()
 		if err != nil {
 			if relay != nil {
-				relay.Close()
+				closeSOCKS5Relay(relay)
 			}
-			ctx.Close()
+			if closeErr := ctx.Close(); closeErr != nil {
+				slog.Warn("close Chromium context after page creation failure", "error", closeErr)
+			}
 			return nil, fmt.Errorf("new page: %w", err)
 		}
 	}

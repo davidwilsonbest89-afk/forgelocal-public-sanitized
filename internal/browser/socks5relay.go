@@ -15,10 +15,11 @@ import (
 // upstream authenticated SOCKS5 proxy. This works around Chromium's lack
 // of SOCKS5 authentication support.
 type SOCKS5Relay struct {
-	ln     net.Listener
-	dialer proxy.Dialer
-	done   chan struct{}
-	wg     sync.WaitGroup
+	ln       net.Listener
+	dialer   proxy.Dialer
+	done     chan struct{}
+	closeOne sync.Once
+	wg       sync.WaitGroup
 }
 
 // StartSOCKS5Relay starts a local SOCKS5 relay on a random port.
@@ -44,10 +45,28 @@ func StartSOCKS5Relay(upstreamAddr, username, password string) (*SOCKS5Relay, st
 	return r, addr, nil
 }
 
-func (r *SOCKS5Relay) Close() {
-	close(r.done)
-	r.ln.Close()
+func (r *SOCKS5Relay) Close() error {
+	var closeErr error
+	r.closeOne.Do(func() {
+		close(r.done)
+		closeErr = r.ln.Close()
+	})
 	r.wg.Wait()
+	return closeErr
+}
+
+func closeSOCKS5Relay(r *SOCKS5Relay) {
+	if r == nil {
+		return
+	}
+	if err := r.Close(); err != nil {
+		slog.Warn("close SOCKS5 relay", "error", err)
+	}
+}
+
+func writeSOCKSReply(conn net.Conn, reply []byte) error {
+	_, err := conn.Write(reply)
+	return err
 }
 
 func (r *SOCKS5Relay) serve() {
@@ -84,7 +103,9 @@ func (r *SOCKS5Relay) handle(conn net.Conn) {
 		return
 	}
 	// reply: no auth required
-	conn.Write([]byte{0x05, 0x00})
+	if err := writeSOCKSReply(conn, []byte{0x05, 0x00}); err != nil {
+		return
+	}
 
 	// --- SOCKS5 request ---
 	// VER CMD RSV ATYP DST.ADDR DST.PORT
@@ -92,7 +113,9 @@ func (r *SOCKS5Relay) handle(conn net.Conn) {
 		return
 	}
 	if buf[1] != 0x01 { // only CONNECT
-		conn.Write([]byte{0x05, 0x07, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		if err := writeSOCKSReply(conn, []byte{0x05, 0x07, 0x00, 0x01, 0, 0, 0, 0, 0, 0}); err != nil {
+			return
+		}
 		return
 	}
 
@@ -119,29 +142,39 @@ func (r *SOCKS5Relay) handle(conn net.Conn) {
 		ip := net.IP(buf[:16])
 		target = fmt.Sprintf("[%s]:%d", ip, binary.BigEndian.Uint16(buf[16:18]))
 	default:
-		conn.Write([]byte{0x05, 0x08, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		if err := writeSOCKSReply(conn, []byte{0x05, 0x08, 0x00, 0x01, 0, 0, 0, 0, 0, 0}); err != nil {
+			return
+		}
 		return
 	}
 
 	// Dial through upstream authenticated SOCKS5
 	remote, err := r.dialer.Dial("tcp", target)
 	if err != nil {
-		conn.Write([]byte{0x05, 0x05, 0x00, 0x01, 0, 0, 0, 0, 0, 0})
+		if err := writeSOCKSReply(conn, []byte{0x05, 0x05, 0x00, 0x01, 0, 0, 0, 0, 0, 0}); err != nil {
+			return
+		}
 		return
 	}
 	defer remote.Close()
 
 	// Success reply
-	conn.Write([]byte{0x05, 0x00, 0x00, 0x01, 127, 0, 0, 1, 0, 0})
+	if err := writeSOCKSReply(conn, []byte{0x05, 0x00, 0x00, 0x01, 127, 0, 0, 1, 0, 0}); err != nil {
+		return
+	}
 
 	// Relay
 	var wg sync.WaitGroup
 	wg.Add(2)
 	relay := func(dst, src net.Conn) {
 		defer wg.Done()
-		io.Copy(dst, src)
+		if _, err := io.Copy(dst, src); err != nil {
+			slog.Warn("SOCKS5 relay copy", "error", err)
+		}
 		if tc, ok := dst.(*net.TCPConn); ok {
-			tc.CloseWrite()
+			if err := tc.CloseWrite(); err != nil {
+				slog.Warn("SOCKS5 relay half-close", "error", err)
+			}
 		}
 	}
 	go relay(remote, conn)

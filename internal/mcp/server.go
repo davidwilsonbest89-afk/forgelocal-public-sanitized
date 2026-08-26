@@ -4,6 +4,7 @@ import (
 	"crypto/subtle"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"net"
 	"net/http"
 	"net/url"
@@ -133,7 +134,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var req mcpRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		writeJSONRPCStatus(w, http.StatusBadRequest, nil, newError(-32700, "Parse error"))
+		if err := writeJSONRPCStatus(w, http.StatusBadRequest, nil, newError(-32700, "Parse error")); err != nil {
+			slog.Warn("write MCP parse error response", "error", err)
+		}
 		return
 	}
 
@@ -151,7 +154,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		mcpErr = newError(-32601, "Method not found: "+req.Method)
 	}
 
-	writeJSONRPC(w, req.ID, mcpErr, result)
+	if err := writeJSONRPC(w, req.ID, mcpErr, result); err != nil {
+		slog.Warn("write MCP response", "error", err)
+	}
 }
 
 func validBearerToken(auth, token string) bool {
@@ -664,7 +669,9 @@ func (s *Server) toolTypeText(args map[string]any) (any, *mcpError) {
 		return nil, newError(-32000, "no active session")
 	}
 	if clear, _ := args["clear"].(bool); clear {
-		sess.Page.Locator(selector).Clear()
+		if err := sess.Page.Locator(selector).Clear(); err != nil {
+			return nil, newError(-32000, err.Error())
+		}
 	}
 	if err := humanize.Type(sess.Page, selector, text, s.hcfg); err != nil {
 		return nil, newError(-32000, err.Error())
@@ -815,7 +822,9 @@ func (s *Server) toolCloseTab(args map[string]any) (any, *mcpError) {
 	if index < 0 || index >= len(pages) {
 		return nil, newError(-32000, fmt.Sprintf("tab index %d out of range (0-%d)", index, len(pages)-1))
 	}
-	pages[index].Close()
+	if err := pages[index].Close(); err != nil {
+		return nil, newError(-32000, err.Error())
+	}
 	if pages[index] == sess.Page {
 		remaining := sess.Context.Pages()
 		if len(remaining) > 0 {

@@ -3,6 +3,7 @@ package browser
 import (
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -128,7 +129,7 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 	ctx, err := m.pw.Firefox.LaunchPersistentContext(userDataDir, opts)
 	if err != nil {
 		if relay != nil {
-			relay.Close()
+			closeSOCKS5Relay(relay)
 		}
 		return nil, fmt.Errorf("launch firefox: %w", humanizeError(err))
 	}
@@ -148,9 +149,11 @@ func (m *Manager) launchFirefox(p *profile.Profile) (*Session, error) {
 		page, err = ctx.NewPage()
 		if err != nil {
 			if relay != nil {
-				relay.Close()
+				closeSOCKS5Relay(relay)
 			}
-			ctx.Close()
+			if closeErr := ctx.Close(); closeErr != nil {
+				slog.Warn("close Firefox context after page creation failure", "error", closeErr)
+			}
 			return nil, fmt.Errorf("new page: %w", err)
 		}
 	}

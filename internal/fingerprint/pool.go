@@ -65,11 +65,16 @@ func (p *Pool) Pick(engine, os string) (map[string]any, error) {
 		fp := fps[idx]
 		hash := fmt.Sprintf("%s-%d", key, idx)
 		if !p.used[hash] {
-			p.used[hash] = true
-			// Deep copy
-			data, _ := json.Marshal(fp)
+			// Deep copy before consuming the pool entry.
+			data, err := json.Marshal(fp)
+			if err != nil {
+				return nil, fmt.Errorf("marshal fingerprint %s: %w", hash, err)
+			}
 			var copy map[string]any
-			json.Unmarshal(data, &copy)
+			if err := json.Unmarshal(data, &copy); err != nil {
+				return nil, fmt.Errorf("copy fingerprint %s: %w", hash, err)
+			}
+			p.used[hash] = true
 			delete(copy, "_meta")
 			return copy, nil
 		}

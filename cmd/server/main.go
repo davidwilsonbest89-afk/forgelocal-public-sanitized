@@ -114,7 +114,10 @@ func runMCPStdio(opts mcpStdioOptions) {
 	mcpServer := mcp.NewServer(profileStore, browserMgr, buildHumanizeCfg(cfg), sessionPool, "", cfg.Version, groupStore)
 	mcpServer.SetPublicBaseURL(cfg.PublicBaseURL)
 	mcpServer.SetScreenshotArtifactDir(filepath.Join(cfg.DataDir, "screenshots"))
-	mcpServer.RunStdio()
+	if err := mcpServer.RunStdio(); err != nil {
+		fmt.Fprintf(os.Stderr, "MCP stdio error: %v\n", err)
+		os.Exit(1)
+	}
 }
 
 func runServer(flags *serveFlags) {
@@ -426,7 +429,9 @@ func runServer(flags *serveFlags) {
 		for i := 0; i < 30; i++ {
 			resp, err := http.Get("http://127.0.0.1:" + cfg.Port + "/api/status")
 			if err == nil && resp.StatusCode == 200 {
-				resp.Body.Close()
+				if closeErr := resp.Body.Close(); closeErr != nil {
+					slog.Warn("close local status response", "error", closeErr)
+				}
 				fmt.Println("╔══════════════════════════════════════════╗")
 				fmt.Printf("║        🦊 BrowseForge v%-16s║\n", Version)
 				fmt.Println("╠══════════════════════════════════════════╣")

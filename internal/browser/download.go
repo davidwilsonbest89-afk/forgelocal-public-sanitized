@@ -481,7 +481,12 @@ func DownloadCloakBrowser(baseDir string) (string, error) {
 	}
 
 	if osName == "darwin" {
-		exec.Command("xattr", "-cr", destDir).Run()
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		err := exec.CommandContext(ctx, "xattr", "-cr", destDir).Run()
+		cancel()
+		if err != nil {
+			return "", fmt.Errorf("clear macOS extended attributes: %w", err)
+		}
 	}
 
 	binPath := FindBinary(baseDir, "cloakbrowser")

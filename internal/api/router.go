@@ -704,7 +704,9 @@ func (h *handler) duplicateProfile(w http.ResponseWriter, r *http.Request) {
 func writeJSON(w http.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(v)
+	if err := json.NewEncoder(w).Encode(v); err != nil {
+		slog.Warn("write JSON response failed", "error", err)
+	}
 }
 
 func writeError(w http.ResponseWriter, status int, code, msg string) {

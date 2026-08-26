@@ -8,7 +8,7 @@ import (
 )
 
 // RunStdio runs the MCP server over stdin/stdout (for Kiro, Claude, etc.)
-func (s *Server) RunStdio() {
+func (s *Server) RunStdio() error {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Buffer(make([]byte, 1024*1024), 1024*1024) // 1MB buffer
 
@@ -20,7 +20,9 @@ func (s *Server) RunStdio() {
 
 		var req mcpRequest
 		if err := json.Unmarshal(line, &req); err != nil {
-			writeStdout(map[string]any{"jsonrpc": "2.0", "id": nil, "error": map[string]any{"code": -32700, "message": "Parse error"}})
+			if err := writeStdout(map[string]any{"jsonrpc": "2.0", "id": nil, "error": map[string]any{"code": -32700, "message": "Parse error"}}); err != nil {
+				return fmt.Errorf("write parse error response: %w", err)
+			}
 			continue
 		}
 
@@ -46,12 +48,23 @@ func (s *Server) RunStdio() {
 		} else if result != nil {
 			resp["result"] = result
 		}
-		writeStdout(resp)
+		if err := writeStdout(resp); err != nil {
+			return fmt.Errorf("write response: %w", err)
+		}
 	}
+	if err := scanner.Err(); err != nil {
+		return fmt.Errorf("read MCP stdin: %w", err)
+	}
+	return nil
 }
 
-func writeStdout(v any) {
-	data, _ := json.Marshal(v)
-	fmt.Fprintf(os.Stdout, "%s\n", data)
-	os.Stdout.Sync()
+func writeStdout(v any) error {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	if _, err := fmt.Fprintf(os.Stdout, "%s\n", data); err != nil {
+		return err
+	}
+	return os.Stdout.Sync()
 }

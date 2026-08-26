@@ -2,6 +2,7 @@ package api
 
 import (
 	_ "embed"
+	"log/slog"
 	"net/http"
 )
 
@@ -10,5 +11,7 @@ var dashboardHTML []byte
 
 func (h *handler) dashboard(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.Write(dashboardHTML)
+	if _, err := w.Write(dashboardHTML); err != nil {
+		slog.Warn("write dashboard response failed", "error", err)
+	}
 }

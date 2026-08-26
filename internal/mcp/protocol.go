@@ -24,11 +24,11 @@ func newErrorData(code int, msg string, data any) *mcpError {
 	return &mcpError{Code: code, Message: msg, Data: data}
 }
 
-func writeJSONRPC(w http.ResponseWriter, id any, err *mcpError, result ...any) {
-	writeJSONRPCStatus(w, http.StatusOK, id, err, result...)
+func writeJSONRPC(w http.ResponseWriter, id any, err *mcpError, result ...any) error {
+	return writeJSONRPCStatus(w, http.StatusOK, id, err, result...)
 }
 
-func writeJSONRPCStatus(w http.ResponseWriter, status int, id any, err *mcpError, result ...any) {
+func writeJSONRPCStatus(w http.ResponseWriter, status int, id any, err *mcpError, result ...any) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	resp := map[string]any{"jsonrpc": "2.0", "id": id}
@@ -37,7 +37,7 @@ func writeJSONRPCStatus(w http.ResponseWriter, status int, id any, err *mcpError
 	} else if len(result) > 0 {
 		resp["result"] = result[0]
 	}
-	json.NewEncoder(w).Encode(resp)
+	return json.NewEncoder(w).Encode(resp)
 }
 
 func mustJSON(v any) string {

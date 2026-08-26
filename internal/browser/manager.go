@@ -304,9 +304,7 @@ func (m *Manager) closeSessionResources(s *Session, reason string) {
 			slog.Warn("session browser close failed", "session", s.ID, "reason", reason, "error", err)
 		}
 	}
-	if s.relay != nil {
-		s.relay.Close()
-	}
+	closeSOCKS5Relay(s.relay)
 	slog.Info("session resources closed", "session", s.ID, "reason", reason, "profile", s.ProfileID, "runtime_id", s.RuntimeID, "connectURL", s.ConnectURL)
 }
 
@@ -337,9 +335,7 @@ func (m *Manager) restartPlaywright() error {
 
 func (m *Manager) dropSessionsLocked(reason string) {
 	for id, s := range m.sessions {
-		if s.relay != nil {
-			s.relay.Close()
-		}
+		closeSOCKS5Relay(s.relay)
 		delete(m.sessions, id)
 		slog.Warn("session dropped", "session", id, "reason", reason)
 	}
@@ -369,15 +365,7 @@ func (m *Manager) CloseSession(id string) error {
 	if !ok {
 		return fmt.Errorf("session not found: %s", id)
 	}
-	if s.Context != nil {
-		s.Context.Close()
-	}
-	if s.Browser != nil {
-		s.Browser.Close()
-	}
-	if s.relay != nil {
-		s.relay.Close()
-	}
+	m.closeSessionResources(s, "explicit close")
 	delete(m.sessions, id)
 	slog.Info("session closed", "session", id)
 	return nil
@@ -387,15 +375,12 @@ func (m *Manager) Close() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	for id, s := range m.sessions {
-		if s.Context != nil {
-			s.Context.Close()
-		}
-		if s.relay != nil {
-			s.relay.Close()
-		}
+		m.closeSessionResources(s, "manager close")
 		delete(m.sessions, id)
 	}
 	if m.pw != nil {
-		m.pw.Stop()
+		if err := m.pw.Stop(); err != nil {
+			slog.Warn("playwright stop during manager close failed", "error", err)
+		}
 	}
 }

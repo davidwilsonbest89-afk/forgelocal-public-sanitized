@@ -29,8 +29,10 @@ func Type(page playwright.Page, selector, text string, cfg Config) error {
 
 	// Focus the element
 	if err := Click(page, selector, cfg); err != nil {
-		// Fallback: use Playwright's click to focus, then still type humanly
-		page.Click(selector)
+		// Fallback: use Playwright's click to focus, then still type humanly.
+		if fallbackErr := page.Click(selector); fallbackErr != nil {
+			return fallbackErr
+		}
 	}
 	time.Sleep(time.Duration(randRangeInt(80, 200)) * time.Millisecond)
 
@@ -55,22 +57,28 @@ func Type(page playwright.Page, selector, text string, cfg Config) error {
 		// Typo simulation
 		if cfg.TypoRate > 0 && rand.Float64() < cfg.TypoRate {
 			if typo := pickTypo(ch); typo != 0 {
-				pressChar(kb, typo)
+				if err := pressChar(kb, typo); err != nil {
+					return err
+				}
 				time.Sleep(time.Duration(randRangeInt(100, 300)) * time.Millisecond)
-				kb.Press("Backspace")
+				if err := kb.Press("Backspace"); err != nil {
+					return err
+				}
 				time.Sleep(time.Duration(randRangeInt(50, 120)) * time.Millisecond)
 			}
 		}
 
-		pressChar(kb, ch)
+		if err := pressChar(kb, ch); err != nil {
+			return err
+		}
 		prev = ch
 	}
 	return nil
 }
 
-func pressChar(kb playwright.Keyboard, ch rune) {
+func pressChar(kb playwright.Keyboard, ch rune) error {
 	delay := randRange(80, 140)
-	kb.Press(string(ch), playwright.KeyboardPressOptions{
+	return kb.Press(string(ch), playwright.KeyboardPressOptions{
 		Delay: playwright.Float(delay),
 	})
 }
