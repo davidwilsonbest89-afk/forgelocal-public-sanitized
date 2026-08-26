@@ -1,0 +1,58 @@
+UTC=2026-08-26T11:40:05Z
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/gosec-r4
+Cloning into '/tmp/gosec_r4_public_clone_1787744405'...
+error: RPC failed; curl 56 GnuTLS recv error (-24): Decryption has failed.
+error: 2736 bytes of body are still expected
+fetch-pack: unexpected disconnect while reading sideband packet
+fatal: early EOF
+fatal: fetch-pack: invalid index-pack output
+CLONE_EXIT_CODE=128
+bash: cd: /tmp/gosec_r4_public_clone_1787744405: No such file or directory
+fatal: not a git repository (or any of the parent directories): .git
+CHECKOUT_EXIT_CODE=128
+fatal: not a git repository (or any of the parent directories): .git
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+CLONE_HEAD=
+REMOTE_HEAD=
+HEAD_EQUALITY_EXIT_CODE=0
+BRANCH_R3_REMOTE
+fatal: 'origin' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+fatal: not a git repository (or any of the parent directories): .git
+FSCK_EXIT_CODE=128
+sha256sum: evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip.sha256: No such file or directory
+ZIP_SIDECAR_EXIT_CODE=1
+sha256sum: evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz.sha256: No such file or directory
+TAR_SIDECAR_EXIT_CODE=1
+error: could not open 'evidence/GOSEC_R4/forgelocal-gosec-r4-delta-8004818-75edd54.bundle'
+BUNDLE_VERIFY_EXIT_CODE=1
+unzip:  cannot find or open evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip, evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip.zip or evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.zip.ZIP.
+UNZIP_EXTRACT_EXIT_CODE=9
+tar (child): evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+TAR_EXTRACT_EXIT_CODE=2
+sha256sum: evidence/GOSEC_R4/GOSEC_R4_FILES.sha256: No such file or directory
+ZIP_INTERNAL_HASH_EXIT_CODE=1
+sha256sum: evidence/GOSEC_R4/GOSEC_R4_FILES.sha256: No such file or directory
+TAR_INTERNAL_HASH_EXIT_CODE=1
+ZIP_TEST_EXIT_CODE=9
+tar (child): evidence/GOSEC_R4/forgelocal-gosec-r4-final-v1.tar.gz: Cannot open: No such file or directory
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+PACKAGE_SOURCE_HEAD=3cd3ac0fb9eb684e61eafb8746c69dda9781df64
+PACKAGE_EVIDENCE_HEAD=75edd5480a1d283046b54445c150f0a220e07d66
+TAR_TEST_EXIT_CODE=2
+PACKAGE_COMMIT=6c949a7c093f7f59ebedc79c084b53389cd649c7
+FINAL_PUBLIC_VERIFICATION_COMMIT=TO_BE_COMMITTED
+exit
