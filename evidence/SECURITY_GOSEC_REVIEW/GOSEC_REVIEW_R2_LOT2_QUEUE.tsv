@@ -1,0 +1,13 @@
+G704	HIGH	HIGH	cmd/server/cli.go	982	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli.go	998	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli.go	1042	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli_runtime.go	851	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli_runtime.go	856	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli_runtime.go	905	SSRF via taint analysis
+G204	MEDIUM	HIGH	cmd/server/main.go	555	Subprocess launched with variable
+G204	MEDIUM	HIGH	cmd/server/main.go	557	Subprocess launched with variable
+G204	MEDIUM	HIGH	cmd/server/main.go	559	Subprocess launched with variable
+G704	HIGH	HIGH	internal/api/sessions.go	477	SSRF via taint analysis
+G204	MEDIUM	HIGH	internal/browser/download.go	331	Subprocess launched with variable
+G204	MEDIUM	HIGH	internal/browser/download.go	371	Subprocess launched with variable
+G204	MEDIUM	HIGH	internal/browser/download.go	450	Subprocess launched with variable

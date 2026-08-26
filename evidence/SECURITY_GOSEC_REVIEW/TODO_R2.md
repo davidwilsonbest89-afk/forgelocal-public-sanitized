@@ -21,3 +21,20 @@
 - [ ] Rendre disponibles Semgrep, Grype, Shellcheck et Yamllint, ou conserver `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` par outil.
 - [ ] Ne pas déclarer `FORGELOCAL_PRODUCTION_READY`.
 - [ ] Ne pas redémarrer T28 ni démarrer T29; ne pas toucher T31–T38.
+
+## Lot 2 — subprocess et réseau
+
+- [x] Baseline dédiée avec HEAD, queue G204/G704, ports, processus et outils disponibles.
+- [x] Validation CLI loopback IPv4/IPv6/localhost et refus des URL externes.
+- [x] Refus userinfo/query/fragment/ports invalides et redirections externes.
+- [x] Timeout HTTP local et garde-fou `open --base-url`.
+- [x] Dial WebSocket borné, deadline de handshake et tests du validateur.
+- [x] Subprocess xattr Darwin converti en `CommandContext` timeouté; exécution native non disponible.
+- [x] Tests race, vet, build, Gosec, Govulncheck, Gitleaks, OSV et Trivy.
+- [ ] Bridge Playwright complet avec session réelle et cycle de vie du subprocess GUI.
+- [ ] Revue manuelle des trois findings G204 `openBrowser`.
+- [ ] Les 12 findings G204/G704 statiques signalés restent ouverts/classifiés.
+- [ ] Analyse des 46 avis OSV `go.mod`.
+- [ ] Outils indisponibles : Semgrep, Grype, Shellcheck et Yamllint.
+
+Le Lot 2 reste classifié avec findings ouverts; aucun statut `COMPLETE_NO_OPEN_FINDINGS` n’est autorisé à ce stade.

@@ -1,0 +1,167 @@
+2026-08-26T02:20:00Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+LOCAL_HEAD=31385c26bc6ca8944d68b50be71fec8c0783d590
+REMOTE_HEAD=31385c26bc6ca8944d68b50be71fec8c0783d590
+LOT1_SOURCE_ANCESTOR=PASS
+--- STATUS ---
+[31m??[m evidence/SECURITY_GOSEC_REVIEW/GOSEC_REVIEW_R2_LOT2_BASELINE_DISCOVERY_RAW.log
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+--- RESERVED PORTS ---
+--- PROCESSES ---
+ 428659 /usr/lib/chromium/chromium --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --disable-features=HighEfficiencyModeAvailable,HighEfficiencyModeToggle,DestroyProfileOnBrowserClose,Translate,PaintHolding,AcceptCHFrame --disable-permission-action-reporting --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --no-default-browser-check --disable-dev-shm-usage --disable-hang-monitor --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --use-angle=swiftshader-webgl --ozone-override-screen-size=1280,1029 --noerrdialogs --window-size=1280,1029 --window-position=0,0 --lang=en-US --num-raster-threads=4 --remote-debugging-port=9222 --load-extension=/opt/.manus/.packages/chrome-extensions/ublock-lite --user-data-dir=/home/ubuntu/.browser_data_dir --download-default-directory=/home/ubuntu/Downloads
+ 428675 /usr/lib/chromium/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=5 --shared-client-connection
+ 428677 /usr/lib/chromium/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/ubuntu/.config/chromium/Crash Reports --annotation=channel=built on Ubuntu 24.04.4 LTS --annotation=lsb-release=Ubuntu 24.04.4 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.71 --initial-client-fd=4 --shared-client-connection
+ 428681 /usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ 428683 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ 428687 /usr/lib/chromium/chromium --type=zygote --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable
+ 428707 /usr/lib/chromium/chromium --type=gpu-process --disable-dev-shm-usage --disable-breakpad --enable-gpu-rasterization --ozone-platform=x11 --use-angle=swiftshader-webgl --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,11065090832617891368,13348017158058586842,262144 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708988185955192
+ 428708 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,2011133410812760104,5510692890254912529,524288 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708989122997041
+ 428720 /usr/lib/chromium/chromium --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --disable-dev-shm-usage --use-angle=swiftshader-webgl --mute-audio --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,17289870680153002038,3846912200178008603,524288 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708990060038890
+ 428768 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1787636529484801 --launch-time-ticks=32476540679 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5370937007351637333,10353714350731769337,2097152 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708991934122588
+ 428769 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1787636529484801 --launch-time-ticks=32476543287 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,7660429937040896151,9456983745005849245,2097152 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708990997080739
+ 428802 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Ubuntu 24.04.4 LTS --noerrdialogs --user-data-dir=/home/ubuntu/.browser_data_dir --change-stack-guard-on-fork=enable --disable-dev-shm-usage --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-port=9222 --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8 --time-ticks-at-unix-epoch=-1787636529484801 --launch-time-ticks=32476889956 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,13283207374507525626,10253901235586997941,2097152 --field-trial-handle=3,i,8818465005634111779,6860289601660894195,262144 --disable-features=AcceptCHFrame,DestroyProfileOnBrowserClose,HighEfficiencyModeAvailable,HighEfficiencyModeToggle,PaintHolding,Translate --variations-seed-version --pseudonymization-salt-handle=7,i,15829431054392731738,12102561451869905552,4 --trace-process-track-uuid=3190708993808206286
+--- G204/G704 QUEUE ---
+G704	HIGH	HIGH	cmd/server/cli.go	982	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli.go	998	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli.go	1042	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli_runtime.go	851	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli_runtime.go	856	SSRF via taint analysis
+G704	HIGH	HIGH	cmd/server/cli_runtime.go	905	SSRF via taint analysis
+G204	MEDIUM	HIGH	cmd/server/main.go	555	Subprocess launched with variable
+G204	MEDIUM	HIGH	cmd/server/main.go	557	Subprocess launched with variable
+G204	MEDIUM	HIGH	cmd/server/main.go	559	Subprocess launched with variable
+G704	HIGH	HIGH	internal/api/sessions.go	477	SSRF via taint analysis
+G204	MEDIUM	HIGH	internal/browser/download.go	331	Subprocess launched with variable
+G204	MEDIUM	HIGH	internal/browser/download.go	371	Subprocess launched with variable
+G204	MEDIUM	HIGH	internal/browser/download.go	450	Subprocess launched with variable
+--- EXISTING SECURITY TESTS ---
+internal/api/backup_v1_test.go:101:	versionOutput, err := exec.CommandContext(ctx, binary, "--version").CombinedOutput()
+internal/api/backup_v1_test.go:106:	cmd := exec.CommandContext(ctx, binary,
+internal/api/groups_test.go:64:		t.Fatalf("Camoufox should not advertise agent web sessions: %+v", body.Data[1].Capabilities)
+internal/api/groups_test.go:67:		t.Fatalf("CloakBrowser should advertise agent web sessions: %+v", body.Data[2].Capabilities)
+internal/api/groups_test.go:309:		"proxy_mode": "enforced",
+internal/api/groups_test.go:310:		"proxy": {"type": "socks5", "host": "proxy.example.com", "port": 1080}
+internal/api/groups_test.go:322:	if data["name"] != "Client A" || data["proxy_mode"] != groups.ProxyModeEnforced {
+internal/api/groups_test.go:326:	req = requestWithGroupName(http.MethodDelete, "/api/groups/Client%20A/proxy", "Client A", nil)
+internal/api/groups_test.go:344:	req := requestWithGroupName(http.MethodPut, "/api/groups/Client%20A", "Client A", strings.NewReader(`{"proxy_mode":"default"}`))
+internal/api/groups_test.go:368:	if _, err := groupStore.Upsert("Client A", &profile.ProxyConfig{Type: "socks5", Host: "proxy.example.com", Port: 1080}, groups.ProxyModeDefault); err != nil {
+internal/api/groups_test.go:387:		t.Fatalf("group proxy still exists = %+v", g)
+internal/api/localsession_http_test.go:1:// Style ForgeLocal — T15-W2 : test d'intégration HTTP du endpoint POST /sessions/{id}/navigate.
+internal/api/localsession_http_test.go:77:// T17-R / G15-A : la projection GET /api/sessions produite par le handler
+internal/api/localsession_http_test.go:78:// de production (*handler).listSessions ne doit exposer que session_id,
+internal/api/localsession_http_test.go:83:// Le test injecte une session réelle dans un browser.Manager réel (sans
+internal/api/localsession_http_test.go:84:// playwright : seul le champ sessions privé est alimenté, ce qui n'engage
+internal/api/localsession_http_test.go:88:	// sessions contient deux sessions dont tous les champs techniques sont
+internal/api/localsession_http_test.go:91:	sessionsField := reflect.ValueOf(mgr).Elem().FieldByName("sessions")
+internal/api/localsession_http_test.go:92:	if !sessionsField.IsValid() {
+internal/api/localsession_http_test.go:93:		t.Fatal("browser.Manager.sessions field missing")
+internal/api/localsession_http_test.go:95:	reflect.NewAt(sessionsField.Type(), unsafe.Pointer(sessionsField.UnsafeAddr())).Elem().Set(
+internal/api/localsession_http_test.go:115:	h.listSessions(rec, httptest.NewRequest(http.MethodGet, "/api/sessions", nil))
+internal/api/localsession_http_test.go:117:		t.Fatalf("GET /api/sessions -> %d, want 200 (body=%s)", rec.Code, rec.Body.String())
+internal/api/localsession_http_test.go:128:	allowed := map[string]bool{"session_id": true, "profile_id": true, "runtime_id": true}
+internal/api/localsession_http_test.go:148:			t.Errorf("session projection leaks %q", f)
+internal/api/navigate_policy_test.go:2:// POST /api/sessions/{id}/navigate avec une URL externe => 400 URL_REJECTED_LOCAL_ONLY,
+internal/api/navigate_policy_test.go:25:	r.Post("/api/sessions/{id}/navigate", h.navigate)
+internal/api/navigate_policy_test.go:35:	req := httptest.NewRequest(http.MethodPost, "/api/sessions/s1/navigate", bytes.NewReader(body))
+internal/api/navigate_policy_test.go:55:		// externes => rejetés AVANT tout accès session (fail-closed W2)
+internal/api/navigate_policy_test.go:61:		// URL valides : le handler n'atteint la session que si l'URL passe ;
+internal/api/profile_history_test.go:81:	if rec.Code != http.StatusOK || bytes.Contains(rec.Body.Bytes(), []byte("proxy.")) || bytes.Contains(rec.Body.Bytes(), []byte("profile_dir")) { t.Fatalf("version redaction: %d %s", rec.Code, rec.Body.String()) }
+internal/api/profile_history_test.go:130:	p := &profile.Profile{Name: "Sensitive Proxy", RuntimeID: "cloakbrowser", LifecycleState: profile.LifecycleActive, Proxy: &profile.ProxyConfig{Type: "http", Host: "proxy.test", Port: 8080, SecretRef: "proxy.ref.sensitive"}}
+internal/api/profile_history_test.go:138:	for _, forbidden := range []string{"proxy.ref.sensitive", `"username"`, `"password"`, `"secret_ref"`, "profile_dir"} {
+internal/api/profile_history_test.go:144:	for _, forbidden := range []string{"proxy.ref.sensitive"} {
+internal/api/profiles_bulk_test.go:148:	if _, err := groupStore.Upsert("T24 Group", &profile.ProxyConfig{Type: "http", Host: "proxy.example.invalid", Port: 8080}, groups.ProxyModeDefault); err != nil {
+internal/api/profiles_bulk_test.go:200:		if strings.Contains(details, "proxy.example.invalid") || strings.Contains(details, "batch") || strings.Contains(details, "T24 Group") || strings.Contains(details, "secret") {
+internal/api/profiles_metadata_test.go:26:	if strings.Contains(rec.Body.String(), "proxy_secret_ref") {
+internal/api/proxies_test.go:1:// T10 — Proxies. API contract tests for the proxy registry endpoints.
+internal/api/proxies_test.go:55:		proxyStore: store,
+internal/api/proxies_test.go:129:	id, resp := createProxy(t, ts, map[string]any{"name": "t10-proxy", "type": "http", "host": "proxy.local", "port": 8080})
+internal/api/proxies_test.go:139:	if entry["id"].(string) != id || entry["host"].(string) != "proxy.local" {
+internal/api/proxies_test.go:146:		// Credential-less proxy must not expose a secret reference.
+internal/api/proxies_test.go:147:		t.Error("credential-less proxy must not expose secret_ref")
+internal/api/proxies_test.go:191:		"secret_ref": "proxy.ref.synthetic-001",
+internal/api/proxies_test.go:198:	if entry["secret_ref"].(string) != "proxy.ref.synthetic-001" {
+internal/api/proxies_test.go:237:		"secret_ref": "proxy.ref.ref-001",
+internal/api/proxies_test.go:245:	if entry["secret_ref"].(string) != "proxy.ref.ref-001" {
+internal/api/proxies_test.go:261:	// T09 loopback refusal evidence for the proxy contract.
+internal/api/proxies_test.go:265:	h := &handler{token: "t10-test-token", proxyStore: store, auditSink: newWriteAuditSink(nil)}
+internal/api/proxies_test.go:325:	nilSink.auditRecord(nil, "proxy.created", "px", "corr", map[string]any{"has_secret": true})
+internal/api/proxies_test.go:374:// T10 — getProfile exposes only the proxy registry id, never credentials.
+internal/api/proxies_test.go:377:	proxyStore, err := proxies.NewStore(dir)
+internal/api/proxies_test.go:393:		proxyStore: proxyStore,
+internal/api/proxies_test.go:414:		t.Fatalf("create proxy: %d", createResp.StatusCode)
+internal/api/proxies_test.go:416:	if err := proxyStore.Assign("p-1", id); err != nil {
+internal/api/proxies_test.go:423:	if data["proxy_id"] != id {
+internal/api/proxies_test.go:424:		t.Errorf("proxy_id: got %v, want %s", data["proxy_id"], id)
+internal/api/proxies_test.go:426:	encoded := encodeJSON(t, data["proxy_data"])
+internal/api/proxies_test.go:427:	for _, forbidden := range []string{"username", "password", "\"proxy\""} {
+internal/api/proxies_test.go:429:			t.Errorf("credential or proxy object leaked in getProfile: %s", forbidden)
+internal/api/proxies_test.go:447:	proxyStore, err := proxies.NewStore(dir)
+internal/api/proxies_test.go:459:	if err := proxyStore.Create(p); err != nil {
+internal/api/proxies_test.go:460:		t.Fatalf("create proxy: %v", err)
+internal/api/proxies_test.go:467:		proxyStore: proxyStore,
+internal/api/proxies_test.go:493:	if assigned := proxyStore.AssignedProxy("ghost-profile-absent"); assigned != nil {
+internal/api/proxy_providers_test.go:14:	"forgelocal/internal/proxyprovider"
+internal/api/proxy_providers_test.go:30:	providers, err := proxyprovider.Open(root)
+internal/api/proxy_providers_test.go:34:	h := &handler{store: profiles, token: t26Token, proxyProviderStore: providers, auditSink: newWriteAuditSink(nil)}
+internal/api/proxy_providers_test.go:40:	r.Post("/api/proxy-providers", h.createProxyProvider)
+internal/api/proxy_providers_test.go:41:	r.Get("/api/proxy-providers", h.listProxyProviders)
+internal/api/proxy_providers_test.go:42:	r.Post("/api/proxy-providers/{id}/simulate-resolve", h.simulateProxyProviderResolve)
+internal/api/proxy_providers_test.go:66:	resp, err := client.Do(t26Request(t, http.MethodPost, server.URL+"/api/proxy-providers", create, t26Token))
+internal/api/proxy_providers_test.go:75:	resp, err = client.Do(t26Request(t, http.MethodPost, server.URL+"/api/proxy-providers/acme-test/simulate-resolve", resolve, t26Token))
+internal/api/proxy_providers_test.go:84:		Data proxyprovider.Lease `json:"data"`
+internal/api/proxy_providers_test.go:97:		t.Fatalf("simulated resolution mutated proxy: %#v", p.Proxy)
+internal/api/proxy_providers_test.go:105:	path := server.URL + "/api/proxy-providers"
+internal/api/proxy_providers_test.go:150:			r, e := client.Do(t26Request(t, http.MethodPost, server.URL+"/api/proxy-providers/acme-test/simulate-resolve", body, t26Token))
+internal/api/readonly_session_test.go:27:	issue := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/codes", nil)
+internal/api/readonly_session_test.go:44:	exchange := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/bootstrap", bytes.NewReader(payload))
+internal/api/readonly_session_test.go:52:	var sessionReply struct {
+internal/api/readonly_session_test.go:55:	if err := json.Unmarshal(bootstrapped.Body.Bytes(), &sessionReply); err != nil || len(sessionReply.Token) != 64 {
+internal/api/readonly_session_test.go:56:		t.Fatalf("invalid session token: %q err=%v", sessionReply.Token, err)
+internal/api/readonly_session_test.go:60:	readonly.Header.Set("Authorization", "Bearer "+sessionReply.Token)
+internal/api/readonly_session_test.go:68:	writeAttempt.Header.Set("Authorization", "Bearer "+sessionReply.Token)
+internal/api/readonly_session_test.go:76:	replay := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/bootstrap", bytes.NewReader(payload))
+internal/api/readonly_session_test.go:87:	remote := httptest.NewRequest(http.MethodPost, "/api/v1/readonly/session/bootstrap", bytes.NewReader(payload))
+internal/api/readonly_test.go:34:		item := &profile.Profile{Name: name, RuntimeID: "cloakbrowser", Tags: []string{"qa"}, Proxy: &profile.ProxyConfig{Type: "socks5", Host: "private.proxy.invalid", Port: 1080, Region: "private-region"}}
+internal/api/readonly_test.go:45:	if strings.Contains(rec.Body.String(), "private.proxy.invalid") || strings.Contains(rec.Body.String(), "secret_ref") || strings.Contains(rec.Body.String(), "profile_dir") || strings.Contains(rec.Body.String(), "fingerprint") {
+internal/api/readonly_test.go:68:func TestReadOnlyRuntimeMarksCamoufoxCandidateNonLaunchable(t *testing.T) {
+internal/api/readonly_test.go:95:		for _, forbidden := range []string{"secret_ref", "proxy_host", "binary_path", "binary_sha256", "/t06/private", "t06-sentinel"} {
+internal/api/readonly_test.go:121:	allowedRequest := httptest.NewRequest(http.MethodOptions, "/api/v1/readonly/session/bootstrap", nil)
+internal/api/readonly_test.go:132:	deniedRequest := httptest.NewRequest(http.MethodOptions, "/api/v1/readonly/session/bootstrap", nil)
+internal/api/readonly_test.go:192:	proxyStore, err := proxies.NewStore(t.TempDir())
+internal/api/readonly_test.go:196:	proxy := &proxies.Proxy{ID: "proxy-assigned", Name: "assigned-proxy", Type: "http", Host: "127.0.0.1", Port: 19282, Region: "us-east", SecretRef: "proxy.ref.synthetic", HasSecret: true}
+internal/api/readonly_test.go:197:	if err := proxyStore.Create(proxy); err != nil {
+internal/api/readonly_test.go:200:	if err := proxyStore.Assign(item.ID, proxy.ID); err != nil {
+internal/api/readonly_test.go:203:	h := &handler{store: profileStore, proxyStore: proxyStore}
+internal/api/readonly_test.go:209:	if !strings.Contains(rec.Body.String(), `"proxy_configured":true`) || strings.Contains(rec.Body.String(), "127.0.0.1") || strings.Contains(rec.Body.String(), "proxy.ref.synthetic") {
+internal/api/readonly_test.go:210:		t.Fatalf("durable proxy projection is wrong or leaked: %s", rec.Body.String())
+internal/api/sessions_helpers_test.go:36:	payload := []byte("websocket-handshake")
+internal/api/sessions_helpers_test.go:51:	if err := copyAll(&dst, bytes.NewBufferString("session-bytes")); err != nil {
+internal/api/sessions_helpers_test.go:54:	if got := dst.String(); got != "session-bytes" {
+internal/api/sessions_helpers_test.go:57:	if err := copyAll(failingWriter{}, bytes.NewBufferString("session-bytes")); err == nil {
+internal/api/sessions_proxy_test.go:26:	return &handler{store: profiles, proxyStore: registry}, profiles, registry, vault
+internal/api/sessions_proxy_test.go:47:func TestSessionProxyAssignmentResolvesDistinctAlphaAndBetaLaunchConfigs(t *testing.T) {
+internal/api/sessions_proxy_test.go:51:	alpha := createRegistryProxy(t, registry, "proxy-alpha", "alpha", "127.0.0.1", 19282, "proxy.ref.alpha")
+internal/api/sessions_proxy_test.go:52:	beta := createRegistryProxy(t, registry, "proxy-beta", "beta", "127.0.0.1", 19284, "proxy.ref.beta")
+internal/api/sessions_proxy_test.go:66:	alphaLaunch, err := h.profileForSessionLaunch(alphaProfile)
+internal/api/sessions_proxy_test.go:70:	betaLaunch, err := h.profileForSessionLaunch(betaProfile)
+internal/api/sessions_proxy_test.go:74:	if alphaLaunch.LaunchProxy == nil || betaLaunch.LaunchProxy == nil {
+internal/api/sessions_proxy_test.go:75:		t.Fatal("assigned profiles must carry an ephemeral launch proxy")
+internal/api/sessions_proxy_test.go:77:	if alphaLaunch.LaunchProxy.Host != "127.0.0.1" || alphaLaunch.LaunchProxy.Port != 19282 || alphaLaunch.LaunchProxy.Username != "fixture-alpha" {
+internal/api/sessions_proxy_test.go:78:		t.Fatalf("alpha launch proxy = %#v", alphaLaunch.LaunchProxy)
+internal/api/sessions_proxy_test.go:80:	if betaLaunch.LaunchProxy.Host != "127.0.0.1" || betaLaunch.LaunchProxy.Port != 19284 || betaLaunch.LaunchProxy.Username != "fixture-beta" {
+internal/api/sessions_proxy_test.go:81:		t.Fatalf("beta launch proxy = %#v", betaLaunch.LaunchProxy)
+internal/api/sessions_proxy_test.go:83:	if alphaLaunch.LaunchProxy.Port == betaLaunch.LaunchProxy.Port || alphaLaunch.LaunchProxy.Username == betaLaunch.LaunchProxy.Username {
+internal/api/sessions_proxy_test.go:87:	encoded, err := json.Marshal(alphaLaunch)
+internal/api/sessions_proxy_test.go:104:	payload := []byte(`{"proxies":[],"assigned":{"profile-unknown":"proxy-missing"}}`)
+internal/api/sessions_proxy_test.go:112:	h.proxyStore = registry
+internal/api/sessions_proxy_test.go:113:	if _, err := h.profileForSessionLaunch(p); err == nil || !strings.Contains(err.Error(), "PROXY_ASSIGNMENT_UNKNOWN") {
+--- TOOLS ---
+gosec: Version: dev
+govulncheck: Scanner: govulncheck@v1.1.4
+gitleaks: Error: unknown flag: --version
+osv-scanner: osv-scanner version: 1.9.2
+trivy: Version: 0.74.0
+semgrep: NOT_AVAILABLE
+grype: NOT_AVAILABLE
+shellcheck: NOT_AVAILABLE
+yamllint: NOT_AVAILABLE
