@@ -781,12 +781,13 @@ func extractFullBackupToStage(stage, path string) (result error) {
 			if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 				return err
 			}
-			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedRestoreMode(header.Mode, 0644))
+			outRoot, out, err := openServerRegularFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedRestoreMode(header.Mode, 0644))
 			if err != nil {
 				return err
 			}
 			n, copyErr := io.CopyN(out, tr, header.Size)
 			closeErr := out.Close()
+			rootErr := outRoot.Close()
 			if copyErr == nil && n != header.Size {
 				copyErr = io.ErrUnexpectedEOF
 			}
@@ -795,6 +796,9 @@ func extractFullBackupToStage(stage, path string) (result error) {
 			}
 			if closeErr != nil {
 				return closeErr
+			}
+			if rootErr != nil {
+				return rootErr
 			}
 			total += header.Size
 		case tar.TypeSymlink:
@@ -972,13 +976,16 @@ func createMetadataBackup(global cliGlobal, output, baseURL, token string) (resu
 	if err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {
 		return err
 	}
-	out, err := os.OpenFile(output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	outRoot, out, err := openServerRegularFile(output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
 	defer func() {
 		if closeErr := out.Close(); result == nil {
 			result = closeErr
+		}
+		if rootErr := outRoot.Close(); result == nil {
+			result = rootErr
 		}
 	}()
 	_, result = io.Copy(out, resp.Body)

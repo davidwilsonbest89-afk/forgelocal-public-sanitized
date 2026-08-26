@@ -600,13 +600,16 @@ func download(dlURL, dest string) (result error) {
 		return fmt.Errorf("download failed: HTTP %d", resp.StatusCode)
 	}
 
-	out, err := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	outRoot, out, err := openBrowserRegularFile(dest, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
 	if err != nil {
 		return err
 	}
 	defer func() {
 		if closeErr := out.Close(); result == nil {
 			result = closeErr
+		}
+		if rootErr := outRoot.Close(); result == nil {
+			result = rootErr
 		}
 	}()
 

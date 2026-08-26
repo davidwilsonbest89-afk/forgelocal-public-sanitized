@@ -50,7 +50,7 @@ func NewEngine(apiBase, token string) *Engine {
 }
 
 func (e *Engine) LoadFile(path string) (*Workflow, error) {
-	data, err := os.ReadFile(path)
+	data, err := readWorkflowFile(path)
 	if err != nil {
 		return nil, err
 	}

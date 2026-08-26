@@ -112,6 +112,11 @@ func secureExtractZip(zipFile, destDir string) error {
 		return err
 	}
 	defer r.Close()
+	destRoot, rootErr := os.OpenRoot(destDir)
+	if rootErr != nil {
+		return rootErr
+	}
+	defer destRoot.Close()
 
 	if len(r.File) > maxArchiveFiles {
 		return fmt.Errorf("archive contains too many files: %d", len(r.File))
@@ -138,7 +143,7 @@ func secureExtractZip(zipFile, destDir string) error {
 		if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 			return err
 		}
-		out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(mode))
+		out, err := openBrowserArchiveOutput(destRoot, destDir, target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(mode))
 		if err != nil {
 			return err
 		}
@@ -165,11 +170,17 @@ func secureExtractZip(zipFile, destDir string) error {
 }
 
 func secureExtractTarGz(tarFile, destDir string) error {
-	f, err := os.Open(tarFile)
+	inputRoot, f, err := openBrowserRegularFile(tarFile, 0, 0)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
+	defer inputRoot.Close()
+	destRoot, rootErr := os.OpenRoot(destDir)
+	if rootErr != nil {
+		return rootErr
+	}
+	defer destRoot.Close()
 	gz, err := gzip.NewReader(f)
 	if err != nil {
 		return err
@@ -207,7 +218,7 @@ func secureExtractTarGz(tarFile, destDir string) error {
 			if err := os.MkdirAll(filepath.Dir(target), 0700); err != nil {
 				return err
 			}
-			out, err := os.OpenFile(target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(os.FileMode(hdr.Mode)))
+			out, err := openBrowserArchiveOutput(destRoot, destDir, target, os.O_CREATE|os.O_WRONLY|os.O_TRUNC|os.O_EXCL, normalizedArchiveMode(os.FileMode(hdr.Mode)))
 			if err != nil {
 				return err
 			}

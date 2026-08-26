@@ -569,7 +569,7 @@ func runMigrateCommand(args []string, global cliGlobal, stdout, stderr io.Writer
 			continue
 		}
 		path := filepath.Join(profilesDir, entry.Name(), "profile.json")
-		data, err := os.ReadFile(path)
+		data, err := readServerRegularFile(path)
 		if err != nil {
 			if os.IsNotExist(err) {
 				continue
@@ -853,7 +853,7 @@ func readToken(configPath, baseDir string) (string, string, error) {
 		return "", "", err
 	}
 	tokenPath := filepath.Join(resolvePath(baseDir, cfg.DataDir), ".api-token")
-	data, err := os.ReadFile(tokenPath)
+	data, err := readServerRegularFile(tokenPath)
 	if err != nil {
 		return "", tokenPath, err
 	}

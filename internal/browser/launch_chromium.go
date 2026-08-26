@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"hash/fnv"
+	"io"
 	"log/slog"
 	"net"
 	"os"
@@ -198,10 +199,25 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	}
 	prefsPath := filepath.Join(prefsDir, "Preferences")
 	prefs := map[string]any{}
-	if data, err := os.ReadFile(prefsPath); err == nil {
+	prefsRoot, prefsFile, prefsErr := openBrowserRegularFile(prefsPath, 0, 0)
+	if prefsErr == nil {
+		data, readErr := io.ReadAll(prefsFile)
+		closeErr := prefsFile.Close()
+		rootErr := prefsRoot.Close()
+		if readErr != nil {
+			return nil, fmt.Errorf("read chromium preferences: %w", readErr)
+		}
+		if closeErr != nil {
+			return nil, fmt.Errorf("close chromium preferences: %w", closeErr)
+		}
+		if rootErr != nil {
+			return nil, fmt.Errorf("close preferences root: %w", rootErr)
+		}
 		if err := json.Unmarshal(data, &prefs); err != nil {
 			return nil, fmt.Errorf("decode chromium preferences: %w", err)
 		}
+	} else if !os.IsNotExist(prefsErr) {
+		return nil, fmt.Errorf("open chromium preferences: %w", prefsErr)
 	}
 	prefs["savefile"] = map[string]any{"default_directory": downloadsDir}
 	prefs["download"] = map[string]any{"default_directory": downloadsDir, "prompt_for_download": false}
@@ -214,8 +230,21 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("encode chromium preferences: %w", err)
 	}
-	if err := os.WriteFile(prefsPath, out, 0600); err != nil {
+	prefsRoot, prefsFile, err = openBrowserRegularFile(prefsPath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	if err != nil {
 		return nil, fmt.Errorf("write chromium preferences: %w", err)
+	}
+	_, writeErr := prefsFile.Write(out)
+	closeErr := prefsFile.Close()
+	rootErr := prefsRoot.Close()
+	if writeErr != nil {
+		return nil, fmt.Errorf("write chromium preferences: %w", writeErr)
+	}
+	if closeErr != nil {
+		return nil, fmt.Errorf("close chromium preferences: %w", closeErr)
+	}
+	if rootErr != nil {
+		return nil, fmt.Errorf("close preferences root: %w", rootErr)
 	}
 
 	ignoreArgs := []string{

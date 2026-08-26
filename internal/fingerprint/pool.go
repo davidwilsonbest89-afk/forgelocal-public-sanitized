@@ -3,6 +3,7 @@ package fingerprint
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -20,10 +21,25 @@ func NewPool(dir string) (*Pool, error) {
 		data: make(map[string][]map[string]any),
 		used: make(map[string]bool),
 	}
+	root, rootErr := os.OpenRoot(dir)
+	if rootErr != nil {
+		return p, nil
+	}
+	defer root.Close()
 	files, _ := filepath.Glob(filepath.Join(dir, "fingerprints-*.json"))
 	for _, f := range files {
-		raw, err := os.ReadFile(f)
+		fileName := filepath.Base(f)
+		info, err := root.Lstat(fileName)
+		if err != nil || info.Mode()&os.ModeSymlink != 0 || !info.Mode().IsRegular() {
+			continue
+		}
+		file, err := root.Open(fileName)
 		if err != nil {
+			continue
+		}
+		raw, readErr := io.ReadAll(file)
+		closeErr := file.Close()
+		if readErr != nil || closeErr != nil {
 			continue
 		}
 		var fps []map[string]any
