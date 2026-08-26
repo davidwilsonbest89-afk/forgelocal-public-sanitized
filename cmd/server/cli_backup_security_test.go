@@ -101,6 +101,31 @@ func TestCLIFullBackupUsesPrivateMode(t *testing.T) {
 	}
 }
 
+func TestCLIFullBackupRejectsSymlinkOutput(t *testing.T) {
+	baseDir := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(baseDir, "profiles"), 0700); err != nil {
+		t.Fatal(err)
+	}
+	outside := filepath.Join(t.TempDir(), "outside-backup.tgz")
+	if err := os.WriteFile(outside, []byte("preserve"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	output := filepath.Join(t.TempDir(), "backup.tgz")
+	if err := os.Symlink(outside, output); err != nil {
+		t.Fatal(err)
+	}
+	if err := createFullBackup(baseDir, output); err == nil {
+		t.Fatal("symlinked backup output was accepted")
+	}
+	data, err := os.ReadFile(outside)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(data) != "preserve" {
+		t.Fatalf("external backup target changed: %q", data)
+	}
+}
+
 func TestCLIFullBackupDoesNotDereferenceExternalSymlink(t *testing.T) {
 	baseDir := t.TempDir()
 	profiles := filepath.Join(baseDir, "profiles")

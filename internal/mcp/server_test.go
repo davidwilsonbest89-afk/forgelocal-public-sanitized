@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"reflect"
 	"slices"
 	"strings"
@@ -867,6 +869,41 @@ func TestConfiguredPublicBaseURLNormalizesUnspecifiedHost(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "http://internal:19280/mcp", nil)
 	if got := s.publicBaseURLFromRequest(req); got != "http://localhost:19280/root" {
 		t.Fatalf("publicBaseURLFromRequest = %q", got)
+	}
+}
+
+func TestReadDownloadFileRootScoped(t *testing.T) {
+	profileDir := t.TempDir()
+	downloads := filepath.Join(profileDir, "downloads")
+	if err := os.Mkdir(downloads, 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(downloads, "ok.txt"), []byte("synthetic"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	data, info, err := readDownloadFile(profileDir, "ok.txt", 1024)
+	if err != nil || info == nil || string(data) != "synthetic" {
+		t.Fatalf("regular download: data=%q info=%v err=%v", data, info, err)
+	}
+	outside := filepath.Join(t.TempDir(), "outside.txt")
+	if err := os.WriteFile(outside, []byte("outside"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(outside, filepath.Join(downloads, "link.txt")); err != nil {
+		t.Fatal(err)
+	}
+	if _, _, err := readDownloadFile(profileDir, "link.txt", 1024); err == nil {
+		t.Fatal("external symlink download was accepted")
+	}
+	otherProfile := filepath.Join(t.TempDir(), "profile")
+	if err := os.Mkdir(otherProfile, 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(downloads, filepath.Join(otherProfile, "downloads")); err != nil {
+		t.Fatal(err)
+	}
+	if _, _, err := readDownloadFile(otherProfile, "ok.txt", 1024); err == nil {
+		t.Fatal("symlinked downloads directory was accepted")
 	}
 }
 

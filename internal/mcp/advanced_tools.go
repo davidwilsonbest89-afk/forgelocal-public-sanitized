@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -471,16 +472,12 @@ func (s *Server) toolReadDownload(args map[string]any) (any, *mcpError) {
 	if raw, ok := args["max_bytes"].(float64); ok && raw > 0 {
 		maxBytes = int64(raw)
 	}
-	info, err := os.Stat(path)
+	data, info, err := readDownloadFile(p.ProfileDir, name, maxBytes)
 	if err != nil {
 		return nil, newError(-32000, err.Error())
 	}
 	if info.Size() > maxBytes {
 		return nil, newError(-32000, fmt.Sprintf("file is %d bytes, above max_bytes %d", info.Size(), maxBytes))
-	}
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, newError(-32000, err.Error())
 	}
 	mimeType := http.DetectContentType(data)
 	payload := map[string]any{
@@ -653,6 +650,42 @@ func intSlicePointer(raw any) *[]int {
 		return nil
 	}
 	return &out
+}
+
+func readDownloadFile(profileDir, name string, maxBytes int64) ([]byte, os.FileInfo, error) {
+	downloadDir := filepath.Join(profileDir, "downloads")
+	dirInfo, err := os.Lstat(downloadDir)
+	if err != nil {
+		return nil, nil, err
+	}
+	if dirInfo.Mode()&os.ModeSymlink != 0 || !dirInfo.IsDir() {
+		return nil, nil, fmt.Errorf("downloads directory is not a regular directory")
+	}
+	root, err := os.OpenRoot(downloadDir)
+	if err != nil {
+		return nil, nil, err
+	}
+	defer root.Close()
+	file, err := root.Open(name)
+	if err != nil {
+		return nil, nil, err
+	}
+	defer file.Close()
+	info, err := file.Stat()
+	if err != nil {
+		return nil, nil, err
+	}
+	if !info.Mode().IsRegular() {
+		return nil, nil, fmt.Errorf("download is not a regular file")
+	}
+	if info.Size() > maxBytes {
+		return nil, info, nil
+	}
+	data, err := io.ReadAll(io.LimitReader(file, maxBytes+1))
+	if err != nil {
+		return nil, nil, err
+	}
+	return data, info, nil
 }
 
 func resolveDownloadPath(profileDir string, args map[string]any) (string, string, error) {

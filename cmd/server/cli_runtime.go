@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log/slog"
 	"mime/multipart"
 	"net/http"
 	"os"
@@ -587,14 +588,19 @@ func backupOutputPath(output, prefix, suffix string) string {
 	return output
 }
 
-func createFullBackup(baseDir, output string) error {
+func createFullBackup(baseDir, output string) (result error) {
 	if err := os.MkdirAll(filepath.Dir(output), 0700); err != nil {
 		return err
 	}
-	out, err := os.OpenFile(output, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	outputRoot, out, err := openBackupOutput(output)
 	if err != nil {
 		return err
 	}
+	defer func() {
+		if closeErr := outputRoot.Close(); result == nil {
+			result = closeErr
+		}
+	}()
 	gw := gzip.NewWriter(out)
 	tw := tar.NewWriter(gw)
 	for _, name := range []string{"profiles", "data", "browsers", "logs"} {
@@ -605,17 +611,23 @@ func createFullBackup(baseDir, output string) error {
 		if err := addPathToTar(tw, baseDir, root); err != nil {
 			_ = tw.Close()
 			_ = gw.Close()
-			_ = out.Close()
+			if closeErr := out.Close(); closeErr != nil {
+				slog.Warn("close backup output after tar failure", "error", closeErr)
+			}
 			return err
 		}
 	}
 	if err := tw.Close(); err != nil {
 		_ = gw.Close()
-		_ = out.Close()
+		if closeErr := out.Close(); closeErr != nil {
+			slog.Warn("close backup output after tar close failure", "error", closeErr)
+		}
 		return err
 	}
 	if err := gw.Close(); err != nil {
-		_ = out.Close()
+		if closeErr := out.Close(); closeErr != nil {
+			slog.Warn("close backup output after gzip close failure", "error", closeErr)
+		}
 		return err
 	}
 	return out.Close()
@@ -705,17 +717,28 @@ func restoreFullBackup(baseDir, path string) error {
 	return activateRestoreStage(baseDir, stage)
 }
 
-func extractFullBackupToStage(stage, path string) error {
-	in, err := os.Open(path)
+func extractFullBackupToStage(stage, path string) (result error) {
+	inputRoot, in, err := openBackupInput(path)
 	if err != nil {
 		return err
 	}
-	defer in.Close()
+	defer func() {
+		if closeErr := in.Close(); result == nil {
+			result = closeErr
+		}
+		if closeErr := inputRoot.Close(); result == nil {
+			result = closeErr
+		}
+	}()
 	gr, err := gzip.NewReader(in)
 	if err != nil {
 		return err
 	}
-	defer gr.Close()
+	defer func() {
+		if closeErr := gr.Close(); result == nil {
+			result = closeErr
+		}
+	}()
 	tr := tar.NewReader(gr)
 	allowed := map[string]bool{"profiles": true, "data": true, "browsers": true, "logs": true}
 	var files, total int64
@@ -849,6 +872,55 @@ func normalizedRestoreMode(mode int64, fallback os.FileMode) os.FileMode {
 	return clean
 }
 
+func openBackupInput(path string) (*os.Root, *os.File, error) {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	parent, base := filepath.Split(filepath.Clean(abs))
+	root, err := os.OpenRoot(filepath.Clean(parent))
+	if err != nil {
+		return nil, nil, err
+	}
+	info, err := root.Lstat(base)
+	if err != nil {
+		_ = root.Close()
+		return nil, nil, err
+	}
+	if !info.Mode().IsRegular() || info.Mode()&os.ModeSymlink != 0 {
+		_ = root.Close()
+		return nil, nil, fmt.Errorf("backup input is not a regular non-symlink file")
+	}
+	file, err := root.Open(base)
+	if err != nil {
+		_ = root.Close()
+		return nil, nil, err
+	}
+	return root, file, nil
+}
+
+func openBackupOutput(path string) (*os.Root, *os.File, error) {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	parent, base := filepath.Split(filepath.Clean(abs))
+	root, err := os.OpenRoot(filepath.Clean(parent))
+	if err != nil {
+		return nil, nil, err
+	}
+	if info, statErr := root.Lstat(base); statErr == nil && info.Mode()&os.ModeSymlink != 0 {
+		_ = root.Close()
+		return nil, nil, fmt.Errorf("backup output cannot be a symlink")
+	}
+	file, err := root.OpenFile(base, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0600)
+	if err != nil {
+		_ = root.Close()
+		return nil, nil, err
+	}
+	return root, file, nil
+}
+
 func safeBackupPath(name string) (string, error) {
 	name = strings.ReplaceAll(name, "\\", "/")
 	clean := filepath.Clean(name)
@@ -932,9 +1004,21 @@ func restoreMetadataBackup(global cliGlobal, path, baseURL, token string) error 
 	if err != nil {
 		return err
 	}
-	data, err := os.ReadFile(path)
+	inputRoot, input, err := openBackupInput(path)
 	if err != nil {
 		return err
+	}
+	data, readErr := io.ReadAll(input)
+	closeErr := input.Close()
+	rootErr := inputRoot.Close()
+	if readErr != nil {
+		return readErr
+	}
+	if closeErr != nil {
+		return closeErr
+	}
+	if rootErr != nil {
+		return rootErr
 	}
 	if _, err := part.Write(data); err != nil {
 		return err
