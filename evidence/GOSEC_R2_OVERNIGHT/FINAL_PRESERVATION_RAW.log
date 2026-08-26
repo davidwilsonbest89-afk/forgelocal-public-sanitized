@@ -1,0 +1,41 @@
+UTC=2026-08-26T03:31:51Z
+WORKTREE_HEAD=ee45a147919e8d0e9c39e2f276f0e590e770a77e
+CLONE_HEAD=ee45a147919e8d0e9c39e2f276f0e590e770a77e
+FIRST_PRESERVATION_ATTEMPT=FAILED_SIDECAR_RELATIVE_PATH_ONLY
+SECOND_PRESERVATION_ATTEMPT=FAILED_LFS_SMUDGE_AT_CHECKOUT
+NEUTRAL_SIDECAR_HASHES=PASS
+UNZIP_TEST=PASS
+ZIP_EXTRACTION=PASS
+TAR_EXTRACTION=PASS
+MANIFEST_HASHES=PASS
+EXTRACTION_GITLEAKS_EXIT_CODE=0
+BUNDLE_VERIFY=PASS
+CLONE_CHECKOUT_NO_LFS=PASS
+CLONE_HEAD_MATCH=PASS
+CLONE_FSCK_EXIT_CODE=0
+PRESERVATION_RESULT=PASS
+evidence/GOSEC_R2_OVERNIGHT/forgelocal-gosec-r2-overnight-delta-ee45a14.bundle is okay
+The bundle contains this ref:
+ee45a147919e8d0e9c39e2f276f0e590e770a77e refs/heads/validation/operational-v1
+The bundle records a complete history.
+The bundle uses this hash algorithm: sha1
+
+--- extraction gitleaks ---
+[90m3:31AM[0m [1m[31mERR[0m[0m [git] fatal: not a git repository (or any of the parent directories): .git
+[90m3:31AM[0m [1m[31mERR[0m[0m  [36merror=[0m[31m"stderr is not empty"[0m
+[90m3:31AM[0m [32mINF[0m scan completed in 4.33ms
+[90m3:31AM[0m [32mINF[0m no leaks found
+
+--- manifest verify tail ---
+GOSEC_R2_OVERNIGHT/osv_pnpm_lock_post_directive.json: OK
+GOSEC_R2_OVERNIGHT/syft_final.json: OK
+GOSEC_R2_OVERNIGHT/syft_post_overnight.json: OK
+GOSEC_R2_OVERNIGHT/trivy_final.json: OK
+GOSEC_R2_OVERNIGHT/trivy_post_overnight.json: OK
+
+--- clone fsck tail ---
+
+--- disk ---
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   42G  6.0G  88% /
+/dev/root        48G   42G  6.0G  88% /

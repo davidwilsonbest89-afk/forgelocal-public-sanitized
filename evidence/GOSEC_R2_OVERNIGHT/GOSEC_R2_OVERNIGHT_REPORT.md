@@ -74,7 +74,9 @@ Les tests GUI `xdg-open/open/rundll32`, le subprocess Darwin `xattr` sur la plat
 
 ## Conservation et limites
 
-Le Lot 2 original conserve son ZIP/TAR, ses sidecars, son bundle et son manifeste. Le manifeste Lot 1 v1 auto-référentiel n’a pas été supprimé; la v2 non auto-référentielle et sa preuve de vérification sont publiées. Pour l’overnight, le package final contient la baseline, les queues, matrices, sorties brutes, JSON, rapports, changelogs, todo, manifestes, hashes, bundle, extraction fraîche, clone neuf, checkout explicite et fsck.
+Le Lot 2 original conserve son ZIP/TAR, ses sidecars, son bundle et son manifeste. Le manifeste Lot 1 v1 auto-référentiel n’a pas été supprimé; la v2 non auto-référentielle et sa preuve de vérification sont publiées. Pour l’overnight, le package v2 `forgelocal-gosec-r2-overnight-final-v2.zip/.tar.gz` contient la baseline, les queues, matrices, sorties brutes, JSON, rapports, changelogs, todo, manifestes, hashes, bundle, extraction fraîche, clone neuf, checkout explicite et fsck. Le package v1 est conservé comme première archive historique; le package v2 est la version canonique vérifiée après ajout de `FINAL_PRESERVATION_RAW.log`.
+
+La première tentative de préservation a échoué sur un chemin relatif incorrect lors du contrôle des sidecars. La seconde a déclenché LFS parce que `GIT_LFS_SKIP_SMUDGE` n’était pas propagé au checkout explicite. Ces deux événements sont documentés dans `FINAL_PRESERVATION_RAW.log`; la troisième vérification, avec chemins neutres et checkout explicitement sans LFS, passe.
 
 Le prochain triage autorisé peut couvrir les findings G703/G304/G301/G104/G404 restants et les dépendances selon une nouvelle baseline. Le Lot 3 n’est pas démarré automatiquement.
 
