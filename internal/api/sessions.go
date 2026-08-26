@@ -9,6 +9,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"forgelocal/internal/humanize"
@@ -450,15 +451,14 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Parse internal endpoint to get host:port and path
-	internalURL := strings.Replace(session.ConnectURL, "ws://", "http://", 1)
-	parsed, err := url.Parse(internalURL)
+	// Parse and validate the manager-owned endpoint before any network dial.
+	// This endpoint is internal-only: accepting a user-controlled host, scheme,
+	// port or path here would turn the WebSocket bridge into an SSRF primitive.
+	internalAddr, internalPath, err := validateInternalPlaywrightEndpoint(session.ConnectURL, sessionID)
 	if err != nil {
-		http.Error(w, "invalid internal endpoint", 500)
+		http.Error(w, "invalid internal endpoint", 400)
 		return
 	}
-	internalAddr := "127.0.0.1:" + parsed.Port()
-	internalPath := parsed.Path
 
 	// Hijack client connection
 	hj, ok := w.(http.Hijacker)
@@ -530,6 +530,31 @@ func (h *handler) playwrightWSProxy(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+func validateInternalPlaywrightEndpoint(raw, sessionID string) (string, string, error) {
+	parsed, err := url.Parse(raw)
+	if err != nil || parsed.Scheme != "ws" || parsed.Host == "" || parsed.User != nil || parsed.RawQuery != "" || parsed.Fragment != "" {
+		return "", "", fmt.Errorf("internal endpoint must be a plain ws URL")
+	}
+	host := strings.Trim(parsed.Hostname(), "[]")
+	ip := net.ParseIP(host)
+	if host != "localhost" && (ip == nil || !ip.IsLoopback()) {
+		return "", "", fmt.Errorf("internal endpoint host is not loopback")
+	}
+	port := parsed.Port()
+	portNumber, err := strconv.Atoi(port)
+	if err != nil || portNumber < 1 || portNumber > 65535 {
+		return "", "", fmt.Errorf("internal endpoint port is invalid")
+	}
+	path := parsed.EscapedPath()
+	prefix := "/api/playwright/ws/"
+	if !strings.HasPrefix(path, prefix) || !strings.HasSuffix(strings.TrimSuffix(path, "/"), "/"+url.PathEscape(sessionID)) {
+		return "", "", fmt.Errorf("internal endpoint path is invalid")
+	}
+	// Normalize the dial target to IPv4 loopback. The manager endpoint is
+	// internal and the bridge must never dial a host supplied by the client.
+	return net.JoinHostPort("127.0.0.1", port), path, nil
 }
 
 // Backup/restore/shutdown are in backup.go
