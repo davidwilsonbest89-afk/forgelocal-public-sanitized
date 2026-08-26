@@ -10,6 +10,7 @@ import {
   CoreReadOnlyProfile,
   CoreReadOnlyRuntime,
   CoreReadOnlySummary,
+  CoreReadOnlyClient,
   createCoreReadOnlyClient,
 } from "@/lib/coreReadOnly";
 
@@ -24,6 +25,7 @@ export type LocalCoreSnapshot = {
 type LocalCoreConnectionProps = {
   onConnected: (snapshot: LocalCoreSnapshot) => void;
   onDisconnected: () => void;
+  onClientReady?: (client: CoreReadOnlyClient) => void;
   onWriteConnected?: (adminToken: string) => void;
   onWriteDisconnected?: () => void;
   writeConnected?: boolean;
@@ -48,7 +50,7 @@ export function resolveLocalCoreBaseURL() {
 	return `http://${window.location.hostname === "[::1]" ? "[::1]" : window.location.hostname}:19280`;
 }
 
-export function LocalCoreConnection({ onConnected, onDisconnected, onWriteConnected, onWriteDisconnected, writeConnected }: LocalCoreConnectionProps) {
+export function LocalCoreConnection({ onConnected, onDisconnected, onClientReady, onWriteConnected, onWriteDisconnected, writeConnected }: LocalCoreConnectionProps) {
 	const clientRef = useRef(createCoreReadOnlyClient(resolveLocalCoreBaseURL()));
   const isLoopback = isLoopbackHostname(window.location.hostname);
   const [code, setCode] = useState("");
@@ -146,6 +148,7 @@ export function LocalCoreConnection({ onConnected, onDisconnected, onWriteConnec
       setExpiresAt(session.expiresAt);
       setState("connected");
       setMessage("Lecture Core active — session limitée et non persistée.");
+      onClientReady?.(clientRef.current);
       onConnected({ summary, profiles: profiles.data, groups: groups.data, runtimes: runtimes.data, expiresAt: session.expiresAt });
     } catch (error) {
       clientRef.current.disconnect();

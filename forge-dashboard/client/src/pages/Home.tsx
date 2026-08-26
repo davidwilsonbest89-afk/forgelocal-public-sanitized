@@ -46,7 +46,7 @@ import { BackupVault, BackupCreateAction } from "@/components/BackupVault";
 import { AutomationPanel } from "@/components/AutomationPanel";
 import { EnvironmentPanel } from "@/components/EnvironmentPanel";
 import { RuntimePanel } from "@/components/RuntimePanel";
-import { createCoreReadOnlyClient } from "@/lib/coreReadOnly";
+import type { CoreReadOnlyClient } from "@/lib/coreReadOnly";
 import { CoreProxy, createCoreWriteClient, type CoreWriteClient } from "@/lib/coreWrite";
 import { AdvancedFiltersPanel, AuditPanel, ExtensionsPanel, HelpPanel, LocalWorkspacePanel, NotificationsPanel, SettingsPanel, type AdvancedFilterState, type AuditEntry } from "@/components/DashboardControlPanels";
 
@@ -173,6 +173,7 @@ export default function Home() {
   const [coreSnapshot, setCoreSnapshot] = useState<LocalCoreSnapshot | null>(null);
   const [coreWrite, setCoreWrite] = useState<{ token: string; version: number } | null>(null);
   const writeClientRef = useRef<CoreWriteClient | null>(null);
+  const readOnlyClientRef = useRef<CoreReadOnlyClient | null>(null);
   const [writePending, setWritePending] = useState<Record<string, boolean>>({});
   const [selectedLifecycle, setSelectedLifecycle] = useState<Record<string, "active" | "archived" | "quarantined">>({});
   const [refreshNonce, setRefreshNonce] = useState(0);
@@ -242,12 +243,12 @@ export default function Home() {
   }, [coreWrite, coreSnapshot, writeClient]);
 
   const refreshCoreSnapshot = async () => {
-    if (!coreSnapshot) return;
+    if (!coreSnapshot || !readOnlyClientRef.current?.isConnected()) return;
     try {
-      const client = createCoreReadOnlyClient(resolveLocalCoreBaseURL());
+      const client = readOnlyClientRef.current;
       const [summary, page, groups, runtimes] = await Promise.all([
         client.getSummary(),
-        client.listProfiles({ limit: 250 }),
+        client.listProfiles({ limit: 100 }),
         client.listGroups({ limit: 100 }),
         client.listRuntimes({ limit: 100 }),
       ]);
@@ -449,7 +450,8 @@ export default function Home() {
               <small>{coreSnapshot ? "Les données affichées sont redacted et le token est uniquement en mémoire." : "Le panneau ne lit aucune donnée locale avant le raccordement de l’API authentifiée."}</small>
               <LocalCoreConnection
                 onConnected={setCoreSnapshot}
-                onDisconnected={() => { setCoreSnapshot(null); setCoreWrite(null); }}
+                onClientReady={(client) => { readOnlyClientRef.current = client; }}
+                onDisconnected={() => { readOnlyClientRef.current = null; setCoreSnapshot(null); setCoreWrite(null); }}
                 onWriteConnected={(token) => setCoreWrite({ token, version: Date.now() })}
                 onWriteDisconnected={() => { setCoreWrite(null); setSelectedLifecycle({}); setRegistryProxies([]); setAssignedProxyIds({}); setProfileIds([]); }}
                 writeConnected={Boolean(coreWrite)}

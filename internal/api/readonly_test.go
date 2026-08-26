@@ -12,6 +12,7 @@ import (
 	"forgelocal/internal/browser"
 	"forgelocal/internal/config"
 	"forgelocal/internal/profile"
+	"forgelocal/internal/proxies"
 )
 
 type t06Catalog struct{}
@@ -166,5 +167,63 @@ func TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID(t *testing.T) {
 	}
 	if got := allowed.Header().Get("X-Request-ID"); got != "ui-readonly-0001" {
 		t.Fatalf("X-Request-ID=%q, want supplied safe id", got)
+	}
+}
+
+type emptyReadOnlyCatalog struct{}
+
+func (emptyReadOnlyCatalog) ListReadOnlyGroups(context.Context) ([]backup.ReadOnlyGroup, error) {
+	return []backup.ReadOnlyGroup{}, nil
+}
+
+func (emptyReadOnlyCatalog) ListReadOnlyRuntimeCandidates(context.Context) ([]backup.ReadOnlyRuntimeCandidate, error) {
+	return []backup.ReadOnlyRuntimeCandidate{}, nil
+}
+
+func TestReadOnlyProfilesReflectDurableProxyAssignmentWithoutSecrets(t *testing.T) {
+	profileStore, err := profile.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	item := &profile.Profile{Name: "assigned-profile", RuntimeID: "browseforge-chromium"}
+	if err := profileStore.Create(item); err != nil {
+		t.Fatal(err)
+	}
+	proxyStore, err := proxies.NewStore(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	proxy := &proxies.Proxy{ID: "proxy-assigned", Name: "assigned-proxy", Type: "http", Host: "127.0.0.1", Port: 19282, Region: "us-east", SecretRef: "proxy.ref.synthetic", HasSecret: true}
+	if err := proxyStore.Create(proxy); err != nil {
+		t.Fatal(err)
+	}
+	if err := proxyStore.Assign(item.ID, proxy.ID); err != nil {
+		t.Fatal(err)
+	}
+	h := &handler{store: profileStore, proxyStore: proxyStore}
+	rec := httptest.NewRecorder()
+	h.readonlyProfiles(rec, httptest.NewRequest(http.MethodGet, "/api/v1/readonly/profiles?limit=100", nil))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	if !strings.Contains(rec.Body.String(), `"proxy_configured":true`) || strings.Contains(rec.Body.String(), "127.0.0.1") || strings.Contains(rec.Body.String(), "proxy.ref.synthetic") {
+		t.Fatalf("durable proxy projection is wrong or leaked: %s", rec.Body.String())
+	}
+}
+
+func TestReadOnlyRuntimeFallsBackToConfiguredManagerWhenCandidateCatalogEmpty(t *testing.T) {
+	cfg := &config.Config{Runtimes: map[string]config.RuntimeConfig{"browseforge-chromium": {BinaryPath: "/usr/bin/chromium"}}}
+	h := &handler{readonlyCatalog: emptyReadOnlyCatalog{}, mgr: testManagerWithRuntimeConfig(t, cfg)}
+	rec := httptest.NewRecorder()
+	h.readonlyRuntimes(rec, httptest.NewRequest(http.MethodGet, "/api/v1/readonly/runtimes", nil))
+	if rec.Code != http.StatusOK {
+		t.Fatalf("status=%d body=%s", rec.Code, rec.Body.String())
+	}
+	body := rec.Body.String()
+	if !strings.Contains(body, `"id":"browseforge-chromium"`) || !strings.Contains(body, `"launchable":true`) {
+		t.Fatalf("configured runtime missing or not launchable: %s", body)
+	}
+	if strings.Contains(body, "binary_path") || strings.Contains(body, "/usr/bin/chromium") {
+		t.Fatalf("runtime response leaked binary path: %s", body)
 	}
 }

@@ -81,7 +81,7 @@ func (h *handler) readonlyProfiles(w http.ResponseWriter, r *http.Request) {
 	items := make([]ReadOnlyProfile, 0)
 	if h.store != nil {
 		for _, item := range h.store.List("", "") {
-			items = append(items, redactProfile(item))
+			items = append(items, h.redactProfile(item))
 		}
 	}
 	sort.Slice(items, func(i, j int) bool { return items[i].ID < items[j].ID })
@@ -108,14 +108,14 @@ func (h *handler) readonlyProxies(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	type proxyDTO struct {
-		ID          string `json:"id"`
-		Name        string `json:"name"`
-		Type        string `json:"type"`
-		Region      string `json:"region,omitempty"`
-		HasSecret   bool   `json:"has_secret"`
-		AssignedTo  string `json:"assigned_to,omitempty"`
-		CreatedAt   time.Time `json:"created_at"`
-		UpdatedAt   time.Time `json:"updated_at"`
+		ID         string    `json:"id"`
+		Name       string    `json:"name"`
+		Type       string    `json:"type"`
+		Region     string    `json:"region,omitempty"`
+		HasSecret  bool      `json:"has_secret"`
+		AssignedTo string    `json:"assigned_to,omitempty"`
+		CreatedAt  time.Time `json:"created_at"`
+		UpdatedAt  time.Time `json:"updated_at"`
 	}
 	items := make([]proxyDTO, 0)
 	if h.proxyStore != nil {
@@ -211,6 +211,7 @@ func (h *handler) readonlyRuntimes(w http.ResponseWriter, r *http.Request) {
 		Launchable        bool   `json:"launchable"`
 	}
 	items := make([]runtimeDTO, 0)
+	seen := make(map[string]bool)
 	if h.readonlyCatalog != nil {
 		catalogItems, err := h.readonlyCatalog.ListReadOnlyRuntimeCandidates(context.Background())
 		if err != nil {
@@ -219,11 +220,29 @@ func (h *handler) readonlyRuntimes(w http.ResponseWriter, r *http.Request) {
 		}
 		for _, item := range catalogItems {
 			items = append(items, runtimeDTO{ID: item.ID, DisplayName: item.Name, Version: item.Version, Architecture: item.Architecture, Status: item.Status, Candidate: true, Launchable: false})
+			seen[item.ID] = true
 		}
-	} else if h.mgr != nil {
+	}
+	if h.mgr != nil {
 		for _, item := range h.mgr.RuntimeRegistry().List() {
+			id := string(item.ID)
+			if seen[id] {
+				continue
+			}
 			candidate := item.ID == bfruntime.Camoufox
-			items = append(items, runtimeDTO{ID: string(item.ID), DisplayName: item.DisplayName, Enabled: item.Enabled, PlatformSupported: item.PlatformSupported, Candidate: candidate, Launchable: item.Enabled && item.PlatformSupported && !candidate})
+			launchable := item.Enabled && item.PlatformSupported && !candidate
+			version := ""
+			status := ""
+			if launchable && h.qualifiedRegistry != nil {
+				qualified, err := h.qualifiedRegistry.Get(context.Background(), item.ID)
+				if err != nil {
+					launchable = false
+				} else {
+					version = qualified.Version
+					status = string(qualified.State)
+				}
+			}
+			items = append(items, runtimeDTO{ID: id, DisplayName: item.DisplayName, Version: version, Status: status, Enabled: item.Enabled, PlatformSupported: item.PlatformSupported, Candidate: candidate, Launchable: launchable})
 		}
 	}
 	start, validCursor := readOnlyStart(items, cursor, func(item runtimeDTO) string { return item.ID })
@@ -245,14 +264,18 @@ func (h *handler) readonlyRuntimes(w http.ResponseWriter, r *http.Request) {
 
 var _ backup.ReadOnlyCatalog = (*backup.SQLiteStore)(nil)
 
-func redactProfile(item *profile.Profile) ReadOnlyProfile {
+func (h *handler) redactProfile(item *profile.Profile) ReadOnlyProfile {
 	if item == nil {
 		return ReadOnlyProfile{}
+	}
+	proxyConfigured := item.Proxy != nil
+	if !proxyConfigured && h.proxyStore != nil && item.ID != "" {
+		_, proxyConfigured = h.proxyStore.AssignedProxyID(item.ID)
 	}
 	return ReadOnlyProfile{
 		ID: item.ID, Name: item.Name, RuntimeID: item.RuntimeID, Group: item.Group,
 		Tags: append([]string(nil), item.Tags...), CreatedAt: item.CreatedAt, LastUsed: item.LastUsed,
-		ProxyConfigured: item.Proxy != nil,
+		ProxyConfigured: proxyConfigured,
 	}
 }
 
