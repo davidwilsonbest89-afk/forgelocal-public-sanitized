@@ -1,0 +1,51 @@
+UTC=2026-08-26T04:11:23Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+OS=Linux
+ARCH=x86_64
+REMOTE=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/gosec-r4
+HEAD=80048180d4ec5241c08146ade698d53a3f29454d
+R3_HEAD_SOURCE_DISCOVERED=80048180d4ec5241c08146ade698d53a3f29454d
+TAGS_BEGIN
+TAGS_END
+WORKTREE_BEGIN
+[31m??[m evidence/GOSEC_R4/
+[31m??[m evidence/SMOKE_INTEGRATED_PROXY/
+WORKTREE_END
+DISK_BEGIN
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   46G  2.1G  96% /
+/dev/root        48G   46G  2.1G  96% /
+DISK_END
+TOOL_VERSIONS_BEGIN
+go version go1.25.13 linux/amd64
+GOTOOLCHAIN=local
+GOVERSION=go1.25.13
+v22.13.0
+11.20.0
+git version 2.43.0
+git-lfs/3.4.1 (GitHub; linux amd64; go 1.22.2)
+gosec=Version: dev
+govulncheck=Go: go1.25.13
+osv-scanner=osv-scanner version: 1.9.2
+gitleaks=Error: unknown flag: --version
+trivy=Version: 0.74.0
+syft=syft 1.51.0
+semgrep=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+grype=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+shellcheck=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+yamllint=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+docker=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+buildx=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+TOOL_VERSIONS_END
+R3_PACKAGE_VERIFICATION_REFERENCE=PASS
+R3_PACKAGE_SOURCE_HEAD=63a6175a71faf73d2071cbf80c38d5d264885e10
+R3_PACKAGE_PUBLIC_HEAD_KNOWN=80048180d4ec5241c08146ade698d53a3f29454d
+R4_BRANCH_CREATED_FROM_DISCOVERED_HEAD=PASS
+[?2004hubuntu@sandbox:~/forgelocal_self_validation_v6/operational_validation_v1/repo$ 
+COUNT_RECONCILIATION_UTC=2026-08-26T04:12:30Z
+R3_NARRATIVE_COUNT=94
+R3_Gosec_JSON_COUNT=99
+R4_BASELINE_COUNT=99
+COUNT_RECONCILIATION=PASS_USING_JSON_AND_RULE_SUM
+NOTE=The prior R3 narrative count 94 is preserved as historical text; R4 does not rewrite it and uses the observed JSON count 99.
