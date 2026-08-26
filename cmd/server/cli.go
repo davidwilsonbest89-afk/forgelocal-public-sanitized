@@ -775,7 +775,7 @@ func writeDefaultConfig(path, baseDir string, force bool) error {
 			return err
 		}
 	}
-	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
 		return err
 	}
 	cfg := defaultConfig(baseDir)

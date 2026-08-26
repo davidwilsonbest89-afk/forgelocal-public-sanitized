@@ -61,7 +61,7 @@ func (m *Manager) launchChromium(p *profile.Profile) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("browser data path: %w", err)
 	}
-	if err := os.MkdirAll(userDataDir, 0755); err != nil {
+	if err := os.MkdirAll(userDataDir, 0700); err != nil {
 		return nil, fmt.Errorf("create browser data dir: %w", err)
 	}
 	cleanProfileLocks(userDataDir)
@@ -1910,7 +1910,7 @@ func applyCloakBrowserLaunchPolicy(args []string, userDataDir string, policy *co
 	}
 	if policy.IsolatedRuntimeCache || fallback {
 		cacheDir := filepath.Join(userDataDir, "BrowseForgeRuntimeCache", fmt.Sprintf("cache-%d-%d", os.Getpid(), time.Now().UnixNano()))
-		if err := os.MkdirAll(cacheDir, 0755); err != nil {
+		if err := os.MkdirAll(cacheDir, 0700); err != nil {
 			return nil, fmt.Errorf("create chromium runtime cache dir: %w", err)
 		}
 		out = append(out, "--disk-cache-dir="+cacheDir)
