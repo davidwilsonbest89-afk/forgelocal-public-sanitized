@@ -1,0 +1,287 @@
+UTC=2026-08-26T13:46:24Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r6
+SOURCE_HEAD=a436a68d1ca4e223b54c45d7b99efa77617e620b
+GO=go version go1.25.13 linux/amd64
+GOTOOLCHAIN=local
+COMMAND=go test -count=1 ./internal/workflow -run Test(ValidateWorkflowURLQueryAllowlist|LoadFileRejectsSymlink)
+ok  	forgelocal/internal/workflow	0.004s
+TARGETED_WORKFLOW_EXIT_CODE=0
+COMMAND=go test -count=1 ./internal/api -run TestValidateInternalPlaywrightEndpoint
+ok  	forgelocal/internal/api	0.004s
+TARGETED_API_EXIT_CODE=0
+COMMAND=go test -count=1 ./cmd/server -run Test(ValidateCLILoopbackURLBoundaries|CLILocalHTTPClient|APIGETRejects|APIPOSTRejects|OpenCommandRejects|MetadataBackupRejects)
+ok  	forgelocal/cmd/server	0.109s
+TARGETED_SERVER_EXIT_CODE=0
+COMMAND=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.212s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.898s
+ok  	forgelocal/internal/backup	2.614s
+ok  	forgelocal/internal/browser	3.158s
+ok  	forgelocal/internal/config	1.027s
+ok  	forgelocal/internal/cookies	1.014s
+ok  	forgelocal/internal/drift	1.010s
+ok  	forgelocal/internal/environment	1.014s
+ok  	forgelocal/internal/extensions	2.048s
+ok  	forgelocal/internal/fingerprint	1.013s
+ok  	forgelocal/internal/fonts	1.011s
+ok  	forgelocal/internal/geolocation	1.011s
+ok  	forgelocal/internal/groups	1.023s
+ok  	forgelocal/internal/hardware	1.010s
+ok  	forgelocal/internal/history	1.160s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.718s
+ok  	forgelocal/internal/localvault	1.065s
+ok  	forgelocal/internal/mcp	1.029s
+ok  	forgelocal/internal/productschema	1.732s
+ok  	forgelocal/internal/profile	1.099s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.436s
+ok  	forgelocal/internal/proxies	1.086s
+ok  	forgelocal/internal/proxyprovider	1.012s
+ok  	forgelocal/internal/runtime	1.211s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.012s
+ok  	forgelocal/internal/spike	2.981s
+ok  	forgelocal/internal/templates	1.310s
+ok  	forgelocal/internal/workflow	1.016s
+FULL_RACE_EXIT_CODE=0
+COMMAND=go vet ./cmd/... ./internal/...
+VET_EXIT_CODE=0
+COMMAND=go build ./cmd/... ./internal/...
+BUILD_EXIT_CODE=0
+COMMAND=gosec -fmt json -out evidence/GOSEC_R6/R6_B/gosec_r6b_after.json ./cmd/... ./internal/...
+[gosec] 2026/08/26 13:46:38 Including rules: default
+[gosec] 2026/08/26 13:46:38 Excluding rules: default
+[gosec] 2026/08/26 13:46:38 Including analyzers: default
+[gosec] 2026/08/26 13:46:38 Excluding analyzers: default
+[gosec] 2026/08/26 13:46:38 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core
+[gosec] 2026/08/26 13:46:38 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server
+[gosec] 2026/08/26 13:46:38 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor
+[gosec] 2026/08/26 13:46:38 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups
+[gosec] 2026/08/26 13:46:38 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile
+[gosec] 2026/08/26 13:46:38 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration
+[gosec] 2026/08/26 13:46:39 Checking package: main
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/systemvault-doctor/main.go
+[gosec] 2026/08/26 13:46:39 Checking package: groups
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/groups/store.go
+[gosec] 2026/08/26 13:46:39 Checking package: profile
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/backup_snapshot.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/errors.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profile/store.go
+[gosec] 2026/08/26 13:46:39 Checking package: profilemigration
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilemigration/migrator.go
+[gosec] 2026/08/26 13:46:39 Checking package: main
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/back01-core/main.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies
+[gosec] 2026/08/26 13:46:39 Checking package: drift
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/drift/detect.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser
+[gosec] 2026/08/26 13:46:39 Checking package: launch
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/id.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/journal.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/journal_sqlite.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/launch.go
+[gosec] 2026/08/26 13:46:39 Checking package: backup
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/bootstrap.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/migrations.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/service.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/backup/store.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/manager.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/launch/redact.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions
+[gosec] 2026/08/26 13:46:39 Checking package: proxies
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies/errors.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxies/store.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api
+[gosec] 2026/08/26 13:46:39 Checking package: workflow
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/engine.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/workflow/file_security.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config
+[gosec] 2026/08/26 13:46:39 Checking package: fonts
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fonts/inventory.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history
+[gosec] 2026/08/26 13:46:39 Checking package: config
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/config/config.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider
+[gosec] 2026/08/26 13:46:39 Checking package: browser
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/archive_security.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/download.go
+[gosec] 2026/08/26 13:46:39 Checking package: extensions
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/extensions/store.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/file_security.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_chromium.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_firefox.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/launch_helpers.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/manager.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/browser/socks5relay.go
+[gosec] 2026/08/26 13:46:39 Checking package: main
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli.go
+[gosec] 2026/08/26 13:46:39 Checking package: history
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history/errors.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/history/store.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/cli_runtime.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/file_security.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/http_server.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/cmd/server/main.go
+[gosec] 2026/08/26 13:46:39 Checking package: proxyprovider
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/proxyprovider/store.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth
+[gosec] 2026/08/26 13:46:39 Checking package: sessiontrack
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/sessiontrack/tracker.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize
+[gosec] 2026/08/26 13:46:39 Checking package: hardware
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/hardware/diagnostic.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime
+[gosec] 2026/08/26 13:46:39 Checking package: profilehealth
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/profilehealth/health.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets
+[gosec] 2026/08/26 13:46:39 Checking package: environment
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/environment/environment.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint
+[gosec] 2026/08/26 13:46:39 Checking package: localvault
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/localvault/localvault.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/productschema
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp
+[gosec] 2026/08/26 13:46:39 Checking package: humanize
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/config.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/keyboard.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/math.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/mouse.go
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/humanize/scroll.go
+[gosec] 2026/08/26 13:46:39 Checking package: runtime
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime/qualification.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/spike
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/runtime/runtime.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies
+[gosec] 2026/08/26 13:46:39 Checking package: secrets
+[gosec] 2026/08/26 13:46:39 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/secrets/keyring.go
+[gosec] 2026/08/26 13:46:39 Import directory: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation
+[gosec] 2026/08/26 13:46:40 Checking package: geolocation
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/geolocation/qa.go
+[gosec] 2026/08/26 13:46:40 Checking package: fingerprint
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/geoip.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/local.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/fingerprint/pool.go
+[gosec] 2026/08/26 13:46:40 Checking package: cookies
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/cookies/fixtures.go
+[gosec] 2026/08/26 13:46:40 Checking package: templates
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates/errors.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/templates/store.go
+[gosec] 2026/08/26 13:46:40 Checking package: api
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/admin_token.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/artifacts.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/audit.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/backup_v1.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/cookie_fixtures.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/correlation.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/dashboard.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/extensions.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/groups.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/localsession.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/openapi.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profile_history.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profiles_bulk.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/profiles_write.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/proxies.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/proxy_providers.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/readonly.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/readonly_session.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/router.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/sessions.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/templates.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/api/workflow.go
+[gosec] 2026/08/26 13:46:40 Checking package: mcp
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/advanced_tools.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/protocol.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/results.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/screenshot_artifacts.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/search_provider.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/server.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/stdio.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/tool_schema.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_search.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_session_pool.go
+[gosec] 2026/08/26 13:46:40 Checking file: /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/internal/mcp/web_tools.go
+GOSEC_EXIT_CODE=1
+COMMAND=gitleaks detect --source . --no-banner --redact --log-opts ^..
+[90m1:46PM[0m [1m[31mERR[0m[0m [git] fatal: bad revision '^..'
+[90m1:46PM[0m [1m[31mERR[0m[0m  [36merror=[0m[31m"stderr is not empty"[0m
+[90m1:46PM[0m [32mINF[0m scan completed in 4.15ms
+[90m1:46PM[0m [32mINF[0m no leaks found
+GITLEAKS_EXIT_CODE=0
+COMMAND=govulncheck ./cmd/... ./internal/...
+No vulnerabilities found.
+GOVULNCHECK_EXIT_CODE=0
+COMMAND=osv-scanner scan --lockfile go.mod
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/go.mod file and found 24 packages
+No issues found
+OSV_GO_EXIT_CODE=0
+COMMAND=osv-scanner scan --lockfile forge-dashboard/pnpm-lock.yaml
+Scanned /home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo/forge-dashboard/pnpm-lock.yaml file and found 698 packages
+No issues found
+OSV_PNPM_EXIT_CODE=0
+COMMAND=trivy fs --scanners vuln,secret,misconfig --skip-dirs artifacts --skip-dirs evidence .
+2026-08-26T13:46:56Z	INFO	[vulndb] Need to update DB
+2026-08-26T13:46:56Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-26T13:46:56Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+39.42 MiB / 109.15 MiB [-------------->_________________________] 36.12% ? p/s ?77.68 MiB / 109.15 MiB [---------------------------->___________] 71.17% ? p/s ?109.15 MiB / 109.15 MiB [------------------------------------->] 100.00% ? p/s ?109.15 MiB / 109.15 MiB [----------------------->] 100.00% 116.29 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 116.29 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 116.29 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 108.79 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 108.79 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 108.79 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 101.77 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 101.77 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [----------------------->] 100.00% 101.77 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [------------------------>] 100.00% 95.21 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [------------------------>] 100.00% 95.21 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [------------------------>] 100.00% 95.21 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [------------------------>] 100.00% 89.06 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [------------------------>] 100.00% 89.06 MiB p/s ETA 0s109.15 MiB / 109.15 MiB [---------------------------] 100.00% 33.61 MiB p/s 3.4s2026-08-26T13:47:00Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-26T13:47:00Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-26T13:47:00Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-26T13:47:00Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-26T13:47:01Z	INFO	[secret] Secret scanning is enabled
+2026-08-26T13:47:01Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-26T13:47:01Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-26T13:47:01Z	WARN	[secret] The size of the scanned file is too large. It is recommended to use `--skip-files` for this file to avoid high memory consumption.	file_path="continuation/T27-R1/evidence/CR01/forgelocal-t27-r1-cr01-df50a2b.bundle" size (MB)=146
+2026-08-26T13:47:12Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-26T13:47:12Z	INFO	Number of language-specific files	num=2
+2026-08-26T13:47:12Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-26T13:47:12Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-26T13:47:12Z	INFO	Detected config files	num=0
+
+Report Summary
+
+┌────────────────────────────────┬───────┬─────────────────┬─────────┬───────────────────┐
+│             Target             │ Type  │ Vulnerabilities │ Secrets │ Misconfigurations │
+├────────────────────────────────┼───────┼─────────────────┼─────────┼───────────────────┤
+│ forge-dashboard/pnpm-lock.yaml │ pnpm  │        0        │    -    │         -         │
+├────────────────────────────────┼───────┼─────────────────┼─────────┼───────────────────┤
+│ go.mod                         │ gomod │        0        │    -    │         -         │
+└────────────────────────────────┴───────┴─────────────────┴─────────┴───────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+TRIVY_EXIT_CODE=0
+JSON_SHA256=62206b6c4e9375f112f5bc3dcfceba6700fb9147a521ff075eebd78b9c090e3a
+ALL_ISSUES=46
+G204=5
+G704=7
+LOT_B_TOTAL=12
+R6B-001	G704	internal/api/sessions.go	478	SSRF via taint analysis
+R6B-002	G704	cmd/server/cli_runtime.go	1039	SSRF via taint analysis
+R6B-003	G704	cmd/server/cli_runtime.go	968	SSRF via taint analysis
+R6B-004	G704	cmd/server/cli_runtime.go	963	SSRF via taint analysis
+R6B-005	G704	cmd/server/cli.go	1088	SSRF via taint analysis
+R6B-006	G704	cmd/server/cli.go	1004	SSRF via taint analysis
+R6B-007	G704	cmd/server/cli.go	985	SSRF via taint analysis
+R6B-008	G204	internal/browser/download.go	515	Subprocess launched with variable
+R6B-009	G204	internal/browser/download.go	388	Subprocess launched with variable
+R6B-010	G204	cmd/server/main.go	564	Subprocess launched with variable
+R6B-011	G204	cmd/server/main.go	562	Subprocess launched with variable
+R6B-012	G204	cmd/server/main.go	560	Subprocess launched with variable
+COMMAND=git diff --check -- . :(exclude)evidence/GOSEC_R6/R6_B/*.log
+DIFF_CHECK_EXIT_CODE=0

@@ -1,0 +1,9 @@
+UTC=2026-08-26T13:47:47Z
+CWD=/home/ubuntu/forgelocal_self_validation_v6/operational_validation_v1/repo
+BRANCH=validation/gosec-r6
+SOURCE_HEAD=a436a68d1ca4e223b54c45d7b99efa77617e620b
+COMMAND=gitleaks detect --source . --no-banner --redact --log-opts a436a68d1ca4e223b54c45d7b99efa77617e620b^..a436a68d1ca4e223b54c45d7b99efa77617e620b
+[90m1:47PM[0m [32mINF[0m 0 commits scanned.
+[90m1:47PM[0m [32mINF[0m scan completed in 7.15ms
+[90m1:47PM[0m [32mINF[0m no leaks found
+GITLEAKS_CORRECTED_EXIT_CODE=0
