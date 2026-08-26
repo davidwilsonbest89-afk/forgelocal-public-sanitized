@@ -1,0 +1,22 @@
+R6A_ID	RULE	BASELINE_FILE	BASELINE_LINE	DETAILS	STATUS	EVIDENCE_OR_REASON
+R6A-001	G703	cmd/server/cli_runtime.go	975	Path traversal via taint analysis	CORRECTED_ROOT_SCOPED	os.OpenFile sink replaced by root-scoped helper; targeted and full regression tests PASS
+R6A-002	G703	cmd/server/cli_runtime.go	972	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-003	G703	cmd/server/cli_runtime.go	808	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-004	G703	cmd/server/cli_runtime.go	784	Path traversal via taint analysis	CORRECTED_ROOT_SCOPED	os.OpenFile sink replaced by root-scoped helper; targeted and full regression tests PASS
+R6A-005	G703	cmd/server/cli_runtime.go	781	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-006	G703	cmd/server/cli_runtime.go	771	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-007	G703	cmd/server/cli_runtime.go	592	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-008	G703	cmd/server/cli_runtime.go	582	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-009	G703	cmd/server/cli_runtime.go	458	Path traversal via taint analysis	MITIGATED_CONTROL_SCANNER_OPEN	safeBackupPath/root-scoped caller validation exists; Gosec still reports taint
+R6A-010	G304	internal/workflow/engine.go	53	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-011	G304	internal/fingerprint/pool.go	25	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-012	G304	internal/browser/launch_chromium.go	201	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-013	G304	internal/browser/download.go	603	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-014	G304	internal/browser/archive_security.go	210	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-015	G304	internal/browser/archive_security.go	168	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-016	G304	internal/browser/archive_security.go	141	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-017	G304	cmd/server/cli_runtime.go	975	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-018	G304	cmd/server/cli_runtime.go	784	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-019	G304	cmd/server/cli.go	856	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-020	G304	cmd/server/cli.go	572	Potential file inclusion via variable	CORRECTED_ROOT_SCOPED	direct read/write replaced by os.Root helper; positive/negative symlink regression PASS
+R6A-021	G305	cmd/server/cli_runtime.go	804	File traversal when extracting zip/tar archive	MITIGATED_CONTROL_SCANNER_OPEN	archive link target is checked; Gosec still reports traversal sink
