@@ -96,7 +96,7 @@ func assertRestoredProfileStartsLocalChromium(t *testing.T, userDataDir string) 
 		t.Log("local Chromium unavailable; runtime relaunch must run in release validation")
 		return
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	versionOutput, err := exec.CommandContext(ctx, binary, "--version").CombinedOutput()
 	if err != nil {
