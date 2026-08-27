@@ -1,0 +1,386 @@
+=== DATE_UTC ===
+2026-08-27T01:50:48Z
+=== FILES ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo/API.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/API.zh-TW.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/CHANGELOG.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/CODE_OF_CONDUCT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/FINAL_CLOSURE_V2_REPORT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/FINAL_SECRET_REMEDIATION_REPORT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/README.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/README.zh-TW.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/SECURITY.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/SELF_VALIDATION_MANIFEST.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/SELF_VALIDATION_SUMMARY.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/SELF_VALIDATION_V6_REPORT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/SUPPORT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/T28_EVIDENCE_QUALIFICATION_R1.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/T28_FINAL_CLOSURE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/T28_FINAL_INDEPENDENT_EVIDENCE_REVIEW.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_AXE_RESULTS_AFTER.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_SBOM_CYCLONEDX.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_SBOM_CYCLONEDX_CLEAN.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_SBOM_SPDX.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_SBOM_SPDX_CLEAN.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_SEMGREP_TRIAGE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_TRIVY_FS_FINAL.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/V6_V5_REPORT_INHERITED.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/PACKAGE_README.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_network_security_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/main.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/continuation/T27-R1/README.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/continuation/T27-R1/closure/T27_R1_SBOM_CYCLONEDX.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/continuation/T27-R1/closure/T27_R1_SBOM_SPDX.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/continuation/T27-R1/governance/T27_R1_CONTINUATION_SCOPE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/continuation/T27-R1/governance/T27_R1_CORRECTIVE_EXECUTION_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/continuation/T27-R1/governance/todo.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docker/README.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docker/README.zh-TW.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/ADDENDUM_V2_1_CAMOFLOX_READONLY_DASHBOARD.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/ADDENDUM_V2_3_1_CI_PROVENANCE_EVIDENCE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/ADDENDUM_V2_4_READONLY_SESSION_BOOTSTRAP.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/ADDENDUM_V2_5_READONLY_PRODUCT_SURFACES.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/API_READONLY_V1.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/BOOTSTRAP_RO_01_EVIDENCE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/BOOTSTRAP_RO_01_STRICT_EXECUTION.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/BRANCH_PROTECTION_REQUIREMENTS.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/CAHIER_DES_CHARGES_FORGELOCAL.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/CAHIER_DES_CHARGES_v3_9_7.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/SELF_VALIDATION_V4_SUMMARY.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/SQLITE_SCHEMA_REFERENCE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07-R-CHECKLIST.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07-R-MESSAGE-TO-REVIEWER.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07-R-OWNER-COMPLETION-GUIDE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07-R-REVIEW-PACKET.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07_CAMOFLOX_PROVENANCE_SBOM.spdx.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07_EVIDENCE_REQUEST_TO_RIGHTS_HOLDER.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07_REMEDIATION_CHAIN.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T07_SECURITY_TRIAGE_REQUEST.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T08-FOLLOW-UP-WATCH-STATE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T10_PROXIES_FRAMING.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T11_BACKUPS_FRAMING.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T20_NCF_SCOPE_AND_ACCEPTANCE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T22_PROFILE_HISTORY_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T24_BULK_OPERATIONS_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T25_COOKIE_FIXTURES_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T26_SIMULATED_PROXY_PROVIDER_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T27_R1_CONTINUATION_SCOPE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T27_R1_CORRECTIVE_EXECUTION_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T28_EXTENSIONS_CONTRACT_AND_TEST_MATRIX.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T28_EXTENSIONS_THREAT_MODEL.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T28_T42_STATUS_REGISTER.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/T30_ENVIRONMENT_DIAGNOSTICS_DELTA_CONTRACT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/agent-integration.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/anti-detection.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/cli.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/cloud-deployment.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/developer-integration.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/execution.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/linux-server.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/linux-server.zh-TW.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/local-quickstart.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/security/GOSEC_BASELINE_BACK_01.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/security/SYSTEM_VAULT_NATIVE_MATRIX.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docs/wbs.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard/T19RR_REPRODUCTION.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard/proofs/T19R_FINAL_REPORT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard/proofs/T19R_GAP_AUDIT.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard/proofs/gosec_t19r_raw.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/audit.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/correlation.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/openapi.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxies_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxy_providers_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly_session.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly_session_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/router.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/sessions.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/templates_t21_correction_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/templates_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/browser/launch_chromium.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/launch/id.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/launch/journal_t18_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/launch/launch_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/launch/manager.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/launch/redact.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/localvault/localvault.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/localvault/localvault_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/mcp/server.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/productschema/schema_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/spike/e2e_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/workflow/engine.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/workflow/engine_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/workflow/file_security_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/release/back01-minimal/PILOT_LOCAL_TEMPORARY_QUALIFICATION_CHECKLIST.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/release/back01-minimal/PROFILE.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/release/back01-minimal/RELEASE_SIGNATURE_RUNBOOK.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/release/back01-minimal/SYSTEMVAULT_NATIVE_HOST_RUNBOOK.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/todo.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/tools/validation/README.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/final/DISTROSEA_SYSTEMVAULT_FEASIBILITY.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/final/ORACLE_FREE_SYSTEMVAULT_PROTOCOL.md
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/final/gosec-baseline-64bede3-v2.21.4-20260814.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/final/gosec_api.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/final/sandbox-gosec-20260814.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/gosec_after_import_hardening.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/gosec_after_io_hardening.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/gosec_after_multipart_fix.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/gosec_final.json
+/home/ubuntu/forgelocal-final-secret-remediation/repo/validation_back01_integration/gosec_modified.json
+=== REFERENCES ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:27:	token    string
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:35:	token := os.Getenv("FORGELOCAL_API_TOKEN")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:36:	if token == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:63:		Handler:           &core{profiles: profiles, backups: svc, token: token},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:79:		w.Header().Set("WWW-Authenticate", "Bearer")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:80:		writeError(w, http.StatusUnauthorized, "UNAUTHORIZED", "valid bearer token required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:96:	value := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/back01-core/main.go:97:	return value != "" && len(value) == len(c.token) && subtle.ConstantTimeCompare([]byte(value), []byte(c.token)) == 1
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:54:  BrowseForge [global flags] token [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:57:  BrowseForge [global flags] status [--base-url URL] [--token TOKEN] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:60:  BrowseForge [global flags] mcp-config stdio|http [--url URL] [--token TOKEN] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:63:  BrowseForge [global flags] backup create|restore [--full|--metadata] [--output PATH] [--base-url URL] [--token TOKEN] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:64:  BrowseForge [global flags] smoke rest|mcp [--base-url URL] [--token TOKEN] [--wait] [--timeout DURATION] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:65:  BrowseForge [global flags] workflow run FILE [--base-url URL] [--token TOKEN] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:66:  BrowseForge [global flags] profiles list [--base-url URL] [--token TOKEN] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:67:  BrowseForge [global flags] sessions list [--base-url URL] [--token TOKEN] [--json]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:119:	case "token":
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:339:	fs := newFlagSet("token", stderr)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:345:		fmt.Fprintf(stderr, "token does not accept positional arguments: %s\n", strings.Join(fs.Args(), " "))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:348:	token, path, err := readToken(global.configPath, global.baseDir)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:358:		_ = writeJSON(stdout, map[string]any{"ok": true, "token": token, "path": path})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:360:		fmt.Fprintln(stdout, token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:419:			"serve", "mcp-stdio", "init", "config", "token", "doctor",
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:424:		"machine_readable": []string{"token --json", "doctor --json", "status --json", "config validate --json", "capabilities --json", "smoke --json"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:432:		fmt.Fprintln(stdout, "Agent-ready commands: init, config, token, doctor, status, capabilities, open, mcp-config, browsers, backup, smoke, workflow, profiles, sessions, migrate")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:445:	token := fs.String("token", "", "Bearer token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:468:	resolvedToken := *token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:473:			result := map[string]any{"ok": false, "target": target, "base_url": resolvedBase, "error": "token error: " + err.Error()}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:477:				fmt.Fprintf(stderr, "Smoke %s failed: token error: %v\n", target, err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:651:	token := fs.String("token", "", "Bearer token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:666:	resolvedToken := *token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:671:			fmt.Fprintf(stderr, "workflow token error: %v\n", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:706:	token := fs.String("token", "", "Bearer token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:725:	resolvedToken := *token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:731:				_ = writeJSON(stdout, map[string]any{"ok": false, "resource": resource, "error": "token error: " + err.Error()})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:733:				fmt.Fprintf(stderr, "%s list failed: token error: %v\n", resource, err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:845:	// The server honours BROWSEFORGE_TOKEN in preference to the on-disk token;
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:847:	// emitted when the admin token lives in the environment only.
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:855:	tokenPath := filepath.Join(resolvePath(baseDir, cfg.DataDir), ".api-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:856:	data, err := readServerRegularFile(tokenPath)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:858:		return "", tokenPath, err
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:860:	token := strings.TrimSpace(string(data))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:861:	if token == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:862:		return "", tokenPath, errors.New("token file is empty")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:864:	return token, tokenPath, nil
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:912:		add("api_token", "ok", "configured")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:914:		warn("api_token", "will be generated on first server start")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:967:func smokeMCP(baseURL, token string) (map[string]any, error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:974:	result, err := apiPOST(baseURL+"/mcp", token, body)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:981:func apiGET(url, token string) (map[string]any, error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:990:	if token != "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:991:		req.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:996:func apiPOST(url, token string, body any) (map[string]any, error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:1010:	if token != "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli.go:1011:		req.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_network_security_test.go:34:		"http://127.0.0.1:19281/api/status?token=secret",
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_network_security_test.go:92:	if _, err := apiPOST("http://example.invalid/api/mutate", "synthetic-token", map[string]any{"ok": true}); err == nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_network_security_test.go:107:	if err := createMetadataBackup(global, "/tmp/synthetic-backup.tar.gz", "http://example.invalid", "synthetic-token"); err == nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_network_security_test.go:110:	if err := restoreMetadataBackup(global, "/nonexistent/backup.tar.gz", "http://example.invalid", "synthetic-token"); err == nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_network_security_test.go:128:	if err := createMetadataBackup(global, output, server.URL, "synthetic-token"); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:39:	Token       map[string]any `json:"token"`
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:49:	token := fs.String("token", "", "Bearer token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:58:	report := buildStatusReport(global, *baseURL, *token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:70:func buildStatusReport(global cliGlobal, baseURL, token string) statusReport {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:89:	if token == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:90:		token, path, err := readToken(global.configPath, global.baseDir)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:92:			report.Token = map[string]any{"configured": true, "path": path, "preview": tokenPreview(token)}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:97:		report.Token = map[string]any{"configured": true, "source": "flag", "preview": tokenPreview(token)}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:202:	token, _, err := readToken(global.configPath, global.baseDir)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:204:		fmt.Fprintf(stderr, "readonly-session failed: token error: %v\n", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:207:	result, err := apiPOST(dashboardOpenURL(resolveBaseURL(*baseURL, cfg))+"/api/v1/readonly/session/codes", token, map[string]any{})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:236:	token := fs.String("token", "", "Bearer token for HTTP mode")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:269:		resolvedToken := *token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:274:				fmt.Fprintf(stderr, "mcp-config failed: token error: %v\n", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:282:					"Authorization": "Bearer " + resolvedToken,
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:511:	token := fs.String("token", "", "Bearer token for metadata backup")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:525:		path, err := createBackup(global, *full, *output, *baseURL, *token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:541:		err := restoreBackup(global, fs.Arg(0), *full, *baseURL, *token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:558:func createBackup(global cliGlobal, full bool, output, baseURL, token string) (string, error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:567:	return path, createMetadataBackup(global, path, baseURL, token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:570:func restoreBackup(global cliGlobal, path string, full bool, baseURL, token string) error {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:574:	return restoreMetadataBackup(global, path, baseURL, token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:947:func createMetadataBackup(global cliGlobal, output, baseURL, token string) (result error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:956:	resolvedToken := token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:967:	req.Header.Set("Authorization", "Bearer "+resolvedToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:995:func restoreMetadataBackup(global cliGlobal, path, baseURL, token string) error {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:1004:	resolvedToken := token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_runtime.go:1043:	req.Header.Set("Authorization", "Bearer "+resolvedToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:125:	tokenDir := filepath.Join(baseDir, "data")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:126:	if err := os.WriteFile(filepath.Join(tokenDir, ".api-token"), []byte("test-token\n"), 0600); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:127:		t.Fatalf("write token: %v", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:131:	if code := runCLI([]string{"--base-dir", baseDir, "token", "--json"}, &stdout, &stderr); code != 0 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:132:		t.Fatalf("token exit = %d, stdout = %s, stderr = %s", code, stdout.String(), stderr.String())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:134:	var token map[string]any
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:135:	if err := json.Unmarshal(stdout.Bytes(), &token); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:136:		t.Fatalf("decode token: %v\n%s", err, stdout.String())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:138:	if token["token"] != "test-token" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:139:		t.Fatalf("token output = %#v", token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:174:	principalToken := "principal-token-must-not-be-printed"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:178:	if err := os.WriteFile(filepath.Join(baseDir, "data", ".api-token"), []byte(principalToken+"\n"), 0600); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:179:		t.Fatalf("write token: %v", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:185:		if got := r.Header.Get("Authorization"); got != "Bearer "+principalToken {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:207:	if strings.Contains(got, "#") || strings.Contains(got, "token") {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:208:		t.Fatalf("dashboard URL must not carry token material: %q", got)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:218:	if err := os.WriteFile(filepath.Join(baseDir, "data", ".api-token"), []byte("test-token\n"), 0600); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:219:		t.Fatalf("write token: %v", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:350:	if err := os.WriteFile(filepath.Join(baseDir, "data", ".api-token"), []byte("test-token"), 0600); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:351:		t.Fatalf("write token: %v", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:392:	if _, err := os.Stat(filepath.Join(restoreDir, "data", ".api-token")); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:393:		t.Fatalf("token not restored: %v", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:573:	if result["ok"] != false || !strings.Contains(errMsg, "token error") {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:579:	if got := tokenPreview("short"); got != "short" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:580:		t.Fatalf("tokenPreview short = %q", got)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:582:	if got := tokenPreview("1234567890abcdefX"); got != "1234567890abcdef" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/cli_test.go:583:		t.Fatalf("tokenPreview long = %q", got)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/main.go:548:func tokenPreview(token string) string {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/main.go:549:	if len(token) <= 16 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/main.go:550:		return token
+/home/ubuntu/forgelocal-final-secret-remediation/repo/cmd/server/main.go:552:	return token[:16]
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:22:	adminTokenMetadataName    = ".api-token.meta"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:26:	ErrAdminTokenMissing   = errors.New("admin token missing")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:27:	ErrAdminTokenMalformed = errors.New("admin token malformed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:28:	ErrAdminTokenInvalid   = errors.New("admin token invalid")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:29:	ErrAdminTokenExpired   = errors.New("admin token expired")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:30:	ErrAdminTokenRevoked   = errors.New("admin token revoked")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:35:	TokenSHA256 string     `json:"token_sha256"`
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:43:	token    string
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:49:func newAdminTokenState(dataDir, token string) (*adminTokenState, error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:50:	if strings.TrimSpace(token) == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:51:		return nil, fmt.Errorf("initialize admin token: %w", ErrAdminTokenInvalid)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:54:		return nil, fmt.Errorf("create admin token metadata directory: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:57:		token:    token,
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:64:			return nil, fmt.Errorf("read admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:66:		if s.metadata.Version != adminTokenMetadataVersion || s.metadata.TokenSHA256 != digestToken(token) || s.metadata.IssuedAt.IsZero() || s.metadata.ExpiresAt.IsZero() || !s.metadata.ExpiresAt.After(s.metadata.IssuedAt) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:67:			return nil, fmt.Errorf("invalid admin token metadata: %w", ErrAdminTokenInvalid)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:72:		return nil, fmt.Errorf("read admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:77:		TokenSHA256: digestToken(token),
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:87:func (s *adminTokenState) validateAuthorization(auth string) error {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:91:	if !strings.HasPrefix(auth, "Bearer ") || strings.TrimSpace(strings.TrimPrefix(auth, "Bearer ")) == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:94:	presented := strings.TrimSpace(strings.TrimPrefix(auth, "Bearer "))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:97:	if subtle.ConstantTimeCompare([]byte(presented), []byte(s.token)) != 1 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:110:	if !strings.HasPrefix(auth, "Bearer ") {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:113:	presented := strings.TrimSpace(strings.TrimPrefix(auth, "Bearer "))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:116:	return subtle.ConstantTimeCompare([]byte(presented), []byte(s.token)) == 1
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:132:		return fmt.Errorf("encode admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:134:	tmp, err := os.CreateTemp(filepath.Dir(s.metaPath), ".api-token.meta-*")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:136:		return fmt.Errorf("create admin token metadata temporary file: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:142:		return fmt.Errorf("chmod admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:146:		return fmt.Errorf("write admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:149:		return fmt.Errorf("close admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:152:		return fmt.Errorf("commit admin token metadata: %w", err)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:157:func digestToken(token string) string {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:158:	digest := sha256.Sum256([]byte(token))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:162:func (h *handler) validateAdminAuthorization(auth string) error {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:164:		return h.adminToken.validateAuthorization(auth)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:166:	if validBearerToken(auth, h.token) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:172:	if !strings.HasPrefix(auth, "Bearer ") || strings.TrimSpace(strings.TrimPrefix(auth, "Bearer ")) == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:179:	reason, message := "invalid", "invalid admin token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:182:		reason, message = "missing", "admin token required"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:184:		reason, message = "malformed", "malformed admin token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:186:		reason, message = "expired", "admin token expired"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:188:		reason, message = "revoked", "admin token revoked"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:191:	// stable reason field distinguishes the R2 token states without revealing
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:192:	// the presented or stored token value.
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:198:		writeError(w, http.StatusNotImplemented, "TOKEN_REVOCATION_UNAVAILABLE", "admin token revocation unavailable")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:202:		writeError(w, http.StatusInternalServerError, "TOKEN_REVOCATION_FAILED", "admin token revocation failed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:15:func configureTestAdminToken(t *testing.T, dir, token string, now time.Time) *adminTokenState {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:17:	state, err := newAdminTokenState(dir, token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:25:		TokenSHA256: digestToken(token),
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:47:		{name: "empty bearer", auth: "Bearer   ", want: ErrAdminTokenMalformed},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:48:		{name: "invalid", auth: "Bearer wrong-synthetic-token", want: ErrAdminTokenInvalid},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:52:			state := configureTestAdminToken(t, t.TempDir(), "admin-synthetic-token", now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:53:			if err := state.validateAuthorization(tc.auth); !errors.Is(err, tc.want) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:60:		state := configureTestAdminToken(t, t.TempDir(), "admin-synthetic-token", now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:61:		if err := state.validateAuthorization("Bearer admin-synthetic-token"); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:67:		state := configureTestAdminToken(t, dir, "admin-synthetic-token", now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:69:		if err := state.validateAuthorization("Bearer admin-synthetic-token"); !errors.Is(err, ErrAdminTokenExpired) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:74:		state := configureTestAdminToken(t, t.TempDir(), "admin-synthetic-token", now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:78:		if err := state.validateAuthorization("Bearer admin-synthetic-token"); !errors.Is(err, ErrAdminTokenRevoked) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:86:	token := "admin-synthetic-restart-token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:88:	state := configureTestAdminToken(t, dir, token, now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:96:	if strings.Contains(string(data), token) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:97:		t.Fatal("admin token value persisted in metadata")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:102:	restarted, err := newAdminTokenState(dir, token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:106:	if err := restarted.validateAuthorization("Bearer " + token); !errors.Is(err, ErrAdminTokenRevoked) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:114:	token := "admin-synthetic-http-token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:115:	state := configureTestAdminToken(t, dir, token, now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:116:	h := &handler{token: token, adminToken: state}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:127:		{name: "invalid", auth: "Bearer invalid-synthetic", want: http.StatusUnauthorized, code: "UNAUTHORIZED", reason: "invalid"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:128:		{name: "valid", auth: "Bearer admin-synthetic-http-token", want: http.StatusNoContent},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:133:			req.Header.Set("Authorization", tc.auth)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:149:	revokeReq.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:160:	if strings.Contains(after.Body.String(), token) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:161:		t.Fatal("token value leaked in auth error")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:167:	state := configureTestAdminToken(t, t.TempDir(), "admin-synthetic-race-token", now)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:174:				_ = state.validateAuthorization("Bearer admin-synthetic-race-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:186:	if err := state.validateAuthorization("Bearer admin-synthetic-race-token"); !errors.Is(err, ErrAdminTokenRevoked) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:194:	want := "synthetic-bootstrap-token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:195:	if err := os.WriteFile(filepath.Join(dir, ".api-token"), []byte(want), 0600); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:205:	if err := os.Remove(filepath.Join(dir, ".api-token")); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:208:	external := filepath.Join(dir, "external-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:209:	if err := os.WriteFile(external, []byte("external-token"), 0600); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:212:	if err := os.Symlink(external, filepath.Join(dir, ".api-token")); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:216:		t.Fatal("loadOrCreateToken() followed a symlinked token file")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/audit.go:22:// redactString strips anything that looks like a secret, a token, a vault
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/audit.go:39:	"token", "key", "secret", "password", "passwd", "pwd", "auth", "bearer",
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go:50:	request.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go:72:	body.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:18:const t25Token = "t25-synthetic-only-token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:35:	h := &handler{store: profiles, token: t25Token, cookieFixtureStore: fixtures, auditSink: newWriteAuditSink(nil)}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:46:func t25Request(t *testing.T, method, url, body string, token string) *http.Request {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:55:	if token != "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:56:		req.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:132:		t.Fatalf("missing token=%d", resp.StatusCode)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/correlation.go:9:// request-tracking token, not a credential.
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:44:		req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:62:	missing.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:40:	cfg := &config.Config{APIToken: "t30-test-token"}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:44:		token:             cfg.APIToken,
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:63:	req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:30:	h := &handler{token: "t28-test-token", extensionStore: repo, store: profiles}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:48:	r.Header.Set("Authorization", "Bearer t28-test-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:119:	foreign.Header.Set("Authorization", "Bearer t28-test-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:132:	req.Header.Set("Authorization", "Bearer t28-test-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:204:		for _, forbidden := range []string{"local.zip", "payload.js", "must never execute", "Bearer", "cookie_value", "Set-Cookie"} {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/openapi.go:45:				"401": map[string]any{"description": "Missing or invalid bearer token"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:33:func historyRequest(method, path, body, token string) *http.Request {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:36:	req.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:42:func createHistoryProfile(t *testing.T, r http.Handler, token string) string {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:45:	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles", `{"name":"History One","runtime_id":"cloakbrowser"}`, token))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:117:			req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:312:			req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:24:const bulkTestToken = "t24-test-token"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:58:	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: testManagerWithRuntimeConfig(t, cfg), token: bulkTestToken, auditSink: &writeAuditSink{db: db}, historyStore: historyStore}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:88:	req.Header.Set("Authorization", "Bearer "+bulkTestToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:237:		t.Fatalf("missing token status=%d body=%s", rec.Code, rec.Body.String())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write_test.go:317:	// refused even with a valid token: write endpoints stay local-only.
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxies_test.go:54:		token:      "t10-test-token",
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxies_test.go:80:func doJSON(t *testing.T, ts *httptest.Server, method, path string, token string, body any) (*http.Response, map[string]any) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxies_test.go:90:	if token != "" {

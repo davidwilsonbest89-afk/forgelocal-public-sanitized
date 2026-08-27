@@ -1,0 +1,372 @@
+=== API_FILES ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/audit.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/correlation.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr02_workflow_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/dashboard.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/localsession.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/localsession_http_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/localsession_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/navigate_policy_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/openapi.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/originguard_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/playwright_ws_security_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_strict_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_metadata_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxies.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxies_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxy_providers.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/proxy_providers_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly_session.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly_session_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/readonly_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/router.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/sessions.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/sessions_helpers_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/sessions_proxy_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/templates.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/templates_t21_correction_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/templates_test.go
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/workflow.go
+=== AUTH_SYMBOLS ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:87:func (s *adminTokenState) validateAuthorization(auth string) error {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:91:	if !strings.HasPrefix(auth, "Bearer ") || strings.TrimSpace(strings.TrimPrefix(auth, "Bearer ")) == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:94:	presented := strings.TrimSpace(strings.TrimPrefix(auth, "Bearer "))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:110:	if !strings.HasPrefix(auth, "Bearer ") {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:113:	presented := strings.TrimSpace(strings.TrimPrefix(auth, "Bearer "))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:162:func (h *handler) validateAdminAuthorization(auth string) error {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:164:		return h.adminToken.validateAuthorization(auth)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:166:	if validBearerToken(auth, h.token) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:172:	if !strings.HasPrefix(auth, "Bearer ") || strings.TrimSpace(strings.TrimPrefix(auth, "Bearer ")) == "" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:178:func writeAdminAuthError(w http.ResponseWriter, err error) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:193:	writeJSON(w, http.StatusUnauthorized, map[string]any{"error": map[string]string{"code": "UNAUTHORIZED", "message": message, "reason": reason}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:198:		writeError(w, http.StatusNotImplemented, "TOKEN_REVOCATION_UNAVAILABLE", "admin token revocation unavailable")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:202:		writeError(w, http.StatusInternalServerError, "TOKEN_REVOCATION_FAILED", "admin token revocation failed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token.go:205:	w.WriteHeader(http.StatusNoContent)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:47:		{name: "empty bearer", auth: "Bearer   ", want: ErrAdminTokenMalformed},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:48:		{name: "invalid", auth: "Bearer wrong-synthetic-token", want: ErrAdminTokenInvalid},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:53:			if err := state.validateAuthorization(tc.auth); !errors.Is(err, tc.want) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:61:		if err := state.validateAuthorization("Bearer admin-synthetic-token"); err != nil {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:69:		if err := state.validateAuthorization("Bearer admin-synthetic-token"); !errors.Is(err, ErrAdminTokenExpired) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:78:		if err := state.validateAuthorization("Bearer admin-synthetic-token"); !errors.Is(err, ErrAdminTokenRevoked) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:106:	if err := restarted.validateAuthorization("Bearer " + token); !errors.Is(err, ErrAdminTokenRevoked) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:117:	next := h.authMiddleware(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) { w.WriteHeader(http.StatusNoContent) }))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:125:		{name: "missing", want: http.StatusUnauthorized, code: "UNAUTHORIZED", reason: "missing"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:126:		{name: "malformed", auth: "Basic synthetic", want: http.StatusUnauthorized, code: "UNAUTHORIZED", reason: "malformed"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:127:		{name: "invalid", auth: "Bearer invalid-synthetic", want: http.StatusUnauthorized, code: "UNAUTHORIZED", reason: "invalid"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:128:		{name: "valid", auth: "Bearer admin-synthetic-http-token", want: http.StatusNoContent},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:132:			req := httptest.NewRequest(http.MethodGet, "/api/health", nil)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:133:			req.Header.Set("Authorization", tc.auth)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:149:	revokeReq.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:152:	if revokeRec.Code != http.StatusNoContent {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:157:	if after.Code != http.StatusUnauthorized || !strings.Contains(after.Body.String(), `"code":"UNAUTHORIZED"`) || !strings.Contains(after.Body.String(), `"reason":"revoked"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:174:				_ = state.validateAuthorization("Bearer admin-synthetic-race-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/admin_token_test.go:186:	if err := state.validateAuthorization("Bearer admin-synthetic-race-token"); !errors.Is(err, ErrAdminTokenRevoked) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:18:		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", "artifact path is required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:23:		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:28:		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:34:		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", "artifact path must stay within profile artifacts")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:39:		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:45:		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:51:		writeError(w, http.StatusInternalServerError, "ARTIFACT_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:55:		writeError(w, http.StatusBadRequest, "INVALID_ARTIFACT", "artifact path must name a file")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts.go:64:			writeError(w, http.StatusInternalServerError, "ARTIFACT_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts_test.go:40:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/artifacts_test.go:74:	if rec.Code != http.StatusNotFound {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:23:		writeError(w, http.StatusNotFound, "NOT_FOUND", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:58:		writeError(w, http.StatusBadRequest, "INVALID_FORM", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:68:			writeError(w, http.StatusBadRequest, "INVALID_FORM", partErr.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:73:				writeError(w, http.StatusBadRequest, "READ_FAILED", closeErr.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:76:			writeError(w, http.StatusBadRequest, "INVALID_FORM", "too many multipart fields")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:81:				writeError(w, http.StatusBadRequest, "READ_FAILED", closeErr.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:88:				writeError(w, http.StatusBadRequest, "READ_FAILED", closeErr.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:91:			writeError(w, http.StatusBadRequest, "INVALID_FORM", "multiple file fields")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:97:			writeError(w, http.StatusBadRequest, "READ_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:101:			writeError(w, http.StatusBadRequest, "READ_FAILED", closeErr.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:106:		writeError(w, http.StatusBadRequest, "NO_FILE", "file field required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:110:		writeError(w, http.StatusRequestEntityTooLarge, "IMPORT_TOO_LARGE", "profile import exceeds maximum size")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:115:		writeError(w, http.StatusBadRequest, "INVALID_ZIP", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:119:		writeError(w, http.StatusBadRequest, "INVALID_ZIP", "profile import has an invalid file count")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:128:			writeError(w, http.StatusBadRequest, "INVALID_ZIP", "profile import contains duplicate profile.json entries")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:133:			writeError(w, http.StatusBadRequest, "READ_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:139:			writeError(w, http.StatusBadRequest, "READ_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:143:			writeError(w, http.StatusBadRequest, "READ_FAILED", closeErr.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:147:			writeError(w, http.StatusBadRequest, "PROFILE_TOO_LARGE", "profile.json exceeds maximum size")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:152:		writeError(w, http.StatusBadRequest, "NO_PROFILE", "profile.json not found in zip")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:157:		writeError(w, http.StatusBadRequest, "INVALID_PROFILE", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:164:		writeError(w, http.StatusBadRequest, "INVALID_RUNTIME", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:172:		writeError(w, http.StatusInternalServerError, "IMPORT_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:175:	writeJSON(w, http.StatusCreated, map[string]any{"data": p})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:181:	writeError(w, http.StatusGone, "BACKUP_ENDPOINT_RETIRED", "use POST /api/v1/profiles/{id}/backups")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:187:	writeError(w, http.StatusGone, "RESTORE_ENDPOINT_RETIRED", "use POST /api/v1/backups/{id}/restore")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup.go:192:	writeJSON(w, http.StatusOK, map[string]any{"data": "shutting down"})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:47:		writeError(w, http.StatusNotFound, "PROFILE_NOT_FOUND", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:51:		writeError(w, http.StatusServiceUnavailable, "SESSION_MANAGER_UNAVAILABLE", "session manager is not configured")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:56:		writeError(w, http.StatusConflict, "PROFILE_ACTIVE_OR_BUSY", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:62:		writeError(w, http.StatusInternalServerError, "BACKUP_KEY_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:69:		writeError(w, http.StatusInternalServerError, "BACKUP_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:72:	writeJSON(w, http.StatusCreated, map[string]any{"data": map[string]any{
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:83:		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:87:		writeError(w, http.StatusBadRequest, "MISSING_TARGET_PROFILE_ID", "target_profile_id is required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:91:		writeError(w, http.StatusConflict, "TARGET_EXISTS", "target profile id already exists")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:95:		writeError(w, http.StatusServiceUnavailable, "SESSION_MANAGER_UNAVAILABLE", "session manager is not configured")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:100:		writeError(w, http.StatusConflict, "TARGET_ACTIVE_OR_BUSY", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:106:		writeError(w, http.StatusBadRequest, "INVALID_TARGET_PROFILE_ID", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:111:		writeError(w, http.StatusConflict, "TARGET_BUSY", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:120:		status := http.StatusInternalServerError
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:122:			status = http.StatusUnprocessableEntity
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:129:		writeError(w, http.StatusInternalServerError, "RESTORE_PROFILE_MISSING", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1.go:132:	writeJSON(w, http.StatusCreated, map[string]any{"data": map[string]any{
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go:50:	request.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go:53:	if response.Code != http.StatusCreated {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go:72:	body.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/backup_v1_test.go:75:	if restoredResponse.Code != http.StatusCreated {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:33:		profileMutationError(w, http.StatusBadRequest, "INVALID_COOKIE_FIXTURES", "synthetic cookie fixtures are invalid", correlationIDFrom(r.Context()))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:37:		profileMutationError(w, http.StatusBadRequest, "INVALID_COOKIE_FIXTURES", "synthetic cookie fixtures are invalid", correlationIDFrom(r.Context()))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:43:		profileMutationError(w, http.StatusBadRequest, "INVALID_COOKIE_FIXTURES", "synthetic cookie fixtures are invalid", correlationIDFrom(r.Context()))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:47:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"count": len(fixtures), "fixtures": fixtures}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:56:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"count": len(fixtures), "fixtures": fixtures}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:61:		writeError(w, http.StatusServiceUnavailable, "COOKIE_FIXTURES_UNAVAILABLE", "synthetic cookie fixture store is unavailable")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:66:		profileMutationError(w, http.StatusNotFound, "PROFILE_NOT_FOUND", "profile not found", correlationIDFrom(r.Context()))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures.go:70:		profileMutationError(w, http.StatusConflict, "INVALID_LIFECYCLE", "profile must be active", correlationIDFrom(r.Context()))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:56:		req.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:71:	if resp.StatusCode != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:72:		t.Fatalf("import=%d", resp.StatusCode)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:104:	if resp.StatusCode != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:105:		t.Fatalf("invalid=%d", resp.StatusCode)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:131:	if resp.StatusCode != http.StatusUnauthorized {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:132:		t.Fatalf("missing token=%d", resp.StatusCode)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:140:		if resp.StatusCode != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:141:			t.Fatalf("strict JSON accepted %q status=%d", body, resp.StatusCode)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:153:				if resp.StatusCode != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cookie_fixtures_test.go:154:					t.Errorf("concurrent status=%d", resp.StatusCode)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr02_workflow_test.go:22:	if rec.Code != http.StatusGone {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:27:	if openAPI.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:44:		req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:47:		if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:56:	if unauthRec.Code != http.StatusUnauthorized {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:62:	missing.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/cr05_openapi_test.go:65:	if missingRec.Code != http.StatusNotFound {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:40:	cfg := &config.Config{APIToken: "t30-test-token"}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:44:		token:             cfg.APIToken,
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:58:	if denied.Code != http.StatusUnauthorized {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:63:	req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:66:	if allowed.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/environment_t30_test.go:91:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:29:		writeError(w, http.StatusServiceUnavailable, "EXTENSION_REPOSITORY_UNAVAILABLE", "extension repository unavailable")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:46:		writeError(w, http.StatusBadRequest, "INVALID_ARCHIVE", "local ZIP package is required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:55:	writeJSON(w, http.StatusCreated, map[string]any{"data": result})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:60:		writeError(w, http.StatusServiceUnavailable, "EXTENSION_REPOSITORY_UNAVAILABLE", "extension repository unavailable")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:70:	writeJSON(w, http.StatusOK, result)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:75:		writeError(w, http.StatusServiceUnavailable, "EXTENSION_REPOSITORY_UNAVAILABLE", "extension repository unavailable")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:83:	writeJSON(w, http.StatusOK, map[string]any{"data": result})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:89:		writeError(w, http.StatusBadRequest, "INVALID_BODY", "approval body is invalid")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:97:	writeJSON(w, http.StatusOK, map[string]any{"data": result})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:103:		writeError(w, http.StatusBadRequest, "INVALID_BODY", "assignment body is invalid")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:114:	writeJSON(w, http.StatusOK, map[string]any{"data": result})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:132:		writeError(w, http.StatusBadRequest, "INVALID_ARCHIVE", "local ZIP package is required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:141:	writeJSON(w, http.StatusCreated, map[string]any{"data": result})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:147:		writeError(w, http.StatusBadRequest, "INVALID_BODY", "rollback body is invalid")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:154:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]string{"state": "rolled_back"}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:162:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]string{"state": "quarantined"}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:170:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]string{"state": "purged"}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:174:	status := http.StatusBadRequest
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:183:		status, code, message = http.StatusNotFound, "SERIES_NOT_FOUND", "extension series not found"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:185:		status, code, message = http.StatusNotFound, "VERSION_NOT_FOUND", "extension version not found"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:193:		status, code, message = http.StatusNotFound, "PROFILE_NOT_FOUND", "profile not found"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:197:		status, code, message = http.StatusConflict, "CONCURRENT_MUTATION", "concurrent mutation refused"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:201:		status, code, message = http.StatusInternalServerError, "INTEGRITY_MISMATCH", "managed extension package integrity check failed"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions.go:205:		status, code, message = http.StatusInternalServerError, "EXTENSION_REPOSITORY_ERROR", "extension repository operation failed"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:48:	r.Header.Set("Authorization", "Bearer t28-test-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:107:func TestT28APIRejectsMissingAuthAndForeignOrigin(t *testing.T) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:114:	if resp.Code != http.StatusUnauthorized || !strings.Contains(resp.Body.String(), `"UNAUTHORIZED"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:119:	foreign.Header.Set("Authorization", "Bearer t28-test-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:123:	if resp.Code != http.StatusForbidden || !strings.Contains(resp.Body.String(), `"ORIGIN_REQUIRED_LOCAL_ONLY"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:132:	req.Header.Set("Authorization", "Bearer t28-test-token")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:136:	if resp.Code != http.StatusForbidden || !strings.Contains(resp.Body.String(), `"LOOPBACK_REQUIRED"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:146:	if resp.Code != http.StatusCreated {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:164:	if resp.Code != http.StatusBadRequest || !strings.Contains(resp.Body.String(), `"HIGH_RISK_ACK_REQUIRED"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:172:	if resp.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:179:	if resp.Code != http.StatusOK || strings.Contains(resp.Body.String(), "blob_relpath") || strings.Contains(resp.Body.String(), "payload.js") {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:186:	if resp.Code != http.StatusOK || strings.Contains(resp.Body.String(), "blob_relpath") || strings.Contains(resp.Body.String(), "package") {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:204:		for _, forbidden := range []string{"local.zip", "payload.js", "must never execute", "Bearer", "cookie_value", "Set-Cookie"} {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:235:	if resp.Code != http.StatusNotFound || !strings.Contains(resp.Body.String(), `"PROFILE_NOT_FOUND"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/extensions_t28_test.go:243:	if resp.Code != http.StatusBadRequest || !strings.Contains(resp.Body.String(), `"VERSION_NOT_APPROVED"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:21:		writeError(w, http.StatusInternalServerError, "GROUPS_UNAVAILABLE", "group store is not initialized")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:29:	writeJSON(w, http.StatusOK, map[string]any{"data": data, "total": len(data)})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:34:		writeError(w, http.StatusInternalServerError, "GROUPS_UNAVAILABLE", "group store is not initialized")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:40:		writeError(w, http.StatusNotFound, "GROUP_NOT_FOUND", "group not found: "+name)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:43:	writeJSON(w, http.StatusOK, map[string]any{"data": h.groupResponse(g)})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:48:		writeError(w, http.StatusInternalServerError, "GROUPS_UNAVAILABLE", "group store is not initialized")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:53:		writeError(w, http.StatusBadRequest, "INVALID_BODY", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:57:		writeError(w, http.StatusBadRequest, "MISSING_PROXY", "proxy is required; use DELETE /api/groups/{name}/proxy to clear a group proxy policy")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:62:		writeError(w, http.StatusBadRequest, "INVALID_GROUP", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:65:	writeJSON(w, http.StatusOK, map[string]any{"data": h.groupResponse(g)})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:70:		writeError(w, http.StatusInternalServerError, "GROUPS_UNAVAILABLE", "group store is not initialized")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:75:		writeError(w, http.StatusBadRequest, "INVALID_GROUP", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:78:	writeJSON(w, http.StatusOK, map[string]any{"data": h.groupResponse(g)})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:83:		writeError(w, http.StatusInternalServerError, "GROUPS_UNAVAILABLE", "group store is not initialized")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:88:		writeError(w, http.StatusBadRequest, "INVALID_GROUP", "group name is required")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:93:		writeJSON(w, http.StatusConflict, map[string]any{
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:111:				writeError(w, http.StatusInternalServerError, "UNGROUP_FAILED", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:119:		writeError(w, http.StatusBadRequest, "INVALID_GROUP", err.Error())
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups.go:122:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:37:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:57:	if body.Data[1].ID != bfruntime.Camoufox || body.Data[1].BinaryPath != "" || body.Data[1].Enabled || body.Data[1].ExecutionAuthorized {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:84:	if rec.Code != http.StatusCreated {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:119:	if rec.Code != http.StatusForbidden {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:149:	if rec.Code != http.StatusForbidden {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:181:	if rec.Code != http.StatusForbidden {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:209:	if rec.Code != http.StatusForbidden {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:224:	if rec.Code != http.StatusGone || !strings.Contains(rec.Body.String(), `"code":"RESTORE_ENDPOINT_RETIRED"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:239:	if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:261:	if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:291:			if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:314:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:329:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:347:	if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:376:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/groups_test.go:398:	if rec.Code != http.StatusGone || !strings.Contains(rec.Body.String(), `"code":"BACKUP_ENDPOINT_RETIRED"`) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/openapi.go:58:		"security": []map[string][]string{{"bearerAuth": {}}},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/openapi.go:61:				"bearerAuth": map[string]any{"type": "http", "scheme": "bearer"},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/openapi.go:81:			"/api/v1/readonly/health":   map[string]any{"get": map[string]any{"summary": "Read-only health"}},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/originguard_test.go:19:		r.Get("/health", func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(200) })
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/originguard_test.go:34:		{"GET", "/health", nil, 200},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/originguard_test.go:35:		{"HEAD", "/health", nil, 200},
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:24:	writeJSON(w, http.StatusOK, result)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:32:	writeJSON(w, http.StatusOK, map[string]any{"data": redactHistoryVersion(*item)})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:44:	writeJSON(w, http.StatusOK, map[string]any{"data": result})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:83:	writeJSON(w, http.StatusOK, map[string]any{"data": entry})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:137:	status, code := http.StatusBadRequest, "PROFILE_HISTORY_INVALID"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:140:		status, code = http.StatusNotFound, "PROFILE_HISTORY_NOT_FOUND"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:142:		status, code = http.StatusConflict, "PROFILE_HISTORY_VERSION_CONFLICT"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:144:		status, code = http.StatusNotFound, "PROFILE_NOT_FOUND"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:146:		status, code = http.StatusConflict, "PROFILE_LOCKED"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history.go:148:		status, code = http.StatusConflict, "INVALID_LIFECYCLE"
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:36:	req.Header.Set("Authorization", "Bearer "+token)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:46:	if rec.Code != http.StatusCreated { t.Fatalf("create: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:55:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:57:	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+id, `{"name":"History Two"}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:58:	if rec.Code != http.StatusOK { t.Fatalf("update: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:60:	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+id+"/metadata", `{"note":"t22-private-note","custom_fields":{"status":{"type":"text","value":"t22-private-value"}}}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:61:	if rec.Code != http.StatusOK { t.Fatalf("metadata: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:67:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=10&offset=0", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:68:	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"version":3`)) { t.Fatalf("list: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:73:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=1&offset=1", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:74:	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"limit":1`)) || !bytes.Contains(rec.Body.Bytes(), []byte(`"offset":1`)) || !bytes.Contains(rec.Body.Bytes(), []byte(`"version":2`)) { t.Fatalf("pagination: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:77:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history/diff?from=1&to=2", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:78:	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte("name")) { t.Fatalf("diff: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:80:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history/1", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:81:	if rec.Code != http.StatusOK || bytes.Contains(rec.Body.Bytes(), []byte("proxy.")) || bytes.Contains(rec.Body.Bytes(), []byte("profile_dir")) { t.Fatalf("version redaction: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:84:	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":3}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:85:	if rec.Code != http.StatusOK || rec.Header().Get(correlationHeader) == "" { t.Fatalf("restore: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:91:	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":3}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:92:	if rec.Code != http.StatusConflict || !bytes.Contains(rec.Body.Bytes(), []byte("PROFILE_HISTORY_VERSION_CONFLICT")) { t.Fatalf("conflict: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:103:func TestT22ProfileHistoryRequiresAuthAndLocalOrigin(t *testing.T) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:105:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:108:	if rec.Code != http.StatusUnauthorized { t.Fatalf("unauth list: %d", rec.Code) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:117:			req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:123:			if rec.Code != http.StatusForbidden || !bytes.Contains(rec.Body.Bytes(), []byte("ORIGIN_REQUIRED_LOCAL_ONLY")) || rec.Header().Get(correlationHeader) == "" { t.Fatalf("refusal: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:133:	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+p.ID, `{"name":"Sensitive Proxy Updated"}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:134:	if rec.Code != http.StatusOK { t.Fatalf("update: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:136:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history/1", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:137:	if rec.Code != http.StatusOK { t.Fatalf("version: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:142:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history/diff?from=1&to=1", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:143:	if rec.Code != http.StatusOK { t.Fatalf("diff: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:151:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:153:	r.ServeHTTP(res, historyRequest(http.MethodPut, "/api/profiles/"+id, `{"name":"Before race"}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:154:	if res.Code != http.StatusOK { t.Fatalf("baseline update: %d %s", res.Code, res.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:160:		r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/history/1/restore", `{"expected_current_version":2}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:166:		r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+id, `{"name":"Concurrent mutation"}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:171:		if status := <-statuses; status != http.StatusOK && status != http.StatusConflict { t.Fatalf("concurrent status=%d", status) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:174:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=10&offset=0", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:175:	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"total":`)) { t.Fatalf("post-race history: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:189:	r.ServeHTTP(rec, historyRequest(http.MethodPut, "/api/profiles/"+p.ID, `{"name":"Written before failed capture"}`, cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:190:	if rec.Code < http.StatusInternalServerError { t.Fatalf("capture failure must be surfaced: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:201:	recovered.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+p.ID+"/history?limit=10&offset=0", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:202:	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"action":"recovery"`)) { t.Fatalf("recovered history: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:216:	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+p.ID+"/archive", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:217:	if rec.Code < http.StatusInternalServerError { t.Fatalf("archive capture failure must be surfaced: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:230:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:238:			r.ServeHTTP(rec, historyRequest(http.MethodPost, path, "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:245:		if status != http.StatusOK && status != http.StatusConflict { t.Fatalf("archive/reopen concurrent status=%d", status) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:253:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:255:	r.ServeHTTP(first, historyRequest(http.MethodPost, "/api/profiles/"+id+"/archive", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:256:	if first.Code != http.StatusOK { t.Fatalf("first archive: %d %s", first.Code, first.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:263:	r.ServeHTTP(second, historyRequest(http.MethodPost, "/api/profiles/"+id+"/archive", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:264:	if second.Code != http.StatusOK || !bytes.Contains(second.Body.Bytes(), []byte(`"changed":false`)) { t.Fatalf("second archive: %d %s", second.Code, second.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:271:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:281:		go func() { <-start; rec := httptest.NewRecorder(); r.ServeHTTP(rec, historyRequest(item.method, item.path, item.body, cfg.APIToken)); statuses <- rec.Code }()
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:286:		if status != http.StatusOK && status != http.StatusConflict { t.Fatalf("concurrent T23 status=%d", status) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:291:	r.ServeHTTP(rec, historyRequest(http.MethodGet, "/api/profiles/"+id+"/history?limit=20&offset=0", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:292:	if rec.Code != http.StatusOK || !bytes.Contains(rec.Body.Bytes(), []byte(`"total":`)) { t.Fatalf("concurrent history: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:297:	id := createHistoryProfile(t, r, cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:304:		if rec.Code != http.StatusUnauthorized { t.Fatalf("missing bearer %s: %d", path, rec.Code) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:312:			req.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:317:			if rec.Code != http.StatusForbidden || !bytes.Contains(rec.Body.Bytes(), []byte("ORIGIN_REQUIRED_LOCAL_ONLY")) { t.Fatalf("origin guard %s origin=%q referer=%q: %d %s", path, guard.origin, guard.referer, rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:321:	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/archive", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:322:	if rec.Code != http.StatusOK { t.Fatalf("guarded archive success: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:327:	r.ServeHTTP(rec, historyRequest(http.MethodPost, "/api/profiles/"+id+"/reopen", "", cfg.APIToken))
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profile_history_test.go:328:	if rec.Code != http.StatusOK { t.Fatalf("guarded reopen success: %d %s", rec.Code, rec.Body.String()) }
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:34:	Status string `json:"status"`
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:52:		profileMutationError(w, http.StatusBadRequest, "INVALID_BULK_REQUEST", "bulk request is invalid", correlationID)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:56:		profileMutationError(w, http.StatusBadRequest, "INVALID_BULK_REQUEST", "bulk request is invalid", correlationID)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:60:		profileMutationError(w, http.StatusBadRequest, "INVALID_BULK_REQUEST", "bulk request is invalid", correlationID)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:69:				results = append(results, bulkProfileOperationResult{ID: remainingID, Status: "failed", Code: "BULK_CANCELLED"})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:76:		switch result.Status {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:87:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:171:			return bulkProfileOperationResult{ID: id, Status: "noop", Code: "NO_CHANGE"}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:177:		return bulkProfileOperationResult{ID: id, Status: "noop", Code: "NO_CHANGE"}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:180:	return bulkProfileOperationResult{ID: id, Status: "changed", Code: "OK"}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk.go:241:	return bulkProfileOperationResult{ID: id, Status: "failed", Code: code}
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_strict_test.go:19:		if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_strict_test.go:29:	if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:88:	req.Header.Set("Authorization", "Bearer "+bulkTestToken)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:97:	if rec.Code == http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:111:	if rec.Code != http.StatusOK || got.Data.Summary.Changed != 2 || got.Data.Summary.Failed != 0 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:132:	if rec.Code != http.StatusOK || got.Data.Summary.Noop != 2 || got.Data.Summary.Changed != 0 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:136:	if rec.Code != http.StatusOK || got.Data.Summary.Changed != 2 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:153:	if rec.Code != http.StatusOK || got.Data.Summary.Changed != 1 || got.Data.Summary.Failed != 1 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:162:	if rec.Code != http.StatusOK || got.Data.Summary.Changed != 1 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:170:	if rec.Code != http.StatusOK || got.Data.Summary.Changed != 1 {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:216:		if rec.Code != http.StatusBadRequest {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:227:func TestT24BulkRequiresAuthLoopbackAndOrigin(t *testing.T) {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:236:	if rec.Code != http.StatusUnauthorized {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:245:	if rec.Code != http.StatusForbidden {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:255:	if rec.Code != http.StatusForbidden {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:276:	if rec.Code != http.StatusOK || cancellation.Data.Summary.Failed != 1 || cancellation.Data.Results[0].Code != "BULK_CANCELLED" {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_bulk_test.go:297:		if response.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_metadata_test.go:19:	if rec.Code != http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_metadata_test.go:43:		if rec.Code == http.StatusOK {
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:55:		profileMutationError(w, http.StatusBadRequest, "INVALID_PROFILE", "profile metadata is invalid", correlationID)
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:65:		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:70:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": p.ID, "note": p.Note, "custom_fields": p.CustomFields}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:97:		writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "lifecycle_state": "archived", "changed": false}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:101:		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:106:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "lifecycle_state": "archived"}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:125:		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:130:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "lifecycle_state": "active"}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:149:		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:154:	writeJSON(w, http.StatusOK, map[string]any{"data": map[string]any{"id": id, "tag": tag}})
+/home/ubuntu/forgelocal-final-secret-remediation/repo/internal/api/profiles_write.go:173:		writeError(w, http.StatusInternalServerError, "PROFILE_HISTORY_CAPTURE_FAILED", "profile history capture failed")

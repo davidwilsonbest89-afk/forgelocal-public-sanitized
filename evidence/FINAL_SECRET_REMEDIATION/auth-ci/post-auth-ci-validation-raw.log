@@ -1,0 +1,26 @@
+=== DATE_UTC ===
+2026-08-27T02:01:30Z
+=== CWD ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo
+=== BASH_N ===
+EXIT_CODE=0
+=== SHELLCHECK ===
+EXIT_CODE=0
+=== CI_PROVENANCE ===
+ci provenance workflow: OK (10 invariants CI + release, 3 dépendances de release, 13 invariants release-separation, 14 règles CODEOWNERS, 9 chemins critiques à trois relecteurs)
+EXIT_CODE=0
+=== CI_WORKFLOW_PARSE ===
+CI_YAML_PARSE=PASS
+EXIT_CODE=0
+=== AUTHENTICATED_SYNTHETIC ===
+AUTHENTICATED_SYNTHETIC_REQUEST=PASS
+MISSING_TOKEN=PASS
+INVALID_TOKEN=PASS
+EXPIRED_TOKEN=PASS
+REVOKED_TOKEN=PASS
+SENTINEL_ABSENT=PASS
+TOKEN_FILE_MODE_0600=PASS
+PROCESS_AND_TEMP_CLEANUP=PASS
+EXIT_CODE=0
+=== TARGETED_EXISTING ===
+EXIT_CODE=0

@@ -64,7 +64,19 @@ jobs:
         run: go vet ./...
 
       - name: Shell syntax
-        run: bash -n scripts/release-preflight.sh scripts/release-push.sh
+        run: bash -n scripts/release-preflight.sh scripts/release-push.sh docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+
+      - name: Install security scanners
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: ShellCheck security launchers and tests
+        run: shellcheck docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+
+      - name: Authenticated synthetic security gate
+        env:
+          CGO_ENABLED: "1"
+          GOTOOLCHAIN: go1.25.13
+        run: scripts/test-authenticated-synthetic.sh
 
       - name: UI i18n syntax
         run: |
@@ -81,3 +93,83 @@ jobs:
 
       - name: Fingerprint generator smoke
         run: npm install --silent && node scripts/generate-fingerprints.js --browser firefox --os macos --count 1 --output /tmp/browseforge-fingerprint-smoke
+
+  security-scans:
+    name: Secret, SBOM, and image security gates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks source gate
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" ghcr.io/gitleaks/gitleaks:v8.24.2 dir --no-banner --redact --exit-code 1 /repo
+
+      - name: Gitleaks pertinent history gate
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" ghcr.io/gitleaks/gitleaks:v8.24.2 git --no-banner --redact --exit-code 1 /repo
+
+      - name: Trivy filesystem secret gate
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" aquasec/trivy:0.74.2 fs --scanners secret --exit-code 1 --no-progress /repo
+
+      - name: Syft source SBOM
+        run: |
+          mkdir -p .ci-artifacts/security
+          docker run --rm -v "$PWD:/repo" anchore/syft:v1.51.0 dir:/repo -o cyclonedx-json=/repo/.ci-artifacts/security/source.cyclonedx.json
+
+      - name: Grype source SBOM report
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" anchore/grype:v0.117.0 sbom:/repo/.ci-artifacts/security/source.cyclonedx.json -o json > .ci-artifacts/security/source.grype.json
+
+      - uses: docker/setup-buildx-action@v4
+
+      - name: Build hardened runtime image
+        uses: docker/build-push-action@v7
+        with:
+          context: docker
+          file: docker/Dockerfile.run
+          load: true
+          push: false
+          tags: forgelocal-ci:${{ github.sha }}
+          build-args: |
+            BROWSEFORGE_VERSION=v2.1.12
+
+      - name: Image hardening and secret redaction gate
+        run: |
+          scripts/test-docker-image-hardening.sh forgelocal-ci:${{ github.sha }}
+          scripts/test-docker-image-secret-redaction.sh forgelocal-ci:${{ github.sha }}
+
+      - name: Trivy image secret gate
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.74.2 image --scanners secret --exit-code 1 --no-progress forgelocal-ci:${{ github.sha }}
+
+      - name: Syft image SBOM
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/repo" anchore/syft:v1.51.0 docker:forgelocal-ci:${{ github.sha }} -o cyclonedx-json=/repo/.ci-artifacts/security/image.cyclonedx.json
+
+      - name: Grype image SBOM report
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" anchore/grype:v0.117.0 sbom:/repo/.ci-artifacts/security/image.cyclonedx.json -o json > .ci-artifacts/security/image.grype.json
+
+      - name: Archive security evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-gates-${{ github.sha }}
+          path: .ci-artifacts/security/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Cleanup temporary containers and image
+        if: always()
+        run: |
+          docker ps -aq --filter name=forgelocal-secret-cycle | xargs -r docker rm -f
+          docker image rm -f forgelocal-ci:${{ github.sha }} >/dev/null 2>&1 || true
+          docker system prune -af >/dev/null 2>&1 || true

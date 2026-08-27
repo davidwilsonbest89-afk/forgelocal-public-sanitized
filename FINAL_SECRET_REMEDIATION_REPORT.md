@@ -11,7 +11,7 @@ Une divulgation critique réelle a été confirmée dans la branche de qualifica
 
 Le correctif appliqué est volontairement minimal. Les deux lanceurs ne lisent plus le fichier de token et ne l’impriment plus. L’entrypoint conserve uniquement le test d’existence du fichier et affiche un état générique redacted ; le lanceur local supprime entièrement le bloc de lecture et d’affichage. Un binaire de test suivi par Git, classé artefact généré contenant des chaînes de fixture bearer-like, a également été retiré de la branche corrective ; seul son hash historique est conservé dans la preuve.
 
-Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. Une installation contrôlée a ensuite réussi : Docker Engine `29.1.3` et Buildx `0.30.1` ont été installés depuis les paquets Ubuntu disponibles. Le daemon réel a démarré via systemd et `sudo docker info` a confirmé le serveur actif ; aucun ajout au groupe Docker n’a été effectué. Le premier build bridge a échoué avec l’erreur noyau/iptables `can't initialize iptables table raw`; un build host-network réel a réussi pour la qualification ponctuelle. Après le cycle, l’image, les caches, les conteneurs, les services et le socket ont été nettoyés ou arrêtés/désactivés. Le chemin de divulgation réel est confirmé, mais aucune valeur n’a été retenue : `REAL_TOKEN_DISCLOSURE_PATH_CONFIRMED`, `SECRET_VALUE_NOT_RETAINED`. Aucun token réel actif n’est démontré dans les éléments conservés ; aucune rotation n’a donc été prétendue : `NO_REAL_SECRET_ROTATION_PERFORMED`. Le verdict de release reste bloqué par mandat et par les findings restants : `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
+Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. La requête authentifiée synthétique sur la route protégée `/api/runtimes` retourne HTTP 200 ; les tokens missing, invalid, expired et revoked retournent HTTP 401 avec les raisons attendues, sans écho de secret. Une installation contrôlée a ensuite réussi : Docker Engine `29.1.3` et Buildx `0.30.1` ont été installés depuis les paquets Ubuntu disponibles. Le daemon réel a démarré via systemd et `sudo docker info` a confirmé le serveur actif ; aucun ajout au groupe Docker n’a été effectué. Le premier build bridge a échoué avec l’erreur noyau/iptables `can't initialize iptables table raw`; un build host-network réel a réussi pour la qualification ponctuelle. Après le cycle, l’image, les caches, les conteneurs, les services et le socket ont été nettoyés ou arrêtés/désactivés. Le chemin de divulgation réel est confirmé, mais aucune valeur n’a été retenue : `REAL_TOKEN_DISCLOSURE_PATH_CONFIRMED`, `SECRET_VALUE_NOT_RETAINED`. Aucun token réel actif n’est démontré dans les éléments conservés ; aucune rotation n’a donc été prétendue : `NO_REAL_SECRET_ROTATION_PERFORMED`. Le verdict de release reste bloqué par mandat et par les findings restants : `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
 
 ## Preuve et audit de contamination
 
@@ -46,7 +46,13 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 |---|---|---|
 | Test entrypoint privé, fichier présent | `PASS` | Sentinelle absente de stdout/stderr ; permission vérifiée à `0600` |
 | Test entrypoint privé, fichier absent | `PASS` | Aucun affichage de token ; comportement d’attente contrôlé |
-| Nettoyage processus et répertoire temporaire | `PASS` | Processus stub et fichiers temporaires nettoyés |
+| Requête authentifiée synthétique | `PASS` | Route protégée `/api/runtimes`, HTTP 200, réponse sans sentinelle |
+| Token absent | `PASS` | HTTP 401, raison `missing`, réponse sans sentinelle |
+| Token invalide | `PASS` | HTTP 401, raison `invalid`, réponse sans sentinelle |
+| Token expiré | `PASS` | HTTP 401, raison `expired`, réponse sans sentinelle |
+| Token révoqué | `PASS` | Révocation HTTP 204 puis HTTP 401, raison `revoked`, réponse sans sentinelle |
+| Variables d’environnement et artefacts temporaires | `PASS` | Sentinelle absente de l’environnement du serveur et après cleanup |
+| Nettoyage processus et répertoire temporaire | `PASS` | Processus serveur et fichiers temporaires nettoyés |
 | `bash -n docker/entrypoint.sh scripts/start.sh` | `PASS` | Syntaxe valide |
 | Garde statique contre log/lecture runtime | `PASS` | Aucun motif runtime résiduel identifié |
 | Go `test -count=1 -race ./cmd/... ./internal/...` | `PASS` | `CGO_ENABLED=1`, toolchain locale |
@@ -59,7 +65,7 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | Gitleaks extraction sans historique | `PASS` | 0 finding ; scan de répertoire, rapport JSON vide |
 | Trivy filesystem secrets | `PASS` | 0 secret détecté |
 | Trivy filesystem complet | `PASS` | 0 secret ; 6 misconfigurations Docker restantes à classer |
-| ShellCheck des deux lanceurs et test hardening | `SHELLCHECK_PASS` | Exit code nul après remplacement des deux index inutilisés par `_` |
+| ShellCheck des deux lanceurs et bancs de test | `SHELLCHECK_PASS` | Exit code nul après correction des index et du contrôle `/proc` |
 | `git diff --check` | `PASS` | Aucun whitespace error |
 | `git fsck --full` local | `PASS` | Intégrité du clone locale vérifiée |
 | Docker version/info/Buildx/context | `PASS` via sudo | Engine `29.1.3`, Buildx `0.30.1`; accès direct utilisateur refusé par socket `root:docker`, sans modification du groupe |
@@ -77,7 +83,13 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | Firefox/Camoufox natifs, SystemVault, Windows/macOS | `BLOCKED_ENVIRONMENT_REQUIRED` / `NATIVE_SYSTEMVAULT_NOT_TESTED` | Environnements non disponibles |
 | Références et packages R7 historiques | `INHERITED_FROM_R7` | Non présentés comme nouvelle exécution |
 
-Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard check/build, Gitleaks source et extraction, Trivy filesystem, ShellCheck avec exit code nul, `git diff --check` et `git fsck --full`. Le cycle Docker réel a ajouté les contrôles image/layers/logs, token absent/invalide, permissions `0600`, Syft et Grype. Les assertions ne rapportent que l’absence de sentinelle. Les sorties brutes d’installation, build, cycle, scans et cleanup, ainsi que les rapports JSON et la matrice de triage, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Le cleanup final est documenté dans `evidence/FINAL_SECRET_REMEDIATION/snakeoil/snakeoil-final-cleanup-raw.log`. Aucun journal ne contient la sentinelle synthétique.
+Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard check/build, Gitleaks source et extraction, Trivy filesystem, ShellCheck avec exit code nul, `git diff --check` et `git fsck --full`. Le test authentifié versionné `scripts/test-authenticated-synthetic.sh` est également PASS pour les états valid, missing, invalid, expired et revoked. Le cycle Docker réel a ajouté les contrôles image/layers/logs, token absent/invalide, permissions `0600`, Syft et Grype. Les assertions ne rapportent que l’absence de sentinelle. Les sorties brutes d’installation, build, cycle, scans et cleanup, ainsi que les rapports JSON et la matrice de triage, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Le cleanup final est documenté dans `evidence/FINAL_SECRET_REMEDIATION/snakeoil/snakeoil-final-cleanup-raw.log`. Aucun journal ne contient la sentinelle synthétique.
+
+## Gates CI ajoutées
+
+Le workflow `.github/workflows/ci.yml` contient maintenant un job `security-scans` et une gate d’authentification synthétique. Les contrôles CI ajoutés couvrent Gitleaks source et historique pertinent, Trivy filesystem secrets, Syft source et image, Grype source et image, build de l’image runtime durcie, inspection hardening/layers, cycle anti-fuite, ShellCheck et test authentifié synthétique. Le job de release n’a pas été modifié et aucun push d’image n’est effectué par ces gates.
+
+Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement ; les rapports Grype sont conservés comme artefacts de triage et la gate Trivy secrets échoue si un secret est présent dans l’image.
 
 ## Triage et décisions ouvertes
 
@@ -99,6 +111,8 @@ SECRET_VALUE_NOT_RETAINED
 NO_REAL_SECRET_ROTATION_PERFORMED
 SECRET_REMEDIATION_VALIDATED_IN_REAL_DOCKER_CYCLE
 TRIVY_IMAGE_SECRET_REMEDIATED
+AUTHENTICATED_SYNTHETIC_REQUEST=PASS
+AUTHENTICATED_SYNTHETIC_NEGATIVE_CASES=PASS
 IMAGE_VULNERABILITIES_TRIAGE_PENDING
 GRYPE_FINDINGS_TRIAGE_PENDING
 SHELLCHECK_PASS
@@ -108,7 +122,7 @@ PUBLIC_RELEASE_BLOCKED
 FORGELOCAL_PRODUCTION_READY=false
 ```
 
-Le correctif des deux divulgations runtime et la suppression de la clé snakeoil sont démontrés sur le périmètre testable. Cette démonstration ne constitue pas une autorisation de release : le verdict global demeure bloqué tant que les vulnérabilités prioritaires, les 379 matches Grype, la revue d’exploitabilité et la validation bridge ne sont pas clôturés formellement.
+Le correctif des deux divulgations runtime, la requête authentifiée synthétique et la suppression de la clé snakeoil sont démontrés sur le périmètre testable. Cette démonstration ne constitue pas une autorisation de release : le verdict global demeure bloqué tant que les vulnérabilités prioritaires, les 379 matches Grype, la revue d’exploitabilité et la validation bridge ne sont pas clôturés formellement.
 
 ## Références
 
