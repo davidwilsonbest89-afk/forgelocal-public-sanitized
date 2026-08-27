@@ -81,8 +81,8 @@
       "sha256": "c8bc6774045fb4cb88eab00bb1295f5835135c550dba0478fbb7417e0f241c05"
     },
     "Dockerfile": {
-      "bytes": 1526,
-      "sha256": "412909d3f3bdea643ab7a68c9d46de0bfc279485d3ea9c94efc019dc13bbde3b"
+      "bytes": 1550,
+      "sha256": "3a9d535c25853b2c342e8be986b855c58be223164102ac757ecc77571ff29faf"
     },
     "FINAL_CLOSURE_V2_REPORT.md": {
       "bytes": 14408,
@@ -105,8 +105,8 @@
       "sha256": "88b63ae257ff4b3f7d151f82075edc8529a152903a10fb40db3ddccf5a4d68fe"
     },
     "FINAL_SECRET_REMEDIATION_REPORT.md": {
-      "bytes": 18865,
-      "sha256": "c121f8e40a07bfb6d8d75ca98641abc42271e14fa257a2fc7667b3a1c2a152dc"
+      "bytes": 20550,
+      "sha256": "df9b716dadb4bbe8c9b56972a99defe73b403da2c59d1e459edaf33fcf15c8f2"
     },
     "FINAL_SECURITY_ENVIRONMENT_REPORT.md": {
       "bytes": 6476,
@@ -1073,8 +1073,8 @@
       "sha256": "15093ccf76e1aa623e0fe9d23172fa6cdf29131a772d2eb49bae10708e1e6434"
     },
     "docker/Dockerfile.run": {
-      "bytes": 4594,
-      "sha256": "45ab888df056084a972d1046d17196bfcf78a25cd14cb2b69a31d16b26158556"
+      "bytes": 4811,
+      "sha256": "3204e9ad699d648fa450306476312dc8612e6dbe3c1ab3d1151ff640e0eb8540"
     },
     "docker/README.md": {
       "bytes": 8828,
@@ -1889,8 +1889,8 @@
       "sha256": "6d0dadc59b70244b974c9a8077d544638346d79a2378f3915bc48090ec0315e1"
     },
     "evidence/FINAL_SECRET_REMEDIATION/PUBLIC_VERIFICATION.log": {
-      "bytes": 6908,
-      "sha256": "24699b252b1de1a2eed45e8c8dce37d6c8cbc5632619cd257b746263497cdba5"
+      "bytes": 7512,
+      "sha256": "459c5f7ad143ef12e3d91a3d62e9cc3106f8df5a4ebcd8c36216c195f79ca929"
     },
     "evidence/FINAL_SECRET_REMEDIATION/attachment-followup-raw.log": {
       "bytes": 6079,
@@ -1955,6 +1955,34 @@
     "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-unit-test.log": {
       "bytes": 123,
       "sha256": "4fd6a6872df2e8dd7da5ce348fbf305e7531e359d0a432f3de7c9eacf3d7b197"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-docker-redaction-sudo-raw.log": {
+      "bytes": 533,
+      "sha256": "48ab93666029115417c13ed6ed232c304d6f20bd6642b866e654580f9fd2f571"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-docker-regression-build-raw.log": {
+      "bytes": 988869,
+      "sha256": "c5917f625667e84a7fefbfec828e7e9ef84432cc121bd5a5b0db9bba7a2c13ff"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-docker-regression-cycle-raw.log": {
+      "bytes": 550,
+      "sha256": "077d65f18fa430a7727b52b381f3fad504d220579547a6b19a91c1c58a1a7996"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-grype-policy-post-correction.log": {
+      "bytes": 319,
+      "sha256": "9a227cae7eb914239c2f6956b3df4217a2dc13fcf2185050694cf44ee23015fe"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-image-auth-raw.log": {
+      "bytes": 1834,
+      "sha256": "56b67aa2fab9596a42be5ccbbc24cf3dece597c54492528cc2c4e2a4f779a161"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-image-scans-corrected-raw.log": {
+      "bytes": 1787,
+      "sha256": "58770ce32413c1081a686db2d243fdb9ce7df71314db3709bf89a677b9bcb617"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/pasted13-post-correction-checks-raw.log": {
+      "bytes": 10132,
+      "sha256": "ebee7a0ad889722227ebdca28debc811b06762d5ac0cad046e85307222486714"
     },
     "evidence/FINAL_SECRET_REMEDIATION/auth-ci/post-auth-ci-validation-raw.log": {
       "bytes": 706,
@@ -2192,13 +2220,25 @@
       "bytes": 143,
       "sha256": "449a7f186fbda0a00625070669c82262f126b4360e7aceca5d9aefc0a5c21efe"
     },
+    "evidence/FINAL_SECRET_REMEDIATION/triage/docker-misconfigurations-post-correction.log": {
+      "bytes": 1259,
+      "sha256": "e8c8bc007432d468d66514cf9cbfd5f46ab8ae6dda35dfc7f17e3799923bbd73"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/triage/docker-misconfigurations.csv": {
+      "bytes": 3688,
+      "sha256": "4df6ac14ac9bb78d01d27d7265351575609a1c1d7dcf026cf9061e00f755afc4"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/triage/image-post-pasted13-scan-summary.log": {
+      "bytes": 1102,
+      "sha256": "03d23ee1c8dd73ec3cef37d8537a84326663df4bb3e0818dac9fa1666f41144d"
+    },
     "evidence/FINAL_SECRET_REMEDIATION/triage/image-secret-triage.json": {
       "bytes": 719,
       "sha256": "865af3a6874a1ffae71979c295db8bb41f9f8d59af2de281c516cbc0dc98b612"
     },
     "evidence/FINAL_SECRET_REMEDIATION/triage/image-trivy-grype-matrix-summary.json": {
-      "bytes": 1658,
-      "sha256": "2c62c1b991f73285afcbeabb9867c62c3e2a8744aeff38d8f591796d657a1a56"
+      "bytes": 1896,
+      "sha256": "9afa1b0049dcf90c0eb7dad5a36aeee2c355eeb159dc03c42a9a73a6d529f636"
     },
     "evidence/FINAL_SECRET_REMEDIATION/triage/image-trivy-grype-matrix.csv": {
       "bytes": 130275,
@@ -2209,8 +2249,8 @@
       "sha256": "449a7f186fbda0a00625070669c82262f126b4360e7aceca5d9aefc0a5c21efe"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/PACKAGE_MANIFEST.json": {
-      "bytes": 438350,
-      "sha256": "f1c02e9fb222c6242f29da4d1eb94821aad69aeb572076244c4442e7c5738c55"
+      "bytes": 438541,
+      "sha256": "3750494314a23017bd6a5c2b5ebb1af0312a0224f65d2e9873ee032ad94696d8"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/README.txt": {
       "bytes": 127,
@@ -2218,15 +2258,15 @@
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.bundle.sha256": {
       "bytes": 112,
-      "sha256": "b40ff4826a341bbd329a868e1916950576ba40cf138c879a51a26175edc2f68c"
+      "sha256": "67c97ae2c5d50ba5ccf79442b44afc0536754887df6f45a26e92d81bc36ce6e4"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.tar.sha256": {
       "bytes": 109,
-      "sha256": "f571e1f70e2cb7459895f76d4922ff707033b8b6a375dd33109f3d72c5e2a4c2"
+      "sha256": "a924a5272017f7202338dac5c6d3901598dccef5299664c89d9ae979c926cda4"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.zip.sha256": {
       "bytes": 109,
-      "sha256": "92849593b23bf2b8388f4acebda31eaebe6b795a3f104d05b7a411ac31b48701"
+      "sha256": "82b9162689b7bf8ec109dd31b0f667577c10525f503fa6953441d18aacfb4482"
     },
     "evidence/GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log": {
       "bytes": 4250,
@@ -9922,20 +9962,20 @@
   "note": "This external manifest contains package hashes; the internal payload manifest is intentionally non-self-referential.",
   "package_files": {
     "forgelocal-secret-remediation-evidence.bundle": {
-      "bytes": 333984996,
-      "sha256": "5b32370670412db6de0e6d671347a21dd39a74da35c4dbc23c12fab59af686f7"
+      "bytes": 334021557,
+      "sha256": "15aef72a904d5e5a690ee74acc62848cbda306e9e670ea7c92f5a880d2939f4c"
     },
     "forgelocal-secret-remediation-evidence.tar": {
-      "bytes": 611962880,
-      "sha256": "cd7bf281bdddd31f01e5a179f2ff7a88dcca59cc0999d35507b05550454fa3e5"
+      "bytes": 612997120,
+      "sha256": "57b4bef004b7d69e7e2b808f117fc5e44bb23136c56343bc391b1301819ad87a"
     },
     "forgelocal-secret-remediation-evidence.zip": {
-      "bytes": 506631942,
-      "sha256": "7f6572976d9c65ff2e7a34bf967963e83e08e57cba65d5abbe2e770ace74bad8"
+      "bytes": 506675621,
+      "sha256": "40be782102cf9c22c558fff88dd837c0b7cb07c451a46a9982bb3b1916e86f17"
     }
   },
   "source_branch": "validation/final-secret-remediation",
-  "source_commit": "f167b97de90ae92cef631847cda5ca22339097d2",
+  "source_commit": "a7f3e90f3db960560b93afcd4c1a03e88093c885",
   "verdict": {
     "FORGELOCAL_PRODUCTION_READY": false,
     "GOSEC_R7_BLOCKED_CRITICAL_FINDING": true,
