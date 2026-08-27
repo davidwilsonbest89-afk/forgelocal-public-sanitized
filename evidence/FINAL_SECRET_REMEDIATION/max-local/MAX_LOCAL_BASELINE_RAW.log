@@ -1,200 +1,14 @@
 
 === COMMAND: date -u +%FT%TZ ===
-2026-08-27T16:40:05Z
+2026-08-27T18:07:35Z
 EXIT_CODE=0
 
 === COMMAND: pwd ===
-/home/ubuntu/forgelocal-final-secret-remediation/pasted17-baseline-clone
-EXIT_CODE=0
-
-=== COMMAND: uname -a ===
-Linux db71298c03d4 6.18.38+ #1 SMP PREEMPT_DYNAMIC Thu Aug  6 06:48:14 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
-EXIT_CODE=0
-
-=== COMMAND: id ===
-uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev)
-EXIT_CODE=0
-
-=== COMMAND: git --version ===
-git version 2.43.0
-EXIT_CODE=0
-
-=== COMMAND: git lfs version ===
-git: 'lfs' is not a git command. See 'git --help'.
-
-The most similar command is
-	lfs-s3
-EXIT_CODE=1
-
-=== COMMAND: df -h ===
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/root        48G   46G  2.0G  96% /
-tmpfs           2.0G     0  2.0G   0% /dev/shm
-tmpfs           788M  248K  788M   1% /run
-tmpfs           5.0M     0  5.0M   0% /run/lock
-EXIT_CODE=0
-
-=== COMMAND: free -h ===
-               total        used        free      shared  buff/cache   available
-Mem:            23Gi       2.8Gi        20Gi        10Mi       1.9Gi        21Gi
-Swap:          2.0Gi          0B       2.0Gi
-EXIT_CODE=0
-
-=== COMMAND: go version ===
-bash: line 1: go: command not found
-EXIT_CODE=127
-
-=== COMMAND: node --version ===
-v22.13.0
-EXIT_CODE=0
-
-=== COMMAND: pnpm --version ===
-10.4.1
-EXIT_CODE=0
-
-=== COMMAND: docker version 2>&1 ===
-Client:
- Version:           29.1.3
- API version:       1.52
- Go version:        go1.24.4
- Git commit:        29.1.3-0ubuntu3~24.04.2
- Built:             Wed Apr 29 16:41:06 2026
- OS/Arch:           linux/amd64
- Context:           default
-failed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory
-EXIT_CODE=1
-
-=== COMMAND: docker info 2>&1 ===
-Client:
- Version:    29.1.3
- Context:    default
- Debug Mode: false
- Plugins:
-  buildx: Docker Buildx (Docker Inc.)
-    Version:  0.30.1
-    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
-  trust: Manage trust on Docker images (Docker Inc.)
-    Version:  29.1.3
-    Path:     /usr/libexec/docker/cli-plugins/docker-trust
-
-Server:
-failed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory
-EXIT_CODE=1
-
-=== COMMAND: docker buildx version 2>&1 ===
-github.com/docker/buildx 0.30.1 0.30.1-0ubuntu1~24.04.1
-EXIT_CODE=0
-
-=== COMMAND: git remote -v ===
-origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch)
-origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
-EXIT_CODE=0
-
-=== COMMAND: git branch --show-current ===
-validation/max-local-execution
-EXIT_CODE=0
-
-=== COMMAND: git rev-parse HEAD ===
-f685c88e1aec4a58dc04a3ba2a4af5f1e5d9e52a
-EXIT_CODE=0
-
-=== COMMAND: git rev-parse HEAD^ ===
-1899c43e6e2a5a288448cf9fea6b1d31f432c333
-EXIT_CODE=0
-
-=== COMMAND: git branch -a --no-color ===
-  main
-* validation/max-local-execution
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/audit/independent-validation-20260824
-  remotes/origin/audit/t00-t42-docker-hardening-v6
-  remotes/origin/audit/t00-t42-docker-image-validation-v6
-  remotes/origin/audit/t00-t42-docker-native-nonruntime-validation
-  remotes/origin/audit/t00-t42-docker-v6-independent-image-validation
-  remotes/origin/audit/t00-t42-external-validation-protocols-v6
-  remotes/origin/audit/t00-t42-gitleaks-historical-method-hardening-v6
-  remotes/origin/audit/t00-t42-lfs-conservation-audit
-  remotes/origin/audit/t00-t42-lfs-conservation-restoration-v6
-  remotes/origin/audit/t00-t42-license-compliance-triage-v6
-  remotes/origin/audit/t00-t42-license-static-debt-triage
-  remotes/origin/audit/t00-t42-osv-toolchain-reconciliation
-  remotes/origin/audit/t00-t42-osv-toolchain-reconciliation-v6
-  remotes/origin/audit/t00-t42-post-v6-revalidation-final-matrix
-  remotes/origin/audit/t00-t42-post-v6-roadmap-final-matrix
-  remotes/origin/audit/t00-t42-prehuman-validation
-  remotes/origin/audit/t00-t42-product-decisions-required-v6
-  remotes/origin/audit/t00-t42-self-validation-enhanced-v5
-  remotes/origin/audit/t00-t42-self-validation-synthetic-e2e
-  remotes/origin/audit/t00-t42-static-debt-prioritization-v6
-  remotes/origin/audit/t00-t42-t10-t15-e2e-validation-v6
-  remotes/origin/audit/t00-t42-t10-t15-independent-review-v6
-  remotes/origin/audit/t00-t42-t30-remote-evidence-reconciliation-v6
-  remotes/origin/audit/t00-t42-v6-findings-remediation
-  remotes/origin/audit/t28-t42-evidence-correction
-  remotes/origin/continuation-t00-t27-canonical
-  remotes/origin/continuation-t27-r1-canonical
-  remotes/origin/continuity-t00-t26-handover
-  remotes/origin/continuity-t24-t24sr
-  remotes/origin/continuity-t25-synthetic-cookie-fixtures
-  remotes/origin/continuity-t26-simulated-proxy-provider
-  remotes/origin/feature/t28-local-extensions-controlled
-  remotes/origin/handover/t28-t42-new-session
-  remotes/origin/main
-  remotes/origin/validation/final-environment-qualification
-  remotes/origin/validation/final-secret-remediation
-  remotes/origin/validation/gosec-r4
-  remotes/origin/validation/gosec-r5
-  remotes/origin/validation/gosec-r6
-  remotes/origin/validation/gosec-r7
-  remotes/origin/validation/gosec-r7-final-remediation
-  remotes/origin/validation/operational-v1
-  remotes/origin/work/t28-agent03-audit
-  remotes/origin/work/t31-canvas-webgl-audio
-  remotes/origin/work/t32-client-rects
-  remotes/origin/work/t33-synthetic-geolocation
-  remotes/origin/work/t34-hardware-diagnostics
-  remotes/origin/work/t35-font-bundle
-  remotes/origin/work/t36-drift-detection
-  remotes/origin/work/t37-profile-health
-  remotes/origin/work/t38-session-lifecycle
-  remotes/origin/work/t39-secret-import-export-blocked
-  remotes/origin/work/t40-integration-gated
-  remotes/origin/work/t41-release-readiness-blocked
-  remotes/origin/work/t42-final-closure
-EXIT_CODE=0
-
-=== COMMAND: git tag --list ===
-EXIT_CODE=0
-
-=== COMMAND: git status --short --branch ===
-## validation/max-local-execution
-?? run_baseline.sh
-EXIT_CODE=0
-
-=== COMMAND: git lfs ls-files ===
-git: 'lfs' is not a git command. See 'git --help'.
-
-The most similar command is
-	lfs-s3
-EXIT_CODE=1
-
-=== COMMAND: date -u +%FT%TZ ===
-2026-08-27T16:40:26Z
-EXIT_CODE=0
-
-=== COMMAND: pwd ===
-/home/ubuntu/forgelocal-final-secret-remediation/pasted17-baseline-clone
+/home/ubuntu/forgelocal-final-secret-remediation/pasted19-clone
 EXIT_CODE=0
 
 === COMMAND: go version ===
 go version go1.26.7 linux/amd64
-EXIT_CODE=0
-
-=== COMMAND: go env GOTOOLCHAIN GOPROXY GOPATH GOMODCACHE ===
-local
-https://proxy.golang.org,direct
-/home/ubuntu/go
-/home/ubuntu/go/pkg/mod
 EXIT_CODE=0
 
 === COMMAND: go test -count=1 -race ./... ===
@@ -212,37 +26,37 @@ artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readon
 artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: too many errors
 FAIL	forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api [build failed]
 ?   	forgelocal/cmd/back01-core	[no test files]
-ok  	forgelocal/cmd/server	2.395s
+ok  	forgelocal/cmd/server	2.721s
 ?   	forgelocal/cmd/systemvault-doctor	[no test files]
-ok  	forgelocal/internal/api	3.724s
-ok  	forgelocal/internal/backup	2.836s
-ok  	forgelocal/internal/browser	5.419s
-ok  	forgelocal/internal/config	1.016s
+ok  	forgelocal/internal/api	3.681s
+ok  	forgelocal/internal/backup	2.934s
+ok  	forgelocal/internal/browser	5.120s
+ok  	forgelocal/internal/config	1.019s
 ok  	forgelocal/internal/cookies	1.013s
 ok  	forgelocal/internal/drift	1.013s
-ok  	forgelocal/internal/environment	1.014s
-ok  	forgelocal/internal/extensions	2.174s
+ok  	forgelocal/internal/environment	1.019s
+ok  	forgelocal/internal/extensions	2.180s
 ok  	forgelocal/internal/fingerprint	1.018s
-ok  	forgelocal/internal/fonts	1.018s
-ok  	forgelocal/internal/geolocation	1.013s
-ok  	forgelocal/internal/groups	1.021s
-ok  	forgelocal/internal/hardware	1.017s
-ok  	forgelocal/internal/history	1.188s
+ok  	forgelocal/internal/fonts	1.013s
+ok  	forgelocal/internal/geolocation	1.014s
+ok  	forgelocal/internal/groups	1.019s
+ok  	forgelocal/internal/hardware	1.013s
+ok  	forgelocal/internal/history	1.193s
 ?   	forgelocal/internal/humanize	[no test files]
-ok  	forgelocal/internal/launch	3.779s
-ok  	forgelocal/internal/localvault	1.081s
-ok  	forgelocal/internal/mcp	1.037s
-ok  	forgelocal/internal/productschema	1.803s
-ok  	forgelocal/internal/profile	1.118s
-ok  	forgelocal/internal/profilehealth	1.014s
-ok  	forgelocal/internal/profilemigration	2.853s
-ok  	forgelocal/internal/proxies	1.096s
-ok  	forgelocal/internal/proxyprovider	1.015s
-ok  	forgelocal/internal/runtime	1.239s
+ok  	forgelocal/internal/launch	3.811s
+ok  	forgelocal/internal/localvault	1.080s
+ok  	forgelocal/internal/mcp	1.033s
+ok  	forgelocal/internal/productschema	1.878s
+ok  	forgelocal/internal/profile	1.139s
+ok  	forgelocal/internal/profilehealth	1.020s
+ok  	forgelocal/internal/profilemigration	2.931s
+ok  	forgelocal/internal/proxies	1.094s
+ok  	forgelocal/internal/proxyprovider	1.017s
+ok  	forgelocal/internal/runtime	1.241s
 ?   	forgelocal/internal/secrets	[no test files]
-ok  	forgelocal/internal/sessiontrack	1.015s
-ok  	forgelocal/internal/spike	3.827s
-ok  	forgelocal/internal/templates	1.598s
+ok  	forgelocal/internal/sessiontrack	1.013s
+ok  	forgelocal/internal/spike	3.830s
+ok  	forgelocal/internal/templates	1.336s
 ok  	forgelocal/internal/workflow	1.021s
 FAIL
 EXIT_CODE=1
@@ -268,29 +82,171 @@ artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readon
 artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: too many errors
 EXIT_CODE=1
 
+=== COMMAND: go test -count=1 -race ./cmd/... ./internal/... ===
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.412s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.633s
+ok  	forgelocal/internal/backup	2.945s
+ok  	forgelocal/internal/browser	5.001s
+ok  	forgelocal/internal/config	1.018s
+ok  	forgelocal/internal/cookies	1.013s
+ok  	forgelocal/internal/drift	1.014s
+ok  	forgelocal/internal/environment	1.014s
+ok  	forgelocal/internal/extensions	2.218s
+ok  	forgelocal/internal/fingerprint	1.017s
+ok  	forgelocal/internal/fonts	1.013s
+ok  	forgelocal/internal/geolocation	1.013s
+ok  	forgelocal/internal/groups	1.023s
+ok  	forgelocal/internal/hardware	1.013s
+ok  	forgelocal/internal/history	1.197s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.790s
+ok  	forgelocal/internal/localvault	1.083s
+ok  	forgelocal/internal/mcp	1.050s
+ok  	forgelocal/internal/productschema	1.803s
+ok  	forgelocal/internal/profile	1.117s
+ok  	forgelocal/internal/profilehealth	1.013s
+ok  	forgelocal/internal/profilemigration	2.769s
+ok  	forgelocal/internal/proxies	1.087s
+ok  	forgelocal/internal/proxyprovider	1.013s
+ok  	forgelocal/internal/runtime	1.250s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.013s
+ok  	forgelocal/internal/spike	3.368s
+ok  	forgelocal/internal/templates	1.341s
+ok  	forgelocal/internal/workflow	1.019s
+EXIT_CODE=0
+
+=== COMMAND: go vet ./cmd/... ./internal/... ===
+EXIT_CODE=0
+
+=== COMMAND: go build ./cmd/... ./internal/... ===
+EXIT_CODE=0
+
 === COMMAND: bash -n docker/entrypoint.sh scripts/start.sh ===
 EXIT_CODE=0
 
 === COMMAND: shellcheck docker/entrypoint.sh scripts/start.sh ===
 EXIT_CODE=0
 
-=== COMMAND: pnpm install --frozen-lockfile ===
- ERR_PNPM_NO_LOCKFILE  Cannot install with "frozen-lockfile" because pnpm-lock.yaml is absent
+=== COMMAND: cd forge-dashboard && pnpm install --frozen-lockfile ===
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +603
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 603, reused 603, downloaded 0, added 178
+Progress: resolved 603, reused 603, downloaded 0, added 603, done
 
-Note that in CI environments this setting is true by default. If you still need to run install in such cases, use "pnpm install --no-frozen-lockfile"
-EXIT_CODE=1
+dependencies:
++ @hookform/resolvers 5.9.1
++ @radix-ui/react-accordion 1.2.20
++ @radix-ui/react-alert-dialog 1.1.23
++ @radix-ui/react-aspect-ratio 1.1.15
++ @radix-ui/react-avatar 1.2.6
++ @radix-ui/react-checkbox 1.3.11
++ @radix-ui/react-collapsible 1.1.20
++ @radix-ui/react-context-menu 2.3.7
++ @radix-ui/react-dialog 1.1.23
++ @radix-ui/react-dropdown-menu 2.1.24
++ @radix-ui/react-hover-card 1.1.23
++ @radix-ui/react-label 2.1.15
++ @radix-ui/react-menubar 1.1.24
++ @radix-ui/react-navigation-menu 1.2.22
++ @radix-ui/react-popover 1.1.23
++ @radix-ui/react-progress 1.1.16
++ @radix-ui/react-radio-group 1.4.7
++ @radix-ui/react-scroll-area 1.2.18
++ @radix-ui/react-select 2.3.7
++ @radix-ui/react-separator 1.1.15
++ @radix-ui/react-slider 1.4.7
++ @radix-ui/react-slot 1.3.3
++ @radix-ui/react-switch 1.3.7
++ @radix-ui/react-tabs 1.1.21
++ @radix-ui/react-toggle 1.1.18
++ @radix-ui/react-toggle-group 1.1.19
++ @radix-ui/react-tooltip 1.2.16
++ axios 1.19.0
++ class-variance-authority 0.7.1
++ clsx 2.1.1
++ cmdk 1.1.1
++ embla-carousel-react 8.6.0
++ express 4.22.2
++ framer-motion 12.43.0
++ input-otp 1.5.0
++ lucide-react 0.453.0
++ nanoid 5.1.16
++ next-themes 0.4.6
++ react 19.2.8
++ react-day-picker 9.14.0
++ react-dom 19.2.8
++ react-hook-form 7.85.0
++ react-resizable-panels 3.0.6
++ recharts 2.15.4
++ sonner 2.0.8
++ streamdown 1.6.11
++ tailwind-merge 3.6.0
++ tailwindcss-animate 1.0.7
++ vaul 1.1.2
++ wouter 3.10.0
++ zod 4.4.3
 
-=== COMMAND: pnpm run check ===
- ERR_PNPM_NO_SCRIPT  Missing script: check
+devDependencies:
++ @axe-core/playwright 4.13.0
++ @builder.io/vite-plugin-jsx-loc 0.1.1
++ @playwright/test 1.55.1
++ @tailwindcss/typography 0.5.20
++ @tailwindcss/vite 4.3.3
++ @types/express 4.17.21
++ @types/google.maps 3.65.5
++ @types/node 24.13.3
++ @types/react 19.2.18
++ @types/react-dom 19.2.4
++ @vitejs/plugin-react 5.2.0
++ add 2.0.9
++ autoprefixer 10.5.4
++ esbuild 0.25.12
++ postcss 8.5.26
++ prettier 3.9.6
++ tailwindcss 4.3.3
++ tsx 4.23.12
++ tw-animate-css 1.4.0
++ typescript 5.6.3
++ vite 7.3.6
++ vite-plugin-manus-runtime 0.0.58
++ vitest 3.2.7
 
-Command "check" not found.
-EXIT_CODE=1
+╭ Warning ─────────────────────────────────────────────────────────────────────╮│                                                                              ││   Ignored build scripts: esbuild.                                            ││   Run "pnpm approve-builds" to pick which dependencies should be allowed     ││   to run scripts.                                                            ││                                                                              │╰──────────────────────────────────────────────────────────────────────────────╯
 
-=== COMMAND: pnpm run build ===
- ERR_PNPM_NO_SCRIPT  Missing script: build
+Done in 2.1s using pnpm v10.4.1
+EXIT_CODE=0
 
-Command "build" not found.
-EXIT_CODE=1
+=== COMMAND: cd forge-dashboard && pnpm run check ===
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal-final-secret-remediation/pasted19-clone/forge-dashboard
+> tsc --noEmit
+
+EXIT_CODE=0
+
+=== COMMAND: cd forge-dashboard && pnpm run build ===
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal-final-secret-remediation/pasted19-clone/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1629 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.70 kB │ gzip: 105.61 kB
+../dist/public/assets/index-CmkDj0A3.css  140.59 kB │ gzip:  25.20 kB
+../dist/public/assets/index-C0hTqVVo.js   446.94 kB │ gzip: 122.47 kB
+✓ built in 2.84s
+
+  dist/index.js  788b
+
+⚡ Done in 4ms
+EXIT_CODE=0
 
 === COMMAND: git diff --check ===
 EXIT_CODE=0

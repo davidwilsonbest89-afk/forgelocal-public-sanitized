@@ -2,7 +2,7 @@
 
 ## Périmètre
 
-Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelocal-public-sanitized`, sur une branche locale dédiée `validation/max-local-execution` créée depuis le HEAD réel `f685c88e1aec4a58dc04a3ba2a4af5f1e5d9e52a`. La campagne a exécuté 249 tests ciblés, dont la suite, la race et vet. La branche corrective distante `validation/final-secret-remediation` n’a pas été remplacée. Aucun package historique n’a été reconstruit.
+Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelocal-public-sanitized`, sur une branche locale dédiée `validation/max-local-execution` créée depuis le HEAD réel `9aba6ed109c54539b1e2fd8b083ec2c5c7e727e3`. La campagne a exécuté 249 tests ciblés, dont la suite, la race et vet. La branche corrective distante `validation/final-secret-remediation` n’a pas été remplacée. Aucun package historique n’a été reconstruit.
 
 ## Résultats exécutés
 
@@ -15,18 +15,18 @@ Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelo
 | Isolation profils | 5 contrôles ciblés et suite Go/race exécutés ; 249 tests ciblés au total | `PASS_DANS_LE_PÉRIMÈTRE_EXÉCUTÉ` |
 | Proxy loopback | 8 scénarios ciblés : loopback, arrêté, port invalide, externe, redirection, timeout, query autorisée/non prévue | `PASS_DANS_LE_PÉRIMÈTRE_EXÉCUTÉ` |
 | Core/Dashboard | 10 scénarios fonctionnels couverts par les tests ciblés ; i18n, typecheck et build dashboard | `PASS` |
-| Docker host | daemon arrêté, socket absent, 3,8 Go disponibles ; nouveau cycle non exécuté | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
+| Docker host | daemon arrêté, socket absent, 7,5 Go au preflight ; aucun nouveau cycle image lancé par prudence | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | Docker bridge | non exécuté dans cette campagne ; blocage bridge historique conservé | `DOCKER_BRIDGE_BUILD_BLOCKED_BY_ENVIRONMENT` |
 | Trivy secrets | filesystem scan : 0 secrets | `PASS` |
 | Grype Critical/High | source : 46/46 matches, dont 24 High/Critical ouverts ; image gate CI : 43/43 High/Critical non approuvées | `FAIL_BLOCKING` |
 | Gosec | outil absent | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
-| Semgrep | 46/46 findings listés, 42 ouverts et 4 `MITIGATED_CONTROL_SCANNER_OPEN` | `OPEN_MANUAL_REVIEW_REQUIRED` |
+| Semgrep | 46/46 findings listés individuellement ; 46 restent `OPEN_MANUAL_REVIEW_REQUIRED` après recalcul courant | `OPEN_MANUAL_REVIEW_REQUIRED` |
 | ShellCheck/Yamllint | ShellCheck exit 0, Yamllint exit 0 | `PASS` |
 | Chromium | job qualifié skipped ; aucun PASS natif local dans cette campagne | `BLOCKED_ENVIRONMENT_REQUIRED` |
 | Firefox | binaire absent | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | Camoufox | binaire absent, aucun téléchargement non vérifié | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | SystemVault natif | Secret Service/keyring natif indisponible | `NATIVE_SYSTEMVAULT_NOT_TESTED` |
-| CI distante | run `33096308070` sur `ffc4967` : test success, sécurité failure sur Grype image policy, navigateur skipped, conclusion globale failure | `CI_REMOTE_EXECUTION_FAIL` |
+| CI distante | run `33099867635` sur `9aba6ed` : test success, sécurité failure sur Grype image policy, navigateur skipped, conclusion globale failure | `CI_REMOTE_EXECUTION_FAIL` |
 | Protection branche | API GitHub `404 Branch not protected` | `BRANCH_PROTECTION_ENFORCEMENT=NOT_VERIFIED` |
 
 ## Gouvernance

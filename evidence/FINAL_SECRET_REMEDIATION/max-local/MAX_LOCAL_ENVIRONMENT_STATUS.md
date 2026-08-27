@@ -1,6 +1,6 @@
 # MAX LOCAL — État d’environnement
 
-Date de campagne : 2026-08-27 UTC. Le dépôt ciblé est `davidwilsonbest89-afk/forgelocal-public-sanitized`, branche corrective `validation/final-secret-remediation`. Le HEAD de départ du clone dédié était `f685c88e1aec4a58dc04a3ba2a4af5f1e5d9e52a` ; le clone local de travail a été créé sur `validation/max-local-execution` et n’a pas été poussé.
+Date de campagne : 2026-08-27 UTC. Le dépôt ciblé est `davidwilsonbest89-afk/forgelocal-public-sanitized`, branche corrective `validation/final-secret-remediation`. Le HEAD de départ du clone dédié était `9aba6ed109c54539b1e2fd8b083ec2c5c7e727e3` ; le clone local de travail a été créé sur `validation/max-local-execution` et n’a pas été poussé.
 
 | Élément | Statut réel | Preuve |
 |---|---|---|
@@ -10,7 +10,7 @@ Date de campagne : 2026-08-27 UTC. Le dépôt ciblé est `davidwilsonbest89-afk/
 | Git LFS | absent | `git lfs version` exit 1 |
 | Docker client / Buildx | client 29.1.3, Buildx 0.30.1 | daemon indisponible |
 | Docker daemon | arrêté, socket absent | `docker info` exit 1 ; service inactive |
-| Espace disque | insuffisant pour un nouveau cycle image sûr | 3,8 Go disponibles au contrôle Docker |
+| Espace disque | insuffisant pour un nouveau cycle image sûr | 7,5 Go disponibles au preflight ; le seuil historique de sécurité pour un nouveau build image n’était pas garanti après le clone et les scans |
 | Firefox | absent | exit 127 |
 | Camoufox | absent | exit 127 |
 | SystemVault natif | non disponible | `secret-tool` absent ; aucune simulation présentée comme native |
