@@ -37,8 +37,8 @@
       "sha256": "3964a895b5ab8042ad86541d1139292079d613497f4eb8b9f7bdfd95a0758eac"
     },
     ".github/workflows/ci.yml": {
-      "bytes": 6660,
-      "sha256": "869e6f3d040c29b7d28cef54a541cfb3b425350cc5d26fd231a8aa8e1341bf01"
+      "bytes": 7080,
+      "sha256": "2e284e4c15d3a968ac6bca658be456974f0cf56257117f8e24a6ad9ae6fa215f"
     },
     ".github/workflows/release-separation.yml": {
       "bytes": 2027,
@@ -105,8 +105,8 @@
       "sha256": "88b63ae257ff4b3f7d151f82075edc8529a152903a10fb40db3ddccf5a4d68fe"
     },
     "FINAL_SECRET_REMEDIATION_REPORT.md": {
-      "bytes": 15139,
-      "sha256": "c2d73494dddbbe4d6845866acea8ca2b1096332acef25d188836646fe51de64a"
+      "bytes": 16451,
+      "sha256": "98aa187effb893e1d4c6ca313132d4e2a9d584d912ef468cd328769d35539364"
     },
     "FINAL_SECURITY_ENVIRONMENT_REPORT.md": {
       "bytes": 6476,
@@ -1889,8 +1889,8 @@
       "sha256": "6d0dadc59b70244b974c9a8077d544638346d79a2378f3915bc48090ec0315e1"
     },
     "evidence/FINAL_SECRET_REMEDIATION/PUBLIC_VERIFICATION.log": {
-      "bytes": 4767,
-      "sha256": "c6302452c8e9f856a942eaf30c9f70c5b39527ccea31401b98e2479e64ae31c6"
+      "bytes": 4831,
+      "sha256": "e048bf5a59e6cbcbbc6e8a9f8b2d2b90bdab0312c5f31aee059cdcc815f5fb69"
     },
     "evidence/FINAL_SECRET_REMEDIATION/attachment-followup-raw.log": {
       "bytes": 6079,
@@ -1916,13 +1916,45 @@
       "bytes": 224,
       "sha256": "da86d85ca5c7e15a90550315ab508cf6c785d93b8f160ddb70349444f3de0d01"
     },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/ci-provenance-after-grype.log": {
+      "bytes": 181,
+      "sha256": "93e2beda0802aa5b1b67d98d320ccc31b6070d8783505acebff67002003c4f39"
+    },
     "evidence/FINAL_SECRET_REMEDIATION/auth-ci/ci-provenance-check.log": {
       "bytes": 181,
       "sha256": "93e2beda0802aa5b1b67d98d320ccc31b6070d8783505acebff67002003c4f39"
     },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-final-status-summary.log": {
+      "bytes": 259,
+      "sha256": "e5d44f3914ad793366930e21e4e68ac6a29a9c475e0fb6b72075cd897e3e3fbc"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-real-image-final.log": {
+      "bytes": 80,
+      "sha256": "f932a3808327df4f3fe0d2a54b1d8280e62d2a4c160b17b40cb41cab1a041826"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-real-image.log": {
+      "bytes": 80,
+      "sha256": "f932a3808327df4f3fe0d2a54b1d8280e62d2a4c160b17b40cb41cab1a041826"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-status-summary.log": {
+      "bytes": 151,
+      "sha256": "859f588dac8010e16260b8323bfafee0f48fbece9501ae9253d18768dd139fa2"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-unit-test-final.log": {
+      "bytes": 65,
+      "sha256": "a978eeff6c9a7e900086b9349cffa2bde1ca0be15b6b2fec511a976b50f6177d"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-unit-test.log": {
+      "bytes": 123,
+      "sha256": "4fd6a6872df2e8dd7da5ce348fbf305e7531e359d0a432f3de7c9eacf3d7b197"
+    },
     "evidence/FINAL_SECRET_REMEDIATION/auth-ci/post-auth-ci-validation-raw.log": {
       "bytes": 706,
       "sha256": "70595bd82272ebcd1a5d1b6d8ddfe2790f4861939653b7d9a65676f33f5a4ece"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/post-grype-ci-full-validation-raw.log": {
+      "bytes": 435,
+      "sha256": "580e86bcb68453dbf14461387b9481d889457399024f85782642ec0a61670c7d"
     },
     "evidence/FINAL_SECRET_REMEDIATION/contamination-audit.tsv": {
       "bytes": 1010,
@@ -2166,7 +2198,7 @@
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/PACKAGE_MANIFEST.json": {
       "bytes": 435960,
-      "sha256": "f9d37ad745f4f199adce796125d211d1ecb9753f5515833d53f944910e271547"
+      "sha256": "9d22a950c70d301a095426534ebf934b3c94b9f9029ae684fea3bb30639a9d07"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/README.txt": {
       "bytes": 127,
@@ -2174,15 +2206,15 @@
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.bundle.sha256": {
       "bytes": 112,
-      "sha256": "dda5780f2dee24a6a012263161273b8ca5268ee9313073f7f321196a5b588eb9"
+      "sha256": "6a1155f33e350a27cb499d2d6b2fae29e1b278bc15db77443c601ef9bdfc2bbb"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.tar.sha256": {
       "bytes": 109,
-      "sha256": "c49e04aa5b97675e5b8adf8f2bb68960b4139d6f5a7d2247ad93d3a8b46e98ef"
+      "sha256": "7c174f9c61175607358681d8582bf6669b7fc1487cc11d163cd100fe4adc146c"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.zip.sha256": {
       "bytes": 109,
-      "sha256": "cf177af80523b6792f79079d60c9b58473fb5c26fe6bf67985fa34c94dd8da85"
+      "sha256": "85e98c2e58c8f96fd5be9783aacea0d9a75e2a0be95edb86f7c65089db01b415"
     },
     "evidence/GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log": {
       "bytes": 4250,
@@ -8920,6 +8952,10 @@
       "bytes": 3108,
       "sha256": "9ee3addab20d32817ba4b42811453dfe67126b12f00745c081a0993707fd9a95"
     },
+    "scripts/grype-policy-gate.py": {
+      "bytes": 3040,
+      "sha256": "5da23314333b938dc8170096f7c236128ec8283c6d5cd4eb6e1431834c4dea8c"
+    },
     "scripts/inject-webgl.py": {
       "bytes": 1455,
       "sha256": "e4e209226bfff5aaabd4a286bb7a9ebfd1d373780911b1b8ca731b433fff2265"
@@ -8980,6 +9016,10 @@
       "bytes": 2553,
       "sha256": "c146d3ff9de5bfa6209f4aaa1e34a6518a09aecf8f3a090582015c04e5b5a606"
     },
+    "scripts/test-grype-policy-gate.py": {
+      "bytes": 2540,
+      "sha256": "5fce990c2c3095f53f76e4946545873f342f7bfd607a48076dea64627435ceb0"
+    },
     "scripts/test-public-release-gate-metadata.py": {
       "bytes": 2336,
       "sha256": "0fb313b97f50b77fb2ddc7057ed9fb1399ac755cf6e93e131b30d2bd289e4a65"
@@ -9019,6 +9059,10 @@
     "scripts/webgl-collector.html": {
       "bytes": 4674,
       "sha256": "b2979fd75cfd83227b1ceacc01356e7ebd3aa4d5a61259c2d933984f78866853"
+    },
+    "security/grype-exceptions.json": {
+      "bytes": 46,
+      "sha256": "81a515050e5d312ac4a453fa1bdaa999cfc11ad6a652659776bf5747c6b69168"
     },
     "start-core-e2e.sh": {
       "bytes": 627,
@@ -9866,20 +9910,20 @@
   "note": "This external manifest contains package hashes; the internal payload manifest is intentionally non-self-referential.",
   "package_files": {
     "forgelocal-secret-remediation-evidence.bundle": {
-      "bytes": 333945405,
-      "sha256": "31ce971c8e3c2fe2fdf092f274e80bb18a47bc3f98dc27c9e771cf449e6f0cd1"
+      "bytes": 333969067,
+      "sha256": "fcc934fd710367632f9572ac4a4a4461d0619fa70480328a36b2ab6c7de7a7a3"
     },
     "forgelocal-secret-remediation-evidence.tar": {
-      "bytes": 611870720,
-      "sha256": "360bc06460d0eba88d0773f07f23c8eeb8202aa1cb02b528cd557c5d816305c1"
+      "bytes": 611901440,
+      "sha256": "aa56c45380fa04ace43fdac826b4c7ad66d268451e44383975729023fc00d71b"
     },
     "forgelocal-secret-remediation-evidence.zip": {
-      "bytes": 506619337,
-      "sha256": "8b73394eb7f9f9d2e99e27e1eed61ef24d48ac1614629114d551c933f9317eb7"
+      "bytes": 506626175,
+      "sha256": "7625cf614109dd639e9cc8d98db90727e09a23f630a36ee1cc02000139a71f2c"
     }
   },
   "source_branch": "validation/final-secret-remediation",
-  "source_commit": "f1ab4aeadf470911ce473f9e05a670711e7fc293",
+  "source_commit": "02450969fbe9c421b29564169fa2b26939389890",
   "verdict": {
     "FORGELOCAL_PRODUCTION_READY": false,
     "GOSEC_R7_BLOCKED_CRITICAL_FINDING": true,
