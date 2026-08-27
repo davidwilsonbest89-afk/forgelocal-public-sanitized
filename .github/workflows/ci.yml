@@ -56,12 +56,12 @@ jobs:
       - name: Go test
         env:
           GOTOOLCHAIN: go1.25.13
-        run: go test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')
+        run: go test -count=1 -timeout 2m ./cmd/... ./internal/...
 
       - name: Go vet
         env:
           GOTOOLCHAIN: go1.25.13
-        run: go vet ./...
+        run: go vet ./cmd/... ./internal/...
 
       - name: Shell syntax
         run: bash -n scripts/release-preflight.sh scripts/release-push.sh docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
