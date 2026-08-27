@@ -2,7 +2,7 @@
 
 ## Périmètre
 
-Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelocal-public-sanitized`, sur une branche locale dédiée `validation/max-local-execution` créée depuis le HEAD réel `9aba6ed109c54539b1e2fd8b083ec2c5c7e727e3`. La campagne a exécuté 249 tests ciblés, dont la suite, la race et vet. La branche corrective distante `validation/final-secret-remediation` n’a pas été remplacée. Aucun package historique n’a été reconstruit.
+Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelocal-public-sanitized`, sur une branche locale dédiée `validation/max-local-execution` créée depuis le HEAD réel `9aba6ed109c54539b1e2fd8b083ec2c5c7e727e3`. La campagne a exécuté 249 tests ciblés, dont la suite, la race et vet. La branche corrective distante `validation/final-secret-remediation` a reçu uniquement les commits d’évidence `d368e02da5f8e5ad30873b4a91c1685dd4ba7509` puis `7850bf33e7cb74a1fdae8b6e86479e107a7deadf`; aucune branche historique n’a été modifiée. Aucun package historique n’a été reconstruit.
 
 ## Résultats exécutés
 
@@ -26,7 +26,7 @@ Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelo
 | Firefox | binaire absent | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | Camoufox | binaire absent, aucun téléchargement non vérifié | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | SystemVault natif | Secret Service/keyring natif indisponible | `NATIVE_SYSTEMVAULT_NOT_TESTED` |
-| CI distante | run `33099867635` sur `9aba6ed` : test success, sécurité failure sur Grype image policy, navigateur skipped, conclusion globale failure | `CI_REMOTE_EXECUTION_FAIL` |
+| CI distante | run `33103998712` sur `7850bf33e7cb74a1fdae8b6e86479e107a7deadf` : `test` success, sécurité failure sur Grype image policy, navigateur skipped, conclusion globale failure | `CI_REMOTE_EXECUTION_FAIL` |
 | Protection branche | API GitHub `404 Branch not protected` | `BRANCH_PROTECTION_ENFORCEMENT=NOT_VERIFIED` |
 
 ## Gouvernance
