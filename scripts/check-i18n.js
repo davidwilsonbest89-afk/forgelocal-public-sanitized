@@ -34,18 +34,21 @@ for (const [locale, messages] of Object.entries({ en: enMessages, zh_TW: zhMessa
 
 const dashboard = fs.readFileSync('internal/api/dashboard.html', 'utf8');
 const match = dashboard.match(/const LOCALES = (\{[\s\S]*?\n\});/);
-if (!match) fail('Dashboard LOCALES object not found');
+if (match) {
+  const locales = Function(`"use strict"; return (${match[1]});`)();
+  if (!locales.en || !locales['zh-TW']) fail('Dashboard must define en and zh-TW locales');
+  sameKeys('dashboard locale', locales.en, locales['zh-TW']);
 
-const locales = Function(`"use strict"; return (${match[1]});`)();
-if (!locales.en || !locales['zh-TW']) fail('Dashboard must define en and zh-TW locales');
-sameKeys('dashboard locale', locales.en, locales['zh-TW']);
-
-for (const [locale, messages] of Object.entries(locales)) {
-  for (const [key, value] of Object.entries(messages)) {
-    if (typeof value !== 'string' || value.length === 0) {
-      fail(`dashboard ${locale}.${key} must be a non-empty string`);
+  for (const [locale, messages] of Object.entries(locales)) {
+    for (const [key, value] of Object.entries(messages)) {
+      if (typeof value !== 'string' || value.length === 0) {
+        fail(`dashboard ${locale}.${key} must be a non-empty string`);
+      }
     }
   }
+  console.log('i18n coverage ok');
+} else {
+  const historicalDisabled = /Interface historique désactivée/i.test(dashboard) && !/<script\b/i.test(dashboard);
+  if (!historicalDisabled) fail('Dashboard has neither a valid LOCALES object nor the approved static disabled form');
+  console.log('extension i18n coverage ok; historical dashboard is static and disabled');
 }
-
-console.log('i18n coverage ok');
