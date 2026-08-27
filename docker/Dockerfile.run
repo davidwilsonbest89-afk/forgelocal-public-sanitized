@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install KasmVNC (replaces Xvfb + x11vnc + noVNC + websockify)
+# KasmVNC is run below with explicit non-TLS flags; do not ship the package-generated snakeoil key.
 RUN target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" && \
     case "$target_arch" in \
       amd64) KASMVNC_DEB_ARCH=amd64; KASMVNC_SHA256="$KASMVNC_SHA256_AMD64" ;; \
@@ -38,6 +39,10 @@ RUN target_arch="${TARGETARCH:-$(dpkg --print-architecture)}" && \
     curl -fSL -o /tmp/kasmvnc.deb "$KASMVNC_URL" && \
     echo "${KASMVNC_SHA256}  /tmp/kasmvnc.deb" | sha256sum -c - && \
     apt-get update && apt-get install -y /tmp/kasmvnc.deb && \
+    rm -f /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/ssl/certs/ssl-cert-snakeoil.pem.broken \
+          /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/ssl-cert-snakeoil.key.broken \
+          /etc/systemd/system/multi-user.target.wants/ssl-cert.service && \
+    find /etc/ssl/certs -maxdepth 1 -lname ssl-cert-snakeoil.pem -delete 2>/dev/null || true && \
     rm -f /tmp/kasmvnc.deb && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

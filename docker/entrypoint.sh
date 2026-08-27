@@ -90,7 +90,7 @@ openbox &
 BF_PID=$!
 
 # Wait for ready and show non-secret status
-for i in $(seq 1 60); do
+for _ in $(seq 1 60); do
   if [ -f /app/data/.api-token ]; then
     echo "========================================="
     echo "  BrowseForge Docker (KasmVNC)"

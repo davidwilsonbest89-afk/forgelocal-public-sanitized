@@ -1,0 +1,33 @@
+{
+  "grype": {
+    "ignored_matches": 0,
+    "matches": 379,
+    "severity_counts": {
+      "Critical": 1,
+      "High": 42,
+      "Low": 46,
+      "Medium": 284,
+      "Negligible": 4,
+      "Unknown": 2
+    },
+    "status": "PASS_WITH_OPEN_MATCHES"
+  },
+  "sbom": {
+    "bytes": 5801675,
+    "path": "remediated-image.cyclonedx.json"
+  },
+  "trivy": {
+    "misconfigurations": 0,
+    "result_count": 4,
+    "secret_metadata_only": [],
+    "secrets": 0,
+    "severity_counts": {
+      "CRITICAL": 1,
+      "HIGH": 41,
+      "LOW": 28,
+      "MEDIUM": 53
+    },
+    "status": "PASS_NO_IMAGE_SECRET",
+    "vulnerabilities": 123
+  }
+}

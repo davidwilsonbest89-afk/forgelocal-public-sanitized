@@ -1,0 +1,86 @@
+=== DATE_UTC ===
+2026-08-27T01:06:12Z
+=== PACKAGE_STATUS ===
+
+
+
+PACKAGE_STATUS_EXIT=0
+=== PACKAGE_FILES ===
+/lib/systemd/system/ssl-cert.service
+/usr/sbin/make-ssl-cert
+/usr/share/doc/ssl-cert
+/usr/share/doc/ssl-cert/README
+/usr/share/doc/ssl-cert/changelog.gz
+/usr/share/doc/ssl-cert/copyright
+/usr/share/lintian/overrides/ssl-cert
+/usr/share/man/man8/make-ssl-cert.8.gz
+/usr/share/ssl-cert
+/usr/share/ssl-cert/ssleay.cnf
+PACKAGE_FILES_EXIT=0
+=== PACKAGE_SCRIPTS ===
+SCRIPT=/var/lib/dpkg/info/ssl-cert.list
+9:/lib/systemd/system/ssl-cert.service
+12:/usr/sbin/make-ssl-cert
+15:/usr/share/doc/ssl-cert
+16:/usr/share/doc/ssl-cert/README
+17:/usr/share/doc/ssl-cert/changelog.gz
+18:/usr/share/doc/ssl-cert/copyright
+21:/usr/share/lintian/overrides/ssl-cert
+24:/usr/share/man/man8/make-ssl-cert.8.gz
+25:/usr/share/ssl-cert
+26:/usr/share/ssl-cert/ssleay.cnf
+SCRIPT=/var/lib/dpkg/info/ssl-cert.md5sums
+1:296d2cf43d6a88a517576daa940f6466  lib/systemd/system/ssl-cert.service
+2:634df147f1127699468cb9f0e1de3a4e  usr/sbin/make-ssl-cert
+3:ced44f6f499b7890c94a6b1e9ef2fc20  usr/share/doc/ssl-cert/README
+4:98cabe24ed0dd3759708c574c5f62816  usr/share/doc/ssl-cert/changelog.gz
+5:e32874bd059cc1d6177a794d3f1787da  usr/share/doc/ssl-cert/copyright
+6:94a4726469c4af8642517dd2dd07d775  usr/share/lintian/overrides/ssl-cert
+7:814eccaa15a7bb01f920753ab1499fa2  usr/share/man/man8/make-ssl-cert.8.gz
+8:9eef3b8f4ed1ab9382464840b6e9a759  usr/share/ssl-cert/ssleay.cnf
+SCRIPT=/var/lib/dpkg/info/ssl-cert.postinst
+7:# Create the ssl-cert system group for snakeoil ownership:
+8:if ! getent group ssl-cert >/dev/null; then
+9:	addgroup --quiet --system --force-badname ssl-cert
+14:make-ssl-cert generate-default-snakeoil
+16:# allow group ssl-cert to access /etc/ssl/private
+19:    dpkg-statoverride --update --add root ssl-cert 710 /etc/ssl/private
+25:	deb-systemd-helper unmask 'ssl-cert.service' >/dev/null || true
+28:	if deb-systemd-helper --quiet was-enabled 'ssl-cert.service'; then
+31:		deb-systemd-helper enable 'ssl-cert.service' >/dev/null || true
+35:		deb-systemd-helper update-state 'ssl-cert.service' >/dev/null || true
+48:		deb-systemd-invoke $_dh_action 'ssl-cert.service' >/dev/null || true
+SCRIPT=/var/lib/dpkg/info/ssl-cert.postrm
+4:	rm -f /etc/ssl/certs/ssl-cert-snakeoil.pem \
+5:	      /etc/ssl/certs/ssl-cert-snakeoil.pem.broken \
+6:              /etc/ssl/private/ssl-cert-snakeoil.key \
+7:	      /etc/ssl/private/ssl-cert-snakeoil.key.broken
+10:	find /etc/ssl/certs -maxdepth 1 -lname ssl-cert-snakeoil.pem -delete > /dev/null 2>&1 || true
+12:	if dpkg-statoverride --list /etc/ssl/private 2>&1 | grep -q "root ssl-cert 710"
+43:		deb-systemd-helper purge 'ssl-cert.service' >/dev/null || true
+SCRIPT=/var/lib/dpkg/info/ssl-cert.prerm
+5:	deb-systemd-invoke stop 'ssl-cert.service' >/dev/null || true
+SCRIPT=/var/lib/dpkg/info/ssl-cert.templates
+2:Template: make-ssl-cert/hostname
+98:Template: make-ssl-cert/altname
+331:Template: make-ssl-cert/title
+357:Template: make-ssl-cert/vulnerable_prng
+SCRIPT=/var/lib/dpkg/info/kasmvncserver.postinst
+PACKAGE_SCRIPTS_EXIT=0
+=== KASMVNC_OWNER ===
+kasmvncserver: /usr/share/kasmvnc/kasmvnc_defaults.yaml
+kasmvncserver: /usr/bin/Xkasmvnc
+dpkg-query: no packages found matching kasmvnc
+
+KASMVNC_OWNER_EXIT=1
+=== CERT_SERVICE ===
+lrwxrwxrwx 1 root root  40 Aug 27 00:57 /etc/systemd/system/multi-user.target.wants/ssl-cert.service -> /usr/lib/systemd/system/ssl-cert.service
+-rw-r--r-- 1 root root 270 Oct  1  2023 /lib/systemd/system/ssl-cert.service
+Verb 'cat' cannot be used with --root= or --image=.
+CERT_SERVICE_EXIT=0
+=== RUNTIME_FLAGS ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docker/entrypoint.sh:70:  -sslOnly 0 \
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docker/entrypoint.sh:71:  -SecurityTypes None \
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docker/entrypoint.sh:73:  -websocketPort 6901 \
+/home/ubuntu/forgelocal-final-secret-remediation/repo/docker/entrypoint.sh:79:  -httpd /usr/share/kasmvnc/www &
+RUNTIME_FLAGS_EXIT=0

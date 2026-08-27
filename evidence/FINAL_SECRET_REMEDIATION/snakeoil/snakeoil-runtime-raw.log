@@ -1,0 +1,37 @@
+=== DATE_UTC ===
+2026-08-27T01:07:02Z
+=== RUN ===
+a5996ea5b1a7bda151c5817af7d0b9ec14aacdb3311357701770eefe3c4eab0a
+RUN_EXIT=0
+=== STATE ===
+running=true pid=44433
+STATE_EXIT=0
+=== PROCESSES ===
+     17 Xvnc            /usr/bin/Xvnc :1 -geometry 1920x1080 -depth 24 -sslOnly 0 -SecurityTypes None -AlwaysShared -websocketPort 6901 -interface 0.0.0.0 +extension GLX +render -http-header Cross-Origin-Embedder-Policy=require-corp -http-header Cross-Origin-Opener-Policy=same-origin -httpd /usr/share/kasmvnc/www
+     23 openbox         openbox
+     24 BrowseForge     /app/BrowseForge
+PROCESS_EXIT=0
+=== HTTP_6901 ===
+HTTP_CODE=401 TLS=0
+HTTP_EXIT=0
+=== HTTPS_6901 ===
+curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 127.0.0.1:6901
+HTTPS_CODE=000
+HTTPS_EXIT=35
+=== CERT_HANDSHAKE ===
+Could not read certificate from <stdin>
+40476E77D97F0000:error:1608010C:STORE routines:ossl_store_handle_load_result:unsupported:../crypto/store/store_result.c:151:
+Unable to load certificate
+CERT_HANDSHAKE_EXIT=1
+=== LOGS_SAFE ===
+Xvnc KasmVNC 1.4.0.663b6d6a0bdd4638bff981c75a522056aaaa1c2e - built Sep 22 2025 14:56:59
+Copyright (C) 1999-2018 KasmVNC Team and many others (see README.me)
+See http://kasmweb.com for information on KasmVNC.
+ 2026-08-27 01:07:02,410 [INFO] vncext: VNC extension running!
+ 2026-08-27 01:07:02,410 [INFO] VNCServerST: CPU capability: SSE2 yes, SSE4.1 yes, SSE4.2 yes, AVX512f yes
+ 2026-08-27 01:07:02,410 [INFO] vncext: created VNC server for screen 0
+Errors from xkbcomp are not fatal to the X server
+LOGS_EXIT=0
+=== STOP ===
+forgelocal-snakeoil-runtime-44384
+STOP_EXIT=0
