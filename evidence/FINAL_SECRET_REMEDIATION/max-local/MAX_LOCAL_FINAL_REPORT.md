@@ -31,7 +31,7 @@ Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelo
 
 ## Gouvernance
 
-La matrice prioritaire existante reste ouverte : 453 lignes dédupliquées et 85 Critical/High, sans owner, échéance ou exploitabilité inventés. `SECRET_REAL_USE_STATUS=OWNER_CONFIRMATION_REQUIRED`. La revue indépendante n’est pas attestée. Le package historique reste inchangé et est seulement vérifié par ses références existantes.
+La matrice prioritaire existante reste ouverte : 453 lignes dédupliquées et 85 Critical/High, sans owner, échéance ou exploitabilité inventés. `SECRET_REAL_USE_STATUS=OWNER_CONFIRMATION_REQUIRED`, réponse propriétaire `UNCERTAIN`; une révocation/rotation officielle est requise, mais n’a pas été exécutée. La revue indépendante n’est pas attestée. Le package historique reste inchangé et est seulement vérifié par ses références existantes.
 
 > `PUBLIC_RELEASE_BLOCKED`
 >
