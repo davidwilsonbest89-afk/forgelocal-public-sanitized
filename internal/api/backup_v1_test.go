@@ -105,7 +105,7 @@ func assertRestoredProfileStartsLocalChromium(t *testing.T, userDataDir string) 
 	runtimeVersion := strings.TrimSpace(string(versionOutput))
 	cmd := exec.CommandContext(ctx, binary,
 		"--headless=new", "--no-first-run", "--no-default-browser-check",
-		"--disable-gpu", "--no-sandbox", "--user-data-dir="+userDataDir,
+		"--disable-gpu", "--disable-dev-shm-usage", "--disable-background-networking", "--disable-component-update", "--disable-features=Translate,MediaRouter", "--no-sandbox", "--user-data-dir="+userDataDir,
 		"--dump-dom", "about:blank")
 	var output bytes.Buffer
 	cmd.Stdout = &output
