@@ -263,3 +263,1047 @@ job=Secret, SBOM, and image security gates; conclusion=failure; job_id=986020219
 job=test; conclusion=success; job_id=98602022201; failed_step=none
 job=Qualified Chromium runtime validation; conclusion=skipped; job_id=98602023469; failed_step=none
 EXIT_CODE=0
+
+=== COMMAND: date -u +%FT%TZ ===
+2026-08-27T17:42:16Z
+EXIT_CODE=0
+
+=== COMMAND: pwd ===
+/home/ubuntu/forgelocal-final-secret-remediation/pasted17-baseline-clone
+EXIT_CODE=0
+
+=== COMMAND: go version ===
+go version go1.26.7 linux/amd64
+EXIT_CODE=0
+
+=== COMMAND: go test -count=1 -v ./internal/api ./internal/browser ./internal/proxies ./internal/profile ./internal/launch ./internal/backup ===
+=== RUN   TestAdminTokenValidationDistinguishesStates
+=== RUN   TestAdminTokenValidationDistinguishesStates/missing
+=== RUN   TestAdminTokenValidationDistinguishesStates/malformed
+=== RUN   TestAdminTokenValidationDistinguishesStates/empty_bearer
+=== RUN   TestAdminTokenValidationDistinguishesStates/invalid
+=== RUN   TestAdminTokenValidationDistinguishesStates/valid_at_start
+=== RUN   TestAdminTokenValidationDistinguishesStates/expired_at_exact_boundary
+=== RUN   TestAdminTokenValidationDistinguishesStates/revoked
+--- PASS: TestAdminTokenValidationDistinguishesStates (0.03s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/missing (0.00s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/malformed (0.01s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/empty_bearer (0.00s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/invalid (0.01s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/valid_at_start (0.00s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/expired_at_exact_boundary (0.00s)
+    --- PASS: TestAdminTokenValidationDistinguishesStates/revoked (0.00s)
+=== RUN   TestAdminTokenRevokePersistsAcrossRestartAndRedactsValue
+--- PASS: TestAdminTokenRevokePersistsAcrossRestartAndRedactsValue (0.00s)
+=== RUN   TestAdminTokenMiddlewareAndRevokeEndpoint
+=== RUN   TestAdminTokenMiddlewareAndRevokeEndpoint/missing
+=== RUN   TestAdminTokenMiddlewareAndRevokeEndpoint/malformed
+=== RUN   TestAdminTokenMiddlewareAndRevokeEndpoint/invalid
+=== RUN   TestAdminTokenMiddlewareAndRevokeEndpoint/valid
+--- PASS: TestAdminTokenMiddlewareAndRevokeEndpoint (0.01s)
+    --- PASS: TestAdminTokenMiddlewareAndRevokeEndpoint/missing (0.00s)
+    --- PASS: TestAdminTokenMiddlewareAndRevokeEndpoint/malformed (0.00s)
+    --- PASS: TestAdminTokenMiddlewareAndRevokeEndpoint/invalid (0.00s)
+    --- PASS: TestAdminTokenMiddlewareAndRevokeEndpoint/valid (0.00s)
+=== RUN   TestAdminTokenConcurrentValidationAndRevocation
+--- PASS: TestAdminTokenConcurrentValidationAndRevocation (0.00s)
+=== RUN   TestLoadOrCreateTokenRejectsSymlinkedTokenFile
+--- PASS: TestLoadOrCreateTokenRejectsSymlinkedTokenFile (0.00s)
+=== RUN   TestArtifactServesProfileArtifact
+--- PASS: TestArtifactServesProfileArtifact (0.00s)
+=== RUN   TestArtifactRejectsExternalSymlink
+--- PASS: TestArtifactRejectsExternalSymlink (0.00s)
+=== RUN   TestResolveProfileArtifactPathRejectsTraversal
+--- PASS: TestResolveProfileArtifactPathRejectsTraversal (0.00s)
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation266849709/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 127.0.0.1:0 - 201 207B in 3.02886ms
+2026/08/27 17:42:18 "POST http://example.com/api/v1/backups/bkp-1787852538610210115-b25042e06cfffd37/restore HTTP/1.1" from 127.0.0.1:0 - 201 634B in 2.160367ms
+    backup_v1_test.go:86: Chromium runtime validation deferred; set FORGELOCAL_VALIDATE_CHROMIUM_RUNTIME=1 on a qualified runner
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (0.04s)
+=== RUN   TestT25DynamicFixtureImportExportRedactsValuesAndIsAtomic
+--- PASS: TestT25DynamicFixtureImportExportRedactsValuesAndIsAtomic (0.00s)
+=== RUN   TestT25DynamicGuardsStrictJSONAndConcurrency
+--- PASS: TestT25DynamicGuardsStrictJSONAndConcurrency (0.01s)
+=== RUN   TestCR02WorkflowHandlerRefusesBeforeBodyRead
+--- PASS: TestCR02WorkflowHandlerRefusesBeforeBodyRead (0.00s)
+=== RUN   TestCR05V1FacadeAndOpenAPIMatchLivingRouter
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestCR05V1FacadeAndOpenAPIMatchLivingRouter2911558736/002/.api-token
+2026/08/27 17:42:18 "GET http://example.com/api/v1/openapi.json HTTP/1.1" from 192.0.2.1:1234 - 200 2563B in 183.788µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 21.814µs
+2026/08/27 17:42:18 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 18.963µs
+2026/08/27 17:42:18 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 38.376µs
+2026/08/27 17:42:18 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7612 - 401 86B in 5.599µs
+2026/08/27 17:42:18 "GET http://example.com/api/v1/not-a-route HTTP/1.1" from 127.0.0.1:7613 - 404 19B in 4.332µs
+2026/08/27 17:42:18 "GET http://example.com/api/v1/not-a-route HTTP/1.1" from 127.0.0.1:7613 - 404 19B in 62.959µs
+--- PASS: TestCR05V1FacadeAndOpenAPIMatchLivingRouter (0.02s)
+=== RUN   TestT30EnvironmentHTTPResponseIsVersionedAndRedacted
+--- PASS: TestT30EnvironmentHTTPResponseIsVersionedAndRedacted (0.00s)
+=== RUN   TestT30EnvironmentOpenAPIContractIsVersionedAndRedacted
+--- PASS: TestT30EnvironmentOpenAPIContractIsVersionedAndRedacted (0.00s)
+=== RUN   TestT28APIRejectsMissingAuthAndForeignOrigin
+--- PASS: TestT28APIRejectsMissingAuthAndForeignOrigin (0.01s)
+=== RUN   TestT28APIOffLoopbackRefused
+--- PASS: TestT28APIOffLoopbackRefused (0.01s)
+=== RUN   TestT28APIImportApproveListAndRedaction
+--- PASS: TestT28APIImportApproveListAndRedaction (0.01s)
+=== RUN   TestT28APIAssignmentRequiresApprovedVersionAndExistingProfile
+--- PASS: TestT28APIAssignmentRequiresApprovedVersionAndExistingProfile (0.01s)
+=== RUN   TestListRuntimesReturnsRuntimeDescriptors
+--- PASS: TestListRuntimesReturnsRuntimeDescriptors (0.00s)
+=== RUN   TestCreateProfileAcceptsRuntimeID
+--- PASS: TestCreateProfileAcceptsRuntimeID (0.00s)
+=== RUN   TestCreateProfileRejectsDisabledRuntimeID
+--- PASS: TestCreateProfileRejectsDisabledRuntimeID (0.00s)
+=== RUN   TestUpdateProfileRejectsDisabledRuntimeID
+--- PASS: TestUpdateProfileRejectsDisabledRuntimeID (0.00s)
+=== RUN   TestDuplicateProfileRejectsDisabledRuntimeID
+--- PASS: TestDuplicateProfileRejectsDisabledRuntimeID (0.00s)
+=== RUN   TestImportProfileRejectsDisabledRuntimeID
+--- PASS: TestImportProfileRejectsDisabledRuntimeID (0.00s)
+=== RUN   TestLegacyRestoreEndpointRetired
+--- PASS: TestLegacyRestoreEndpointRetired (0.00s)
+=== RUN   TestCreateProfileRejectsDeprecatedEngine
+--- PASS: TestCreateProfileRejectsDeprecatedEngine (0.00s)
+=== RUN   TestUpdateProfileRejectsDeprecatedEngine
+--- PASS: TestUpdateProfileRejectsDeprecatedEngine (0.00s)
+=== RUN   TestUpdateProfileRejectsNonStringRuntimeID
+=== RUN   TestUpdateProfileRejectsNonStringRuntimeID/null
+=== RUN   TestUpdateProfileRejectsNonStringRuntimeID/number
+--- PASS: TestUpdateProfileRejectsNonStringRuntimeID (0.00s)
+    --- PASS: TestUpdateProfileRejectsNonStringRuntimeID/null (0.00s)
+    --- PASS: TestUpdateProfileRejectsNonStringRuntimeID/number (0.00s)
+=== RUN   TestGroupProxyAPI
+--- PASS: TestGroupProxyAPI (0.00s)
+=== RUN   TestGroupProxyAPIRequiresProxyOnPut
+--- PASS: TestGroupProxyAPIRequiresProxyOnPut (0.00s)
+=== RUN   TestDeleteGroupUngroupsProfilesAndClearsProxy
+--- PASS: TestDeleteGroupUngroupsProfilesAndClearsProxy (0.00s)
+=== RUN   TestLegacyBackupEndpointRetired
+--- PASS: TestLegacyBackupEndpointRetired (0.00s)
+=== RUN   TestNavigateURLPolicy
+--- PASS: TestNavigateURLPolicy (0.00s)
+=== RUN   TestListSessionsRedactsTechnicalFields
+--- PASS: TestListSessionsRedactsTechnicalFields (0.00s)
+=== RUN   TestValidateLocalURL
+--- PASS: TestValidateLocalURL (0.00s)
+=== RUN   TestNavigateRejectsExternalURL
+--- PASS: TestNavigateRejectsExternalURL (0.00s)
+=== RUN   TestOriginGuard
+--- PASS: TestOriginGuard (0.00s)
+=== RUN   TestValidateInternalPlaywrightEndpoint
+=== RUN   TestValidateInternalPlaywrightEndpoint/ipv4
+=== RUN   TestValidateInternalPlaywrightEndpoint/ipv6-loopback
+=== RUN   TestValidateInternalPlaywrightEndpoint/localhost
+=== RUN   TestValidateInternalPlaywrightEndpoint/external-host
+=== RUN   TestValidateInternalPlaywrightEndpoint/external-ip
+=== RUN   TestValidateInternalPlaywrightEndpoint/wrong-scheme
+=== RUN   TestValidateInternalPlaywrightEndpoint/missing-port
+=== RUN   TestValidateInternalPlaywrightEndpoint/invalid-port
+=== RUN   TestValidateInternalPlaywrightEndpoint/query
+=== RUN   TestValidateInternalPlaywrightEndpoint/fragment
+=== RUN   TestValidateInternalPlaywrightEndpoint/wrong-path
+=== RUN   TestValidateInternalPlaywrightEndpoint/userinfo
+--- PASS: TestValidateInternalPlaywrightEndpoint (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/ipv4 (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/ipv6-loopback (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/localhost (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/external-host (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/external-ip (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/wrong-scheme (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/missing-port (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/invalid-port (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/query (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/fragment (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/wrong-path (0.00s)
+    --- PASS: TestValidateInternalPlaywrightEndpoint/userinfo (0.00s)
+=== RUN   TestT22ProfileHistoryReadDiffRestoreAndRedaction
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT22ProfileHistoryReadDiffRestoreAndRedaction707186471/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 556B in 966.966µs
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_4fa650953611 HTTP/1.1" from 127.0.0.1:7777 - 200 556B in 967.97µs
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_4fa650953611/metadata HTTP/1.1" from 127.0.0.1:7777 - 200 133B in 901.709µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_4fa650953611/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 368B in 158.031µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_4fa650953611/history?limit=1&offset=1 HTTP/1.1" from 127.0.0.1:7777 - 200 150B in 75.655µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_4fa650953611/history/diff?from=1&to=2 HTTP/1.1" from 127.0.0.1:7777 - 200 77B in 108.332µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_4fa650953611/history/1 HTTP/1.1" from 127.0.0.1:7777 - 200 360B in 82.78µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_4fa650953611/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 200 118B in 958.868µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_4fa650953611/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 409 99B in 515.657µs
+--- PASS: TestT22ProfileHistoryReadDiffRestoreAndRedaction (0.02s)
+=== RUN   TestT22ProfileHistoryRequiresAuthAndLocalOrigin
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT22ProfileHistoryRequiresAuthAndLocalOrigin1153812018/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 559B in 747.087µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_29cab35dd312/history HTTP/1.1" from 192.0.2.1:1234 - 401 86B in 12.769µs
+=== RUN   TestT22ProfileHistoryRequiresAuthAndLocalOrigin/origin_and_referer_absent
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_29cab35dd312/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 20.636µs
+=== RUN   TestT22ProfileHistoryRequiresAuthAndLocalOrigin/origin_distant
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_29cab35dd312/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 13.19µs
+=== RUN   TestT22ProfileHistoryRequiresAuthAndLocalOrigin/referer_distant
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_29cab35dd312/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 11.177µs
+--- PASS: TestT22ProfileHistoryRequiresAuthAndLocalOrigin (0.02s)
+    --- PASS: TestT22ProfileHistoryRequiresAuthAndLocalOrigin/origin_and_referer_absent (0.00s)
+    --- PASS: TestT22ProfileHistoryRequiresAuthAndLocalOrigin/origin_distant (0.00s)
+    --- PASS: TestT22ProfileHistoryRequiresAuthAndLocalOrigin/referer_distant (0.00s)
+=== RUN   TestT22HistoryProjectionRedactsActualProxySecrets
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT22HistoryProjectionRedactsActualProxySecrets4259200548/001/.api-token
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_9470ebc994df HTTP/1.1" from 127.0.0.1:7777 - 200 599B in 831.041µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_9470ebc994df/history/1 HTTP/1.1" from 127.0.0.1:7777 - 200 402B in 115.866µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_9470ebc994df/history/diff?from=1&to=1 HTTP/1.1" from 127.0.0.1:7777 - 200 71B in 108.617µs
+--- PASS: TestT22HistoryProjectionRedactsActualProxySecrets (0.02s)
+=== RUN   TestT22HistoryConcurrentRestoreAndMutationAreSerialized
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT22HistoryConcurrentRestoreAndMutationAreSerialized3215970580/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 567B in 823.608µs
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_3c9e485b91a1 HTTP/1.1" from 127.0.0.1:7777 - 200 567B in 732.881µs
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_3c9e485b91a1 HTTP/1.1" from 127.0.0.1:7777 - 200 575B in 715.413µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_3c9e485b91a1/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 409 99B in 1.164399ms
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_3c9e485b91a1/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 366B in 131.215µs
+--- PASS: TestT22HistoryConcurrentRestoreAndMutationAreSerialized (0.04s)
+=== RUN   TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers2549733274/001/.api-token
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_e077c4a8c873 HTTP/1.1" from 127.0.0.1:7777 - 500 95B in 516.065µs
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_e077c4a8c873/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 153B in 128.973µs
+--- PASS: TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers (0.03s)
+=== RUN   TestT23ArchiveHistoryFailureLeavesDurableLifecycleAndStartupRecovers
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT23ArchiveHistoryFailureLeavesDurableLifecycleAndStartupReco3569130046/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_2cb9f0744707/archive HTTP/1.1" from 127.0.0.1:7777 - 500 95B in 347.641µs
+--- PASS: TestT23ArchiveHistoryFailureLeavesDurableLifecycleAndStartupRecovers (0.02s)
+=== RUN   TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker3026554212/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 570B in 1.110919ms
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ad44cdce143c/reopen HTTP/1.1" from 127.0.0.1:7777 - 409 110B in 42.707µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ad44cdce143c/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 1.375491ms
+--- PASS: TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker (0.02s)
+=== RUN   TestT23IdempotentArchiveDoesNotCreateSecondHistoryVersion
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT23IdempotentArchiveDoesNotCreateSecondHistoryVersion4039156822/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 569B in 1.36522ms
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_9c7830d58020/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 898.972µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_9c7830d58020/archive HTTP/1.1" from 127.0.0.1:7777 - 200 81B in 53.558µs
+--- PASS: TestT23IdempotentArchiveDoesNotCreateSecondHistoryVersion (0.02s)
+=== RUN   TestT23ArchiveReopenUpdateConcurrentProductionRouter
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT23ArchiveReopenUpdateConcurrentProductionRouter3477558918/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 563B in 874.531µs
+2026/08/27 17:42:18 "PUT http://example.com/api/profiles/prof_682d1c819914 HTTP/1.1" from 127.0.0.1:7777 - 200 574B in 797.696µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_682d1c819914/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 2.397447ms
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_682d1c819914/reopen HTTP/1.1" from 127.0.0.1:7777 - 200 63B in 3.231376ms
+2026/08/27 17:42:18 "GET http://example.com/api/profiles/prof_682d1c819914/history?limit=20&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 473B in 126.715µs
+--- PASS: TestT23ArchiveReopenUpdateConcurrentProductionRouter (0.04s)
+=== RUN   TestT23ArchiveReopenProductionGuardsAndRedaction
+2026/08/27 17:42:18 INFO generated API token path=/tmp/TestT23ArchiveReopenProductionGuardsAndRedaction2622046245/001/.api-token
+2026/08/27 17:42:18 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 554B in 829.711µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/archive HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 17.293µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 5.822µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 6.266µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.563µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/reopen HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 8.254µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 5.409µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.551µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 3.969µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 761.662µs
+2026/08/27 17:42:18 "POST http://example.com/api/profiles/prof_ff0482eea37b/reopen HTTP/1.1" from 127.0.0.1:7777 - 200 63B in 824.364µs
+--- PASS: TestT23ArchiveReopenProductionGuardsAndRedaction (0.02s)
+=== RUN   TestT24BulkRejectsStrictJSONAndTargetBudgetBeforeMutation
+--- PASS: TestT24BulkRejectsStrictJSONAndTargetBudgetBeforeMutation (0.01s)
+=== RUN   TestT24BulkArchiveReopenAndIdempotence
+--- PASS: TestT24BulkArchiveReopenAndIdempotence (0.01s)
+=== RUN   TestT24BulkTagsGroupsPartialFailureAndRedaction
+--- PASS: TestT24BulkTagsGroupsPartialFailureAndRedaction (0.01s)
+=== RUN   TestT24BulkRejectsInvalidInputBeforeMutation
+--- PASS: TestT24BulkRejectsInvalidInputBeforeMutation (0.01s)
+=== RUN   TestT24BulkRequiresAuthLoopbackAndOrigin
+--- PASS: TestT24BulkRequiresAuthLoopbackAndOrigin (0.01s)
+=== RUN   TestT24BulkContextCancellationAndConcurrentArchive
+--- PASS: TestT24BulkContextCancellationAndConcurrentArchive (0.01s)
+=== RUN   TestProfileMetadataEndpointAuditsRedactedShape
+--- PASS: TestProfileMetadataEndpointAuditsRedactedShape (0.00s)
+=== RUN   TestProfileMetadataEndpointRejectsInvalidAndGenericBypass
+--- PASS: TestProfileMetadataEndpointRejectsInvalidAndGenericBypass (0.00s)
+=== RUN   TestArchiveReopenLifecycleRoundTrip
+--- PASS: TestArchiveReopenLifecycleRoundTrip (0.00s)
+=== RUN   TestArchiveQuarantinedStaysRefused
+--- PASS: TestArchiveQuarantinedStaysRefused (0.00s)
+=== RUN   TestArchiveIdempotentAndMutationsRefusedAfterArchive
+--- PASS: TestArchiveIdempotentAndMutationsRefusedAfterArchive (0.00s)
+=== RUN   TestTagAssignmentAndRemoval
+--- PASS: TestTagAssignmentAndRemoval (0.00s)
+=== RUN   TestWriteMutationsRefusedOutsideLoopback
+--- PASS: TestWriteMutationsRefusedOutsideLoopback (0.00s)
+=== RUN   TestTagRejectionRules
+--- PASS: TestTagRejectionRules (0.00s)
+=== RUN   TestWriteCorrelationIdAlwaysPresent
+--- PASS: TestWriteCorrelationIdAlwaysPresent (0.00s)
+=== RUN   TestWriteContractErrorsAreMachineReadable
+--- PASS: TestWriteContractErrorsAreMachineReadable (0.00s)
+=== RUN   TestAuditEventsAreRedacted
+--- PASS: TestAuditEventsAreRedacted (0.00s)
+=== RUN   TestProxyListEmptyAndCreated
+--- PASS: TestProxyListEmptyAndCreated (0.00s)
+=== RUN   TestProxyCreateRefusesInvalid
+=== RUN   TestProxyCreateRefusesInvalid/unsupported_type
+=== RUN   TestProxyCreateRefusesInvalid/port_out_of_range
+=== RUN   TestProxyCreateRefusesInvalid/port_zero
+=== RUN   TestProxyCreateRefusesInvalid/empty_host
+=== RUN   TestProxyCreateRefusesInvalid/missing_name
+=== RUN   TestProxyCreateRefusesInvalid/malformed_secret_ref
+--- PASS: TestProxyCreateRefusesInvalid (0.00s)
+    --- PASS: TestProxyCreateRefusesInvalid/unsupported_type (0.00s)
+    --- PASS: TestProxyCreateRefusesInvalid/port_out_of_range (0.00s)
+    --- PASS: TestProxyCreateRefusesInvalid/port_zero (0.00s)
+    --- PASS: TestProxyCreateRefusesInvalid/empty_host (0.00s)
+    --- PASS: TestProxyCreateRefusesInvalid/missing_name (0.00s)
+    --- PASS: TestProxyCreateRefusesInvalid/malformed_secret_ref (0.00s)
+=== RUN   TestProxyCreateSyntheticSecretRef
+--- PASS: TestProxyCreateSyntheticSecretRef (0.00s)
+=== RUN   TestProxyDeleteRefusesAssigned
+--- PASS: TestProxyDeleteRefusesAssigned (0.00s)
+=== RUN   TestProxyUpdateRefusesOverwriteOfSecretRef
+--- PASS: TestProxyUpdateRefusesOverwriteOfSecretRef (0.00s)
+=== RUN   TestProxyUnauthorized
+--- PASS: TestProxyUnauthorized (0.00s)
+=== RUN   TestProxyMutationsOutOfLoopbackRefused
+--- PASS: TestProxyMutationsOutOfLoopbackRefused (0.00s)
+=== RUN   TestProxyNotFoundAndCorrelation
+--- PASS: TestProxyNotFoundAndCorrelation (0.00s)
+=== RUN   TestProxyAuditSinkNilTolerance
+--- PASS: TestProxyAuditSinkNilTolerance (0.00s)
+=== RUN   TestProxyAssignmentAPI
+--- PASS: TestProxyAssignmentAPI (0.00s)
+=== RUN   TestProxyConcurrentMutationsAPI
+--- PASS: TestProxyConcurrentMutationsAPI (0.00s)
+=== RUN   TestGetProfileProxyIdRedacted
+--- PASS: TestGetProfileProxyIdRedacted (0.00s)
+=== RUN   TestProxyAssignRefusesUnknownProfile
+--- PASS: TestProxyAssignRefusesUnknownProfile (0.00s)
+=== RUN   TestT26DynamicRegistrationAndSimulatedResolution
+--- PASS: TestT26DynamicRegistrationAndSimulatedResolution (0.00s)
+=== RUN   TestT26DynamicGuardsStrictJSONAndConcurrency
+--- PASS: TestT26DynamicGuardsStrictJSONAndConcurrency (0.00s)
+=== RUN   TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited1028376325/002/.api-token
+2026/08/27 17:42:19 "POST http://example.com/api/v1/readonly/session/codes HTTP/1.1" from 127.0.0.1:41234 - 201 131B in 21.943µs
+2026/08/27 17:42:19 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 127.0.0.1:41235 - 200 132B in 14.067µs
+2026/08/27 17:42:19 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 200 62B in 7.3µs
+2026/08/27 17:42:19 "POST http://example.com/api/profiles HTTP/1.1" from 192.0.2.1:1234 - 401 85B in 8.885µs
+2026/08/27 17:42:19 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 127.0.0.1:41236 - 401 90B in 10.273µs
+2026/08/27 17:42:19 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 203.0.113.10:41237 - 403 107B in 5.385µs
+--- PASS: TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited (0.02s)
+=== RUN   TestReadOnlySessionBrokerExpiresCodesAndTokens
+--- PASS: TestReadOnlySessionBrokerExpiresCodesAndTokens (0.00s)
+=== RUN   TestReadOnlyProfilesAreRedactedAndPaginated
+--- PASS: TestReadOnlyProfilesAreRedactedAndPaginated (0.00s)
+=== RUN   TestReadOnlyRuntimeMarksCamoufoxCandidateNonLaunchable
+--- PASS: TestReadOnlyRuntimeMarksCamoufoxCandidateNonLaunchable (0.00s)
+=== RUN   TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted
+--- PASS: TestReadOnlyCatalogGroupsAndRuntimesArePaginatedAndRedacted (0.00s)
+=== RUN   TestRequestIDMiddlewareRejectsMalformedInput
+--- PASS: TestRequestIDMiddlewareRejectsMalformedInput (0.00s)
+=== RUN   TestCORSAllowsOnlyLoopbackDashboardOrigins
+--- PASS: TestCORSAllowsOnlyLoopbackDashboardOrigins (0.00s)
+=== RUN   TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID1352659044/002/.api-token
+2026/08/27 17:42:19 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 401 93B in 15.3µs
+2026/08/27 17:42:19 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 200 62B in 8.136µs
+--- PASS: TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID (0.02s)
+=== RUN   TestReadOnlyProfilesReflectDurableProxyAssignmentWithoutSecrets
+--- PASS: TestReadOnlyProfilesReflectDurableProxyAssignmentWithoutSecrets (0.00s)
+=== RUN   TestReadOnlyRuntimeFallsBackToConfiguredManagerWhenCandidateCatalogEmpty
+--- PASS: TestReadOnlyRuntimeFallsBackToConfiguredManagerWhenCandidateCatalogEmpty (0.00s)
+=== RUN   TestWriteAllHandlesPartialAndFailedWrites
+--- PASS: TestWriteAllHandlesPartialAndFailedWrites (0.00s)
+=== RUN   TestCopyAllPropagatesReaderAndWriterResult
+--- PASS: TestCopyAllPropagatesReaderAndWriterResult (0.00s)
+=== RUN   TestSessionProxyAssignmentResolvesDistinctAlphaAndBetaLaunchConfigs
+--- PASS: TestSessionProxyAssignmentResolvesDistinctAlphaAndBetaLaunchConfigs (0.00s)
+=== RUN   TestSessionProxyAssignmentFailsClosedForUnknownRegistryTarget
+--- PASS: TestSessionProxyAssignmentFailsClosedForUnknownRegistryTarget (0.00s)
+=== RUN   TestSessionProxyAssignmentFailsClosedForInvalidRecordAndUnavailableSecret
+--- PASS: TestSessionProxyAssignmentFailsClosedForInvalidRecordAndUnavailableSecret (0.00s)
+=== RUN   TestSessionWithoutRegistryAssignmentPreservesExplicitNoProxyBehavior
+--- PASS: TestSessionWithoutRegistryAssignmentPreservesExplicitNoProxyBehavior (0.00s)
+=== RUN   TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata1905457830/001/data/.api-token
+=== RUN   TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata/unknown_top_level_field
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 78.991µs
+=== RUN   TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata/unknown_content_field
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 27.08µs
+=== RUN   TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata/invalid_typed_custom_field
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 32.73µs
+--- PASS: TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata (0.01s)
+    --- PASS: TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata/unknown_top_level_field (0.00s)
+    --- PASS: TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata/unknown_content_field (0.00s)
+    --- PASS: TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata/invalid_typed_custom_field (0.00s)
+=== RUN   TestT21TemplateAPIMachineReadableAuthAndOriginRefusals
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestT21TemplateAPIMachineReadableAuthAndOriginRefusals1583661192/001/data/.api-token
+=== RUN   TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/authentication_absent
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 30.539µs
+=== RUN   TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/origin_and_referer_absent
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 13.807µs
+=== RUN   TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/origin_distant
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 10.888µs
+=== RUN   TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/referer_distant
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 10.411µs
+--- PASS: TestT21TemplateAPIMachineReadableAuthAndOriginRefusals (0.02s)
+    --- PASS: TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/authentication_absent (0.00s)
+    --- PASS: TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/origin_and_referer_absent (0.00s)
+    --- PASS: TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/origin_distant (0.00s)
+    --- PASS: TestT21TemplateAPIMachineReadableAuthAndOriginRefusals/referer_distant (0.00s)
+=== RUN   TestT21TemplateAPIPaginationProjectionAndCorrelation
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestT21TemplateAPIPaginationProjectionAndCorrelation2789367196/001/data/.api-token
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 191B in 827.394µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 191B in 848.268µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 193B in 628.728µs
+2026/08/27 17:42:19 "GET http://example.com/api/templates?limit=1&offset=1 HTTP/1.1" from 127.0.0.1:7777 - 200 172B in 237.065µs
+--- PASS: TestT21TemplateAPIPaginationProjectionAndCorrelation (0.02s)
+=== RUN   TestT21TemplateDraftArchivedProfileSnapshotAndAuditIsolation
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestT21TemplateDraftArchivedProfileSnapshotAndAuditIsolation3997918224/001/data/.api-token
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 1.229939ms
+2026/08/27 17:42:19 "POST http://example.com/api/templates/e1b20902e213053669864fd8db473376/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 200 306B in 747.116µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/e1b20902e213053669864fd8db473376/versions/1/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 835.21µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/e1b20902e213053669864fd8db473376/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 87B in 463.266µs
+--- PASS: TestT21TemplateDraftArchivedProfileSnapshotAndAuditIsolation (0.02s)
+=== RUN   TestT21TemplateAuditRedactsSuccessConflictAndRefusal
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestT21TemplateAuditRedactsSuccessConflictAndRefusal1774730491/001/data/.api-token
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 320B in 1.806313ms
+2026/08/27 17:42:19 "POST http://example.com/api/templates/ec8a0a3469ca68d51a0bbe0c5dc01d1c/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 133B in 682.665µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/ec8a0a3469ca68d51a0bbe0c5dc01d1c/versions/1/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 699.814µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/ec8a0a3469ca68d51a0bbe0c5dc01d1c/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 87B in 642.919µs
+--- PASS: TestT21TemplateAuditRedactsSuccessConflictAndRefusal (0.03s)
+=== RUN   TestTemplatesCatalogReadDetailAndDraft
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestTemplatesCatalogReadDetailAndDraft532089684/001/data/.api-token
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 796.517µs
+2026/08/27 17:42:19 "GET http://example.com/api/templates?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 171B in 199.701µs
+2026/08/27 17:42:19 "GET http://example.com/api/templates/5ee9add901af5e82fdf1e2b5b9350b95/versions/1 HTTP/1.1" from 127.0.0.1:7777 - 200 270B in 67.016µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/5ee9add901af5e82fdf1e2b5b9350b95/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 200 303B in 557.057µs
+--- PASS: TestTemplatesCatalogReadDetailAndDraft (0.02s)
+=== RUN   TestTemplatesVersionArchiveConflictAndLoopbackRefusal
+2026/08/27 17:42:19 INFO generated API token path=/tmp/TestTemplatesVersionArchiveConflictAndLoopbackRefusal2810181171/001/data/.api-token
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 670.622µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/2d8e3c6291bdf0070d0676b8bf2f3b1e/versions HTTP/1.1" from 127.0.0.1:7777 - 201 175B in 760.264µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/2d8e3c6291bdf0070d0676b8bf2f3b1e/versions/2/draft HTTP/1.1" from 127.0.0.1:7777 - 409 133B in 544.665µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates/2d8e3c6291bdf0070d0676b8bf2f3b1e/versions/2/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 451.791µs
+2026/08/27 17:42:19 "GET http://example.com/api/templates/2d8e3c6291bdf0070d0676b8bf2f3b1e/versions/2 HTTP/1.1" from 127.0.0.1:7777 - 200 177B in 57.216µs
+2026/08/27 17:42:19 "POST http://example.com/api/templates HTTP/1.1" from 203.0.113.9:9000 - 403 107B in 7.332µs
+--- PASS: TestTemplatesVersionArchiveConflictAndLoopbackRefusal (0.02s)
+PASS
+ok  	forgelocal/internal/api	0.685s
+=== RUN   TestSecureExtractZipAcceptsLocalFileAndReplacesDestinationAtomically
+--- PASS: TestSecureExtractZipAcceptsLocalFileAndReplacesDestinationAtomically (0.00s)
+=== RUN   TestSecureExtractZipRejectsTraversalAndPreservesDestination
+--- PASS: TestSecureExtractZipRejectsTraversalAndPreservesDestination (0.00s)
+=== RUN   TestSecureExtractZipRejectsAbsoluteAndTooDeepPaths
+=== RUN   TestSecureExtractZipRejectsAbsoluteAndTooDeepPaths//tmp/escape.txt
+=== RUN   TestSecureExtractZipRejectsAbsoluteAndTooDeepPaths/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/escape.txt
+--- PASS: TestSecureExtractZipRejectsAbsoluteAndTooDeepPaths (0.00s)
+    --- PASS: TestSecureExtractZipRejectsAbsoluteAndTooDeepPaths//tmp/escape.txt (0.00s)
+    --- PASS: TestSecureExtractZipRejectsAbsoluteAndTooDeepPaths/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/nested/escape.txt (0.00s)
+=== RUN   TestSecureExtractTarRejectsSymlinkAndTraversal
+=== RUN   TestSecureExtractTarRejectsSymlinkAndTraversal/symlink
+=== RUN   TestSecureExtractTarRejectsSymlinkAndTraversal/traversal
+--- PASS: TestSecureExtractTarRejectsSymlinkAndTraversal (0.00s)
+    --- PASS: TestSecureExtractTarRejectsSymlinkAndTraversal/symlink (0.00s)
+    --- PASS: TestSecureExtractTarRejectsSymlinkAndTraversal/traversal (0.00s)
+=== RUN   TestSecureExtractTarAcceptsRegularFile
+--- PASS: TestSecureExtractTarAcceptsRegularFile (0.00s)
+=== RUN   TestCR01DownloadCamoufoxRefusesBeforeFilesystemOrNetwork
+--- PASS: TestCR01DownloadCamoufoxRefusesBeforeFilesystemOrNetwork (0.00s)
+=== RUN   TestCR01LaunchFirefoxRefusesWithoutBinaryOrPlaywright
+--- PASS: TestCR01LaunchFirefoxRefusesWithoutBinaryOrPlaywright (0.00s)
+=== RUN   TestR4BoundedArchiveSizeAndPersonaSeed
+--- PASS: TestR4BoundedArchiveSizeAndPersonaSeed (0.00s)
+=== RUN   TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts
+=== RUN   TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/direct_app_bundle
+=== RUN   TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/direct_chrome_executable
+=== RUN   TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/direct_windows_executable
+=== RUN   TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/extracted_artifact_root_with_app_bundle
+=== RUN   TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/extracted_artifact_root_with_linux_executable
+--- PASS: TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts (0.00s)
+    --- PASS: TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/direct_app_bundle (0.00s)
+    --- PASS: TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/direct_chrome_executable (0.00s)
+    --- PASS: TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/direct_windows_executable (0.00s)
+    --- PASS: TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/extracted_artifact_root_with_app_bundle (0.00s)
+    --- PASS: TestFindBinaryLocatesBrowseForgeChromiumArtifactLayouts/extracted_artifact_root_with_linux_executable (0.00s)
+=== RUN   TestBrowseForgeChromiumPlatformFor
+=== RUN   TestBrowseForgeChromiumPlatformFor/macOS_arm64
+=== RUN   TestBrowseForgeChromiumPlatformFor/macOS_x64
+=== RUN   TestBrowseForgeChromiumPlatformFor/Linux_x64
+=== RUN   TestBrowseForgeChromiumPlatformFor/Linux_arm64
+=== RUN   TestBrowseForgeChromiumPlatformFor/Windows_x64
+=== RUN   TestBrowseForgeChromiumPlatformFor/Windows_arm64_unsupported
+=== RUN   TestBrowseForgeChromiumPlatformFor/Linux_386_unsupported
+=== RUN   TestBrowseForgeChromiumPlatformFor/FreeBSD_amd64_unsupported
+--- PASS: TestBrowseForgeChromiumPlatformFor (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/macOS_arm64 (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/macOS_x64 (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/Linux_x64 (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/Linux_arm64 (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/Windows_x64 (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/Windows_arm64_unsupported (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/Linux_386_unsupported (0.00s)
+    --- PASS: TestBrowseForgeChromiumPlatformFor/FreeBSD_amd64_unsupported (0.00s)
+=== RUN   TestBrowseForgeChromiumDownloadURLForLinuxArm64
+--- PASS: TestBrowseForgeChromiumDownloadURLForLinuxArm64 (0.00s)
+=== RUN   TestCamoufoxDownloadURLForSupportedPlatforms
+=== RUN   TestCamoufoxDownloadURLForSupportedPlatforms/macOS_x64
+=== RUN   TestCamoufoxDownloadURLForSupportedPlatforms/macOS_arm64
+=== RUN   TestCamoufoxDownloadURLForSupportedPlatforms/Linux_x64
+=== RUN   TestCamoufoxDownloadURLForSupportedPlatforms/Linux_arm64
+=== RUN   TestCamoufoxDownloadURLForSupportedPlatforms/Windows_x64
+--- PASS: TestCamoufoxDownloadURLForSupportedPlatforms (0.00s)
+    --- PASS: TestCamoufoxDownloadURLForSupportedPlatforms/macOS_x64 (0.00s)
+    --- PASS: TestCamoufoxDownloadURLForSupportedPlatforms/macOS_arm64 (0.00s)
+    --- PASS: TestCamoufoxDownloadURLForSupportedPlatforms/Linux_x64 (0.00s)
+    --- PASS: TestCamoufoxDownloadURLForSupportedPlatforms/Linux_arm64 (0.00s)
+    --- PASS: TestCamoufoxDownloadURLForSupportedPlatforms/Windows_x64 (0.00s)
+=== RUN   TestCamoufoxDownloadURLForUnsupportedPlatforms
+--- PASS: TestCamoufoxDownloadURLForUnsupportedPlatforms (0.00s)
+=== RUN   TestDownloadBrowseForgeChromiumExtractsFlattenedExecutable
+2026/08/27 17:42:18 INFO downloading BrowseForge Chromium url=http://127.0.0.1:39057/v0.1.6-alpha.0/browseforge-runtime-chromium-v0.1.6-alpha.0-linux-x64.zip
+📥 Downloading BrowseForge Chromium (browseforge-runtime-chromium-v0.1.6-alpha.0-linux-x64.zip)...
+  0 / 0 MB (100%)
+📦 Extracting...
+✅ BrowseForge Chromium installed
+--- PASS: TestDownloadBrowseForgeChromiumExtractsFlattenedExecutable (0.00s)
+=== RUN   TestInstalledVersionRejectsSymlinkedMarker
+--- PASS: TestInstalledVersionRejectsSymlinkedMarker (0.00s)
+=== RUN   TestOpenBrowserRegularFileRejectsSymlink
+--- PASS: TestOpenBrowserRegularFileRejectsSymlink (0.00s)
+=== RUN   TestShouldRetryLaunchForProtocolEOF
+--- PASS: TestShouldRetryLaunchForProtocolEOF (0.00s)
+=== RUN   TestShouldRetryLaunchRejectsRegularErrors
+--- PASS: TestShouldRetryLaunchRejectsRegularErrors (0.00s)
+=== RUN   TestShouldRetryLaunchRejectsNoManagerRetryError
+--- PASS: TestShouldRetryLaunchRejectsNoManagerRetryError (0.00s)
+=== RUN   TestPrepareSessionEndpointRequiresHealthyEndpoint
+2026/08/27 17:42:18 INFO session endpoint bound session=sess_prof_health profile=prof_health runtime_id=cloakbrowser attempt=1 connectURL=ws://127.0.0.1:12345/bind profileDir=profiles/prof_health userDataDir=profiles/prof_health/browser-data executablePath=browsers/cloakbrowser/chrome.exe
+2026/08/27 17:42:18 WARN session endpoint health failed session=sess_prof_health profile=prof_health runtime_id=cloakbrowser stage=launch connectURL=ws://127.0.0.1:12345/bind timeoutMS=1234 code=BROWSER_CONNECT_TIMEOUT profileDir=profiles/prof_health userDataDir=profiles/prof_health/browser-data executablePath=browsers/cloakbrowser/chrome.exe error="Playwright endpoint health check failed: browserType.connect: Timeout 30000ms exceeded"
+--- PASS: TestPrepareSessionEndpointRequiresHealthyEndpoint (0.00s)
+=== RUN   TestPrepareSessionEndpointStoresHealthyEndpoint
+2026/08/27 17:42:18 INFO session endpoint bound session=sess_prof_ok profile=prof_ok runtime_id=cloakbrowser attempt=1 connectURL=ws://127.0.0.1:12345/healthy profileDir="" userDataDir="" executablePath=""
+2026/08/27 17:42:18 INFO session endpoint healthy session=sess_prof_ok profile=prof_ok runtime_id=cloakbrowser stage=launch connectURL=ws://127.0.0.1:12345/healthy timeoutMS=5000
+--- PASS: TestPrepareSessionEndpointStoresHealthyEndpoint (0.00s)
+=== RUN   TestEndpointHealthErrorClassification
+--- PASS: TestEndpointHealthErrorClassification (0.00s)
+=== RUN   TestCleanProfileLocks
+--- PASS: TestCleanProfileLocks (0.00s)
+=== RUN   TestSanitizeExtraChromiumArgs
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--user-data-dir=C:\\temp\\profile"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--remote-debugging-port=9222"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg=--remote-debugging-pipe
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--disk-cache-dir=C:\\temp\\cache"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--proxy-server=http://proxy.example"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg=--enable-automation
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--disable-blink-features=Other"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--force-webrtc-ip-handling-policy=default_public_interface_only"
+--- PASS: TestSanitizeExtraChromiumArgs (0.00s)
+=== RUN   TestSanitizeExtraChromiumArgsRejectsManagedFingerprintFlags
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint=123"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-platform=linux"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-fonts-dir=/tmp/fonts"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-storage-quota=1024"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-timezone=UTC"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-locale=en-US"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-webrtc-ip=auto"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-width=1280"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-height=720"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-hardware-concurrency=8"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-full-version=150.0.7871.101"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-platform=Linux"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-platform-version="
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-architecture=arm"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-bitness=64"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-mobile=?0"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-model="
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-ua-form-factors=Desktop"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-sec-ch-ua=\"Chromium\";v=\"150\""
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--fingerprint-sec-ch-ua-full-version-list=\"Chromium\";v=\"150.0.7871.101\""
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--force-device-scale-factor=2"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--window-position=1,1"
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--window-size=800,600"
+--- PASS: TestSanitizeExtraChromiumArgsRejectsManagedFingerprintFlags (0.00s)
+=== RUN   TestRepairTransientChromiumDataPreservesProfileState
+--- PASS: TestRepairTransientChromiumDataPreservesProfileState (0.00s)
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/nil_policy_never_falls_back
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/fallback_must_be_explicitly_enabled
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/GPU_launch_failure_falls_back_when_enabled
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/cache_launch_failure_falls_back_when_enabled
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/non_GPU_or_cache_errors_do_not_fallback
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/policy_already_using_fallback-equivalent_settings_does_not_fallback_again
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/safe_GPU_without_isolated_cache_still_falls_back_for_cache_failures
+=== RUN   TestShouldAutoFallbackCloakBrowserLaunch/isolated_cache_without_safe_GPU_still_falls_back_for_GPU_failures
+--- PASS: TestShouldAutoFallbackCloakBrowserLaunch (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/nil_policy_never_falls_back (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/fallback_must_be_explicitly_enabled (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/GPU_launch_failure_falls_back_when_enabled (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/cache_launch_failure_falls_back_when_enabled (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/non_GPU_or_cache_errors_do_not_fallback (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/policy_already_using_fallback-equivalent_settings_does_not_fallback_again (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/safe_GPU_without_isolated_cache_still_falls_back_for_cache_failures (0.00s)
+    --- PASS: TestShouldAutoFallbackCloakBrowserLaunch/isolated_cache_without_safe_GPU_still_falls_back_for_GPU_failures (0.00s)
+=== RUN   TestApplyCloakBrowserLaunchPolicyFallbackArgs
+2026/08/27 17:42:18 WARN ignored unsafe extra chromium arg arg="--user-data-dir=C:\\temp"
+--- PASS: TestApplyCloakBrowserLaunchPolicyFallbackArgs (0.00s)
+=== RUN   TestLaunchChromiumRejectsNegativeStorageQuotaBeforeBrowserLaunch
+--- PASS: TestLaunchChromiumRejectsNegativeStorageQuotaBeforeBrowserLaunch (0.00s)
+=== RUN   TestLaunchProfileDispatchesBrowseForgeChromiumToChromiumLauncher
+--- PASS: TestLaunchProfileDispatchesBrowseForgeChromiumToChromiumLauncher (4.15s)
+=== RUN   TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser
+--- PASS: TestLaunchChromiumAssemblesProxyFingerprintArgsWithoutLaunchingBrowser (0.00s)
+=== RUN   TestResolveCloakFontsDirExplicitDirectory
+--- PASS: TestResolveCloakFontsDirExplicitDirectory (0.00s)
+=== RUN   TestResolveCloakFontsDirExplicitMissingPathFails
+--- PASS: TestResolveCloakFontsDirExplicitMissingPathFails (0.00s)
+=== RUN   TestResolveCloakFontsDirUsesSystemFontsWhenPresent
+--- PASS: TestResolveCloakFontsDirUsesSystemFontsWhenPresent (0.00s)
+=== RUN   TestResolveCloakFingerprintPlatform
+=== RUN   TestResolveCloakFingerprintPlatform/auto_uses_macos_on_darwin
+=== RUN   TestResolveCloakFingerprintPlatform/empty_policy_uses_windows-compatible_profile_off_darwin
+=== RUN   TestResolveCloakFingerprintPlatform/explicit_linux_is_preserved_on_darwin
+--- PASS: TestResolveCloakFingerprintPlatform (0.00s)
+    --- PASS: TestResolveCloakFingerprintPlatform/auto_uses_macos_on_darwin (0.00s)
+    --- PASS: TestResolveCloakFingerprintPlatform/empty_policy_uses_windows-compatible_profile_off_darwin (0.00s)
+    --- PASS: TestResolveCloakFingerprintPlatform/explicit_linux_is_preserved_on_darwin (0.00s)
+=== RUN   TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch
+=== RUN   TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/auto_linux_amd64
+=== RUN   TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/auto_linux_arm64
+=== RUN   TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/explicit_linux_arm64
+=== RUN   TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/explicit_windows_on_arm64
+--- PASS: TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch (0.00s)
+    --- PASS: TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/auto_linux_amd64 (0.00s)
+    --- PASS: TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/auto_linux_arm64 (0.00s)
+    --- PASS: TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/explicit_linux_arm64 (0.00s)
+    --- PASS: TestResolveChromiumFingerprintPlatformUsesNativeLinuxArch/explicit_windows_on_arm64 (0.00s)
+=== RUN   TestChromiumLaunchPersonaPlatformMappings
+=== RUN   TestChromiumLaunchPersonaPlatformMappings/windows
+=== RUN   TestChromiumLaunchPersonaPlatformMappings/macos_x64
+=== RUN   TestChromiumLaunchPersonaPlatformMappings/macos_arm64
+=== RUN   TestChromiumLaunchPersonaPlatformMappings/linux_x64
+=== RUN   TestChromiumLaunchPersonaPlatformMappings/linux_arm64
+--- PASS: TestChromiumLaunchPersonaPlatformMappings (0.00s)
+    --- PASS: TestChromiumLaunchPersonaPlatformMappings/windows (0.00s)
+    --- PASS: TestChromiumLaunchPersonaPlatformMappings/macos_x64 (0.00s)
+    --- PASS: TestChromiumLaunchPersonaPlatformMappings/macos_arm64 (0.00s)
+    --- PASS: TestChromiumLaunchPersonaPlatformMappings/linux_x64 (0.00s)
+    --- PASS: TestChromiumLaunchPersonaPlatformMappings/linux_arm64 (0.00s)
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/windows_UA_with_linux_platform
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/macOS_persona_with_SwiftShader_renderer
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/x64_UA_with_ARM_UA-CH
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/zh-TW_locale_without_CJK_font_profile
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/ja-JP_locale_without_CJK_font_profile
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/US_IP_metadata_with_Asia_timezone
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/Accept-Language_mismatches_locale
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/navigator_language_mismatches_Accept-Language
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/Sec-CH-Lang_mismatches_navigator_languages
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/desktop_UA_with_mobile_form_factor
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/screen_avail_exceeds_screen_size
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/window_inner_exceeds_outer_size
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/desktop_persona_advertises_touch_points
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/chrome_persona_missing_PDF_plugin_entry
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/chrome_persona_missing_PDF_MIME
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_missing_country_metadata
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_uses_local_DNS_policy
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_geolocation_mismatches_proxy_region
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/non-proxy_persona_includes_proxy_metadata
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_leaks_direct_WebRTC_IP
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_permits_public_WebRTC_routes
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/UAData_platform_mismatches_JS_platform
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/math_policy_disabled
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/client_rect_policy_disabled
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_service_worker_realm_target
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_required_realm_target
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_schema_version
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_runtime_id
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_seed
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/browser_family_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/browser_version_metadata_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/sec_ch_brand_string_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/sec_ch_full_version_string_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/platform_version_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/form_factors_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/timezone_offset_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/hardware_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/screen_color_depth_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/screen_orientation_invalid
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/webrtc_proxy_region_mismatch
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/gpu_renderer_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/webgl_baseline_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/font_profile_missing_families
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/canvas_stable_baseline_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/audio_stable_baseline_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/media_codec_baseline_missing
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/notification_policy_invalid
+=== RUN   TestBrowseForgePersonaContractRejectsIncoherentTuples/storage_persistent_policy_incomplete
+--- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/windows_UA_with_linux_platform (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/macOS_persona_with_SwiftShader_renderer (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/x64_UA_with_ARM_UA-CH (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/zh-TW_locale_without_CJK_font_profile (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/ja-JP_locale_without_CJK_font_profile (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/US_IP_metadata_with_Asia_timezone (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/Accept-Language_mismatches_locale (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/navigator_language_mismatches_Accept-Language (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/Sec-CH-Lang_mismatches_navigator_languages (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/desktop_UA_with_mobile_form_factor (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/screen_avail_exceeds_screen_size (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/window_inner_exceeds_outer_size (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/desktop_persona_advertises_touch_points (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/chrome_persona_missing_PDF_plugin_entry (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/chrome_persona_missing_PDF_MIME (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_missing_country_metadata (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_uses_local_DNS_policy (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_geolocation_mismatches_proxy_region (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/non-proxy_persona_includes_proxy_metadata (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_leaks_direct_WebRTC_IP (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/proxy_persona_permits_public_WebRTC_routes (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/UAData_platform_mismatches_JS_platform (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/math_policy_disabled (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/client_rect_policy_disabled (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_service_worker_realm_target (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_required_realm_target (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_schema_version (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_runtime_id (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/missing_seed (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/browser_family_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/browser_version_metadata_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/sec_ch_brand_string_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/sec_ch_full_version_string_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/platform_version_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/form_factors_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/timezone_offset_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/hardware_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/screen_color_depth_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/screen_orientation_invalid (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/webrtc_proxy_region_mismatch (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/gpu_renderer_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/webgl_baseline_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/font_profile_missing_families (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/canvas_stable_baseline_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/audio_stable_baseline_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/media_codec_baseline_missing (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/notification_policy_invalid (0.00s)
+    --- PASS: TestBrowseForgePersonaContractRejectsIncoherentTuples/storage_persistent_policy_incomplete (0.00s)
+=== RUN   TestChromiumLaunchPersonaRepairsIncompatiblePoolValues
+=== RUN   TestChromiumLaunchPersonaRepairsIncompatiblePoolValues/windows_pool_on_linux_arm64
+=== RUN   TestChromiumLaunchPersonaRepairsIncompatiblePoolValues/linux_x86_pool_on_linux_arm64
+--- PASS: TestChromiumLaunchPersonaRepairsIncompatiblePoolValues (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRepairsIncompatiblePoolValues/windows_pool_on_linux_arm64 (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRepairsIncompatiblePoolValues/linux_x86_pool_on_linux_arm64 (0.00s)
+=== RUN   TestChromiumLaunchPersonaUsesDeterministicFontsWithoutExplicitCorpus
+--- PASS: TestChromiumLaunchPersonaUsesDeterministicFontsWithoutExplicitCorpus (0.00s)
+=== RUN   TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList
+=== RUN   TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/pipe
+=== RUN   TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/control
+=== RUN   TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/unicode
+=== RUN   TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/too_long
+=== RUN   TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/non_string
+--- PASS: TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/pipe (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/control (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/unicode (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/too_long (0.00s)
+    --- PASS: TestChromiumLaunchPersonaRejectsInvalidExplicitFontCorpusList/non_string (0.00s)
+=== RUN   TestChromiumLaunchPersonaUsesExplicitFontCorpusList
+--- PASS: TestChromiumLaunchPersonaUsesExplicitFontCorpusList (0.00s)
+=== RUN   TestChromiumLaunchPersonaClampsScreenAvailToScreenSize
+--- PASS: TestChromiumLaunchPersonaClampsScreenAvailToScreenSize (0.00s)
+=== RUN   TestLaunchChromiumRejectsInvalidBrowseForgeProxyRegionBeforeLaunch
+--- PASS: TestLaunchChromiumRejectsInvalidBrowseForgeProxyRegionBeforeLaunch (0.00s)
+=== RUN   TestLaunchChromiumRequiresBrowseForgeProxyRegionBeforeLaunch
+--- PASS: TestLaunchChromiumRequiresBrowseForgeProxyRegionBeforeLaunch (0.00s)
+=== RUN   TestEffectiveChromiumIdentityKeepsPlatformAndLocaleConsistent
+--- PASS: TestEffectiveChromiumIdentityKeepsPlatformAndLocaleConsistent (0.00s)
+=== RUN   TestBrowseForgeLaunchOptionsExposeNativeLocaleAndRealViewport
+--- PASS: TestBrowseForgeLaunchOptionsExposeNativeLocaleAndRealViewport (0.00s)
+=== RUN   TestBrowseForgeDockerSoftwareModeUsesSwiftShaderPersona
+--- PASS: TestBrowseForgeDockerSoftwareModeUsesSwiftShaderPersona (0.00s)
+=== RUN   TestBrowseForgeNativeModeDoesNotInventWebGLButPinsFontPersona
+--- PASS: TestBrowseForgeNativeModeDoesNotInventWebGLButPinsFontPersona (0.00s)
+=== RUN   TestBrowseForgeDockerSoftwareModeEnablesSwiftShaderWebGLFallback
+--- PASS: TestBrowseForgeDockerSoftwareModeEnablesSwiftShaderWebGLFallback (0.00s)
+=== RUN   TestBrowseForgeDockerNativeModeDoesNotForceSwiftShaderWebGLFallback
+--- PASS: TestBrowseForgeDockerNativeModeDoesNotForceSwiftShaderWebGLFallback (0.00s)
+=== RUN   TestBrowseForgeDockerPassthroughModeDoesNotForceSwiftShaderWebGLFallback
+--- PASS: TestBrowseForgeDockerPassthroughModeDoesNotForceSwiftShaderWebGLFallback (0.00s)
+=== RUN   TestBrowseForgeDockerGPUInvalidModeFailsClosed
+--- PASS: TestBrowseForgeDockerGPUInvalidModeFailsClosed (0.00s)
+=== RUN   TestDockerGPUInvalidModeDoesNotAffectCloakBrowserPersona
+--- PASS: TestDockerGPUInvalidModeDoesNotAffectCloakBrowserPersona (0.00s)
+=== RUN   TestBrowseForgePersonaContractAllowsDisabledPDFPlugin
+--- PASS: TestBrowseForgePersonaContractAllowsDisabledPDFPlugin (0.00s)
+=== RUN   TestResolveCloakFingerprintPlatformRejectsInvalidValues
+--- PASS: TestResolveCloakFingerprintPlatformRejectsInvalidValues (0.00s)
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy/invalid_mode_is_rejected
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy/invalid_plugins_PDF_mode_is_rejected
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy/strict_rejects_windows_fingerprint_on_non-windows_host_without_fonts
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy/warn_allows_windows_fingerprint_on_non-windows_host_without_fonts
+2026/08/27 17:42:22 WARN Windows CloakBrowser fingerprint on non-Windows host should configure runtimes.cloakbrowser.settings.fonts_dir with a Windows-compatible font pack goos=linux platform=Win32
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy/allow_bypasses_windows_font-pack_validation
+=== RUN   TestValidateCloakFingerprintPolicyTargetPlatformPolicy/strict_allows_windows_fingerprint_on_non-windows_host_with_fonts
+--- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy (0.00s)
+    --- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy/invalid_mode_is_rejected (0.00s)
+    --- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy/invalid_plugins_PDF_mode_is_rejected (0.00s)
+    --- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy/strict_rejects_windows_fingerprint_on_non-windows_host_without_fonts (0.00s)
+    --- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy/warn_allows_windows_fingerprint_on_non-windows_host_without_fonts (0.00s)
+    --- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy/allow_bypasses_windows_font-pack_validation (0.00s)
+    --- PASS: TestValidateCloakFingerprintPolicyTargetPlatformPolicy/strict_allows_windows_fingerprint_on_non-windows_host_with_fonts (0.00s)
+=== RUN   TestApplyCloakBrowserLaunchPolicyKeepsManagedFingerprintArgsOwnedByManager
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-platform=linux"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-fonts-dir=/tmp/fonts"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-storage-quota=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-timezone=UTC"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-locale=en-US"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-webrtc-ip=public"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-width=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-height=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-hardware-concurrency=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-device-memory=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-avail-width=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-screen-avail-height=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-accept-language=en-US,en"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-user-agent=evil"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-audio-noise=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-canvas-noise=1"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-webgl-vendor=evil"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-fonts-list=evil"
+2026/08/27 17:42:22 WARN ignored unsafe extra chromium arg arg="--fingerprint-webgl-renderer=evil"
+--- PASS: TestApplyCloakBrowserLaunchPolicyKeepsManagedFingerprintArgsOwnedByManager (0.00s)
+=== RUN   TestCamoufoxEnvChunksLargeNonASCIIConfigWithoutCorruption
+--- PASS: TestCamoufoxEnvChunksLargeNonASCIIConfigWithoutCorruption (0.00s)
+=== RUN   TestNormalizeCamouWebGLProfileDropsOnlyPartialWebGL2
+--- PASS: TestNormalizeCamouWebGLProfileDropsOnlyPartialWebGL2 (0.00s)
+=== RUN   TestNormalizeCamouWebGLProfilePreservesCompleteWebGL2Profile
+--- PASS: TestNormalizeCamouWebGLProfilePreservesCompleteWebGL2Profile (0.00s)
+=== RUN   TestNormalizeCamouWebGLProfileDropsOnlyPartialWebGL1
+--- PASS: TestNormalizeCamouWebGLProfileDropsOnlyPartialWebGL1 (0.00s)
+=== RUN   TestManagerEffectiveProxyUsesGroupStore
+--- PASS: TestManagerEffectiveProxyUsesGroupStore (0.00s)
+=== RUN   TestIsLoopbackProxyHost
+--- PASS: TestIsLoopbackProxyHost (0.00s)
+=== RUN   TestAcquireSnapshotRejectsConcurrentReservationAndReleases
+--- PASS: TestAcquireSnapshotRejectsConcurrentReservationAndReleases (0.00s)
+=== RUN   TestAcquireSnapshotRejectsLiveBrowserSession
+--- PASS: TestAcquireSnapshotRejectsLiveBrowserSession (0.00s)
+PASS
+ok  	forgelocal/internal/browser	4.206s
+=== RUN   TestCreateAndGet
+--- PASS: TestCreateAndGet (0.00s)
+=== RUN   TestCreateRejectsInvalid
+=== RUN   TestCreateRejectsInvalid/nil_payload
+=== RUN   TestCreateRejectsInvalid/missing_name
+=== RUN   TestCreateRejectsInvalid/unsupported_type
+=== RUN   TestCreateRejectsInvalid/empty_host
+=== RUN   TestCreateRejectsInvalid/port_zero
+=== RUN   TestCreateRejectsInvalid/negative_port
+=== RUN   TestCreateRejectsInvalid/port_overflow
+=== RUN   TestCreateRejectsInvalid/control_char_in_name
+=== RUN   TestCreateRejectsInvalid/invalid_region
+--- PASS: TestCreateRejectsInvalid (0.00s)
+    --- PASS: TestCreateRejectsInvalid/nil_payload (0.00s)
+    --- PASS: TestCreateRejectsInvalid/missing_name (0.00s)
+    --- PASS: TestCreateRejectsInvalid/unsupported_type (0.00s)
+    --- PASS: TestCreateRejectsInvalid/empty_host (0.00s)
+    --- PASS: TestCreateRejectsInvalid/port_zero (0.00s)
+    --- PASS: TestCreateRejectsInvalid/negative_port (0.00s)
+    --- PASS: TestCreateRejectsInvalid/port_overflow (0.00s)
+    --- PASS: TestCreateRejectsInvalid/control_char_in_name (0.00s)
+    --- PASS: TestCreateRejectsInvalid/invalid_region (0.00s)
+=== RUN   TestNameUniqueness
+--- PASS: TestNameUniqueness (0.00s)
+=== RUN   TestDelete
+--- PASS: TestDelete (0.00s)
+=== RUN   TestUpdateValidatesAndRejectsAssigned
+--- PASS: TestUpdateValidatesAndRejectsAssigned (0.02s)
+=== RUN   TestUpdateReplacesNameIndex
+--- PASS: TestUpdateReplacesNameIndex (0.00s)
+=== RUN   TestAssignUnassignConsistency
+--- PASS: TestAssignUnassignConsistency (0.01s)
+=== RUN   TestAssignRejectsUnknownProxy
+--- PASS: TestAssignRejectsUnknownProxy (0.00s)
+=== RUN   TestUnassignForMismatchRefused
+--- PASS: TestUnassignForMismatchRefused (0.00s)
+=== RUN   TestListSortedAndRedacted
+--- PASS: TestListSortedAndRedacted (0.00s)
+=== RUN   TestPersistenceReload
+--- PASS: TestPersistenceReload (0.00s)
+=== RUN   TestPersistenceRejectsBadSecretRef
+--- PASS: TestPersistenceRejectsBadSecretRef (0.00s)
+=== RUN   TestConcurrentMutations
+--- PASS: TestConcurrentMutations (0.01s)
+=== RUN   TestConcurrentAssignAndDelete
+--- PASS: TestConcurrentAssignAndDelete (0.00s)
+=== RUN   TestSecretPresenceFlag
+--- PASS: TestSecretPresenceFlag (0.00s)
+=== RUN   TestIsolationBudgetTimeout
+--- PASS: TestIsolationBudgetTimeout (0.05s)
+PASS
+ok  	forgelocal/internal/proxies	0.102s
+=== RUN   TestBackupSnapshotRestoresBrowserDataAndRedactsProxySecret
+--- PASS: TestBackupSnapshotRestoresBrowserDataAndRedactsProxySecret (0.03s)
+=== RUN   TestBackupSnapshotRejectsSymlink
+--- PASS: TestBackupSnapshotRejectsSymlink (0.00s)
+=== RUN   TestRestoreSnapshotRejectsTraversalArchive
+--- PASS: TestRestoreSnapshotRejectsTraversalArchive (0.00s)
+=== RUN   TestBisectCRUDSteps
+    bisect_test.go:14: 1 newstore ok
+    bisect_test.go:20: 2 create ok prof_017ef9371a7f
+    bisect_test.go:26: 3 get ok Test
+    bisect_test.go:29: 4 list ok 1
+    bisect_test.go:35: 5 update ok Updated
+    bisect_test.go:37: 6a about to duplicate
+    bisect_test.go:39: 6b duplicate done err=<nil> id=prof_c310bc56ad4d
+    bisect_test.go:44: 7 delete ok
+--- PASS: TestBisectCRUDSteps (0.00s)
+=== RUN   TestDupAfterUpdate
+    duponly_test.go:27: dup err=<nil> id=prof_f6c73c0eb728
+    duponly_test.go:33: duplicate completed
+--- PASS: TestDupAfterUpdate (0.01s)
+=== RUN   TestHistoryPendingPersistsUntilExplicitConfirmation
+--- PASS: TestHistoryPendingPersistsUntilExplicitConfirmation (0.00s)
+=== RUN   TestClearHistoryPendingFailureRetainsMarker
+--- PASS: TestClearHistoryPendingFailureRetainsMarker (0.00s)
+=== RUN   TestWithHistorySequenceSerializesCallerCriticalSection
+--- PASS: TestWithHistorySequenceSerializesCallerCriticalSection (0.03s)
+=== RUN   TestT23ArchivePersistsBeforePublishingAndReopenClearsTimestamp
+--- PASS: TestT23ArchivePersistsBeforePublishingAndReopenClearsTimestamp (0.00s)
+=== RUN   TestT23ArchiveWriteFailureDoesNotPublishPartialState
+--- PASS: TestT23ArchiveWriteFailureDoesNotPublishPartialState (0.00s)
+=== RUN   TestSetMetadataPersistsTypedFields
+--- PASS: TestSetMetadataPersistsTypedFields (0.00s)
+=== RUN   TestSetMetadataRejectsInvalidFieldsAndArchivedProfiles
+--- PASS: TestSetMetadataRejectsInvalidFieldsAndArchivedProfiles (0.00s)
+=== RUN   TestProxyCredentialsRemainInVaultAndOutOfProfileJSON
+--- PASS: TestProxyCredentialsRemainInVaultAndOutOfProfileJSON (0.00s)
+=== RUN   TestProfileCRUD
+    store_test.go:28: Created: prof_a2687d1ef6b6
+    store_test.go:71: ✅ Profile CRUD all pass
+--- PASS: TestProfileCRUD (0.00s)
+=== RUN   TestStoreRejectsV1EngineOnlyProfile
+--- PASS: TestStoreRejectsV1EngineOnlyProfile (0.00s)
+=== RUN   TestStoreCreatesRuntimeIDOnlyCloakBrowserProfile
+--- PASS: TestStoreCreatesRuntimeIDOnlyCloakBrowserProfile (0.00s)
+=== RUN   TestStoreDropsLegacyIdentityBrowserFamilyOnOutput
+--- PASS: TestStoreDropsLegacyIdentityBrowserFamilyOnOutput (0.00s)
+=== RUN   TestLifecycleArchiveAndReopen
+--- PASS: TestLifecycleArchiveAndReopen (0.00s)
+=== RUN   TestArchiveIdempotentAndQuarantinedRefused
+--- PASS: TestArchiveIdempotentAndQuarantinedRefused (0.00s)
+=== RUN   TestTagAssignmentBudgetAndArchivedRefusal
+--- PASS: TestTagAssignmentBudgetAndArchivedRefusal (0.00s)
+=== RUN   TestProfileNameUniquenessIsCaseInsensitive
+--- PASS: TestProfileNameUniquenessIsCaseInsensitive (0.00s)
+=== RUN   TestWriteContractRejectsInvalidInputs
+=== RUN   TestWriteContractRejectsInvalidInputs/empty_name
+=== RUN   TestWriteContractRejectsInvalidInputs/too_long_name
+=== RUN   TestWriteContractRejectsInvalidInputs/invalid_proxy_type
+=== RUN   TestWriteContractRejectsInvalidInputs/negative_port
+=== RUN   TestWriteContractRejectsInvalidInputs/too_many_tags
+=== RUN   TestWriteContractRejectsInvalidInputs/invalid_tag
+--- PASS: TestWriteContractRejectsInvalidInputs (0.00s)
+    --- PASS: TestWriteContractRejectsInvalidInputs/empty_name (0.00s)
+    --- PASS: TestWriteContractRejectsInvalidInputs/too_long_name (0.00s)
+    --- PASS: TestWriteContractRejectsInvalidInputs/invalid_proxy_type (0.00s)
+    --- PASS: TestWriteContractRejectsInvalidInputs/negative_port (0.00s)
+    --- PASS: TestWriteContractRejectsInvalidInputs/too_many_tags (0.00s)
+    --- PASS: TestWriteContractRejectsInvalidInputs/invalid_tag (0.00s)
+=== RUN   TestConcurrentMutationsSerializePerProfile
+=== PAUSE TestConcurrentMutationsSerializePerProfile
+=== RUN   TestConcurrentProfileCreationsKeepUniqueNames
+=== PAUSE TestConcurrentProfileCreationsKeepUniqueNames
+=== RUN   TestIsolationBudgetIsShort
+--- PASS: TestIsolationBudgetIsShort (0.00s)
+=== CONT  TestConcurrentMutationsSerializePerProfile
+=== CONT  TestConcurrentProfileCreationsKeepUniqueNames
+--- PASS: TestConcurrentProfileCreationsKeepUniqueNames (0.00s)
+--- PASS: TestConcurrentMutationsSerializePerProfile (0.01s)
+PASS
+ok  	forgelocal/internal/profile	0.084s
+=== RUN   TestT18Journal_IdempotencePreventsDoubleAttachAfterCrash
+--- PASS: TestT18Journal_IdempotencePreventsDoubleAttachAfterCrash (0.00s)
+=== RUN   TestT18Journal_CancelBeforeExecutionLeavesNoPartialWrite
+--- PASS: TestT18Journal_CancelBeforeExecutionLeavesNoPartialWrite (0.01s)
+=== RUN   TestT18Journal_CrashRecoveryAfterStartingStopsWithoutAttach
+--- PASS: TestT18Journal_CrashRecoveryAfterStartingStopsWithoutAttach (0.00s)
+=== RUN   TestT18Journal_ManagerRestartRecoveryIsIdempotentAndDoesNotAttach
+--- PASS: TestT18Journal_ManagerRestartRecoveryIsIdempotentAndDoesNotAttach (0.00s)
+=== RUN   TestT18Journal_CancelDuringAttachPersistsInterrupted
+--- PASS: TestT18Journal_CancelDuringAttachPersistsInterrupted (0.01s)
+=== RUN   TestT18Journal_OperationTimeoutPersistsError
+--- PASS: TestT18Journal_OperationTimeoutPersistsError (0.03s)
+=== RUN   TestT18Journal_InvalidTransitionHasNoPartialAuditWrite
+--- PASS: TestT18Journal_InvalidTransitionHasNoPartialAuditWrite (0.00s)
+=== RUN   TestT18Journal_ActiveProfileContentionLeavesNoPartialOperation
+--- PASS: TestT18Journal_ActiveProfileContentionLeavesNoPartialOperation (0.00s)
+=== RUN   TestT18Journal_DistinctProfilesReserveIndependently
+--- PASS: TestT18Journal_DistinctProfilesReserveIndependently (0.00s)
+=== RUN   TestT18Journal_ReconcileRejectsIncoherentStateWithoutPartialWrite
+--- PASS: TestT18Journal_ReconcileRejectsIncoherentStateWithoutPartialWrite (0.00s)
+=== RUN   TestT18Journal_ReconcileKeepsCorrelationInCrashAudit
+--- PASS: TestT18Journal_ReconcileKeepsCorrelationInCrashAudit (0.00s)
+=== RUN   TestT18Journal_QueueSaturationLeavesNoPartialOperation
+--- PASS: TestT18Journal_QueueSaturationLeavesNoPartialOperation (0.02s)
+=== RUN   TestT18Journal_AuditRedactsSecretAndInvalidCorrelation
+--- PASS: TestT18Journal_AuditRedactsSecretAndInvalidCorrelation (0.00s)
+=== RUN   TestRequest_SingleSessionPerProfile
+--- PASS: TestRequest_SingleSessionPerProfile (0.10s)
+=== RUN   TestRequest_InvalidProfile
+--- PASS: TestRequest_InvalidProfile (0.00s)
+=== RUN   TestRequest_GlobalLimit
+--- PASS: TestRequest_GlobalLimit (2.01s)
+=== RUN   TestRequest_QueueFull
+--- PASS: TestRequest_QueueFull (0.10s)
+=== RUN   TestRequest_CancelledWhileQueued
+--- PASS: TestRequest_CancelledWhileQueued (0.10s)
+=== RUN   TestRequest_AttachFailure_Cleanup
+--- PASS: TestRequest_AttachFailure_Cleanup (0.00s)
+=== RUN   TestRecover_NoGhostSessions
+--- PASS: TestRecover_NoGhostSessions (0.00s)
+=== RUN   TestStop_Idempotent
+--- PASS: TestStop_Idempotent (0.01s)
+=== RUN   TestStop_ReleaseAllProfiles
+--- PASS: TestStop_ReleaseAllProfiles (0.01s)
+=== RUN   TestAudit_Redacted
+--- PASS: TestAudit_Redacted (0.00s)
+=== RUN   TestRequest_ReuseAfterStop
+--- PASS: TestRequest_ReuseAfterStop (0.01s)
+=== RUN   TestStatus_Bounds
+--- PASS: TestStatus_Bounds (0.00s)
+=== RUN   TestConcurrentStress
+=== PAUSE TestConcurrentStress
+=== CONT  TestConcurrentStress
+--- PASS: TestConcurrentStress (0.10s)
+PASS
+ok  	forgelocal/internal/launch	2.532s
+=== RUN   TestMigrateUpgradesExistingBack01DatabaseToProductV4
+--- PASS: TestMigrateUpgradesExistingBack01DatabaseToProductV4 (0.05s)
+=== RUN   TestBackupCreateRestoreIsolatedAndNoSecretAtRest
+--- PASS: TestBackupCreateRestoreIsolatedAndNoSecretAtRest (0.02s)
+=== RUN   TestBackupRejectsCorruptionTruncationAndAADTampering
+=== RUN   TestBackupRejectsCorruptionTruncationAndAADTampering/magic
+=== RUN   TestBackupRejectsCorruptionTruncationAndAADTampering/truncated
+=== RUN   TestBackupRejectsCorruptionTruncationAndAADTampering/aad
+--- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering (0.02s)
+    --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering/magic (0.00s)
+    --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering/truncated (0.00s)
+    --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering/aad (0.00s)
+=== RUN   TestBackupRejectsHostileIdentifiersAndRestorePaths
+--- PASS: TestBackupRejectsHostileIdentifiersAndRestorePaths (0.02s)
+=== RUN   TestSnapshotLockRejectsConcurrentBackup
+--- PASS: TestSnapshotLockRejectsConcurrentBackup (0.00s)
+=== RUN   TestReconcileRepairsPublishedUnregisteredAfterCrash
+--- PASS: TestReconcileRepairsPublishedUnregisteredAfterCrash (0.02s)
+=== RUN   TestReconcileQuarantinesMalformedArtifact
+--- PASS: TestReconcileQuarantinesMalformedArtifact (0.01s)
+=== RUN   TestMigrationsEnableCoreTables
+--- PASS: TestMigrationsEnableCoreTables (0.02s)
+=== RUN   TestBackupIDsDeterministic
+--- PASS: TestBackupIDsDeterministic (0.00s)
+=== RUN   TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels
+--- PASS: TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels (0.02s)
+=== RUN   TestBackupTransactionLifecycleRemainsAtomic
+--- PASS: TestBackupTransactionLifecycleRemainsAtomic (0.02s)
+=== RUN   TestVerifyAcceptsPublishedArtifactAndRejectsCorruption
+--- PASS: TestVerifyAcceptsPublishedArtifactAndRejectsCorruption (0.01s)
+PASS
+ok  	forgelocal/internal/backup	0.208s
+EXIT_CODE=0

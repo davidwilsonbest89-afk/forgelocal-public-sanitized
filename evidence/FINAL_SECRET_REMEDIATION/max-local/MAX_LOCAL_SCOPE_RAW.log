@@ -295,3 +295,22 @@ EXIT_CODE=1
 === COMMAND: git diff --check ===
 EXIT_CODE=0
 GraphQL: Could not resolve to a Repository with the name 'boucheriechefimane-cmd/IPcache'. (repository)
+UTC=
+2026-08-27T17:41:40Z
+CWD=
+/home/ubuntu
+COMMAND=git ls-remote https://github.com/boucheriechefimane-cmd/IPcache.git
+remote: Repository not found.
+fatal: repository 'https://github.com/boucheriechefimane-cmd/IPcache.git/' not found
+EXIT_CODE=128
+COMMAND=gh repo view boucheriechefimane-cmd/IPcache
+GraphQL: Could not resolve to a Repository with the name 'boucheriechefimane-cmd/IPcache'. (repository)
+EXIT_CODE=1
+CURRENT_REPOSITORY=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+CURRENT_BRANCH=validation/final-secret-remediation
+CURRENT_HEAD=e7346e87e69cc1bd4e58993f8008b164c3ebe560
+HISTORICAL_COMMIT_CHECK=NOT_EXECUTED_REPOSITORY_UNAVAILABLE
+HISTORICAL_TREE_COMPARISON=NOT_EXECUTED_REPOSITORY_UNAVAILABLE
+HISTORICAL_ARCHIVE_COMPARISON=NOT_EXECUTED_REPOSITORY_UNAVAILABLE
+ANCESTRY_RELATION=UNVERIFIED
+VERDICT=HISTORICAL_EVIDENCE_UNVERIFIED
