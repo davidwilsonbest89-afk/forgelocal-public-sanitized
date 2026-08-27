@@ -90,7 +90,8 @@ func newTestManager(opt *Options) (*Manager, *memSink) {
 }
 
 // --- AC-CAMO-01 : une seule session active par profil, seconde
-//     demande refusée de manière auditable. ---
+//
+//	demande refusée de manière auditable. ---
 func TestRequest_SingleSessionPerProfile(t *testing.T) {
 	m, sink := newTestManager(nil)
 	launcher := newBlockingLauncher()
@@ -142,7 +143,8 @@ func TestRequest_InvalidProfile(t *testing.T) {
 }
 
 // --- AC-CAMO-02 : limite globale respectée ; les dépasseurs attendent
-//     et sont libérés quand un créneau se libère. ---
+//
+//	et sont libérés quand un créneau se libère. ---
 func TestRequest_GlobalLimit(t *testing.T) {
 	m, _ := newTestManager(&Options{GlobalLimit: 2, MaxQueueDepth: 8, WaitDeadline: 2 * time.Second})
 	launcher := newBlockingLauncher()
@@ -432,13 +434,27 @@ func TestAudit_Redacted(t *testing.T) {
 }
 
 // --- Sérialisation par profil : les demandes successives d'un profil
-//     libéré retournent bien une nouvelle session. ---
+//
+//	libéré retournent bien une nouvelle session. ---
 func TestRequest_ReuseAfterStop(t *testing.T) {
 	m, _ := newTestManager(nil)
 	ctx := context.Background()
 	l1 := newBlockingLauncher()
-	go func() { m.Request(ctx, l1, "reuse") }()
+	firstDone := make(chan error, 1)
+	go func() {
+		_, err := m.Request(ctx, l1, "reuse")
+		firstDone <- err
+	}()
 	waitForRunning(t, m, 1)
+	l1.releaseAll()
+	select {
+	case err := <-firstDone:
+		if err != nil {
+			t.Fatalf("initial admission failed: %v", err)
+		}
+	case <-time.After(5 * time.Second):
+		t.Fatal("initial admission did not resolve in time")
+	}
 	stopCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
 	defer cancel()
 	m.Stop(stopCtx)
@@ -477,14 +493,14 @@ func TestConcurrentStress(t *testing.T) {
 	t.Parallel()
 	m, sink := newTestManager(&Options{GlobalLimit: 4, MaxQueueDepth: 16})
 	const (
-		goroutines     = 120
-		profiles       = 24
-		annulCancelAt  = 10 * time.Millisecond // staggered cancellations
+		goroutines    = 120
+		profiles      = 24
+		annulCancelAt = 10 * time.Millisecond // staggered cancellations
 	)
 	var (
-		launchers     [profiles]*blockingLauncher
-		joinedGrs     = make([]<-chan Session, 0, goroutines)
-		cancelledGrs  int64
+		launchers    [profiles]*blockingLauncher
+		joinedGrs    = make([]<-chan Session, 0, goroutines)
+		cancelledGrs int64
 	)
 	for i := range launchers {
 		launchers[i] = newBlockingLauncher()

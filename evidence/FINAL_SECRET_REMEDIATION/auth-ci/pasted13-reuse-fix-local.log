@@ -1,0 +1,58 @@
+DATE_UTC=2026-08-27T05:41:27Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+GO_VERSION=go version go1.26.7 linux/amd64
+=== RUN   TestRequest_SingleSessionPerProfile
+--- PASS: TestRequest_SingleSessionPerProfile (0.10s)
+=== RUN   TestRequest_GlobalLimit
+--- PASS: TestRequest_GlobalLimit (2.01s)
+=== RUN   TestRequest_ReuseAfterStop
+--- PASS: TestRequest_ReuseAfterStop (0.01s)
+=== RUN   TestRequest_SingleSessionPerProfile
+--- PASS: TestRequest_SingleSessionPerProfile (0.10s)
+=== RUN   TestRequest_GlobalLimit
+--- PASS: TestRequest_GlobalLimit (2.01s)
+=== RUN   TestRequest_ReuseAfterStop
+--- PASS: TestRequest_ReuseAfterStop (0.01s)
+=== RUN   TestRequest_SingleSessionPerProfile
+--- PASS: TestRequest_SingleSessionPerProfile (0.10s)
+=== RUN   TestRequest_GlobalLimit
+--- PASS: TestRequest_GlobalLimit (2.01s)
+=== RUN   TestRequest_ReuseAfterStop
+--- PASS: TestRequest_ReuseAfterStop (0.01s)
+PASS
+ok  	forgelocal/internal/launch	6.372s
+LAUNCH_REGRESSION_EXIT=0
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.171s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.852s
+ok  	forgelocal/internal/backup	2.573s
+ok  	forgelocal/internal/browser	11.078s
+ok  	forgelocal/internal/config	1.014s
+ok  	forgelocal/internal/cookies	1.011s
+ok  	forgelocal/internal/drift	1.012s
+ok  	forgelocal/internal/environment	1.011s
+ok  	forgelocal/internal/extensions	2.009s
+ok  	forgelocal/internal/fingerprint	1.014s
+ok  	forgelocal/internal/fonts	1.012s
+ok  	forgelocal/internal/geolocation	1.013s
+ok  	forgelocal/internal/groups	1.018s
+ok  	forgelocal/internal/hardware	1.011s
+ok  	forgelocal/internal/history	1.159s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.731s
+ok  	forgelocal/internal/localvault	1.092s
+ok  	forgelocal/internal/mcp	1.040s
+ok  	forgelocal/internal/productschema	1.702s
+ok  	forgelocal/internal/profile	1.100s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.382s
+ok  	forgelocal/internal/proxies	1.085s
+ok  	forgelocal/internal/proxyprovider	1.012s
+ok  	forgelocal/internal/runtime	1.216s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.010s
+ok  	forgelocal/internal/spike	3.083s
+ok  	forgelocal/internal/templates	1.261s
+ok  	forgelocal/internal/workflow	1.017s
+FULL_RACE_EXIT=0
