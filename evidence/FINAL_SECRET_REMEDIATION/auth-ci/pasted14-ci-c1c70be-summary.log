@@ -1,0 +1,6 @@
+UTC_CAPTURE=2026-08-27T12:35:00Z
+RUN_ID=33071664971
+RUN_URL=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/actions/runs/33071664971
+HEAD=c1c70beb4c46448eb136af101fed8c35a000e62f
+JOB=test CONCLUSION=failure JOB_ID=98515207899
+JOB=Secret, SBOM, and image security gates CONCLUSION=failure JOB_ID=98515208230
