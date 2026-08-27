@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -58,6 +59,11 @@ jobs:
           GOTOOLCHAIN: go1.25.13
         run: go test -count=1 -timeout 2m ./cmd/... ./internal/...
 
+      - name: Chromium runtime is explicit
+        run: |
+          test "${FORGELOCAL_VALIDATE_CHROMIUM_RUNTIME:-0}" != "1"
+          echo "CHROMIUM_RUNTIME_VALIDATION=DEFERRED_TO_QUALIFIED_RUNNER"
+
       - name: Go vet
         env:
           GOTOOLCHAIN: go1.25.13
@@ -88,6 +94,18 @@ jobs:
           node -e "const fs=require('fs'); const html=fs.readFileSync('internal/api/dashboard.html','utf8'); const m=html.match(/<script>([\s\S]*)<\/script>/); if(!m) throw new Error('script not found'); new Function(m[1]); console.log('dashboard js ok')"
           node scripts/check-i18n.js
 
+      - name: Dashboard pnpm install
+        working-directory: forge-dashboard
+        run: pnpm install --frozen-lockfile
+
+      - name: Dashboard pnpm check
+        working-directory: forge-dashboard
+        run: pnpm run check
+
+      - name: Dashboard pnpm build
+        working-directory: forge-dashboard
+        run: pnpm run build
+
       - name: CI provenance policy
         run: node scripts/check-ci-provenance-workflow.mjs
 
@@ -96,6 +114,38 @@ jobs:
 
       - name: Fingerprint generator smoke
         run: npm install --silent && node scripts/generate-fingerprints.js --browser firefox --os macos --count 1 --output /tmp/browseforge-fingerprint-smoke
+
+  browser-runtime-qualified:
+    name: Qualified Chromium runtime validation
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: [self-hosted, forgelocal-chromium]
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.25.13"
+          check-latest: true
+          cache: false
+
+      - name: Verify qualified Chromium environment
+        run: |
+          command -v chromium
+          chromium --version
+          command -v ps
+          command -v pgrep
+
+      - name: Run Chromium runtime validation
+        env:
+          FORGELOCAL_VALIDATE_CHROMIUM_RUNTIME: "1"
+          GOTOOLCHAIN: go1.25.13
+        run: |
+          date -u +%Y-%m-%dT%H:%M:%SZ
+          pwd
+          go test ./internal/api -run '^TestBackupV1CreateModifyRestoreIsolation$' -count=1 -timeout 2m -v
 
   security-scans:
     name: Secret, SBOM, and image security gates

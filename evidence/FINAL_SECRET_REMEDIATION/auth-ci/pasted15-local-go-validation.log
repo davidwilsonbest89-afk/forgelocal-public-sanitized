@@ -1,0 +1,88 @@
+UTC=2026-08-27T13:25:59Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+GO_VERSION=go version go1.26.7 linux/amd64
+DETERMINISTIC_TEST_COMMAND=go test -count=1 -timeout 2m ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	0.628s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	1.284s
+ok  	forgelocal/internal/backup	0.426s
+ok  	forgelocal/internal/browser	3.834s
+ok  	forgelocal/internal/config	0.004s
+ok  	forgelocal/internal/cookies	0.003s
+ok  	forgelocal/internal/drift	0.003s
+ok  	forgelocal/internal/environment	0.004s
+ok  	forgelocal/internal/extensions	0.637s
+ok  	forgelocal/internal/fingerprint	0.006s
+ok  	forgelocal/internal/fonts	0.003s
+ok  	forgelocal/internal/geolocation	0.002s
+ok  	forgelocal/internal/groups	0.008s
+ok  	forgelocal/internal/hardware	0.002s
+ok  	forgelocal/internal/history	0.225s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	2.537s
+ok  	forgelocal/internal/localvault	0.167s
+ok  	forgelocal/internal/mcp	0.018s
+ok  	forgelocal/internal/productschema	0.043s
+ok  	forgelocal/internal/profile	0.063s
+ok  	forgelocal/internal/profilehealth	0.004s
+ok  	forgelocal/internal/profilemigration	0.226s
+ok  	forgelocal/internal/proxies	0.070s
+ok  	forgelocal/internal/proxyprovider	0.004s
+ok  	forgelocal/internal/runtime	0.165s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	0.002s
+ok  	forgelocal/internal/spike	2.862s
+ok  	forgelocal/internal/templates	0.314s
+ok  	forgelocal/internal/workflow	0.007s
+DETERMINISTIC_TEST_EXIT=0
+CHROMIUM_OPT_IN_COMMAND=FORGELOCAL_VALIDATE_CHROMIUM_RUNTIME=1 go test ./internal/api -run '^TestBackupV1CreateModifyRestoreIsolation$' -count=1 -timeout 2m -v
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/27 13:26:09 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation1208673184/001/.api-token
+2026/08/27 13:26:09 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 127.0.0.1:0 - 201 207B in 3.669605ms
+2026/08/27 13:26:09 "POST http://example.com/api/v1/backups/bkp-1787837169647261332-d8980f4d64abd09d/restore HTTP/1.1" from 127.0.0.1:0 - 201 637B in 3.871951ms
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS" pid=106802 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation1208673184/001/profiles/target-api/browser-data" endpoint="none (--screenshot direct process)" navigation="data:text/html,forgelocal-backup-validation"
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch stopped cleanly: pid=106802 profile_lock_cleanup=verified
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (1.11s)
+PASS
+ok  	forgelocal/internal/api	1.113s
+CHROMIUM_OPT_IN_EXIT=0
+RACE_COMMAND=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.629s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.924s
+ok  	forgelocal/internal/backup	2.976s
+ok  	forgelocal/internal/browser	4.423s
+ok  	forgelocal/internal/config	1.016s
+ok  	forgelocal/internal/cookies	1.017s
+ok  	forgelocal/internal/drift	1.013s
+ok  	forgelocal/internal/environment	1.014s
+ok  	forgelocal/internal/extensions	2.242s
+ok  	forgelocal/internal/fingerprint	1.021s
+ok  	forgelocal/internal/fonts	1.016s
+ok  	forgelocal/internal/geolocation	1.012s
+ok  	forgelocal/internal/groups	1.022s
+ok  	forgelocal/internal/hardware	1.012s
+ok  	forgelocal/internal/history	1.210s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.771s
+ok  	forgelocal/internal/localvault	1.089s
+ok  	forgelocal/internal/mcp	1.033s
+ok  	forgelocal/internal/productschema	1.869s
+ok  	forgelocal/internal/profile	1.124s
+ok  	forgelocal/internal/profilehealth	1.015s
+ok  	forgelocal/internal/profilemigration	2.797s
+ok  	forgelocal/internal/proxies	1.095s
+ok  	forgelocal/internal/proxyprovider	1.015s
+ok  	forgelocal/internal/runtime	1.245s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.014s
+ok  	forgelocal/internal/spike	3.497s
+ok  	forgelocal/internal/templates	1.346s
+ok  	forgelocal/internal/workflow	1.022s
+RACE_EXIT=0
+VET_COMMAND=go vet ./cmd/... ./internal/...
+VET_EXIT=0
+BUILD_COMMAND=go build ./cmd/... ./internal/...
+BUILD_EXIT=0

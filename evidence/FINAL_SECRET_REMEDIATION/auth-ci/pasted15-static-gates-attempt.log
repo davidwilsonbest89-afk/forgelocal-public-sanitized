@@ -1,0 +1,86 @@
+STEP=CI_PROVENANCE UTC=2026-08-27T13:26:40Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=node scripts/check-ci-provenance-workflow.mjs
+ci provenance workflow: OK (10 invariants CI + release, 3 dépendances de release, 13 invariants release-separation, 14 règles CODEOWNERS, 9 chemins critiques à trois relecteurs)
+STEP=CI_PROVENANCE EXIT=0
+STEP=PNPM_INSTALL UTC=2026-08-27T13:26:41Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=pnpm install --frozen-lockfile
+[ERR_PNPM_NO_LOCKFILE] Cannot install with "frozen-lockfile" because pnpm-lock.yaml is absent
+
+Note that in CI environments this setting is true by default. If you still need to run install in such cases, use "pnpm install --no-frozen-lockfile"
+STEP=PNPM_INSTALL EXIT=1
+STEP=PNPM_CHECK UTC=2026-08-27T13:26:41Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=pnpm run check
+Progress: resolved 1, reused 0, downloaded 0, added 0
+[WARN] 1 deprecated subdependencies found: lodash.isequal@4.5.0
+Packages: +20
+++++++++++++++++++++
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/ubuntu/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Progress: resolved 20, reused 3, downloaded 17, added 20, done
+
+dependencies:
++ fingerprint-generator 2.1.88
++ header-generator 2.1.88
+
+Done in 1.3s using pnpm v11.20.0
+[ERR_PNPM_NO_SCRIPT] Missing script: check
+
+Command "check" not found.
+STEP=PNPM_CHECK EXIT=1
+STEP=PNPM_BUILD UTC=2026-08-27T13:26:43Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=pnpm run build
+[ERR_PNPM_NO_SCRIPT] Missing script: build
+
+Command "build" not found.
+STEP=PNPM_BUILD EXIT=1
+STEP=SHELLCHECK UTC=2026-08-27T13:26:44Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=shellcheck docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+STEP=SHELLCHECK EXIT=0
+STEP=GITLEAKS_SOURCE UTC=2026-08-27T13:26:44Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/gitleaks dir --no-banner --redact --exit-code 1 .
+[90m1:27PM[0m [32mINF[0m [1mscanned ~972029176 bytes (972.03 MB) in 36.4s[0m
+[90m1:27PM[0m [32mINF[0m [1mno leaks found[0m
+STEP=GITLEAKS_SOURCE EXIT=0
+STEP=TRIVY_FS UTC=2026-08-27T13:27:21Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/trivy fs --scanners secret --exit-code 1 --no-progress .
+2026-08-27T13:27:22Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T13:27:22Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T13:27:29Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-27T13:27:29Z	INFO	Number of language-specific files	num=3
+
+Report Summary
+
+┌────────────────────────────────┬───────┬─────────┐
+│             Target             │ Type  │ Secrets │
+├────────────────────────────────┼───────┼─────────┤
+│ forge-dashboard/pnpm-lock.yaml │ pnpm  │    -    │
+├────────────────────────────────┼───────┼─────────┤
+│ go.mod                         │ gomod │    -    │
+├────────────────────────────────┼───────┼─────────┤
+│ pnpm-lock.yaml                 │ pnpm  │    -    │
+└────────────────────────────────┴───────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+STEP=TRIVY_FS EXIT=0
+STEP=GIT_DIFF_CHECK UTC=2026-08-27T13:27:29Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=git diff --check
+STEP=GIT_DIFF_CHECK EXIT=0
+STEP=GIT_FSCK UTC=2026-08-27T13:27:29Z CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo COMMAND=git fsck --full
+dangling blob 6c82ac5fbcc2e7c123f4083a153a717868c39180
+dangling blob 26852055804aa077d12cb42fc31c83b838695b0c
+dangling blob d98798806c542a96af91c6833e3bd59cfe1baa35
+dangling tag 310c10e7541bbec7828226ce1049df56da11ce0b
+dangling tag a7d3c6afe1627d23f6d4d990f4ab7e00186b780d
+dangling blob 0d14774a057645fa8a9d1999850a76dd6f55cb96
+dangling tag 72d54110c89583beacc556bb103f881b667d8137
+dangling blob d89a0e37eb364e68980bc6fcf9baa2471419d634
+dangling blob 0cdb996002ead7b276f575337c2ca0ee393f725f
+dangling blob d65b1d8b186ce71ea99a62a518ae688c2110049a
+dangling blob f85ee1d0ffe2c6bc1a0ad92539de50da4ad2bbe5
+dangling blob 0e1fa4d5e1dae02b4ab295bb4970b2db2a430b30
+dangling tag f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7
+dangling blob a7273dfdbdc7af87bcc0b1f57ac1d953be023ab7
+dangling blob dca799734b74841f77ae1c95f0b10cfe95141da9
+dangling blob 932d88aa5cc70939037059e802d04762dcea2318
+dangling tag 436eebd4937352476c9e4c44a13b536c48d0c048
+dangling blob 34b3d2e32b443565a924487c4aba54d872942c43
+dangling blob c6f7a1851bd60ea43e9951d4d79cbff66acfe931
+dangling tag 3ebcf55fcab7ab10e34ffea652f2398e07e299da
+dangling blob 89fc48128a9be053303c4ec9746c6980d3762989
+dangling tag f77fd0bb02993854eec9ecf05fda9788546860ec
+STEP=GIT_FSCK EXIT=0
