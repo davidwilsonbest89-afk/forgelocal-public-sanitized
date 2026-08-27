@@ -1,0 +1,43 @@
+=== DATE_UTC ===
+2026-08-27T01:39:21Z
+=== DISK_BEFORE ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   30G   19G  62% /
+/dev/root      50976727040 31248478208 19711471616  62% /
+=== CONTAINERS_BEFORE ===
+CONTAINERS_BEFORE_EXIT=0
+=== IMAGE_REMOVE ===
+Untagged: forgelocal-secret-remediation:snakeoil-remediated-20260827
+Deleted: sha256:f64b6ac756b1b8309e9949bf513239568f4d808fb416993e1f4770aba25cc263
+IMAGE_REMOVE_EXIT=0
+=== BUILDER_PRUNE ===
+Total:	0B
+BUILDER_PRUNE_EXIT=0
+=== CONTAINERS_AFTER ===
+CONTAINERS_AFTER_EXIT=0
+=== IMAGES_AFTER ===
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+IMAGES_AFTER_EXIT=0
+=== SERVICE_STOP_DISABLE ===
+DOCKER_SOCKET_STOP_EXIT=0
+DOCKER_STOP_EXIT=0
+CONTAINERD_STOP_EXIT=0
+DISABLE_EXIT=0
+REMOVE_SOCKET_EXIT=0
+=== SERVICES_FINAL ===
+inactive
+DOCKER_ACTIVE_EXIT=3
+inactive
+DOCKER_SOCKET_ACTIVE_EXIT=3
+inactive
+CONTAINERD_ACTIVE_EXIT=3
+=== SOCKET_FINAL ===
+ls: cannot access '/run/docker.sock': No such file or directory
+ls: cannot access '/var/run/docker.sock': No such file or directory
+SOCKET_EXIT=2
+=== PROCESSES_FINAL ===
+PROCESSES_EXIT=1
+=== DISK_AFTER ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   23G   25G  48% /
+/dev/root      50976727040 24390918144 26569031680  48% /

@@ -71,12 +71,13 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | Syft SBOM CycloneDX image remédiée | `PASS` | Syft `1.51.0`, SBOM produit, 5.801.675 octets |
 | Grype SBOM image remédiée | `GRYPE_FINDINGS_TRIAGE_PENDING` | Grype `0.117.0`, 379 matches ; aucun ignore global |
 | Matrice dédupliquée Trivy/Grype | `IMAGE_VULNERABILITIES_TRIAGE_PENDING` | 453 lignes uniques ; 85 Critical/High prioritaires ; exploitabilité non évaluée |
-| Docker services/socket final | `PASS` cleanup | Docker, docker.socket et containerd inactifs/désactivés ; socket supprimé |
+| Docker services/socket final | `PASS` cleanup | Docker, docker.socket et containerd inactifs/désactivés ; socket supprimé ; 25 Go libres |
+| Cleanup final documenté | `PASS` | Aucun conteneur, aucune image temporaire, aucun cache, aucun processus ou socket résiduel |
 | Grype SBOM source précédent | `NOT_EXECUTED` | Remplacé par le scan Grype du SBOM image réel |
 | Firefox/Camoufox natifs, SystemVault, Windows/macOS | `BLOCKED_ENVIRONMENT_REQUIRED` / `NATIVE_SYSTEMVAULT_NOT_TESTED` | Environnements non disponibles |
 | Références et packages R7 historiques | `INHERITED_FROM_R7` | Non présentés comme nouvelle exécution |
 
-Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard check/build, Gitleaks source et extraction, Trivy filesystem, ShellCheck avec exit code nul, `git diff --check` et `git fsck --full`. Le cycle Docker réel a ajouté les contrôles image/layers/logs, token absent/invalide, permissions `0600`, Syft et Grype. Les assertions ne rapportent que l’absence de sentinelle. Les sorties brutes d’installation, build, cycle, scans et cleanup, ainsi que les rapports JSON et la matrice de triage, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Aucun journal ne contient la sentinelle synthétique.
+Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard check/build, Gitleaks source et extraction, Trivy filesystem, ShellCheck avec exit code nul, `git diff --check` et `git fsck --full`. Le cycle Docker réel a ajouté les contrôles image/layers/logs, token absent/invalide, permissions `0600`, Syft et Grype. Les assertions ne rapportent que l’absence de sentinelle. Les sorties brutes d’installation, build, cycle, scans et cleanup, ainsi que les rapports JSON et la matrice de triage, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Le cleanup final est documenté dans `evidence/FINAL_SECRET_REMEDIATION/snakeoil/snakeoil-final-cleanup-raw.log`. Aucun journal ne contient la sentinelle synthétique.
 
 ## Triage et décisions ouvertes
 
