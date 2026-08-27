@@ -94,6 +94,11 @@ jobs:
           node -e "const fs=require('fs'); const html=fs.readFileSync('internal/api/dashboard.html','utf8'); if(!/<html\b/i.test(html) || !/<main\b/i.test(html)) throw new Error('dashboard HTML structure invalid'); if(/<script\b/i.test(html)) throw new Error('historical dashboard must remain script-free'); console.log('dashboard HTML structure ok; script-free historical page')"
           node scripts/check-i18n.js
 
+      - name: Enable pnpm
+        run: |
+          npm install --global pnpm@10.4.1
+          pnpm --version
+
       - name: Dashboard pnpm install
         working-directory: forge-dashboard
         run: pnpm install --frozen-lockfile
