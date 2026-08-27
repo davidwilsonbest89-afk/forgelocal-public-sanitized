@@ -250,3 +250,16 @@ job=Secret, SBOM, and image security gates; conclusion=failure; job_id=985969862
 job=test; conclusion=success; job_id=98596986717; failed_step=none
 job=Qualified Chromium runtime validation; conclusion=skipped; job_id=98596987733; failed_step=none
 EXIT_CODE=0
+
+=== COMMAND: gh run view 33096308070 --json status,conclusion,headSha,jobs ===
+UTC=2026-08-27T17:15:00Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+GH_VERSION=GitHub CLI (gh)
+OUTPUT:
+status=completed
+conclusion=failure
+headSha=ffc4967ba8d076141ed34fa761d0da7d93748b8d
+job=Secret, SBOM, and image security gates; conclusion=failure; job_id=98602021924; failed_step=Grype image policy gate
+job=test; conclusion=success; job_id=98602022201; failed_step=none
+job=Qualified Chromium runtime validation; conclusion=skipped; job_id=98602023469; failed_step=none
+EXIT_CODE=0
