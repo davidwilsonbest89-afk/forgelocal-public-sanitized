@@ -105,8 +105,8 @@
       "sha256": "88b63ae257ff4b3f7d151f82075edc8529a152903a10fb40db3ddccf5a4d68fe"
     },
     "FINAL_SECRET_REMEDIATION_REPORT.md": {
-      "bytes": 18371,
-      "sha256": "af74830e3e4597a88c05a44e17f16850bb72638e052e8b6577fd0fd03e5a3578"
+      "bytes": 18865,
+      "sha256": "c121f8e40a07bfb6d8d75ca98641abc42271e14fa257a2fc7667b3a1c2a152dc"
     },
     "FINAL_SECURITY_ENVIRONMENT_REPORT.md": {
       "bytes": 6476,
@@ -1889,8 +1889,8 @@
       "sha256": "6d0dadc59b70244b974c9a8077d544638346d79a2378f3915bc48090ec0315e1"
     },
     "evidence/FINAL_SECRET_REMEDIATION/PUBLIC_VERIFICATION.log": {
-      "bytes": 6718,
-      "sha256": "186898850b2c4378cffdcaf298028708d71b1cec6a66181352c5c6d224f4ce08"
+      "bytes": 6908,
+      "sha256": "24699b252b1de1a2eed45e8c8dce37d6c8cbc5632619cd257b746263497cdba5"
     },
     "evidence/FINAL_SECRET_REMEDIATION/attachment-followup-raw.log": {
       "bytes": 6079,
@@ -1927,6 +1927,10 @@
     "evidence/FINAL_SECRET_REMEDIATION/auth-ci/ci-provenance-check.log": {
       "bytes": 181,
       "sha256": "93e2beda0802aa5b1b67d98d320ccc31b6070d8783505acebff67002003c4f39"
+    },
+    "evidence/FINAL_SECRET_REMEDIATION/auth-ci/github-cli-final-recheck.log": {
+      "bytes": 1129,
+      "sha256": "fef7e502630586fbee3a588184fd0ec4d89a93647fe960280a30cab96acd976e"
     },
     "evidence/FINAL_SECRET_REMEDIATION/auth-ci/grype-policy-final-status-summary.log": {
       "bytes": 259,
@@ -2205,8 +2209,8 @@
       "sha256": "449a7f186fbda0a00625070669c82262f126b4360e7aceca5d9aefc0a5c21efe"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/PACKAGE_MANIFEST.json": {
-      "bytes": 437957,
-      "sha256": "d8421f7514306188a536227bc3d071b166cad654cb75b061722a168d0380289c"
+      "bytes": 438350,
+      "sha256": "f1c02e9fb222c6242f29da4d1eb94821aad69aeb572076244c4442e7c5738c55"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/README.txt": {
       "bytes": 127,
@@ -2214,15 +2218,15 @@
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.bundle.sha256": {
       "bytes": 112,
-      "sha256": "990aad381fc4f5ddfa04b00506d3796f1ea4be97c6b1cbed9abb160e22c142a4"
+      "sha256": "b40ff4826a341bbd329a868e1916950576ba40cf138c879a51a26175edc2f68c"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.tar.sha256": {
       "bytes": 109,
-      "sha256": "fd114c0d9a463cd85b153b4850c99ba51ef309266117c36787c8a76291f451f0"
+      "sha256": "f571e1f70e2cb7459895f76d4922ff707033b8b6a375dd33109f3d72c5e2a4c2"
     },
     "evidence/FINAL_SECRET_REMEDIATION_PACKAGE/forgelocal-secret-remediation-evidence.zip.sha256": {
       "bytes": 109,
-      "sha256": "acfa9f8bbfc29bdf0e95fd4c5998c483a46c7b26836e8edfb94be6c83b6b4da5"
+      "sha256": "92849593b23bf2b8388f4acebda31eaebe6b795a3f104d05b7a411ac31b48701"
     },
     "evidence/GOSEC_R2_OVERNIGHT/BASELINE_DISCOVERY_RAW.log": {
       "bytes": 4250,
@@ -9918,20 +9922,20 @@
   "note": "This external manifest contains package hashes; the internal payload manifest is intentionally non-self-referential.",
   "package_files": {
     "forgelocal-secret-remediation-evidence.bundle": {
-      "bytes": 333963793,
-      "sha256": "619b16e018927d815900033e595cd70eacf805ea05f5229a7cdab456da8555e6"
+      "bytes": 333984996,
+      "sha256": "5b32370670412db6de0e6d671347a21dd39a74da35c4dbc23c12fab59af686f7"
     },
     "forgelocal-secret-remediation-evidence.tar": {
       "bytes": 611962880,
-      "sha256": "cebd4db4342a995b0af84e61a7729f1418e9545e9113db62a2a1600e2f81ba71"
+      "sha256": "cd7bf281bdddd31f01e5a179f2ff7a88dcca59cc0999d35507b05550454fa3e5"
     },
     "forgelocal-secret-remediation-evidence.zip": {
-      "bytes": 506630749,
-      "sha256": "1b8c11cb36063fc8a543611d017d02c7744f0c6d452b230758a8e71348be3b60"
+      "bytes": 506631942,
+      "sha256": "7f6572976d9c65ff2e7a34bf967963e83e08e57cba65d5abbe2e770ace74bad8"
     }
   },
   "source_branch": "validation/final-secret-remediation",
-  "source_commit": "2cddce06a7f7c070d9b9ac8a5ffd4ac9c7e21ca2",
+  "source_commit": "f167b97de90ae92cef631847cda5ca22339097d2",
   "verdict": {
     "FORGELOCAL_PRODUCTION_READY": false,
     "GOSEC_R7_BLOCKED_CRITICAL_FINDING": true,
