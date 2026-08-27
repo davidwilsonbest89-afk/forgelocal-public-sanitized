@@ -5,7 +5,7 @@ FROM golang:1.26-bookworm AS base
 
 # Node.js 22 LTS for fingerprint-suite and web-ext
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs && \
+    apt-get install -y --no-install-recommends nodejs && \
     npm install -g web-ext
 
 # Playwright system dependencies
