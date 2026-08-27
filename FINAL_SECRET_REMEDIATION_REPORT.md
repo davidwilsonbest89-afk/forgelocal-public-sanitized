@@ -11,7 +11,7 @@ Une divulgation critique réelle a été confirmée dans la branche de qualifica
 
 Le correctif appliqué est volontairement minimal. Les deux lanceurs ne lisent plus le fichier de token et ne l’impriment plus. L’entrypoint conserve uniquement le test d’existence du fichier et affiche un état générique redacted ; le lanceur local supprime entièrement le bloc de lecture et d’affichage. Un binaire de test suivi par Git, classé artefact généré contenant des chaînes de fixture bearer-like, a également été retiré de la branche corrective ; seul son hash historique est conservé dans la preuve.
 
-Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. La requête authentifiée synthétique sur la route protégée `/api/runtimes` retourne HTTP 200 ; les tokens missing, invalid, expired et revoked retournent HTTP 401 avec les raisons attendues, sans écho de secret. Une installation contrôlée a ensuite réussi : Docker Engine `29.1.3` et Buildx `0.30.1` ont été installés depuis les paquets Ubuntu disponibles. Le daemon réel a démarré via systemd et `sudo docker info` a confirmé le serveur actif ; aucun ajout au groupe Docker n’a été effectué. Le premier build bridge a échoué avec l’erreur noyau/iptables `can't initialize iptables table raw`; un build host-network réel a réussi pour la qualification ponctuelle. Après le cycle, l’image, les caches, les conteneurs, les services et le socket ont été nettoyés ou arrêtés/désactivés. Le chemin de divulgation réel est confirmé, mais aucune valeur n’a été retenue : `REAL_TOKEN_DISCLOSURE_PATH_CONFIRMED`, `SECRET_VALUE_NOT_RETAINED`. Aucun token réel actif n’est démontré dans les éléments conservés ; aucune rotation n’a donc été prétendue : `NO_REAL_SECRET_ROTATION_PERFORMED`. Le verdict de release reste bloqué par mandat et par les findings restants : `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
+Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. La requête authentifiée synthétique sur la route protégée `/api/runtimes` retourne HTTP 200 ; les tokens missing, invalid, expired et revoked retournent HTTP 401 avec les raisons attendues, sans écho de secret. Une installation contrôlée a ensuite réussi : Docker Engine `29.1.3` et Buildx `0.30.1` ont été installés depuis les paquets Ubuntu disponibles. Le daemon réel a démarré via systemd et `sudo docker info` a confirmé le serveur actif ; aucun ajout au groupe Docker n’a été effectué. Le premier build bridge a échoué avec l’erreur noyau/iptables `can't initialize iptables table raw`; un build host-network réel a réussi pour la qualification ponctuelle. Après le cycle, l’image, les caches, les conteneurs, les services et le socket ont été nettoyés ou arrêtés/désactivés. Le chemin de divulgation réel est confirmé, mais aucune valeur n’a été retenue : `REAL_TOKEN_DISCLOSURE_PATH_CONFIRMED`, `SECRET_VALUE_NOT_RETAINED`. Aucun token réel actif n’est démontré dans les éléments conservés. Cette mission n’a effectué aucune rotation, mais l’absence d’usage réel reste à confirmer par l’owner : `NO_REAL_SECRET_ROTATION_PERFORMED=TRUE`, `SECRET_REAL_USE_STATUS=OWNER_CONFIRMATION_REQUIRED`. Le verdict de release reste bloqué par mandat et par les findings restants : `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
 
 ## Preuve et audit de contamination
 
@@ -91,7 +91,7 @@ Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard 
 
 Le workflow `.github/workflows/ci.yml` contient maintenant un job `security-scans` et une gate d’authentification synthétique. Les contrôles CI ajoutés couvrent Gitleaks source et historique pertinent, Trivy filesystem secrets, Syft source et image, Grype source et image, build de l’image runtime durcie, inspection hardening/layers, cycle anti-fuite, ShellCheck et test authentifié synthétique. Le job de release n’a pas été modifié et aucun push d’image n’est effectué par ces gates.
 
-Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`; aucune exécution GitHub distante de cette branche n’a été confirmée, donc `CI_REMOTE_EXECUTION_NOT_CONFIRMED`.
+Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`. Une exécution GitHub Actions distante réelle a été observée : la première run `33033705812` a échoué sur la référence inexistante `aquasec/trivy:0.74.2`, puis le workflow a été corrigé vers `0.74.0`. La run finale observée `33034113884`, sur le HEAD `9d3929c38865dc2bdfabf1609dbe167d88aa8cae`, était encore `in_progress` au moment de la capture ; aucune conclusion finale n’est donc inventée. Le statut est `CI_REMOTE_EXECUTION_OBSERVED=TRUE`, `CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE`.
 
 ## Triage et décisions ouvertes
 
@@ -110,7 +110,8 @@ La vérification publique exige un clone frais, un checkout explicite de `valida
 ```text
 REAL_TOKEN_DISCLOSURE_PATH_CONFIRMED
 SECRET_VALUE_NOT_RETAINED
-NO_REAL_SECRET_ROTATION_PERFORMED
+NO_REAL_SECRET_ROTATION_PERFORMED=TRUE (OWNER_CONFIRMATION_REQUIRED)
+SECRET_REAL_USE_STATUS=OWNER_CONFIRMATION_REQUIRED
 SECRET_REMEDIATION_VALIDATED_IN_REAL_DOCKER_CYCLE
 TRIVY_IMAGE_SECRET_REMEDIATED
 AUTHENTICATED_SYNTHETIC_REQUEST=PASS
@@ -120,7 +121,8 @@ GRYPE_FINDINGS_TRIAGE_PENDING
 GRYPE_POLICY_GATE_BLOCKING=TRUE
 GRYPE_POLICY_REAL_REPORT=BLOCKED_OPEN_CRITICAL_HIGH_43
 CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS
-CI_REMOTE_EXECUTION_NOT_CONFIRMED
+CI_REMOTE_EXECUTION_OBSERVED=TRUE
+CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE
 SHELLCHECK_PASS
 DOCKER_HOST_NETWORK_BUILD_PASS
 DOCKER_BRIDGE_BUILD_BLOCKED_BY_ENVIRONMENT
