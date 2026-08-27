@@ -30,8 +30,10 @@ La preuve redacted distribuable se trouve dans `evidence/FINAL_SECRET_REMEDIATIO
 | Historique et layers de l’image | PASS | Sentinelle absente de `docker history` et de l’export de layers |
 | Image secret scan Trivy baseline | `TRIVY_IMAGE_SECRET_OPEN` | Clé snakeoil générée par `ssl-cert`, sans lien avec la sentinelle |
 | Analyse snakeoil | `PASS` | `kasmvncserver` dépend de `ssl-cert`; KasmVNC référence la paire par défaut, mais ForgeLocal force `-sslOnly 0` et `-SecurityTypes None` |
-| Image secret scan Trivy remédiée | `TRIVY_IMAGE_SECRET_REMEDIATED` | 0 secret après suppression de la clé, du certificat, des variantes broken et du symlink de service |
+| Image secret scan Trivy remédiée | `TRIVY_IMAGE_SECRET_REMEDIATED` | 0 secret sur l’image exacte `sha256:906ee46a15885c4cda92325adec06a450e7afe485c43ba763f922d7c321af879`; image supprimée après cleanup |
 | Cleanup Docker | PASS | Aucun conteneur/processus résiduel ; daemon et socket arrêtés/supprimés |
+| Test de non-régression snakeoil | PASS | `scripts/test-docker-image-hardening.sh` vérifie à chaque image l’absence de clé, certificat, variantes et symlink |
+| Identité image par digest | PASS borné | Digest exact testé conservé ; aucune image courante ni digest de registry n’est revendiqué |
 | Archives historiques R7/V2 | Héritées, chaîne de conservation séparée | `INHERITED_FROM_R7`, non modifiées et non repackagées |
 
 ## Correctif appliqué
@@ -78,8 +80,11 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | Grype SBOM image remédiée | `GRYPE_FINDINGS_TRIAGE_PENDING` | Grype `0.117.0`, 379 matches ; aucun ignore global |
 | Grype policy gate unitaire | `PASS` | La fixture Critical synthétique non approuvée échoue, puis passe uniquement avec owner/justification/expiration |
 | Grype policy gate sur rapport image réel | `FAIL` attendu | 43 Critical/High non approuvées, 0 exception approuvée ; la gate bloque effectivement |
-| Matrice dédupliquée Trivy/Grype | `IMAGE_VULNERABILITIES_TRIAGE_PENDING` | 453 lignes uniques ; 85 Critical/High prioritaires ; exploitabilité non évaluée |
+| Matrice dédupliquée Trivy/Grype | `IMAGE_VULNERABILITIES_TRIAGE_PENDING` | 453 lignes uniques ; 85 Critical/High prioritaires ; exploitabilité, action, owner et échéance restent à renseigner |
 | Docker services/socket final | `PASS` cleanup | Docker, docker.socket et containerd inactifs/désactivés ; socket supprimé ; 25 Go libres |
+| Misconfigurations Docker | `IMAGE_MISCONFIGURATIONS_TRIAGE_PENDING` | 6 diagnostics restent à décider |
+| Revue indépendante | `INDEPENDENT_REVIEW_PENDING` | Aucune revue humaine indépendante n’est attestée dans les preuves |
+| Protection de branche | `NOT_ACTIVE` | API GitHub : 404 `Branch not protected`; job sécurité obligatoire non vérifié |
 | Cleanup final documenté | `PASS` | Aucun conteneur, aucune image temporaire, aucun cache, aucun processus ou socket résiduel |
 | Grype SBOM source précédent | `NOT_EXECUTED` | Remplacé par le scan Grype du SBOM image réel |
 | Firefox/Camoufox natifs, SystemVault, Windows/macOS | `BLOCKED_ENVIRONMENT_REQUIRED` / `NATIVE_SYSTEMVAULT_NOT_TESTED` | Environnements non disponibles |
@@ -91,11 +96,11 @@ Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard 
 
 Le workflow `.github/workflows/ci.yml` contient maintenant un job `security-scans` et une gate d’authentification synthétique. Les contrôles CI ajoutés couvrent Gitleaks source et historique pertinent, Trivy filesystem secrets, Syft source et image, Grype source et image, build de l’image runtime durcie, inspection hardening/layers, cycle anti-fuite, ShellCheck et test authentifié synthétique. Le job de release n’a pas été modifié et aucun push d’image n’est effectué par ces gates.
 
-Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`. Une exécution GitHub Actions distante réelle a été observée : la première run `33033705812` a échoué sur la référence inexistante `aquasec/trivy:0.74.2`, puis le workflow a été corrigé vers `0.74.0`. La run finale observée `33034611887`, sur le HEAD `c7a4ca6e3371891473ffc10dc34a0102931da0b2`, était encore `in_progress` au moment de la capture ; aucune conclusion finale n’est donc inventée. Le statut est `CI_REMOTE_EXECUTION_OBSERVED=TRUE`, `CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE`.
+Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`. Une exécution GitHub Actions distante réelle a été observée : la première run `33033705812` a échoué sur la référence inexistante `aquasec/trivy:0.74.2`, puis le workflow a été corrigé vers `0.74.0`. La run finale observée `33034611887`, sur le HEAD `c7a4ca6e3371891473ffc10dc34a0102931da0b2`, était encore `in_progress` au moment de la capture ; aucune conclusion finale n’est donc inventée. Le statut est `CI_REMOTE_EXECUTION_OBSERVED=TRUE`, `CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE`, `BRANCH_PROTECTION_ENFORCEMENT=NOT_ACTIVE`, `SECURITY_JOB_REQUIRED_FOR_PR=NOT_VERIFIED` et `INDEPENDENT_REVIEW_PENDING`.
 
 ## Triage et décisions ouvertes
 
-La matrice finale `evidence/FINAL_SECRET_REMEDIATION/triage/image-trivy-grype-matrix.csv` déduplique par `vulnerability_id + component + installed_version`. Elle contient **453 lignes uniques**, dont **85 Critical/High prioritaires**. Chaque ligne indique le composant, la version installée, la présence dans l’image runtime, la sévérité, les versions corrigées rapportées par les scanners, la disponibilité apparente d’un correctif, les sources et une décision `OPEN_*_MANUAL_REVIEW_REQUIRED`. L’exploitabilité n’est pas inventée : elle reste `NOT_ASSESSED_SCANNER_DATA_UNAVAILABLE`. La policy Grype a été testée avec une fixture synthétique et exécutée contre le rapport réel : 43 Critical/High non approuvées bloquent effectivement la gate, avec 0 exception active.
+La matrice finale `evidence/FINAL_SECRET_REMEDIATION/triage/image-trivy-grype-matrix.csv` déduplique par `vulnerability_id + component + installed_version`. Elle contient **453 lignes uniques**, dont **85 Critical/High prioritaires**. Chaque ligne indique le composant, la version installée, la présence dans l’image runtime, l’étape `build_or_runtime`, l’identifiant, la sévérité, le scanner, les versions corrigées rapportées par les scanners, l’exploitabilité, l’action, l’owner, l’échéance, l’état d’exception et une décision `OPEN_*_MANUAL_REVIEW_REQUIRED`. Les 453 lignes sont actuellement `RUNTIME_IMAGE`, `OWNER_UNASSIGNED` et `DUE_DATE_OWNER_REQUIRED` : ces marqueurs rendent l’absence de triage explicite et ne constituent pas des décisions positives. L’exploitabilité n’est pas inventée : elle reste `NOT_ASSESSED_SCANNER_DATA_UNAVAILABLE`. La policy Grype a été testée avec une fixture synthétique et exécutée contre le rapport réel : 43 Critical/High non approuvées bloquent effectivement la gate, avec 0 exception active.
 
 Le fichier `evidence/FINAL_SECRET_REMEDIATION/triage/image-secret-triage.json` documente le finding snakeoil baseline, son créateur `ssl-cert`/`make-ssl-cert`, les références KasmVNC, la correction appliquée et le résultat Trivy post-correction à zéro secret. Les vulnérabilités Trivy et les matches Grype restent donc `IMAGE_VULNERABILITIES_TRIAGE_PENDING` et `GRYPE_FINDINGS_TRIAGE_PENDING` jusqu’à une revue finding par finding avec exploitabilité et propriétaire.
 
@@ -123,6 +128,9 @@ GRYPE_POLICY_REAL_REPORT=BLOCKED_OPEN_CRITICAL_HIGH_43
 CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS
 CI_REMOTE_EXECUTION_OBSERVED=TRUE
 CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE
+BRANCH_PROTECTION_ENFORCEMENT=NOT_ACTIVE
+SECURITY_JOB_REQUIRED_FOR_PR=NOT_VERIFIED
+INDEPENDENT_REVIEW_PENDING
 SHELLCHECK_PASS
 DOCKER_HOST_NETWORK_BUILD_PASS
 DOCKER_BRIDGE_BUILD_BLOCKED_BY_ENVIRONMENT
