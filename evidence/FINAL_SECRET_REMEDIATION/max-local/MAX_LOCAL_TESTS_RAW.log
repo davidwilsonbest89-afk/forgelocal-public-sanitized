@@ -237,3 +237,16 @@ EXIT_CODE=0
 
 === COMMAND: git diff --check ===
 EXIT_CODE=0
+
+=== COMMAND: gh run view 33094861561 --json status,conclusion,headSha,jobs ===
+UTC=2026-08-27T16:58:00Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+GH_VERSION=GitHub CLI (gh)
+OUTPUT:
+status=completed
+conclusion=failure
+headSha=9a1c01c0433620a27aac35983b57a7cbe75be1cc
+job=Secret, SBOM, and image security gates; conclusion=failure; job_id=98596986280; failed_step=Grype image policy gate
+job=test; conclusion=success; job_id=98596986717; failed_step=none
+job=Qualified Chromium runtime validation; conclusion=skipped; job_id=98596987733; failed_step=none
+EXIT_CODE=0

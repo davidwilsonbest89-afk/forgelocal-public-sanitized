@@ -26,7 +26,7 @@ Campagne exécutée dans un clone neuf du dépôt `davidwilsonbest89-afk/forgelo
 | Firefox | binaire absent | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | Camoufox | binaire absent, aucun téléchargement non vérifié | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
 | SystemVault natif | Secret Service/keyring natif indisponible | `NATIVE_SYSTEMVAULT_NOT_TESTED` |
-| CI distante | run `33092186739` : test success, sécurité failure Grype, navigateur skipped, conclusion globale failure | `CI_REMOTE_EXECUTION_FAIL` |
+| CI distante | run `33094861561` sur `9a1c01c` : test success, sécurité failure sur Grype image policy, navigateur skipped, conclusion globale failure | `CI_REMOTE_EXECUTION_FAIL` |
 | Protection branche | API GitHub `404 Branch not protected` | `BRANCH_PROTECTION_ENFORCEMENT=NOT_VERIFIED` |
 
 ## Gouvernance
