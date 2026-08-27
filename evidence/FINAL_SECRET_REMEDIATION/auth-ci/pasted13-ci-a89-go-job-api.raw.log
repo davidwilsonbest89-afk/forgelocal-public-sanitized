@@ -1,0 +1,548 @@
+﻿2026-08-27T05:04:21.2939412Z Current runner version: '2.336.0'
+2026-08-27T05:04:21.2956352Z ##[group]Runner Image Provisioner
+2026-08-27T05:04:21.2956988Z Hosted Compute Agent
+2026-08-27T05:04:21.2957608Z Version: 20260819.586
+2026-08-27T05:04:21.2958087Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+2026-08-27T05:04:21.2958599Z Build Date: 2026-08-18T23:20:18Z
+2026-08-27T05:04:21.2959062Z Worker ID: {d4ee488f-ca3d-4a5f-b422-c9cd23e55a91}
+2026-08-27T05:04:21.2959540Z Azure Region: centralus
+2026-08-27T05:04:21.2959951Z ##[endgroup]
+2026-08-27T05:04:21.2960877Z ##[group]Operating System
+2026-08-27T05:04:21.2961303Z Ubuntu
+2026-08-27T05:04:21.2961661Z 24.04.4
+2026-08-27T05:04:21.2962026Z LTS
+2026-08-27T05:04:21.2962385Z ##[endgroup]
+2026-08-27T05:04:21.2962748Z ##[group]Runner Image
+2026-08-27T05:04:21.2963184Z Image: ubuntu-24.04
+2026-08-27T05:04:21.2963569Z Version: 20260823.283.1
+2026-08-27T05:04:21.2964444Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260823.283/images/ubuntu/Ubuntu2404-Readme.md
+2026-08-27T05:04:21.2965481Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260823.283
+2026-08-27T05:04:21.2966127Z ##[endgroup]
+2026-08-27T05:04:21.2966980Z ##[group]GITHUB_TOKEN Permissions
+2026-08-27T05:04:21.2968950Z Contents: read
+2026-08-27T05:04:21.2969360Z Metadata: read
+2026-08-27T05:04:21.2969736Z Packages: read
+2026-08-27T05:04:21.2970134Z ##[endgroup]
+2026-08-27T05:04:21.2971603Z Secret source: Actions
+2026-08-27T05:04:21.2972316Z Prepare workflow directory
+2026-08-27T05:04:21.3225991Z Prepare all required actions
+2026-08-27T05:04:21.3261256Z Getting action download info
+2026-08-27T05:04:21.5231670Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-08-27T05:04:21.6923143Z Download action repository 'actions/setup-node@v6' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+2026-08-27T05:04:21.7879952Z Download action repository 'actions/setup-go@v6' (SHA:924ae3a1cded613372ab5595356fb5720e22ba16)
+2026-08-27T05:04:22.2277021Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-08-27T05:04:22.4351503Z Complete job name: test
+2026-08-27T05:04:22.5084698Z ##[group]Run actions/checkout@v7
+2026-08-27T05:04:22.5085706Z with:
+2026-08-27T05:04:22.5086597Z   repository: davidwilsonbest89-afk/forgelocal-public-sanitized
+2026-08-27T05:04:22.5093234Z   token: ***
+2026-08-27T05:04:22.5093975Z   ssh-strict: true
+2026-08-27T05:04:22.5094629Z   ssh-user: git
+2026-08-27T05:04:22.5095315Z   persist-credentials: true
+2026-08-27T05:04:22.5096054Z   clean: true
+2026-08-27T05:04:22.5096737Z   sparse-checkout-cone-mode: true
+2026-08-27T05:04:22.5097636Z   fetch-depth: 1
+2026-08-27T05:04:22.5098319Z   fetch-tags: false
+2026-08-27T05:04:22.5098987Z   show-progress: true
+2026-08-27T05:04:22.5099731Z   lfs: false
+2026-08-27T05:04:22.5100367Z   submodules: false
+2026-08-27T05:04:22.5101359Z   set-safe-directory: true
+2026-08-27T05:04:22.5102133Z   allow-unsafe-pr-checkout: false
+2026-08-27T05:04:22.5103135Z ##[endgroup]
+2026-08-27T05:04:22.5889292Z Syncing repository: davidwilsonbest89-afk/forgelocal-public-sanitized
+2026-08-27T05:04:22.5893105Z ##[group]Getting Git version info
+2026-08-27T05:04:22.5894953Z Working directory is '/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized'
+2026-08-27T05:04:22.5903174Z [command]/usr/bin/git version
+2026-08-27T05:04:22.6624483Z git version 2.55.0
+2026-08-27T05:04:22.6637524Z ##[endgroup]
+2026-08-27T05:04:22.6644562Z Temporarily overriding HOME='/home/runner/work/_temp/334255a7-f7d6-46d2-963b-c5217841dc10' before making global git config changes
+2026-08-27T05:04:22.6646792Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-27T05:04:22.6649288Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized
+2026-08-27T05:04:22.6685276Z Deleting the contents of '/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized'
+2026-08-27T05:04:22.6687876Z ##[group]Determining repository object format
+2026-08-27T05:04:22.6689476Z ##[endgroup]
+2026-08-27T05:04:22.6690826Z ##[group]Initializing the repository
+2026-08-27T05:04:22.6692428Z [command]/usr/bin/git init /home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized
+2026-08-27T05:04:22.6771914Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-08-27T05:04:22.6773900Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-08-27T05:04:22.6775456Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-08-27T05:04:22.6776606Z hint: call:
+2026-08-27T05:04:22.6777262Z hint:
+2026-08-27T05:04:22.6778446Z hint: 	git config --global init.defaultBranch <name>
+2026-08-27T05:04:22.6779537Z hint:
+2026-08-27T05:04:22.6780492Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-08-27T05:04:22.6781849Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-08-27T05:04:22.6782999Z hint:
+2026-08-27T05:04:22.6783973Z hint: 	git branch -m <name>
+2026-08-27T05:04:22.6784715Z hint:
+2026-08-27T05:04:22.6785677Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-08-27T05:04:22.6787741Z Initialized empty Git repository in /home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git/
+2026-08-27T05:04:22.6790746Z [command]/usr/bin/git remote add origin https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized
+2026-08-27T05:04:22.6812150Z ##[endgroup]
+2026-08-27T05:04:22.6813295Z ##[group]Disabling automatic garbage collection
+2026-08-27T05:04:22.6815327Z [command]/usr/bin/git config --local gc.auto 0
+2026-08-27T05:04:22.6835849Z ##[endgroup]
+2026-08-27T05:04:22.6837668Z ##[group]Setting up auth
+2026-08-27T05:04:22.6838833Z Removing SSH command configuration
+2026-08-27T05:04:22.6840367Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-27T05:04:22.6862189Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-27T05:04:22.7218099Z Removing HTTP extra header
+2026-08-27T05:04:22.7219641Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-27T05:04:22.7241384Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-27T05:04:22.7383007Z Removing includeIf entries pointing to credentials config files
+2026-08-27T05:04:22.7386805Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-27T05:04:22.7408832Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-08-27T05:04:22.7554251Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-08-27T05:04:22.7578940Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git.path /home/runner/work/_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:04:22.7598881Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:04:22.7621098Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:04:22.7641649Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:04:22.7660324Z ##[endgroup]
+2026-08-27T05:04:22.7661485Z ##[group]Fetching the repository
+2026-08-27T05:04:22.7664578Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d01ffad64570839298da7bcb8e3da0d2fd38e8b2:refs/remotes/pull/1/merge
+2026-08-27T05:04:29.8839055Z From https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized
+2026-08-27T05:04:29.8839797Z  * [new ref]         d01ffad64570839298da7bcb8e3da0d2fd38e8b2 -> pull/1/merge
+2026-08-27T05:04:29.8842406Z ##[endgroup]
+2026-08-27T05:04:29.8843359Z ##[group]Determining the checkout info
+2026-08-27T05:04:29.8843908Z ##[endgroup]
+2026-08-27T05:04:29.8848869Z [command]/usr/bin/git sparse-checkout disable
+2026-08-27T05:04:29.8933859Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-08-27T05:04:29.9094070Z ##[group]Checking out the ref
+2026-08-27T05:04:29.9097687Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1/merge
+2026-08-27T05:04:30.7792935Z Note: switching to 'refs/remotes/pull/1/merge'.
+2026-08-27T05:04:30.7793353Z
+2026-08-27T05:04:30.7793611Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-08-27T05:04:30.7794072Z changes and commit them, and you can discard any commits you make in this
+2026-08-27T05:04:30.7794611Z state without impacting any branches by switching back to a branch.
+2026-08-27T05:04:30.7794955Z
+2026-08-27T05:04:30.7795198Z If you want to create a new branch to retain commits you create, you may
+2026-08-27T05:04:30.7795610Z do so (now or later) by using -c with the switch command. Example:
+2026-08-27T05:04:30.7795798Z
+2026-08-27T05:04:30.7795936Z   git switch -c <new-branch-name>
+2026-08-27T05:04:30.7796121Z
+2026-08-27T05:04:30.7796207Z Or undo this operation with:
+2026-08-27T05:04:30.7796450Z
+2026-08-27T05:04:30.7796537Z   git switch -
+2026-08-27T05:04:30.7796694Z
+2026-08-27T05:04:30.7796860Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-08-27T05:04:30.7797202Z
+2026-08-27T05:04:30.7797913Z HEAD is now at d01ffad Merge a89b9c451bc02c5f366129d34a0072b0628d13e6 into 1d0fe24da0edbddc5eab30d971628df8fe5a92d3
+2026-08-27T05:04:30.8083033Z ##[endgroup]
+2026-08-27T05:04:30.8119856Z [command]/usr/bin/git log -1 --format=%H
+2026-08-27T05:04:30.8138759Z d01ffad64570839298da7bcb8e3da0d2fd38e8b2
+2026-08-27T05:04:30.8347251Z ##[group]Run actions/setup-node@v6
+2026-08-27T05:04:30.8347759Z with:
+2026-08-27T05:04:30.8347993Z   node-version: 22
+2026-08-27T05:04:30.8348206Z   check-latest: false
+2026-08-27T05:04:30.8350059Z   token: ***
+2026-08-27T05:04:30.8350307Z   package-manager-cache: true
+2026-08-27T05:04:30.8350545Z ##[endgroup]
+2026-08-27T05:04:30.9325337Z Found in cache @ /opt/hostedtoolcache/node/22.23.2/x64
+2026-08-27T05:04:30.9328158Z ##[group]Environment details
+2026-08-27T05:04:31.2366766Z node: v22.23.2
+2026-08-27T05:04:31.2367183Z npm: 10.9.8
+2026-08-27T05:04:31.2367919Z yarn: 1.22.22
+2026-08-27T05:04:31.2368677Z ##[endgroup]
+2026-08-27T05:04:31.2487234Z ##[group]Run actions/setup-go@v6
+2026-08-27T05:04:31.2487718Z with:
+2026-08-27T05:04:31.2487947Z   go-version: 1.25.13
+2026-08-27T05:04:31.2488184Z   check-latest: true
+2026-08-27T05:04:31.2488439Z   cache: false
+2026-08-27T05:04:31.2490371Z   token: ***
+2026-08-27T05:04:31.2490619Z ##[endgroup]
+2026-08-27T05:04:31.3337954Z Setup go version spec 1.25.13
+2026-08-27T05:04:31.3338678Z Attempting to resolve the latest version from the manifest...
+2026-08-27T05:04:31.9465732Z matching 1.25.13...
+2026-08-27T05:04:31.9495409Z Resolved as '1.25.13'
+2026-08-27T05:04:31.9499140Z Attempting to download 1.25.13...
+2026-08-27T05:04:32.5259207Z matching 1.25.13...
+2026-08-27T05:04:32.5267331Z Acquiring 1.25.13 from https://github.com/actions/go-versions/releases/download/1.25.13-31764271102/go-1.25.13-linux-x64.tar.gz
+2026-08-27T05:04:33.0661428Z Extracting Go...
+2026-08-27T05:04:33.0744268Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/afa80568-be1a-4f71-ae2d-d4787babafbf -f /home/runner/work/_temp/05d79c08-a53c-410f-b0f3-9bb472df900a
+2026-08-27T05:04:34.3511365Z Successfully extracted go to /home/runner/work/_temp/afa80568-be1a-4f71-ae2d-d4787babafbf
+2026-08-27T05:04:34.3511892Z Adding to the cache ...
+2026-08-27T05:04:44.8693228Z Successfully cached go to /opt/hostedtoolcache/go/1.25.13/x64
+2026-08-27T05:04:44.8694828Z Added go to the path
+2026-08-27T05:04:44.8697116Z Successfully set up Go version 1.25.13
+2026-08-27T05:04:44.8837094Z go version go1.25.13 linux/amd64
+2026-08-27T05:04:44.8837292Z
+2026-08-27T05:04:44.8837811Z ##[group]go env
+2026-08-27T05:04:45.0340008Z AR='ar'
+2026-08-27T05:04:45.0340258Z CC='gcc'
+2026-08-27T05:04:45.0340441Z CGO_CFLAGS='-O2 -g'
+2026-08-27T05:04:45.0340622Z CGO_CPPFLAGS=''
+2026-08-27T05:04:45.0340800Z CGO_CXXFLAGS='-O2 -g'
+2026-08-27T05:04:45.0340990Z CGO_ENABLED='1'
+2026-08-27T05:04:45.0341151Z CGO_FFLAGS='-O2 -g'
+2026-08-27T05:04:45.0341318Z CGO_LDFLAGS='-O2 -g'
+2026-08-27T05:04:45.0341583Z CXX='g++'
+2026-08-27T05:04:45.0341761Z GCCGO='gccgo'
+2026-08-27T05:04:45.0341914Z GO111MODULE=''
+2026-08-27T05:04:45.0342065Z GOAMD64='v1'
+2026-08-27T05:04:45.0342225Z GOARCH='amd64'
+2026-08-27T05:04:45.0342381Z GOAUTH='netrc'
+2026-08-27T05:04:45.0342525Z GOBIN=''
+2026-08-27T05:04:45.0342721Z GOCACHE='/home/runner/.cache/go-build'
+2026-08-27T05:04:45.0342988Z GOCACHEPROG=''
+2026-08-27T05:04:45.0343136Z GODEBUG=''
+2026-08-27T05:04:45.0343391Z GOENV='/home/runner/.config/go/env'
+2026-08-27T05:04:45.0343581Z GOEXE=''
+2026-08-27T05:04:45.0343732Z GOEXPERIMENT=''
+2026-08-27T05:04:45.0343887Z GOFIPS140='off'
+2026-08-27T05:04:45.0344057Z GOFLAGS=''
+2026-08-27T05:04:45.0344646Z GOGCCFLAGS='-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build3772261320=/tmp/go-build -gno-record-gcc-switches'
+2026-08-27T05:04:45.0345109Z GOHOSTARCH='amd64'
+2026-08-27T05:04:45.0345270Z GOHOSTOS='linux'
+2026-08-27T05:04:45.0345428Z GOINSECURE=''
+2026-08-27T05:04:45.0345772Z GOMOD='/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/go.mod'
+2026-08-27T05:04:45.0346131Z GOMODCACHE='/home/runner/go/pkg/mod'
+2026-08-27T05:04:45.0346321Z GONOPROXY=''
+2026-08-27T05:04:45.0346481Z GONOSUMDB=''
+2026-08-27T05:04:45.0346627Z GOOS='linux'
+2026-08-27T05:04:45.0346789Z GOPATH='/home/runner/go'
+2026-08-27T05:04:45.0346958Z GOPRIVATE=''
+2026-08-27T05:04:45.0347170Z GOPROXY='https://proxy.golang.org,direct'
+2026-08-27T05:04:45.0347581Z GOROOT='/opt/hostedtoolcache/go/1.25.13/x64'
+2026-08-27T05:04:45.0347893Z GOSUMDB='sum.golang.org'
+2026-08-27T05:04:45.0348090Z GOTELEMETRY='local'
+2026-08-27T05:04:45.0348321Z GOTELEMETRYDIR='/home/runner/.config/go/telemetry'
+2026-08-27T05:04:45.0348535Z GOTMPDIR=''
+2026-08-27T05:04:45.0348694Z GOTOOLCHAIN='local'
+2026-08-27T05:04:45.0348965Z GOTOOLDIR='/opt/hostedtoolcache/go/1.25.13/x64/pkg/tool/linux_amd64'
+2026-08-27T05:04:45.0349213Z GOVCS=''
+2026-08-27T05:04:45.0349378Z GOVERSION='go1.25.13'
+2026-08-27T05:04:45.0349539Z GOWORK=''
+2026-08-27T05:04:45.0349910Z PKG_CONFIG='pkg-config'
+2026-08-27T05:04:45.0350032Z
+2026-08-27T05:04:45.0350282Z ##[endgroup]
+2026-08-27T05:04:45.0471445Z ##[group]Run test "$(go version | awk '{print $3}')" = "go1.25.13"
+2026-08-27T05:04:45.0471807Z [36;1mtest "$(go version | awk '{print $3}')" = "go1.25.13"[0m
+2026-08-27T05:04:45.0472044Z [36;1mgo env GOTOOLCHAIN[0m
+2026-08-27T05:04:45.0497964Z shell: /usr/bin/bash -e {0}
+2026-08-27T05:04:45.0498165Z env:
+2026-08-27T05:04:45.0498313Z   GOTOOLCHAIN: local
+2026-08-27T05:04:45.0498466Z ##[endgroup]
+2026-08-27T05:04:45.0596535Z local
+2026-08-27T05:04:45.0620231Z ##[group]Run node scripts/check-component-rights.mjs
+2026-08-27T05:04:45.0620518Z [36;1mnode scripts/check-component-rights.mjs[0m
+2026-08-27T05:04:45.0620752Z [36;1mnode scripts/test-component-rights.mjs[0m
+2026-08-27T05:04:45.0620980Z [36;1mnode scripts/test-release-separation.mjs[0m
+2026-08-27T05:04:45.0634815Z shell: /usr/bin/bash -e {0}
+2026-08-27T05:04:45.0635006Z env:
+2026-08-27T05:04:45.0635151Z   GOTOOLCHAIN: local
+2026-08-27T05:04:45.0635445Z ##[endgroup]
+2026-08-27T05:04:45.3601653Z component-rights: OK (8 composants, 3 inputs vérifiés)
+2026-08-27T05:04:49.3119523Z component-rights test: authorized OK
+2026-08-27T05:04:53.7691116Z component-rights test: denied-integrated OK
+2026-08-27T05:04:57.4189759Z component-rights test: unknown-integrated OK
+2026-08-27T05:05:01.1940770Z component-rights test: missing-revision OK
+2026-08-27T05:05:05.7926609Z component-rights test: not-first-party OK
+2026-08-27T05:05:10.7881641Z component-rights test: absent-owner OK
+2026-08-27T05:05:10.8751186Z release-separation test: 7 scénarios OK
+2026-08-27T05:05:10.8796593Z ##[group]Run node scripts/create-component-rights-evidence.mjs
+2026-08-27T05:05:10.8797053Z [36;1mnode scripts/create-component-rights-evidence.mjs[0m
+2026-08-27T05:05:10.8817925Z shell: /usr/bin/bash -e {0}
+2026-08-27T05:05:10.8818141Z env:
+2026-08-27T05:05:10.8818294Z   GOTOOLCHAIN: local
+2026-08-27T05:05:10.8818446Z ##[endgroup]
+2026-08-27T05:05:10.9065959Z component-provenance evidence: fae9c7fbc7fbbf3e503648b968d72551ab326477de52c808bd5ba0b7405334a1 @ d01ffad64570839298da7bcb8e3da0d2fd38e8b2
+2026-08-27T05:05:10.9143849Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-08-27T05:05:10.9144750Z ##[group]Run actions/upload-artifact@v4
+2026-08-27T05:05:10.9144957Z with:
+2026-08-27T05:05:10.9145199Z   name: component-provenance-d01ffad64570839298da7bcb8e3da0d2fd38e8b2
+2026-08-27T05:05:10.9145500Z   path: .ci-artifacts/component-provenance/
+2026-08-27T05:05:10.9145721Z   if-no-files-found: error
+2026-08-27T05:05:10.9145902Z   retention-days: 90
+2026-08-27T05:05:10.9146069Z   compression-level: 6
+2026-08-27T05:05:10.9146239Z   overwrite: false
+2026-08-27T05:05:10.9146407Z   include-hidden-files: false
+2026-08-27T05:05:10.9146613Z env:
+2026-08-27T05:05:10.9146762Z   GOTOOLCHAIN: local
+2026-08-27T05:05:10.9146919Z ##[endgroup]
+2026-08-27T05:05:11.0304613Z (node:2256) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-08-27T05:05:11.0305208Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-08-27T05:05:11.0350440Z With the provided path, there will be 2 files uploaded
+2026-08-27T05:05:11.0354460Z Artifact name is valid!
+2026-08-27T05:05:11.0354838Z Root directory input is valid!
+2026-08-27T05:05:11.3218711Z Beginning upload of artifact content to blob storage
+2026-08-27T05:05:11.3352374Z (node:2256) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-08-27T05:05:11.4708856Z Uploaded bytes 3529
+2026-08-27T05:05:11.5095075Z Finished uploading artifact content to blob storage!
+2026-08-27T05:05:11.5095788Z SHA256 digest of uploaded artifact zip is 94873eec8fd9a64170e2d3f41dd4d6867719e7d7b0a7d8395f6a751ed11f1333
+2026-08-27T05:05:11.5097081Z Finalizing artifact upload
+2026-08-27T05:05:11.7503110Z Artifact component-provenance-d01ffad64570839298da7bcb8e3da0d2fd38e8b2.zip successfully finalized. Artifact ID 9633986241
+2026-08-27T05:05:11.7503948Z Artifact component-provenance-d01ffad64570839298da7bcb8e3da0d2fd38e8b2 has been successfully uploaded! Final size is 3529 bytes. Artifact ID is 9633986241
+2026-08-27T05:05:11.7507783Z Artifact download URL: https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/actions/runs/33041338770/artifacts/9633986241
+2026-08-27T05:05:11.7591641Z ##[group]Run go test ./internal/backup -count=1 -v
+2026-08-27T05:05:11.7591937Z [36;1mgo test ./internal/backup -count=1 -v[0m
+2026-08-27T05:05:11.7592178Z [36;1mgo test -race ./internal/backup -count=1[0m
+2026-08-27T05:05:11.7612841Z shell: /usr/bin/bash -e {0}
+2026-08-27T05:05:11.7613186Z env:
+2026-08-27T05:05:11.7613344Z   GOTOOLCHAIN: go1.25.13
+2026-08-27T05:05:11.7613510Z ##[endgroup]
+2026-08-27T05:05:11.7723646Z go: downloading modernc.org/sqlite v1.56.0
+2026-08-27T05:05:11.7836112Z go: downloading github.com/zalando/go-keyring v0.2.8
+2026-08-27T05:05:11.8963415Z go: downloading github.com/godbus/dbus/v5 v5.2.2
+2026-08-27T05:05:13.5102555Z go: downloading golang.org/x/sys v0.47.0
+2026-08-27T05:05:13.5102896Z go: downloading modernc.org/libc v1.74.4
+2026-08-27T05:05:14.5196932Z go: downloading modernc.org/memory v1.11.0
+2026-08-27T05:05:14.5197310Z go: downloading github.com/google/uuid v1.6.0
+2026-08-27T05:05:14.5197898Z go: downloading github.com/dustin/go-humanize v1.0.1
+2026-08-27T05:05:14.5198176Z go: downloading modernc.org/mathutil v1.7.1
+2026-08-27T05:05:14.6049037Z go: downloading github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
+2026-08-27T05:05:30.0523577Z === RUN   TestMigrateUpgradesExistingBack01DatabaseToProductV4
+2026-08-27T05:05:30.2605806Z --- PASS: TestMigrateUpgradesExistingBack01DatabaseToProductV4 (0.21s)
+2026-08-27T05:05:30.2606480Z === RUN   TestBackupCreateRestoreIsolatedAndNoSecretAtRest
+2026-08-27T05:05:30.3146304Z --- PASS: TestBackupCreateRestoreIsolatedAndNoSecretAtRest (0.05s)
+2026-08-27T05:05:30.3146781Z === RUN   TestBackupRejectsCorruptionTruncationAndAADTampering
+2026-08-27T05:05:30.4603915Z === RUN   TestBackupRejectsCorruptionTruncationAndAADTampering/magic
+2026-08-27T05:05:30.4604472Z === RUN   TestBackupRejectsCorruptionTruncationAndAADTampering/truncated
+2026-08-27T05:05:30.4604885Z === RUN   TestBackupRejectsCorruptionTruncationAndAADTampering/aad
+2026-08-27T05:05:30.4618465Z --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering (0.15s)
+2026-08-27T05:05:30.4619012Z     --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering/magic (0.00s)
+2026-08-27T05:05:30.4619612Z     --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering/truncated (0.00s)
+2026-08-27T05:05:30.4620078Z     --- PASS: TestBackupRejectsCorruptionTruncationAndAADTampering/aad (0.00s)
+2026-08-27T05:05:30.4620486Z === RUN   TestBackupRejectsHostileIdentifiersAndRestorePaths
+2026-08-27T05:05:30.4777100Z --- PASS: TestBackupRejectsHostileIdentifiersAndRestorePaths (0.02s)
+2026-08-27T05:05:30.4778333Z === RUN   TestSnapshotLockRejectsConcurrentBackup
+2026-08-27T05:05:30.4778870Z --- PASS: TestSnapshotLockRejectsConcurrentBackup (0.00s)
+2026-08-27T05:05:30.4779506Z === RUN   TestReconcileRepairsPublishedUnregisteredAfterCrash
+2026-08-27T05:05:30.4935887Z --- PASS: TestReconcileRepairsPublishedUnregisteredAfterCrash (0.02s)
+2026-08-27T05:05:30.4936719Z === RUN   TestReconcileQuarantinesMalformedArtifact
+2026-08-27T05:05:30.5136057Z --- PASS: TestReconcileQuarantinesMalformedArtifact (0.02s)
+2026-08-27T05:05:30.5136454Z === RUN   TestMigrationsEnableCoreTables
+2026-08-27T05:05:30.5466328Z --- PASS: TestMigrationsEnableCoreTables (0.03s)
+2026-08-27T05:05:30.5466860Z === RUN   TestBackupIDsDeterministic
+2026-08-27T05:05:30.5467907Z --- PASS: TestBackupIDsDeterministic (0.00s)
+2026-08-27T05:05:30.5468991Z === RUN   TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels
+2026-08-27T05:05:30.6593972Z --- PASS: TestSQLiteReadOnlyCatalogProjectsGroupsAndRuntimeCandidatesWithoutSentinels (0.11s)
+2026-08-27T05:05:30.6594656Z === RUN   TestBackupTransactionLifecycleRemainsAtomic
+2026-08-27T05:05:30.6833804Z --- PASS: TestBackupTransactionLifecycleRemainsAtomic (0.02s)
+2026-08-27T05:05:30.6834425Z === RUN   TestVerifyAcceptsPublishedArtifactAndRejectsCorruption
+2026-08-27T05:05:30.7415231Z --- PASS: TestVerifyAcceptsPublishedArtifactAndRejectsCorruption (0.06s)
+2026-08-27T05:05:30.7415698Z PASS
+2026-08-27T05:05:30.7419902Z ok  	forgelocal/internal/backup	0.692s
+2026-08-27T05:05:57.6782943Z ok  	forgelocal/internal/backup	4.490s
+2026-08-27T05:05:57.7045031Z ##[group]Run go test -count=1 -timeout 2m ./cmd/... ./internal/...
+2026-08-27T05:05:57.7045481Z [36;1mgo test -count=1 -timeout 2m ./cmd/... ./internal/...[0m
+2026-08-27T05:05:57.7073728Z shell: /usr/bin/bash -e {0}
+2026-08-27T05:05:57.7074079Z env:
+2026-08-27T05:05:57.7074298Z   GOTOOLCHAIN: go1.25.13
+2026-08-27T05:05:57.7074540Z ##[endgroup]
+2026-08-27T05:05:57.7345940Z go: downloading github.com/go-chi/chi/v5 v5.3.1
+2026-08-27T05:05:57.7346586Z go: downloading github.com/mxschmitt/playwright-go v0.6100.0
+2026-08-27T05:05:57.7373019Z go: downloading golang.org/x/net v0.58.0
+2026-08-27T05:05:58.0629179Z go: downloading gopkg.in/yaml.v3 v3.0.1
+2026-08-27T05:05:58.3121548Z go: downloading github.com/go-stack/stack v1.8.1
+2026-08-27T05:05:58.3138613Z go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+2026-08-27T05:05:58.3139378Z go: downloading github.com/go-jose/go-jose/v3 v3.0.5
+2026-08-27T05:06:02.7104336Z ?   	forgelocal/cmd/back01-core	[no test files]
+2026-08-27T05:06:05.9650767Z ok  	forgelocal/cmd/server	0.302s
+2026-08-27T05:06:05.9678913Z ?   	forgelocal/cmd/systemvault-doctor	[no test files]
+2026-08-27T05:07:09.6041546Z 2026/08/27 05:06:07 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation1998179660/001/.api-token
+2026-08-27T05:07:09.6042303Z 2026/08/27 05:06:07 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 127.0.0.1:0 - 201 207B in 44.323632ms
+2026-08-27T05:07:09.6043012Z 2026/08/27 05:06:07 "POST http://example.com/api/v1/backups/bkp-1787807167828725276-3f7cc33d7c57fe28/restore HTTP/1.1" from 127.0.0.1:0 - 201 637B in 3.848567ms
+2026-08-27T05:07:09.6043536Z --- FAIL: TestBackupV1CreateModifyRestoreIsolation (60.59s)
+2026-08-27T05:07:09.6044916Z     backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.0" pid=8779 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation1998179660/001/profiles/target-api/browser-data" endpoint="none (--dump-dom direct process)" navigation="data:text/html,forgelocal-backup-validation"
+2026-08-27T05:07:09.6046870Z     backup_v1_test.go:86: restored Chromium launch timed out: context deadline exceeded; output=[8779:8798:0827/050628.991165:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6048405Z         [8779:8798:0827/050628.992816:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6049634Z         [8779:8798:0827/050630.918584:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6050779Z         [8779:8798:0827/050636.780703:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6051781Z         [8779:8779:0827/050639.354561:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6052785Z         [8779:8779:0827/050639.354636:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6053788Z         [8779:8798:0827/050639.354672:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6054792Z         [8779:8798:0827/050639.354689:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6056003Z         [8779:8779:0827/050639.486200:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6056998Z         [8779:8779:0827/050640.149071:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6058571Z         [8779:8779:0827/050644.494022:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6059871Z         [8779:8779:0827/050644.494216:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6061166Z         [8779:8798:0827/050644.494495:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6062173Z         [8779:8779:0827/050644.743015:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6063176Z         [8779:8798:0827/050644.743080:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6064658Z         [8779:8779:0827/050644.902649:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+2026-08-27T05:07:09.6065903Z         [8779:8779:0827/050644.902877:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6066901Z         [8779:8798:0827/050644.902936:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+2026-08-27T05:07:09.6068140Z         [8779:8779:0827/050644.947939:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+2026-08-27T05:07:09.6069021Z         [8779:8798:0827/050653.275895:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+2026-08-27T05:07:09.6069842Z         [8779:8798:0827/050653.303143:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+2026-08-27T05:07:09.6070724Z         [8779:8798:0827/050653.303706:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+2026-08-27T05:07:09.6071550Z         [8779:8798:0827/050653.362951:ERROR:google_apis/gcm/engine/mcs_client.cc:702]   Error code: 401  Error message: Authentication Failed: wrong_secret
+2026-08-27T05:07:09.6072280Z         [8779:8798:0827/050653.362965:ERROR:google_apis/gcm/engine/mcs_client.cc:704] Failed to log in to GCM, resetting connection.
+2026-08-27T05:07:09.6072910Z 2026/08/27 05:07:07 INFO generated API token path=/tmp/TestCR05V1FacadeAndOpenAPIMatchLivingRouter2383804605/002/.api-token
+2026-08-27T05:07:09.6073799Z 2026/08/27 05:07:07 "GET http://example.com/api/v1/openapi.json HTTP/1.1" from 192.0.2.1:1234 - 200 2563B in 100.245µs
+2026-08-27T05:07:09.6074398Z 2026/08/27 05:07:07 "GET http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 12.872µs
+2026-08-27T05:07:09.6074959Z 2026/08/27 05:07:07 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 6.383µs
+2026-08-27T05:07:09.6075514Z 2026/08/27 05:07:07 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 25.562µs
+2026-08-27T05:07:09.6076202Z 2026/08/27 05:07:07 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7612 - 401 86B in 3.795µs
+2026-08-27T05:07:09.6076768Z 2026/08/27 05:07:07 "GET http://example.com/api/v1/not-a-route HTTP/1.1" from 127.0.0.1:7613 - 404 19B in 2.32µs
+2026-08-27T05:07:09.6077544Z 2026/08/27 05:07:07 "GET http://example.com/api/v1/not-a-route HTTP/1.1" from 127.0.0.1:7613 - 404 19B in 6.238µs
+2026-08-27T05:07:09.6078142Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT22ProfileHistoryReadDiffRestoreAndRedaction3529249901/001/.api-token
+2026-08-27T05:07:09.6078751Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 560B in 1.16487ms
+2026-08-27T05:07:09.6079341Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_dc802c43bf35 HTTP/1.1" from 127.0.0.1:7777 - 200 560B in 1.159469ms
+2026-08-27T05:07:09.6079953Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_dc802c43bf35/metadata HTTP/1.1" from 127.0.0.1:7777 - 200 133B in 1.082969ms
+2026-08-27T05:07:09.6080771Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_dc802c43bf35/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 369B in 112.046µs
+2026-08-27T05:07:09.6081583Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_dc802c43bf35/history?limit=1&offset=1 HTTP/1.1" from 127.0.0.1:7777 - 200 150B in 56.581µs
+2026-08-27T05:07:09.6082492Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_dc802c43bf35/history/diff?from=1&to=2 HTTP/1.1" from 127.0.0.1:7777 - 200 77B in 121.582µs
+2026-08-27T05:07:09.6083382Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_dc802c43bf35/history/1 HTTP/1.1" from 127.0.0.1:7777 - 200 364B in 54.878µs
+2026-08-27T05:07:09.6084116Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_dc802c43bf35/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 200 118B in 998.778µs
+2026-08-27T05:07:09.6084861Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_dc802c43bf35/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 409 99B in 786.024µs
+2026-08-27T05:07:09.6085521Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT22ProfileHistoryRequiresAuthAndLocalOrigin2116415175/001/.api-token
+2026-08-27T05:07:09.6086138Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 559B in 1.079004ms
+2026-08-27T05:07:09.6086784Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_a4661af2d6ad/history HTTP/1.1" from 192.0.2.1:1234 - 401 86B in 10.513µs
+2026-08-27T05:07:09.6087634Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_a4661af2d6ad/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 14.345µs
+2026-08-27T05:07:09.6088387Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_a4661af2d6ad/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 10.405µs
+2026-08-27T05:07:09.6089137Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_a4661af2d6ad/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 8.215µs
+2026-08-27T05:07:09.6089794Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT22HistoryProjectionRedactsActualProxySecrets1797690530/001/.api-token
+2026-08-27T05:07:09.6090495Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_d9c97bfd3c9e HTTP/1.1" from 127.0.0.1:7777 - 200 596B in 947.753µs
+2026-08-27T05:07:09.6091172Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_d9c97bfd3c9e/history/1 HTTP/1.1" from 127.0.0.1:7777 - 200 400B in 96.884µs
+2026-08-27T05:07:09.6091993Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_d9c97bfd3c9e/history/diff?from=1&to=1 HTTP/1.1" from 127.0.0.1:7777 - 200 71B in 84.726µs
+2026-08-27T05:07:09.6092722Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT22HistoryConcurrentRestoreAndMutationAreSerialized3325206262/001/.api-token
+2026-08-27T05:07:09.6093335Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 566B in 1.032139ms
+2026-08-27T05:07:09.6093977Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_159486eaa4d2 HTTP/1.1" from 127.0.0.1:7777 - 200 566B in 1.361826ms
+2026-08-27T05:07:09.6094599Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_159486eaa4d2 HTTP/1.1" from 127.0.0.1:7777 - 200 574B in 1.262825ms
+2026-08-27T05:07:09.6095319Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_159486eaa4d2/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 409 99B in 2.162714ms
+2026-08-27T05:07:09.6096125Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_159486eaa4d2/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 366B in 102.075µs
+2026-08-27T05:07:09.6096852Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers1096722879/001/.api-token
+2026-08-27T05:07:09.6098036Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_664fe23c4282 HTTP/1.1" from 127.0.0.1:7777 - 500 95B in 262.283µs
+2026-08-27T05:07:09.6098904Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_664fe23c4282/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 153B in 96.293µs
+2026-08-27T05:07:09.6099677Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT23ArchiveHistoryFailureLeavesDurableLifecycleAndStartupReco2263034132/001/.api-token
+2026-08-27T05:07:09.6100489Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_f3f02249a92d/archive HTTP/1.1" from 127.0.0.1:7777 - 500 95B in 289.061µs
+2026-08-27T05:07:09.6101180Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker144136817/001/.api-token
+2026-08-27T05:07:09.6101821Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 569B in 1.030945ms
+2026-08-27T05:07:09.6102500Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_3f9aad780a43/reopen HTTP/1.1" from 127.0.0.1:7777 - 409 110B in 37.423µs
+2026-08-27T05:07:09.6103114Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_3f9aad780a43/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 1.126691ms
+2026-08-27T05:07:09.6103775Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT23IdempotentArchiveDoesNotCreateSecondHistoryVersion1301444903/001/.api-token
+2026-08-27T05:07:09.6104369Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 568B in 1.189241ms
+2026-08-27T05:07:09.6104930Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_6e449ebd7671/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 1.186572ms
+2026-08-27T05:07:09.6105622Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_6e449ebd7671/archive HTTP/1.1" from 127.0.0.1:7777 - 200 81B in 30.098µs
+2026-08-27T05:07:09.6106258Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT23ArchiveReopenUpdateConcurrentProductionRouter1324693207/001/.api-token
+2026-08-27T05:07:09.6106849Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 564B in 1.904201ms
+2026-08-27T05:07:09.6107536Z 2026/08/27 05:07:08 "PUT http://example.com/api/profiles/prof_9b30d3982560 HTTP/1.1" from 127.0.0.1:7777 - 200 574B in 1.173604ms
+2026-08-27T05:07:09.6108172Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_9b30d3982560/reopen HTTP/1.1" from 127.0.0.1:7777 - 409 110B in 1.056047ms
+2026-08-27T05:07:09.6108826Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_9b30d3982560/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 2.234022ms
+2026-08-27T05:07:09.6109576Z 2026/08/27 05:07:08 "GET http://example.com/api/profiles/prof_9b30d3982560/history?limit=20&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 368B in 116.133µs
+2026-08-27T05:07:09.6110244Z 2026/08/27 05:07:08 INFO generated API token path=/tmp/TestT23ArchiveReopenProductionGuardsAndRedaction2390368197/001/.api-token
+2026-08-27T05:07:09.6110834Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 559B in 13.851127ms
+2026-08-27T05:07:09.6111522Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/archive HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 17.89µs
+2026-08-27T05:07:09.6112208Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.344µs
+2026-08-27T05:07:09.6113004Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 3.401µs
+2026-08-27T05:07:09.6113702Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 2.113µs
+2026-08-27T05:07:09.6114414Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/reopen HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 4.931µs
+2026-08-27T05:07:09.6115103Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 3.141µs
+2026-08-27T05:07:09.6115805Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 2.971µs
+2026-08-27T05:07:09.6116512Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 2.268µs
+2026-08-27T05:07:09.6117148Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 1.178444ms
+2026-08-27T05:07:09.6118034Z 2026/08/27 05:07:08 "POST http://example.com/api/profiles/prof_e5b21357b434/reopen HTTP/1.1" from 127.0.0.1:7777 - 200 63B in 23.109452ms
+2026-08-27T05:07:09.6118735Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited2706398775/002/.api-token
+2026-08-27T05:07:09.6119494Z 2026/08/27 05:07:09 "POST http://example.com/api/v1/readonly/session/codes HTTP/1.1" from 127.0.0.1:41234 - 201 131B in 28.839µs
+2026-08-27T05:07:09.6120209Z 2026/08/27 05:07:09 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 127.0.0.1:41235 - 200 132B in 17.276µs
+2026-08-27T05:07:09.6120854Z 2026/08/27 05:07:09 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 200 62B in 6.743µs
+2026-08-27T05:07:09.6121447Z 2026/08/27 05:07:09 "POST http://example.com/api/profiles HTTP/1.1" from 192.0.2.1:1234 - 401 85B in 11.904µs
+2026-08-27T05:07:09.6122104Z 2026/08/27 05:07:09 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 127.0.0.1:41236 - 401 90B in 15.764µs
+2026-08-27T05:07:09.6122799Z 2026/08/27 05:07:09 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 203.0.113.10:41237 - 403 107B in 6.104µs
+2026-08-27T05:07:09.6123506Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID3993916076/002/.api-token
+2026-08-27T05:07:09.6124173Z 2026/08/27 05:07:09 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 401 93B in 12.675µs
+2026-08-27T05:07:09.6124762Z 2026/08/27 05:07:09 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 200 62B in 4.73µs
+2026-08-27T05:07:09.6125400Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata639558225/001/data/.api-token
+2026-08-27T05:07:09.6126065Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 73.047µs
+2026-08-27T05:07:09.6126615Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 15.101µs
+2026-08-27T05:07:09.6127165Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 23.132µs
+2026-08-27T05:07:09.6127943Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestT21TemplateAPIMachineReadableAuthAndOriginRefusals2098139846/001/data/.api-token
+2026-08-27T05:07:09.6128596Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 22.402µs
+2026-08-27T05:07:09.6129195Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 11.935µs
+2026-08-27T05:07:09.6129746Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 8.313µs
+2026-08-27T05:07:09.6130369Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 8.627µs
+2026-08-27T05:07:09.6130976Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestT21TemplateAPIPaginationProjectionAndCorrelation1719116506/001/data/.api-token
+2026-08-27T05:07:09.6131631Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 191B in 882.589µs
+2026-08-27T05:07:09.6132135Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 191B in 31.189125ms
+2026-08-27T05:07:09.6132684Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 193B in 978.684µs
+2026-08-27T05:07:09.6133298Z 2026/08/27 05:07:09 "GET http://example.com/api/templates?limit=1&offset=1 HTTP/1.1" from 127.0.0.1:7777 - 200 172B in 176.727µs
+2026-08-27T05:07:09.6134044Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestT21TemplateDraftArchivedProfileSnapshotAndAuditIsolation4122201748/001/data/.api-token
+2026-08-27T05:07:09.6134767Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 923.015µs
+2026-08-27T05:07:09.6135541Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/ef59ffb52f3e8a603d008cfe8db523e9/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 200 306B in 893.009µs
+2026-08-27T05:07:09.6136416Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/ef59ffb52f3e8a603d008cfe8db523e9/versions/1/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 904.491µs
+2026-08-27T05:07:09.6137300Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/ef59ffb52f3e8a603d008cfe8db523e9/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 87B in 805.574µs
+2026-08-27T05:07:09.6138208Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestT21TemplateAuditRedactsSuccessConflictAndRefusal77189885/001/data/.api-token
+2026-08-27T05:07:09.6138890Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 320B in 891.63µs
+2026-08-27T05:07:09.6139671Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/54a1e373d77d7b19eaff4c668e5d0b79/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 133B in 735.442µs
+2026-08-27T05:07:09.6140541Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/54a1e373d77d7b19eaff4c668e5d0b79/versions/1/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 873.951µs
+2026-08-27T05:07:09.6141427Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/54a1e373d77d7b19eaff4c668e5d0b79/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 87B in 808.759µs
+2026-08-27T05:07:09.6142135Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestTemplatesCatalogReadDetailAndDraft2913923988/001/data/.api-token
+2026-08-27T05:07:09.6142791Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 269B in 877.724µs
+2026-08-27T05:07:09.6143452Z 2026/08/27 05:07:09 "GET http://example.com/api/templates?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 170B in 109.658µs
+2026-08-27T05:07:09.6144219Z 2026/08/27 05:07:09 "GET http://example.com/api/templates/0ec08bc4fa92dce209573805934b1758/versions/1 HTTP/1.1" from 127.0.0.1:7777 - 200 269B in 43.077µs
+2026-08-27T05:07:09.6145076Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/0ec08bc4fa92dce209573805934b1758/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 200 303B in 838.326µs
+2026-08-27T05:07:09.6145825Z 2026/08/27 05:07:09 INFO generated API token path=/tmp/TestTemplatesVersionArchiveConflictAndLoopbackRefusal176176602/001/data/.api-token
+2026-08-27T05:07:09.6146501Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 761.213µs
+2026-08-27T05:07:09.6147306Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/236b216302cc1d266ffd0d191bf838a0/versions HTTP/1.1" from 127.0.0.1:7777 - 201 175B in 883.08µs
+2026-08-27T05:07:09.6148302Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/236b216302cc1d266ffd0d191bf838a0/versions/2/draft HTTP/1.1" from 127.0.0.1:7777 - 409 133B in 886.842µs
+2026-08-27T05:07:09.6149222Z 2026/08/27 05:07:09 "POST http://example.com/api/templates/236b216302cc1d266ffd0d191bf838a0/versions/2/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 778.267µs
+2026-08-27T05:07:09.6150056Z 2026/08/27 05:07:09 "GET http://example.com/api/templates/236b216302cc1d266ffd0d191bf838a0/versions/2 HTTP/1.1" from 127.0.0.1:7777 - 200 177B in 46.548µs
+2026-08-27T05:07:09.6150733Z 2026/08/27 05:07:09 "POST http://example.com/api/templates HTTP/1.1" from 203.0.113.9:9000 - 403 107B in 11.111µs
+2026-08-27T05:07:09.6151072Z FAIL
+2026-08-27T05:07:09.6151284Z FAIL	forgelocal/internal/api	62.837s
+2026-08-27T05:07:09.6151543Z ok  	forgelocal/internal/backup	2.073s
+2026-08-27T05:07:09.6151821Z ok  	forgelocal/internal/browser	0.411s
+2026-08-27T05:07:09.6152075Z ok  	forgelocal/internal/config	0.003s
+2026-08-27T05:07:09.6152328Z ok  	forgelocal/internal/cookies	0.002s
+2026-08-27T05:07:09.6152583Z ok  	forgelocal/internal/drift	0.001s
+2026-08-27T05:07:09.6152863Z ok  	forgelocal/internal/environment	0.002s
+2026-08-27T05:07:09.6153128Z ok  	forgelocal/internal/extensions	1.446s
+2026-08-27T05:07:09.6153382Z ok  	forgelocal/internal/fingerprint	0.003s
+2026-08-27T05:07:09.6153617Z ok  	forgelocal/internal/fonts	0.001s
+2026-08-27T05:07:09.6153868Z ok  	forgelocal/internal/geolocation	0.001s
+2026-08-27T05:07:09.6154128Z ok  	forgelocal/internal/groups	0.006s
+2026-08-27T05:07:09.6154401Z ok  	forgelocal/internal/hardware	0.001s
+2026-08-27T05:07:09.6154652Z ok  	forgelocal/internal/history	0.602s
+2026-08-27T05:07:09.6154924Z ?   	forgelocal/internal/humanize	[no test files]
+2026-08-27T05:07:09.6155201Z ok  	forgelocal/internal/launch	2.525s
+2026-08-27T05:07:09.6155452Z ok  	forgelocal/internal/localvault	0.207s
+2026-08-27T05:07:09.6155705Z ok  	forgelocal/internal/mcp	0.243s
+2026-08-27T05:07:09.6155965Z ok  	forgelocal/internal/productschema	0.023s
+2026-08-27T05:07:09.6156255Z ok  	forgelocal/internal/profile	0.054s
+2026-08-27T05:07:09.6156510Z ok  	forgelocal/internal/profilehealth	0.002s
+2026-08-27T05:07:09.6156779Z ok  	forgelocal/internal/profilemigration	2.180s
+2026-08-27T05:07:09.6157065Z ok  	forgelocal/internal/proxies	0.588s
+2026-08-27T05:07:09.6157330Z ok  	forgelocal/internal/proxyprovider	0.002s
+2026-08-27T05:07:09.6157724Z ok  	forgelocal/internal/runtime	0.111s
+2026-08-27T05:07:09.6158016Z ?   	forgelocal/internal/secrets	[no test files]
+2026-08-27T05:07:09.6158292Z ok  	forgelocal/internal/sessiontrack	0.001s
+2026-08-27T05:07:09.6158556Z ok  	forgelocal/internal/spike	2.578s
+2026-08-27T05:07:09.6158821Z ok  	forgelocal/internal/templates	0.835s
+2026-08-27T05:07:09.6159078Z ok  	forgelocal/internal/workflow	0.004s
+2026-08-27T05:07:09.6159291Z FAIL
+2026-08-27T05:07:09.6248170Z ##[error]Process completed with exit code 1.
+2026-08-27T05:07:09.6353348Z Post job cleanup.
+2026-08-27T05:07:09.6982032Z [command]/usr/bin/git version
+2026-08-27T05:07:09.7009321Z git version 2.55.0
+2026-08-27T05:07:09.7031976Z Temporarily overriding HOME='/home/runner/work/_temp/77b7e972-6dc6-4128-b25e-40a71f038430' before making global git config changes
+2026-08-27T05:07:09.7032901Z Adding repository directory to the temporary git global config as a safe directory
+2026-08-27T05:07:09.7035986Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized
+2026-08-27T05:07:09.7057696Z Removing SSH command configuration
+2026-08-27T05:07:09.7062585Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-08-27T05:07:09.7088296Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-08-27T05:07:09.7252563Z Removing HTTP extra header
+2026-08-27T05:07:09.7258476Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-08-27T05:07:09.7278274Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-08-27T05:07:09.7437911Z Removing includeIf entries pointing to credentials config files
+2026-08-27T05:07:09.7442646Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-08-27T05:07:09.7460839Z includeif.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git.path
+2026-08-27T05:07:09.7461755Z includeif.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git/worktrees/*.path
+2026-08-27T05:07:09.7462347Z includeif.gitdir:/github/workspace/.git.path
+2026-08-27T05:07:09.7462814Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-27T05:07:09.7467300Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git.path
+2026-08-27T05:07:09.7481813Z /home/runner/work/_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:07:09.7488675Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-da152bda\-b826\-4df0\-bb01\-2b88a3b64d3b\.config
+2026-08-27T05:07:09.7510648Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git/worktrees/*.path
+2026-08-27T05:07:09.7532546Z /home/runner/work/_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:07:09.7539663Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/forgelocal-public-sanitized/forgelocal-public-sanitized/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-da152bda\-b826\-4df0\-bb01\-2b88a3b64d3b\.config
+2026-08-27T05:07:09.7560613Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-08-27T05:07:09.7575062Z /github/runner_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:07:09.7580213Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-da152bda\-b826\-4df0\-bb01\-2b88a3b64d3b\.config
+2026-08-27T05:07:09.7604797Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-08-27T05:07:09.7624010Z /github/runner_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config
+2026-08-27T05:07:09.7630441Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-da152bda\-b826\-4df0\-bb01\-2b88a3b64d3b\.config
+2026-08-27T05:07:09.7652484Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-08-27T05:07:09.7795001Z Removing credentials config '/home/runner/work/_temp/git-credentials-da152bda-b826-4df0-bb01-2b88a3b64d3b.config'
+2026-08-27T05:07:09.7900975Z Cleaning up orphan processes
+2026-08-27T05:07:09.8102340Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

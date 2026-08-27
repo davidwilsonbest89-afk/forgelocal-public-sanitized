@@ -103,10 +103,11 @@ func assertRestoredProfileStartsLocalChromium(t *testing.T, userDataDir string) 
 		t.Fatalf("read restored Chromium version: %v; output=%s", err, versionOutput)
 	}
 	runtimeVersion := strings.TrimSpace(string(versionOutput))
+	probePath := filepath.Join(t.TempDir(), "chromium-runtime-probe.png")
 	cmd := exec.CommandContext(ctx, binary,
 		"--headless=new", "--no-first-run", "--no-default-browser-check",
 		"--disable-gpu", "--disable-dev-shm-usage", "--disable-background-networking", "--disable-component-update", "--disable-extensions", "--disable-sync", "--disable-default-apps", "--disable-crash-reporter", "--disable-features=Translate,MediaRouter,OptimizationHints,AutofillServerCommunication,CertificateTransparencyComponentUpdater", "--no-sandbox", "--user-data-dir="+userDataDir,
-		"--dump-dom", "data:text/html,forgelocal-backup-validation")
+		"--screenshot="+probePath, "data:text/html,forgelocal-backup-validation")
 	var output bytes.Buffer
 	cmd.Stdout = &output
 	cmd.Stderr = &output
@@ -114,13 +115,16 @@ func assertRestoredProfileStartsLocalChromium(t *testing.T, userDataDir string) 
 		t.Fatalf("start restored Chromium: %v", err)
 	}
 	pid := cmd.Process.Pid
-	t.Logf("AC-BACK-01 runtime relaunch started: binary=%q version=%q pid=%d target_profile_id=%q user_data_dir=%q endpoint=%q navigation=%q", binary, runtimeVersion, pid, filepath.Base(filepath.Dir(userDataDir)), userDataDir, "none (--dump-dom direct process)", "data:text/html,forgelocal-backup-validation")
+	t.Logf("AC-BACK-01 runtime relaunch started: binary=%q version=%q pid=%d target_profile_id=%q user_data_dir=%q endpoint=%q navigation=%q", binary, runtimeVersion, pid, filepath.Base(filepath.Dir(userDataDir)), userDataDir, "none (--screenshot direct process)", "data:text/html,forgelocal-backup-validation")
 	err = cmd.Wait()
 	if ctx.Err() != nil {
 		t.Fatalf("restored Chromium launch timed out: %v; output=%s", ctx.Err(), output.String())
 	}
 	if err != nil {
 		t.Fatalf("restored Chromium launch failed: %v; output=%s", err, output.String())
+	}
+	if info, err := os.Stat(probePath); err != nil || info.Size() == 0 {
+		t.Fatalf("restored Chromium probe artifact missing or empty: %v", err)
 	}
 	for _, name := range []string{"SingletonLock", "SingletonCookie", "SingletonSocket"} {
 		if _, err := os.Lstat(filepath.Join(userDataDir, name)); err == nil {
