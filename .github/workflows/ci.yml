@@ -118,7 +118,7 @@ jobs:
 
       - name: Trivy filesystem secret gate
         run: |
-          docker run --rm -v "$PWD:/repo:ro" aquasec/trivy:0.74.2 fs --scanners secret --exit-code 1 --no-progress /repo
+          docker run --rm -v "$PWD:/repo:ro" aquasec/trivy:0.74.0 fs --scanners secret --exit-code 1 --no-progress /repo
 
       - name: Syft source SBOM
         run: |
@@ -153,7 +153,7 @@ jobs:
 
       - name: Trivy image secret gate
         run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.74.2 image --scanners secret --exit-code 1 --no-progress forgelocal-ci:${{ github.sha }}
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.74.0 image --scanners secret --exit-code 1 --no-progress forgelocal-ci:${{ github.sha }}
 
       - name: Syft image SBOM
         run: |
