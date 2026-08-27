@@ -1,0 +1,55 @@
+=== DATE_UTC ===
+2026-08-26T23:56:37Z
+=== COMMAND ===
+sudo docker build --progress=plain --no-cache -f docker/Dockerfile.run --build-arg BROWSEFORGE_VERSION=v2.1.12 -t forgelocal-secret-remediation:controlled-20260826 docker
+=== BUILD ===
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.run
+#1 transferring dockerfile: 4.17kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:24.04
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 46B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 4.20kB done
+#4 DONE 0.0s
+
+#5 [1/9] FROM docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517
+#5 resolve docker.io/library/ubuntu:24.04@sha256:33ceb71981b602c1a7443a53469e4dba065f7503eab3078a2d7a57a2ab987517 0.0s done
+#5 sha256:0926a8eb0e608a5c6888d1cd5594184bdf3ed3aa311dba5b42a547caefdc6f2e 2.10MB / 29.75MB 0.2s
+#5 sha256:0926a8eb0e608a5c6888d1cd5594184bdf3ed3aa311dba5b42a547caefdc6f2e 29.75MB / 29.75MB 0.3s done
+#5 extracting sha256:0926a8eb0e608a5c6888d1cd5594184bdf3ed3aa311dba5b42a547caefdc6f2e
+#5 extracting sha256:0926a8eb0e608a5c6888d1cd5594184bdf3ed3aa311dba5b42a547caefdc6f2e 1.0s done
+#5 DONE 1.3s
+
+#6 [2/9] RUN apt-get update && apt-get install -y --no-install-recommends     curl unzip ca-certificates     libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2     libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1     libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1     libgtk-3-0 libdbus-glib-1-2 libxt6     fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-liberation2 fonts-dejavu-core     openbox     libegl1 libgles2     && rm -rf /var/lib/apt/lists/*
+#6 ERROR: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends     curl unzip ca-certificates     libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2     libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1     libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1     libgtk-3-0 libdbus-glib-1-2 libxt6     fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-liberation2 fonts-dejavu-core     openbox     libegl1 libgles2     && rm -rf /var/lib/apt/lists/*" did not complete successfully: failed to create endpoint vlui9ywa34zbdnvcjf8gc2spz on network bridge: Unable to enable DIRECT ACCESS FILTERING - DROP rule:  (iptables failed: iptables --wait -t raw -A PREROUTING -d 172.17.0.2 ! -i docker0 -j DROP: iptables v1.8.10 (legacy): can't initialize iptables table `raw': Table does not exist (do you need to insmod?)
+Perhaps iptables or your kernel needs to be upgraded.
+ (exit status 3))
+------
+ > [2/9] RUN apt-get update && apt-get install -y --no-install-recommends     curl unzip ca-certificates     libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2     libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1     libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1     libgtk-3-0 libdbus-glib-1-2 libxt6     fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-liberation2 fonts-dejavu-core     openbox     libegl1 libgles2     && rm -rf /var/lib/apt/lists/*:
+------
+Dockerfile.run:18
+--------------------
+  17 |     # System deps + browser runtime libs
+  18 | >>> RUN apt-get update && apt-get install -y --no-install-recommends \
+  19 | >>>     curl unzip ca-certificates \
+  20 | >>>     libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 \
+  21 | >>>     libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1 \
+  22 | >>>     libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1 \
+  23 | >>>     libgtk-3-0 libdbus-glib-1-2 libxt6 \
+  24 | >>>     fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-liberation2 fonts-dejavu-core \
+  25 | >>>     openbox \
+  26 | >>>     libegl1 libgles2 \
+  27 | >>>     && rm -rf /var/lib/apt/lists/*
+  28 |
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c apt-get update && apt-get install -y --no-install-recommends     curl unzip ca-certificates     libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2     libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm1     libpango-1.0-0 libcairo2 libasound2t64 libxshmfence1     libgtk-3-0 libdbus-glib-1-2 libxt6     fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-liberation2 fonts-dejavu-core     openbox     libegl1 libgles2     && rm -rf /var/lib/apt/lists/*" did not complete successfully: failed to create endpoint vlui9ywa34zbdnvcjf8gc2spz on network bridge: Unable to enable DIRECT ACCESS FILTERING - DROP rule:  (iptables failed: iptables --wait -t raw -A PREROUTING -d 172.17.0.2 ! -i docker0 -j DROP: iptables v1.8.10 (legacy): can't initialize iptables table `raw': Table does not exist (do you need to insmod?)
+Perhaps iptables or your kernel needs to be upgraded.
+ (exit status 3))

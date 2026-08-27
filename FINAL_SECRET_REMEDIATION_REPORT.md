@@ -11,7 +11,7 @@ Une divulgation critique réelle a été confirmée dans la branche de qualifica
 
 Le correctif appliqué est volontairement minimal. Les deux lanceurs ne lisent plus le fichier de token et ne l’impriment plus. L’entrypoint conserve uniquement le test d’existence du fichier et affiche un état générique redacted ; le lanceur local supprime entièrement le bloc de lecture et d’affichage. Un binaire de test suivi par Git, classé artefact généré contenant des chaînes de fixture bearer-like, a également été retiré de la branche corrective ; seul son hash historique est conservé dans la preuve.
 
-Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. Le diagnostic demandé a confirmé que `docker version`, `docker info`, `docker buildx version` et `docker context ls` échouent tous avec `docker: command not found` (code 127) ; `systemctl is-system-running` répond `running`, mais cela ne constitue pas la présence d’un daemon Docker. L’espace disponible était de 25G sur 48G et l’utilisateur était `ubuntu` avec groupe sudo ; aucune installation ni tentative de démarrage n’a été effectuée. Les contrôles Docker restent `DOCKER_RUNTIME_VALIDATION_PENDING`, `DOCKER_BUILD_RUN_LOG_LAYERS_NOT_EXECUTED` et `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE`. Le verdict de release reste bloqué par mandat et par les autres constats de qualification : `GOSEC_R7_BLOCKED_CRITICAL_FINDING`, `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
+Le contrôle comportemental avec sentinelle synthétique privée, le contrôle de permissions `0600`, le cas fichier absent, le nettoyage des processus et les scans secrets ciblés sont PASS. Une installation contrôlée a ensuite réussi : Docker Engine `29.1.3` et Buildx `0.30.1` ont été installés depuis les paquets Ubuntu disponibles. Le daemon réel a démarré via systemd et `sudo docker info` a confirmé le serveur actif ; aucun ajout au groupe Docker n’a été effectué. Le premier build bridge a échoué avec l’erreur noyau/iptables `can't initialize iptables table raw`; un second build utilisant le réseau host du daemon réel a réussi sans modifier le code ni simuler Docker. Après le cycle, l’image, les caches, les conteneurs, les services et le socket ont été nettoyés ou arrêtés/désactivés. Le verdict de release reste bloqué par mandat et par les findings restants : `GOSEC_R7_BLOCKED_CRITICAL_FINDING`, `PUBLIC_RELEASE_BLOCKED`, `GOSEC_R7_CLASSIFIED_WITH_OPEN_FINDINGS`, `FORGELOCAL_PRODUCTION_READY=false`.
 
 ## Preuve et audit de contamination
 
@@ -23,7 +23,13 @@ La preuve redacted distribuable se trouve dans `evidence/FINAL_SECRET_REMEDIATIO
 | `scripts/start.sh:29` | Seconde source runtime critique | Bloc de lecture et d’affichage supprimé ; garde statique PASS |
 | Fixtures de tests | Test/fixture, non-runtime | Conservées et distinguées dans la matrice anonymisée |
 | `launch.test` | Binaire de test suivi, bearer-like fixture possible | Retiré de la branche corrective ; hash seul conservé |
-| Logs Docker, couches d’image et `docker logs` | Contrôle runtime | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` |
+| Logs Docker, couches d’image et `docker logs` | Contrôle runtime | Cycle réel PASS ; sentinelle absente |
+| Installation Docker Engine/Buildx | PASS | Engine `29.1.3`, Buildx `0.30.1`; provenance et codes dans les raw logs |
+| Premier build Docker bridge | FAIL contrôlé | Table iptables `raw` indisponible ; erreur exacte conservée |
+| Build Docker host-network | PASS | Image ForgeLocal construite sans push |
+| Historique et layers de l’image | PASS | Sentinelle absente de `docker history` et de l’export de layers |
+| Image secret scan Trivy | `OPEN_FINDING` | 1 clé privée snakeoil générée par Ubuntu dans `/etc/ssl/private/ssl-cert-snakeoil.key`, sans lien avec la sentinelle |
+| Cleanup Docker | PASS | Aucun conteneur/processus résiduel ; daemon et socket arrêtés/supprimés |
 | Archives historiques R7/V2 | Héritées, chaîne de conservation séparée | `INHERITED_FROM_R7`, non modifiées et non repackagées |
 
 ## Correctif appliqué
@@ -54,14 +60,19 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | ShellCheck des deux lanceurs | `FAIL` au sens exit code | Seulement deux warnings SC2034 sur l’index de boucle inutilisé ; aucun diagnostic secret ou erreur |
 | `git diff --check` | `PASS` | Aucun whitespace error |
 | `git fsck --full` local | `PASS` | Intégrité du clone locale vérifiée |
-| Docker version/info/Buildx/context | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` | Client absent : `docker: command not found`, codes 127 |
-| Docker build/run/logs/layers/Trivy image | `DOCKER_RUNTIME_VALIDATION_PENDING` / `DOCKER_BUILD_RUN_LOG_LAYERS_NOT_EXECUTED` | Daemon réel indisponible ; aucune simulation, installation ou contournement effectué |
-| Syft SBOM CycloneDX | `NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE` | Binaire `syft` absent ; aucun SBOM simulé |
-| Grype SBOM | `NOT_EXECUTED` | Contrôle secondaire hors du scope critique immédiat |
+| Docker version/info/Buildx/context | `PASS` via sudo | Engine `29.1.3`, Buildx `0.30.1`; accès direct utilisateur refusé par socket `root:docker`, sans modification du groupe |
+| Docker build bridge | `FAIL` contrôlé | Échec iptables table `raw`; aucun contournement du code |
+| Docker build host-network | `PASS` | Build réel de l’image runtime v2.1.12 |
+| Docker run/logs/layers/inspection/cleanup | `PASS` | Sentinelle absente logs, history et layers ; fichier `0600`, cas absent/invalide, cleanup PASS |
+| Trivy image | `PASS` de scan avec `OPEN_FINDING` | 123 vulnérabilités, 1 secret image (clé privée snakeoil Ubuntu), 0 misconfiguration |
+| Syft SBOM CycloneDX image | `PASS` | Syft `1.51.0`, SBOM produit, 5.801.674 octets |
+| Grype SBOM image | `PASS` avec résultats ouverts | Grype `0.117.0`, 379 matches ; warning de précision Go documenté |
+| Docker services/socket final | `PASS` cleanup | Docker, docker.socket et containerd inactifs/désactivés ; socket supprimé |
+| Grype SBOM source précédent | `NOT_EXECUTED` | Remplacé par le scan Grype du SBOM image réel |
 | Firefox/Camoufox natifs, SystemVault, Windows/macOS | `BLOCKED_ENVIRONMENT_REQUIRED` / `NATIVE_SYSTEMVAULT_NOT_TESTED` | Environnements non disponibles |
 | Références et packages R7 historiques | `INHERITED_FROM_R7` | Non présentés comme nouvelle exécution |
 
-Le replay additionnel prescrit par la pièce jointe a reconfirmé `bash -n`, Go race/vet/build, `git diff --check`, Gitleaks source-only, Trivy filesystem et `git fsck --full`. ShellCheck conserve uniquement les warnings SC2034 déjà classés. Les sorties brutes Docker et post-blocage, ainsi que les rapports JSON correspondants, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Les journaux ne contiennent pas la sentinelle synthétique.
+Le replay additionnel prescrit par la pièce jointe a reconfirmé `bash -n`, Go race/vet/build, `git diff --check`, Gitleaks source-only, Trivy filesystem et `git fsck --full`. Le cycle Docker réel a ajouté les contrôles image/layers/logs, Syft et Grype ; les assertions ne rapportent que l’absence de sentinelle. ShellCheck conserve uniquement les warnings SC2034 déjà classés. Les sorties brutes d’installation, build, cycle, scans et cleanup, ainsi que les rapports JSON, sont conservés sous `evidence/FINAL_SECRET_REMEDIATION/`. Aucun journal ne contient la sentinelle synthétique.
 
 ## Package et vérification
 

@@ -1,0 +1,35 @@
+=== DATE_UTC ===
+2026-08-27T00:20:50Z
+=== TRIVY_VERSION ===
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+  UpdatedAt: 2026-08-26 13:02:19.845522405 +0000 UTC
+  NextUpdate: 2026-08-27 13:02:19.845522164 +0000 UTC
+  DownloadedAt: 2026-08-26 19:59:46.095522406 +0000 UTC
+Check Bundle:
+  Digest: sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c
+  DownloadedAt: 2026-08-26 19:59:46.974472653 +0000 UTC
+=== TRIVY_IMAGE ===
+2026-08-27T00:20:50Z	INFO	[vulndb] Need to update DB
+2026-08-27T00:20:50Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-27T00:20:50Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+29.61 MiB / 109.16 MiB [---------->_____________________________] 27.13% ? p/s ?52.85 MiB / 109.16 MiB [------------------->____________________] 48.41% ? p/s ?79.42 MiB / 109.16 MiB [----------------------------->__________] 72.76% ? p/s ?108.34 MiB / 109.16 MiB [------------------------>] 99.25% 131.23 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 131.23 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 131.23 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 122.85 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 122.85 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 122.85 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 114.93 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 114.93 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 114.93 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 107.51 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 107.51 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 107.51 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 100.58 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 100.58 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [----------------------->] 100.00% 100.58 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [------------------------>] 100.00% 94.09 MiB p/s ETA 0s109.16 MiB / 109.16 MiB [---------------------------] 100.00% 29.82 MiB p/s 3.9s2026-08-27T00:20:55Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-27T00:20:55Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-27T00:20:55Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-27T00:20:55Z	INFO	[checks-client] Need to update the checks bundle
+2026-08-27T00:20:55Z	INFO	[checks-client] Downloading the checks bundle...
+234.65 KiB / 234.65 KiB [-------------------------------------] 100.00% ? p/s 0s2026-08-27T00:20:57Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T00:20:57Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-27T00:20:57Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T00:21:54Z	INFO	Detected OS	family="ubuntu" version="24.04"
+2026-08-27T00:21:54Z	INFO	[ubuntu] Detecting vulnerabilities...	os_version="24.04" pkg_num=368
+2026-08-27T00:21:54Z	INFO	Number of language-specific files	num=3
+2026-08-27T00:21:54Z	INFO	[gobinary] Detecting vulnerabilities...
+2026-08-27T00:21:54Z	INFO	[node-pkg] Detecting vulnerabilities...
+2026-08-27T00:21:54Z	INFO	Detected config files	num=0
+2026-08-27T00:21:54Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.74/guide/scanner/vulnerability#severity-selection for details.
+TRIVY_IMAGE_EXIT=0
+=== SUMMARY ===
+{"bytes": 1424343, "exists": true, "file": "forgelocal-image-grype.json", "ignored_matches": 0, "matches": 379}
+{"bytes": 2313406, "exists": true, "file": "trivy-image.json", "misconfigurations": 0, "results": 5, "secrets": 1, "vulnerabilities": 123}
