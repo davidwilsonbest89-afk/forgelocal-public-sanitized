@@ -78,6 +78,9 @@ jobs:
           GOTOOLCHAIN: go1.25.13
         run: scripts/test-authenticated-synthetic.sh
 
+      - name: Grype policy gate unit test
+        run: python3 scripts/test-grype-policy-gate.py
+
       - name: UI i18n syntax
         run: |
           node --check extension/sidebar/app.js
@@ -127,6 +130,9 @@ jobs:
         run: |
           docker run --rm -v "$PWD:/repo:ro" anchore/grype:v0.117.0 sbom:/repo/.ci-artifacts/security/source.cyclonedx.json -o json > .ci-artifacts/security/source.grype.json
 
+      - name: Grype source policy gate
+        run: python3 scripts/grype-policy-gate.py .ci-artifacts/security/source.grype.json security/grype-exceptions.json
+
       - uses: docker/setup-buildx-action@v4
 
       - name: Build hardened runtime image
@@ -157,6 +163,9 @@ jobs:
         continue-on-error: true
         run: |
           docker run --rm -v "$PWD:/repo:ro" anchore/grype:v0.117.0 sbom:/repo/.ci-artifacts/security/image.cyclonedx.json -o json > .ci-artifacts/security/image.grype.json
+
+      - name: Grype image policy gate
+        run: python3 scripts/grype-policy-gate.py .ci-artifacts/security/image.grype.json security/grype-exceptions.json
 
       - name: Archive security evidence
         if: always()

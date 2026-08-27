@@ -76,6 +76,8 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | Trivy image remédiée | `TRIVY_IMAGE_SECRET_REMEDIATED` | 123 vulnérabilités, 0 secret, 0 misconfiguration |
 | Syft SBOM CycloneDX image remédiée | `PASS` | Syft `1.51.0`, SBOM produit, 5.801.675 octets |
 | Grype SBOM image remédiée | `GRYPE_FINDINGS_TRIAGE_PENDING` | Grype `0.117.0`, 379 matches ; aucun ignore global |
+| Grype policy gate unitaire | `PASS` | La fixture Critical synthétique non approuvée échoue, puis passe uniquement avec owner/justification/expiration |
+| Grype policy gate sur rapport image réel | `FAIL` attendu | 43 Critical/High non approuvées, 0 exception approuvée ; la gate bloque effectivement |
 | Matrice dédupliquée Trivy/Grype | `IMAGE_VULNERABILITIES_TRIAGE_PENDING` | 453 lignes uniques ; 85 Critical/High prioritaires ; exploitabilité non évaluée |
 | Docker services/socket final | `PASS` cleanup | Docker, docker.socket et containerd inactifs/désactivés ; socket supprimé ; 25 Go libres |
 | Cleanup final documenté | `PASS` | Aucun conteneur, aucune image temporaire, aucun cache, aucun processus ou socket résiduel |
@@ -89,11 +91,11 @@ Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard 
 
 Le workflow `.github/workflows/ci.yml` contient maintenant un job `security-scans` et une gate d’authentification synthétique. Les contrôles CI ajoutés couvrent Gitleaks source et historique pertinent, Trivy filesystem secrets, Syft source et image, Grype source et image, build de l’image runtime durcie, inspection hardening/layers, cycle anti-fuite, ShellCheck et test authentifié synthétique. Le job de release n’a pas été modifié et aucun push d’image n’est effectué par ces gates.
 
-Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement ; les rapports Grype sont conservés comme artefacts de triage et la gate Trivy secrets échoue si un secret est présent dans l’image.
+Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`; aucune exécution GitHub distante de cette branche n’a été confirmée, donc `CI_REMOTE_EXECUTION_NOT_CONFIRMED`.
 
 ## Triage et décisions ouvertes
 
-La matrice finale `evidence/FINAL_SECRET_REMEDIATION/triage/image-trivy-grype-matrix.csv` déduplique par `vulnerability_id + component + installed_version`. Elle contient **453 lignes uniques**, dont **85 Critical/High prioritaires**. Chaque ligne indique le composant, la version installée, la présence dans l’image runtime, la sévérité, les versions corrigées rapportées par les scanners, la disponibilité apparente d’un correctif, les sources et une décision `OPEN_*_MANUAL_REVIEW_REQUIRED`. L’exploitabilité n’est pas inventée : elle reste `NOT_ASSESSED_SCANNER_DATA_UNAVAILABLE`.
+La matrice finale `evidence/FINAL_SECRET_REMEDIATION/triage/image-trivy-grype-matrix.csv` déduplique par `vulnerability_id + component + installed_version`. Elle contient **453 lignes uniques**, dont **85 Critical/High prioritaires**. Chaque ligne indique le composant, la version installée, la présence dans l’image runtime, la sévérité, les versions corrigées rapportées par les scanners, la disponibilité apparente d’un correctif, les sources et une décision `OPEN_*_MANUAL_REVIEW_REQUIRED`. L’exploitabilité n’est pas inventée : elle reste `NOT_ASSESSED_SCANNER_DATA_UNAVAILABLE`. La policy Grype a été testée avec une fixture synthétique et exécutée contre le rapport réel : 43 Critical/High non approuvées bloquent effectivement la gate, avec 0 exception active.
 
 Le fichier `evidence/FINAL_SECRET_REMEDIATION/triage/image-secret-triage.json` documente le finding snakeoil baseline, son créateur `ssl-cert`/`make-ssl-cert`, les références KasmVNC, la correction appliquée et le résultat Trivy post-correction à zéro secret. Les vulnérabilités Trivy et les matches Grype restent donc `IMAGE_VULNERABILITIES_TRIAGE_PENDING` et `GRYPE_FINDINGS_TRIAGE_PENDING` jusqu’à une revue finding par finding avec exploitabilité et propriétaire.
 
@@ -115,6 +117,10 @@ AUTHENTICATED_SYNTHETIC_REQUEST=PASS
 AUTHENTICATED_SYNTHETIC_NEGATIVE_CASES=PASS
 IMAGE_VULNERABILITIES_TRIAGE_PENDING
 GRYPE_FINDINGS_TRIAGE_PENDING
+GRYPE_POLICY_GATE_BLOCKING=TRUE
+GRYPE_POLICY_REAL_REPORT=BLOCKED_OPEN_CRITICAL_HIGH_43
+CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS
+CI_REMOTE_EXECUTION_NOT_CONFIRMED
 SHELLCHECK_PASS
 DOCKER_HOST_NETWORK_BUILD_PASS
 DOCKER_BRIDGE_BUILD_BLOCKED_BY_ENVIRONMENT
@@ -122,7 +128,7 @@ PUBLIC_RELEASE_BLOCKED
 FORGELOCAL_PRODUCTION_READY=false
 ```
 
-Le correctif des deux divulgations runtime, la requête authentifiée synthétique et la suppression de la clé snakeoil sont démontrés sur le périmètre testable. Cette démonstration ne constitue pas une autorisation de release : le verdict global demeure bloqué tant que les vulnérabilités prioritaires, les 379 matches Grype, la revue d’exploitabilité et la validation bridge ne sont pas clôturés formellement.
+Le correctif des deux divulgations runtime, la requête authentifiée synthétique et la suppression de la clé snakeoil sont démontrés sur le périmètre testable. Cette démonstration ne constitue pas une autorisation de release : le verdict global demeure bloqué tant que les 85 Critical/High de la matrice, les 43 Critical/High bloquants de la policy Grype, les 379 matches Grype, la revue d’exploitabilité et la validation bridge ne sont pas clôturés formellement.
 
 ## Références
 
