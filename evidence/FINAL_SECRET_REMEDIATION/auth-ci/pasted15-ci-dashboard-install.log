@@ -1,0 +1,8 @@
+test	Dashboard pnpm install	﻿2026-08-27T13:48:47.5010183Z ##[group]Run pnpm install --frozen-lockfile
+test	Dashboard pnpm install	2026-08-27T13:48:47.5010573Z ^[[36;1mpnpm install --frozen-lockfile^[[0m
+test	Dashboard pnpm install	2026-08-27T13:48:47.5047501Z shell: /usr/bin/bash -e {0}
+test	Dashboard pnpm install	2026-08-27T13:48:47.5047762Z env:
+test	Dashboard pnpm install	2026-08-27T13:48:47.5047955Z   GOTOOLCHAIN: local
+test	Dashboard pnpm install	2026-08-27T13:48:47.5048180Z ##[endgroup]
+test	Dashboard pnpm install	2026-08-27T13:48:47.5110329Z /home/runner/work/_temp/cf53ad5d-9efb-480e-ae26-8c1525018c84.sh: line 1: pnpm: command not found
+test	Dashboard pnpm install	2026-08-27T13:48:47.5124308Z ##[error]Process completed with exit code 127.
