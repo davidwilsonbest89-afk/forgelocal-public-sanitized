@@ -84,7 +84,7 @@ Aucun `set -x`, aucune substitution de commande contenant le token, aucun messag
 | Docker services/socket final | `PASS` cleanup | Docker, docker.socket et containerd inactifs/désactivés ; socket supprimé ; 25 Go libres |
 | Misconfigurations Docker | `IMAGE_MISCONFIGURATIONS_TRIAGE_PENDING` | 6 diagnostics restent à décider |
 | Revue indépendante | `INDEPENDENT_REVIEW_PENDING` | Aucune revue humaine indépendante n’est attestée dans les preuves |
-| Protection de branche | `NOT_ACTIVE` | API GitHub : 404 `Branch not protected`; job sécurité obligatoire non vérifié |
+| Protection de branche | `NOT_ACTIVE` | Vérification antérieure : API GitHub 404 `Branch not protected`; re-vérification ultérieure non exécutée après HTTP 401 d’authentification ; job sécurité obligatoire non vérifié |
 | Cleanup final documenté | `PASS` | Aucun conteneur, aucune image temporaire, aucun cache, aucun processus ou socket résiduel |
 | Grype SBOM source précédent | `NOT_EXECUTED` | Remplacé par le scan Grype du SBOM image réel |
 | Firefox/Camoufox natifs, SystemVault, Windows/macOS | `BLOCKED_ENVIRONMENT_REQUIRED` / `NATIVE_SYSTEMVAULT_NOT_TESTED` | Environnements non disponibles |
@@ -96,7 +96,7 @@ Le replay post-correction a reconfirmé `bash -n`, Go race/vet/build, Dashboard 
 
 Le workflow `.github/workflows/ci.yml` contient maintenant un job `security-scans` et une gate d’authentification synthétique. Les contrôles CI ajoutés couvrent Gitleaks source et historique pertinent, Trivy filesystem secrets, Syft source et image, Grype source et image, build de l’image runtime durcie, inspection hardening/layers, cycle anti-fuite, ShellCheck et test authentifié synthétique. Le job de release n’a pas été modifié et aucun push d’image n’est effectué par ces gates.
 
-Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`. Une exécution GitHub Actions distante réelle a été observée : la première run `33033705812` a échoué sur la référence inexistante `aquasec/trivy:0.74.2`, puis le workflow a été corrigé vers `0.74.0`. La run finale observée `33035937910`, sur le HEAD package `315226a4fa39e3572ef507bb8002d9d49cbcbaf8`, était encore `in_progress` au moment de la capture ; aucune conclusion finale n’est donc inventée. Le statut est `CI_REMOTE_EXECUTION_OBSERVED=TRUE`, `CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE`, `BRANCH_PROTECTION_ENFORCEMENT=NOT_ACTIVE`, `SECURITY_JOB_REQUIRED_FOR_PR=NOT_VERIFIED` et `INDEPENDENT_REVIEW_PENDING`.
+Le workflow reste soumis à la politique de provenance existante, validée localement par `node scripts/check-ci-provenance-workflow.mjs`. Les vulnérabilités et matches scanners ne sont pas ignorés globalement. Les étapes Grype `report` conservent les rapports comme artefacts et peuvent être `continue-on-error` uniquement pour permettre la génération du rapport ; elles sont immédiatement suivies d’une `Grype policy gate` bloquante. Cette policy échoue pour tout Critical/High non approuvé par une exception exacte comportant owner, justification et expiration. Sur le rapport image réel, elle retourne exit code 1 avec 43 Critical/High ouverts et 0 exception approuvée. La gate Trivy secrets échoue si un secret est présent dans l’image. La définition locale est `CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS`. Une exécution GitHub Actions distante réelle a été observée : la première run `33033705812` a échoué sur la référence inexistante `aquasec/trivy:0.74.2`, puis le workflow a été corrigé vers `0.74.0`. La run finale observée `33035937910`, sur le HEAD package `315226a4fa39e3572ef507bb8002d9d49cbcbaf8`, était encore `in_progress` au moment de la capture ; aucune conclusion finale n’est donc inventée. Le statut est `CI_REMOTE_EXECUTION_OBSERVED=TRUE`, `CI_REMOTE_EXECUTION_PASS=FALSE`, `CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE`, `BRANCH_PROTECTION_ENFORCEMENT=NOT_ACTIVE`, `SECURITY_JOB_REQUIRED_FOR_PR=NOT_VERIFIED` et `INDEPENDENT_REVIEW_PENDING`. La dernière re-vérification GitHub CLI a ensuite été bloquée par HTTP 401 `Bad credentials`; elle est conservée comme `CI_REMOTE_FINAL_RECHECK=NOT_EXECUTED_CREDENTIAL_UNAVAILABLE`, sans nouvelle affirmation sur la PR ou la protection de branche.
 
 ## Triage et décisions ouvertes
 
@@ -127,7 +127,9 @@ GRYPE_POLICY_GATE_BLOCKING=TRUE
 GRYPE_POLICY_REAL_REPORT=BLOCKED_OPEN_CRITICAL_HIGH_43
 CI_GATES_DEFINED_LOCAL_VERIFICATION_PASS
 CI_REMOTE_EXECUTION_OBSERVED=TRUE
+CI_REMOTE_EXECUTION_PASS=FALSE
 CI_REMOTE_EXECUTION_CONCLUSION=NOT_YET_AVAILABLE
+CI_REMOTE_FINAL_RECHECK=NOT_EXECUTED_CREDENTIAL_UNAVAILABLE
 BRANCH_PROTECTION_ENFORCEMENT=NOT_ACTIVE
 SECURITY_JOB_REQUIRED_FOR_PR=NOT_VERIFIED
 INDEPENDENT_REVIEW_PENDING
