@@ -210,6 +210,10 @@ func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, f
 		r.Delete("/api/v1/extensions/{versionID}", h.purgeExtension)
 
 		if h.backupSvc != nil {
+			r.Get("/api/v1/backups", h.listBackupsV1)
+			r.Get("/api/v1/backups/{id}", h.getBackupV1)
+			r.Get("/api/v1/backups/{id}/restores", h.listBackupRestoresV1)
+			r.Delete("/api/v1/backups/{id}", h.deleteBackupV1)
 			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
 			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
 		}

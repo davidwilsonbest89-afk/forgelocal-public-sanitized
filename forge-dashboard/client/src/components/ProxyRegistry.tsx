@@ -23,6 +23,8 @@ export type ProxyRegistryProps = {
   client: CoreWriteClient;
   proxies: CoreProxy[];
   onChange: (next: CoreProxy[]) => void;
+  onAssigned?: (proxyId: string) => void;
+  onUnassigned?: (proxyId: string) => void;
   /** Profil actuellement sélectionné dans le registre des profils, quand il est connu. */
   selectedProfileId?: string;
   /** Id du proxy déjà affecté au profil sélectionné (affichage uniquement). */
@@ -181,7 +183,7 @@ function CoreProxyRow({
   );
 }
 
-export function ProxyRegistry({ client, proxies, onChange, selectedProfileId, assignedProxyId, formRef }: ProxyRegistryProps) {
+export function ProxyRegistry({ client, proxies, onChange, onAssigned, onUnassigned, selectedProfileId, assignedProxyId, formRef }: ProxyRegistryProps) {
   const [creating, setCreating] = useState(false);
 
   // Double source pilotée par un state local :
@@ -264,8 +266,14 @@ export function ProxyRegistry({ client, proxies, onChange, selectedProfileId, as
               selectedProfileId={selectedProfileId}
               isAssigned={assignedProxyId === proxy.id}
               onDelete={() => onChange(proxies.filter(p => p.id !== proxy.id))}
-              onAssigned={() => onChange(proxies)}
-              onUnassigned={() => onChange(proxies)}
+              onAssigned={() => {
+                onChange(proxies);
+                onAssigned?.(proxy.id);
+              }}
+              onUnassigned={() => {
+                onChange(proxies);
+                onUnassigned?.(proxy.id);
+              }}
             />
           ))}
         </div>

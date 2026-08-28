@@ -139,3 +139,128 @@ func assertRestoredProfileStartsLocalChromium(t *testing.T, userDataDir string) 
 	}
 	t.Logf("AC-BACK-01 runtime relaunch stopped cleanly: pid=%d profile_lock_cleanup=verified", pid)
 }
+
+func TestBackupV1DashboardReadContractAndDelete(t *testing.T) {
+	root := t.TempDir()
+	profiles, err := profile.NewStore(filepath.Join(root, "profiles"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := &profile.Profile{ID: "dashboard-backup-source", Name: "Dashboard backup source", RuntimeID: "chromium"}
+	if err := profiles.Create(source); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(source.ProfileDir, "browser-data", "Cookies"), []byte("synthetic-cookie-marker"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	db, err := backup.OpenSQLite(filepath.Join(root, "metadata.db"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer db.Close()
+	vault := secrets.NewMemoryVault()
+	svc := &backup.Service{Root: filepath.Join(root, "backups"), Vault: vault, Store: db, Locks: backup.NewProfileLocks()}
+	cfg := &config.Config{DataDir: root, ProfilesDir: filepath.Join(root, "profiles"), Version: "test", APIToken: "dashboard-synthetic-admin-token"}
+	router, err := NewRouterWithReadOnlyCatalog(cfg, profiles, &browser.Manager{}, nil, svc, nil, db, db.DB())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	create := newLoopbackRequest(http.MethodPost, "/api/v1/profiles/"+source.ID+"/backups", nil)
+	create.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	createResponse := httptest.NewRecorder()
+	router.ServeHTTP(createResponse, create)
+	if createResponse.Code != http.StatusCreated {
+		t.Fatalf("create status=%d body=%s", createResponse.Code, createResponse.Body.String())
+	}
+	var created struct {
+		Data struct {
+			ID string `json:"id"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(createResponse.Body.Bytes(), &created); err != nil {
+		t.Fatal(err)
+	}
+	if created.Data.ID == "" {
+		t.Fatal("backup id missing")
+	}
+
+	list := newLoopbackRequest(http.MethodGet, "/api/v1/backups", nil)
+	list.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	listResponse := httptest.NewRecorder()
+	router.ServeHTTP(listResponse, list)
+	if listResponse.Code != http.StatusOK {
+		t.Fatalf("list status=%d body=%s", listResponse.Code, listResponse.Body.String())
+	}
+	var listed struct {
+		Items []map[string]any `json:"items"`
+	}
+	if err := json.Unmarshal(listResponse.Body.Bytes(), &listed); err != nil {
+		t.Fatal(err)
+	}
+	if len(listed.Items) != 1 || listed.Items[0]["id"] != created.Data.ID || listed.Items[0]["profile_id"] != source.ID {
+		t.Fatalf("unexpected backup list=%#v", listed.Items)
+	}
+	if _, ok := listed.Items[0]["artifact_path"]; ok {
+		t.Fatal("backup list exposed artifact path")
+	}
+	if _, ok := listed.Items[0]["key_id"]; ok {
+		t.Fatal("backup list exposed key id")
+	}
+
+	detail := newLoopbackRequest(http.MethodGet, "/api/v1/backups/"+created.Data.ID, nil)
+	detail.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	detailResponse := httptest.NewRecorder()
+	router.ServeHTTP(detailResponse, detail)
+	if detailResponse.Code != http.StatusOK {
+		t.Fatalf("detail status=%d body=%s", detailResponse.Code, detailResponse.Body.String())
+	}
+	var detailBody map[string]any
+	if err := json.Unmarshal(detailResponse.Body.Bytes(), &detailBody); err != nil {
+		t.Fatal(err)
+	}
+	if detailBody["id"] != created.Data.ID || detailBody["state"] != "committed" {
+		t.Fatalf("unexpected backup detail=%#v", detailBody)
+	}
+	if _, ok := detailBody["artifact_path"]; ok {
+		t.Fatal("backup detail exposed artifact path")
+	}
+	if _, ok := detailBody["key_id"]; ok {
+		t.Fatal("backup detail exposed key id")
+	}
+
+	restores := newLoopbackRequest(http.MethodGet, "/api/v1/backups/"+created.Data.ID+"/restores", nil)
+	restores.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	restoresResponse := httptest.NewRecorder()
+	router.ServeHTTP(restoresResponse, restores)
+	if restoresResponse.Code != http.StatusOK {
+		t.Fatalf("restores status=%d body=%s", restoresResponse.Code, restoresResponse.Body.String())
+	}
+	var restoreBody struct {
+		Items []map[string]any `json:"items"`
+	}
+	if err := json.Unmarshal(restoresResponse.Body.Bytes(), &restoreBody); err != nil {
+		t.Fatal(err)
+	}
+	if len(restoreBody.Items) != 0 {
+		t.Fatalf("unexpected restore list=%#v", restoreBody.Items)
+	}
+
+	remove := newLoopbackRequest(http.MethodDelete, "/api/v1/backups/"+created.Data.ID, nil)
+	remove.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	removeResponse := httptest.NewRecorder()
+	router.ServeHTTP(removeResponse, remove)
+	if removeResponse.Code != http.StatusOK {
+		t.Fatalf("delete status=%d body=%s", removeResponse.Code, removeResponse.Body.String())
+	}
+	if _, err := os.Stat(filepath.Join(root, "backups", created.Data.ID+".backup")); err == nil {
+		t.Fatal("backup artifact remained after delete")
+	}
+	listAfterDelete := newLoopbackRequest(http.MethodGet, "/api/v1/backups", nil)
+	listAfterDelete.Header.Set("Authorization", "Bearer "+cfg.APIToken)
+	listAfterDeleteResponse := httptest.NewRecorder()
+	router.ServeHTTP(listAfterDeleteResponse, listAfterDelete)
+	if listAfterDeleteResponse.Code != http.StatusOK || !bytes.Contains(listAfterDeleteResponse.Body.Bytes(), []byte(`"items":[]`)) {
+		t.Fatalf("list after delete status=%d body=%s", listAfterDeleteResponse.Code, listAfterDeleteResponse.Body.String())
+	}
+}

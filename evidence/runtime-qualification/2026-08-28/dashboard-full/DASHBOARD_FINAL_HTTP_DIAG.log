@@ -1,0 +1,39 @@
+ROUTER_BACKUP_ROUTES
+23:	"forgelocal/internal/backup"
+40:func NewRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStores ...*groups.Store) (*chi.Mux, error) {
+45:	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, nil, nil, nil, nil)
+50:func NewRouterWithReadOnlyCatalog(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB) (*chi.Mux, error) {
+51:	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, nil, nil)
+57:func NewRouterWithProxyRegistry(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store) (*chi.Mux, error) {
+58:	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore, nil)
+63:func NewRouterWithQualifiedRegistry(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
+64:	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore, registry)
+69:func NewRouterWithEnvironment(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
+70:	return newRouter(cfg, store, mgr, fpPool, backupService, groupStore, catalog, backupDB, proxyStore, registry)
+73:func newRouter(cfg *config.Config, store *profile.Store, mgr *browser.Manager, fpPool *fingerprint.Pool, backupService *backup.Service, groupStore *groups.Store, catalog backup.ReadOnlyCatalog, backupDB *sql.DB, proxyStore *proxies.Store, registry *bfruntime.QualifiedRegistry) (*chi.Mux, error) {
+117:	h := &handler{cfg: cfg, store: store, groupStore: groupStore, mgr: mgr, token: token, adminToken: adminToken, fpPool: fpPool, hcfg: hcfg, backupSvc: backupService, readonlyCatalog: catalog, readonlySessions: newReadOnlySessionBroker(), auditSink: newWriteAuditSink(backupDB), backupDB: backupDB, proxyStore: proxyStore, qualifiedRegistry: registry, templateStore: templateStore, historyStore: historyStore, cookieFixtureStore: cookieFixtureStore, proxyProviderStore: proxyProviderStore, extensionStore: extensionStore}
+212:		if h.backupSvc != nil {
+213:			r.Get("/api/v1/backups", h.listBackupsV1)
+214:			r.Get("/api/v1/backups/{id}", h.getBackupV1)
+215:			r.Get("/api/v1/backups/{id}/restores", h.listBackupRestoresV1)
+216:			r.Delete("/api/v1/backups/{id}", h.deleteBackupV1)
+217:			r.Post("/api/v1/profiles/{id}/backups", h.createBackupV1)
+218:			r.Post("/api/v1/backups/{id}/restore", h.restoreBackupV1)
+266:	backupSvc          *backup.Service
+267:	readonlyCatalog    backup.ReadOnlyCatalog
+272:	backupDB           *sql.DB
+342:	diag, err := environment.Diagnose(r.Context(), &t13Checker{db: h.backupDB, registry: h.qualifiedRegistry}, string(bfruntime.ID(id)))
+HARNESS_ERROR_URLS
+CORE_STDERR_LINES
+RAW_FAIL_LINES
+BACKUP_CREATE_BLOCKED_SYSTEMVAULT=PASS
+BACKUP_PANEL_OPEN=PASS
+BACKUP_REFRESH_UI=PASS
+BACKUP_DETAIL_ENV_BLOCKED=PASS
+BACKUP_RESTORE_ENV_BLOCKED=PASS
+BACKUP_PURGE_ENV_BLOCKED=PASS
+UNEXPECTED_HTTP_ERRORS=PASS:0
+HTTP_ERROR_RESPONSES=2
+UNEXPECTED_HTTP_ERROR_RESPONSES=0
+FAILURE_REDACTED=console:Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+FAILURE_REDACTED=console:Failed to load resource: the server responded with a status of 404 (Not Found)

@@ -1,0 +1,31 @@
+UTC=2026-08-28T04:32:44Z
+HEAD=4fd54022f3970d2177976a78970d2b81bd8810bf
+BRANCH=validation/final-secret-remediation
+STATUS_SHORT
+ [31mM[m forge-dashboard/client/src/components/ProxyRegistry.tsx
+ [31mM[m forge-dashboard/client/src/index.css
+ [31mM[m forge-dashboard/client/src/pages/Home.tsx
+ [31mM[m internal/api/backup_v1.go
+ [31mM[m internal/api/backup_v1_test.go
+ [31mM[m internal/api/router.go
+DIFF_CHECK
+DIFF_CHECK_EXIT=0
+DIFF_NAMES
+forge-dashboard/client/src/components/ProxyRegistry.tsx
+forge-dashboard/client/src/index.css
+forge-dashboard/client/src/pages/Home.tsx
+internal/api/backup_v1.go
+internal/api/backup_v1_test.go
+internal/api/router.go
+DIFF_STAT
+ .../client/src/components/ProxyRegistry.tsx        |  14 [32m+[m[31m-[m
+ forge-dashboard/client/src/index.css               |  45 [32m++++++[m
+ forge-dashboard/client/src/pages/Home.tsx          |   2 [32m+[m[31m-[m
+ internal/api/backup_v1.go                          | 165 [32m+++++++++++++++++++++[m
+ internal/api/backup_v1_test.go                     | 125 [32m++++++++++++++++[m
+ internal/api/router.go                             |   4 [32m+[m
+ 6 files changed, 351 insertions(+), 4 deletions(-)
+REMOTE_HEAD
+4fd54022f3970d2177976a78970d2b81bd8810bf
+PUSH_RUNTIME=NO
+COMMIT_RUNTIME=NO
