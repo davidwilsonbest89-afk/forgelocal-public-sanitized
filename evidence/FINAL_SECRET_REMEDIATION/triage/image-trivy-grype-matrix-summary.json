@@ -1,0 +1,37 @@
+{
+  "baseline_delta": {
+    "baseline_grype_matches": 379,
+    "baseline_trivy_secret_count": 1,
+    "baseline_trivy_vulnerabilities": 123,
+    "post_grype_matches": 379,
+    "post_trivy_secret_count": 0,
+    "post_trivy_vulnerabilities": 123
+  },
+  "decisions": "All vulnerability rows remain OPEN_*_MANUAL_REVIEW_REQUIRED; misconfiguration decisions are tracked in docker-misconfigurations.csv; no global ignore used.",
+  "dedupe_key": "vulnerability_id+component+installed_version",
+  "governance_columns": ["component", "installed_version", "runtime_presence", "build_or_runtime", "vulnerability_id", "severity", "scanner", "fixed_versions", "exploitability", "action", "owner", "due_date", "exception_status"],
+  "governance_values": "All 453 rows remain pending with OWNER_UNASSIGNED, DUE_DATE_OWNER_REQUIRED, MANUAL_REVIEW_REQUIRED and NO_APPROVED_EXCEPTION.",
+  "exploitability": "NOT_ASSESSED_SCANNER_DATA_UNAVAILABLE",
+  "grype_findings_triage_status": "GRYPE_FINDINGS_TRIAGE_PENDING",
+  "grype_matches": 379,
+  "image_vulnerability_triage_status": "IMAGE_VULNERABILITIES_TRIAGE_PENDING",
+  "priority_rows_critical_high": 85,
+  "runtime_image": "forgelocal-pasted13:regression",
+  "runtime_image_digest": "sha256:c8a77b4acbb01794b14a84b100aa05a9ebfb9584c10781e800556e924070cca5",
+  "runtime_image_digest_status": "EXACT_TESTED_IMAGE_DIGEST_LOCAL_REGRESSION_IMAGE",
+  "runtime_presence": "PRESENT_IN_RUNTIME_IMAGE",
+  "severity_counts": {
+    "CRITICAL": 2,
+    "HIGH": 83,
+    "LOW": 48,
+    "MEDIUM": 314,
+    "UNKNOWN": 6
+  },
+  "trivy_vulnerabilities": 123,
+  "unique_matrix_rows": 453,
+  "trivy_misconfigurations_pending": 3,
+  "trivy_misconfigurations_original": 6,
+  "trivy_misconfigurations_corrected_verified": 3,
+  "misconfiguration_matrix": "evidence/FINAL_SECRET_REMEDIATION/triage/docker-misconfigurations.csv",
+  "independent_review_status": "INDEPENDENT_REVIEW_PENDING"
+}

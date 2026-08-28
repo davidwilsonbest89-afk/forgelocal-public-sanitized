@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -56,22 +57,59 @@ jobs:
       - name: Go test
         env:
           GOTOOLCHAIN: go1.25.13
-        run: go test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')
+        run: go test -count=1 -timeout 2m ./cmd/... ./internal/...
+
+      - name: Chromium runtime is explicit
+        run: |
+          test "${FORGELOCAL_VALIDATE_CHROMIUM_RUNTIME:-0}" != "1"
+          echo "CHROMIUM_RUNTIME_VALIDATION=DEFERRED_TO_QUALIFIED_RUNNER"
 
       - name: Go vet
         env:
           GOTOOLCHAIN: go1.25.13
-        run: go vet ./...
+        run: go vet ./cmd/... ./internal/...
 
       - name: Shell syntax
-        run: bash -n scripts/release-preflight.sh scripts/release-push.sh
+        run: bash -n scripts/release-preflight.sh scripts/release-push.sh docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+
+      - name: Install security scanners
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: ShellCheck security launchers and tests
+        run: shellcheck docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+
+      - name: Authenticated synthetic security gate
+        env:
+          CGO_ENABLED: "1"
+          GOTOOLCHAIN: go1.25.13
+        run: scripts/test-authenticated-synthetic.sh
+
+      - name: Grype policy gate unit test
+        run: python3 scripts/test-grype-policy-gate.py
 
       - name: UI i18n syntax
         run: |
           node --check extension/sidebar/app.js
           node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json','utf8')); JSON.parse(require('fs').readFileSync('extension/_locales/en/messages.json','utf8')); JSON.parse(require('fs').readFileSync('extension/_locales/zh_TW/messages.json','utf8')); console.log('extension json ok')"
-          node -e "const fs=require('fs'); const html=fs.readFileSync('internal/api/dashboard.html','utf8'); const m=html.match(/<script>([\s\S]*)<\/script>/); if(!m) throw new Error('script not found'); new Function(m[1]); console.log('dashboard js ok')"
+          node -e "const fs=require('fs'); const html=fs.readFileSync('internal/api/dashboard.html','utf8'); if(!/<html\b/i.test(html) || !/<main\b/i.test(html)) throw new Error('dashboard HTML structure invalid'); if(/<script\b/i.test(html)) throw new Error('historical dashboard must remain script-free'); console.log('dashboard HTML structure ok; script-free historical page')"
           node scripts/check-i18n.js
+
+      - name: Enable pnpm
+        run: |
+          npm install --global pnpm@10.4.1
+          pnpm --version
+
+      - name: Dashboard pnpm install
+        working-directory: forge-dashboard
+        run: pnpm install --frozen-lockfile
+
+      - name: Dashboard pnpm check
+        working-directory: forge-dashboard
+        run: pnpm run check
+
+      - name: Dashboard pnpm build
+        working-directory: forge-dashboard
+        run: pnpm run build
 
       - name: CI provenance policy
         run: node scripts/check-ci-provenance-workflow.mjs
@@ -81,3 +119,121 @@ jobs:
 
       - name: Fingerprint generator smoke
         run: npm install --silent && node scripts/generate-fingerprints.js --browser firefox --os macos --count 1 --output /tmp/browseforge-fingerprint-smoke
+
+  browser-runtime-qualified:
+    name: Qualified Chromium runtime validation
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: [self-hosted, forgelocal-chromium]
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.25.13"
+          check-latest: true
+          cache: false
+
+      - name: Verify qualified Chromium environment
+        run: |
+          command -v chromium
+          chromium --version
+          command -v ps
+          command -v pgrep
+
+      - name: Run Chromium runtime validation
+        env:
+          FORGELOCAL_VALIDATE_CHROMIUM_RUNTIME: "1"
+          GOTOOLCHAIN: go1.25.13
+        run: |
+          date -u +%Y-%m-%dT%H:%M:%SZ
+          pwd
+          go test ./internal/api -run '^TestBackupV1CreateModifyRestoreIsolation$' -count=1 -timeout 2m -v
+
+  security-scans:
+    name: Secret, SBOM, and image security gates
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks source gate
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" ghcr.io/gitleaks/gitleaks:v8.24.2 dir --no-banner --redact --exit-code 1 /repo
+
+      - name: Gitleaks pertinent history gate
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" ghcr.io/gitleaks/gitleaks:v8.24.2 git --no-banner --redact --exit-code 1 /repo
+
+      - name: Trivy filesystem secret gate
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" aquasec/trivy:0.74.0 fs --scanners secret --exit-code 1 --no-progress /repo
+
+      - name: Syft source SBOM
+        run: |
+          mkdir -p .ci-artifacts/security
+          docker run --rm -v "$PWD:/repo" anchore/syft:v1.51.0 dir:/repo -o cyclonedx-json=/repo/.ci-artifacts/security/source.cyclonedx.json
+
+      - name: Grype source SBOM report
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" anchore/grype:v0.117.0 sbom:/repo/.ci-artifacts/security/source.cyclonedx.json -o json > .ci-artifacts/security/source.grype.json
+
+      - name: Grype source policy gate
+        run: python3 scripts/grype-policy-gate.py .ci-artifacts/security/source.grype.json security/grype-exceptions.json
+
+      - uses: docker/setup-buildx-action@v4
+
+      - name: Build hardened runtime image
+        uses: docker/build-push-action@v7
+        with:
+          context: docker
+          file: docker/Dockerfile.run
+          load: true
+          push: false
+          tags: forgelocal-ci:${{ github.sha }}
+          build-args: |
+            BROWSEFORGE_VERSION=v2.1.12
+
+      - name: Image hardening and secret redaction gate
+        run: |
+          scripts/test-docker-image-hardening.sh forgelocal-ci:${{ github.sha }}
+          scripts/test-docker-image-secret-redaction.sh forgelocal-ci:${{ github.sha }}
+
+      - name: Trivy image secret gate
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.74.0 image --scanners secret --exit-code 1 --no-progress forgelocal-ci:${{ github.sha }}
+
+      - name: Syft image SBOM
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/repo" anchore/syft:v1.51.0 docker:forgelocal-ci:${{ github.sha }} -o cyclonedx-json=/repo/.ci-artifacts/security/image.cyclonedx.json
+
+      - name: Grype image SBOM report
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$PWD:/repo:ro" anchore/grype:v0.117.0 sbom:/repo/.ci-artifacts/security/image.cyclonedx.json -o json > .ci-artifacts/security/image.grype.json
+
+      - name: Grype image policy gate
+        run: python3 scripts/grype-policy-gate.py .ci-artifacts/security/image.grype.json security/grype-exceptions.json
+
+      - name: Archive security evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-gates-${{ github.sha }}
+          path: .ci-artifacts/security/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Cleanup temporary containers and image
+        if: always()
+        run: |
+          docker ps -aq --filter name=forgelocal-secret-cycle | xargs -r docker rm -f
+          docker image rm -f forgelocal-ci:${{ github.sha }} >/dev/null 2>&1 || true
+          docker system prune -af >/dev/null 2>&1 || true

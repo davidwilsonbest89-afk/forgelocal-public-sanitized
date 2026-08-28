@@ -1,0 +1,17 @@
+UTC=2026-08-28T04:33:47Z
+HEAD=4fd54022f3970d2177976a78970d2b81bd8810bf
+BRANCH=validation/final-secret-remediation
+DIFF_CHECK_EXIT=0
+MODIFIED_FILES
+ [31mM[m forge-dashboard/client/src/components/ProxyRegistry.tsx
+ [31mM[m forge-dashboard/client/src/index.css
+ [31mM[m forge-dashboard/client/src/pages/Home.tsx
+ [31mM[m internal/api/backup_v1.go
+ [31mM[m internal/api/backup_v1_test.go
+ [31mM[m internal/api/router.go
+REMOTE_HEAD=4fd54022f3970d2177976a78970d2b81bd8810bf
+PACKAGE_SHA256=36cda0c643fa5703607f120b94f797ce22b0eb917057288c146d6e6d345626a3
+ZIP_TEST_EXIT=0
+PUSH_TO_GITHUB=NO
+MERGE_PERFORMED=false
+RELEASE_PERFORMED=false

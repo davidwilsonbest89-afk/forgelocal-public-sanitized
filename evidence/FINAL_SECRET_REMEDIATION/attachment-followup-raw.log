@@ -1,0 +1,128 @@
+=== DATE_UTC ===
+2026-08-26T23:31:17Z
+=== CWD ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo
+=== BRANCH_HEAD ===
+validation/final-secret-remediation
+1751e03aab163aa4484ebc012649724c32bff78c
+=== TOOL_VERSIONS ===
+GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)
+ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+v22.13.0
+11.20.0
+git version 2.43.0
+go version go1.26.7 linux/amd64
+8.30.1
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+  UpdatedAt: 2026-08-26 13:02:19.845522405 +0000 UTC
+  NextUpdate: 2026-08-27 13:02:19.845522164 +0000 UTC
+  DownloadedAt: 2026-08-26 19:59:46.095522406 +0000 UTC
+Check Bundle:
+  Digest: sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c
+  DownloadedAt: 2026-08-26 19:59:46.974472653 +0000 UTC
+=== BASH_SYNTAX ===
+COMMAND=bash -n docker/entrypoint.sh scripts/start.sh
+EXIT_CODE=0
+=== SHELLCHECK ===
+COMMAND=shellcheck docker/entrypoint.sh scripts/start.sh
+
+In docker/entrypoint.sh line 93:
+for i in $(seq 1 60); do
+^-^ SC2034 (warning): i appears unused. Verify use (or export if used externally).
+
+
+In scripts/start.sh line 19:
+for i in $(seq 1 10); do
+^-^ SC2034 (warning): i appears unused. Verify use (or export if used externally).
+
+For more information:
+  https://www.shellcheck.net/wiki/SC2034 -- i appears unused. Verify use (or ...
+EXIT_CODE=1
+=== GO_TEST_RACE ===
+COMMAND=env CGO_ENABLED=1 GOTOOLCHAIN=local GOPROXY=off timeout 360s /home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/go-toolchain/bin/go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.275s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.901s
+ok  	forgelocal/internal/backup	2.653s
+ok  	forgelocal/internal/browser	3.590s
+ok  	forgelocal/internal/config	1.023s
+ok  	forgelocal/internal/cookies	1.013s
+ok  	forgelocal/internal/drift	1.013s
+ok  	forgelocal/internal/environment	1.011s
+ok  	forgelocal/internal/extensions	2.005s
+ok  	forgelocal/internal/fingerprint	1.014s
+ok  	forgelocal/internal/fonts	1.012s
+ok  	forgelocal/internal/geolocation	1.010s
+ok  	forgelocal/internal/groups	1.017s
+ok  	forgelocal/internal/hardware	1.011s
+ok  	forgelocal/internal/history	1.146s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.712s
+ok  	forgelocal/internal/localvault	1.065s
+ok  	forgelocal/internal/mcp	1.029s
+ok  	forgelocal/internal/productschema	1.669s
+ok  	forgelocal/internal/profile	1.088s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.394s
+ok  	forgelocal/internal/proxies	1.083s
+ok  	forgelocal/internal/proxyprovider	1.013s
+ok  	forgelocal/internal/runtime	1.221s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.011s
+ok  	forgelocal/internal/spike	4.698s
+ok  	forgelocal/internal/templates	2.255s
+ok  	forgelocal/internal/workflow	1.016s
+EXIT_CODE=0
+=== GO_VET ===
+COMMAND=env CGO_ENABLED=1 GOTOOLCHAIN=local GOPROXY=off timeout 240s /home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/go-toolchain/bin/go vet ./cmd/... ./internal/...
+EXIT_CODE=0
+=== GO_BUILD ===
+COMMAND=env CGO_ENABLED=1 GOTOOLCHAIN=local GOPROXY=off timeout 240s /home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/go-toolchain/bin/go build ./cmd/... ./internal/...
+EXIT_CODE=0
+=== GIT_DIFF_CHECK ===
+COMMAND=git diff --check
+EXIT_CODE=0
+=== GITLEAKS_SOURCE_ONLY ===
+COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/gitleaks dir --no-banner --redact --exit-code 1 --report-format json --report-path /home/ubuntu/forgelocal-final-secret-remediation/checks/gitleaks-attachment-source.json /home/ubuntu/forgelocal-final-secret-remediation/gitleaks-attachment-source
+[90m11:32PM[0m [32mINF[0m [1mscanned ~19259179 bytes (19.26 MB) in 700ms[0m
+[90m11:32PM[0m [32mINF[0m [1mno leaks found[0m
+EXIT_CODE=0
+=== TRIVY_FILESYSTEM ===
+COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/trivy fs --scanners vuln,secret,misconfig --format json --output /home/ubuntu/forgelocal-final-secret-remediation/checks/trivy-attachment-fs.json .
+2026-08-26T23:32:04Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-26T23:32:04Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-26T23:32:04Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-26T23:32:05Z	INFO	[secret] Secret scanning is enabled
+2026-08-26T23:32:05Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-26T23:32:05Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-26T23:32:24Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-26T23:32:24Z	INFO	Number of language-specific files	num=2
+2026-08-26T23:32:24Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-26T23:32:25Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-26T23:32:25Z	INFO	Detected config files	num=2
+EXIT_CODE=0
+=== SYFT_SBOM ===
+COMMAND=syft . -o cyclonedx-json
+STATUS=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+EXIT_CODE=127
+=== FINAL_FSCK ===
+COMMAND=git fsck --full
+dangling blob 26852055804aa077d12cb42fc31c83b838695b0c
+dangling tag 310c10e7541bbec7828226ce1049df56da11ce0b
+dangling tag a7d3c6afe1627d23f6d4d990f4ab7e00186b780d
+dangling tag 72d54110c89583beacc556bb103f881b667d8137
+dangling blob d89a0e37eb364e68980bc6fcf9baa2471419d634
+dangling tag f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7
+dangling tag 436eebd4937352476c9e4c44a13b536c48d0c048
+dangling tag 3ebcf55fcab7ab10e34ffea652f2398e07e299da
+dangling tag f77fd0bb02993854eec9ecf05fda9788546860ec
+EXIT_CODE=0
+=== FINAL_STATUS ===
+COMMAND=git status --short --branch
+## [32mvalidation/final-secret-remediation[m
+EXIT_CODE=0

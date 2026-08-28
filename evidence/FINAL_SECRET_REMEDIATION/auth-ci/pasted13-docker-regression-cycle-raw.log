@@ -1,0 +1,10 @@
+DATE_UTC=2026-08-27T03:45:34Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+IMAGE_TAG=forgelocal-pasted13:regression
+IMAGE_ID=sha256:c8a77b4acbb01794b14a84b100aa05a9ebfb9584c10781e800556e924070cca5
+HARDENING_COMMAND=scripts/test-docker-image-hardening.sh forgelocal-pasted13:regression
+IMAGE_SNAKEOIL_ARTIFACTS=ABSENT
+HARDENING_EXIT=0
+REDACTION_COMMAND=scripts/test-docker-image-secret-redaction.sh forgelocal-pasted13:regression
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+REDACTION_EXIT=1

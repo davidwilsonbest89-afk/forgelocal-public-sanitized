@@ -1,0 +1,10 @@
+command	cwd	exit_code	status
+go test -count=1 -race ./cmd/... ./internal/...	/home/ubuntu/forgelocal-final-secret-remediation/repo	0	PASS_WITH_TOOLCHAIN_DEVIATION
+go vet ./cmd/... ./internal/...	/home/ubuntu/forgelocal-final-secret-remediation/repo	0	PASS_WITH_TOOLCHAIN_DEVIATION
+go build ./cmd/... ./internal/...	/home/ubuntu/forgelocal-final-secret-remediation/repo	0	PASS_WITH_TOOLCHAIN_DEVIATION
+bash -n docker/entrypoint.sh scripts/start.sh	/home/ubuntu/forgelocal-final-secret-remediation/repo	0	PASS
+shellcheck docker/entrypoint.sh scripts/start.sh	/home/ubuntu/forgelocal-final-secret-remediation/repo	0	PASS
+pnpm install --frozen-lockfile	/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard	0	PASS
+pnpm run check	/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard	0	PASS
+pnpm run build	/home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard	0	PASS
+git diff --check	/home/ubuntu/forgelocal-final-secret-remediation/repo	0	PASS

@@ -1,0 +1,47 @@
+=== DATE_UTC ===
+2026-08-27T01:07:48Z
+=== IMAGE ===
+forgelocal-secret-remediation:snakeoil-baseline-20260827
+=== SYFT_VERSION ===
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+=== GRYPE_VERSION ===
+Application:         grype
+Version:             0.117.0
+BuildDate:           2026-08-10T16:48:30Z
+GitCommit:           b5fa92bbcbef655497e3be840a2f718380e2cdd3
+GitDescription:      v0.117.0
+Platform:            linux/amd64
+GoVersion:           go1.26.3
+Compiler:            gc
+Syft Version:        v1.51.0
+Supported DB Schema: 6
+=== SYFT_IMAGE ===
+SYFT_EXIT=0
+=== GRYPE_SBOM ===
+GRYPE_EXIT=0
+=== TRIVY_IMAGE ===
+2026-08-27T01:10:12Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-27T01:10:12Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-27T01:10:12Z	INFO	[checks-client] Using existing checks from cache	path="/root/.cache/trivy/policy/content"
+2026-08-27T01:10:13Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T01:10:13Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-27T01:10:13Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T01:11:09Z	INFO	Detected OS	family="ubuntu" version="24.04"
+2026-08-27T01:11:09Z	INFO	[ubuntu] Detecting vulnerabilities...	os_version="24.04" pkg_num=368
+2026-08-27T01:11:09Z	INFO	Number of language-specific files	num=3
+2026-08-27T01:11:09Z	INFO	[gobinary] Detecting vulnerabilities...
+2026-08-27T01:11:09Z	INFO	[node-pkg] Detecting vulnerabilities...
+2026-08-27T01:11:09Z	INFO	Detected config files	num=0
+2026-08-27T01:11:09Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.74/guide/scanner/vulnerability#severity-selection for details.
+TRIVY_EXIT=0
+=== SBOM_METADATA ===
+SBOM_BYTES=5801673
+SBOM_STAT_EXIT=0

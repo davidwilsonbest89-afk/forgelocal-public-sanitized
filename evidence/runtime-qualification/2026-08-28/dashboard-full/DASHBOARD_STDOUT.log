@@ -1,0 +1,9 @@
+
+  VITE v7.3.6  ready in 617 ms
+
+  ➜  Local:   http://127.0.0.1:4174/
+  ➜  press h + enter to show help
+4:02:18 AM [vite] (client) hmr update /src/components/ProxyRegistry.tsx, /src/index.css
+4:02:28 AM [vite] (client) hmr update /src/components/ProxyRegistry.tsx, /src/index.css
+4:02:35 AM [vite] (client) hmr update /src/pages/Home.tsx, /src/index.css
+4:16:16 AM [vite] (client) hmr update /src/index.css

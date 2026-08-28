@@ -1,0 +1,150 @@
+
+=== COMMAND: date -u +%FT%TZ ===
+2026-08-27T18:09:22Z
+EXIT_CODE=0
+
+=== COMMAND: pwd ===
+/home/ubuntu/forgelocal-final-secret-remediation/pasted19-clone
+EXIT_CODE=0
+
+=== COMMAND: gitleaks version ===
+8.30.1
+EXIT_CODE=0
+
+=== COMMAND: trivy version ===
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+  UpdatedAt: 2026-08-26 13:02:19.845522405 +0000 UTC
+  NextUpdate: 2026-08-27 13:02:19.845522164 +0000 UTC
+  DownloadedAt: 2026-08-26 19:59:46.095522406 +0000 UTC
+Check Bundle:
+  Digest: sha256:1583562f8b90ed2a071b99f0e5ffff6b57e4ceb6ca3e4796577b4e6a339eb74c
+  DownloadedAt: 2026-08-26 19:59:46.974472653 +0000 UTC
+EXIT_CODE=0
+
+=== COMMAND: syft version ===
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+GitCommit:     2293641e3bd628a01bb37639318d62c0ebe89b39
+GitDescription: v1.51.0
+Platform:      linux/amd64
+GoVersion:     go1.26.3
+Compiler:      gc
+SchemaVersion: 16.1.10
+EXIT_CODE=0
+
+=== COMMAND: grype version ===
+Application:         grype
+Version:             0.117.0
+BuildDate:           2026-08-10T16:48:30Z
+GitCommit:           b5fa92bbcbef655497e3be840a2f718380e2cdd3
+GitDescription:      v0.117.0
+Platform:            linux/amd64
+GoVersion:           go1.26.3
+Compiler:            gc
+Syft Version:        v1.51.0
+Supported DB Schema: 6
+EXIT_CODE=0
+
+=== COMMAND: semgrep --version ===
+1.175.0
+EXIT_CODE=0
+
+=== COMMAND: yamllint --version ===
+yamllint 1.33.0
+EXIT_CODE=0
+
+=== COMMAND: gitleaks dir --no-banner --redact --exit-code 1 . ===
+6:09PM INF scanned ~967104692 bytes (967.10 MB) in 25.6s
+6:09PM INF no leaks found
+EXIT_CODE=0
+
+=== COMMAND: gitleaks git --no-banner --redact --exit-code 1 . ===
+6:09PM INF 0 commits scanned.
+6:09PM INF scanned ~0 bytes (0) in 3.82s
+6:09PM INF no leaks found
+EXIT_CODE=0
+
+=== COMMAND: trivy fs --scanners secret --exit-code 1 --no-progress --format json --output /tmp/pasted19-scans/trivy-fs.json . ===
+2026-08-27T18:09:59Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T18:09:59Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T18:10:05Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-27T18:10:05Z	INFO	Number of language-specific files	num=2
+EXIT_CODE=0
+
+=== COMMAND: syft dir:. -o cyclonedx-json=/tmp/pasted19-scans/source.cyclonedx.json ===
+[0003]  WARN no explicit name and version provided for directory source, deriving artifact ID from the given path (which is not ideal)
+EXIT_CODE=0
+
+=== COMMAND: grype sbom:/tmp/pasted19-scans/source.cyclonedx.json -o json > /tmp/pasted19-scans/source.grype.json ===
+[0000]  WARN go binary packages were found but none carry function symbols; go vulnerability matching falls back to module granularity and may report false positives. if scanning an SBOM, regenerate it with symbol capture enabled for more precise results.
+[0009]  WARN Unable to determine the OS distribution of some packages. This may result in missing vulnerabilities. You may specify a distro using: --distro <distro>:<version>
+EXIT_CODE=0
+
+=== COMMAND: semgrep scan --config auto --json --output /tmp/pasted19-scans/semgrep.json . ===
+
+
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 2304 files tracked by git with 1074 Code rules:
+
+  Language      Rules   Files          Origin      Rules
+ ─────────────────────────────        ───────────────────
+  <multilang>      60    2304          Community    1074
+  json              4     385
+  go               84      96
+  ts              163      82
+  bash              4      50
+  python          243      28
+  js              153      21
+  yaml             38      13
+  html              1       6
+  dockerfile        6       1
+
+
+
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 46 (46 blocking)
+ • Rules run: 597
+ • Targets scanned: 2304
+ • Parsed lines: ~99.9%
+ • Scan skipped:
+   ◦ Files larger than  files 1.0 MB: 79
+   ◦ Files matching .semgrepignore patterns: 105
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 597 rules on 2304 files: 46 findings.
+
+📢 Too many findings? Try Semgrep Pro for more powerful queries and less noise.
+   See https://sg.run/false-positives.
+EXIT_CODE=0
+
+=== COMMAND: yamllint -d relaxed .github/workflows/ci.yml ===
+.github/workflows/ci.yml
+  73:81     warning  line too long (236 > 80 characters)  (line-length)
+  79:81     warning  line too long (186 > 80 characters)  (line-length)
+  93:81     warning  line too long (301 > 80 characters)  (line-length)
+  94:81     warning  line too long (380 > 80 characters)  (line-length)
+  121:81    warning  line too long (157 > 80 characters)  (line-length)
+  153:81    warning  line too long (106 > 80 characters)  (line-length)
+  168:81    warning  line too long (123 > 80 characters)  (line-length)
+  172:81    warning  line too long (123 > 80 characters)  (line-length)
+  176:81    warning  line too long (120 > 80 characters)  (line-length)
+  181:81    warning  line too long (141 > 80 characters)  (line-length)
+  186:81    warning  line too long (174 > 80 characters)  (line-length)
+  189:81    warning  line too long (121 > 80 characters)  (line-length)
+  207:81    warning  line too long (87 > 80 characters)  (line-length)
+  211:81    warning  line too long (175 > 80 characters)  (line-length)
+  215:81    warning  line too long (214 > 80 characters)  (line-length)
+  220:81    warning  line too long (172 > 80 characters)  (line-length)
+  223:81    warning  line too long (120 > 80 characters)  (line-length)
+  237:81    warning  line too long (85 > 80 characters)  (line-length)
+  238:81    warning  line too long (84 > 80 characters)  (line-length)
+
+EXIT_CODE=0

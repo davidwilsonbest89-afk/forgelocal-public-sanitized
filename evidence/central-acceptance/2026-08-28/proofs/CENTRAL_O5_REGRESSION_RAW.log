@@ -1,0 +1,97 @@
+UTC=2026-08-28T00:16:58Z
+REPO=/home/ubuntu/forgelocal-final-secret-remediation/repo
+GO_BIN=/home/ubuntu/forgelocal-final-remediation/go-toolchain/bin/go
+GO_VERSION=go version go1.26.7 linux/amd64
+NODE_VERSION=v22.13.0
+PNPM_VERSION=10.4.1
+COMMAND_1=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.660s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.555s
+ok  	forgelocal/internal/backup	2.720s
+ok  	forgelocal/internal/browser	3.932s
+ok  	forgelocal/internal/config	1.015s
+ok  	forgelocal/internal/cookies	1.011s
+ok  	forgelocal/internal/drift	1.012s
+ok  	forgelocal/internal/environment	1.015s
+ok  	forgelocal/internal/extensions	2.110s
+ok  	forgelocal/internal/fingerprint	1.016s
+ok  	forgelocal/internal/fonts	1.013s
+ok  	forgelocal/internal/geolocation	1.011s
+ok  	forgelocal/internal/groups	1.017s
+ok  	forgelocal/internal/hardware	1.015s
+ok  	forgelocal/internal/history	1.168s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.743s
+ok  	forgelocal/internal/localvault	1.075s
+ok  	forgelocal/internal/mcp	1.030s
+ok  	forgelocal/internal/productschema	1.735s
+ok  	forgelocal/internal/profile	1.100s
+ok  	forgelocal/internal/profilehealth	1.012s
+ok  	forgelocal/internal/profilemigration	2.628s
+ok  	forgelocal/internal/proxies	1.084s
+ok  	forgelocal/internal/proxyprovider	1.024s
+ok  	forgelocal/internal/runtime	1.326s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.012s
+ok  	forgelocal/internal/spike	3.187s
+ok  	forgelocal/internal/templates	1.306s
+ok  	forgelocal/internal/workflow	1.018s
+COMMAND_1_EXIT=0
+COMMAND_2=go vet ./cmd/... ./internal/...
+COMMAND_2_EXIT=0
+COMMAND_3=go build ./cmd/... ./internal/...
+COMMAND_3_EXIT=0
+COMMAND_4=bash -n docker/entrypoint.sh scripts/start.sh
+COMMAND_4_EXIT=0
+COMMAND_5=shellcheck docker/entrypoint.sh scripts/start.sh
+COMMAND_5_EXIT=0
+COMMAND_6=pnpm install --frozen-lockfile
+
+   ╭───────────────────────────────────────────────────────────────────╮
+   │                                                                   │
+   │                Update available! 10.4.1 → 11.24.0.                │
+   │   Changelog: https://github.com/pnpm/pnpm/releases/tag/v11.24.0   │
+   │                 Run "pnpm self-update" to update.                 │
+   │                                                                   │
+   ╰───────────────────────────────────────────────────────────────────╯
+
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮│                                                                              ││   Ignored build scripts: esbuild.                                            ││   Run "pnpm approve-builds" to pick which dependencies should be allowed     ││   to run scripts.                                                            ││                                                                              │╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 6.5s using pnpm v10.4.1
+COMMAND_6_EXIT=0
+COMMAND_7=pnpm run check
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard
+> tsc --noEmit
+
+COMMAND_7_EXIT=0
+COMMAND_8=pnpm run build
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1629 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.70 kB │ gzip: 105.61 kB
+../dist/public/assets/index-CmkDj0A3.css  140.59 kB │ gzip:  25.20 kB
+../dist/public/assets/index-C0hTqVVo.js   446.94 kB │ gzip: 122.47 kB
+✓ built in 2.66s
+
+  dist/index.js  788b
+
+⚡ Done in 3ms
+COMMAND_8_EXIT=0
+COMMAND_9=git diff --check
+COMMAND_9_EXIT=0
+COMMANDS_EXPECTED=9
+COMMANDS_EXECUTED=9
+COMMANDS_PASS=9
+O5_STATUS=PASS_WITH_TOOLCHAIN_DEVIATION

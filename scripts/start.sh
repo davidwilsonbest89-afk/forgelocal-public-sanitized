@@ -16,7 +16,7 @@ echo "Starting Control Server..."
 SERVER_PID=$!
 
 # Wait for server ready
-for i in $(seq 1 10); do
+for _ in $(seq 1 10); do
   if curl -s http://127.0.0.1:19280/api/status > /dev/null 2>&1; then
     echo "Control Server ready (PID: $SERVER_PID)"
     break
@@ -24,9 +24,7 @@ for i in $(seq 1 10); do
   sleep 1
 done
 
-# Read API token
-TOKEN=$(cat data/.api-token 2>/dev/null || echo "")
-echo "API Token: $TOKEN"
+# API token is intentionally not read or printed by the launcher.
 
 # Camoufox will be launched by Control Server via Playwright
 # Just wait for server to exit

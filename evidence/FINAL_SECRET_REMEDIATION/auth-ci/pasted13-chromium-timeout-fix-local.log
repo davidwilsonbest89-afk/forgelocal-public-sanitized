@@ -1,0 +1,49 @@
+DATE_UTC=2026-08-27T04:51:30Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+GO_VERSION=go version go1.26.7 linux/amd64
+COMMAND=go test -count=1 -run TestBackupV1CreateModifyRestoreIsolation -v ./internal/api
+=== RUN   TestBackupV1CreateModifyRestoreIsolation
+2026/08/27 04:51:32 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation1593367178/001/.api-token
+2026/08/27 04:51:32 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 127.0.0.1:0 - 201 207B in 2.023652ms
+2026/08/27 04:51:32 "POST http://example.com/api/v1/backups/bkp-1787806292477727171-26597989d490f9ee/restore HTTP/1.1" from 127.0.0.1:0 - 201 636B in 1.822462ms
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.71 built on Ubuntu 24.04.4 LTS" pid=90395 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation1593367178/001/profiles/target-api/browser-data" endpoint="none (--dump-dom direct process)" navigation="about:blank"
+    backup_v1_test.go:86: AC-BACK-01 runtime relaunch stopped cleanly: pid=90395 profile_lock_cleanup=verified
+--- PASS: TestBackupV1CreateModifyRestoreIsolation (0.70s)
+PASS
+ok  	forgelocal/internal/api	0.704s
+TARGETED_EXIT=0
+COMMAND=go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.210s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	3.551s
+ok  	forgelocal/internal/backup	2.491s
+ok  	forgelocal/internal/browser	4.119s
+ok  	forgelocal/internal/config	1.012s
+ok  	forgelocal/internal/cookies	1.011s
+ok  	forgelocal/internal/drift	1.010s
+ok  	forgelocal/internal/environment	1.012s
+ok  	forgelocal/internal/extensions	1.958s
+ok  	forgelocal/internal/fingerprint	1.013s
+ok  	forgelocal/internal/fonts	1.011s
+ok  	forgelocal/internal/geolocation	1.015s
+ok  	forgelocal/internal/groups	1.020s
+ok  	forgelocal/internal/hardware	1.010s
+ok  	forgelocal/internal/history	1.143s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.707s
+ok  	forgelocal/internal/localvault	1.062s
+ok  	forgelocal/internal/mcp	1.030s
+ok  	forgelocal/internal/productschema	1.610s
+ok  	forgelocal/internal/profile	1.088s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.341s
+ok  	forgelocal/internal/proxies	1.079s
+ok  	forgelocal/internal/proxyprovider	1.014s
+ok  	forgelocal/internal/runtime	1.223s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.012s
+ok  	forgelocal/internal/spike	2.944s
+ok  	forgelocal/internal/templates	1.254s
+ok  	forgelocal/internal/workflow	1.014s
+FULL_RACE_EXIT=0

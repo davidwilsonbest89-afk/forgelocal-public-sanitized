@@ -1,0 +1,212 @@
+HEAD=3babed14c540d304e09c5e6025bf2700c9694f2a
+GO_VERSION=go version go1.26.7 linux/amd64
+NODE_VERSION=v22.13.0
+PNPM_VERSION=11.20.0
+PYTHON_VERSION=Python 3.12.3
+SHELLCHECK_VERSION=ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+
+=== GO_TEST_RACE ===
+DATE_UTC=2026-08-27T03:59:49Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=env CGO_ENABLED=1 GOTOOLCHAIN=local GOPROXY=off timeout 360s /home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/go-toolchain/bin/go test -count=1 -race ./cmd/... ./internal/...
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.126s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	4.076s
+ok  	forgelocal/internal/backup	2.793s
+ok  	forgelocal/internal/browser	4.324s
+ok  	forgelocal/internal/config	1.015s
+ok  	forgelocal/internal/cookies	1.011s
+ok  	forgelocal/internal/drift	1.012s
+ok  	forgelocal/internal/environment	1.011s
+ok  	forgelocal/internal/extensions	1.999s
+ok  	forgelocal/internal/fingerprint	1.020s
+ok  	forgelocal/internal/fonts	1.015s
+ok  	forgelocal/internal/geolocation	1.016s
+ok  	forgelocal/internal/groups	1.022s
+ok  	forgelocal/internal/hardware	1.014s
+ok  	forgelocal/internal/history	1.151s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.709s
+ok  	forgelocal/internal/localvault	1.057s
+ok  	forgelocal/internal/mcp	1.033s
+ok  	forgelocal/internal/productschema	1.657s
+ok  	forgelocal/internal/profile	1.086s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.358s
+ok  	forgelocal/internal/proxies	1.081s
+ok  	forgelocal/internal/proxyprovider	1.011s
+ok  	forgelocal/internal/runtime	1.214s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.011s
+ok  	forgelocal/internal/spike	3.046s
+ok  	forgelocal/internal/templates	1.496s
+ok  	forgelocal/internal/workflow	1.015s
+EXIT_CODE=0
+
+=== GO_VET ===
+DATE_UTC=2026-08-27T04:00:01Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=env CGO_ENABLED=1 GOTOOLCHAIN=local GOPROXY=off timeout 240s /home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/go-toolchain/bin/go vet ./cmd/... ./internal/...
+EXIT_CODE=0
+
+=== GO_BUILD ===
+DATE_UTC=2026-08-27T04:00:01Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=env CGO_ENABLED=1 GOTOOLCHAIN=local GOPROXY=off timeout 240s /home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/go-toolchain/bin/go build ./cmd/... ./internal/...
+EXIT_CODE=0
+
+=== PNPM_INSTALL ===
+DATE_UTC=2026-08-27T04:00:03Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=pnpm --dir forge-dashboard install --frozen-lockfile
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮│                                                                              ││   Ignored build scripts: esbuild.                                            ││   Run "pnpm approve-builds" to pick which dependencies should be allowed     ││   to run scripts.                                                            ││                                                                              │╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 1s using pnpm v10.4.1
+EXIT_CODE=0
+
+=== PNPM_CHECK ===
+DATE_UTC=2026-08-27T04:00:04Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=pnpm --dir forge-dashboard run check
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard
+> tsc --noEmit
+
+EXIT_CODE=0
+
+=== PNPM_BUILD ===
+DATE_UTC=2026-08-27T04:00:07Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=pnpm --dir forge-dashboard run build
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1629 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.70 kB │ gzip: 105.61 kB
+../dist/public/assets/index-CmkDj0A3.css  140.59 kB │ gzip:  25.20 kB
+../dist/public/assets/index-C0hTqVVo.js   446.94 kB │ gzip: 122.47 kB
+✓ built in 2.27s
+
+  dist/index.js  788b
+
+⚡ Done in 3ms
+EXIT_CODE=0
+
+=== GITLEAKS_SOURCE ===
+DATE_UTC=2026-08-27T04:00:11Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/gitleaks dir --no-banner --redact --exit-code 1 --report-format json --report-path /home/ubuntu/forgelocal-final-secret-remediation/checks/pasted13-gitleaks-source.json /home/ubuntu/forgelocal-final-secret-remediation/repo
+[90m4:00AM[0m [32mINF[0m [1mscanned ~965671749 bytes (965.67 MB) in 21.1s[0m
+[90m4:00AM[0m [32mINF[0m [1mno leaks found[0m
+EXIT_CODE=0
+
+=== TRIVY_FILESYSTEM_SECRET ===
+DATE_UTC=2026-08-27T04:00:32Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/trivy fs --scanners secret --format json --output /home/ubuntu/forgelocal-final-secret-remediation/checks/pasted13-trivy-fs-secret.json /home/ubuntu/forgelocal-final-secret-remediation/repo
+2026-08-27T04:00:32Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T04:00:32Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T04:00:38Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-27T04:00:38Z	INFO	Number of language-specific files	num=2
+EXIT_CODE=0
+
+=== TRIVY_FILESYSTEM ===
+DATE_UTC=2026-08-27T04:00:38Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=/home/ubuntu/forgelocal-final-secret-remediation/../forgelocal-final-remediation/tools/bin/trivy fs --scanners vuln\,secret\,misconfig --format json --output /home/ubuntu/forgelocal-final-secret-remediation/checks/pasted13-trivy-fs.json /home/ubuntu/forgelocal-final-secret-remediation/repo
+2026-08-27T04:00:38Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-27T04:00:38Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-27T04:00:38Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-27T04:00:39Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T04:00:39Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-27T04:00:39Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T04:00:50Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-27T04:00:50Z	INFO	Number of language-specific files	num=2
+2026-08-27T04:00:50Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-27T04:00:50Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-27T04:00:50Z	INFO	Detected config files	num=2
+EXIT_CODE=0
+
+=== SHELLCHECK ===
+DATE_UTC=2026-08-27T04:00:50Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=shellcheck docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+EXIT_CODE=0
+
+=== BASH_N ===
+DATE_UTC=2026-08-27T04:00:50Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=bash -n docker/entrypoint.sh scripts/start.sh scripts/test-authenticated-synthetic.sh scripts/test-docker-image-hardening.sh scripts/test-docker-image-secret-redaction.sh
+EXIT_CODE=0
+
+=== GIT_DIFF_CHECK ===
+DATE_UTC=2026-08-27T04:00:50Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=git diff --check
+EXIT_CODE=0
+
+=== GIT_FSCK ===
+DATE_UTC=2026-08-27T04:00:50Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=git fsck --full
+dangling blob 6c82ac5fbcc2e7c123f4083a153a717868c39180
+dangling blob 26852055804aa077d12cb42fc31c83b838695b0c
+dangling blob d98798806c542a96af91c6833e3bd59cfe1baa35
+dangling tag 310c10e7541bbec7828226ce1049df56da11ce0b
+dangling tag a7d3c6afe1627d23f6d4d990f4ab7e00186b780d
+dangling blob 0d14774a057645fa8a9d1999850a76dd6f55cb96
+dangling tag 72d54110c89583beacc556bb103f881b667d8137
+dangling blob d89a0e37eb364e68980bc6fcf9baa2471419d634
+dangling blob 0cdb996002ead7b276f575337c2ca0ee393f725f
+dangling blob d65b1d8b186ce71ea99a62a518ae688c2110049a
+dangling tag f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7
+dangling blob a7273dfdbdc7af87bcc0b1f57ac1d953be023ab7
+dangling blob 932d88aa5cc70939037059e802d04762dcea2318
+dangling tag 436eebd4937352476c9e4c44a13b536c48d0c048
+dangling blob 34b3d2e32b443565a924487c4aba54d872942c43
+dangling blob c6f7a1851bd60ea43e9951d4d79cbff66acfe931
+dangling tag 3ebcf55fcab7ab10e34ffea652f2398e07e299da
+dangling blob 89fc48128a9be053303c4ec9746c6980d3762989
+dangling tag f77fd0bb02993854eec9ecf05fda9788546860ec
+EXIT_CODE=0
+
+=== SUMMARY ===
+HEAD=3babed14c540d304e09c5e6025bf2700c9694f2a
+=== GO_TEST_RACE ===
+EXIT_CODE=0
+=== GO_VET ===
+EXIT_CODE=0
+=== GO_BUILD ===
+EXIT_CODE=0
+=== PNPM_INSTALL ===
+EXIT_CODE=0
+=== PNPM_CHECK ===
+EXIT_CODE=0
+=== PNPM_BUILD ===
+EXIT_CODE=0
+=== GITLEAKS_SOURCE ===
+EXIT_CODE=0
+=== TRIVY_FILESYSTEM_SECRET ===
+EXIT_CODE=0
+=== TRIVY_FILESYSTEM ===
+EXIT_CODE=0
+=== SHELLCHECK ===
+EXIT_CODE=0
+=== BASH_N ===
+EXIT_CODE=0
+=== GIT_DIFF_CHECK ===
+EXIT_CODE=0
+=== GIT_FSCK ===
+EXIT_CODE=0
+=== SUMMARY ===

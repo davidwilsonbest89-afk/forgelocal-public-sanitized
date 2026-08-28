@@ -1,0 +1,154 @@
+=== GIT_STATUS ===
+## [32mvalidation/final-secret-remediation[m
+ [31mM[m docker/Dockerfile.run
+ [31mM[m docker/entrypoint.sh
+ [31mM[m scripts/start.sh
+[31m??[m scripts/test-docker-image-hardening.sh
+EXIT_CODE=0
+=== DIFF_CHECK ===
+EXIT_CODE=0
+=== BASH_SYNTAX_ENTRYPOINT ===
+EXIT_CODE=0
+=== SHELLCHECK_ENTRYPOINT ===
+[]
+EXIT_CODE=0
+=== STATIC_SECRET_OUTPUT_GUARDS ===
+grep: Trailing backslash
+EXIT_CODE=0
+=== GO_VERSION ===
+go version go1.26.7 linux/amd64
+EXIT_CODE=0
+=== GO_TEST_RACE ===
+?   	forgelocal/cmd/back01-core	[no test files]
+ok  	forgelocal/cmd/server	2.406s
+?   	forgelocal/cmd/systemvault-doctor	[no test files]
+ok  	forgelocal/internal/api	4.404s
+ok  	forgelocal/internal/backup	2.884s
+ok  	forgelocal/internal/browser	4.987s
+ok  	forgelocal/internal/config	1.026s
+ok  	forgelocal/internal/cookies	1.015s
+ok  	forgelocal/internal/drift	1.021s
+ok  	forgelocal/internal/environment	1.020s
+ok  	forgelocal/internal/extensions	2.051s
+ok  	forgelocal/internal/fingerprint	1.023s
+ok  	forgelocal/internal/fonts	1.018s
+ok  	forgelocal/internal/geolocation	1.017s
+ok  	forgelocal/internal/groups	1.022s
+ok  	forgelocal/internal/hardware	1.015s
+ok  	forgelocal/internal/history	1.151s
+?   	forgelocal/internal/humanize	[no test files]
+ok  	forgelocal/internal/launch	3.718s
+ok  	forgelocal/internal/localvault	1.063s
+ok  	forgelocal/internal/mcp	1.030s
+ok  	forgelocal/internal/productschema	1.689s
+ok  	forgelocal/internal/profile	1.141s
+ok  	forgelocal/internal/profilehealth	1.011s
+ok  	forgelocal/internal/profilemigration	2.443s
+ok  	forgelocal/internal/proxies	1.086s
+ok  	forgelocal/internal/proxyprovider	1.011s
+ok  	forgelocal/internal/runtime	1.230s
+?   	forgelocal/internal/secrets	[no test files]
+ok  	forgelocal/internal/sessiontrack	1.010s
+ok  	forgelocal/internal/spike	3.589s
+ok  	forgelocal/internal/templates	1.346s
+ok  	forgelocal/internal/workflow	1.016s
+EXIT_CODE=0
+=== GO_VET ===
+EXIT_CODE=0
+=== GO_BUILD ===
+EXIT_CODE=0
+=== PNPM_INSTALL_FROZEN ===
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮│                                                                              ││   Ignored build scripts: esbuild.                                            ││   Run "pnpm approve-builds" to pick which dependencies should be allowed     ││   to run scripts.                                                            ││                                                                              │╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 1.1s using pnpm v10.4.1
+EXIT_CODE=0
+=== PNPM_CHECK ===
+
+> forgelocal-dashboard@1.0.0 check /home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard
+> tsc --noEmit
+
+EXIT_CODE=0
+=== PNPM_BUILD ===
+
+> forgelocal-dashboard@1.0.0 build /home/ubuntu/forgelocal-final-secret-remediation/repo/forge-dashboard
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1629 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/public/index.html                 367.70 kB │ gzip: 105.61 kB
+../dist/public/assets/index-CmkDj0A3.css  140.59 kB │ gzip:  25.20 kB
+../dist/public/assets/index-C0hTqVVo.js   446.94 kB │ gzip: 122.47 kB
+✓ built in 2.58s
+
+  dist/index.js  788b
+
+⚡ Done in 3ms
+EXIT_CODE=0
+=== GITLEAKS_SOURCE_ONLY ===
+[90m1:34AM[0m [32mINF[0m [1mscanned ~19262524 bytes (19.26 MB) in 760ms[0m
+[90m1:34AM[0m [32mINF[0m [1mno leaks found[0m
+EXIT_CODE=0
+=== GITLEAKS_EXTRACTION_NO_GIT ===
+[90m1:35AM[0m [32mINF[0m [1mscanned ~943614504 bytes (943.61 MB) in 22.8s[0m
+[90m1:35AM[0m [32mINF[0m [1mno leaks found[0m
+EXIT_CODE=0
+=== TRIVY_SECRET_FILESYSTEM ===
+2026-08-27T01:35:00Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T01:35:00Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T01:35:07Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-27T01:35:07Z	INFO	Number of language-specific files	num=2
+EXIT_CODE=0
+=== TRIVY_FILESYSTEM ===
+2026-08-27T01:35:07Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-27T01:35:07Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-27T01:35:07Z	INFO	[checks-client] Using existing checks from cache	path="/home/ubuntu/.cache/trivy/policy/content"
+2026-08-27T01:35:08Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T01:35:08Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-27T01:35:08Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T01:35:17Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-08-27T01:35:17Z	INFO	Number of language-specific files	num=2
+2026-08-27T01:35:17Z	INFO	[gomod] Detecting vulnerabilities...
+2026-08-27T01:35:17Z	INFO	[pnpm] Detecting vulnerabilities...
+2026-08-27T01:35:17Z	INFO	Detected config files	num=2
+EXIT_CODE=0
+=== DOCKER_INFO ===
+Client:
+ Version:    29.1.3
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  0.30.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  trust: Manage trust on Docker images (Docker Inc.)
+    Version:  29.1.3
+    Path:     /usr/libexec/docker/cli-plugins/docker-trust
+
+Server:
+permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+EXIT_CODE=1
+=== FSCK ===
+dangling blob 6c82ac5fbcc2e7c123f4083a153a717868c39180
+dangling blob 26852055804aa077d12cb42fc31c83b838695b0c
+dangling blob d98798806c542a96af91c6833e3bd59cfe1baa35
+dangling tag 310c10e7541bbec7828226ce1049df56da11ce0b
+dangling tag a7d3c6afe1627d23f6d4d990f4ab7e00186b780d
+dangling blob 0d14774a057645fa8a9d1999850a76dd6f55cb96
+dangling tag 72d54110c89583beacc556bb103f881b667d8137
+dangling blob d89a0e37eb364e68980bc6fcf9baa2471419d634
+dangling blob 0cdb996002ead7b276f575337c2ca0ee393f725f
+dangling blob d65b1d8b186ce71ea99a62a518ae688c2110049a
+dangling tag f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7
+dangling blob 932d88aa5cc70939037059e802d04762dcea2318
+dangling tag 436eebd4937352476c9e4c44a13b536c48d0c048
+dangling blob c6f7a1851bd60ea43e9951d4d79cbff66acfe931
+dangling tag 3ebcf55fcab7ab10e34ffea652f2398e07e299da
+dangling blob 89fc48128a9be053303c4ec9746c6980d3762989
+dangling tag f77fd0bb02993854eec9ecf05fda9788546860ec
+EXIT_CODE=0

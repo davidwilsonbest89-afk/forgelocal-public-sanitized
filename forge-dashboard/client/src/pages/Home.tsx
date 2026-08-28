@@ -472,7 +472,7 @@ export default function Home() {
               <button className="create-profile" type="button" onClick={() => setDialogOpen(true)}><Plus size={17} /> Préparer un profil</button>
             </div>
 
-            {coreWrite && <ProxyRegistry client={writeClientRef.current!} proxies={registryProxies} onChange={setRegistryProxies} selectedProfileId={selectedProfile?.id} assignedProxyId={assignedProxyIds[selectedProfile?.id ?? ""]} formRef={proxyFormRef} />}
+            {coreWrite && <ProxyRegistry client={writeClientRef.current!} proxies={registryProxies} onChange={setRegistryProxies} onAssigned={(proxyId) => { if (selectedProfile?.id) setAssignedProxyIds((previous) => ({ ...previous, [selectedProfile.id]: proxyId })); }} onUnassigned={(proxyId) => { if (selectedProfile?.id) setAssignedProxyIds((previous) => { const next = { ...previous }; if (next[selectedProfile.id] === proxyId) delete next[selectedProfile.id]; return next; }); }} selectedProfileId={selectedProfile?.id} assignedProxyId={assignedProxyIds[selectedProfile?.id ?? ""]} formRef={proxyFormRef} />}
             {coreWrite && navLabel === "Sauvegardes" && <BackupVault client={writeClientRef.current!} profileIds={profileIds} />}
             {coreWrite && navLabel === "Identité navigateur" && <EnvironmentPanel client={writeClientRef.current!} profileIds={profileIds} selectedProfileId={selectedProfile?.id} />}
             {coreWrite && navLabel === "Runtime qualifié" && <RuntimePanel client={writeClientRef.current!} />}

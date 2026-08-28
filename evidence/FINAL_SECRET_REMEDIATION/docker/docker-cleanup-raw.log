@@ -1,0 +1,50 @@
+=== DATE_UTC ===
+2026-08-27T00:22:29Z
+=== IMAGE_INSPECT ===
+IMAGE_INSPECT_EXIT=0
+=== IMAGE_HISTORY ===
+IMAGE_HISTORY_EXIT=0
+=== CONTAINERS_BEFORE ===
+CONTAINERS_BEFORE_EXIT=0
+=== IMAGE_REMOVE ===
+Untagged: forgelocal-secret-remediation:controlled-hostnet-20260826
+Deleted: sha256:92b181f89dfdb5a77623c3914707a72376e397f47783547ee428aa5cfdf002a9
+IMAGE_REMOVE_EXIT=0
+=== BUILDER_PRUNE ===
+ID						RECLAIMABLE	SIZE		LAST ACCESSED
+tfjt71fcjiy2vmc5c1jogvx94               	true 		14.01kB   	22 minutes ago
+t4tf62na7yevgm9qn9hmko86m*              	true 	12.29kB   	22 minutes ago
+jc8dmantfik2mhbry6n27xgs7*              	true 	8.192kB   	22 minutes ago
+ek2ho7ih0cvsksy32bdpy3v7l*              	true 	12.29kB   	22 minutes ago
+7zhxsvcdtbrwo2aw7rykt50ou               	true 	14kB      	22 minutes ago
+malzayc7f2vbng49clhbmq6xu               	true 	5.355GB   	22 minutes ago
+topbx8olrfyhc56dg4d1h58qu               	true 	185.1MB   	22 minutes ago
+f5qh0mnokv1pbzll83usadk12               	true 	30.97MB   	22 minutes ago
+q2g8ta7uakneuilfq9m2wva02               	true 	8.285kB   	22 minutes ago
+h1i82n0l4n30sc0vj79k9tpfu               	true 	243.3MB   	22 minutes ago
+wiykn3u0l133qrq3676n8rz2c               	true 	925.9MB   	22 minutes ago
+unkwsnupt2wal6ed1eldw3ftb               	true 	117.4MB   	22 minutes ago
+Total:	6.858GB
+BUILDER_PRUNE_EXIT=0
+=== CONTAINERS_AFTER ===
+CONTAINERS_AFTER_EXIT=0
+=== IMAGES_AFTER ===
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+IMAGES_AFTER_EXIT=0
+=== SERVICE_STOP ===
+Stopping 'docker.service', but its triggering units are still active:
+docker.socket
+DOCKER_STOP_EXIT=0
+CONTAINERD_STOP_EXIT=0
+=== SERVICE_FINAL ===
+inactive
+DOCKER_ACTIVE_EXIT=3
+inactive
+CONTAINERD_ACTIVE_EXIT=3
+srw-rw---- 1 root docker 0 Aug 26 23:47 /run/docker.sock
+srw-rw---- 1 root docker 0 Aug 26 23:47 /var/run/docker.sock
+SOCKET_EXIT=0
+=== DISK_FINAL ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   29G   19G  61% /
+/dev/root      50976727040 30730833920 20229115904  61% /

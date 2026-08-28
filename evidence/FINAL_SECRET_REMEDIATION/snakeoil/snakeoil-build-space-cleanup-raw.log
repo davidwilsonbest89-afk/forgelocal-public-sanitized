@@ -1,0 +1,44 @@
+=== DATE_UTC ===
+2026-08-27T01:22:18Z
+=== DISK_BEFORE ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   41G  7.3G  85% /
+/dev/root      50976727040 43150630912 7809318912  85% /
+=== CONTAINERS ===
+CONTAINERS_EXIT=0
+=== IMAGES ===
+REPOSITORY                      TAG                            IMAGE ID                                                                  CREATED          SIZE
+forgelocal-secret-remediation   snakeoil-remediated-20260827   sha256:906ee46a15885c4cda92325adec06a450e7afe485c43ba763f922d7c321af879   7 minutes ago    1.71GB
+forgelocal-secret-remediation   snakeoil-baseline-20260827     sha256:d57f637f8da7b27ec05115f045cafd0e0aca594008c3715e51e11cdf08eb591d   24 minutes ago   6.86GB
+IMAGES_EXIT=0
+=== BUILDER_DF_BEFORE ===
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         0         9.56GB    1.17GB (12%)
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     7         0         1.503GB   1.503GB
+SYSTEM_DF_EXIT=0
+=== REMOVE_TEMP_IMAGES ===
+Untagged: forgelocal-secret-remediation:snakeoil-baseline-20260827
+Deleted: sha256:d57f637f8da7b27ec05115f045cafd0e0aca594008c3715e51e11cdf08eb591d
+Untagged: forgelocal-secret-remediation:snakeoil-remediated-20260827
+Deleted: sha256:906ee46a15885c4cda92325adec06a450e7afe485c43ba763f922d7c321af879
+REMOVE_IMAGES_EXIT=0
+=== PRUNE_BUILDER ===
+ID						RECLAIMABLE	SIZE		LAST ACCESSED
+paeui4mgvv4t40kl7ii8a0a2m*              	true 		8.192kB   	5 minutes ago
+ik2qqo4qag07hzvnua278q3eg               	true 	185.1MB   	5 minutes ago
+l4uc6xx86uvuicyly153nwgu5               	true 	30.97MB   	5 minutes ago
+4og5i3b0q5cnhc3g5zcqqtgoa               	true 	8.283kB   	5 minutes ago
+jhzs51f9uhsi26nu5ei6w9438               	true 	243.3MB   	5 minutes ago
+fn5ccvih5t4xkfifc2tgbiywr               	true 	925.9MB   	5 minutes ago
+rr4lr12eqokmg1szlx6q0qzet               	true 	117.4MB   	5 minutes ago
+Total:	1.503GB
+BUILDER_PRUNE_EXIT=0
+=== DISK_AFTER ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   32G   17G  66% /
+/dev/root      50976727040 33590992896 17368956928  66% /
+=== IMAGES_AFTER ===
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+IMAGES_AFTER_EXIT=0

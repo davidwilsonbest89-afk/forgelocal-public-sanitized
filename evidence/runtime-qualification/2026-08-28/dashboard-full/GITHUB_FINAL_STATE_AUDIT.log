@@ -1,0 +1,9 @@
+UTC=2026-08-28T11:43:37Z
+FINAL_COMMIT=91baf48c31df59949274d80db020e8d0ae645e66
+PUSH_EXIT=0
+REMOTE_HEAD=91baf48c31df59949274d80db020e8d0ae645e66
+REMOTE_MATCH=true
+WORKTREE_CLEAN=false
+PUSH_TO_GITHUB=YES
+To https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+   7b59f43..91baf48  HEAD -> validation/final-secret-remediation

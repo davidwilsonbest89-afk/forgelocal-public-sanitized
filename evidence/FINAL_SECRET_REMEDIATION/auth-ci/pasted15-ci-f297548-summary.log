@@ -1,0 +1,7 @@
+UTC_CAPTURE=2026-08-27T15:10:00Z
+RUN_ID=33084774532
+RUN_URL=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/actions/runs/33084774532
+HEAD=f2975483692d23e51ec2cb5e8ef744064d74ad75
+JOB=test CONCLUSION=success JOB_ID=98561327062 FAILED_STEPS=
+JOB=Secret, SBOM, and image security gates CONCLUSION=failure JOB_ID=98561327415 FAILED_STEPS=Grype image policy gate
+JOB=Qualified Chromium runtime validation CONCLUSION=skipped JOB_ID=98561328828 FAILED_STEPS=

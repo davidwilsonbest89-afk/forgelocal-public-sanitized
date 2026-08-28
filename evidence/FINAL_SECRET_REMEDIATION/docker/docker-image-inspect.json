@@ -1,0 +1,60 @@
+[
+    {
+        "Id": "sha256:92b181f89dfdb5a77623c3914707a72376e397f47783547ee428aa5cfdf002a9",
+        "RepoTags": [
+            "forgelocal-secret-remediation:controlled-hostnet-20260826"
+        ],
+        "RepoDigests": [
+            "forgelocal-secret-remediation@sha256:92b181f89dfdb5a77623c3914707a72376e397f47783547ee428aa5cfdf002a9"
+        ],
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2026-08-26T23:58:19.120853684Z",
+        "Config": {
+            "ExposedPorts": {
+                "19280/tcp": {},
+                "6901/tcp": {}
+            },
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "DISPLAY=:1",
+                "BROWSEFORGE_DOCKER_GPU_MODE=software",
+                "BROWSEFORGE_DOCKER_DISPLAY_WIDTH=1920",
+                "BROWSEFORGE_DOCKER_DISPLAY_HEIGHT=1080",
+                "BROWSEFORGE_CHROMIUM_RELEASE_BASE_URL="
+            ],
+            "Entrypoint": [
+                "/entrypoint.sh"
+            ],
+            "WorkingDir": "/app",
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 1707752513,
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:b9a65b3c65ab22d490085bd0bf5490e2409da8748b406870f2463bdc41cd6795",
+                "sha256:4019448a45ae885eb47eb797229b15c76cbbeb74adf3cd4679b3d28e4903a7fa",
+                "sha256:e9d4a61568329627be679eefadbce50cc0e88b6f7cd98019b741a4389373df40",
+                "sha256:c3faad7f86882bcc7ba6746cd12edcbcd6e306570e4b7870b52e73e7b619fad1",
+                "sha256:341fdd6c0846945fba524811e5c1b3d9e49f4bd0a9db7030e05f15a3c209862c",
+                "sha256:a91b9de4e951b702e376b81b52dded5c42ce0e8351648405a2c84849e1149edd",
+                "sha256:31042195d5a1ba1d7900d01edf1f51ab9489223705ffde30f88dbdf406f69a00",
+                "sha256:5342f608db842caf4931fdcb30d5b4af2134457e63b3c084f1d5ba8faf3fefe2",
+                "sha256:db8125bfe3f1e746b649618a1ef4388ae80ca16ff6ca8ac716c1fd14f9e7c0c3"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2026-08-27T00:00:03.183079393Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:92b181f89dfdb5a77623c3914707a72376e397f47783547ee428aa5cfdf002a9",
+            "size": 856
+        }
+    }
+]

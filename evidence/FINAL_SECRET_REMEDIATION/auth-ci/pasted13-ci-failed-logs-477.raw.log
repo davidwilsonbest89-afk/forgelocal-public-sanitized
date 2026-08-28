@@ -1,0 +1,206 @@
+test	Go test	﻿2026-08-27T04:11:48.5520339Z ##[group]Run go test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')
+test	Go test	2026-08-27T04:11:48.5521511Z ^[[36;1mgo test -count=1 -timeout 2m $(go list ./... | grep -v '/internal/spike$')^[[0m
+test	Go test	2026-08-27T04:11:48.5561608Z shell: /usr/bin/bash -e {0}
+test	Go test	2026-08-27T04:11:48.5561881Z env:
+test	Go test	2026-08-27T04:11:48.5562094Z   GOTOOLCHAIN: go1.25.13
+test	Go test	2026-08-27T04:11:48.5562345Z ##[endgroup]
+test	Go test	2026-08-27T04:11:48.6142562Z go: downloading github.com/mxschmitt/playwright-go v0.6100.0
+test	Go test	2026-08-27T04:11:48.6148555Z go: downloading golang.org/x/net v0.58.0
+test	Go test	2026-08-27T04:11:48.6149244Z go: downloading github.com/go-chi/chi/v5 v5.3.1
+test	Go test	2026-08-27T04:11:48.7215052Z go: downloading gopkg.in/yaml.v3 v3.0.1
+test	Go test	2026-08-27T04:11:48.8613078Z go: downloading github.com/go-stack/stack v1.8.1
+test	Go test	2026-08-27T04:11:48.8613834Z go: downloading github.com/deckarep/golang-set/v2 v2.8.0
+test	Go test	2026-08-27T04:11:48.8614299Z go: downloading github.com/go-jose/go-jose/v3 v3.0.5
+test	Go test	2026-08-27T04:11:58.1575300Z # forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api [forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api.test]
+test	Go test	2026-08-27T04:11:58.1606152Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:41:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1614979Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:46:2: undefined: writeJSON
+test	Go test	2026-08-27T04:11:58.1616681Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:53:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1618199Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:66:2: undefined: writeJSON
+test	Go test	2026-08-27T04:11:58.1619579Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:76:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1621133Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: undefined: writeError
+test	Go test	2026-08-27T04:11:58.1622650Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:105:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1623993Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:148:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1625332Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:197:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1626688Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:267:10: undefined: handler
+test	Go test	2026-08-27T04:11:58.1628174Z ##[error]artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api/readonly.go:90:3: too many errors
+test	Go test	2026-08-27T04:11:58.4749077Z FAIL	forgelocal/artifacts/forgelocal-dashboard-profile-create-0c4b9ae/source/internal/api [build failed]
+test	Go test	2026-08-27T04:11:58.5314857Z ?   	forgelocal/cmd/back01-core	[no test files]
+test	Go test	2026-08-27T04:12:01.2842134Z ok  	forgelocal/cmd/server	0.580s
+test	Go test	2026-08-27T04:12:01.2872067Z ?   	forgelocal/cmd/systemvault-doctor	[no test files]
+test	Go test	2026-08-27T04:12:22.8491954Z 2026/08/27 04:12:02 INFO generated API token path=/tmp/TestBackupV1CreateModifyRestoreIsolation979105501/001/.api-token
+test	Go test	2026-08-27T04:12:22.8493725Z 2026/08/27 04:12:02 "POST http://example.com/api/v1/profiles/source-api/backups HTTP/1.1" from 127.0.0.1:0 - 201 207B in 2.977925ms
+test	Go test	2026-08-27T04:12:22.8495541Z 2026/08/27 04:12:02 "POST http://example.com/api/v1/backups/bkp-1787803922263447417-24b25b2f4dfba033/restore HTTP/1.1" from 127.0.0.1:0 - 201 636B in 2.037482ms
+test	Go test	2026-08-27T04:12:22.8496839Z --- FAIL: TestBackupV1CreateModifyRestoreIsolation (20.16s)
+test	Go test	2026-08-27T04:12:22.8502172Z     backup_v1_test.go:86: AC-BACK-01 runtime relaunch started: binary="/usr/bin/chromium" version="Chromium 151.0.7922.0" pid=8754 target_profile_id="target-api" user_data_dir="/tmp/TestBackupV1CreateModifyRestoreIsolation979105501/001/profiles/target-api/browser-data" endpoint="none (--dump-dom direct process)" navigation="about:blank"
+test	Go test	2026-08-27T04:12:22.8506669Z     backup_v1_test.go:86: restored Chromium launch timed out: context deadline exceeded; output=[8754:9049:0827/041207.896328:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8510052Z         [8754:9049:0827/041207.896821:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8512940Z         [8754:9049:0827/041208.288596:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8515660Z         [8754:9049:0827/041209.669782:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8518364Z         [8754:8754:0827/041210.491393:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8521148Z         [8754:8754:0827/041210.491453:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8523897Z         [8754:9049:0827/041210.491477:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8526587Z         [8754:9049:0827/041210.491493:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8529212Z         [8754:8754:0827/041210.496538:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8532000Z         [8754:8754:0827/041210.557174:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8534606Z         [8754:8754:0827/041211.756855:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8537188Z         [8754:8754:0827/041211.757151:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8539844Z         [8754:9049:0827/041211.757768:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8542625Z         [8754:8754:0827/041211.780181:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8545274Z         [8754:9049:0827/041211.780476:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8549134Z         [8754:8754:0827/041211.834359:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files
+test	Go test	2026-08-27T04:12:22.8552775Z         [8754:8754:0827/041211.842068:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8555435Z         [8754:9049:0827/041211.842196:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+test	Go test	2026-08-27T04:12:22.8558537Z         [8754:8754:0827/041211.884200:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type:
+test	Go test	2026-08-27T04:12:22.8560905Z         [8754:9049:0827/041216.754437:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+test	Go test	2026-08-27T04:12:22.8563286Z         [8754:9049:0827/041216.755464:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+test	Go test	2026-08-27T04:12:22.8565484Z         [8754:9049:0827/041216.778400:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+test	Go test	2026-08-27T04:12:22.8567217Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestCR05V1FacadeAndOpenAPIMatchLivingRouter3032954963/002/.api-token
+test	Go test	2026-08-27T04:12:22.8569155Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/openapi.json HTTP/1.1" from 192.0.2.1:1234 - 200 2563B in 114.55µs
+test	Go test	2026-08-27T04:12:22.8570629Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 18.708µs
+test	Go test	2026-08-27T04:12:22.8572232Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 10.435µs
+test	Go test	2026-08-27T04:12:22.8573646Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7611 - 200 24B in 72.097µs
+test	Go test	2026-08-27T04:12:22.8575043Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/profiles HTTP/1.1" from 127.0.0.1:7612 - 401 86B in 9.373µs
+test	Go test	2026-08-27T04:12:22.8576478Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/not-a-route HTTP/1.1" from 127.0.0.1:7613 - 404 19B in 5.599µs
+test	Go test	2026-08-27T04:12:22.8577962Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/not-a-route HTTP/1.1" from 127.0.0.1:7613 - 404 19B in 19.929µs
+test	Go test	2026-08-27T04:12:22.8579498Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT22ProfileHistoryReadDiffRestoreAndRedaction23457799/001/.api-token
+test	Go test	2026-08-27T04:12:22.8581292Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 558B in 810.31µs
+test	Go test	2026-08-27T04:12:22.8582883Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_8de10f3124e8 HTTP/1.1" from 127.0.0.1:7777 - 200 558B in 825.071µs
+test	Go test	2026-08-27T04:12:22.8584638Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_8de10f3124e8/metadata HTTP/1.1" from 127.0.0.1:7777 - 200 133B in 821.617µs
+test	Go test	2026-08-27T04:12:22.8586596Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_8de10f3124e8/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 369B in 160.318µs
+test	Go test	2026-08-27T04:12:22.8588592Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_8de10f3124e8/history?limit=1&offset=1 HTTP/1.1" from 127.0.0.1:7777 - 200 150B in 83.934µs
+test	Go test	2026-08-27T04:12:22.8590587Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_8de10f3124e8/history/diff?from=1&to=2 HTTP/1.1" from 127.0.0.1:7777 - 200 77B in 131.045µs
+test	Go test	2026-08-27T04:12:22.8592622Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_8de10f3124e8/history/1 HTTP/1.1" from 127.0.0.1:7777 - 200 364B in 63.364µs
+test	Go test	2026-08-27T04:12:22.8594518Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_8de10f3124e8/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 200 118B in 868.496µs
+test	Go test	2026-08-27T04:12:22.8596438Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_8de10f3124e8/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 409 99B in 474.673µs
+test	Go test	2026-08-27T04:12:22.8598135Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT22ProfileHistoryRequiresAuthAndLocalOrigin136402476/001/.api-token
+test	Go test	2026-08-27T04:12:22.8599767Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 557B in 884.079µs
+test	Go test	2026-08-27T04:12:22.8601549Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_df4ccd08ba7e/history HTTP/1.1" from 192.0.2.1:1234 - 401 86B in 10.055µs
+test	Go test	2026-08-27T04:12:22.8603844Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_df4ccd08ba7e/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 25.828µs
+test	Go test	2026-08-27T04:12:22.8605755Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_df4ccd08ba7e/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 22.083µs
+test	Go test	2026-08-27T04:12:22.8607660Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_df4ccd08ba7e/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 11.187µs
+test	Go test	2026-08-27T04:12:22.8609396Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT22HistoryProjectionRedactsActualProxySecrets2166069102/001/.api-token
+test	Go test	2026-08-27T04:12:22.8611339Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_16b0aed2a218 HTTP/1.1" from 127.0.0.1:7777 - 200 599B in 860.414µs
+test	Go test	2026-08-27T04:12:22.8613099Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_16b0aed2a218/history/1 HTTP/1.1" from 127.0.0.1:7777 - 200 402B in 101.961µs
+test	Go test	2026-08-27T04:12:22.8615031Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_16b0aed2a218/history/diff?from=1&to=1 HTTP/1.1" from 127.0.0.1:7777 - 200 71B in 105.256µs
+test	Go test	2026-08-27T04:12:22.8616828Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT22HistoryConcurrentRestoreAndMutationAreSerialized3198318025/001/.api-token
+test	Go test	2026-08-27T04:12:22.8618512Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 567B in 780.246µs
+test	Go test	2026-08-27T04:12:22.8620083Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_2ef9a4ece270 HTTP/1.1" from 127.0.0.1:7777 - 200 567B in 826.324µs
+test	Go test	2026-08-27T04:12:22.8621941Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_2ef9a4ece270 HTTP/1.1" from 127.0.0.1:7777 - 200 574B in 888.045µs
+test	Go test	2026-08-27T04:12:22.8623621Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_2ef9a4ece270/history/1/restore HTTP/1.1" from 127.0.0.1:7777 - 409 99B in 1.30658ms
+test	Go test	2026-08-27T04:12:22.8625696Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_2ef9a4ece270/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 367B in 120.518µs
+test	Go test	2026-08-27T04:12:22.8627554Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT22HistoryCaptureFailureLeavesPendingAndStartupRecovers2805024797/001/.api-token
+test	Go test	2026-08-27T04:12:22.8629411Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_702637e09136 HTTP/1.1" from 127.0.0.1:7777 - 500 95B in 398.31µs
+test	Go test	2026-08-27T04:12:22.8631433Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_702637e09136/history?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 152B in 114.67µs
+test	Go test	2026-08-27T04:12:22.8633344Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT23ArchiveHistoryFailureLeavesDurableLifecycleAndStartupReco1386807919/001/.api-token
+test	Go test	2026-08-27T04:12:22.8635348Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_0b903cd8cea3/archive HTTP/1.1" from 127.0.0.1:7777 - 500 95B in 375.145µs
+test	Go test	2026-08-27T04:12:22.8637172Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT23ArchiveReopenConcurrentSequenceLeavesNoPendingMarker1883855869/001/.api-token
+test	Go test	2026-08-27T04:12:22.8638909Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 571B in 890.007µs
+test	Go test	2026-08-27T04:12:22.8640528Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_b538339d68d9/reopen HTTP/1.1" from 127.0.0.1:7777 - 409 110B in 38.256µs
+test	Go test	2026-08-27T04:12:22.8642439Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_b538339d68d9/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 974.307µs
+test	Go test	2026-08-27T04:12:22.8644183Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT23IdempotentArchiveDoesNotCreateSecondHistoryVersion3445463502/001/.api-token
+test	Go test	2026-08-27T04:12:22.8645875Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 569B in 943.006µs
+test	Go test	2026-08-27T04:12:22.8647573Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_258d204ae180/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 876.858µs
+test	Go test	2026-08-27T04:12:22.8649743Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_258d204ae180/archive HTTP/1.1" from 127.0.0.1:7777 - 200 81B in 30.244µs
+test	Go test	2026-08-27T04:12:22.8651578Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT23ArchiveReopenUpdateConcurrentProductionRouter2297855573/001/.api-token
+test	Go test	2026-08-27T04:12:22.8653241Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 564B in 849.978µs
+test	Go test	2026-08-27T04:12:22.8654821Z 2026/08/27 04:12:22 "PUT http://example.com/api/profiles/prof_1157571ae790 HTTP/1.1" from 127.0.0.1:7777 - 200 574B in 935.775µs
+test	Go test	2026-08-27T04:12:22.8656388Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_1157571ae790/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 1.748144ms
+test	Go test	2026-08-27T04:12:22.8657981Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_1157571ae790/reopen HTTP/1.1" from 127.0.0.1:7777 - 200 63B in 2.5122ms
+test	Go test	2026-08-27T04:12:22.8659889Z 2026/08/27 04:12:22 "GET http://example.com/api/profiles/prof_1157571ae790/history?limit=20&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 476B in 174.007µs
+test	Go test	2026-08-27T04:12:22.8661778Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT23ArchiveReopenProductionGuardsAndRedaction2638488418/001/.api-token
+test	Go test	2026-08-27T04:12:22.8663407Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 127.0.0.1:7777 - 201 560B in 835.247µs
+test	Go test	2026-08-27T04:12:22.8665053Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/archive HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 15.693µs
+test	Go test	2026-08-27T04:12:22.8666846Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.477µs
+test	Go test	2026-08-27T04:12:22.8668601Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 5.037µs
+test	Go test	2026-08-27T04:12:22.8670368Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/archive HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.287µs
+test	Go test	2026-08-27T04:12:22.8672271Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/reopen HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 6.579µs
+test	Go test	2026-08-27T04:12:22.8674020Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 5.307µs
+test	Go test	2026-08-27T04:12:22.8675784Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.577µs
+test	Go test	2026-08-27T04:12:22.8677522Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/reopen HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 4.116µs
+test	Go test	2026-08-27T04:12:22.8679251Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/archive HTTP/1.1" from 127.0.0.1:7777 - 200 65B in 908.385µs
+test	Go test	2026-08-27T04:12:22.8681493Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles/prof_523ae44d5d1b/reopen HTTP/1.1" from 127.0.0.1:7777 - 200 63B in 867.204µs
+test	Go test	2026-08-27T04:12:22.8682851Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestReadOnlyBootstrapIsLoopbackOnlySingleUseAndScopeLimited3882254122/002/.api-token
+test	Go test	2026-08-27T04:12:22.8684149Z 2026/08/27 04:12:22 "POST http://example.com/api/v1/readonly/session/codes HTTP/1.1" from 127.0.0.1:41234 - 201 131B in 22.193µs
+test	Go test	2026-08-27T04:12:22.8685233Z 2026/08/27 04:12:22 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 127.0.0.1:41235 - 200 132B in 11.657µs
+test	Go test	2026-08-27T04:12:22.8686207Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 200 62B in 8.873µs
+test	Go test	2026-08-27T04:12:22.8687083Z 2026/08/27 04:12:22 "POST http://example.com/api/profiles HTTP/1.1" from 192.0.2.1:1234 - 401 85B in 7.522µs
+test	Go test	2026-08-27T04:12:22.8688030Z 2026/08/27 04:12:22 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 127.0.0.1:41236 - 401 90B in 8.022µs
+test	Go test	2026-08-27T04:12:22.8689460Z 2026/08/27 04:12:22 "POST http://example.com/api/v1/readonly/session/bootstrap HTTP/1.1" from 203.0.113.10:41237 - 403 107B in 4.697µs
+test	Go test	2026-08-27T04:12:22.8690634Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestReadOnlyRoutesRequireCoreBearerAndReturnRequestID2992040331/002/.api-token
+test	Go test	2026-08-27T04:12:22.8691939Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 401 93B in 11.618µs
+test	Go test	2026-08-27T04:12:22.8692857Z 2026/08/27 04:12:22 "GET http://example.com/api/v1/readonly/health HTTP/1.1" from 192.0.2.1:1234 - 200 62B in 28.943µs
+test	Go test	2026-08-27T04:12:22.8693840Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT21TemplateAPIRejectsUnknownFieldsAndInvalidMetadata666783450/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8694874Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 90.994µs
+test	Go test	2026-08-27T04:12:22.8695720Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 20.56µs
+test	Go test	2026-08-27T04:12:22.8696563Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 400 76B in 29.614µs
+test	Go test	2026-08-27T04:12:22.8697491Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT21TemplateAPIMachineReadableAuthAndOriginRefusals3968828700/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8698495Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 401 86B in 21.071µs
+test	Go test	2026-08-27T04:12:22.8699325Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 18.016µs
+test	Go test	2026-08-27T04:12:22.8700155Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 11.337µs
+test	Go test	2026-08-27T04:12:22.8701124Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 403 107B in 27.531µs
+test	Go test	2026-08-27T04:12:22.8702047Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT21TemplateAPIPaginationProjectionAndCorrelation252805535/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8703057Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 191B in 589.262µs
+test	Go test	2026-08-27T04:12:22.8703895Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 191B in 488.003µs
+test	Go test	2026-08-27T04:12:22.8704719Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 193B in 483.766µs
+test	Go test	2026-08-27T04:12:22.8705657Z 2026/08/27 04:12:22 "GET http://example.com/api/templates?limit=1&offset=1 HTTP/1.1" from 127.0.0.1:7777 - 200 172B in 202.319µs
+test	Go test	2026-08-27T04:12:22.8706731Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT21TemplateDraftArchivedProfileSnapshotAndAuditIsolation213582569/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8707819Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 604.354µs
+test	Go test	2026-08-27T04:12:22.8708974Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/74729afbaa915648bc081a70f641edc0/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 200 306B in 532.238µs
+test	Go test	2026-08-27T04:12:22.8710280Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/74729afbaa915648bc081a70f641edc0/versions/1/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 504.988µs
+test	Go test	2026-08-27T04:12:22.8711754Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/74729afbaa915648bc081a70f641edc0/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 87B in 442.866µs
+test	Go test	2026-08-27T04:12:22.8712858Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestT21TemplateAuditRedactsSuccessConflictAndRefusal1794866990/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8713852Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 320B in 547.531µs
+test	Go test	2026-08-27T04:12:22.8714956Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/982350669b295b1e89fb903682f7846a/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 133B in 448.714µs
+test	Go test	2026-08-27T04:12:22.8716576Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/982350669b295b1e89fb903682f7846a/versions/1/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 528.132µs
+test	Go test	2026-08-27T04:12:22.8717981Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/982350669b295b1e89fb903682f7846a/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 409 87B in 458.048µs
+test	Go test	2026-08-27T04:12:22.8718995Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestTemplatesCatalogReadDetailAndDraft2816388922/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8719958Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 542.083µs
+test	Go test	2026-08-27T04:12:22.8720910Z 2026/08/27 04:12:22 "GET http://example.com/api/templates?limit=10&offset=0 HTTP/1.1" from 127.0.0.1:7777 - 200 171B in 121.02µs
+test	Go test	2026-08-27T04:12:22.8722362Z 2026/08/27 04:12:22 "GET http://example.com/api/templates/8084cfe8fcee1b081149138dd533c214/versions/1 HTTP/1.1" from 127.0.0.1:7777 - 200 270B in 51.226µs
+test	Go test	2026-08-27T04:12:22.8723654Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/8084cfe8fcee1b081149138dd533c214/versions/1/draft HTTP/1.1" from 127.0.0.1:7777 - 200 303B in 416.146µs
+test	Go test	2026-08-27T04:12:22.8724832Z 2026/08/27 04:12:22 INFO generated API token path=/tmp/TestTemplatesVersionArchiveConflictAndLoopbackRefusal2925119529/001/data/.api-token
+test	Go test	2026-08-27T04:12:22.8725999Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 127.0.0.1:7777 - 201 270B in 608.792µs
+test	Go test	2026-08-27T04:12:22.8727182Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/d55234a001943b75064d63ed0508131a/versions HTTP/1.1" from 127.0.0.1:7777 - 201 175B in 590.424µs
+test	Go test	2026-08-27T04:12:22.8728447Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/d55234a001943b75064d63ed0508131a/versions/2/draft HTTP/1.1" from 127.0.0.1:7777 - 409 133B in 491.788µs
+test	Go test	2026-08-27T04:12:22.8729729Z 2026/08/27 04:12:22 "POST http://example.com/api/templates/d55234a001943b75064d63ed0508131a/versions/2/archive HTTP/1.1" from 127.0.0.1:7777 - 200 22B in 447.723µs
+test	Go test	2026-08-27T04:12:22.8731134Z 2026/08/27 04:12:22 "GET http://example.com/api/templates/d55234a001943b75064d63ed0508131a/versions/2 HTTP/1.1" from 127.0.0.1:7777 - 200 177B in 82.953µs
+test	Go test	2026-08-27T04:12:22.8732176Z 2026/08/27 04:12:22 "POST http://example.com/api/templates HTTP/1.1" from 203.0.113.9:9000 - 403 107B in 14.641µs
+test	Go test	2026-08-27T04:12:22.8732654Z FAIL
+test	Go test	2026-08-27T04:12:22.8732920Z FAIL	forgelocal/internal/api	20.648s
+test	Go test	2026-08-27T04:12:22.8733271Z ok  	forgelocal/internal/backup	0.186s
+test	Go test	2026-08-27T04:12:22.8733609Z ok  	forgelocal/internal/browser	0.354s
+test	Go test	2026-08-27T04:12:22.8733942Z ok  	forgelocal/internal/config	0.004s
+test	Go test	2026-08-27T04:12:22.8734288Z ok  	forgelocal/internal/cookies	0.003s
+test	Go test	2026-08-27T04:12:22.8734609Z ok  	forgelocal/internal/drift	0.002s
+test	Go test	2026-08-27T04:12:22.8734944Z ok  	forgelocal/internal/environment	0.007s
+test	Go test	2026-08-27T04:12:22.8735301Z ok  	forgelocal/internal/extensions	0.315s
+test	Go test	2026-08-27T04:12:22.8735663Z ok  	forgelocal/internal/fingerprint	0.006s
+test	Go test	2026-08-27T04:12:22.8735996Z ok  	forgelocal/internal/fonts	0.002s
+test	Go test	2026-08-27T04:12:22.8736330Z ok  	forgelocal/internal/geolocation	0.002s
+test	Go test	2026-08-27T04:12:22.8736665Z ok  	forgelocal/internal/groups	0.008s
+test	Go test	2026-08-27T04:12:22.8736994Z ok  	forgelocal/internal/hardware	0.004s
+test	Go test	2026-08-27T04:12:22.8737333Z ok  	forgelocal/internal/history	0.061s
+test	Go test	2026-08-27T04:12:22.8737706Z ?   	forgelocal/internal/humanize	[no test files]
+test	Go test	2026-08-27T04:12:22.8738070Z ok  	forgelocal/internal/launch	2.533s
+test	Go test	2026-08-27T04:12:22.8738414Z ok  	forgelocal/internal/localvault	0.052s
+test	Go test	2026-08-27T04:12:22.8738757Z ok  	forgelocal/internal/mcp	0.012s
+test	Go test	2026-08-27T04:12:22.8739101Z ok  	forgelocal/internal/productschema	0.040s
+test	Go test	2026-08-27T04:12:22.8739549Z ok  	forgelocal/internal/profile	0.066s
+test	Go test	2026-08-27T04:12:22.8739943Z ok  	forgelocal/internal/profilehealth	0.002s
+test	Go test	2026-08-27T04:12:22.8740401Z ok  	forgelocal/internal/profilemigration	0.166s
+test	Go test	2026-08-27T04:12:22.8740771Z ok  	forgelocal/internal/proxies	0.071s
+test	Go test	2026-08-27T04:12:22.8741462Z ok  	forgelocal/internal/proxyprovider	0.003s
+test	Go test	2026-08-27T04:12:22.8742109Z ok  	forgelocal/internal/runtime	0.120s
+test	Go test	2026-08-27T04:12:22.8742567Z ?   	forgelocal/internal/secrets	[no test files]
+test	Go test	2026-08-27T04:12:22.8742942Z ok  	forgelocal/internal/sessiontrack	0.002s
+test	Go test	2026-08-27T04:12:22.8743410Z ok  	forgelocal/internal/templates	0.081s
+test	Go test	2026-08-27T04:12:22.8743761Z ok  	forgelocal/internal/workflow	0.005s
+test	Go test	2026-08-27T04:12:22.8744102Z FAIL
+test	Go test	2026-08-27T04:12:22.8946128Z ##[error]Process completed with exit code 1.
+Secret, SBOM, and image security gates	Grype image policy gate	﻿2026-08-27T04:20:19.2856687Z ##[group]Run python3 scripts/grype-policy-gate.py .ci-artifacts/security/image.grype.json security/grype-exceptions.json
+Secret, SBOM, and image security gates	Grype image policy gate	2026-08-27T04:20:19.2857559Z ^[[36;1mpython3 scripts/grype-policy-gate.py .ci-artifacts/security/image.grype.json security/grype-exceptions.json^[[0m
+Secret, SBOM, and image security gates	Grype image policy gate	2026-08-27T04:20:19.2898896Z shell: /usr/bin/bash -e {0}
+Secret, SBOM, and image security gates	Grype image policy gate	2026-08-27T04:20:19.2899171Z ##[endgroup]
+Secret, SBOM, and image security gates	Grype image policy gate	2026-08-27T04:20:19.3550477Z GRYPE_POLICY_GATE=FAIL_OPEN_CRITICAL_HIGH=43
+Secret, SBOM, and image security gates	Grype image policy gate	2026-08-27T04:20:19.3551074Z GRYPE_POLICY_APPROVED_EXCEPTIONS=0
+Secret, SBOM, and image security gates	Grype image policy gate	2026-08-27T04:20:19.3614971Z ##[error]Process completed with exit code 1.

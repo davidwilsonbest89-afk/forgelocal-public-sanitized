@@ -1,0 +1,1377 @@
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request less than a minute ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;33m*[0m Run actions/checkout@v7
+  [0;33m*[0m Gitleaks source gate
+  [0;33m*[0m Gitleaks pertinent history gate
+  [0;33m*[0m Trivy filesystem secret gate
+  [0;33m*[0m Syft source SBOM
+  [0;33m*[0m Grype source SBOM report
+  [0;33m*[0m Grype source policy gate
+  [0;33m*[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;33m*[0m [0;1;39mtest[0m (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;33m*[0m Run actions/checkout@v7
+  [0;33m*[0m Run actions/setup-node@v6
+  [0;33m*[0m Run actions/setup-go@v6
+  [0;33m*[0m Verify pinned Go toolchain
+  [0;33m*[0m Component provenance
+  [0;33m*[0m Create component provenance evidence
+  [0;33m*[0m Archive component provenance evidence
+  [0;33m*[0m BACK-01 targeted tests
+  [0;33m*[0m Go test
+  [0;33m*[0m Go vet
+  [0;33m*[0m Shell syntax
+  [0;33m*[0m Install security scanners
+  [0;33m*[0m ShellCheck security launchers and tests
+  [0;33m*[0m Authenticated synthetic security gate
+  [0;33m*[0m Grype policy gate unit test
+  [0;33m*[0m UI i18n syntax
+  [0;33m*[0m CI provenance policy
+  [0;33m*[0m Docker Compose config
+  [0;33m*[0m Fingerprint generator smoke
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request less than a minute ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;33m*[0m Grype source SBOM report
+  [0;33m*[0m Grype source policy gate
+  [0;33m*[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;33m*[0m [0;1;39mtest[0m (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;33m*[0m Component provenance
+  [0;33m*[0m Create component provenance evidence
+  [0;33m*[0m Archive component provenance evidence
+  [0;33m*[0m BACK-01 targeted tests
+  [0;33m*[0m Go test
+  [0;33m*[0m Go vet
+  [0;33m*[0m Shell syntax
+  [0;33m*[0m Install security scanners
+  [0;33m*[0m ShellCheck security launchers and tests
+  [0;33m*[0m Authenticated synthetic security gate
+  [0;33m*[0m Grype policy gate unit test
+  [0;33m*[0m UI i18n syntax
+  [0;33m*[0m CI provenance policy
+  [0;33m*[0m Docker Compose config
+  [0;33m*[0m Fingerprint generator smoke
+  [0;33m*[0m Post Run actions/setup-go@v6
+  [0;33m*[0m Post Run actions/setup-node@v6
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 1 minute ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;33m*[0m Grype source SBOM report
+  [0;33m*[0m Grype source policy gate
+  [0;33m*[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;33m*[0m [0;1;39mtest[0m (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;33m*[0m BACK-01 targeted tests
+  [0;33m*[0m Go test
+  [0;33m*[0m Go vet
+  [0;33m*[0m Shell syntax
+  [0;33m*[0m Install security scanners
+  [0;33m*[0m ShellCheck security launchers and tests
+  [0;33m*[0m Authenticated synthetic security gate
+  [0;33m*[0m Grype policy gate unit test
+  [0;33m*[0m UI i18n syntax
+  [0;33m*[0m CI provenance policy
+  [0;33m*[0m Docker Compose config
+  [0;33m*[0m Fingerprint generator smoke
+  [0;33m*[0m Post Run actions/setup-go@v6
+  [0;33m*[0m Post Run actions/setup-node@v6
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 1 minute ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;33m*[0m [0;1;39mtest[0m (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;33m*[0m BACK-01 targeted tests
+  [0;33m*[0m Go test
+  [0;33m*[0m Go vet
+  [0;33m*[0m Shell syntax
+  [0;33m*[0m Install security scanners
+  [0;33m*[0m ShellCheck security launchers and tests
+  [0;33m*[0m Authenticated synthetic security gate
+  [0;33m*[0m Grype policy gate unit test
+  [0;33m*[0m UI i18n syntax
+  [0;33m*[0m CI provenance policy
+  [0;33m*[0m Docker Compose config
+  [0;33m*[0m Fingerprint generator smoke
+  [0;33m*[0m Post Run actions/setup-go@v6
+  [0;33m*[0m Post Run actions/setup-node@v6
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 2 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;33m*[0m [0;1;39mtest[0m (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;33m*[0m Go test
+  [0;33m*[0m Go vet
+  [0;33m*[0m Shell syntax
+  [0;33m*[0m Install security scanners
+  [0;33m*[0m ShellCheck security launchers and tests
+  [0;33m*[0m Authenticated synthetic security gate
+  [0;33m*[0m Grype policy gate unit test
+  [0;33m*[0m UI i18n syntax
+  [0;33m*[0m CI provenance policy
+  [0;33m*[0m Docker Compose config
+  [0;33m*[0m Fingerprint generator smoke
+  [0;33m*[0m Post Run actions/setup-go@v6
+  [0;33m*[0m Post Run actions/setup-node@v6
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 2 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;33m*[0m [0;1;39mtest[0m (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;33m*[0m Go test
+  [0;33m*[0m Go vet
+  [0;33m*[0m Shell syntax
+  [0;33m*[0m Install security scanners
+  [0;33m*[0m ShellCheck security launchers and tests
+  [0;33m*[0m Authenticated synthetic security gate
+  [0;33m*[0m Grype policy gate unit test
+  [0;33m*[0m UI i18n syntax
+  [0;33m*[0m CI provenance policy
+  [0;33m*[0m Docker Compose config
+  [0;33m*[0m Fingerprint generator smoke
+  [0;33m*[0m Post Run actions/setup-go@v6
+  [0;33m*[0m Post Run actions/setup-node@v6
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 3 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 3 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 4 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 4 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 5 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;33m*[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 5 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 6 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 6 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;33m*[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 7 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 7 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 8 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;33m*[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 8 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 9 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 9 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 10 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;33m*[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 11 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;32m✓[0m Syft image SBOM
+  [0;33m*[0m Grype image SBOM report
+  [0;33m*[0m Grype image policy gate
+  [0;33m*[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;1;39mRefreshing run status every 30 seconds. Press Ctrl+C to quit.[0m
+
+[0;33m*[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 11 minutes ago
+
+[0;1;39mJOBS[0m
+[0;33m*[0m [0;1;39mSecret, SBOM, and image security gates[0m (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;32m✓[0m Syft image SBOM
+  [0;32m✓[0m Grype image SBOM report
+  [0;31mX[0m Grype image policy gate
+  [0;32m✓[0m Archive security evidence
+  [0;33m*[0m Cleanup temporary containers and image
+  [0;33m*[0m Post Build hardened runtime image
+  [0;33m*[0m Post Run docker/setup-buildx-action@v4
+  [0;33m*[0m Post Run actions/checkout@v7
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m
+[0;31mX[0m [0;1;39mvalidation/final-secret-remediation[0m CI davidwilsonbest89-afk/forgelocal-public-sanitized#1 · [0;36m33042659550[0m
+Triggered via pull_request about 12 minutes ago
+
+[0;1;39mJOBS[0m
+[0;31mX[0m [0;1;39mSecret, SBOM, and image security gates[0m in 11m41s (ID [0;36m98419533813[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Gitleaks source gate
+  [0;32m✓[0m Gitleaks pertinent history gate
+  [0;32m✓[0m Trivy filesystem secret gate
+  [0;32m✓[0m Syft source SBOM
+  [0;32m✓[0m Grype source SBOM report
+  [0;32m✓[0m Grype source policy gate
+  [0;32m✓[0m Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Build hardened runtime image
+  [0;32m✓[0m Image hardening and secret redaction gate
+  [0;32m✓[0m Trivy image secret gate
+  [0;32m✓[0m Syft image SBOM
+  [0;32m✓[0m Grype image SBOM report
+  [0;31mX[0m Grype image policy gate
+  [0;32m✓[0m Archive security evidence
+  [0;32m✓[0m Cleanup temporary containers and image
+  [0;32m✓[0m Post Build hardened runtime image
+  [0;32m✓[0m Post Run docker/setup-buildx-action@v4
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+[0;31mX[0m [0;1;39mtest[0m in 3m4s (ID [0;36m98419533962[0m)
+  [0;32m✓[0m Set up job
+  [0;32m✓[0m Run actions/checkout@v7
+  [0;32m✓[0m Run actions/setup-node@v6
+  [0;32m✓[0m Run actions/setup-go@v6
+  [0;32m✓[0m Verify pinned Go toolchain
+  [0;32m✓[0m Component provenance
+  [0;32m✓[0m Create component provenance evidence
+  [0;32m✓[0m Archive component provenance evidence
+  [0;32m✓[0m BACK-01 targeted tests
+  [0;31mX[0m Go test
+  [38;5;242m-[0m Go vet
+  [38;5;242m-[0m Shell syntax
+  [38;5;242m-[0m Install security scanners
+  [38;5;242m-[0m ShellCheck security launchers and tests
+  [38;5;242m-[0m Authenticated synthetic security gate
+  [38;5;242m-[0m Grype policy gate unit test
+  [38;5;242m-[0m UI i18n syntax
+  [38;5;242m-[0m CI provenance policy
+  [38;5;242m-[0m Docker Compose config
+  [38;5;242m-[0m Fingerprint generator smoke
+  [38;5;242m-[0m Post Run actions/setup-go@v6
+  [38;5;242m-[0m Post Run actions/setup-node@v6
+  [0;32m✓[0m Post Run actions/checkout@v7
+  [0;32m✓[0m Complete job
+
+[0;1;39mANNOTATIONS[0m
+[0;33m![0m Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+[38;5;242mtest: .github#2
+[0m
+[0;31mX[0m Process completed with exit code 1.
+[38;5;242mtest: .github#188
+[0m

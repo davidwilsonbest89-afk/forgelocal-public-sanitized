@@ -1,0 +1,229 @@
+=== DATE_UTC ===
+2026-08-27T01:06:37Z
+=== PACKAGE_DEPENDS ===
+
+
+-- depends --
+kasmvncserver
+  Depends: libc6
+  Depends: libcrypt1
+  Depends: libfreetype6
+  Depends: libgbm1
+  Depends: libgcc-s1
+  Depends: libgl1
+  Depends: libpixman-1-0
+  Depends: libpng16-16t64
+  Depends: libssl3t64
+  Depends: libstdc++6
+  Depends: libsystemd0
+  Depends: libunwind8
+  Depends: libwebp7
+  Depends: libx11-6
+  Depends: libxau6
+  Depends: libxcursor1
+  Depends: libxdmcp6
+  Depends: libxext6
+  Depends: libxfixes3
+  Depends: libxfont2
+  Depends: libxrandr2
+  Depends: libxshmfence1
+  Depends: libxtst6
+  Depends: zlib1g
+  Depends: <perl:any>
+    perl
+  Depends: ssl-cert
+  Depends: xauth
+  Depends: x11-xkb-utils
+  Depends: xkb-data
+  Depends: procps
+  Depends: libswitch-perl
+  Depends: libyaml-tiny-perl
+  Depends: libhash-merge-simple-perl
+  Depends: <libscalar-list-utils-perl>
+    perl-base
+  Depends: liblist-moreutils-perl
+  Depends: libtry-tiny-perl
+  Depends: libdatetime-perl
+  Depends: libdatetime-timezone-perl
+ssl-cert
+ |Depends: debconf
+  Depends: <debconf-2.0>
+    debconf
+  Depends: openssl
+  Depends: adduser
+PACKAGE_DEPENDS_EXIT=0
+=== KASMVNC_DEFAULTS ===
+---
+desktop:
+  resolution:
+    width: 1024
+    height: 768
+  allow_resize: true
+  pixel_depth: 24
+  gpu:
+    hw3d: false
+    drinode: /dev/dri/renderD128
+
+network:
+  protocol: http
+  interface: 0.0.0.0
+  websocket_port: auto
+  use_ipv4: true
+  use_ipv6: true
+  udp:
+    public_ip: auto
+    port: auto
+    payload_size: auto
+    stun_server: auto
+  ssl:
+    pem_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
+    pem_key: /etc/ssl/private/ssl-cert-snakeoil.key
+    require_ssl: true
+  # unix_relay:
+  #   name:
+  #   path:
+
+user_session:
+  # session_type: shared
+  new_session_disconnects_existing_exclusive_session: false
+  concurrent_connections_prompt: false
+  concurrent_connections_prompt_timeout: 10
+  idle_timeout: never
+
+keyboard:
+  remap_keys:
+  # - 0x22->0x40
+  ignore_numlock: false
+  raw_keyboard: false
+
+# Mouse, trackpad, etc.
+pointer:
+  enabled: true
+
+runtime_configuration:
+  allow_client_to_override_kasm_server_settings: true
+  allow_override_standard_vnc_server_settings: true
+# ---
+# desktop:
+#   resolution:
+#     width: 1024
+#     height: 768
+#   allow_resize: true
+#   pixel_depth: 24
+#   gpu:
+#     hw3d: false
+#     drinode: /dev/dri/renderD128
+
+# network:
+#   protocol: http
+#   interface: 0.0.0.0
+#   websocket_port: auto
+#   use_ipv4: true
+#   use_ipv6: true
+#   udp:
+#     public_ip: auto
+#     port: auto
+#     payload_size: auto
+#     stun_server: auto
+#   ssl:
+#     pem_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
+#     pem_key: /etc/ssl/private/ssl-cert-snakeoil.key
+#     require_ssl: true
+#   # unix_relay:
+#   #   name:
+#   #   path:
+
+# user_session:
+#   # session_type: shared
+#   new_session_disconnects_existing_exclusive_session: false
+#   concurrent_connections_prompt: false
+#   concurrent_connections_prompt_timeout: 10
+#   idle_timeout: never
+
+# keyboard:
+#   remap_keys:
+#   # - 0x22->0x40
+#   ignore_numlock: false
+#   raw_keyboard: false
+
+# Mouse, trackpad, etc.
+# pointer:
+#   enabled: true
+
+# runtime_configuration:
+#   allow_client_to_override_kasm_server_settings: true
+#   allow_override_standard_vnc_server_settings: true
+DEFAULTS_EXIT=0
+=== ENTRYPOINT_FLAGS ===
+# Start KasmVNC X server (Basic Auth protects HTTP, VNC protocol uses None).
+# The display geometry defaults to the BrowseForge Chromium native persona
+# screen contract so headed window bounds and Screen API values stay coherent.
+/usr/bin/Xvnc :1 \
+  -geometry "$BROWSEFORGE_DOCKER_DISPLAY_GEOMETRY" \
+  -depth 24 \
+  -sslOnly 0 \
+  -SecurityTypes None \
+  -AlwaysShared \
+  -websocketPort 6901 \
+  -interface 0.0.0.0 \
+  +extension GLX \
+  +render \
+  -http-header Cross-Origin-Embedder-Policy=require-corp \
+  -http-header Cross-Origin-Opener-Policy=same-origin \
+  -httpd /usr/share/kasmvnc/www &
+
+ENTRYPOINT_FLAGS_EXIT=0
+=== SSL_CERT_PACKAGE_POSTINST ===
+#!/bin/sh
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+# Create the ssl-cert system group for snakeoil ownership:
+if ! getent group ssl-cert >/dev/null; then
+	addgroup --quiet --system --force-badname ssl-cert
+fi
+
+# no need to perform any check. If the certificates are there
+# it will exit 0.
+make-ssl-cert generate-default-snakeoil
+
+# allow group ssl-cert to access /etc/ssl/private
+if ! dpkg-statoverride --list /etc/ssl/private >/dev/null 2>&1
+then
+    dpkg-statoverride --update --add root ssl-cert 710 /etc/ssl/private
+fi
+
+# Automatically added by dh_installsystemd/13.11.6ubuntu1
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ] ; then
+	# The following line should be removed in trixie or trixie+1
+	deb-systemd-helper unmask 'ssl-cert.service' >/dev/null || true
+
+	# was-enabled defaults to true, so new installations run enable.
+	if deb-systemd-helper --quiet was-enabled 'ssl-cert.service'; then
+		# Enables the unit on first installation, creates new
+		# symlinks on upgrades if the unit file has changed.
+		deb-systemd-helper enable 'ssl-cert.service' >/dev/null || true
+	else
+		# Update the statefile to add new symlinks (if any), which need to be
+		# cleaned up on purge. Also remove old symlinks.
+		deb-systemd-helper update-state 'ssl-cert.service' >/dev/null || true
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_installsystemd/13.11.6ubuntu1
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] || [ "$1" = "abort-deconfigure" ] || [ "$1" = "abort-remove" ] ; then
+	if [ -d /run/systemd/system ]; then
+		systemctl --system daemon-reload >/dev/null || true
+		if [ -n "$2" ]; then
+			_dh_action=restart
+		else
+			_dh_action=start
+		fi
+		deb-systemd-invoke $_dh_action 'ssl-cert.service' >/dev/null || true
+	fi
+fi
+# End automatically added section
+
+POSTINST_EXIT=0

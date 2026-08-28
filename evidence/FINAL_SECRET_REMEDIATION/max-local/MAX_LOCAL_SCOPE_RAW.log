@@ -1,0 +1,182 @@
+UTC=
+2026-08-27T18:07:16Z
+CWD=
+/home/ubuntu/forgelocal-final-secret-remediation/pasted19-clone
+COMMAND=uname -a
+Linux db71298c03d4 6.18.38+ #1 SMP PREEMPT_DYNAMIC Thu Aug  6 06:48:14 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+EXIT_CODE=0
+COMMAND=id
+uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev)
+EXIT_CODE=0
+COMMAND=git remote -v
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (fetch)
+origin	https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git (push)
+EXIT_CODE=0
+COMMAND=git branch -avv
+  main                                                                 f09af4b [origin/main] docs: require baseline discovery before future lots
+* validation/max-local-senior-measurable                               9aba6ed evidence: finalize measurable max-local report
+  remotes/origin/HEAD                                                  -> origin/main
+  remotes/origin/audit/independent-validation-20260824                 08107b3 audit: publish independently validated archive results
+  remotes/origin/audit/t00-t42-docker-hardening-v6                     1d585ab Package isolated Docker hardening evidence
+  remotes/origin/audit/t00-t42-docker-image-validation-v6              80a4a15 Package Docker image validation blocker
+  remotes/origin/audit/t00-t42-docker-native-nonruntime-validation     38a273d Package Docker native non-runtime validation
+  remotes/origin/audit/t00-t42-docker-v6-independent-image-validation  b53eccd Publish final Docker V6 evidence package
+  remotes/origin/audit/t00-t42-external-validation-protocols-v6        b8efc38 Package external validation protocols
+  remotes/origin/audit/t00-t42-gitleaks-historical-method-hardening-v6 6fd0e31 Package historical Gitleaks method hardening
+  remotes/origin/audit/t00-t42-lfs-conservation-audit                  a236291 Package LFS conservation audit evidence
+  remotes/origin/audit/t00-t42-lfs-conservation-restoration-v6         1fa32f6 Package LFS conservation restoration
+  remotes/origin/audit/t00-t42-license-compliance-triage-v6            0931ec8 Package license compliance triage
+  remotes/origin/audit/t00-t42-license-static-debt-triage              fb9d20c Package license and static debt triage
+  remotes/origin/audit/t00-t42-osv-toolchain-reconciliation            89dea88 Package OSV toolchain reconciliation evidence
+  remotes/origin/audit/t00-t42-osv-toolchain-reconciliation-v6         0f055e7 Package OSV toolchain reconciliation
+  remotes/origin/audit/t00-t42-post-v6-revalidation-final-matrix       2d4a51d Finalize revalidation matrix package
+  remotes/origin/audit/t00-t42-post-v6-roadmap-final-matrix            3b46a17 Package post V6 final matrix
+  remotes/origin/audit/t00-t42-prehuman-validation                     861880e evidence: publish code-fixed finalization bundle
+  remotes/origin/audit/t00-t42-product-decisions-required-v6           93bc841 Package required product decisions
+  remotes/origin/audit/t00-t42-self-validation-enhanced-v5             8cea3be Include public clone verification evidence
+  remotes/origin/audit/t00-t42-self-validation-synthetic-e2e           b34fa5c Record final published v4 head
+  remotes/origin/audit/t00-t42-static-debt-prioritization-v6           78b6c49 Package static debt prioritization
+  remotes/origin/audit/t00-t42-t10-t15-e2e-validation-v6               8c38830 Package T10 T15 E2E validation
+  remotes/origin/audit/t00-t42-t10-t15-independent-review-v6           47303ea Finalize independent T10 T15 evidence package
+  remotes/origin/audit/t00-t42-t30-remote-evidence-reconciliation-v6   e5241c9 Package T30 remote evidence reconciliation
+  remotes/origin/audit/t00-t42-v6-findings-remediation                 727e94b Freeze V6 local qualified baseline
+  remotes/origin/audit/t28-t42-evidence-correction                     6ae02e4 docs: align V2 delivery head metadata
+  remotes/origin/continuation-t00-t27-canonical                        69411e6 Archive verified T00-T27 packages with LFS fragments
+  remotes/origin/continuation-t27-r1-canonical                         76551a9 docs(t27): register continuity branch
+  remotes/origin/continuity-t00-t26-handover                           1a5112b docs(continuity): add T00-T26 restart handover
+  remotes/origin/continuity-t24-t24sr                                  7a375cc docs(governance): require baseline discovery evidence
+  remotes/origin/continuity-t25-synthetic-cookie-fixtures              a7ccfbc feat(t25): add synthetic cookie fixture manifests
+  remotes/origin/continuity-t26-simulated-proxy-provider               930003c feat(t26): add simulated local proxy provider catalogue
+  remotes/origin/feature/t28-local-extensions-controlled               053fd8f Sync T28 closure metadata with current head
+  remotes/origin/handover/t28-t42-new-session                          f03b584 docs: add T28-T42 new session handover
+  remotes/origin/main                                                  f09af4b docs: require baseline discovery before future lots
+  remotes/origin/validation/final-environment-qualification            1d0fe24 evidence: finalize public closure report
+  remotes/origin/validation/final-secret-remediation                   9aba6ed evidence: finalize measurable max-local report
+  remotes/origin/validation/gosec-r4                                   2d528ea evidence: record final R4 post-handover checks
+  remotes/origin/validation/gosec-r5                                   28f66a1 evidence: reconcile GOSEC R5 finding count
+  remotes/origin/validation/gosec-r6                                   3656dba evidence: publish consolidated GOSEC R6 review
+  remotes/origin/validation/gosec-r7                                   b907dfc evidence: record final R7 v4 public verification
+  remotes/origin/validation/gosec-r7-final-remediation                 97ce9b8 evidence: record public verification of remediation package
+  remotes/origin/validation/operational-v1                             8004818 evidence: record public R3 verification
+  remotes/origin/work/t28-agent03-audit                                34d3ba9 archive T28 audit delta bundle
+  remotes/origin/work/t31-canvas-webgl-audio                           9dad987 evidence: add T31 validation bundle
+  remotes/origin/work/t32-client-rects                                 d7279e8 evidence: add T32 validation bundle
+  remotes/origin/work/t33-synthetic-geolocation                        6936327 evidence: add T33 validation bundle
+  remotes/origin/work/t34-hardware-diagnostics                         c7f66da evidence: add T34 validation bundle
+  remotes/origin/work/t35-font-bundle                                  891b2d1 evidence: add T35 validation bundle
+  remotes/origin/work/t36-drift-detection                              099ff7b evidence: add T36 validation bundle
+  remotes/origin/work/t37-profile-health                               c0ad051 evidence: add T37 validation bundle
+  remotes/origin/work/t38-session-lifecycle                            f8fcfa0 evidence: add T38 lifecycle validation bundle
+  remotes/origin/work/t39-secret-import-export-blocked                 08061f1 evidence: add T39 blocked verdict
+  remotes/origin/work/t40-integration-gated                            077ba90 evidence: add T40 integration gate
+  remotes/origin/work/t41-release-readiness-blocked                    944376f evidence: add compact T41 blocked verdict
+  remotes/origin/work/t42-final-closure                                6489af3 evidence: add compact T42 final closure
+EXIT_CODE=0
+COMMAND=git log --oneline --decorate -20
+9aba6ed (HEAD -> validation/max-local-senior-measurable, origin/validation/final-secret-remediation) evidence: finalize measurable max-local report
+e7346e8 evidence: record terminal CI result
+ffc4967 evidence: reconcile final max-local CI proof
+9a1c01c evidence: publish closed max-local proof set
+f685c88 evidence: record MAX-LOCAL CI result
+1899c43 evidence: record Docker environment block
+c4dcafa evidence: record max local execution status
+bfa6f52 evidence: add max local execution results
+db24986 evidence: finalize public verification head
+c0e0fae evidence: record final head CI result
+e79ac0f evidence: close final verification references
+6c36517 evidence: mark final public HEAD
+8a68397 evidence: finalize CI and package references
+f297548 evidence: publish package for separated CI
+9e1e3ff evidence: record deterministic CI success
+0886b77 evidence: reconcile CI separation results
+5d444b6 ci: use deterministic pnpm bootstrap
+43a2d9e ci: fix static dashboard i18n validation
+3d51192 ci: separate qualified Chromium runtime validation
+2e6f8ac evidence: finalize public verification log
+EXIT_CODE=0
+COMMAND=git status --short
+EXIT_CODE=0
+COMMAND=df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   40G  7.5G  85% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           788M  248K  788M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+EXIT_CODE=0
+COMMAND=free -h
+               total        used        free      shared  buff/cache   available
+Mem:            23Gi       3.0Gi        20Gi        10Mi       1.9Gi        20Gi
+Swap:          2.0Gi          0B       2.0Gi
+EXIT_CODE=0
+COMMAND=go version
+bash: go: command not found
+EXIT_CODE=127
+COMMAND=node --version
+v22.13.0
+EXIT_CODE=0
+COMMAND=pnpm --version
+10.4.1
+EXIT_CODE=0
+COMMAND=git lfs version
+git: 'lfs' is not a git command. See 'git --help'.
+
+The most similar command is
+	lfs-s3
+EXIT_CODE=1
+COMMAND=docker version
+Client:
+ Version:           29.1.3
+ API version:       1.52
+ Go version:        go1.24.4
+ Git commit:        29.1.3-0ubuntu3~24.04.2
+ Built:             Wed Apr 29 16:41:06 2026
+ OS/Arch:           linux/amd64
+ Context:           default
+failed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory
+EXIT_CODE=1
+COMMAND=docker info
+Client:
+ Version:    29.1.3
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  0.30.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  trust: Manage trust on Docker images (Docker Inc.)
+    Version:  29.1.3
+    Path:     /usr/libexec/docker/cli-plugins/docker-trust
+
+Server:
+failed to connect to the docker API at unix:///var/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /var/run/docker.sock: connect: no such file or directory
+EXIT_CODE=1
+COMMAND=docker buildx version
+github.com/docker/buildx 0.30.1 0.30.1-0ubuntu1~24.04.1
+EXIT_CODE=0
+HEAD=
+9aba6ed109c54539b1e2fd8b083ec2c5c7e727e3
+PARENT=
+e7346e87e69cc1bd4e58993f8008b164c3ebe560
+BRANCH=
+validation/max-local-senior-measurable
+REMOTE_HEAD=
+9aba6ed109c54539b1e2fd8b083ec2c5c7e727e3
+UTC=
+2026-08-27T17:41:40Z
+CWD=
+/home/ubuntu
+COMMAND=git ls-remote https://github.com/boucheriechefimane-cmd/IPcache.git
+remote: Repository not found.
+fatal: repository 'https://github.com/boucheriechefimane-cmd/IPcache.git/' not found
+EXIT_CODE=128
+COMMAND=gh repo view boucheriechefimane-cmd/IPcache
+GraphQL: Could not resolve to a Repository with the name 'boucheriechefimane-cmd/IPcache'. (repository)
+EXIT_CODE=1
+CURRENT_REPOSITORY=https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+CURRENT_BRANCH=validation/final-secret-remediation
+CURRENT_HEAD=e7346e87e69cc1bd4e58993f8008b164c3ebe560
+HISTORICAL_COMMIT_CHECK=NOT_EXECUTED_REPOSITORY_UNAVAILABLE
+HISTORICAL_TREE_COMPARISON=NOT_EXECUTED_REPOSITORY_UNAVAILABLE
+HISTORICAL_ARCHIVE_COMPARISON=NOT_EXECUTED_REPOSITORY_UNAVAILABLE
+ANCESTRY_RELATION=UNVERIFIED
+VERDICT=HISTORICAL_EVIDENCE_UNVERIFIED

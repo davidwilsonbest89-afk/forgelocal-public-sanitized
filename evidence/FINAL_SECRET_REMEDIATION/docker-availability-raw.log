@@ -1,0 +1,27 @@
+=== DATE_UTC ===
+2026-08-26T23:30:54Z
+=== CWD ===
+/home/ubuntu
+=== DISK ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   23G   25G  49% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           788M  204K  788M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+=== ID ===
+uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev)
+=== COMMAND: docker version ===
+bash: line 1: docker: command not found
+EXIT_CODE=127
+=== COMMAND: docker info ===
+bash: line 1: docker: command not found
+EXIT_CODE=127
+=== COMMAND: docker buildx version ===
+bash: line 1: docker: command not found
+EXIT_CODE=127
+=== COMMAND: docker context ls ===
+bash: line 1: docker: command not found
+EXIT_CODE=127
+=== COMMAND: systemctl is-system-running 2>/dev/null || true ===
+running
+EXIT_CODE=0

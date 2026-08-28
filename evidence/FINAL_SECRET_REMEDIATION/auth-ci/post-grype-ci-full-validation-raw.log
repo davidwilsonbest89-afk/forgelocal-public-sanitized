@@ -1,0 +1,25 @@
+=== DATE_UTC ===
+2026-08-27T02:29:53Z
+=== CWD ===
+/home/ubuntu/forgelocal-final-secret-remediation/repo
+=== BASH_N ===
+EXIT_CODE=0
+=== SHELLCHECK ===
+EXIT_CODE=0
+=== CI_PROVENANCE ===
+EXIT_CODE=0
+=== CI_YAML ===
+PASS
+EXIT_CODE=0
+=== GRYPE_POLICY_UNIT ===
+EXIT_CODE=0
+=== GRYPE_POLICY_REAL ===
+EXIT_CODE=1
+=== AUTH_SYNTHETIC ===
+EXIT_CODE=0
+=== TARGETED_EXISTING ===
+EXIT_CODE=0
+=== STATIC_GUARD ===
+PASS
+=== DIFF_CHECK ===
+EXIT_CODE=0

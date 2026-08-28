@@ -1,0 +1,43 @@
+=== DATE_UTC ===
+2026-08-26T23:38:22Z
+=== CWD ===
+/home/ubuntu
+=== DISK ===
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        48G   25G   23G  53% /
+tmpfs           2.0G     0  2.0G   0% /dev/shm
+tmpfs           788M  204K  788M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+=== DISK_BYTES_ROOT ===
+/dev/root      50976727040 26620436480 24339513344  53% /
+=== ID ===
+uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev)
+=== UID_GID ===
+1000
+1000
+=== SUDO_NONINTERACTIVE ===
+sudo: a password is required
+EXIT_CODE=1
+=== DOCKER_COMMANDS ===
+docker_path_exit=1
+dockerd_path_exit=1
+buildx_path_exit=1
+/usr/bin/systemctl
+systemctl_path_exit=0
+=== KERNEL_CGROUPS ===
+Linux db71298c03d4 6.18.38+ #1 SMP PREEMPT_DYNAMIC Thu Aug  6 06:48:14 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+cgroup2fs
+cgroup_stat_exit=0
+=== PRIVILEGED_CAPABILITIES ===
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	000001ffffffffff
+CapAmb:	0000000000000000
+=== DEV_DOCKER ===
+ls: cannot access '/var/run/docker.sock': No such file or directory
+ls: cannot access '/run/docker.sock': No such file or directory
+socket_ls_exit=2
+=== SYSTEMD ===
+running
+systemd_status_exit=0

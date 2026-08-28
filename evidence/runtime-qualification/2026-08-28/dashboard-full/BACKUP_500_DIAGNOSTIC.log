@@ -1,0 +1,5 @@
+UTC=2026-08-28T04:08:12Z
+HTTP=500
+BODY_REDACTED
+{"error":{"code":"BACKUP_KEY_FAILED","message":"The name org.freedesktop.[redacted]}}
+CORE_STDERR_TAIL

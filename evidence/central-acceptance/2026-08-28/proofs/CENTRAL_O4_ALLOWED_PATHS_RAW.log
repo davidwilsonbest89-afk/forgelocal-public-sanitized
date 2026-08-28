@@ -1,0 +1,12 @@
+UTC=2026-08-28T01:22:00Z
+PWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+AUTHORIZED_ROOT=evidence/central-acceptance/2026-08-28/
+COMMAND=git status --porcelain=v1 --untracked-files=all; path allowlist check
+ALLOWED_PATH_VALIDATION_EXIT_CODE=0
+PRODUCT_CODE_FILES_CHANGED=0
+OUT_OF_SCOPE_FILES_CHANGED=0
+ZIP_FILES=4
+SIDECAR_FILES=4
+CENTRAL_REPORTS=3
+PATCH_FILE=proofs/CENTRAL_O4_DIFF_BEFORE_COMMIT.patch
+STATUS=PASS

@@ -1,0 +1,5 @@
+lot	sidecar_verify_exit	zip_test_exit	fresh_extraction_exit	archive_entries	status
+LOT-A	0	0	0	24	PASS
+LOT-B	0	0	0	31	PASS
+LOT-C	0	0	0	20	PASS
+LOT-D	0	0	0	7	PASS

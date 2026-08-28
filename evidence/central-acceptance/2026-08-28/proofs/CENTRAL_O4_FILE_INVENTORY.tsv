@@ -1,0 +1,6 @@
+category	count	root	status
+ZIP_FILES	4	evidence/central-acceptance/2026-08-28/lot-packages/	PASS
+SIDECAR_FILES	4	evidence/central-acceptance/2026-08-28/lot-packages/	PASS
+CENTRAL_REPORTS	3	evidence/central-acceptance/2026-08-28/reports/	PASS
+PRODUCT_CODE_FILES_CHANGED	0	cmd internal forge-dashboard docker scripts .github	PASS
+OUT_OF_SCOPE_FILES_CHANGED	0	outside authorized root	PASS

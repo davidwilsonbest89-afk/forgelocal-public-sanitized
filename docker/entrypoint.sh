@@ -89,17 +89,16 @@ openbox &
 /app/BrowseForge &
 BF_PID=$!
 
-# Wait for ready and show token
-for i in $(seq 1 60); do
+# Wait for ready and show non-secret status
+for _ in $(seq 1 60); do
   if [ -f /app/data/.api-token ]; then
-    TOKEN=$(cat /app/data/.api-token)
     echo "========================================="
     echo "  BrowseForge Docker (KasmVNC)"
     echo "  Dashboard:  http://0.0.0.0:19280"
     echo "  Remote VNC: http://0.0.0.0:6901"
     echo "  VNC User:   user"
     echo "  VNC Password: set via VNC_PASSWORD (default: browseforge)"
-    echo "  API Token: $TOKEN"
+    echo "  API Token: [redacted; read /app/data/.api-token inside the container]"
     echo "========================================="
     break
   fi

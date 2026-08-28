@@ -1,0 +1,6 @@
+STATUS_LINES
+403
+403
+LAST_RESPONSE_REDACTED
+{"error":{"code":"ORIGIN_REQUIRED_LOCAL_ONLY","message":"mutations require a loopback Origin or Referer"}}
+CORE_STDERR_TAIL

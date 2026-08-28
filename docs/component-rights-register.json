@@ -184,12 +184,12 @@
   "build_inputs": [
     {
       "path": "go.mod",
-      "sha256": "29beb0df64ea9d4d35346dbd63524d91fae936679e8bba688645da868783f551",
+      "sha256": "344a472d66ca5435b47f2eae4ca3982013988762d31a728ea6c1d0b4825f17aa",
       "owners": ["browseforge-core", "forgelocal-first-party"]
     },
     {
       "path": "go.sum",
-      "sha256": "c40627102cc04dec2844fc3aaf7c03e99508ef6822f5e5ccafab761c110b6f92",
+      "sha256": "55042b9bf2791a3f78b37272fa560903e633cbe6628f51f6decc8ab469f010e2",
       "owners": ["browseforge-core", "forgelocal-first-party"]
     },
     {

@@ -1,0 +1,15 @@
+BRANCH_PROTECTION_VERIFICATION=FINAL_SECRET_REMEDIATION
+DATE_UTC=2026-08-27T03:20:00Z
+REPOSITORY=davidwilsonbest89-afk/forgelocal-public-sanitized.git
+BRANCH=validation/final-secret-remediation
+COMMAND=gh api repos/davidwilsonbest89-afk/forgelocal-public-sanitized/branches/validation/final-secret-remediation/protection
+EXIT_CODE=1
+RESULT=NOT_ACTIVE
+API_STATUS=404
+API_MESSAGE=Branch not protected
+SECURITY_JOB_REQUIRED_FOR_PR=NOT_VERIFIED
+BRANCH_PROTECTION_ENFORCEMENT=NOT_ACTIVE
+LIMITATION=Repository_or_plan_does_not_expose_active_branch_protection_for_this_branch
+NO_ACTIVE_PROTECTION_CLAIMED=TRUE
+PR_MERGE=NOT_PERFORMED
+RELEASE_GATE=PUBLIC_RELEASE_BLOCKED

@@ -1,0 +1,24 @@
+DATE_UTC=2026-08-27T03:49:01Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+IMAGE_TAG=forgelocal-pasted13:regression
+IMAGE_DIGEST=sha256:c8a77b4acbb01794b14a84b100aa05a9ebfb9584c10781e800556e924070cca5
+TRIVY_VERSION=Version: 0.74.0
+2026-08-27T03:49:01Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-27T03:49:01Z	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-08-27T03:49:01Z	INFO	[checks-client] Using existing checks from cache	path="/root/.cache/trivy/policy/content"
+2026-08-27T03:49:02Z	INFO	[secret] Secret scanning is enabled
+2026-08-27T03:49:02Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln,misconfig' to disable secret scanning
+2026-08-27T03:49:02Z	INFO	[secret] Please see https://trivy.dev/docs/v0.74/guide/scanner/secret#recommendation for faster secret detection
+2026-08-27T03:49:55Z	INFO	Detected OS	family="ubuntu" version="24.04"
+2026-08-27T03:49:55Z	INFO	[ubuntu] Detecting vulnerabilities...	os_version="24.04" pkg_num=358
+2026-08-27T03:49:55Z	INFO	Number of language-specific files	num=3
+2026-08-27T03:49:55Z	INFO	[gobinary] Detecting vulnerabilities...
+2026-08-27T03:49:55Z	INFO	[node-pkg] Detecting vulnerabilities...
+2026-08-27T03:49:55Z	INFO	Detected config files	num=0
+2026-08-27T03:49:55Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.74/guide/scanner/vulnerability#severity-selection for details.
+TRIVY_EXIT=0
+SYFT_VERSION=Application: syft
+SYFT_EXIT=0
+GRYPE_VERSION=Application: grype
+[0000]  WARN go binary packages were found but none carry function symbols; go vulnerability matching falls back to module granularity and may report false positives. if scanning an SBOM, regenerate it with symbol capture enabled for more precise results.
+GRYPE_EXIT=0

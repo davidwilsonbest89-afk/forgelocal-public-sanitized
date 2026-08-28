@@ -1,0 +1,55 @@
+VERSION_GITLEAKS_EXIT=0
+8.30.1
+VERSION_TRIVY_EXIT=0
+Version: 0.74.0
+Vulnerability DB:
+  Version: 2
+VERSION_SYFT_EXIT=0
+Application:   syft
+Version:       1.51.0
+BuildDate:     2026-08-10T14:48:50Z
+VERSION_GRYPE_EXIT=0
+Application:         grype
+Version:             0.117.0
+BuildDate:           2026-08-10T16:48:30Z
+VERSION_SEMGREP_EXIT=0
+1.175.0
+VERSION_YAMLLINT_EXIT=0
+yamllint 1.33.0
+
+=== COMMAND: gitleaks dir --redact --exit-code 1 ===
+GITLEAKS_SOURCE_EXIT=0
+3:58PM INF no leaks found
+
+=== COMMAND: gitleaks git --redact --exit-code 1 ===
+GITLEAKS_HISTORY_EXIT=0
+3:58PM INF no leaks found
+
+=== COMMAND: trivy fs --scanners secret --format json ===
+TRIVY_FS_SECRET_EXIT=0
+TRIVY_FS_SECRET_FINDINGS=0
+
+=== COMMAND: syft dir -> cyclonedx ===
+SYFT_SOURCE_EXIT=0
+
+=== COMMAND: grype source SBOM -> json ===
+GRYPE_SOURCE_EXIT=0
+GRYPE_SOURCE_MATCHES=0
+GRYPE_SOURCE_CRITICAL_HIGH=0
+
+=== COMMAND: semgrep scan --config auto --json ===
+SEMGREP_EXIT=0
+SEMGREP_FINDINGS=46
+
+=== COMMAND: yamllint -d relaxed workflow ===
+YAMLLINT_EXIT=0
+
+=== TOOL_AVAILABILITY ===
+go=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+shellcheck=AVAILABLE
+gosec=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+govulncheck=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+osv-scanner=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+firefox=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+camoufox=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE
+secret-tool=NOT_EXECUTED_ENVIRONMENT_UNAVAILABLE

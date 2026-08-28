@@ -1,0 +1,39 @@
+=== DATE_UTC ===
+2026-08-27T01:05:48Z
+=== IMAGE ===
+forgelocal-secret-remediation:snakeoil-baseline-20260827
+=== PACKAGE_OWNER ===
+dpkg-query: no path found matching pattern /etc/ssl/private/ssl-cert-snakeoil.key
+dpkg-query: no path found matching pattern /etc/ssl/certs/ssl-cert-snakeoil.pem
+
+PACKAGE_OWNER_EXIT=0
+=== FILE_METADATA ===
+-rw-r----- root:ssl-cert 640 1704 /etc/ssl/private/ssl-cert-snakeoil.key
+-rw-r--r-- root:root 644 1090 /etc/ssl/certs/ssl-cert-snakeoil.pem
+FILE_METADATA_EXIT=0
+=== CERT_METADATA ===
+subject=CN = localhost
+issuer=CN = localhost
+notBefore=Aug 27 00:57:34 2026 GMT
+notAfter=Aug 24 00:57:34 2036 GMT
+CERT_METADATA_EXIT=0
+=== KASMVNC_REFERENCES ===
+/etc/alternatives/vncserver
+/etc/group
+/etc/gshadow
+/etc/systemd/system/multi-user.target.wants/ssl-cert.service
+/etc/kasmvnc/kasmvnc.yaml
+KASMVNC_REFERENCES_EXIT=0
+=== RUNTIME_CONFIG ===
+/entrypoint.sh:70:  -sslOnly 0 \
+/entrypoint.sh:71:  -SecurityTypes None \
+/entrypoint.sh:73:  -websocketPort 6901 \
+/etc/kasmvnc/kasmvnc.yaml:24:#     pem_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
+/etc/kasmvnc/kasmvnc.yaml:25:#     pem_key: /etc/ssl/private/ssl-cert-snakeoil.key
+/usr/share/kasmvnc/kasmvnc_defaults.yaml:24:    pem_certificate: /etc/ssl/certs/ssl-cert-snakeoil.pem
+/usr/share/kasmvnc/kasmvnc_defaults.yaml:25:    pem_key: /etc/ssl/private/ssl-cert-snakeoil.key
+RUNTIME_CONFIG_EXIT=0
+=== IMAGE_FILES ===
+KEY_PRESENT=0
+CERT_PRESENT=0
+IMAGE_FILES_EXIT=0

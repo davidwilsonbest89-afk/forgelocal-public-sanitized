@@ -1,0 +1,7 @@
+DATE_UTC=2026-08-27T03:59:23Z
+CWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=python3 scripts/grype-policy-gate.py checks/pasted13-grype-image.json security/grype-exceptions.json
+GRYPE_POLICY_GATE=FAIL_OPEN_CRITICAL_HIGH=43
+GRYPE_POLICY_APPROVED_EXCEPTIONS=0
+EXIT_CODE=1
+EXPECTED_BLOCKING_RESULT=PASS

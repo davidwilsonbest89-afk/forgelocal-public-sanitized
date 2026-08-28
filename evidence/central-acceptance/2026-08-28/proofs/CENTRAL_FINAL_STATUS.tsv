@@ -1,0 +1,6 @@
+lot	central_acceptance	technical_status	open_gate_summary	public_release_blocked	production_ready
+LOT-A	true	LOT_A_PARTIAL_WITH_OPEN_FINDINGS	50 current and 24 historical High/Critical plus Semgrep findings remain open	true	false
+LOT-B	true	LOT_B_PARTIAL_WITH_OBSERVED_BLOCKED_OR_UNSUPPORTED	mixed PASS/OBSERVED/BLOCKED/UNSUPPORTED outcomes remain classified	true	false
+LOT-C	true	LOT_C_PARTIAL_WITH_ENVIRONMENT_BLOCKERS	Docker/Buildx target unavailable and image governance remains open	true	false
+LOT-D	true	LOT_D_PARTIAL_WITH_ENVIRONMENT_BLOCKERS	T07/T08 lineage and environment-dependent checks remain open or blocked	true	false
+GLOBAL	true	EVIDENCE_ACCEPTANCE_COMPLETE	independent review and release gates remain open	true	false
