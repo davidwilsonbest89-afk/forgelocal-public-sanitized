@@ -1,0 +1,5 @@
+lot	manifest	manifest_verify_exit	entries	absolute_paths	self_references	status
+LOT-A	A_MANIFEST.sha256	0	22	0	0	PASS
+LOT-B	B_MANIFEST.sha256	0	29	0	0	PASS
+LOT-C	C_MANIFEST.sha256	0	5	0	0	PASS
+LOT-D	D_MANIFEST.sha256	0	5	0	0	PASS

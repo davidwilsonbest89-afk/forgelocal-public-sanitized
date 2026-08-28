@@ -1,0 +1,10 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  },
+  "ReportID": "01a045f4-f1f6-7f18-bf22-fdff4c168f86",
+  "CreatedAt": "2026-08-28T01:21:15.766990834Z",
+  "ArtifactName": "/home/ubuntu/forgelocal-final-secret-remediation/repo/evidence/central-acceptance/2026-08-28",
+  "ArtifactType": "filesystem"
+}

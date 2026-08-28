@@ -1,0 +1,52 @@
+UTC=2026-08-28T00:14:14Z
+PWD=/home/ubuntu/forgelocal-final-secret-remediation/repo
+COMMAND=git rev-parse --show-toplevel
+/home/ubuntu/forgelocal-final-secret-remediation/repo
+EXIT_CODE=0
+COMMAND=git branch --show-current
+validation/final-secret-remediation
+EXIT_CODE=0
+COMMAND=git rev-parse HEAD
+ad23de2595b38e680f4d0d010ef64ed21d7ab087
+EXIT_CODE=0
+COMMAND=git status --short --branch
+## validation/final-secret-remediation
+EXIT_CODE=0
+COMMAND=git log -1 --format='%H %cI %s'
+ad23de2595b38e680f4d0d010ef64ed21d7ab087 2026-08-27T19:20:54+00:00 evidence: add redacted owner token status addendum
+EXIT_CODE=0
+COMMAND=git fsck --full
+dangling blob 6c82ac5fbcc2e7c123f4083a153a717868c39180
+dangling blob 26852055804aa077d12cb42fc31c83b838695b0c
+dangling blob d98798806c542a96af91c6833e3bd59cfe1baa35
+dangling tag 310c10e7541bbec7828226ce1049df56da11ce0b
+dangling tag a7d3c6afe1627d23f6d4d990f4ab7e00186b780d
+dangling blob 0d14774a057645fa8a9d1999850a76dd6f55cb96
+dangling tag 72d54110c89583beacc556bb103f881b667d8137
+dangling blob d89a0e37eb364e68980bc6fcf9baa2471419d634
+dangling blob 0cdb996002ead7b276f575337c2ca0ee393f725f
+dangling blob d65b1d8b186ce71ea99a62a518ae688c2110049a
+dangling blob f85ee1d0ffe2c6bc1a0ad92539de50da4ad2bbe5
+dangling blob 0e1fa4d5e1dae02b4ab295bb4970b2db2a430b30
+dangling tag f2e655ba14042da92eb5d6e6f081c65c4ec2d5e7
+dangling blob a7273dfdbdc7af87bcc0b1f57ac1d953be023ab7
+dangling blob dca799734b74841f77ae1c95f0b10cfe95141da9
+dangling blob 5028b79c6fcd3482fc15e29c0f260652c709aa4e
+dangling blob 932d88aa5cc70939037059e802d04762dcea2318
+dangling tag 436eebd4937352476c9e4c44a13b536c48d0c048
+dangling blob 34b3d2e32b443565a924487c4aba54d872942c43
+dangling blob c6f7a1851bd60ea43e9951d4d79cbff66acfe931
+dangling blob 6ab928861ad860656aba31fb958d4da469829703
+dangling tag 3ebcf55fcab7ab10e34ffea652f2398e07e299da
+dangling blob 89fc48128a9be053303c4ec9746c6980d3762989
+dangling tag f77fd0bb02993854eec9ecf05fda9788546860ec
+EXIT_CODE=0
+COMMAND=git diff --check
+EXIT_CODE=0
+COMMAND=git diff --name-only e6d761b7a6efdc7ef827875d9bd2101115846d6b..HEAD
+evidence/FINAL_SECRET_REMEDIATION/addenda/OWNER_TOKEN_STATUS_ADDENDUM_2026-08-27.md
+evidence/FINAL_SECRET_REMEDIATION/addenda/OWNER_TOKEN_STATUS_ADDENDUM_2026-08-27.sha256
+EXIT_CODE=0
+PLACEHOLDER_SCAN=guarded
+PLACEHOLDER_MATCHES=0
+O0_STATUS=PASS

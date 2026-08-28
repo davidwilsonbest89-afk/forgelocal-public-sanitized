@@ -1,0 +1,17 @@
+lot	gate_id	domain	status	evidence	note
+LOT-A	A-IMAGE-HC	image vulnerability triage	OPEN	LOT-A/A_GRYPE_FINDINGS.tsv	50 current High/Critical remain open
+LOT-A	A-HISTORICAL-HC	image vulnerability history	OPEN	LOT-A/A_GRYPE_FINDINGS.tsv	24 historical High/Critical remain open
+LOT-A	A-SEMGREP	static analysis	OPEN	LOT-A/A_SEMGREP_FINDINGS.tsv	findings remain open; no closure inferred
+LOT-A	A-RELEASE	common release gate	BLOCKED	LOT-A/A_SECURITY_REPORT.md	public release remains blocked
+LOT-B	B-FUNCTIONAL	functional scenarios	PARTIAL	LOT-B/B_FUNCTIONAL_REPORT.md	23 PASS, 3 OBSERVED, 1 BLOCKED, 2 UNSUPPORTED
+LOT-B	B-ISOLATION	isolation controls	PARTIAL	LOT-B/B_ISOLATION_PROXY_MATRIX.tsv	mixed PASS/OBSERVED/UNSUPPORTED results
+LOT-B	B-PROXY	proxy scenarios	PARTIAL	LOT-B/B3_PROXY_MATRIX.tsv	mixed PASS/OBSERVED results
+LOT-B	B-RELEASE	common release gate	BLOCKED	LOT-B/B_README.md	no global PASS asserted
+LOT-C	C-DOCKER	Docker/Buildx execution	BLOCKED_ENVIRONMENT_REQUIRED	LOT-C/C_DOCKER_EXECUTION_RAW.log	current Docker target unavailable
+LOT-C	C-IMAGE	image scan	PARTIAL	LOT-C/C_IMAGE_SCAN_RAW.log	image governance remains open
+LOT-C	C-RELEASE	common release gate	BLOCKED	LOT-C/C_DOCKER_REPORT.md	production readiness false
+LOT-D	D-LINEAGE	T07/T08 lineage	OPEN	LOT-D/D_PROVENANCE_RAW.log	not transferred without authoritative proof
+LOT-D	D-CI	CI/browser environments	BLOCKED_ENVIRONMENT_REQUIRED	LOT-D/D_ENVIRONMENT_REPORT.md	environment-dependent checks remain open
+LOT-D	D-RELEASE	common release gate	BLOCKED	LOT-D/D_ENVIRONMENT_REPORT.md	production readiness false
+COMMON	COMMON-INDEPENDENT-REVIEW	review	OPEN	central reports	independent review pending
+COMMON	COMMON-PUBLIC-RELEASE	release	BLOCKED	central reports	PUBLIC_RELEASE_BLOCKED=true

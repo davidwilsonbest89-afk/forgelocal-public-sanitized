@@ -1,0 +1,23 @@
+UTC=2026-08-28T01:21:41Z
+PWD=/home/ubuntu/forgelocal-final-secret-remediation/repo/evidence/central-acceptance/2026-08-28/lot-packages
+COMMAND=sha256sum -c LOT-X.zip.sha256
+LOTS_EXPECTED=4
+LOT=A
+/home/ubuntu/forgelocal-final-secret-remediation/repo/evidence/central-acceptance/2026-08-28/lot-packages/LOT-A.zip: OK
+SIDECAR_VERIFY_EXIT_CODE=0
+LOT=B
+/home/ubuntu/forgelocal-final-secret-remediation/repo/evidence/central-acceptance/2026-08-28/lot-packages/LOT-B.zip: OK
+SIDECAR_VERIFY_EXIT_CODE=0
+LOT=C
+/home/ubuntu/forgelocal-final-secret-remediation/repo/evidence/central-acceptance/2026-08-28/lot-packages/LOT-C.zip: OK
+SIDECAR_VERIFY_EXIT_CODE=0
+LOT=D
+/home/ubuntu/forgelocal-final-secret-remediation/repo/evidence/central-acceptance/2026-08-28/lot-packages/LOT-D.zip: OK
+SIDECAR_VERIFY_EXIT_CODE=0
+LOTS_WITH_ZIP=4
+LOTS_WITH_SIDECAR=4
+DELIVERY_FILES=8
+MISSING_FILES=0
+SIDECARS_PASS=4
+EXIT_CODE=0
+STATUS=PASS
