@@ -3,7 +3,7 @@
 **Date :** 2026-08-28 UTC
 **Branche :** `validation/final-secret-remediation`
 **Baseline de départ :** `4fd54022f3970d2177976a78970d2b81bd8810bf`
-**Statut de publication :** commit et push autorisés par l’owner ; références finales à compléter après publication.
+**Statut de publication :** publié sur GitHub après autorisation explicite de l’owner. Le commit fonctionnel est `3900a841e19004421550cb329747ddf70593b922`. La branche distante vérifiée est `validation/final-secret-remediation` dans [davidwilsonbest89-afk/forgelocal-public-sanitized](https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized/tree/validation/final-secret-remediation).
 
 ## Résumé
 
@@ -53,7 +53,7 @@ internal/api/backup_v1_test.go
 internal/api/router.go
 ```
 
-Le diff de ces six fichiers doit être relu avant merge. Les preuves sont sous `evidence/runtime-qualification/2026-08-28/dashboard-full/`. Le package local et son SHA-256 sont fournis dans ce dossier ; le manifeste et le log de vérification doivent rester cohérents après toute modification.
+Le diff de ces six fichiers doit être relu avant merge. Les preuves sont sous `evidence/runtime-qualification/2026-08-28/dashboard-full/`. Le package publié dans les preuves est `forgelocal-dashboard-full-audit-2026-08-28.zip`, SHA-256 `36cda0c643fa5703607f120b94f797ce22b0eb917057288c146d6e6d345626a3`. Le manifeste et le log de vérification sont conservés dans `evidence/runtime-qualification/2026-08-28/dashboard-full/` et doivent rester cohérents après toute modification.
 
 ## Procédure de revue et gates
 
@@ -63,7 +63,7 @@ Les gates de livraison restent obligatoires :
 
 ```text
 DASHBOARD_BUTTON_AUDIT=PASS_WITH_EXPLICIT_ENVIRONMENT_LIMITS
-PUSH_TO_GITHUB=YES — uniquement pour le commit identifié dans cette passation
+PUSH_TO_GITHUB=YES — commit fonctionnel `3900a841e19004421550cb329747ddf70593b922`
 MERGE_PERFORMED=false
 RELEASE_PERFORMED=false
 PUBLIC_RELEASE_BLOCKED=true
