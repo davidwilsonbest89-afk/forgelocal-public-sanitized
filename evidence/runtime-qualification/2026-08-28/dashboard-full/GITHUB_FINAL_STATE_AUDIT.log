@@ -1,12 +1,9 @@
-UTC=2026-08-28T11:43:18Z
-LOCAL_HEAD=7b59f4385ac71e606e4bf87db57b4b7907f38a6a
-BRANCH=validation/final-secret-remediation
-STATUS
-[31m??[m evidence/runtime-qualification/2026-08-28/dashboard-full/GITHUB_HANDOFF_PUSH_VERIFICATION.log
-DIFF_CHECK
-DIFF_CHECK_EXIT=0
-REMOTE_HEAD=7b59f4385ac71e606e4bf87db57b4b7907f38a6a
-RECENT_COMMITS
-[33m7b59f43[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mvalidation/final-secret-remediation[m[33m)[m publish dashboard handoff verification
-[33m3900a84[m audit dashboard buttons and runtime handoff
-[33m4fd5402[m chore(evidence): accept and consolidate lots A-D locally
+UTC=2026-08-28T11:43:37Z
+FINAL_COMMIT=91baf48c31df59949274d80db020e8d0ae645e66
+PUSH_EXIT=0
+REMOTE_HEAD=91baf48c31df59949274d80db020e8d0ae645e66
+REMOTE_MATCH=true
+WORKTREE_CLEAN=false
+PUSH_TO_GITHUB=YES
+To https://github.com/davidwilsonbest89-afk/forgelocal-public-sanitized.git
+   7b59f43..91baf48  HEAD -> validation/final-secret-remediation
